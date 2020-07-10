@@ -107,12 +107,15 @@ If you prefer to use a Terraform template to generate these resources, you can u
    SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --resource-group-name default --json | jq -r '.id')
    ```
    {:pre}
-1. Add a rule to limit inbound to port 22
+1. Add a rule to limit inbound to SSH port 22
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
    ```
    {:pre}
-1. Add a rule to limit inbound to port 80
+
+    You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
+   {:tip}
+1. Add a rule to limit inbound to HTTP port 80
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80 --json
    ```
@@ -127,7 +130,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 18.x by running the following command.  
    ```sh
-   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name==ibm-ubuntu-18-04-1-minimal-amd64-2) | .id')
+   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-18-04-1-minimal-amd64-2") | .id')
    ```
    {:pre}
 
@@ -141,7 +144,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    VSI_ADDRESS=$(ibmcloud is floating-ip-reserve fip-lamp-1 --nic-id $NIC_ID --resource-group-name default --json | jq -r '.address')
    ```
    {:pre}
-1. Connect to the server with SSH.
+1. Connect to the server with SSH, notw that it may take a minute for the newly created server to be accessible via SSH.
    ```sh
    ssh root@$VSI_ADDRESS
    ```
@@ -164,6 +167,9 @@ In this section, you'll run commands to update Ubuntu package sources and instal
    ```
    {: pre}
 
+  When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
+  {:tip}
+  
 ## Verify the installation and configuration
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
@@ -277,9 +283,9 @@ You can use {{site.data.keyword.la_full_notm}} to manage system and application 
 If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-ubuntu)
 
 
-## Configure a Data Volume (Optional)
+## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
 {: #configure_data_volume}
-The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted.  If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
+The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted.  You can also encrypt the volume with your own key. If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
 
 1. Create a data volume configuration file.
    ```sh
