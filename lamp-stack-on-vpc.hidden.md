@@ -285,7 +285,7 @@ If you would like to configure the logging service follow the steps outlined in 
 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
 {: #configure_data_volume}
-The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted.  You can also encrypt the volume with your own key. If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
+The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted and attached to a new VSI.  You can also encrypt the volume with your own key. If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
 
 1. Create a data volume configuration file.
    ```sh
@@ -380,6 +380,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
 3. Once the VSIs are gone, switch to **Subnets**. Delete your subnets.
 4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
+5. If you created the optional Data Volume and no longer need it, switch to **Block storage volumes** tab and delete the volume.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
