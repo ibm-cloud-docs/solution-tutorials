@@ -155,14 +155,14 @@ If you prefer to use a Terraform template to generate these resources, you can u
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
 
 1. Disable interactive prompts
-```sh
-export DEBIAN_FRONTEND=noninteractive
-apt update
-apt install apache2 -y
-apt install mysql-server -y
-apt install php libapache2-mod-php php-mysql php-common php-cli -y
-```
-{: pre}
+   ```sh
+   export DEBIAN_FRONTEND=noninteractive
+   apt update
+   apt install apache2 -y
+   apt install mysql-server -y
+   apt install php libapache2-mod-php php-mysql php-common php-cli -y
+   ```
+   {: pre}
 
 ## Verify the installation and configuration
 
