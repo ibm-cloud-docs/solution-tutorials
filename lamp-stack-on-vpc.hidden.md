@@ -68,7 +68,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 1. From the [{{site.data.keyword.Bluemix_notm}} Console](https://{DomainName}), launch the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell).
 1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
    ```sh
-   ibmcloud target -r <region-name> -g <resource-group>
+   ibmcloud target -r <region-name> -g default
    ```
    {:pre}
 1. For this tutorial we will use the latest VPC generation 2.  Set the target generation for VPC
@@ -89,17 +89,17 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:tip}
 1. Add the SSH key to your account.
    ```sh
-   SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --json --resource-group-name default | jq -r '.id')
+   SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --resource-group-name default --json | jq -r '.id')
    ```
    {:pre}
 1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
-   VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json --resource-group-name default | jq -r '.id')
+   VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --resource-group-name default --json | jq -r '.id')
    ```
    {:pre}
 1. Create the subnet for your VPC. 
    ```sh
-   SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone us-south-1 --ipv4-address-count 256 --resource-group-name default | jq -r '.id')
+   SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone us-south-1 --ipv4-address-count 256 --resource-group-name default --json | jq -r '.id')
    ```
    {:pre}
 1. Create the security for your VPC. 
