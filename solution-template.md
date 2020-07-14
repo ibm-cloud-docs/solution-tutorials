@@ -80,12 +80,23 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 <!--#/istutorial#-->
 
 In addition, make sure you have:
 - a **namespace** created in the {{site.data.keyword.registryfull_notm}}
 - and Android Studio installed.
+
+<!--##isworkshop#-->
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
+-->
+<!--#/isworkshop#-->
 
 ## Create services
 {: #setup}
@@ -181,7 +192,7 @@ For anchors within the same document always only use the following format:
 For anchors or any links to external documents, even for those are are within our tutorials use the following format:
   [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
 
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
 
 Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
 

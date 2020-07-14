@@ -355,7 +355,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 {:related}
 
 - [{{site.data.keyword.watson}} Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
-- [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#data_experiencee)
+- [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#data_experiencee)
 - [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
 - [Machine learning & AI](https://dataplatform.ibm.com/docs/content/analyze-data/wml-ai.html?audience=wdp&context=wdp)
 - [{{site.data.keyword.aios_short}} documentation](https://{DomainName}/docs/ai-openscale)

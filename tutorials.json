@@ -297,7 +297,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2020-03-16"
+          "lastUpdated": "2020-06-18"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -369,7 +369,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2020-01-10"
+          "lastUpdated": "2020-06-18"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -384,7 +384,7 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-12-13"
+          "lastUpdated": "2020-06-25"
         }
       ]
     },
@@ -610,7 +610,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2020-06-18"
         }
       ]
     },

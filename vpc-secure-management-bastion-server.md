@@ -352,4 +352,4 @@ When using the console, you may need to refresh your browser to see updated stat
 ## Related content
 {: #related}
 
-- [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
+- [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)

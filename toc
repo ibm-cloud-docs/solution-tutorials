@@ -64,7 +64,8 @@ Solution Tutorials
     {: .topicgroup}
     Work In Progress
         solution-template.md
-        coligo.hidden.md
+        image-classification-code-engine.hidden.md
+        lamp-stack-on-vpc.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
@@ -106,7 +107,7 @@ Solution Tutorials
         application-log-analysis.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
-        coligo.hidden.md
+        image-classification-code-engine.hidden.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 

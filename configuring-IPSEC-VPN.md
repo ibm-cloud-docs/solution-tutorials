@@ -35,7 +35,7 @@ There are two suitable VPN options for connectivity over the public internet to 
 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 
 
-This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec 
+This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec 
 VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {:shortdesc}
 
@@ -72,7 +72,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 ## Before you begin
 {: #prereqs}
 
-This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
+This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
 
 ## Document VPN configuration
 {: #Document_VPN}

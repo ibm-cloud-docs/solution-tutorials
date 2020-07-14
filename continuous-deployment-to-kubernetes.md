@@ -61,9 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `dev` plugin,
+  * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+  * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+  * `dev` plugin,
 * a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
 * `helm` to deploy charts,
@@ -71,7 +71,7 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition, make sure you:
@@ -116,8 +116,8 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
-2. Under **Start from the Web**, section click on the **Get Started** button.
-3. Select the `Node.js with Express App` tile and then `Create app` to create a Node.js starter application.
+2. Under **Starter Kits**, section click on the **Get a Starter Kit** button.
+3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
 4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
@@ -129,97 +129,42 @@ Now that you successfully created the starter application, you can automate its 
 1. Select **{{site.data.keyword.containershort_notm}}** as the **Deployment target**.
 1. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
 1. Select a region and your cluster from the list.
-1. Select **Helm** as the **Deployment type**.
+1. Select **Helm** as the **Deployment type** and click on **Next**.
 1. Define a unique **DevOps toolchain name**.
-1. Select a region to create your toolchain in, and then select the resource group that provides access to your new toolchain.
+1. Select a region to create your toolchain in.
 1. Click **Create**.
 
 The toolchain will build your application and deploy it to the cluster.
 
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
-4. After the deploy stages complete, click on **View logs and history** to see the logs.
-5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
+1. After the deploy stages complete, click on **View logs and history** to see the logs.
+1. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![](images/solution21/Logs.png)
 
-## Clone, build and run the application locally
-{: #cloneandbuildapp}
+## Modify the application and deploy the updates
 
-In this section, you will use the starter app created in the earlier section, clone it to your local machine, modify the code and then build/run it locally.
-{: shortdesc}
-
-### Clone the application
-1. From the Toolchain overview, select the **Git** tile under **Code**. You will be redirected to your git repository page where you can clone the repo.![HelloWorld](images/solution21/DevOps_Toolchain.png)
-
-2. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking **create a personal access token**. Remember to save the key or token for future reference.
-3. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine. If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
-
-   ```bash
-   git clone <your_repo_url>
-   cd <name_of_your_app>
-   ```
-   {: codeblock}
-
-4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code by trying to change "Congratulations!" to something else and the save the file.
-
-### Build the application locally
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-{: shortdesc}
-
-1. Ensure your local Docker engine is started, to check run the command below:
-   ```
-   docker ps
-   ```
-   {: codeblock}
-2. Navigate to the generated project directory cloned.
-   ```
-   cd <project name>
-   ```
-   {: codeblock}
-3. Build the application locally.
-   ```
-   ibmcloud dev build
-   ```
-   {: codeblock}
-
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
-### Run the application locally
-
-1. Run the container.
-   ```
-   ibmcloud dev run
-   ```
-   {: codeblock}
-
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:3000/
-   ![](images/solution21/node_starter_localhost.png)
-
-## Push application to your Git repository
-
-In this section, you will commit your change to your Git repository. The pipeline will pick up the commit and push the changes to your cluster automatically.
-1. In your terminal window, make sure you are inside the repo you cloned.
-2. Push the change to your repository with three simple steps: Add, commit, and push.
-   ```bash
-   git add public/index.html
-   git commit -m "my first changes"
-   git push origin master
-   ```
-   {: codeblock}
-
-3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-4. Notice a new **BUILD** has started.
-5. Wait for the **DEPLOY** stage to complete.
-6. Click the application **url** under Last Execution result to view your changes live.
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
+1. Click the **Eclipse Orion Web IDE** tile.
+1. Expand the `<your-initial>-mynodestarter` and then `public`.
+1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
+1. Click on the Git icon in the left most column.
+1. Enter a commit message: *my first changes* and click on **Commit**.
+1. Click on the arrow at the top to get back to the toolchain. 
+1. Click on the **Delivery Pipeline** tile.
+1. Notice a new **BUILD** has started.
+1. Wait for the **DEPLOY** stage to complete.
+1. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
+
+**Note:** If you prefer to work locally for making and viewing updates to the application, you can  clone the repository to your own environment for editing and use `ibmcloud dev build` and `ibmcloud dev run` to view the changes locally before pushing them back to the repository. Once your changes are pushed to the repository they will also trigger a build in the **Delivery Pipeline**.
 
 ## Deploy to a production environment
 {: #deploytoproduction}
 
 In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
-There are [different options](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
+There are [different options](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 1. Rename the **Deploy Stage** to `Deploy dev` by clicking on settings Icon > **Configure Stage**.
@@ -265,16 +210,16 @@ In this step, you will clean up the resources to remove what you created above.
 
 Do you want to learn more? Here are some ideas of what you can do next:
 
-- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Add a 3rd environment dedicated to testing.
-- Deploy the production app [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
+- Deploy the production app [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 
 ## Related Content
 {: #related}
 
-* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
+* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
 * [Security](https://{DomainName}/docs/containers?topic=containers-security#cluster) for IBM Cloud Container Service.
 * Toolchain [integrations](https://{DomainName}/docs/services/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
-* Analyze logs and monitor application health with [LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+* Analyze logs and monitor application health with [LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 
 

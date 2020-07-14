@@ -123,6 +123,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    {:pre}
 
 ## Deploying an application
+{: #deploy}
 
 In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
@@ -166,7 +167,7 @@ A project is a collection of resources managed by a devops team.  An administrat
    Push successful
    ```
 1. Click back to the **Topology** and select your app again.
-1. Click on the url under **Routes** to open your application with the URL. Enter any strings for username and password, for instance `test:test` because the app is running in demo mode.
+1. Click on the url under **Routes** to open your application with the URL. Enter any strings for username and password, for instance `test:test` because the app is running in demonstration mode.
 
 The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Container Platform. To recap:
    * The "Example Health" Node.js application was deployed directly from GitHub into your cluster
@@ -174,6 +175,7 @@ The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Cont
    * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
 
 ## Logging and monitoring
+{: #logging-monitoring}
 
 In this section, you will explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
 
@@ -252,6 +254,7 @@ When deploying new apps, making configuration changes, or simply inspecting the 
 Almost all actions in {{site.data.keyword.openshiftshort}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
 ## Metrics and dashboards
+{: #metrics}
 
 In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
 
@@ -266,7 +269,7 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 5. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
    <p style="width: 50%;">
 
-   ![Grafana also project](images/solution55-openshift-microservices/ocp43-grafana-cpu.png)
+   ![Grafana CPU view](images/solution55-openshift-microservices/ocp43-grafana-cpu.png)
    </p>
 5. There is a lot more to investigate with Grafana, but instead the fully managed cloud {{site.data.keyword.la_short}} service will be covered in detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
@@ -293,6 +296,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
+{: #scaling}
 
 In this section, the metrics observed in the previous section can be used to scale the UI application in response to load.
 
@@ -410,7 +414,8 @@ You can also can delete and create resources like autoscalars with the command l
    {:pre}
 1. Revisit the **Workloads > Deployments** overview page for `patient-health-frontend` deployment and watch it work.
 
-## Cloudant DB with IBM Cloud Operator and Binding
+## Using the IBM Cloud Operator to create a Cloudant DB
+{: #operator}
 
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
@@ -448,7 +453,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
 9. Use the helper script provided by IBM to create the following resources:
    - {{site.data.keyword.Bluemix_notm}} API key that represents you and your permissions to use {{site.data.keyword.Bluemix_notm}}
-   - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has data keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
+   - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has the keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
    - Kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
     
    Use the supplied curl command: 
@@ -472,7 +477,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:codeblock}
 1. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
-   Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrative** perspective with Project: example-health in the **Service** panel.
+   Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
 1. Click on the service just created, **cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
 5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
@@ -614,6 +619,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 3. Click through the different patients you can log-in as.
 
 ## Configure {{site.data.keyword.la_short}} agent for {{site.data.keyword.openshiftshort}}  cluster
+{: #configure-logdna}
 
 The {{site.data.keyword.la_short}} agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
 
@@ -683,6 +689,7 @@ For example,
    ```
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
+{: #use-logdna}
 
 IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
 
@@ -880,6 +887,7 @@ Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM
 {:note}
 
 ## Configure {{site.data.keyword.monitoringshort}}
+{: #configure-sysdig}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
@@ -929,6 +937,7 @@ Example output:
    ```
 
 ## Monitor your Cluster with SysDig
+{: #use-sysdig}
 
 IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
 
@@ -1057,5 +1066,5 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
+- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)

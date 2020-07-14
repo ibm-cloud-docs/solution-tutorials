@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019
-lastupdated: "2019-12-13"
-lasttested: "2019-09-26"
+  years: 2019,2020
+lastupdated: "2020-06-25"
+lasttested: "2020-06-25"
 
 ---
 
@@ -18,7 +18,7 @@ lasttested: "2019-09-26"
 # Enhance security of your deployed application
 {: #extended-app-security}
 
-You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
+You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
 {:shortdesc}
 
 ## Objectives
@@ -41,7 +41,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager)
 * [{{site.data.keyword.hpvs}}](https://{DomainName}/catalog/services/hyper-protect-virtual-servers)
 * [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc/provision/vs)
-* [{{site.data.keyword.datashield_full_notm}}](https://{DomainName}/catalog/infrastructure/ibm-datashield-helm)
+* [{{site.data.keyword.datashield_full_notm}}](https://{DomainName}/catalog/services/ibm-cloud-data-shield)
 * [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-postgresql)
 * [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-mongodb)
 
@@ -63,7 +63,7 @@ An existing solution with the application and connected (micro-) services is ext
 
 You developed a solution and successfully deployed it to {{site.data.keyword.cloud_notm}}. Now you want to look into how to harden the app environment. This can be part of the regular activities of (agile) development and the next steps towards a fully secure app or by increasing requirements for an app already in production. 
 
-If you tried the tutorial on how to [apply end to end security to a cloud application](https://{DomainName}/docs/tutorials?topic=solution-tutorials-cloud-e2e-security), you already know how to rotate service credentials. But there is far more to app security than regular changes of passwords and access keys. You may want to assess the application, its deployment and usage  characteristics to better understand what needs to, could be and should be addressed. Depending on your industry, country and region, etc. there exist different [security and resiliency requirements](https://www.ibm.com/cloud/compliance). It could mean
+If you tried the tutorial on how to [apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security), you already know how to rotate service credentials. But there is far more to app security than regular changes of passwords and access keys. You may want to assess the application, its deployment and usage  characteristics to better understand what needs to, could be and should be addressed. Depending on your industry, country and region, etc. there exist different [security and resiliency requirements](https://www.ibm.com/cloud/compliance). It could mean
 
 * to isolate the application, its services, the network traffic and stored data from those of other applications,
 * to encrypt data and have control over the management of encryption keys,
@@ -83,11 +83,11 @@ To isolate application runtime environments and related services, you can provis
 
 Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc) to benefit from isolation of compute and network resources.
 
-  Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
+  Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
   {: #tip}
 
 * Evaluate the use of [{{site.data.keyword.hpvs}}](https://{DomainName}/docs/services/hp-virtual-servers?topic=hp-virtual-servers-overview) to run workloads in secure service containers.
-* As another option to secure workloads, consider [{{site.data.keyword.datashield_short}}](https://{DomainName}/docs/services/data-shield?topic=data-shield-about) for guarding applications running in containers.
+* As another option to secure workloads, consider [{{site.data.keyword.datashield_short}}](https://{DomainName}/docs/data-shield?topic=data-shield-about) for guarding applications running in containers.
 
 When working with database systems, consider using service plans with dedicated resources or services with enhanced security. Examples are [dedicated hardware plans for {{site.data.keyword.cloudant}}](https://{DomainName}/docs/services/Cloudant?topic=cloudant-ibm-cloud-public#dedicated-hardware-plan) that offers HIPAA compliance or services like [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-postgresql) and [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-mongodb) which offer highly secure database environments for sensitive data.
 
@@ -116,7 +116,7 @@ The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs
 ## Control encryption keys
 {: #control_encryption}
 
-Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys.
+Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key).
 
 ### Integrated services
 
@@ -125,15 +125,17 @@ More and more data services support the integration with either {{site.data.keyw
 - [integrated services for {{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/services/key-protect?topic=key-protect-integrate-services) and the
 - [integrated services for {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-integrate-services).
 
-Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more.
+Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more.
 
 ### Example: Cloud Object Storage
 
-One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
+One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key with optionally making use of BYOK or KYOK, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
 <p style="text-align: center;">
   ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
 </p>
+
+A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
 
 ## Conclusions
 
@@ -142,10 +144,12 @@ In this tutorial, you learned how to increase application security by moving fro
 ## Related content
 {: #related}
 
-* Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/tutorials?topic=solution-tutorials-cloud-e2e-security)
+* Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)
 * Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps)
 * Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2)
+* Blog: [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)
+* Blog: [Increase Information Security for Db2 on IBM Cloud](https://www.ibm.com/cloud/blog/increase-information-security-for-db2-on-ibm-cloud)
 * IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/devops/method/content/architecture/securityArchitecture)
 * [{{site.data.keyword.cloud_notm}} platform service CLIs and APIs](https://{DomainName}/docs/overview?topic=overview-platform-svc-cli-api)
 * [IBM Cloud Compliance Programs](https://www.ibm.com/cloud/compliance)

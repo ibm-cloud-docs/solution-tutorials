@@ -81,8 +81,17 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 <!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+-->
+<!--#/isworkshop#-->
 
 ## Create services
 {: #setup}
@@ -203,7 +212,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 
-{{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
+{{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow to define a list of allowed IP addresses. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
 {: tip}
 
 ### Authenticate users
@@ -467,7 +476,7 @@ If you share an account with other users, always make sure to delete only your o
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
 * [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
-* Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
+* Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * Blog: [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates)
 * Blog: [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/cloud/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security)
 * Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2)

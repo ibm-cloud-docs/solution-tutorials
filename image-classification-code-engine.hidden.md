@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-22"
+lastupdated: "2020-06-29"
 lasttested: "2020-06-22"
 
 ---
@@ -20,30 +20,30 @@ lasttested: "2020-06-22"
 {:important: .important}
 {:note: .note}
 
-# Image classification with Coligo
-{: #coligo}
+# Image classification with Code Engine
+{: #image_classification_code_engine}
 
-> :warning: WORK-IN-PROGRESS
+> WORK-IN-PROGRESS
 
-In this tutorial, you will learn about Coligo by deploying an image classification application. You will create a Coligo project, target the project and deploy Coligo components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Coligo components. You will also understand the auto-scaling capability of Coligo where instances are scaled up or down (to zero) based on incoming workload.
+In this tutorial, you will learn about {{site.data.keyword.cloud_notm}} Code Engine by deploying an image classification application. You will create a Code Engine project, target the project and deploy Code Engine components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Code Engine components. You will also understand the auto-scaling capability of Code Engine where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
-Coligo provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then Coligo can host and manage them for you - all on a Kubernetes-based infrastructure. And Coligo does this without the need for you to learn, or even know about, Kubernetes. The Coligo experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
+{{site.data.keyword.cloud_notm}} Code Engine provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then Code Engine can host and manage them for you - all on a Kubernetes-based infrastructure. And Code Engine does this without the need for you to learn, or even know about, Kubernetes. The Code Engine experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
 
-Coligo helps developers by hiding many of the complex tasks like configuration, dependency management etc., Coligo simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
+Code Engine helps developers by hiding many of the complex tasks like configuration, dependency management etc., Code Engine simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
 {: #objectives}
 
-* Understand Coligo and how it simplifies the developer experience.
-* Understand how easy it is to deploy and scale an application using Coligo.
+* Understand {{site.data.keyword.cloud_notm}} Code Engine and how it simplifies the developer experience.
+* Understand how easy it is to deploy and scale an application using Code Engine.
 * Learn the use of jobs to execute run to completion workloads.
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IBM Coligo](https://{DomainName}/knative/overview)
+* [{{site.data.keyword.cloud_notm}} Code Engine](https://{DomainName}/knative/overview)
 * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
 
@@ -57,14 +57,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution54-coligo-hidden/architecture_diagram.png)
+  ![Architecture](images/solution54-codeengine-hidden/architecture_diagram.png)
 </p>
 
-1. Developer creates a Coligo project and deploys a frontend and a backend Coligo application.
+1. Developer creates a Code Engine project and deploys a frontend and a backend Code Engine application.
 2. Developer connects the frontend(UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
 4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
-5. User runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
+5. User runs a Code Engine job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
 {: #prereqs}
@@ -75,15 +75,15 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
-## Create a IBM Coligo project
+## Create a IBM Code Engine project
 {: #create_coligo_project}
 
-In this section, you will create a Coligo project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
+In this section, you will create a Code Engine project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
-1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
+1. Navigate to [IBM Code Engine Overview](https://{DomainName}/knative/overview) page
 2. Click on **Create project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group
@@ -95,21 +95,21 @@ In this section, you will create a Coligo project. A project is a grouping of ap
    {:pre}
 4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed from the output above.
 
-## Deploy the frontend and backend apps as Coligo applications
+## Deploy the frontend and backend apps as Code Engine applications
 {: #deploy_app}
 
-In this section, you will deploy your front-end web application to Coligo under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
+In this section, you will deploy your front-end web application to Code Engine under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
 
 ### Deploy a frontend application
 
-1. To deploy a new Coligo application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
+1. To deploy a new Code Engine application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
    ibmcloud coligo application create --name frontend \
    --image ibmcom/frontend
    ```
    {:pre}
 
-    With just these two pieces of data, Coligo can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
+    With just these two pieces of data, Code Engine can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
 2. Copy the URL from the output and open it in a browser to see an output similar to this
@@ -129,11 +129,11 @@ In this section, you will deploy your front-end web application to Coligo under 
    kubectl get pods --watch
    ```
    {:pre}-->
-Congratulations!! You've just deployed a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+Congratulations!! You've just deployed a web application to Code Engine with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
 
-To check the autoscaling capabilities of Coligo,
+To check the autoscaling capabilities of Code Engine,
 1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
 2. Click on **Generate load** to generate traffic.
 3. Run the below command to see the pod count incrementing as part the autoscaling
@@ -151,7 +151,7 @@ To check the autoscaling capabilities of Coligo,
    --image ibmcom/backend --cluster-local
    ```
    {:pre}
-   The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster. This is often used for security purposes.
+   The `--cluster-local` flag will instruct Code Engine to keep the endpoint for this application private. Meaning, it will only be available from within the cluster. This is often used for security purposes.
    {:tip}
 
 2. Copy the private endpoint (URL) from the output.
@@ -173,46 +173,46 @@ To check the autoscaling capabilities of Coligo,
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {:connect_cloud_services}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **coligo-cos** and select a resource group.
+   2. Set **Service name** to **codeengine-cos** and select a resource group.
    3. Click on **Create**.
 2. Under **Service Credentials**, click on **New credential**
-   1. Give it a name - `cos-for-coligo` and select **Writer** as the role
+   1. Give it a name - `cos-for-codeengine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
-   <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
-3. Create a **Custom** bucket named `<your-initials>-coligo`,
+   <!--3. Expand the `for-codeengine` credentials, copy and **save** the credentials for future reference.-->
+3. Create a **Custom** bucket named `<your-initials>-codeengine`,
    1. Select **Cross Region** resiliency
-   2. Select a Location preferably `Dallas`
+   2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
 4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
-   2. Set **Service name** to **coligo-vr** and select a resource group.
+   2. Set **Service name** to **codeengine-vr** and select a resource group.
    3. Click on **Create**.
 7. Under **Service Credentials**, click on **New credential**
-   1. Give it a name - `vr-for-coligo` and select **Writer** as the role
+   1. Give it a name - `vr-for-codeengine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
-   <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
+   <!--3. Expand the `for-codeengine` credentials, copy and **save** the credentials for future reference.-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 
-Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
+Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application and then asking the Code Engine runtime to make them available to the application via environment variables.
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application,
    ```sh
    ibmcloud coligo application bind --name backend \
-   --service-instance coligo-cos \
-   --service-credential cos-for-coligo \
+   --service-instance codeengine-cos \
+   --service-credential cos-for-codeengine \
    --prefix COS
    ```
    {:pre}
@@ -229,7 +229,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-3. With the configmap defined, you can now update the backend application by asking Coligo to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
+3. With the configmap defined, you can now update the backend application by asking Code Engine to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
    --env-from-configmap backend-configuration
@@ -259,7 +259,7 @@ Now that you have the backend application connected to the frontend application,
    {:pre}
 2. Test the app by uploading an image through the frontend UI
    1. Click on **Upload image** and point to the image on your computer.
-   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
+   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-codeengine`.
 3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images and test the application.
 5. Check the results of the classified images on the UI.
@@ -272,7 +272,7 @@ Now that you have the backend application connected to the frontend application,
 
 Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
 
-Jobs in Coligo are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Coligo application does.
+Jobs in Code Engine are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Code Engine application does.
 
 ### Create a job definition
 
@@ -295,17 +295,17 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 1. Before further testing the application, let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud coligo application bind --name backend-jobdef \
-   --service-instance coligo-cos \
-   --service-credential cos-for-coligo \
+   ibmcloud coligo jobdef bind --name backend-jobdef \
+   --service-instance codeengine-cos \
+   --service-credential cos-for-codeengine \
    --prefix COS_JOB
    ```
    {:pre}
 2. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud coligo application bind --name backend-jobdef \
-   --service-instance coligo-vr \
-   --service-credential vr-for-coligo \
+   ibmcloud coligo jobdef bind --name backend-jobdef \
+   --service-instance codeengine-vr \
+   --service-credential vr-for-codeengine \
    --prefix VR_JOB
    ```
    {:pre}
