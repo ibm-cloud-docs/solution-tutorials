@@ -137,84 +137,27 @@ Now that you successfully created the starter application, you can automate its 
 The toolchain will build your application and deploy it to the cluster.
 
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
-4. After the deploy stages complete, click on **View logs and history** to see the logs.
-5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
+1. After the deploy stages complete, click on **View logs and history** to see the logs.
+1. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![](images/solution21/Logs.png)
 
-<!--##istutorial#-->
-## Clone, build and run the application
-{: #cloneandbuildapp}
+## Modify the application and deploy the updates
 
-In this section, you will use the starter app, clone it to the {{site.data.keyword.cloud-shell_notm}} session you created earlier, modify the code and then build/run it.
-{: shortdesc}
-
-### Clone the application
-1. From the Toolchain overview, select the **Git** tile under **Code**. You will be redirected to your git repository page where you can clone the repo.![HelloWorld](images/solution21/DevOps_Toolchain.png)
-
-2. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking **create a personal access token**. Remember to save the key or token for future reference.
-3. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine. If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
-
-   ```bash
-   git clone <your_repo_url>
-   cd <name_of_your_app>
-   ```
-   {: codeblock}
-
-4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code by trying to change "Congratulations!" to something else and the save the file.
-
-### Build the application
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-{: shortdesc}
-
-1. Ensure your local Docker engine is started, to check run the command below:
-   ```
-   docker ps
-   ```
-   {: codeblock}
-2. Navigate to the generated project directory cloned.
-   ```
-   cd <project name>
-   ```
-   {: codeblock}
-3. Build the application.
-   ```
-   ibmcloud dev build
-   ```
-   {: codeblock}
-
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
-### Run the application
-
-1. Run the container.
-   ```
-   ibmcloud dev run
-   ```
-   {: codeblock}
-
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:3000/
-   ![](images/solution21/node_starter_localhost.png)
-
-## Push application to your Git repository
-
-In this section, you will commit your change to your Git repository. The pipeline will pick up the commit and push the changes to your cluster automatically.
-1. In your terminal window, make sure you are inside the repo you cloned.
-2. Push the change to your repository with three simple steps: Add, commit, and push.
-   ```bash
-   git add public/index.html
-   git commit -m "my first changes"
-   git push origin master
-   ```
-   {: codeblock}
-
-3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-4. Notice a new **BUILD** has started.
-5. Wait for the **DEPLOY** stage to complete.
-6. Click the application **url** under Last Execution result to view your changes live.
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
+1. Click the **Eclipse Orion Web IDE** tile.
+1. Expand the `<your-initial>-mynodestarter` and then `public`.
+1. Update the code by trying to change "Congratulations!" to something else, your changes are automatically saved.
+1. Click on the Git icon in the left most column.
+1. Enter a commit message: *my first changes* and click on **Commit**.
+1. Click on the arrow at the top to get back to the toolchain. 
+1. Click on the **Delivery Pipeline** tile.
+1. Notice a new **BUILD** has started.
+1. Wait for the **DEPLOY** stage to complete.
+1. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
-<!--#/istutorial#-->
+
+**Note:** If you prefer to work locally for making and viewing updates to the application, you can  clone the repository to your own environment for editing and use `ibmcloud dev build` and `ibmcloud dev run` to view the changes locally before pushing them back to the repository. Once your changes are pushed to the repository they will also trigger a build in the **Delivery Pipeline**.
 
 ## Deploy to a production environment
 {: #deploytoproduction}
