@@ -116,7 +116,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
-2. Under **Starter Kist**, section click on the **Get a Starter Kit** button.
+2. Under **Starter Kits**, section click on the **Get a Starter Kit** button.
 3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
 4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
 
