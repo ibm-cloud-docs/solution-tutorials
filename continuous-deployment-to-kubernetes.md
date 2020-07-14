@@ -146,7 +146,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
 1. Click the **Eclipse Orion Web IDE** tile.
 1. Expand the `<your-initial>-mynodestarter` and then `public`.
-1. Update the code by trying to change "Congratulations!" to something else, your changes are automatically saved.
+1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
 1. Click on the arrow at the top to get back to the toolchain. 
