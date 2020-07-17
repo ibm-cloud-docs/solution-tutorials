@@ -760,6 +760,16 @@
           ]
         },
         {
+          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
+          "url": "vpc-tg-dns-iam.hidden.html",
+          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
+          "tags": [
+            "VPC",
+            "Linux"
+          ]
+        },
+        {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
           "url": "lamp-stack-on-vpc.hidden.html",
           "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",

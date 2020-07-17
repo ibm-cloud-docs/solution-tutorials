@@ -66,7 +66,7 @@ Conceptual architecture:
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution59-vpc-tg-dns-iam/simple.png)
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/simple.png)
 </p>
 
 The user is accessing the applications.  The applications are leveraging some shared microservices.  The company has separate devops teams that own app1, app2 and shared.  A networking team focuses on connectivity and network security. The devops teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
@@ -75,7 +75,7 @@ The teams determined the following architecture could meet their isolation and c
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png)
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/architecture.png)
 </p>
 
 
@@ -126,7 +126,7 @@ A conceptual team ownership model was implemented.  It isn't surprising that the
 Network team Editor access:
 <p style="text-align: center;">
 
-  ![Architecture](images/solution59-vpc-tg-dns-iam/network.png)
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/network.png)
 </p>
 
 
@@ -135,7 +135,7 @@ The shared team creates the VSI in it's isolated VPC.  In addition the team need
 Shared team access:
 <p style="text-align: center;">
 
-  ![Architecture](images/solution59-vpc-tg-dns-iam/shared.png)
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/shared.png)
 </p>
 
 The application teams do not need manager access to the {{site.data.keyword.dns_short}}.
@@ -143,7 +143,7 @@ The application teams do not need manager access to the {{site.data.keyword.dns_
 Application team access:
 <p style="text-align: center;">
 
-  ![Architecture](images/solution59-vpc-tg-dns-iam/app1.png)
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/app1.png)
 </p>
 
 ### IAM Actual
@@ -164,15 +164,18 @@ graph LR;
   Network --Editor--> InstanceNetwork;
   Network --Editor--> NetworkResources[IS Network Service Types];
 ```
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/mermaid-vpc.png)
 
 The {{site.data.keyword.tg_short}} service is administered by the Network team.  Same with the {{site.data.keyword.dns_short}}.  The Shared team requires Manager access to DNS to write records.
 
 ``` mermaid
-graph TD;
+graph LR;
   Network --Editor--> dns-transit[[Transit Gateway]]
   Network --Editor/Manager--> dns-svcs[[DNS]]
   Shared --Manager--> dns-svcs[[DNS]]
 ```
+
+  ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/mermaid-resources.png)
 
 #### Resource Groups
 
