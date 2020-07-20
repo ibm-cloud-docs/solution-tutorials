@@ -20,10 +20,10 @@ lasttested: "2020-07-20"
 {:important: .important}
 {:note: .note}
 
-# How to write a tutorial
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+# Implementing Electronic Design Automation for High Performance Computing
+{: #hpc-eda}
 
-This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
+This tutorial demonstrates how to extending an existing on-premise IBM Spectrum LSF cluster to the IBM cloud using our latest Gen 2 Virtual Server Instances and Virtual Private Cloud (VPC).
 {:shortdesc}
 
 ## Objectives
@@ -36,9 +36,10 @@ This template shows how to structure a tutorial but also some writing tips and g
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* IBM Spectrum LSF
+* IBM Cloud Direct Link
+* IBM Cloud VPC
+* IBM Cloud CLI
 
 * Ansible (see Step 4 in word doc)
 
@@ -53,11 +54,7 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
 </p>
-
-1. The user does this
-2. Then that
 
 ## Before you begin
 {: #prereqs}
