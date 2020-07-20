@@ -54,7 +54,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-intro sentence
+![Architecture diagram](diagrams/hpc-eda-arch.svg)
 
 <p style="text-align: center;">
 
