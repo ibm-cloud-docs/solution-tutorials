@@ -18,8 +18,17 @@ lasttested: "2020-07-20"
 # Implementing Electronic Design Automation for High Performance Computing
 {: #hpc-eda}
 
-This tutorial demonstrates how to extending an existing on-premise IBM Spectrum LSF cluster to the IBM cloud using our latest Gen 2 Virtual Server Instances and Virtual Private Cloud (VPC).
+An EDA workload currently running in an on-premise datacenter can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premise EDA workload to the IBM Cloud.  Many reasons may be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  The IBM Cloud offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  This tutorial demonstrates you can achieve these benefits extending an existing on-premise IBM Spectrum LSF cluster to the IBM cloud using our latest Gen 2 Virtual Server Instances and Virtual Private Cloud (VPC).
 {:shortdesc}
+A Spectrum LSF cluster can span the on-premise and cloud domains in two ways:
+* A stretch cluster operates as a single cluster with a single (on-prem) master that spans 2 domains by communicating over a secure network.  
+* A multi cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
+
+For the purposes of this tutorial we have chosen to employ a Spectrum LSF Multi-Cluster. We build and configure the following hardware and software systems:
+* An on-premise Spectrum LSF Cluster
+* A cloud based Spectrum LSF Cluster
+* A VPN connecting the on-premise network to the VPC
+* Storage
 
 ## Objectives
 {: #objectives}
@@ -226,52 +235,8 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
 
 Steps to take to remove the resources created in this tutorial
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
-
 ## Related content
 {: #related}
 
 * [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
 * [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
-
-## Writing guide
-{: #writing_guide}
-
-
-## Markup for workshops
-
-Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
-
-### Tutorial-only content
-
-To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
-
-```markdown
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-```
-
-### Workshop-only content
-
-To have content showing only in a workshop, use:
-
-```markdown
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #access-cluster}
-
-This section will only appear in a workshop and not in the tutorial.
--->
-<!--#/isworkshop#-->
-```
-
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
