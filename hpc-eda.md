@@ -6,11 +6,6 @@ lastupdated: "2020-07-20"
 lasttested: "2020-07-20"
 
 ---
-
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
