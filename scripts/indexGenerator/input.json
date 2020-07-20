@@ -752,7 +752,7 @@
           "name": "Image Classification with Code Engine",
           "url": "image-classification-code-engine.hidden.html",
           "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-codeengine-hidden/architecture_diagram.png",
+          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
           "tags": [
             "code engine",
             "Knative",
