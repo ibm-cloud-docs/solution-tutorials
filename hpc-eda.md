@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2020-07-30"
-lasttested: "2020-07-30"
+  years: 2020
+lastupdated: "2020-07-20"
+lasttested: "2020-07-20"
 
 ---
 
@@ -39,6 +39,8 @@ This tutorial uses the following runtimes and services:
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+
+* Ansible (see Step 4 in word doc)
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -98,68 +100,107 @@ In addition, make sure you have:
 -->
 <!--#/isworkshop#-->
 
-## Create services
-{: #setup}
+## Create the multi-cluster
+{: #create-multi-cluster}
 
-In this section, you will create the services required to ...
+Use a master node from the on-premises cluster as a deployer to create the VPC, its virtual server instances, and a number of other associated resources. 
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-    ```sh
-    ibmcloud resource service-instance-create service-instance-name service-name lite global
-    ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
+### Set up the IBM Cloud CLI
+{: #set-up-cli}
 
-## Solution Specific Section
-{: #section_one}
+1. If possible, log in to the on-premises master node as the root user.
+2. Install the {{site.data.keyword.cloud_notm}} CLI:
 
-Introductory statement that overviews the section
+  ```
+  curl -sL https://ibm.biz/idt-installer | bash
+  ```
+  {: pre}
 
-1. Step 1 Click **This** and enter your name.
+3. Test the {{site.data.keyword}} CLI:
 
-  This is a tip.
-  {:tip}
+  ```
+  ibmcloud dev help
+  ```
+  {: pre}
 
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
+4. Log in to the {{site.data.keyword.cloud_notm}} with your credentials:
 
-### A sub section
+  ```
+  ibmcloud login
+  ```
+  {: pre}
 
-   ```bash
-   some shellscript
-   ```
-   {: pre}
+5. Add the VPC infrastructure capabilities plugin to the CLI:
 
-This paragraph only appears in the iOS documentation
-{: ios}
+  ```
+  ibmcloud plugin install vpc-infrastructure
+  ```
+  {: pre}
 
-And this paragraph only appears in the Android documentation
-{: android}
+6. Add DNS-related commands:
 
-This paragraph only appears for Java code
-{: java}
+  ```
+  ibmcloud plugin install DNS
+  ```
+  {: pre}
 
-And this paragraph only appears for Swift code
-{: swift}
+7. Set the infrastructure (is) commands target to VPC gen 2:
 
-## Another Solution Specific Section
-{: #section_two}
+  ```
+  ibmcloud is target --gen 2
+  ```
+  {: pre}
 
-Introductory statement that overviews the section
+8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud regions` to list them. If you choose the region "us-south", the command is the following:
 
-### Another sub section
+  ```
+  ibmcloud target -r us-south
+  ```
+  {: pre}
+
+### Specify the cloud cluster configuration
+{: #specify-cloud-cluster-configuration}
+
+
+
+
+## Create an IBM Cloud API key
+{: #create-api-key}
+
+You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to provide Terraform with the credential it needs to provision resources on your behalf. If you do not already have an `api-key`, you can create one with the following commands:
+
+1. Log in to the {{site.data.keyword.cloud_notm}} CLI:
+
+  ```
+  ibmcloud login
+  ```
+  {: pre}
+
+2. Create the API key:
+
+  ```
+  ibmcloud iam api-key-create <name of key> --file <file to write the key> -d "your description of the key"
+  ```
+  {: pre}
+
+3. You can find your API key in the text file (the file name you supplied for the `--file` parameter) on the line labeled `apikey`. Copy that key and store it in an environment variable where Terraform can find it:
+
+  ```
+  export IBMCLOUD_API_KEY="<the apikey from the text file you just created>"
+  ```
+  {: pre}
+
+## Provision the cloud resources
+{: #provision-cloud-resources}
+
+1. Use an Ansible playbook to install Terraform and the IBM Cloud Terraform plugin:
+
+  ```
+  ansible-playbook -i tf_inventory.yml create_vpc.yml --tags "install-terraform"
+  ```
+  {: pre}
+
+
 
 ## Remove resources
 {: #removeresources}
@@ -184,21 +225,6 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Writing guide
 {: #writing_guide}
 
-### Creating links
-
-For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
-
-For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
-
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
-
-### Conrefs
-
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
 
