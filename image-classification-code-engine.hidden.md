@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-07-19"
+lastupdated: "2020-07-21"
 lasttested: "2020-06-22"
 
 ---
@@ -71,7 +71,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * code-engine plugin (`code-engine`),
+   * code-engine plugin (`code-engine`)
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
