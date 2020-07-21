@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2020-06-04"
+  years: 2017, 2019, 2020
+lastupdated: "2020-07-21"
 lasttested: "2020-06-03"
 ---
 
@@ -303,7 +303,7 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 
 ## Related content
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
+* [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
 * [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
 * [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases)
 * [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-apigateway)
