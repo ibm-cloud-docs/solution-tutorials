@@ -15,37 +15,36 @@ lasttested: "2020-07-20"
 {:important: .important}
 {:note: .note}
 
-# Implementing Electronic Design Automation for High Performance Computing
+# Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.cloud_notm}} Virtual Private Cloud
 {: #hpc-eda}
 
-An EDA workload currently running in an on-premise datacenter can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premise EDA workload to the IBM Cloud.  Many reasons may be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  The IBM Cloud offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
+An EDA workload currently running in an on-premise datacenter can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premise EDA workload to the {{site.data.keyword.cloud}}.  Many reasons may be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
 {:shortdesc}
 
-You can span a Spectrum LSF cluster between on-premise and cloud domains in two ways:
+You can span a IBM Spectrum LSF cluster between on-premise and cloud domains in two ways:
 * A stretch cluster operates as a single cluster with a single (on-premise) master that spans 2 domains by communicating over a secure network.  
 * A multi cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
 
-This tutorial focuses on a building and configuring the following hardware and software for a Spectrum LSF Multi-Cluster. We :
-* An on-premise Spectrum LSF Cluster
-* A cloud based Spectrum LSF Cluster
-* A VPN connecting the on-premise network to the VPC
+This tutorial focuses on a building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster. We :
+* An on-premise IBM Spectrum LSF Cluster
+* A cloud based IBM Spectrum LSF Cluster
+* A VPN connecting the on-premise network to {{site.data.keyword.vpc_short}}
 * Storage
 
 ## Objectives
 {: #objectives}
 
-* Extend an existing on-premise IBM Spectrum LSF cluster to the IBM Cloud Virtual Private Cloud (VPC).
+* Extend an existing on-premise IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_full}}.
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* IBM Spectrum LSF
+* IBM Spectrum&reg; LSF
 * {{site.data.keyword.dl_full}}
-* {{site.data.keyword.vpc_full}}
+* {{site.data.keyword.vpc_short}}
 * {{site.data.keyword.cloud}} CLI
-
-* Ansible (see Step 4 in word doc)
+* Ansible&reg;
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -54,6 +53,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
+The following diagram shows the final solution architecture.
 ![Architecture diagram](diagrams/hpc-eda-arch.svg)
 
 <p style="text-align: center;">
