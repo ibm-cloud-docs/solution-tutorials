@@ -752,11 +752,21 @@
           "name": "Image Classification with Code Engine",
           "url": "image-classification-code-engine.hidden.html",
           "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-codeengine-hidden/architecture_diagram.png",
+          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
           "tags": [
             "code engine",
             "Knative",
             "Kubernetes"
+          ]
+        },
+        {
+          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
+          "url": "vpc-tg-dns-iam.hidden.html",
+          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
+          "tags": [
+            "VPC",
+            "Linux"
           ]
         },
         {
