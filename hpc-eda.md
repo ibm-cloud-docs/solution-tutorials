@@ -23,7 +23,7 @@ An EDA workload currently running in an on-premises data center can be a good ca
 
 You can span a IBM Spectrum LSF cluster between on-premises and cloud domains in two ways:
 * A stretch cluster operates as a single cluster with a single (on-premises) master that spans two domains by communicating over a secure network.  
-* A multi cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
+* A multi-cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
 
 This tutorial focuses on building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster.
 * An on-premises IBM Spectrum LSF Cluster
@@ -63,12 +63,8 @@ The following diagram shows the final solution architecture.
 ## Before you begin
 {: #prereqs}
 
-## Create the multi-cluster
-{: #create-multi-cluster}
 
-Use a master node from the on-premises cluster as a deployer to create the VPC, its virtual server instances, and a number of other associated resources.
-
-### Step 1. Set up the {{site.data.keyword._notm}} CLI
+## Set up the {{site.data.keyword._notm}} CLI
 {: #set-up-cli}
 
 1. If possible, log in to the on-premises master node as the root user.
@@ -121,7 +117,7 @@ Use a master node from the on-premises cluster as a deployer to create the VPC, 
   ```
   {: pre}
 
-### Step 2. Specify the cloud cluster configuration
+## Specify the cloud cluster configuration
 {: #specify-cloud-cluster-configuration}
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
@@ -148,7 +144,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |worker_profile<br>master_profile<br>login_profile<br>|These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:<br><br>`ibmcloud is in-prs`<br><br>The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
 |image_name|This should be a recent RedHat or Centos amd64 release.  You can see the available options with the following command.<br><br>`ibmcloud is images`||volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
 |volume_dir|The mount point for the cloud shared NFS volume.|
-|vpn_peer|_address_: The public IP address of your on-premise VPN gateway.<br>_cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.<br>_psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.<br><br>`echo -n <your_key> \| ansible-vault encrypt_string --ask-vault-pass`<br><br>_Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premise and {{site.data.keyword.cloud_notm}} Networks with a VPN.<br>Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
+|vpn_peer|_address_: The public IP address of your on-premises VPN gateway.<br>_cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.<br>_psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.<br><br>`echo -n <your_key> \| ansible-vault encrypt_string --ask-vault-pass`<br><br>_Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.<br>Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
 |tfbinary_path|Location to install the Terraform command.|
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
@@ -296,10 +292,10 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
       cloud:
         conf_dir: 
     Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
-  * **onprem**: The LSF conf file location and the name of the on-premise cluster.
+  * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
       cluster_name: onPremCluster 
-  * **sndqueue**: The name of the on-premise queue the forwards jobs to the cloud cluster.
+  * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
   * **vpn**: 
       ip: <vpn_server_ip>
 
