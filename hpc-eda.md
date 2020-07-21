@@ -62,7 +62,8 @@ The following diagram shows the final solution architecture.
 
 ## Before you begin
 {: #prereqs}
-This tutorial assumes that you have  an existing IBM Spectrum LSF cluster for which you would like to add flexible compute capacity. If you do not have an existing on-premise Spectrum LSF cluster, you will need to install the latest LSF install image version, and create the on-premise cluster. 
+
+This tutorial assumes that you have  an existing IBM Spectrum LSF cluster for which you would like to add flexible compute capacity. If you do not have an existing on-premise Spectrum LSF cluster, you will need to install the latest LSF install image version, and create the on-premise cluster.
 
 
 ## Create the multi-cluster
