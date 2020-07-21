@@ -164,18 +164,26 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
 
-1. Install the LAMP stack
+When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
+{:tip}
+
+1. Install the Apache 
    ```sh
    export DEBIAN_FRONTEND=noninteractive
    apt update
    apt install apache2 -y
+   ```
+   {: pre}
+1. Install the MySQL 
+   ```sh
    apt install mysql-server -y
+   ```
+   {: pre}
+1. Install the PHP 
+   ```sh
    apt install php libapache2-mod-php php-mysql php-common php-cli -y
    ```
    {: pre}
-
-  When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
-  {:tip}
   
 ## Verify the installation and configuration
 
