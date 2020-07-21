@@ -62,6 +62,8 @@ The following diagram shows the final solution architecture.
 
 ## Before you begin
 {: #prereqs}
+This tutorial assumes that you have  an existing IBM Spectrum LSF cluster for which you would like to add flexible compute capacity. If you do not have an existing on-premise Spectrum LSF cluster, you will need to install the latest LSF install image version, and create the on-premise cluster. 
+
 
 ## Create the multi-cluster
 {: #create-multi-cluster}
@@ -246,12 +248,12 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   **VPN Option 1 - Using an on-premises public IP and VPN appliance**
 
     Connect your VPC with your on-premises subnet by using a site-to-site VPN between your cloud VPN gateway and your on-premises gateway. This adds an additional section to the `vpn.yml` file with information that is needed to remove this resource later. Affter running the command, you will have a VPN connection between your on-premises network and your VPC:
-      
+
     ```
     ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "vpn"
     ```
     {: pre}
-      
+
   **VPN Option 2 - Using OpenVPN with on-premises as client**
 
     Use OpenVPN to connect your on-premises cluster with your cloud cluster. This option is useful because _VPN Option 1_ requires opening a public IP and employing a VPN appliance. This can be cumbersome and expensive to set up, and might be unnecessary if you are experimenting with a non-production phase of a multi-cluster implementation. With this _VPN Option 2_, you can set up a multi-cluster and start experimenting with your workload on a small scale.  
@@ -270,7 +272,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
         ```
         {: pre}
 
-3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies. 
+3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies.
 
   ```
   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "clean_vpn"
@@ -289,18 +291,18 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `setup/group_vars` directory with the following parameters:
 
-  * **local_path**: The full path to the directory where the lsf binary resides on the local machine. 
+  * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
   * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-  * **bin**: The name of the LSF install file which currently resides in the local_path. 
+  * **bin**: The name of the LSF install file which currently resides in the local_path.
   * **multicluster**:
       cloud:
-        conf_dir: 
+        conf_dir:
     Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
   * **onprem**: The LSF conf file location and the name of the on-premise cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
-      cluster_name: onPremCluster 
+      cluster_name: onPremCluster
   * **sndqueue**: The name of the on-premise queue the forwards jobs to the cloud cluster.
-  * **vpn**: 
+  * **vpn**:
       ip: <vpn_server_ip>
 
 2. Install LSF:
@@ -322,7 +324,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   ```
   {: pre}
 
-4. Configure the on-premises queues and settings for LSF. 
+4. Configure the on-premises queues and settings for LSF.
 
   ```
   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"
