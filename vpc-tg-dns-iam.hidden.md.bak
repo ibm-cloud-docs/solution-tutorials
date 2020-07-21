@@ -18,7 +18,7 @@ lasttested: "2020-07-08"
 # Team based privacy using IAM, VPC, Transit Gateway and DNS
 {: #vpc-tg-dns-iam}
 
-Team based development of a micro-service based application via vpc....
+Team based development of a microservice based application via vpc....
 {:shortdesc}
 
 ## Objectives
@@ -27,12 +27,12 @@ Team based development of a micro-service based application via vpc....
 * Learn how to isolate infrastructure using IAM and Resource groups
 * Use a separate VPC for each team
 * Connect VPCs via transit gateway
-* Address micro-services using DNS name resolution
+* Address microservices using DNS name resolution
 
 ## Services Used
 {: #services}
 
-This tutorial uses the following run times and services:
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc/provision/vs)
 * [{{site.data.keyword.iamlong}}](https://{DomainName}/docs/iam?topic=iam-iamoverview#iamoverview)
 * [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
@@ -51,7 +51,7 @@ Conceptual architecture:
   ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/simple.png)
 </p>
 
-The user is accessing the applications.  The applications are leveraging some shared micro-services.  The company has separate devops teams that own app1, app2 and shared.  A networking team focuses on connectivity and network security. The devops teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
+The user is accessing the applications.  The applications are leveraging some shared microservices.  The company has separate devops teams that own app1, app2 and shared.  A networking team focuses on connectivity and network security. The devops teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 The teams determined the following architecture could meet their isolation and connectivity requirements.  Notice that APP1, SHARED, and APP2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
@@ -90,7 +90,7 @@ All of the operations will be done in a bash shell and making use of terraform a
 1. There is a terraform.tfvars file that you will need to edit:
     - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the above prerequisites.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
-    - basename - replace the default value, **project10**, if required.  Most resources created will use this as a name prefix.
+    - basename - replace the default value, **project10**, if required.  Most resouces created will use this as a name prefix.
 
 ## Identity and Access Management
 {: #iam}
@@ -115,7 +115,7 @@ Network team Editor access:
 </p>
 
 
-The shared team creates the VSI in it's isolated VPC.  In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
+The shared team creates the VSI in it's isolated VPC.  In addition the team needs to write records into the DNS servie since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
 
 Shared team access:
 <p style="text-align: center;">
@@ -134,7 +134,7 @@ Application team access:
 ### IAM Actual
 #### Access Groups
 {: #iam_access_groups}
-Access policies do not need to be assigned to a specific user. Instead, access policies can be assigned to an access group.  Then users can be assigned to the access group.  The use of access groups can greatly simplify an system administrators life.
+Access policies do not need to be assigned to a specific user. Instead, access policies can be assigned to an access group.  Then users can be assigned to the access group.  The use of access groups can greatly simplify an syste administrators life.
 
 Another way to think about the team access policies is captured in the drawing below.  An IAM access group is created for each team.  Team members can be added to the access group as needed.  In the diagrams below the normal boxes are the Access Groups, the double boxes are collections of similar resources, the lines are the roles.
 
@@ -168,7 +168,7 @@ graph LR;
 
 The Shared team and the Network team are now nicely separated.  But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
-This is where resource groups can help out. Each team has micro-services in a single VPC.  All of the resources for a VPC can be put into a single resource group.  Each team will be allowed access to a single resource group. 
+This is where resource groups can help out. Each team has microservices in a single VPC.  All of the resources for a VPC can be put into a single resource group.  Each team will be allowed access to a single resource group. 
 
 There will be three resource groups used for VPC (is) resources: "shared", "application1" and "application2".  The network team will have Editor access for the **is** network service type of resources in each of the resource groups.  The other teams will have Editor and Manager for their **is** resources in their resource group.
 
@@ -219,8 +219,8 @@ The policy group details are captured in the tables below.
 
 Notice the following:
 - network team has viewer access to all of the resource groups, other teams just their own
-- network team alone has access to the **transit** ({{site.data.keyword.tg_short}})
-- network team has Editor access to the **dns-svcs** ({{site.data.keyword.dns_short}}), shared team has Manager access
+- network team alone has acces to the **transit** ({{site.data.keyword.tg_short}})
+- network team has Edtior acces to the **dns-svcs** ({{site.data.keyword.dns_short}}), shared team has Manager access
 
 
 Policy Group project10-network:
@@ -311,7 +311,7 @@ role-Operator||sn:is,keyId=pfq
 role-Viewer||rt:resource-group,rg:project10-application2
 
 
-A less compact view can be generated using the ibmcloud cli:
+A less compact view can be generated usin the ibmcloud cli:
 ```
 $ ibmcloud iam access-group-policies project10-network
 Retrieving all policies of access group project10-network under account 8675309 as jenny
@@ -343,7 +343,7 @@ Resources:
 ### Becoming a team member
 {: #iam_become}
 
-It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using api keys for yourself, the admin user, or from the service IDs that will be in the other access groups.  The service ID names are ${basename}-x where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using api keys for yourself, the admin user, or from the service IDs that will be in the other access groups.  The service ID names are ${basename}-x where x is network, shared, application1 andapplication2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
@@ -427,7 +427,7 @@ These resources can be edited and displayed using the ibm cloud console.  Naviga
 {: #network}
 
 
-The network team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances.  It is likely that the number of applications, size of computers, DNS addresses of the micro services etc will be in constant flux and not a concern of the network team.
+The network team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances.  It is likely that the number of applications, size of computers, DNS addresses of the microservices etc will be in constant flux and not a concern of the network team.
 
 The Admin team has provided them just the right amount of permissions to create the VPC **is** resources, the {{site.data.keyword.dns_short}} and the {{site.data.keyword.tg_short}} service.
 
@@ -613,7 +613,7 @@ Change directory, generate an API key in the local.env and become a member of th
    source local.env
    ```
 
-The shared team is going to provide micro services.  The network team has provided the shared VPC. They have chosen the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+The shared team is going to provide microservices.  The network team has provided the shared VPC. They have choosen the instance profile.  A linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
 In `main.tf` notice these two resources:
    ```
@@ -655,7 +655,7 @@ In `main.tf` notice these two resources:
 The network_context is the output generated by the network team specifically for the shared team.
 
 Navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance.  Click on it and verify the following:
-- The instance has no incoming connectivity from the public internet (check the Security Groups)
+- The instance has no imcomming connectivity from the public internet (check the Security Groups)
 - Locate the private IP address
 
 Navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**.  Notice the Value is the private IP address.
@@ -675,14 +675,14 @@ Change directory, generate an API key in the local.env and become a member of th
    {:pre}
 
 
-The application1 team resources are very similar to the shared team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
+The application1 team resources are very similar to the shared team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared microservice.
 
 
 
 ### Linux demo application terraform module
 {: #demo_application}
 
-The Linux demo including DNS configuration and an example nodejs application is provided as a Linux service.  All this has been captured in a terraform module shared by all the teams during this exploratory stage.
+The linux demo including DNS configuration and an example nodejs application is provided as a linux service.  All this has been captured in a terraform module shared by all the teams during this exploritory stage.
 
 In the directory ../common/user_data_app is a terraform module.
 
@@ -720,7 +720,7 @@ In the directory ../common/user_data_app is a terraform module.
 - `supersede domain-name-servers 161.26.0.7, 161.26.0.8;`
 - `dhclient ...`
 
-### Nodejs run time installation
+### Nodejs runtime installation
 {: #application_nodjs}
 
 Nodejs is required prerequisite for the application:
@@ -926,12 +926,12 @@ You can cd to the team directories in order, and execute `source local.env; terr
 {: #expand_cd}
 
 - Installation of software is currently done when the VPC instance is created.  The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
-- For shared micro-services, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
+- For shared microservices, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
 {: #expand_automation}
 
-For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://cloud.ibm.com/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
+For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://cloud.ibm.com/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and oputput can be shared.
 
 The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.  
 
@@ -940,7 +940,7 @@ A continuous deployment environment can be constructed to move the code and envi
 ## Conclusions
 {: #conclusions}
 
-The architecture of a system is influenced by the containment and ownership of cloud resources.  It is important for architects from all aspects of the system contribute their concerns to the architecture.  Each team needs the ability to control the resources they produce and release.  Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
+The architecture of a system is influenced by the containment and ownership of cloud resources.  It is important for architects from all aspects of the sytem contribute their concerns to the architecture.  Each team needs the ability to control the resources they produce and release.  Isolation will reduce the likelyhood of problems and contain the blast radius when problems occur.
 
 ## Related content
 {: #related}
