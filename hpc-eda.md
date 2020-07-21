@@ -18,23 +18,23 @@ lasttested: "2020-07-20"
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.cloud_notm}} Virtual Private Cloud
 {: #hpc-eda}
 
-An EDA workload currently running in an on-premise datacenter can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premise EDA workload to the {{site.data.keyword.cloud}}.  Many reasons may be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
+An EDA workload currently running in an on-premises data center can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premises EDA workload to the {{site.data.keyword.cloud}}.  Many reasons might be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
 {:shortdesc}
 
-You can span a IBM Spectrum LSF cluster between on-premise and cloud domains in two ways:
-* A stretch cluster operates as a single cluster with a single (on-premise) master that spans 2 domains by communicating over a secure network.  
+You can span a IBM Spectrum LSF cluster between on-premises and cloud domains in two ways:
+* A stretch cluster operates as a single cluster with a single (on-premises) master that spans two domains by communicating over a secure network.  
 * A multi cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
 
-This tutorial focuses on a building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster. We :
-* An on-premise IBM Spectrum LSF Cluster
+This tutorial focuses on building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster.
+* An on-premises IBM Spectrum LSF Cluster
 * A cloud based IBM Spectrum LSF Cluster
-* A VPN connecting the on-premise network to {{site.data.keyword.vpc_short}}
+* A VPN connecting the on-premises network to {{site.data.keyword.vpc_short}}
 * Storage
 
 ## Objectives
 {: #objectives}
 
-* Extend an existing on-premise IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_full}}.
+* Extend an existing on-premises IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_full}}.
 
 ## Services used
 {: #services}
@@ -68,7 +68,7 @@ The following diagram shows the final solution architecture.
 
 Use a master node from the on-premises cluster as a deployer to create the VPC, its virtual server instances, and a number of other associated resources.
 
-### Set up the {{site.data.keyword._notm}} CLI
+### Step 1. Set up the {{site.data.keyword._notm}} CLI
 {: #set-up-cli}
 
 1. If possible, log in to the on-premises master node as the root user.
@@ -121,10 +121,8 @@ Use a master node from the on-premises cluster as a deployer to create the VPC, 
   ```
   {: pre}
 
-### Specify the cloud cluster configuration
+### Step 2. Specify the cloud cluster configuration
 {: #specify-cloud-cluster-configuration}
-
-## Step 2: Specify the Cloud Cluster Configuration
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
 1. The scripts that you will be using reside on Github.  To use them you will clone them from the Github repository.
@@ -245,30 +243,32 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 2. Run one of the following playbooks (VPN Option 1 or VPN Option 2).
 
-    **VPN Option 1 - Using an on-premises public IP and VPN appliance**
-      Connect your VPC with your on-premises subnet by using a site-to-site VPN between your cloud VPN gateway and your on-premises gateway. This adds an additional section to the `vpn.yml` file with information that is needed to remove this resource later. Affter running the command, you will have a VPN connection between your on-premises network and your VPC:
+  **VPN Option 1 - Using an on-premises public IP and VPN appliance**
+
+    Connect your VPC with your on-premises subnet by using a site-to-site VPN between your cloud VPN gateway and your on-premises gateway. This adds an additional section to the `vpn.yml` file with information that is needed to remove this resource later. Affter running the command, you will have a VPN connection between your on-premises network and your VPC:
       
+    ```
+    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "vpn"
+    ```
+    {: pre}
+      
+  **VPN Option 2 - Using OpenVPN with on-premises as client**
+
+    Use OpenVPN to connect your on-premises cluster with your cloud cluster. This option is useful because _VPN Option 1_ requires opening a public IP and employing a VPN appliance. This can be cumbersome and expensive to set up, and might be unnecessary if you are experimenting with a non-production phase of a multi-cluster implementation. With this _VPN Option 2_, you can set up a multi-cluster and start experimenting with your workload on a small scale.  
+
+    This option is less secure than _VPN Option 1_.
+    {: note}
+
+    The following script will:
+      * Configure the epel yum repository if it is not already enabled.
+      * Install the OpenVPN client.
+      * Create a VPN connecting the on-premises network to the cloud.
+      * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
+
         ```
-        ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "vpn"
+        ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
         ```
         {: pre}
-      
-      **VPN Option 2 - Using OpenVPN with on-premises as client**
-        Use OpenVPN to connect your on-premises cluster with your cloud cluster. This option is useful because _VPN Option 1_ requires opening a public IP and employing a VPN appliance. This can be cumbersome and expensive to set up, and might be unnecessary if you are experimenting with a non-production phase of a multi-cluster implementation. With this _VPN Option 2_, you can set up a multi-cluster and start experimenting with your workload on a small scale.  
-
-        This option is less secure than _VPN Option 1_.
-        {: note}
-
-        The following script will:
-          * Configure the epel yum repository if it is not already enabled.
-          * Install the OpenVPN client.
-          * Create a VPN connecting the on-premises network to the cloud.
-          * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
-
-            ```
-            ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
-            ```
-            {: pre}
 
 3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies. 
 
@@ -287,7 +287,57 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
 {: #deploy-lsf-cloud-cluster}
 
-1. To install and configure
+1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `setup/group_vars` directory with the following parameters:
+
+  * **local_path**: The full path to the directory where the lsf binary resides on the local machine. 
+  * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
+  * **bin**: The name of the LSF install file which currently resides in the local_path. 
+  * **multicluster**:
+      cloud:
+        conf_dir: 
+    Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
+  * **onprem**: The LSF conf file location and the name of the on-premise cluster.
+      conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
+      cluster_name: onPremCluster 
+  * **sndqueue**: The name of the on-premise queue the forwards jobs to the cloud cluster.
+  * **vpn**: 
+      ip: <vpn_server_ip>
+
+2. Install LSF:
+
+  ```
+  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
+  ```
+  {: pre}
+
+  The install command does the following:
+  * Copies the LSF installation binary to the deployer.
+  * Installs the necessary packages on the deployer.
+  * Sets up the NFS server on the deployer including creating and mounting the filesystem.
+
+3. Configure the data manager. For a workload that requires a significant amount of input data, generates a large amount of output data, or both, efficient data management is important. The Spectrum LSF Data Manager provides a number of highly configurable strategies to optimize compute time, network bandwidth, and costs related to data movement.
+
+  ```
+  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "config_dm"
+  ```
+  {: pre}
+
+4. Configure the on-premises queues and settings for LSF. 
+
+  ```
+  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"
+  ```
+  {: pre}
+
+If you see an error when running this script for `mc_onprem`, you might need to limit the network interfaces that are scanned to just those that will be part of the cluster network.  This can be accomplished by uncommenting the “interfaces” tag in the `lsf_install` file and listing the necessary interfaces.
+{: note}
+
+5. Configure the cloud queues and settings for LSF.
+
+  ```
+  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_cloud"
+  ```
+  {: pre}
 
 ## Verify and test the multi-cluster
 {: #verify-test-multi-cluster}
@@ -313,7 +363,7 @@ The output of the command should show both the on-premises and cloud clusters.
 3. Submit a job to the cloud queue with the `bsub` command and then confirm it with the `bjobs` command.
 
   ```
-  bsub -q <you cloud queue>
+  bsub -q <your cloud queue>
   ```
   {: pre}
 
@@ -336,7 +386,6 @@ Make sure `GEN_FILE_DIR` is set.
   {: pre}
 
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
-
 
 
 ## Related content
