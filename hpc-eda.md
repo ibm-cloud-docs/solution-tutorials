@@ -243,8 +243,46 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   * **preshared_key**: A passphrase or key that provides access to your on-premises VPN gateway.
   * **security**: The setting in this section needs to match the settings for your on-premises appliance.
 
-2. Run one of the following playbooks:
+2. Run one of the following playbooks (VPN Option 1 or VPN Option 2).
 
+    **VPN Option 1 - Using an on-premises public IP and VPN appliance**
+      Connect your VPC with your on-premises subnet by using a site-to-site VPN between your cloud VPN gateway and your on-premises gateway. This adds an additional section to the `vpn.yml` file with information that is needed to remove this resource later. Affter running the command, you will have a VPN connection between your on-premises network and your VPC:
+      
+        ```
+        ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "vpn"
+        ```
+        {: pre}
+      
+      **VPN Option 2 - Using OpenVPN with on-premises as client**
+        Use OpenVPN to connect your on-premises cluster with your cloud cluster. This option is useful because _VPN Option 1_ requires opening a public IP and employing a VPN appliance. This can be cumbersome and expensive to set up, and might be unnecessary if you are experimenting with a non-production phase of a multi-cluster implementation. With this _VPN Option 2_, you can set up a multi-cluster and start experimenting with your workload on a small scale.  
+
+        This option is less secure than _VPN Option 1_.
+        {: note}
+
+        The following script will:
+          * Configure the epel yum repository if it is not already enabled.
+          * Install the OpenVPN client.
+          * Create a VPN connecting the on-premises network to the cloud.
+          * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
+
+            ```
+            ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
+            ```
+            {: pre}
+
+3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies. 
+
+  ```
+  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "clean_vpn"
+  ```
+  {: pre}
+
+4. You can use SSH to access cloud nodes through the private network. If your VPN is down, but you need to access cloud nodes, this command can be useful to SSH to a cloud node from the on-premises master (no VPN required).
+
+  ```
+  ssh -F ${GEN_FILES_DIR}/ssh_config <local IP: 10.x.x.x>
+  ```
+  {: pre}
 
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
 {: #deploy-lsf-cloud-cluster}
