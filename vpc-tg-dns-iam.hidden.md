@@ -237,35 +237,35 @@ Notice the following:
 
 Policy Group project10-network:
 
-roles|resource group|access\|
--|-|-\|
-role-Editor|project10-network|sn:transit\|
-role-Editor,serviceRole-Manager|project10-shared|sn:dns-svcs\|
-role-Editor|project10-application1|sn:is,flowLogCollectorId=*\|
-role-Editor|project10-application1|sn:is,networkAclId=*\|
-role-Editor|project10-application1|sn:is,publicGatewayId=*\|
-role-Editor|project10-application1|sn:is,securityGroupId=*\|
-role-Editor|project10-application1|sn:is,subnetId=*\|
-role-Editor|project10-application1|sn:is,vpcId=*\|
-role-Editor|project10-application1|sn:is,vpnGatewayId=*\|
-role-Editor|project10-application2|sn:is,flowLogCollectorId=*\|
-role-Editor|project10-application2|sn:is,networkAclId=*\|
-role-Editor|project10-application2|sn:is,publicGatewayId=*\|
-role-Editor|project10-application2|sn:is,securityGroupId=*\|
-role-Editor|project10-application2|sn:is,subnetId=*\|
-role-Editor|project10-application2|sn:is,vpcId=*\|
-role-Editor|project10-application2|sn:is,vpnGatewayId=*\|
-role-Editor|project10-shared|sn:is,flowLogCollectorId=*\|
-role-Editor|project10-shared|sn:is,networkAclId=*\|
-role-Editor|project10-shared|sn:is,publicGatewayId=*\|
-role-Editor|project10-shared|sn:is,securityGroupId=*\|
-role-Editor|project10-shared|sn:is,subnetId=*\|
-role-Editor|project10-shared|sn:is,vpcId=*\|
-role-Editor|project10-shared|sn:is,vpnGatewayId=*\|
-role-Viewer||rt:resource-group,rg:project10-application1\|
-role-Viewer||rt:resource-group,rg:project10-application2\|
-role-Viewer||rt:resource-group,rg:project10-network\|
-role-Viewer||rt:resource-group,rg:project10-shared\|
+roles|resource group|access
+-|-|-
+role-Editor|project10-network|sn:transit
+role-Editor,serviceRole-Manager|project10-shared|sn:dns-svcs
+role-Editor|project10-application1|sn:is,flowLogCollectorId=*
+role-Editor|project10-application1|sn:is,networkAclId=*
+role-Editor|project10-application1|sn:is,publicGatewayId=*
+role-Editor|project10-application1|sn:is,securityGroupId=*
+role-Editor|project10-application1|sn:is,subnetId=*
+role-Editor|project10-application1|sn:is,vpcId=*
+role-Editor|project10-application1|sn:is,vpnGatewayId=*
+role-Editor|project10-application2|sn:is,flowLogCollectorId=*
+role-Editor|project10-application2|sn:is,networkAclId=*
+role-Editor|project10-application2|sn:is,publicGatewayId=*
+role-Editor|project10-application2|sn:is,securityGroupId=*
+role-Editor|project10-application2|sn:is,subnetId=*
+role-Editor|project10-application2|sn:is,vpcId=*
+role-Editor|project10-application2|sn:is,vpnGatewayId=*
+role-Editor|project10-shared|sn:is,flowLogCollectorId=*
+role-Editor|project10-shared|sn:is,networkAclId=*
+role-Editor|project10-shared|sn:is,publicGatewayId=*
+role-Editor|project10-shared|sn:is,securityGroupId=*
+role-Editor|project10-shared|sn:is,subnetId=*
+role-Editor|project10-shared|sn:is,vpcId=*
+role-Editor|project10-shared|sn:is,vpnGatewayId=*
+role-Viewer||rt:resource-group,rg:project10-application1
+role-Viewer||rt:resource-group,rg:project10-application2
+role-Viewer||rt:resource-group,rg:project10-network
+role-Viewer||rt:resource-group,rg:project10-shared
 
 Policy Group project10-shared:
 
@@ -288,21 +288,21 @@ role-Viewer||rt:resource-group,rg:project10-shared
 
 Policy Group project10-application1:
 
-|roles|resource group|access|
-|-|-|-|
-|role-Editor|project10-application1|sn:is,dedicatedHostId=*|
-|role-Editor|project10-application1|sn:is,floatingIpId=*|
-|role-Editor|project10-application1|sn:is,imageId=*|
-|role-Editor|project10-application1|sn:is,instanceGroupId=*|
-|role-Editor|project10-application1|sn:is,instanceId=*|
-|role-Editor|project10-application1|sn:is,keyId=*|
-|role-Editor|project10-application1|sn:is,loadBalancerId=*|
-|role-Editor|project10-application1|sn:is,volumeId=*|
-|role-Operator|project10-application1|sn:is,securityGroupId=*|
-|role-Operator|project10-application1|sn:is,subnetId=*|
-|role-Operator|project10-application1|sn:is,vpcId=*|
-|role-Operator||sn:is,keyId=pfq|
-|role-Viewer||rt:resource-group,rg:project10-application1|
+roles|resource group|access
+-|-|-
+role-Editor|project10-application1|sn:is,dedicatedHostId=*
+role-Editor|project10-application1|sn:is,floatingIpId=*
+role-Editor|project10-application1|sn:is,imageId=*
+role-Editor|project10-application1|sn:is,instanceGroupId=*
+role-Editor|project10-application1|sn:is,instanceId=*
+role-Editor|project10-application1|sn:is,keyId=*
+role-Editor|project10-application1|sn:is,loadBalancerId=*
+role-Editor|project10-application1|sn:is,volumeId=*
+role-Operator|project10-application1|sn:is,securityGroupId=*
+role-Operator|project10-application1|sn:is,subnetId=*
+role-Operator|project10-application1|sn:is,vpcId=*
+role-Operator||sn:is,keyId=pfq
+role-Viewer||rt:resource-group,rg:project10-application1
 
 Policy Group project10-application2:
 
