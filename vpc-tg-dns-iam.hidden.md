@@ -931,7 +931,7 @@ You can cd to the team directories in order, and execute `source local.env; terr
 ### Automation, Staging, and Development
 {: #expand_automation}
 
-- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://cloud.ibm.com/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
+- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
 - The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.  
 - A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production.  Is roll back needed?  How would this be accomplished?
 
