@@ -376,6 +376,16 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ln -s /data/lib/mysql /var/lib/mysql
    ```
    {: pre}
+1. Add an alias to the new location to AppArmor
+   ```sh
+   echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
+   ```
+   {: pre}
+1. Restart the apparmor service
+   ```sh
+   systemctl restart apparmor
+   ```
+   {: pre}     
 1. Start the MySQL service
    ```sh
    service mysql start
