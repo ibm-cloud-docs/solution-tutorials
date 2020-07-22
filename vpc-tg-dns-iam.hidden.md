@@ -87,7 +87,14 @@ All of the operations will be done in a bash shell and making use of terraform a
     - shared/
     - application1/
 
-1. There is a terraform.tfvars file that you will need to edit:
+1. There is a terraform.tfvars file that you will need to create and edit:
+   ```
+   cp terraform.tfvars.template terraform.tfvars
+   ```
+   {:pre}
+   ```
+   edit terraform.tfvars
+   ```
     - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the above prerequisites.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
     - basename - replace the default value, **project10**, if required.  Most resources created will use this as a name prefix.
