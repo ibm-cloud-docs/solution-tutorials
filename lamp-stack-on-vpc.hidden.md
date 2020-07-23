@@ -117,7 +117,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {:pre}
 
-    You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
+   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
    {:tip}
 1. Add a rule to limit inbound to HTTP port 80.
    ```sh
