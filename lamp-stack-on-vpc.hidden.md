@@ -111,7 +111,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --json | jq -r '.id')
    ```
    {:pre}
-1. Add a rule to limit inbound to SSH port 22
+1. Add a rule to limit inbound to SSH port 22.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
    ```
@@ -119,7 +119,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
     You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
    {:tip}
-1. Add a rule to limit inbound to HTTP port 80
+1. Add a rule to limit inbound to HTTP port 80.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80 --json
    ```
@@ -127,7 +127,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
    You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 80 --port-max 80 --json`
    {:tip}
-1. Add a rule to allow outbound to all
+1. Add a rule to allow outbound to all, this is required to install software, it can be disabled or removed later on.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID outbound all --json
    ```
@@ -157,7 +157,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in an environment variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1 in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
+  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1 in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
   {:tip}
 
 ## Install Apache, MySQL, and PHP
@@ -167,13 +167,21 @@ In this section, you'll run commands to update Ubuntu package sources and instal
 When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
 {:tip}
 
-1. Install the Apache 
+1. Disable interactive mode during updates 
    ```sh
    export DEBIAN_FRONTEND=noninteractive
-   apt update
-   apt install apache2 -y
    ```
    {: pre}
+1. Update packages 
+   ```sh
+   apt update
+   ```
+   {: pre}
+1. Install the Apache 
+   ```sh
+   apt install apache2 -y
+   ```
+   {: pre}      
 1. Install the MySQL 
    ```sh
    apt install mysql-server -y
@@ -232,7 +240,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    sensible-editor /etc/wordpress/config-localhost.php
    ```
    {: pre}
-3. Copy the following lines to the file substituting *yourPassword* with your MySQL database password and leaving the other values unchanged. Save and exit the file using `Ctrl+X`.
+3. Copy the following lines to the file substituting *yourPassword* with your MySQL database password and leaving the other values unchanged. Save and exit the file.
    ```php
    <?php
    define('DB_NAME', 'wordpress');
@@ -376,12 +384,12 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ln -s /data/lib/mysql /var/lib/mysql
    ```
    {: pre}
-1. Add an alias to the new location to AppArmor
+1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor), otherwise AppArmor will block the access. 
    ```sh
    echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
    ```
    {: pre}
-1. Restart the apparmor service
+1. Restart the AppArmor service
    ```sh
    systemctl restart apparmor
    ```
@@ -390,14 +398,14 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```sh
    service mysql start
    ```
-   {: pre}   
+   {: pre}
 
 ## Remove resources
 {: #remove-resources}
 
 1. In the VPC [console](https://{DomainName}/vpc-ext), click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
-2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
-3. Once the VSIs are gone, switch to **Subnets**. Delete your subnets.
+2. Next, switch to **Virtual server instances**, **Delete** your instance.
+3. Once the VSIs are gone, switch to **Subnets**. Delete your subnet.
 4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
 5. If you created the optional Data Volume and no longer need it, switch to **Block storage volumes** tab and delete the volume.
 
