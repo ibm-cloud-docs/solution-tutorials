@@ -157,7 +157,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1 in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
+  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
   {:tip}
 
 ## Install Apache, MySQL, and PHP
