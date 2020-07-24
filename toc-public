@@ -72,6 +72,7 @@ Solution Tutorials
         vpc-site2site-vpn.md
         vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
+        lamp-stack-on-vpc.md
         /containers/containers-vpc_ks_tutorial
 
     {: .topicgroup}

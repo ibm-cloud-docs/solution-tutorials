@@ -251,7 +251,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2020-06-04"
+          "lastUpdated": "2020-07-21"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -611,6 +611,23 @@
             "Network"
           ],
           "lastUpdated": "2020-06-18"
+        },
+        {
+          "name": "PHP web application on a LAMP Stack in VPC Gen2",
+          "url": "lamp-stack-on-vpc.html",
+          "description": "Create an Ubuntu Linux virtual server on VPC, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
+          "imgSrc": "images/solution56-lamp-stack-on-vpc/Architecture.png",
+          "tags": [
+            "VPC",
+            "LAMP Stack",
+            "Ubuntu",
+            "Linux",
+            "Apache",
+            "MySQL",
+            "PHP",
+            "WordPress"
+          ],
+          "lastUpdated": "2020-07-23"
         }
       ]
     },

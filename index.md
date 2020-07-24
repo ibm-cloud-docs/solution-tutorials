@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-07-17"
+lastupdated: "2020-07-24"
 ---
 
 {:shortdesc: .shortdesc}
@@ -909,6 +909,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png" alt="Architecture diagram for the solution Securely access remote instances with a bastion host"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc#lamp-stack-on-vpc">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                PHP web application on a LAMP Stack in VPC Gen2
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create an Ubuntu Linux virtual server on VPC, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution56-lamp-stack-on-vpc/Architecture.png" alt="Architecture diagram for the solution PHP web application on a LAMP Stack in VPC Gen2"/>
                 </div>
             </div>
         </div>
