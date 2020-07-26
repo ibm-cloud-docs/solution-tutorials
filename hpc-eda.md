@@ -27,7 +27,7 @@ You can span a IBM Spectrum LSF cluster between on-premises and cloud domains in
 * A stretch cluster operates as a single cluster with a single (on-premises) master that spans two domains by communicating over a secure network.  
 * A multi-cluster consists of two or more independent, but closely cooperating clusters, each with its own master, operating on its own domain and linked by a secure network.
 
-This tutorial focuses on building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster.
+This tutorial focuses on building and configuring the following hardware and software for a IBM Spectrum LSF Multi-Cluster:
 * An on-premises IBM Spectrum LSF Cluster
 * A cloud based IBM Spectrum LSF Cluster
 * A VPN connecting the on-premises network to {{site.data.keyword.vpc_short}}
