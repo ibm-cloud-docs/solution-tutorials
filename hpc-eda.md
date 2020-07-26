@@ -64,7 +64,7 @@ The following diagram shows the final solution architecture.
 
 ## Before you begin
 {: #prereqs}
-
+Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed. 
 
 ## Set up the {{site.data.keyword._notm}} CLI
 {: #set-up-cli}
