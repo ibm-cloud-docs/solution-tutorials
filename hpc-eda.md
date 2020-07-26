@@ -112,7 +112,7 @@ Because this tutorial demonstrates how to add compute capacity to your on-premis
   ```
   {: pre}
 
-8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud regions` to list them. If you choose the region "us-south", the command is the following:
+8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
   ```
   ibmcloud target -r us-south
