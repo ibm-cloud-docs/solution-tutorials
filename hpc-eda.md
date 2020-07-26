@@ -15,7 +15,7 @@ lasttested: "2020-07-20"
 {:important: .important}
 {:note: .note}
 
-# Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.cloud_notm}} Virtual Private Cloud
+# Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
 
 An EDA workload currently running in an on-premises data center can be a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premises EDA workload to the {{site.data.keyword.cloud}}.  Many reasons might be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
