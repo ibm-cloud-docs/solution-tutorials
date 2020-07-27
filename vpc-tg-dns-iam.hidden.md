@@ -18,7 +18,8 @@ lasttested: "2020-07-08"
 # Team based privacy using IAM, VPC, Transit Gateway and DNS
 {: #vpc-tg-dns-iam}
 
-Team based development of a micro-service based application via vpc....
+This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro service architecture.  The VPCs are connected to each other using the {{site.data.keyword.tg_full}}.  The shared microservices are accessed through the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate application team isolated by {{site.data.keyword.iamlong}}.  Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
+
 {:shortdesc}
 
 ## Objectives
@@ -38,6 +39,7 @@ This tutorial uses the following run times and services:
 * [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 * [{{site.data.keyword.tg_full}}](https://{DomainName}/cloud/transit-gateway)
 * [{{site.data.keyword.dns_full}}](https://{DomainName}/catalog/services/dns-services)
+* [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/vpc/provision/loadBalancer)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -350,17 +352,28 @@ Resources:
 ### Becoming a team member
 {: #iam_become}
 
-It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using api keys for yourself, the admin user, or from the service IDs that will be in the other access groups.  The service ID names are ${basename}-x where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using api keys for yourself or from the service IDs that will be in the other access groups.  The service ID names are ${basename}-x where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
 When you cd into a directory you will be reminded to execute: `source local.env`
 
-## Admin Team
+Terraform will be used to create the resources.  Open `admin/main.tf` and notice the `provider ibm` clause and the reference to the ibmcloud_api_key:
+
+   ```
+   provider ibm {
+    ibmcloud_api_key = var.ibmcloud_api_key
+    region           = var.ibm_region
+    generation       = var.generation
+   }
+   ```
+
+## Creating the IAM resources
 {: #admin}
 
-After fetching the source code and making the initial terraform.tfvars changes suggested above set current directory to ./admin and use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
+The admin team will be responsible for creating the IAM resources. After fetching the source code and making the initial terraform.tfvars changes suggested above set current directory to ./admin and use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
 
+Change directory, generate your personal API key in the local.env that will be used by terraform to become you:
    ```
    cd admin
    echo export TF_VAR_ibmcloud_api_key=$(ibmcloud iam api-key-create project10-admin --output json | jq .apikey) > local.env
@@ -430,7 +443,7 @@ Initialize the basename shell variable and verify some of the resources were cre
    ```
 These resources can be edited and displayed using the ibm cloud console.  Navigate to the account [Resource groups](https://{DomainName}/account/resource-groups ) and find the resource groups.  Navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click a **Service IDs** panel at the top.
 
-## Network Team
+## Create {{site.data.keyword.vpc_short}}}} network {{site.data.keyword.tg_short}} {{site.data.keyword.dns_short}}
 {: #network}
 
 
@@ -486,7 +499,7 @@ Create the resources:
    terraform apply
    ```
 
-### VPC is resources
+### List the VPC resources
 {: #network_vpc}
 
 The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity.  Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
@@ -508,7 +521,7 @@ The VPC resources created is summarized by the output of the subnets command, sh
 
 The VPC configuration can be created, edited and displayed using the ibm cloud console.  Navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all of the other resources created above.
 
-### {{site.data.keyword.tg_short}} resources
+### List the {{site.data.keyword.tg_short}} resources
 {: #network_tg}
 
 The {{site.data.keyword.tg_short}} can be displayed using the two commands below.  A gateway was created that has three connections.  Notice the copy/paste of the GatewayID.
@@ -551,7 +564,7 @@ The {{site.data.keyword.tg_short}} can be displayed using the two commands below
 
 The {{site.data.keyword.tg_short}} configuration can be created, edited and displayed using the ibm cloud console.  Navigate to the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
 
-### {{site.data.keyword.dns_short}} resources
+### List the {{site.data.keyword.dns_short}} resources
 {: #network_dns}
 
 The {{site.data.keyword.dns_short}} and zone were created with the terraform snippet:
@@ -607,7 +620,7 @@ The DNS configuration can be displayed using the command below.  A {{site.data.k
 
 The DNS configuration can be created, edited and displayed using the ibm cloud console.  Navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
 
-## Shared Team
+## Create the shared microservice and associated DNS record
 {: #shared}
 
 Change directory, generate an API key in the local.env and become a member of the shared access group:
@@ -661,13 +674,15 @@ In `main.tf` notice these two resources:
 
 The network_context is the output generated by the network team specifically for the shared team.
 
+The `count = var.shared_lb ? 1 : 0` is a terraform construct explained later in the {{site.data.keyword.loadbalancer_short}} and can be ignored at this point.
+
 Navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance.  Click on it and verify the following:
 - The instance has no incoming connectivity from the public internet (check the Security Groups)
 - Locate the private IP address
 
 Navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**.  Notice the Value is the private IP address.
 
-## Application1 Team
+## Create a publicly facing microservice that uses the shared microservice
 {: #application}
 
 Change directory, generate an API key in the local.env and become a member of the application1 access group:
@@ -683,8 +698,6 @@ Change directory, generate an API key in the local.env and become a member of th
 
 
 The application1 team resources are very similar to the shared team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
-
-
 
 ### Linux demo application terraform module
 {: #demo_application}
@@ -720,7 +733,7 @@ In the directory ../common/user_data_app is a terraform module.
    }
    ```
 
-### DNS configuration
+### Adjust the DNS configuration
 {: #application_dns}
 
 [Updating the DNS resolver for your VSI](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-updating-dns-resolver) for centos is accomplished by the lines:
@@ -851,7 +864,7 @@ Try the curl commands suggested.  See something like what was captured below whe
 
 Remember these curl commands, you will use them again shortly
 
-### Shared Load Balancer
+### Insert a {{site.data.keyword.loadbalancer_short}} and replace the DNS record
 {: #shared_lb}
 
 Change directory and become a member of the shared access group (use the existing API key):
