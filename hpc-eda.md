@@ -18,7 +18,7 @@ lasttested: "2020-07-20"
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
 
-Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are common run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management){: external}. 
+Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are common run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management){: external}.
 
 An EDA workload currently running in IBM Spectrum LSF in an on-premises data center is a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premises EDA workload to the {{site.data.keyword.cloud}}.  Many reasons might be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
 {:shortdesc}
@@ -55,21 +55,35 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-The following diagram shows the final solution architecture.
-![Architecture diagram](diagrams/hpc-eda-arch.svg)
+The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
 <p style="text-align: center;">
-
+![Architecture diagram](images/hpc-eda-arch.svg)
 </p>
 
 ## Before you begin
 {: #prereqs}
-Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed. 
+Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed. You will also need to download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
+
+In addition to your on-premise cluster, you will need to following in {{site.data.keyword.cloud_notm}}:
+
+An {{site.data.keyword.cloud_notm}} billable account,
+{{site.data.keyword.cloud_notm}} CLI,
+
+    {{site.data.keyword.vpc_short}} plugin (vpc-infrastructure),
+    {{site.data.keyword.containerfull_notm}} plugin (kubernetes-service),
+    {{site.data.keyword.registryshort_notm}} plugin (container-registry),
+    {{site.data.keyword.cos_full_notm}} plugin (cloud-object-storage),
+    {{site.data.keyword.openwhisk}} plugin (cloud-functions),
+    dev plugin,
+    a GitHub account,
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
 ## Set up the {{site.data.keyword._notm}} CLI
 {: #set-up-cli}
 
-1. If possible, log in to the on-premises master node as the root user.
+1. If possible, log in to the on-premise master node as the root user.
 2. Install the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
@@ -121,10 +135,10 @@ Because this tutorial demonstrates how to add compute capacity to your on-premis
 
 ## Specify the cloud cluster configuration
 {: #specify-cloud-cluster-configuration}
-With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
-1. The scripts that you will be using reside on Github.  To use them you will clone them from the Github repository.
-2. Start the process by copying the tf_inventory.in file to tf_inventory.yml. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
+With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
+
+1. Start the process by copying the tf_inventory.in file to tf_inventory.yml. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
 3. Save the configuration file and create a backup copy.
 
 ### The tf_inventory.yml file parameters
@@ -296,9 +310,9 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
     Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
   * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
-      cluster_name: onPremCluster 
+      cluster_name: onPremCluster
   * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
-  * **vpn**: 
+  * **vpn**:
       ip: <vpn_server_ip>
 
 2. Install LSF:
