@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-05-15"
-lasttested: "2019-05-15"
+  years: 2017, 2019, 2020
+lastupdated: "2020-07-27"
+lasttested: "2020-07-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -93,6 +93,11 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
   ```
   {: codeblock}
 
+4. Create the service key.
+  ```sh
+   ibmcloud cf create-service-key mean-starter-mongodb "Service credentials-1"
+  ```
+  {: codeblock} 
 
 ## Run the MEAN app locally
 {: #runapplocally}
