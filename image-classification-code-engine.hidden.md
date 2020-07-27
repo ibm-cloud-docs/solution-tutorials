@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-07-21"
+lastupdated: "2020-07-27"
 lasttested: "2020-06-22"
 
 ---
@@ -90,10 +90,12 @@ In this section, you will create a Code Engine project. A project is a grouping 
    - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
-   ibmcloud code-engine target --name <PROJECT_NAME>
+   ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
    ```
    {:pre}
-4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed from the output above.
+
+   `--kubecfg` flag appends the project to the default Kubernetes configuration file.
+   {:tip}
 
 ## Deploy the frontend and backend apps as Code Engine applications
 {: #deploy_app}
@@ -355,3 +357,5 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 ## Related resources
 {: #related_resources}
+
+- [IBM Cloud Code Engine Documentation](/docs/codeengine)
