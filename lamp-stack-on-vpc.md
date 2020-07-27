@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Architecture
 <p style="text-align: center;">
-![Architecture diagram](images/solution56-lamp-stack-on-vpc-hidden/Architecture.png)
+![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png)
 </p>
 
 1. End user accesses the LAMP server running on a VPC using a web browser.
@@ -198,7 +198,7 @@ When the server is spun up for the first time, it is possible that it is already
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
 
 1. Verify Ubuntu by opening the Floating IP address in the browser. You should see the Ubuntu welcome page.
-   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc-hidden/VerifyUbuntu.png)
+   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc/VerifyUbuntu.png)
 1. Review the Apache, MySQL and PHP versions installed by using the following commands.
    ```sh
    apache2 -v
@@ -224,7 +224,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    {: pre}
 1. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
 
-![PHP info](images/solution56-lamp-stack-on-vpc-hidden/PHPInfo.png)
+![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
 
 ## Install and configure WordPress
 
@@ -277,7 +277,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    ```
    {: pre}
 8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. It should look similar to the following image.
-   ![WordPress site running](images/solution56-lamp-stack-on-vpc-hidden/WordPressSiteRunning.png)
+   ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
 ## Configure domain
 
