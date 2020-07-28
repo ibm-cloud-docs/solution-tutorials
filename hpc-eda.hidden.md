@@ -58,7 +58,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution-hpc-eda/hpc-eda-arch.svg)
+![Architecture diagram](images/solution60-hpc-eda-hidden/hpc-eda-arch.svg)
 </p>
 
 ## Before you begin

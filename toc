@@ -9,6 +9,13 @@ Solution Tutorials
     getting-started.md
 
     {: .topicgroup}
+    Work In Progress
+        solution-template.md
+        image-classification-code-engine.hidden.md
+        vpc-tg-dns-iam.hidden.md
+        hpc-eda.hidden.md
+
+    {: .topicgroup}
     Websites and Web Apps
         scalable-webapp-kubernetes.md
         vm-to-containers-and-kubernetes.md
@@ -62,12 +69,6 @@ Solution Tutorials
         gather-visualize-analyze-iot-data.md
 
     {: .topicgroup}
-    Work In Progress
-        solution-template.md
-        image-classification-code-engine.hidden.md
-        vpc-tg-dns-iam.hidden.md
-
-    {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
 
@@ -98,6 +99,7 @@ Solution Tutorials
     {: .navgroup id="howto"}
     {: .topicgroup}
     Kubernetes
+        image-classification-code-engine.hidden.md
         scalable-webapp-kubernetes.md
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
@@ -108,7 +110,6 @@ Solution Tutorials
         application-log-analysis.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
-        image-classification-code-engine.hidden.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 

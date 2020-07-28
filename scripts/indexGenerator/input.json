@@ -21,6 +21,50 @@
       ]
     },
     {
+      "name": "Work In Progress",
+      "hidden": "hidden",
+      "anchor": "working",
+      "solutions": [
+        {
+          "name": "Solution Template",
+          "url": "solution-template.html",
+          "description": "Solution Template",
+          "imgSrc": ""
+        },
+        {
+          "name": "Image Classification with Code Engine",
+          "url": "image-classification-code-engine.hidden.html",
+          "description": "Create a Code Engine project and deploy an image classification application",
+          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative",
+            "Kubernetes"
+          ]
+        },
+        {
+          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
+          "url": "vpc-tg-dns-iam.hidden.html",
+          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
+          "tags": [
+            "VPC",
+            "Linux"
+          ]
+        },
+        {
+          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
+          "url": "hpc-eda.hidden.html",
+          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
+          "imgSrc": "images/solution60-hpc-eda-hidden/hpc-eda-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC"
+          ]
+        }
+      ]
+    },
+    {
       "name": "Websites and Web Apps",
       "anchor": "websites",
       "solutions": [
@@ -734,40 +778,6 @@
             "cloud_foundry"
           ],
           "supportsCloudShell": "yes_with_modifications"
-        }
-      ]
-    },
-    {
-      "name": "Work In Progress",
-      "hidden": "hidden",
-      "anchor": "working",
-      "solutions": [
-        {
-          "name": "Solution Template",
-          "url": "solution-template.html",
-          "description": "Solution Template",
-          "imgSrc": ""
-        },
-        {
-          "name": "Image Classification with Code Engine",
-          "url": "image-classification-code-engine.hidden.html",
-          "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
-          "tags": [
-            "code engine",
-            "Knative",
-            "Kubernetes"
-          ]
-        },
-        {
-          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
-          "url": "vpc-tg-dns-iam.hidden.html",
-          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
-          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
-          "tags": [
-            "VPC",
-            "Linux"
-          ]
         }
       ]
     },
