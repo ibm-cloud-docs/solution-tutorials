@@ -83,7 +83,7 @@ An {{site.data.keyword.cloud_notm}} billable account,
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
-## Set up the {{site.data.keyword._notm}} CLI
+## Set up the {{site.data.keyword.cloud_notm}} CLI
 {: #set-up-cli}
 
 1. If possible, log in to the on-premise master node as the root user.
@@ -94,7 +94,7 @@ You will find instructions to download and install these tools for your operatin
   ```
   {: pre}
 
-3. Test the {{site.data.keyword._notm}} CLI:
+3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
   ibmcloud dev help
