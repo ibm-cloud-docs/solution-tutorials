@@ -58,14 +58,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
 <p style="text-align: center;">
-![Architecture diagram](images/hpc-eda-arch.svg)
+![Architecture diagram](images/solution-hpc-eda/hpc-eda-arch.svg)
 </p>
 
 ## Before you begin
 {: #prereqs}
-Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed. You will also need to download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
+You need to following to complete this tutorial:
+* Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed.
+* Red Hat&reg; Ansible&reg; version 2.7 or higher
+* [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 
-In addition to your on-premise cluster, you will need to following in {{site.data.keyword.cloud_notm}}:
+You will also need to following in {{site.data.keyword.cloud_notm}}:
 
 An {{site.data.keyword.cloud_notm}} billable account,
 {{site.data.keyword.cloud_notm}} CLI,
@@ -138,7 +141,8 @@ You will find instructions to download and install these tools for your operatin
 
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
-1. Start the process by copying the tf_inventory.in file to tf_inventory.yml. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
+1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
+2. Copy the tf_inventory.in file to tf_inventory.yml. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
 3. Save the configuration file and create a backup copy.
 
 ### The tf_inventory.yml file parameters
@@ -169,7 +173,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 
 You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to provide Terraform with the credential it needs to provision resources on your behalf. If you do not already have an `api-key`, you can create one with the following commands:
 
-1. Log in to the {{site.data.keyword.cloud_notm}} CLI:
+1. If you are not already logged in, log in to the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
   ibmcloud login
