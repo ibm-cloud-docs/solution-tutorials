@@ -162,9 +162,9 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as <name of private key>.public (such as id_rsa.public ).|
 |lsf_cluster_name|The name you want LSF to apply to your cloud based cluster.|
 |worker_profile<br>master_profile<br>login_profile<br>|These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:<br><br>`ibmcloud is in-prs`<br><br>The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
-|image_name|This should be a recent RedHat or Centos amd64 release.  You can see the available options with the following command.<br><br>`ibmcloud is images`||volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
+|image_name|This should be a recent RedHat or Centos amd64 release.  You can see the available options with the following command.<br><br>`ibmcloud is images`|volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
 |volume_dir|The mount point for the cloud shared NFS volume.|
-|vpn_peer|_address_: The public IP address of your on-premises VPN gateway.<br>_cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.<br>_psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.<br><br>`echo -n <your_key> \| ansible-vault encrypt_string --ask-vault-pass`<br><br>_Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.<br>Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
+|vpn_peer|_address_: The public IP address of your on-premises VPN gateway.<br>_cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.<br>_psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.<br><br>`echo -n <your_key>  ansible-vault encrypt_string --ask-vault-pass`<br><br>_Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.<br>Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
 |tfbinary_path|Location to install the Terraform command.|
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
@@ -213,14 +213,14 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
   ```
   {: pre}
 
-This playbook invokes Terraform to do the following:
-*	Creates and configures the {{site.data.keyword.vpc_short}} based on the parameters you provided in the `tf_inventory.yml` file
-*	Provisions the specified master and worker virtual instances
-*	Provisions a login box that will be used as a deployer and login jump box for the cluster
-*	Provisions and configures a DNS server
-*	Provisions storage for the virtual instances including storage for the NFS volume
-*	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
-*	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
+  This playbook invokes Terraform to do the following:
+  *	Creates and configures the {{site.data.keyword.vpc_short}} based on the parameters you provided in the `tf_inventory.yml` file
+  *	Provisions the specified master and worker virtual instances
+  *	Provisions a login box that will be used as a deployer and login jump box for the cluster
+  *	Provisions and configures a DNS server
+  *	Provisions storage for the virtual instances including storage for the NFS volume
+  *	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
+  *	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
 
 3. Ensure that there is not a stale copy of the `terrafrom.tfstate` file in `GEN_FILES_DIR`.
 4. Run the playbook:
@@ -345,8 +345,8 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   ```
   {: pre}
 
-If you see an error when running this script for `mc_onprem`, you might need to limit the network interfaces that are scanned to just those that will be part of the cluster network.  This can be accomplished by uncommenting the “interfaces” tag in the `lsf_install` file and listing the necessary interfaces.
-{: note}
+  If you see an error when running this script for `mc_onprem`, you might need to limit the network interfaces that are scanned to just those that will be part of the cluster network.  This can be accomplished by uncommenting the “interfaces” tag in the `lsf_install` file and listing the necessary interfaces.
+  {: note}
 
 5. Configure the cloud queues and settings for LSF.
 
@@ -367,7 +367,7 @@ From the on-premises master node, complete the following steps.
   ```
   {: pre}
 
-The output of the command should show both the on-premises and cloud clusters.
+  The output of the command should show both the on-premises and cloud clusters.
 
 2. The `bqueues` command displays the normal default array of lsf queues but should also contain the queue that can be used to send jobs to the cloud cluster. The name of this queue is specified by the `sndqueue:` variable in the `lsf_install` file.
 
