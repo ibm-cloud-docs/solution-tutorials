@@ -18,7 +18,7 @@ lasttested: "2020-07-20"
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
 
-Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are common run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management){: external}.
+Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are commonly run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management){: external}.
 
 An EDA workload currently running in IBM Spectrum LSF in an on-premises data center is a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premises EDA workload to the {{site.data.keyword.cloud}}.  Many reasons might be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
 {:shortdesc}
@@ -63,7 +63,7 @@ The following diagram shows how the IBM Spectrum LSF on-premise cluster is exten
 
 ## Before you begin
 {: #prereqs}
-You need to following to complete this tutorial:
+You need the following to complete this tutorial:
 * Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed.
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
@@ -136,7 +136,10 @@ You will find instructions to download and install these tools for your operatin
   ```
   {: pre}
 
-## Specify the cloud cluster configuration
+## Prepare your environment
+{: #prep-environment}
+
+### Specify the cloud cluster configuration
 {: #specify-cloud-cluster-configuration}
 
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
@@ -145,7 +148,7 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 2. Copy the tf_inventory.in file to tf_inventory.yml. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
 3. Save the configuration file and create a backup copy.
 
-### The tf_inventory.yml file parameters
+#### The tf_inventory.yml file parameters
 {: #tf_inventory-parameters}
 
 Much of the work needed to configure your cloud cluster is configuring the following parameters in the tf_inventory.yml file:
@@ -162,13 +165,14 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as <name of private key>.public (such as id_rsa.public ).|
 |lsf_cluster_name|The name you want LSF to apply to your cloud based cluster.|
 |worker_profile<br>master_profile<br>login_profile<br>|These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:<br><br>`ibmcloud is in-prs`<br><br>The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
-|image_name|This should be a recent RedHat or Centos amd64 release.  You can see the available options with the following command.<br><br>`ibmcloud is images`|volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
+|image_name|This should be a recent RedHat or Centos amd64 release. You can see the available options with the following command.<br><br> `ibmcloud is images`|
+|volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
 |volume_dir|The mount point for the cloud shared NFS volume.|
 |vpn_peer|_address_: The public IP address of your on-premises VPN gateway.<br>_cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.<br>_psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.<br><br><code>echo -n <your_key>  ansible-vault encrypt_string --ask-vault-pass</code><br><br>_Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.<br>Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
 |tfbinary_path|Location to install the Terraform command.|
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
-## Create an {{site.data.keyword.cloud_notm}} API key
+### Create an {{site.data.keyword.cloud_notm}} API key
 {: #create-api-key}
 
 You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to provide Terraform with the credential it needs to provision resources on your behalf. If you do not already have an `api-key`, you can create one with the following commands:
@@ -402,10 +406,3 @@ Make sure `GEN_FILE_DIR` is set.
   {: pre}
 
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
-
-
-## Related content
-{: #related}
-
-* [Relevant links in {{site.data.keyword.cloud_notm}} docs](https://{DomainName}/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
