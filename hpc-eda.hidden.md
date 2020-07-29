@@ -42,7 +42,7 @@ This tutorial focuses on building and configuring the following hardware and sof
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* IBM Spectrum&reg; LSF version 10.2
+* IBM Spectrum&reg; LSF
 * {{site.data.keyword.dl_full}}
 * {{site.data.keyword.vpc_short}}
 * {{site.data.keyword.cloud}} CLI
@@ -64,7 +64,7 @@ The following diagram shows how the IBM Spectrum LSF on-premise cluster is exten
 ## Before you begin
 {: #prereqs}
 You need the following to complete this tutorial:
-* Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF cluster already installed.
+* Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF version 10.2 cluster already installed.
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 
