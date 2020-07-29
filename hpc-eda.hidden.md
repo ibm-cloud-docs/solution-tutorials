@@ -14,6 +14,7 @@ lasttested: "2020-07-20"
 {:pre: .pre}
 {:important: .important}
 {:note: .note}
+{:external: target="_blank" .external}
 
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
@@ -79,7 +80,7 @@ You will find instructions to download and install these tools for your operatin
 {: #set-up-cli}
 
 1. If possible, log in to the on-premise master node as the root user.
-2. Install the {{site.data.keyword.cloud_notm}} CLI. Refer to [Installing the stand-alone IBM Cloud CLI](/docs/cli?topic=cli-install-ibmcloud-cli).
+2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install){: external}.
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
