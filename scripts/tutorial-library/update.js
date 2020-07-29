@@ -118,7 +118,7 @@ function readUntil(array, start, match) {
 const firstAttributeDefinitionIndex = readUntil(lines, endOfFrontMatterIndex, (value) => {
   return value.startsWith('{:')
 });
-lines.splice(firstAttributeDefinitionIndex - 1, 0,
+lines.splice(firstAttributeDefinitionIndex, 0,
   '{:step: data-tutorial-type=\'step\'}'
 );
 
@@ -169,4 +169,4 @@ while ((currentH2Index = readUntil(lines, currentH2Index, (value) => {
 }
 
 // bring back everything together
-// fs.writeFileSync(filename, lines.join('\n'));
+fs.writeFileSync(filename, lines.join('\n'));
