@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-07-28"
+lastupdated: "2020-07-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -14,12 +14,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <style>
 <!--
     #tutorials { /* hide the page header */
-        display: none !important;
-    }
-    .docs--DocsContentPage__contentArea {
-        max-width: 100% !important;
-    }
-    .Toc {
         display: none !important;
     }
     p.last-updated { /* hide the last updated */
