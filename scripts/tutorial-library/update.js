@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { exit } = require('process');
 
-const filename = '../../scalable-webapp-kubernetes.md';
+const filename = process.argv[2];
 const template = fs.readFileSync(filename).toString('utf-8');
 
 const input = require('../indexGenerator/input.json');
@@ -22,6 +22,8 @@ const tagMapping = {
   'Container Registry': 'Registry',
   'Code Engine': 'codeengine',
   'VPC': 'vpc',
+  'vpc': 'vpc',
+  'Virtual Private Cloud': 'vpc',
   'cloudant': 'Cloudant',
   'Cloud Functions': 'openwhisk',
   'Cloud Foundry': 'cloud-foundry-public',
@@ -60,6 +62,8 @@ const tagMapping = {
   'vmware': 'vmwaresolutions',
   'schematics': 'schematics',
   'Activity Tracker': 'Activity-Tracker-with-LogDNA',
+  'Vyatta': 'virtual-router-appliance',
+  'Push Notifications': 'mobilepush',
 }
 
 const servicesMap = {};
