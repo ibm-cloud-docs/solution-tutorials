@@ -68,9 +68,10 @@ You need the following to complete this tutorial:
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 
-You will also need to following in {{site.data.keyword.cloud_notm}}:
+You will also need the following in {{site.data.keyword.cloud_notm}}:
 
-* An {{site.data.keyword.cloud_notm}} billable account, {{site.data.keyword.cloud_notm}} CLI, {{site.data.keyword.vpc_short}} plugin (vpc-infrastructure), {{site.data.keyword.containerfull_notm}} plugin (kubernetes-service), {{site.data.keyword.registryshort_notm}} plugin (container-registry), {{site.data.keyword.cos_full_notm}} plugin (cloud-object-storage), {{site.data.keyword.openwhisk}} plugin (cloud-functions), dev plugin, a GitHub account,
+* An {{site.data.keyword.cloud_notm}} billable account
+* {{site.data.keyword.cloud_notm}} CLI
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
@@ -218,7 +219,7 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
   *	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
   *	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
 
-3. If this is the first time you are running the playbook, ensure that there is not an existing copy of the `terraform.tfstate` file in `GEN_FILES_DIR`. If you previously ran the playbook and it failed, don't delete the `terraform.tfstate` file. You will need it to restart the playbook starting from the place that it failed.
+3. If this is the first time you are running the playbook, ensure that there is not an existing copy of the `terraform.tfstate` file in `GEN_FILES_DIR`. If you previously ran the playbook and it failed, don't delete the `terraform.tfstate` file. You will need it to restart the playbook, beginning with place that it failed.
 4. Run the playbook:
 
   ```
