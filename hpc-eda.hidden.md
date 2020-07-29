@@ -145,6 +145,12 @@ You will find instructions to download and install these tools for your operatin
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
+
+```
+git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git`
+```
+{: pre}
+
 2. Copy the tf_inventory.in file to tf_inventory.yml.
 3. Fill out the parameters in the tf_inventory.yml file. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
 3. Save the tf_inventory.yml file and create a backup copy.
@@ -227,7 +233,7 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
   *	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
   *	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
 
-3. Open the `GEN_FILES_DIR` directory and check for a file named `terraform.tfstate`. In most cases, you should delete this file, if it exists.  However, if you previously ran the create_vpc.yml and it failed, don't delete the `terraform.tfstate` file. You will need it to retry the playbook, which will then only need to create items starting with the failed items.
+3. If this is the first time you are running the playbook, ensure that there is not an existing copy of the `terraform.tfstate` file in `GEN_FILES_DIR`. If you previously ran the playbook and it failed, don't delete the `terraform.tfstate` file. You will need it to restart the playbook starting from the place that it failed.
 4. Run the playbook:
 
   ```
