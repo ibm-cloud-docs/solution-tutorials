@@ -70,16 +70,7 @@ You need the following to complete this tutorial:
 
 You will also need to following in {{site.data.keyword.cloud_notm}}:
 
-An {{site.data.keyword.cloud_notm}} billable account,
-{{site.data.keyword.cloud_notm}} CLI,
-
-    {{site.data.keyword.vpc_short}} plugin (vpc-infrastructure),
-    {{site.data.keyword.containerfull_notm}} plugin (kubernetes-service),
-    {{site.data.keyword.registryshort_notm}} plugin (container-registry),
-    {{site.data.keyword.cos_full_notm}} plugin (cloud-object-storage),
-    {{site.data.keyword.openwhisk}} plugin (cloud-functions),
-    dev plugin,
-    a GitHub account,
+* An {{site.data.keyword.cloud_notm}} billable account, {{site.data.keyword.cloud_notm}} CLI, {{site.data.keyword.vpc_short}} plugin (vpc-infrastructure), {{site.data.keyword.containerfull_notm}} plugin (kubernetes-service), {{site.data.keyword.registryshort_notm}} plugin (container-registry), {{site.data.keyword.cos_full_notm}} plugin (cloud-object-storage), {{site.data.keyword.openwhisk}} plugin (cloud-functions), dev plugin, a GitHub account,
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
@@ -88,12 +79,6 @@ You will find instructions to download and install these tools for your operatin
 
 1. If possible, log in to the on-premise master node as the root user.
 2. Install the {{site.data.keyword.cloud_notm}} CLI. Refer to [Installing the stand-alone IBM Cloud CLI](/docs/cli?topic=cli-install-ibmcloud-cli).
-
-  ```
-  curl -sL https://ibm.biz/idt-installer | bash
-  ```
-  {: pre}
-
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
@@ -146,10 +131,10 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
 
-```
-git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git`
-```
-{: pre}
+  ```
+  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git`
+  ```
+  {: pre}
 
 2. Copy the tf_inventory.in file to tf_inventory.yml.
 3. Fill out the parameters in the tf_inventory.yml file. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
