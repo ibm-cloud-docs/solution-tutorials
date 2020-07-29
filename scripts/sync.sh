@@ -22,7 +22,7 @@ tar cf - \
   --exclude="*.course.json" \
   --exclude=scripts \
   --exclude=diagrams \
-  --exclude="*.hidden.md" \
+  --exclude="*.hidden.*" \
   --exclude="images/*hidden*" \
   --exclude=hpc-eda.md \
   --exclude="images/*hpc-eda*" \
