@@ -108,6 +108,7 @@
             "ibmcloud_cli",
             "docker"
           ],
+          "guide": true,
           "supportsCloudShell": false
         },
         {
@@ -136,6 +137,7 @@
             "cloud_functions",
             "cloud_foundry"
           ],
+          "guide": true,
           "supportsCloudShell": "not_applicable"
         },
         {
@@ -585,6 +587,7 @@
             "key_protect",
             "logdna"
           ],
+          "guide": true,
           "supportsCloudShell": "not_applicable"
         }
       ]
@@ -799,6 +802,7 @@
             "DevOps"
           ],
           "requirements": [],
+          "guide": true,
           "supportsCloudShell": "not_applicable"
         }
       ]
