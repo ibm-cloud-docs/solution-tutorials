@@ -51,6 +51,7 @@
             "MySQL",
             "Java"
           ],
+          "guide": true,
           "lastUpdated": "2019-12-12"
         },
         {
@@ -68,6 +69,7 @@
             "File Storage",
             "Watson"
           ],
+          "guide": true,
           "lastUpdated": "2020-01-23"
         },
         {
@@ -384,6 +386,7 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
+          "guide": true,
           "lastUpdated": "2020-06-25"
         }
       ]
@@ -540,6 +543,7 @@
             "Container Registry",
             "DevOps"
           ],
+          "guide": true,
           "lastUpdated": "2020-03-18"
         }
       ]

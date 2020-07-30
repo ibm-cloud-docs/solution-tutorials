@@ -7,27 +7,33 @@ Solution Tutorials
     {: .navgroup id="learn"}
     index.md
     getting-started.md
+    {: .navgroup-end}
+
+    {: .navgroup id="tutorial"}
+    {: .topicgroup}
+    By Category
 {{#each categories}}
 {{#unless tocOnly}}
 {{#if (or (not hidden) @root.includeHidden)}}
 
-    {: .topicgroup}
-    {{name}}
+        {: .topicgroup}
+        {{name}}
     {{#each solutions as |solution|}}
     {{#if (or (not hidden) @root.includeHidden)}}
-        {{#tocLink solution}}{{/tocLink}}
+            {{#tocLink solution}}{{/tocLink}}
     {{/if}}
     {{/each}}
 {{/if}}
 {{/unless}}
 {{/each}}
-    {: .navgroup-end}
-    
-    {: .navgroup id="howto"}
-{{#each tags as |tag|}}
+
     {: .topicgroup}
-    {{tag}}
-{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}        {{#tocLink solution}}{{/tocLink}}
+    By Compute Options
+{{#each tags as |tag|}}
+
+        {: .topicgroup}
+        {{tag}}
+{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}            {{#tocLink solution}}{{/tocLink}}
 {{/hasTag}}{{/if}}{{/each}}{{/if}}{{/each}}
 {{/each}}
     {: .navgroup-end}
