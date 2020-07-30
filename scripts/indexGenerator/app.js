@@ -79,7 +79,7 @@ function writeFile(templateFile, dest, includeHidden = true) {
 }
 
 writeFile('./index.md.tmpl', '../../index.md');
-writeFile('./toc.md.tmpl', '../../toc');
+writeFile('./extended-toc.md.tmpl', '../../toc');
 writeFile('./toc.md.tmpl', '../../toc-public', false);
 
 console.log('Writing ../../tutorials.json');
