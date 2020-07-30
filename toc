@@ -119,13 +119,11 @@ Solution Tutorials
             users-teams-applications.md
             /containers/containers-vpc_ks_tutorial
 
-
         {: .topicgroup}
         OpenShift
             scalable-webapp-openshift.md
             openshift-service-mesh.md
             openshift-microservices.md
-
 
         {: .topicgroup}
         Cloud Foundry
@@ -139,7 +137,6 @@ Solution Tutorials
             create-manage-secure-apis.md
             gather-visualize-analyze-iot-data.md
 
-
         {: .topicgroup}
         Cloud Functions
             strategies-for-resilient-applications.md
@@ -148,7 +145,6 @@ Solution Tutorials
             slack-chatbot-database-watson.md
             serverless-mobile-backend.md
             serverless-github-traffic-analytics.md
-
 
         {: .topicgroup}
         Infrastructure
