@@ -26,7 +26,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Set up automated, serverless collection of GitHub traffic statistics
 * Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
-## Products
+## Services used
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)

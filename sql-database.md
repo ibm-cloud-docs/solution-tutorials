@@ -28,7 +28,7 @@ This tutorial shows how to provision a SQL (relational) database service, create
 * Connect the app and database service (share credentials)
 * Monitoring, Security, Backups & Recovery
 
-## Products
+## Services used
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.dashdblong_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-29"
-lasttested: "2019-06-29"
+lastupdated: "2020-07-23"
+lasttested: "2020-07-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Architecture
 <p style="text-align: center;">
-![Architecture diagram](images/solution56-lamp-stack-on-vpc-hidden/Architecture.png)
+![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png)
 </p>
 
 1. End user accesses the LAMP server running on a VPC using a web browser.
@@ -62,13 +62,13 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](https://{DomainName}/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
-If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview).
+If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview).
 {:tip}
 
 1. From the [{{site.data.keyword.Bluemix_notm}} Console](https://{DomainName}), launch the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell).
 1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
    ```sh
-   ibmcloud target -r <region-name> -g default
+   ibmcloud target -r <region-name> -g <resource-group>
    ```
    {:pre}
 1. For this tutorial we will use the latest VPC generation 2.  Set the target generation for VPC
@@ -76,6 +76,8 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ibmcloud is target --gen 2
    ```
    {:pre}
+
+### Create SSH Key(s)
 1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
@@ -89,33 +91,35 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:tip}
 1. Add the SSH key to your account.
    ```sh
-   SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --resource-group-name default --json | jq -r '.id')
+   SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --json | jq -r '.id')
    ```
    {:pre}
+
+### Create VPC, Subnet(s) and Security Group(s)
 1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
-   VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --resource-group-name default --json | jq -r '.id')
+   VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
    ```
    {:pre}
 1. Create the subnet for your VPC. 
    ```sh
-   SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone us-south-1 --ipv4-address-count 256 --resource-group-name default --json | jq -r '.id')
+   SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone $(ibmcloud target --output json | jq -r '.region.name')-1 --ipv4-address-count 256 --json | jq -r '.id')
    ```
    {:pre}
-1. Create the security for your VPC. 
+1. Create the security group for your VPC. 
    ```sh
-   SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --resource-group-name default --json | jq -r '.id')
+   SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --json | jq -r '.id')
    ```
    {:pre}
-1. Add a rule to limit inbound to SSH port 22
+1. Add a rule to limit inbound to SSH port 22.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
    ```
    {:pre}
 
-    You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
+   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
    {:tip}
-1. Add a rule to limit inbound to HTTP port 80
+1. Add a rule to limit inbound to HTTP port 80.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80 --json
    ```
@@ -123,11 +127,14 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
    You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 80 --port-max 80 --json`
    {:tip}
-1. Add a rule to allow outbound to all
+1. Add a rule to allow outbound to all, this is required to install software, it can be disabled or removed later on.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID outbound all --json
    ```
    {:pre}
+
+### Create Virtual Server Instance
+
 1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 18.x by running the following command.  
    ```sh
    IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-18-04-1-minimal-amd64-2") | .id')
@@ -136,53 +143,63 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 1.  Create virtual server instance
    ```sh
-   NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID us-south-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --resource-group-name default --json | jq -r '.primary_network_interface.id')
+   NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID $(ibmcloud target --output json | jq -r '.region.name')-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --json | jq -r '.primary_network_interface.id')
    ```
    {:pre}
 1. Reserve a Floating IP
    ```sh
-   VSI_ADDRESS=$(ibmcloud is floating-ip-reserve fip-lamp-1 --nic-id $NIC_ID --resource-group-name default --json | jq -r '.address')
+   FLOATING_IP=$(ibmcloud is floating-ip-reserve fip-lamp-1 --nic-id $NIC_ID --json | jq -r '.address')
    ```
    {:pre}
-1. Connect to the server with SSH, notw that it may take a minute for the newly created server to be accessible via SSH.
+1. Connect to the server with SSH, note that it may take a minute for the newly created server to be accessible via SSH.
    ```sh
-   ssh root@$VSI_ADDRESS
+   ssh root@$FLOATING_IP
    ```
    {: pre}
 
-  You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs
+  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
   {:tip}
 
 ## Install Apache, MySQL, and PHP
 
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
 
-1. Disable interactive prompts
+When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
+{:tip}
+
+1. Disable interactive mode during updates 
    ```sh
    export DEBIAN_FRONTEND=noninteractive
+   ```
+   {: pre}
+1. Update packages 
+   ```sh
    apt update
+   ```
+   {: pre}
+1. Install the Apache 
+   ```sh
    apt install apache2 -y
+   ```
+   {: pre}      
+1. Install the MySQL 
+   ```sh
    apt install mysql-server -y
+   ```
+   {: pre}
+1. Install the PHP 
+   ```sh
    apt install php libapache2-mod-php php-mysql php-common php-cli -y
    ```
    {: pre}
-
-  When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
-  {:tip}
   
 ## Verify the installation and configuration
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
 
 1. Verify Ubuntu by opening the Floating IP address in the browser. You should see the Ubuntu welcome page.
-   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc-hidden/VerifyUbuntu.png)
-2. Verify port 80 is available for web traffic by running the following command.
-   ```sh
-   netstat -ntlp | grep LISTEN
-   ```
-   {: pre}
-   ![Verify Port](images/solution56-lamp-stack-on-vpc-hidden/VerifyPort.png)
-3. Review the Apache, MySQL and PHP versions installed by using the following commands.
+   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc/VerifyUbuntu.png)
+1. Review the Apache, MySQL and PHP versions installed by using the following commands.
    ```sh
    apache2 -v
    ```
@@ -195,19 +212,19 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    php -v
    ```
    {: pre}
-4. Run the following script to secure the MySQL database.
+1. Run the following script to secure the MySQL database.
   ```sh
   mysql_secure_installation
   ```
   {: pre}
-5. Additionally you can quickly create a PHP info page with the following command.
+1. Additionally you can quickly create a PHP info page with the following command.
    ```sh
    echo "<?php phpinfo(); ?>" > /var/www/html/info.php
    ```
    {: pre}
-6. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
+1. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
 
-![PHP info](images/solution56-lamp-stack-on-vpc-hidden/PHPInfo.png)
+![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
 
 ## Install and configure WordPress
 
@@ -223,7 +240,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    sensible-editor /etc/wordpress/config-localhost.php
    ```
    {: pre}
-3. Copy the following lines to the file substituting *yourPassword* with your MySQL database password and leaving the other values unchanged. Save and exit the file using `Ctrl+X`.
+3. Copy the following lines to the file substituting *yourPassword* with your MySQL database password and leaving the other values unchanged. Save and exit the file.
    ```php
    <?php
    define('DB_NAME', 'wordpress');
@@ -260,7 +277,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    ```
    {: pre}
 8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. It should look similar to the following image.
-   ![WordPress site running](images/solution56-lamp-stack-on-vpc-hidden/WordPressSiteRunning.png)
+   ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
 ## Configure domain
 
@@ -289,7 +306,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 
 1. Create a data volume configuration file.
    ```sh
-   VOLUME_ID=$(ibmcloud is volume-create volume-lamp-1 10iops-tier us-south-1 --capacity 100 --resource-group-name default --json | jq -r '.id')
+   VOLUME_ID=$(ibmcloud is volume-create volume-lamp-1 10iops-tier $(ibmcloud target --output json | jq -r '.region.name')-1 --capacity 100 --json | jq -r '.id')
    ```
    {:pre}
 
@@ -298,17 +315,17 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {:tip}
 1. Capture the ID of the VSI you created earlier by listing all instances 
    ```sh
-   ibmcloud is instances
+   VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')
    ```
    {:pre}   
-1. Attach the data volume to your existing VSI, by replacing the <VSI_ID> in the command below with the ID for your VSI.
+1. Attach the data volume to your existing VSI.
    ```sh
-   ibmcloud is instance-volume-attachment-add attachment-data-1 <VSI_ID> $VOLUME_ID --auto-delete false --json
+   ibmcloud is instance-volume-attachment-add attachment-data-1 $VSI_ID $VOLUME_ID --auto-delete false --json
    ```
    {:pre}
 1. Connect to the server with SSH.
    ```sh
-   ssh root@$VSI_ADDRESS
+   ssh root@$FLOATING_IP
    ```
    {: pre}
 1. Configure the newly created data volume on the VSI.  
@@ -367,18 +384,28 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ln -s /data/lib/mysql /var/lib/mysql
    ```
    {: pre}
+1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor), otherwise AppArmor will block the access. 
+   ```sh
+   echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
+   ```
+   {: pre}
+1. Restart the AppArmor service
+   ```sh
+   systemctl restart apparmor
+   ```
+   {: pre}     
 1. Start the MySQL service
    ```sh
    service mysql start
    ```
-   {: pre}   
+   {: pre}
 
 ## Remove resources
 {: #remove-resources}
 
 1. In the VPC [console](https://{DomainName}/vpc-ext), click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
-2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
-3. Once the VSIs are gone, switch to **Subnets**. Delete your subnets.
+2. Next, switch to **Virtual server instances**, **Delete** your instance.
+3. Once the VSIs are gone, switch to **Subnets**. Delete your subnet.
 4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
 5. If you created the optional Data Volume and no longer need it, switch to **Block storage volumes** tab and delete the volume.
 

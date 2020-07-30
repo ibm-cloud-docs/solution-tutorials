@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-29"
+lastupdated: "2020-07-30"
 lasttested: "2020-06-22"
 
 ---
@@ -57,7 +57,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution54-codeengine-hidden/architecture_diagram.png)
+  ![Architecture](images/solution54-code-engine-hidden/architecture_diagram.png)
 </p>
 
 1. Developer creates a Code Engine project and deploys a frontend and a backend Code Engine application.
@@ -71,7 +71,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * Coligo plugin (`coligo`),
+   * code-engine plugin (`code-engine`)
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
@@ -90,10 +90,12 @@ In this section, you will create a Code Engine project. A project is a grouping 
    - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
-   ibmcloud coligo target --name <PROJECT_NAME>
+   ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
    ```
    {:pre}
-4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed from the output above.
+
+   `--kubecfg` flag appends the project to the default Kubernetes configuration file.
+   {:tip}
 
 ## Deploy the frontend and backend apps as Code Engine applications
 {: #deploy_app}
@@ -104,7 +106,7 @@ In this section, you will deploy your front-end web application to Code Engine u
 
 1. To deploy a new Code Engine application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
-   ibmcloud coligo application create --name frontend \
+   ibmcloud code-engine application create --name frontend \
    --image ibmcom/frontend
    ```
    {:pre}
@@ -118,11 +120,11 @@ In this section, you will deploy your front-end web application to Code Engine u
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 
-   Run `ibmcloud coligo application get -n frontend` command to see the details of the application.
+   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application.
    {:tip}
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
-  <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
+  <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud code-engine application logs --name frontend`
    {:tip}-->
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
@@ -147,7 +149,7 @@ To check the autoscaling capabilities of Code Engine,
 
 1. To deploy a new backend application, run this command
    ```sh
-   ibmcloud coligo application create --name backend \
+   ibmcloud code-engine application create --name backend \
    --image ibmcom/backend --cluster-local
    ```
    {:pre}
@@ -156,16 +158,16 @@ To check the autoscaling capabilities of Code Engine,
 
 2. Copy the private endpoint (URL) from the output.
 
-   Run `ibmcloud coligo application get -n backend` command to check the status and details of the backend application.
+   Run `ibmcloud code-engine application get -n backend` command to check the status and details of the backend application.
    {:tip}
 3. The frontend application uses an environment variable(BACKEND_URL) to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command
    ```sh
-   ibmcloud coligo application update --name frontend \
+   ibmcloud code-engine application update --name frontend \
    --env BACKEND_URL=<BACKEND_PRIVATE_URL>
    ```
    {:pre}
 
-   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud coligo application create` command for the frontend application as well if you knew its value at that time.
+   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application as well if you knew its value at that time.
    {:tip}
 
 4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
@@ -180,14 +182,14 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **codeengine-cos** and select a resource group.
+   2. Set **Service name** to **code-engine-cos** and select a resource group.
    3. Click on **Create**.
 2. Under **Service Credentials**, click on **New credential**
-   1. Give it a name - `cos-for-codeengine` and select **Writer** as the role
+   1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
-   <!--3. Expand the `for-codeengine` credentials, copy and **save** the credentials for future reference.-->
-3. Create a **Custom** bucket named `<your-initials>-codeengine`,
+   <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
+3. Create a **Custom** bucket named `<your-initials>-code-engine`,
    1. Select **Cross Region** resiliency
    2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
@@ -196,13 +198,13 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
-   2. Set **Service name** to **codeengine-vr** and select a resource group.
+   2. Set **Service name** to **code-engine-vr** and select a resource group.
    3. Click on **Create**.
 7. Under **Service Credentials**, click on **New credential**
-   1. Give it a name - `vr-for-codeengine` and select **Writer** as the role
+   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
-   <!--3. Expand the `for-codeengine` credentials, copy and **save** the credentials for future reference.-->
+   <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 
@@ -210,9 +212,9 @@ Now, you will need to pass in the credentials for the services you just created 
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application,
    ```sh
-   ibmcloud coligo application bind --name backend \
-   --service-instance codeengine-cos \
-   --service-credential cos-for-codeengine \
+   ibmcloud code-engine application bind --name backend \
+   --service-instance code-engine-cos \
+   --service-credential cos-for-code-engine \
    --prefix COS
    ```
    {:pre}
@@ -223,15 +225,15 @@ Now, you will need to pass in the credentials for the services you just created 
 
 2. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive,
    ```sh
-   ibmcloud coligo configmap create --name backend-configuration \
+   ibmcloud code-engine configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
-   --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
+   --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
    {:pre}
 
 3. With the configmap defined, you can now update the backend application by asking Code Engine to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
    ```sh
-   ibmcloud coligo application update --name backend \
+   ibmcloud code-engine application update --name backend \
    --env-from-configmap backend-configuration
    ```
    {:pre}
@@ -241,7 +243,7 @@ Now, you will need to pass in the credentials for the services you just created 
 
 4. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
    ```sh
-   ibmcloud coligo application get --name backend --more-details
+   ibmcloud code-engine application get --name backend --more-details
    ```
    {:pre}
 
@@ -252,19 +254,19 @@ Now that you have the backend application connected to the frontend application,
 
 1. Before testing the application, let's create a secret for {{site.data.keyword.visualrecognitionshort}} service to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud coligo secret create --name vr-secret \
+   ibmcloud code-engine secret create --name vr-secret \
    --from-literal=VR_APIKEY=<VISUAL_RECOGNITION_APIKEY> \
    --from-literal=VR_URL=<VISUAL_RECOGNITION_URL>
    ```
    {:pre}
 2. Test the app by uploading an image through the frontend UI
    1. Click on **Upload image** and point to the image on your computer.
-   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-codeengine`.
+   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-code-engine`.
 3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images and test the application.
 5. Check the results of the classified images on the UI.
 
-   If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud coligo job logs --name <JOBRUN_NAME> `
+   If you are interested in checking the job details, run the command `ibmcloud code-engine job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud code-engine job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud code-engine job logs --name <JOBRUN_NAME> `
    {:tip}-->
 
 ## Test the application
@@ -278,10 +280,10 @@ Jobs in Code Engine are meant to run to completion as batch or standalone execut
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
-1. Go to the frontend UI and upload images for classification.
+1. Go to the frontend UI and **upload images** for classification.
 2. On a terminal, run the following command to create a job definition,
    ```sh
-   ibmcloud coligo jobdef create --name backend-jobdef \
+   ibmcloud code-engine jobdef create --name backend-jobdef \
    --image ibmcom/backend-job \
    --env-from-configmap backend-configuration \
    --env VR_VERSION='2018-03-19'
@@ -295,17 +297,17 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 1. Before further testing the application, let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud coligo jobdef bind --name backend-jobdef \
-   --service-instance codeengine-cos \
-   --service-credential cos-for-codeengine \
+   ibmcloud code-engine jobdef bind --name backend-jobdef \
+   --service-instance code-engine-cos \
+   --service-credential cos-for-code-engine \
    --prefix COS_JOB
    ```
    {:pre}
 2. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud coligo jobdef bind --name backend-jobdef \
-   --service-instance codeengine-vr \
-   --service-credential vr-for-codeengine \
+   ibmcloud code-engine jobdef bind --name backend-jobdef \
+   --service-instance code-engine-vr \
+   --service-credential vr-for-code-engine \
    --prefix VR_JOB
    ```
    {:pre}
@@ -314,7 +316,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 1. With the following command, run a job using the jobdefinition created above
    ```sh
-   ibmcloud coligo job run --name backend-job \
+   ibmcloud code-engine job run --name backend-job \
    --jobdef backend-jobdef \
    --image ibmcom/backend-job \
    --arraysize 1 \
@@ -324,28 +326,28 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ```
    {:pre}
 
-   When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud coligo job run --help`.
+   When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud code-engine job run --help`.
    {:tip}
 
 2. To check the logs, run the following command
    ```sh
-   ibmcloud coligo job logs --name backend-job
+   ibmcloud code-engine job logs --name backend-job
    ```
    {:pre}
 3. In the frontend UI, click on the **refresh** button to see the results for each of the uploaded images.
 4. To delete the job, run the below command
    ```sh
-   ibmcloud coligo job delete --name backend-job
+   ibmcloud code-engine job delete --name backend-job
    ```
    {:pre}
-5. Upload new images, create the job again and hit the refresh button to see the results.
+5. Upload new images, create the job again and hit the **refresh** button to see the results.
 
 ## Remove resources
 {:#cleanup}
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
    ```sh
-   ibmcloud coligo project delete --name <PROJECT_NAME>
+   ibmcloud code-engine project delete --name <PROJECT_NAME>
    ```
    {:pre}
 2. Navigate to [Resource List](https://{DomainName}/resources/)
@@ -355,3 +357,5 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 ## Related resources
 {: #related_resources}
+
+- [IBM Cloud Code Engine Documentation](/docs/codeengine)

@@ -21,6 +21,51 @@
       ]
     },
     {
+      "name": "Work In Progress",
+      "hidden": "hidden",
+      "anchor": "working",
+      "solutions": [
+        {
+          "name": "Solution Template",
+          "url": "solution-template.html",
+          "description": "Solution Template",
+          "imgSrc": ""
+        },
+        {
+          "name": "Image Classification with Code Engine",
+          "url": "image-classification-code-engine.hidden.html",
+          "description": "Create a Code Engine project and deploy an image classification application",
+          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative",
+            "Kubernetes"
+          ]
+        },
+        {
+          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
+          "url": "vpc-tg-dns-iam.hidden.html",
+          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
+          "tags": [
+            "VPC",
+            "Linux"
+          ]
+        },
+        {
+          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
+          "url": "hpc-eda.hidden.html",
+          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
+          "imgSrc": "images/solution60-hpc-eda-hidden/hpc-eda-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ]
+        }
+      ]
+    },
+    {
       "name": "Websites and Web Apps",
       "anchor": "websites",
       "solutions": [
@@ -172,7 +217,7 @@
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
-          "url": "static-files-cdn.html?pos=2",
+          "url": "static-files-cdn.html",
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
           "imgSrc": "images/solution3/Architecture.png",
           "tags": [
@@ -192,7 +237,7 @@
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
-          "url": "dynamic-content-cdn.html?pos=2",
+          "url": "dynamic-content-cdn.html",
           "description": "Use Dynamic Content Acceleration to reduce latency for dynamic and uncacheable contents of your web application.",
           "imgSrc": "images/solution52-cdn-dca/solution_52_architecture.png",
           "tags": [
@@ -402,7 +447,7 @@
       "solutions": [
         {
           "name": "Build a database-driven Slackbot",
-          "url": "slack-chatbot-database-watson.html?pos=2",
+          "url": "slack-chatbot-database-watson.html",
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
           "tags": [
@@ -446,7 +491,7 @@
       "solutions": [
         {
           "name": "Secure web application across multiple regions",
-          "url": "multi-region-webapp.html?pos=2",
+          "url": "multi-region-webapp.html",
           "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
           "imgSrc": "images/solution1/Architecture.png",
           "tags": [
@@ -464,7 +509,7 @@
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
-          "url": "multi-region-k8s-cis.html?pos=2",
+          "url": "multi-region-k8s-cis.html",
           "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
           "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
           "tags": [
@@ -581,7 +626,7 @@
         },
         {
           "name": "Mobile application with a serverless backend",
-          "url": "serverless-mobile-backend.html?pos=2",
+          "url": "serverless-mobile-backend.html",
           "description": "Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.",
           "imgSrc": "images/solution11/Architecture.png",
           "tags": [
@@ -649,7 +694,7 @@
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
-          "url": "serverless-github-traffic-analytics.html?pos=2",
+          "url": "serverless-github-traffic-analytics.html",
           "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
           "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
           "tags": [
@@ -734,46 +779,6 @@
             "cloud_foundry"
           ],
           "supportsCloudShell": "yes_with_modifications"
-        }
-      ]
-    },
-    {
-      "name": "Work In Progress",
-      "hidden": "hidden",
-      "anchor": "working",
-      "solutions": [
-        {
-          "name": "Solution Template",
-          "url": "solution-template.html",
-          "description": "Solution Template",
-          "imgSrc": ""
-        },
-        {
-          "name": "Image Classification with Code Engine",
-          "url": "image-classification-code-engine.hidden.html",
-          "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-codeengine-hidden/architecture_diagram.png",
-          "tags": [
-            "code engine",
-            "Knative",
-            "Kubernetes"
-          ]
-        },
-        {
-          "name": "PHP web application on a LAMP Stack in VPC Gen2",
-          "url": "lamp-stack-on-vpc.hidden.html",
-          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
-          "imgSrc": "images/solution4/Architecture.png",
-          "tags": [
-            "VPC",
-            "LAMP Stack",
-            "Ubuntu",
-            "Linux",
-            "Apache",
-            "MySQL",
-            "PHP",
-            "WordPress"
-          ]
         }
       ]
     },
@@ -891,6 +896,26 @@
             "vpc"
           ],
           "supportsCloudShell": "yes_with_modifications"
+        },
+        {
+          "name": "PHP web application on a LAMP Stack in VPC Gen2",
+          "url": "lamp-stack-on-vpc.html",
+          "description": "Create an Ubuntu Linux virtual server on VPC, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
+          "imgSrc": "images/solution56-lamp-stack-on-vpc/Architecture.png",
+          "tags": [
+            "VPC",
+            "LAMP Stack",
+            "Ubuntu",
+            "Linux",
+            "Apache",
+            "MySQL",
+            "PHP",
+            "WordPress"
+          ],
+          "requirements": [
+            "vpc"
+          ],
+          "supportsCloudShell": "yes"
         },
         {
           "url": "/containers/containers-vpc_ks_tutorial",

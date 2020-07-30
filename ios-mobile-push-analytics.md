@@ -33,7 +33,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 - Download the code and setup client SDK.
 - Send and monitor {{site.data.keyword.mobilepushshort}}.
 
-## Services
+## Services used
 {:#services}
 
 This tutorial uses the following runtimes and services:
