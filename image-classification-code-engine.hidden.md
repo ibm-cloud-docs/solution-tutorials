@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-07-27"
+lastupdated: "2020-07-30"
 lasttested: "2020-06-22"
 
 ---
@@ -227,7 +227,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ```sh
    ibmcloud code-engine configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
-   --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
+   --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
    {:pre}
 
@@ -280,7 +280,7 @@ Jobs in Code Engine are meant to run to completion as batch or standalone execut
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
-1. Go to the frontend UI and upload images for classification.
+1. Go to the frontend UI and **upload images** for classification.
 2. On a terminal, run the following command to create a job definition,
    ```sh
    ibmcloud code-engine jobdef create --name backend-jobdef \
@@ -340,7 +340,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ibmcloud code-engine job delete --name backend-job
    ```
    {:pre}
-5. Upload new images, create the job again and hit the refresh button to see the results.
+5. Upload new images, create the job again and hit the **refresh** button to see the results.
 
 ## Remove resources
 {:#cleanup}
