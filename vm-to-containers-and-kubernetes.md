@@ -5,13 +5,8 @@ copyright:
 lastupdated: "2019-12-12"
 lasttested: "2019-06-10"
 
-content-type: tutorial
-services: containers, Registry
-account-plan:
-completion-time:
 ---
 
-{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -21,9 +16,6 @@ completion-time:
 
 # Moving a VM based app to Kubernetes
 {: #vm-to-containers-and-kubernetes}
-{: toc-content-type="tutorial"}
-{: toc-services="containers, Registry"}
-{: toc-completion-time=""}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

@@ -5,13 +5,8 @@ copyright:
 lastupdated: "2020-01-23"
 lasttested: "2019-05-28"
 
-content-type: tutorial
-services: containers, cloud-foundry-public, openwhisk, Registry, Cloudant, cloud-object-storage, cis, virtual-servers, Db2onCloud, certificate-manager
-account-plan:
-completion-time:
 ---
 
-{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -25,9 +20,6 @@ completion-time:
 
 # Strategies for resilient applications
 {: #strategies-for-resilient-applications}
-{: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-foundry-public, openwhisk, Registry, Cloudant, cloud-object-storage, cis, virtual-servers, Db2onCloud, certificate-manager"}
-{: toc-completion-time=""}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
