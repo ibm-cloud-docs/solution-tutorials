@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2020-01-31"
 lasttested: "2019-06-20"
 
+content-type: tutorial
+services: mobilepush
+account-plan:
+completion-time: 1h
+
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -16,6 +22,14 @@ lasttested: "2019-06-20"
 
 # Android native mobile application with Push Notifications
 {: #android-mobile-push-analytics}
+{: toc-content-type="tutorial"}
+{: toc-services="mobilepush"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Learn how easy it is to quickly create a native Android application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 
@@ -29,14 +43,6 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Download the code and complete required setup.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
-
-## Architecture
-{:#architecture}
 ![](images/solution9/Architecture.png)
 1. The user creates a project on the App Development page.
 2. Adds and configures the push notifications SDK to interact with FCM.
@@ -52,6 +58,7 @@ This tutorial uses the following runtimes and services:
 
 ## Create Android mobile app from starter kit
 {: #get_code}
+{: step}
 The {{site.data.keyword.Bluemix_notm}} App Development allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [App Development](https://{DomainName}/appservice/dashboard) and click on **Get Started**.
 2. Scroll and click on **Mobile App with Push Notifications** starter kit.
@@ -67,6 +74,7 @@ In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 ## Obtain FCM credentials
 {: #obtain_fcm_credentials}
+{: step}
 
 Firebase Cloud Messaging (FCM) is the gateway used to deliver {{site.data.keyword.mobilepushshort}} to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the {{site.data.keyword.mobilepushshort}} service on the console, you need to get your FCM credentials (Sender ID and API key).
 
@@ -99,6 +107,7 @@ In the next step, you will download the scaffolded code and setup the Push Andro
 
 ## Download the code and complete required setup
 {: #download_code}
+{: step}
 
 If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} App Development to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
 The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client SDK included. The client SDK is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
@@ -111,6 +120,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
 
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
 {: #configure_push}
+{: step}
 
 1. {{site.data.keyword.mobilepushshort}} SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
 

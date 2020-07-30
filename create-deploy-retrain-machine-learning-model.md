@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-05-27"
 lasttested: "2020-05-07"
+
+content-type: tutorial
+services: cloud-object-storage, Db2whc
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2020-05-07"
 
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-object-storage, Db2whc"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a Python function to wrap the deployed model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed function (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {:shortdesc}
 
@@ -39,17 +53,6 @@ In the terminology of machine learning, classification is considered an instance
 * Monitor the deployed model
 * Retrain your model.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
-* [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
-* [{{site.data.keyword.aios_full}}](https://{DomainName}/catalog/services/watson-openscale)
-
-## Architecture
-{: #architecture}
 ![](images/solution22-build-machine-learning-model/architecture_diagram.png)
 
 1. The admin uploads a CSV file from a local machine.
@@ -60,6 +63,7 @@ This tutorial uses the following runtimes and services:
 
 ## Import data to a project
 {: #import_data_project}
+{: step}
 
 A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
 
@@ -98,6 +102,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 ## Associate the {{site.data.keyword.pm_short}} service
 {:#associate_services}
+{: step}
 
 1. In the top navigation menu, click on `iris-project`, click on **Settings** in the top bar and scroll to **Associated Services** section.
 2. Click **Add Service** and choose **{{site.data.keyword.watson}}**.
@@ -109,6 +114,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 ## Build a machine learning model
 {:#build_model}
+{: step}
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. Select **From blank**.
@@ -148,6 +154,7 @@ The accuracy of the model will be improved in the later part of the tutorial.
 
 ## Deploy and test your model
 {:#deploy_model}
+{: step}
 
 In this section, you will deploy the saved model and test the deployed model,
 
@@ -175,6 +182,7 @@ In this section, you will deploy the saved model and test the deployed model,
 
 ## Try out the API
 {:#try_api}
+{: step}
 
 Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
 
@@ -227,6 +235,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
+{: step}
 
 {{site.data.keyword.aios_full}} tracks and measures outcomes from your AI models, and helps ensure they remain fair, explainable, and compliant wherever your models were built or are running. {{site.data.keyword.aios_short}} also detects and helps correct the drift in accuracy when an AI model is in production.
 
@@ -347,6 +356,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
 2. Delete the services which you created for this tutorial.

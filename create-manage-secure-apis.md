@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-05-21"
 lasttested: "2019-05-21"
+
+content-type: tutorial
+services: cloud-foundry-public, apiconnect
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-05-21"
 
 # Create, secure and manage REST APIs
 {: #create-manage-secure-apis}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, apiconnect"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial demonstrates how to create REST APIs using the LoopBack Node.js API Framework. With Loopback you can quickly create REST APIs that connect devices and browsers to data and services. You'll also add management, visibility, security and rate limiting to your APIs using {{site.data.keyword.apiconnect_long}}.
 {:shortdesc}
@@ -29,16 +43,6 @@ This tutorial demonstrates how to create REST APIs using the LoopBack Node.js AP
 * Publish your API on {{site.data.keyword.Bluemix_notm}} to reach developers
 * Bring existing APIs into {{site.data.keyword.apiconnect_short}}
 * Securely expose and control access to systems of record
-
-## Services used
-
-This tutorial uses the following runtimes and services:
-
-* [Loopback](https://loopback.io/)
-* [{{site.data.keyword.apiconnect_short}}](https://{DomainName}/docs/services/apiconnect?topic=apiconnect-index#index)
-* [SDK for Node.js](https://{DomainName}/catalog/starters/sdk-for-nodejs) Cloud Foundry App
-
-## Architecture
 
 ![Architecture](images/solution13/Architecture.png)
 
@@ -51,6 +55,7 @@ This tutorial uses the following runtimes and services:
 * Download and install [Node.js](https://nodejs.org/en/download/) version 8.15.0, or a higher 8.x.x version. It is recommended to use [nvm](https://github.com/creationix/nvm) to manage your Node.js versions.
 
 ## Create a REST API in Node.js
+{: step}
 
 {: #create_api}
 In this section, you will create an API in Node.js using [LoopBack](https://loopback.io/doc/index.html). LoopBack is a highly-extensible, open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding.
@@ -109,6 +114,7 @@ A model is a JavaScript object with both Node and REST APIs that represents data
 ![Model generator](images/solution13/models.png)
 
 ## Create {{site.data.keyword.apiconnect_short}} service
+{: step}
 
 To prepare for the next steps, you will create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}}. {{site.data.keyword.apiconnect_short}} acts as the gateway to your API and also provides management, security and rate limits.
 
@@ -116,6 +122,7 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
+{: step}
 
 {: #publish}
 You will use the API Designer to deploy your application to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application and also publish your API definition to **{{site.data.keyword.apiconnect_short}}**. The API Designer is your local toolkit. If you closed it, relaunch it with `apic edit` from the project directory.
@@ -142,6 +149,7 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
 The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
 
 ## API Gateway
+{: step}
 
 Until now, you have been designing and testing your API locally. In this section, you will use {{site.data.keyword.apiconnect_short}} to test your deployed API on {{site.data.keyword.Bluemix_notm}}.
 
@@ -165,6 +173,7 @@ Your managed and secure API URL is displayed next to each operation and it shoul
 {: tip}
 
 ## Rate Limiting
+{: step}
 
 Setting rate limits enables you to manage the network traffic for your APIs and for specific operations within your APIs. A rate limit is the maximum number of calls allowed in a particular time interval.
 

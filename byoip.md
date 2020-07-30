@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # Bring Your Own IP Address
 {: #byoip}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Bring Your own IP (BYOIP) is a frequent requirement where its desired to connect existing client networks to infrastructure provisioned on the {{site.data.keyword.Bluemix_notm}}. The intent is typically to minimize change to the clients network routing configuration and operations with the adoption of a single IP address space based on the clients existing IP addressing scheme.
 
