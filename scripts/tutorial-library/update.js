@@ -234,7 +234,7 @@ while ((currentH2Index = readUntil(lines, currentH2Index, (value) => {
 }))) {
 
   if (notAStep.find((toIgnore) => {
-    return lines[currentH2Index].indexOf(toIgnore) >= 0
+    return lines[currentH2Index].toLowerCase().indexOf(toIgnore.toLowerCase()) >= 0
   })) {
     currentH2Index = currentH2Index +1;
     continue;
