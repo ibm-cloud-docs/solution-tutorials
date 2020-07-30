@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-05-13"
-lasttested: "2020-04-21"
+lastupdated: "2020-07-27"
+lasttested: "2020-07-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -95,10 +95,15 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
+- Create an {{site.data.keyword.openshiftshort}} cluster:
+  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
+  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
+
+<!--
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest, Default version of OpenShift**.
+2. Set the **Orchestration service** to **Latest**.
 3. Select your OCP entitlement.
 4. Under **Location**,
    - Select a **Resource group**
@@ -111,6 +116,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Review **Infrastructure permissions checker** to verify the required permissions
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+-->
 
 ### Configure CLI
 
