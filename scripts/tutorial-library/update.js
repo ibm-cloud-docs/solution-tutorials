@@ -129,6 +129,10 @@ if (Object.keys(servicesMap).length == 0) {
 }
 
 const lines = template.split('\n');
+if (readUntil(lines, 0, (value) => value.indexOf('content-type: tutorial') >= 0)) {
+  log('Already processed');
+  exit(0);
+}
 
 // remove the "Services used" section and extract the services used
 const servicesUsedIndex = readUntil(lines, 0, (value) => value.startsWith('## Services '));
