@@ -188,13 +188,17 @@ lines.splice(firstAttributeDefinitionIndex, 0,
 );
 
 // first H1
-const firstH1Index = lines.findIndex((value) => {
+let firstH1Index = lines.findIndex((value) => {
   return value.startsWith('# ');
 });
 if (firstH1Index == -1) {
   log('No H1 found');
   exit(1);
 }
+if (lines[firstH1Index + 1].startsWith('{')) {
+  firstH1Index++;
+}
+
 lines.splice(firstH1Index + 1, 0, 
   '{: toc-content-type="tutorial"}',
   `{: toc-services="${services}"}`,
