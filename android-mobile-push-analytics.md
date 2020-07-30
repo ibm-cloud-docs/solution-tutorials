@@ -29,7 +29,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Download the code and complete required setup.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
 
-## Services
+## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
