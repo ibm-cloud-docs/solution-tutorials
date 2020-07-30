@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2020-07-30"
 lasttested: "2020-06-22"
 
+content-type: tutorial
+services: codeengine, containers, cloud-object-storage, visual-recognition
+account-plan:
+completion-time: 2h
+
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -22,6 +28,14 @@ lasttested: "2020-06-22"
 
 # Image classification with Code Engine
 {: #image_classification_code_engine}
+{: toc-content-type="tutorial"}
+{: toc-services="codeengine, containers, cloud-object-storage, visual-recognition"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 > WORK-IN-PROGRESS
 
@@ -39,21 +53,6 @@ Code Engine helps developers by hiding many of the complex tasks like configurat
 * Understand how easy it is to deploy and scale an application using Code Engine.
 * Learn the use of jobs to execute run to completion workloads.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cloud_notm}} Code Engine](https://{DomainName}/knative/overview)
-* [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
-
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -80,6 +79,7 @@ You will find instructions to download and install these tools for your operatin
 
 ## Create a IBM Code Engine project
 {: #create_coligo_project}
+{: step}
 
 In this section, you will create a Code Engine project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
@@ -99,6 +99,7 @@ In this section, you will create a Code Engine project. A project is a grouping 
 
 ## Deploy the frontend and backend apps as Code Engine applications
 {: #deploy_app}
+{: step}
 
 In this section, you will deploy your front-end web application to Code Engine under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
 
@@ -174,6 +175,7 @@ To check the autoscaling capabilities of Code Engine,
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {:connect_cloud_services}
+{: step}
 
 In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
@@ -271,6 +273,7 @@ Now that you have the backend application connected to the frontend application,
 
 ## Test the application
 {: #test_the_app}
+{: step}
 
 Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
 
@@ -344,6 +347,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 ## Remove resources
 {:#cleanup}
+{: step}
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
    ```sh

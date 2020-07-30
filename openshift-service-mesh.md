@@ -4,8 +4,14 @@ copyright:
   years: 2020
 lastupdated: "2020-05-27"
 lasttested: "2020-05-27"
+
+content-type: tutorial
+services: openshift, containers
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-05-27"
 
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #openshift-service-mesh}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, containers"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {:shortdesc}
@@ -33,19 +47,6 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-
-- [{{site.data.keyword.openshiftlong}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 ![](images/solution57-openshift-service-mesh/Architecture.png)
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
@@ -58,6 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
+{: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
@@ -83,6 +85,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 <!--
 ## Configure the access to your cluster
 {: #access-cluster}
+{: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
 1. Select the account where you have been invited.
@@ -110,6 +113,7 @@ To avoid installing the command line, the recommended approach is to use the {{s
 
 ## Install Service Mesh - Istio
 {: #install_istio}
+{: step}
 
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
 
@@ -157,6 +161,7 @@ You successfully installed Istio into your cluster.
 
 ## Deploy the BookInfo application on Service Mesh
 {: #deploy_bookinfo_app}
+{: step}
 
 The [BookInfo application](https://istio.io/docs/examples/bookinfo/) displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
@@ -225,6 +230,7 @@ Your bookinfo app is running, but you can't access it as the service is not yet 
 
 ## Expose the app with the Istio Ingress Gateway and Route
 {: #ingress_gateway_route}
+{: step}
 
 The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer or node port on each service.
 
@@ -250,6 +256,7 @@ An Ingress Gateway resource can be created to allow external requests through th
 
 ## Observe service telemetry: metrics and tracing
 {: #istio_telemetry}
+{: step}
 
 Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
 
@@ -290,6 +297,7 @@ Kiali has a number of views to help you visualize your services. Click through t
 
 ## Perform traffic management
 {: #traffic_management}
+{: step}
 
 Istio’s traffic routing rules let you easily control the flow of traffic and API calls between services. Istio simplifies configuration of service-level properties like circuit breakers, timeouts, and retries, and makes it easy to set up important tasks like A/B testing, canary rollouts, and staged rollouts with percentage-based traffic splits. It also provides out-of-box failure recovery features that help make your application more robust against failures of dependent services or the network.
 
@@ -381,6 +389,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 
 ## Secure your services
 {: #secure_services}
+{: step}
 
 Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
 
@@ -397,6 +406,7 @@ Istio can secure the communication between microservices without requiring appli
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {: #enable_https}
+{: step}
 In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the istio-ingressgateway Pod.
 
 1. Launch the {{site.data.keyword.openshiftshort}} console
@@ -413,6 +423,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 
 ## Remove resources
 {: #cleanup}
+{: step}
 
 ### Delete the application project
 

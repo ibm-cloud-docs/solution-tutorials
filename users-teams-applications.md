@@ -4,8 +4,14 @@ copyright:
   years: 2020
 lastupdated: "2020-03-18"
 lasttested: "2019-04-19"
+
+content-type: tutorial
+services: containers, Registry, account, cloud-object-storage, cloud-foundry-public, Cloudant
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-19"
 
 # Best practices for organizing users, teams, applications
 {: #users-teams-applications}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, Registry, account, cloud-object-storage, cloud-foundry-public, Cloudant"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
 {:shortdesc}
@@ -33,18 +47,6 @@ Isolating the underlying resources, implementing governance and access policies,
 * Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
-
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.iamlong}}](https://{DomainName}/docs/iam?topic=iam-iamoverview#iamoverview)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
-* [Cloud Foundry](https://{DomainName}/catalog/?category=cf-apps&search=foundry)
-* [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Define a project
 

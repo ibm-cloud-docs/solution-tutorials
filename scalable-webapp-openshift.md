@@ -4,8 +4,14 @@ copyright:
   years: 2019, 2020
 lastupdated: "2020-07-27"
 lasttested: "2020-07-27"
+
+content-type: tutorial
+services: openshift, containers, Registry
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-07-27"
 
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, containers, Registry"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
@@ -34,19 +48,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -85,6 +86,7 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 -->
 <!--#/isworkshop#-->
@@ -92,6 +94,7 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
+{: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
@@ -135,6 +138,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 <!--
 ## Configure the access to your cluster
 {: #access-cluster}
+{: step}
 
 `ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
 
@@ -165,6 +169,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 
 ## Generate a starter kit
 {: #generate_starter_kit}
+{: step}
 
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
@@ -211,6 +216,7 @@ In this step, you will create a deploy token to allow read-only access to your r
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
+{: step}
 
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 
@@ -330,6 +336,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
+{: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
@@ -436,6 +443,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 <!--##istutorial#-->
 ## Use your own custom domain
 {: #custom_domain}
+{: step}
 
 This section requires you to own a custom domain and to be able to modify the DNS records of the domain. You will need to create a `CNAME` record pointing to the IBM-provided domain.
 
@@ -461,6 +469,7 @@ This section requires you to own a custom domain and to be able to modify the DN
 
 ## Monitor the app
 {:#monitor_application}
+{: step}
 
 In this section, you will learn to monitor the health and performance of your application.
 {{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
@@ -489,6 +498,7 @@ In this section, you will learn to monitor the health and performance of your ap
 
 ## Scale the app
 {:#scaling_app}
+{: step}
 
 In this section, you will learn how to autoscale and also manually scale your application.
 
@@ -525,6 +535,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 
 ## Remove resources
 {:#cleanup}
+{: step}
 
 * Delete all application resource objects:
    ```sh

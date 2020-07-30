@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-02-03"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # Isolating workloads with a secure private network
 {: #secure-network-enclosure}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.
 
@@ -39,16 +53,6 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Define VLANs and IP subnets to deploy virtual machines and bare-metal servers
 * Secure the VRA and enclosure with firewall rules
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [Virtual Router Appliance](https://{DomainName}/catalog/infrastructure/virtual-router-appliance)
-
-This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
-
-## Architecture
-{: #architecture}
 
 ![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png) 
 
@@ -100,6 +104,7 @@ To ensure that sufficient VLANs are available on the same data center router and
 
 ## Provision Virtual Router Appliance
 {: #VRA}
+{: step}
 
 The first step is to deploy a Virtual Router Appliance (VRA) that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}}-provided public facing transit VLAN, a gateway and, optionally, a hardware firewall to create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial, a VRA provides this gateway and firewall for the perimeter.
 
@@ -128,6 +133,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
 ## Initial VRA setup
 {: #initial_VRA_setup}
+{: step}
 
 1. From your workstation, use the SSL VPN to log in to the VRA using the default **vyatta** account, accepting the SSH security prompts.
    ```bash
@@ -189,6 +195,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
 ## Order the first virtual server
 {: #order_virtualserver}
+{: step}
 
 A virtual server is created at this point to aid in diagnosis of VRA configuration errors. Successful access to the VSI is validated over the {{site.data.keyword.Bluemix_notm}} private network before access to it is routed via the VRA in a later step.
 
@@ -215,6 +222,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 
 ## Route VLAN access through the VRA
 {: #routing_vlan_via_vra}
+{: step}
 
 The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
 
@@ -242,6 +250,7 @@ This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} conso
 
 ## Configure IP routing and secure enclosure
 {: #vra_setup}
+{: step}
 
 When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
@@ -441,6 +450,7 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
 
 ## Secure the VRA
 {: #securing_the_vra}
+{: step}
 
 1. Apply VRA security policy. By default, policy-based firewall zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration:
    ```bash
@@ -470,6 +480,7 @@ This completes the setup of the secure private network enclosure protecting a si
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 In this step, you will clean up the resources to remove what you created.
 

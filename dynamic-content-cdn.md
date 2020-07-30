@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2019-10-24"
 lasttested: "2019-10-24"
 
+content-type: tutorial
+services: CDN, containers, Registry, dns
+account-plan:
+completion-time: 2h
+
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -22,6 +28,14 @@ lasttested: "2019-10-24"
 
 # Accelerate a dynamic website using Dynamic Content Acceleration
 {: #dynamic-content-cdn}
+{: toc-content-type="tutorial"}
+{: toc-services="CDN, containers, Registry, dns"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. This tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
 
@@ -40,19 +54,6 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -89,6 +90,7 @@ In addition:
 - and obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
 ## Deploy a dynamic web application to be accelerated
+{: step}
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
@@ -156,6 +158,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
 ## Create a CDN instance
+{: step}
 
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
@@ -181,6 +184,7 @@ After you have successfully created the CDN mapping:
    * You application is now accessible through the CNAME only: `https://<CNAME>`.  Note that the application is not available via todo.exampledomain.net - this will take a little additional configuration and associated delay.
 
 ## Enable Dynamic Content Acceleration (DCA)
+{: step}
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
 
@@ -195,18 +199,21 @@ To activate DCA:
 5. Click **Save**. You have successfully accelerated your application deployed in {{site.data.keyword.containershort_notm}} cluster with **Dynamic Content Acceleration**.
 
 ## Verify DCA performance
+{: step}
 
 You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.
 
 After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
 
 ## Conclusion
+{: step}
 
 With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, {{site.data.keyword.cdn_full}} consults the most recent data to send that request over the best path to the origin.
 
 With **Prefetching** enabled, DCA also finds which content is required by the application and preemptively fetches content from origin and stores it close to the user by analyzing user behavior data and web sessions. The **Image compression** option serves compressed images to reduces the amount of content required to load a page, especially when end users have slow network speed. DCA also employs TCP-layer optimizations that accelerate connection set-up and reduce round trips.
 
 ## Remove resources
+{: step}
 
 * Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster).
 * Delete the image from the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry).

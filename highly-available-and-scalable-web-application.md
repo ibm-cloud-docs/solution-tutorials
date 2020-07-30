@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019, 2020
 lastupdated: "2020-04-08"
 lasttested: "2020-04-08"
+
+content-type: tutorial
+services: virtual-servers, cis, loadbalancer-service, FileStorage
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-04-08"
 
 # Use Virtual Servers to build highly available and scalable web app
 {: #highly-available-and-scalable-web-application}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-servers, cis, loadbalancer-service, FileStorage"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
 
@@ -34,19 +48,6 @@ This tutorial walks you through a scenario with the creation of:
 * Provision a {{site.data.keyword.loadbalancer_short}} to distribute requests to the application servers
 * Extend the solution by adding a second location for better resiliency and higher availability
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/load-balancer-group)
-* [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
@@ -85,6 +86,7 @@ Contact your Infrastructure master user to get the following permissions:
 
 ## Provision one server for the database
 {: #database_server}
+{: step}
 
 In this section, you configure one server to act as the master database.
 
@@ -109,6 +111,7 @@ In this section, you configure one server to act as the master database.
 
 ## Install and configure MySQL
 {: #mysql}
+{: step}
 
 The server does not come with a database. In this section, you install MySQL on the server.
 
@@ -205,6 +208,7 @@ By default MySQL only listens on the local interface. The application servers wi
 
 ## Create a file storage for database backups
 {: #database_backup}
+{: step}
 
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
@@ -316,6 +320,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
 
 ## Provision two servers for the PHP application
 {: #app_servers}
+{: step}
 
 In this section, you will create two web application servers.
 
@@ -335,6 +340,7 @@ In this section, you will create two web application servers.
 
 ## Create a file storage to share files between the application servers
 {: shared_storage}
+{: step}
 
 This file storage is used to share the application files between **app1** and **app2** servers.
 
@@ -413,6 +419,7 @@ Eventually all steps related to the configuration of the servers could be automa
 
 ## Install and configure the PHP application on the application servers
 {: #php_application}
+{: step}
 
 This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
 
@@ -588,6 +595,7 @@ If you configured the application servers with only a private network link, you 
 
 ## Provision one load balancer server in front of the application servers
 {: #load_balancer}
+{: step}
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
@@ -652,6 +660,7 @@ The load balancer is configured to check the health of the servers and to redire
 
 ## Extend the solution with a 2nd location (optional)
 {: #secondregion}
+{: step}
 
 To increase resiliency and availability, you can extend the infrastructure setup with a second location and have your application running in two locations.
 
@@ -676,6 +685,7 @@ To implement this architecture, you would need to do the following in location t
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*

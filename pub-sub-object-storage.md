@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-05-08"
 lasttested: "2020-05-08"
+
+content-type: tutorial
+services: containers, EventStreams, cloud-object-storage, Registry
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2020-05-08"
 
 # Asynchronous data processing using object storage and pub/sub messaging
 {: #pub-sub-object-storage}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, EventStreams, cloud-object-storage, Registry"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
 
 {:shortdesc}
@@ -31,18 +45,6 @@ You will simulate this pattern using a file processing example. First you will c
 * Implement a producer-consumer pattern with {{site.data.keyword.messagehub}}
 * Bind services to a Kubernetes cluster
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented as a Cloud Foundry application or serverless function.
 
@@ -74,6 +76,7 @@ You will find instructions to download and install these tools for your operatin
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
+{: step}
 
 1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
    1. Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster
@@ -100,6 +103,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
 
 ## Create a {{site.data.keyword.messagehub}} instance
+{: step}
  {: #create_messagehub}
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
@@ -125,6 +129,7 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 
 ## Create an {{site.data.keyword.objectstorageshort}} service
 {: #create_cos}
+{: step}
 
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
 
@@ -143,6 +148,7 @@ The `cluster service bind` command creates a cluster secret that holds the crede
    {:pre}
 
 ## Deploy the UI application to the cluster
+{: step}
 
 The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
 
@@ -164,6 +170,7 @@ The UI application is a simple Node.js Express web application which allows the 
    ![](images/solution25/files_uploaded.png)
 
 ## Deploy the worker application to the cluster
+{: step}
 
 The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-topic` topic upon completion. The UI application will listen this topic and update the status.
 
@@ -187,6 +194,7 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 Navigate to [Resource List](https://{DomainName}/resources/) and
 1. Delete Kubernetes cluster `mycluster`

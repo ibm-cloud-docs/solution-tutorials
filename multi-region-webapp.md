@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-11-18"
 lasttested: "2019-05-20"
+
+content-type: tutorial
+services: cloud-foundry-public, cis, ContinuousDelivery
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-05-20"
 
 # Secure web application across multiple regions
 {: #multi-region-webapp}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, cis, ContinuousDelivery"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) pipeline.
 
@@ -28,17 +42,6 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
-## Services used
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/cloud-foundry?runtime=sdk-for-nodejs) Cloud Foundry App
-* [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) for DevOps
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-
 This tutorial involves an active/active scenario where two copies of the application are deployed in two different locations and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy location if one copy fails.
 
 <p style="text-align: center;">
@@ -48,6 +51,7 @@ This tutorial involves an active/active scenario where two copies of the applica
 
 ## Create a Node.js application
 {: #create}
+{: step}
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
@@ -63,6 +67,7 @@ Next, let's push the source code of your application to a repository and deploy 
 
 ## Set up source control and {{site.data.keyword.contdelivery_short}}
 {: #devops}
+{: step}
 
 In this step, you set up a git source control repository to store your code and then create a pipeline, which deploys any code changes automatically.
 
@@ -102,6 +107,7 @@ Continue making further changes to your application and periodically commit your
 
 ## Deploy to another location
 {: #deploy_another_region}
+{: step}
 
 Next, we will deploy the same application to a different {{site.data.keyword.Bluemix_notm}} location. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another location.
 
@@ -115,6 +121,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 
 ## Register a custom domain with {{site.data.keyword.cis_full_notm}}
 {: #domain_cis}
+{: step}
 
 [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.
 
@@ -130,6 +137,7 @@ When deploying a real world application, you will likely want to use your own do
   {:tip}
 
 ## Add Global Load Balancing to the application
+{: step}
 
 {: #add_glb}
 
@@ -161,6 +169,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. To complete the configuration, you will update the applications with routes using the custom domain.
 
 ## Configure custom domain and routes to your application
+{: step}
 
 {: #add_domain}
 
@@ -221,6 +230,7 @@ For the application deployed in London, use a separate manifest to configure the
 Finally commit the changes to the manifest files and make sure the builds for both locations succeed.
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
+{: step}
 
 It is possible that you do not want to utilize a Global Load Balancer in front of your multi-location applications, but need to map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
@@ -254,6 +264,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 
 ## Bind SSL certificate to your application
 {: #ssl}
+{: step}
 
 1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
@@ -262,6 +273,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 
 ## Monitor application performance
 {: #monitor}
+{: step}
 
 Lets check the health of your multi-location application.
 
@@ -272,6 +284,7 @@ Lets check the health of your multi-location application.
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
 
 ## Remove resources
+{: step}
 
 * Delete the toolchain
 * Delete the two Cloud Foundry applications deployed in the two locations

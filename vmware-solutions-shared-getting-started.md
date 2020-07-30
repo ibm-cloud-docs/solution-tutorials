@@ -4,8 +4,14 @@ copyright:
   years: 2020
 lastupdated: "2020-05-22"
 lasttested: "2020-05-22"
+
+content-type: tutorial
+services: vmwaresolutions, schematics
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -21,6 +27,14 @@ lasttested: "2020-05-22"
 
 # Getting Started with {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started}
+{: toc-content-type="tutorial"}
+{: toc-services="vmwaresolutions, schematics"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
   - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
@@ -38,17 +52,6 @@ On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offering
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
 * Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
-## Services used
-{: #services}
-
-This tutorial uses the following services:
-* [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console)
-* [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
   ![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png)
@@ -75,6 +78,7 @@ This tutorial requires:
 
 ## Create services
 {: #create_services}
+{: step}
 
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
@@ -114,6 +118,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 
 ## Review the Terraform template
 {: #review_terraform_template}
+{: step}
 
 [Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a data center infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
 
@@ -314,6 +319,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ## Deploy using Schematics
 {: #deploy_using_schematics}
+{: step}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
 
@@ -343,6 +349,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ## Access deployed virtual machine and test 
 {: #access-virtual-machine}
+{: step}
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
 2. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
@@ -360,6 +367,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
 2. Click on the action menu next to the `vmware-tutorial` workspace.
