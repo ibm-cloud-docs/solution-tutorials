@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-06-25"
 lasttested: "2019-06-25"
+
+content-type: tutorial
+services: virtual-servers, cloud-object-storage, terraform
+account-plan:
+completion-time: 1h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-06-25"
 
 # Deploy a LAMP stack using Terraform
 {: #infrastructure-as-code-terraform}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-servers, cloud-object-storage, terraform"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -26,17 +40,6 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 * Configure Terraform and the {{site.data.keyword.Bluemix_notm}} Provider for Terraform.
 * Use Terraform to create, update, scale and finally destroy a LAMP stack configuration.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -63,6 +66,7 @@ In addition, contact your Infrastructure master user to get the following permis
 - API Key
 
 ## Prerequisites
+{: step}
 
 {: #prereq}
 
@@ -78,6 +82,7 @@ ibmcloud_api_key = "<platform_api_key>"
 Note the values for the **SoftLayer** username and api key, and the {{site.data.keyword.Bluemix_notm}} API Key.  These will be used in the next section.
 
 ## Prepare terraform configuration
+{: step}
 
 {: #terraformconfig}
 
@@ -99,6 +104,7 @@ Note on SSH key - The public key from a private/public key pair is required to c
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}
+{: step}
 In this section, you will learn how to create a LAMP stack server from the terraform configuration sample. The configuration is used to provision a virtual machine instance and install **A**pache, **M**ySQL (**M**ariaDB), and **P**HP onto that instance.
 
 1. Navigate to the folder of the repo you cloned.
@@ -124,6 +130,7 @@ In this section, you will learn how to create a LAMP stack server from the terra
 {: tip}
 
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
+{: step}
 
 {: #modify}
 
@@ -170,6 +177,7 @@ In this section, you are going to look at how to scale the virtual server resour
 
 ## Verify VM and {{site.data.keyword.cos_short}}
 {: #verifyvm}
+{: step}
 
 In this section, you are going to verify the VM and {{site.data.keyword.cos_short}} to make sure it has been created successfully.
 
@@ -189,6 +197,7 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 
 ## Remove resources
 {: #deleteresources}
+{: step}
 
 Delete resources using the following command:
    ```bash

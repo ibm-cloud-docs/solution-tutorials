@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-01-10"
 lasttested: "2019-06-18"
+
+content-type: tutorial
+services: containers, cloud-foundry-public, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, Monitoring-with-Sysdig
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-06-18"
 
 # Plan, create and update deployment environments
 {: #plan-create-update-deployments}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, cloud-foundry-public, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, Monitoring-with-Sysdig"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
 {:shortdesc}
@@ -36,22 +50,6 @@ Multiple environments are pretty common in a project to support the different ph
 * Write scripts using the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the deployment of these environments
 * Deploy these environments in your account
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
-* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.at_short}}](https://{DomainName}/observe/activitytracker/create)
-* [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring/create)
-* [HashiCorp Terraform](https://www.terraform.io/)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -66,6 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Overview of the available tools
 {: #tools}
+{: step}
 
 The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
@@ -75,6 +74,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
 ## Write scripts to automate the deployment
 {: #scripts}
+{: step}
 
 As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, adding a continuous integration pipeline to automatically deploy infrastructure changes.
 
@@ -281,6 +281,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```
 
 ## Deploy this environment in your account
+{: step}
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 
@@ -628,6 +629,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
 You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
+{: step}
 
 1. Navigate to the `development` folder under `roles`
    ```sh

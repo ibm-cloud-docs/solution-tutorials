@@ -5,9 +5,15 @@ copyright:
 lastupdated: "2020-01-31"
 lasttested: "2019-05-23"
 
+content-type: tutorial
+services: containers, Registry, ContinuousDelivery
+account-plan:
+completion-time: 1h
+
 ---
 
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -18,6 +24,14 @@ lasttested: "2019-05-23"
 
 # Continuous Deployment to Kubernetes
 {: #continuous-deployment-to-kubernetes}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, Registry, ContinuousDelivery"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like Slack notifications.
 
@@ -33,20 +47,6 @@ This tutorial walks you through the process setting up a continuous integration 
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-- [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 ![](images/solution21/Architecture.png)
 
@@ -81,6 +81,7 @@ In addition, make sure you:
 <!--##istutorial#-->
 ## Create development Kubernetes cluster
 {: #create_kube_cluster}
+{: step}
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
@@ -104,6 +105,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 <!--
 ## Log in {{site.data.keyword.cloud_notm}}
 {: #access-cluster}
+{: step}
 
 1. Open the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}).
 2. Switch to the account where you have been invited.
@@ -112,6 +114,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 ## Create a starter application
 {: #create_application}
+{: step}
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
@@ -122,6 +125,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
+{: step}
 
 Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
 
@@ -142,6 +146,7 @@ The toolchain will build your application and deploy it to the cluster.
    ![](images/solution21/Logs.png)
 
 ## Modify the application and deploy the updates
+{: step}
 
 1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
 1. Click the **Eclipse Orion Web IDE** tile.
@@ -161,6 +166,7 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 
 ## Deploy to a production environment
 {: #deploytoproduction}
+{: step}
 
 In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
@@ -180,6 +186,7 @@ You now have the full deployment setup. To deploy from dev to production, you mu
 
 ## Setup Slack notifications
 {: #setup_slack}
+{: step}
 
 1. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
 2. Search for slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
@@ -195,6 +202,7 @@ You now have the full deployment setup. To deploy from dev to production, you mu
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 In this step, you will clean up the resources to remove what you created above.
 

@@ -4,6 +4,7 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-12-12"
 lasttested: "2019-06-10"
+
 ---
 
 {:shortdesc: .shortdesc}
@@ -15,6 +16,11 @@ lasttested: "2019-06-10"
 
 # Moving a VM based app to Kubernetes
 {: #vm-to-containers-and-kubernetes}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-container_index#container_index) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}
@@ -34,14 +40,6 @@ Depending on the type of app that you have, the steps to migrate your app might 
 - Learn how to deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
 - Put everything learned to practice, run the **JPetStore** app in your cluster.
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/private)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {:#architecture}

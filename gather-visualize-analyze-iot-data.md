@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019, 2020
 lastupdated: "2020-02-26"
 lasttested: "2019-12-04"
+
+content-type: tutorial
+services: cloud-foundry-public, cloud-object-storage, AnalyticsEngine, Cloudant, IoT
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-12-04"
 
 # Gather, visualize, analyze and detect anomalies in IoT data
 {: #gather-visualize-analyze-iot-data}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, cloud-object-storage, AnalyticsEngine, Cloudant, IoT"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 {{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
@@ -31,21 +45,6 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 * Create visualizations with a Jupyter notebook.
 * Analyze the device generated data and detect anomalies.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.iot_full}}](https://{DomainName}/catalog/services/internet-of-things-platform)
-* [Node.js Application](https://{DomainName}/catalog/starters/sdk-for-nodejs)
-* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
-* [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine)
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -71,6 +70,7 @@ You will find instructions to download and install these tools for your operatin
 
 ## Create IoT Platform
 {: #iot_starter}
+{: step}
 
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
 
@@ -91,6 +91,7 @@ The IoT platform is now configured to start receiving data. Devices will need to
 
 ## Create device simulator
 {: #create_device_simulator}
+{: step}
 Next, you will deploy a Node.js web application and visit it on your phone, which will connect to and send device accelerometer and orientation data to the IoT Platform.
 
 1. Clone the Github repository:
@@ -143,6 +144,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #creat_ecards}
+{: step}
 Next, you will create a board and cards to display device data in the dashboard.
 
 ### Create a board
@@ -174,6 +176,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
 {: #historical_data_cloudant}
+{: step}
 
 In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
 
@@ -272,6 +275,7 @@ Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}.
 
 ## Detect Anomalies using Machine Learning
 {: #detect_anomalies}
+{: step}
 
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
@@ -355,6 +359,7 @@ In {{site.data.keyword.DSX}},:
 
 ## Remove resources
 {:#removeresources}
+{: step}
 
 1. Navigate to [Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective {{site.data.keyword.iot_full}}, {{site.data.keyword.iae_full_notm}}, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.

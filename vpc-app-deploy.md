@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2019-10-18"
 lasttested: "2019-08-05"
 
+content-type: tutorial
+services: vpc
+account-plan:
+completion-time: 2h
+
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -22,6 +28,14 @@ lasttested: "2019-08-05"
 
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {:shortdesc}
@@ -35,17 +49,6 @@ After an [introduction to the tutorial architecture](#architecture), you will [p
 * Utilize manual steps for updating the operating system software and installing new software.
 * Understand how to use the {{site.data.keyword.Bluemix_notm}} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
@@ -132,6 +135,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
 
 ## Basics of software installation
 {: #basics}
+{: step}
 
 ### Provision virtual server instances from base images
 {: #base-vsi-images}
@@ -200,6 +204,7 @@ In the next sections, you will use the script [test_provision.bash](https://gith
 
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #cli}
+{: step}
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
 
@@ -336,6 +341,7 @@ This section uses a shell script found in the [Public frontend and private backe
 
 ## Provisioning infrastructure with Terraform
 {: #terraform}
+{: step}
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -502,6 +508,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 
 ## Installing software with Ansible
 {: #ansible}
+{: step}
 
 [Ansible](https://www.ansible.com/) is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/) and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
 

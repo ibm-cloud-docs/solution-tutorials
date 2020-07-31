@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-03-17"
 lasttested: "2019-10-22"
+
+content-type: tutorial
+services: assistant, speech-to-text, text-to-speech
+account-plan:
+completion-time: 1h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-10-22"
 
 # Build a voice-enabled Android chatbot
 {: #android-watson-chatbot}
+{: toc-content-type="tutorial"}
+{: toc-services="assistant, speech-to-text, text-to-speech"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}} and {{site.data.keyword.speechtotextshort}} services on {{site.data.keyword.Bluemix_short}}.
 
@@ -32,20 +46,6 @@ This tutorial walks you through the process of defining intents and entities and
 - Allow end users to interact with chatbot using voice and audio.
 - Configure and run the Android app.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-- [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/watson-assistant)
-- [{{site.data.keyword.speechtotextfull}}](https://{DomainName}/catalog/services/speech-to-text)
-- [{{site.data.keyword.texttospeechfull}}](https://{DomainName}/catalog/services/text-to-speech)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 ![](images/solution28-watson-chatbot-android/architecture.png)
 
@@ -62,6 +62,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Create services
 {: #setup}
+{: step}
 
 In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
 
@@ -98,6 +99,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 
 ## Create a skill
 {: #create_workspace}
+{: step}
 
 A skill is a container for the artifacts that define the conversation flow.
 
@@ -182,6 +184,7 @@ A dialog is a branching conversation flow that defines how your application resp
 8. Test the dialog flow using the **Try it** button.
 
 ## Link the skill to an assistant
+{: step}
 
 An **assistant** is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the **skills** it needs to satisfy your customers' goals.
 
@@ -195,6 +198,7 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 
 ## Configure and run the Android app
 {:#configure_run_android_app}
+{: step}
 
 The repository contains Android application code with required gradle dependencies.
 
@@ -259,6 +263,7 @@ The repository contains Android application code with required gradle dependenci
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 1. Navigate to [Resource List,](https://{DomainName}/resources/)
 1. Delete the services you have created:

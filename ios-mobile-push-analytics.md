@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2020
 lastupdated: "2020-01-31"
 lasttested: "2020-01-29"
+
+content-type: tutorial
+services: mobilepush, appid
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2020-01-29"
 
 # iOS mobile application with Push Notifications
 {: #ios-mobile-push-analytics}
+{: toc-content-type="tutorial"}
+{: toc-services="mobilepush, appid"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile service {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_short}}.
 
@@ -33,14 +47,6 @@ This tutorial walks you through the creation of a mobile starter application, ad
 - Download the code and setup client SDK.
 - Send and monitor {{site.data.keyword.mobilepushshort}}.
 
-## Services
-{:#services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
-
-## Architecture
-{:#architecture}
 
   ![](images/solution6/Architecture.png)
 
@@ -58,6 +64,7 @@ This tutorial uses the following runtimes and services:
 
 ## Create a mobile app from Swift starter kit
 {: #get_code}
+{: step}
 
 1. Navigate to [App Development Dashboard](https://{DomainName}/developer/appservice/dashboard) and click **Get Started**.
 1. Scroll and select **Mobile App with Push Notifications** starter kit.
@@ -74,6 +81,7 @@ This tutorial uses the following runtimes and services:
 
 ## Download the code and setup client SDKs
 {: #download_code}
+{: step}
 
 If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
 The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client SDK included. The Client SDK is available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
@@ -98,6 +106,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
 ## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
 {: #obtain_apns_credentials}
+{: step}
 
    For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
 
@@ -192,6 +201,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
 {: #configure_push}
+{: step}
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.

@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2020
 lastupdated: "2020-04-15"
 lasttested: "2020-04-15"
+
+content-type: tutorial
+services: cloud-foundry-public, Db2whc
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-04-15"
 
 # SQL Database for Cloud data
 {: #sql-database}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, Db2whc"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 
@@ -27,11 +41,6 @@ This tutorial shows how to provision a SQL (relational) database service, create
 * Load data
 * Connect the app and database service (share credentials)
 * Monitoring, Security, Backups & Recovery
-
-## Products
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.dashdblong_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)
 
 ## Before you begin
 {: #prereqs}
@@ -54,6 +63,7 @@ You will find instructions to download and install these tools for your operatin
 2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
+{: step}
 Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)** service.
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
@@ -64,6 +74,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 6. Click on **Open Console** to launch the database console.
 
 ## Create a table
+{: step}
 You need a table to hold the sample data. Create it using the console.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **RUN SQL** in the navigation bar and start **From file**.
@@ -71,6 +82,7 @@ You need a table to hold the sample data. Create it using the console.
 3. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
+{: step}
 Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, e.g. from your local machine or from cloud object storage (COS) or Amazon S3 interface. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
 
 1. In the top navigation click on **Load** and **Load data**. Then, after clicking **My Computer**, under **File selection**, click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
@@ -84,6 +96,7 @@ Now that the table "cities" has been created, you are going to load data into it
 5. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 
 ## Verify Loaded Data Using SQL
+{: step}
 The data has been loaded into the relational database. There were no errors, but you should run some quick tests anyway. Use the built-in SQL editor to type in and execute some SQL statements.
 
 1. In the top navigation click on **RUN SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Blank** to create a new editor tab.
@@ -106,6 +119,7 @@ The data has been loaded into the relational database. There were no errors, but
 4. In the editor select the text of the above statement. Click the **Run selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
+{: step}
 Change back to the terminal and the directory with the cloned repository. Now you are going to deploy the application code.
 
 1. Push the application to the IBM Cloud. You need to be logged in to the location, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
@@ -117,14 +131,17 @@ Change back to the terminal and the directory with the cloned repository. Now yo
 3. Once the push process is finished you should be able to access the app on the route shown in the output. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named **sqldatabase** together. It also creates a random route (URI) for the app.
 
 ## Security, Backup & Recovery, Monitoring
+{: step}
 The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
 
 In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html). The executable Swagger interface of that API can be accessed in the menu behind the "book" icon under "Rest APIs". Some tools that can be used for monitoring and more, e.g., the IBM Data Server Manager, can even be downloaded under the "Downloads" section in that same menu.
 
 ## Test the App
+{: step}
 The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
 
 ## Cleanup
+{: step}
 To clean up resources used by the tutorial, follow these steps:
 1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app.
 2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.

@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-11-21"
 lasttested: "2019-11-21"
+
+content-type: tutorial
+services: openwhisk, cognos-dashboard-embedded, Db2whc, appid
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-11-21"
 
 # Combining serverless and Cloud Foundry for data retrieval and analytics
 {: #serverless-github-traffic-analytics}
+{: toc-content-type="tutorial"}
+{: toc-services="openwhisk, cognos-dashboard-embedded, Db2whc, appid"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless action to retrieve the traffic data and store it in a SQL database. Moreover, a Cloud Foundry app is used to manage repositories and provide access to the statistics for data analytics. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution with the initial set of features supporting single-tenant mode.
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
@@ -25,14 +39,6 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Integrate App ID as OpenID Connect-based authentication provider
 * Set up automated, serverless collection of GitHub traffic statistics
 * Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
-
-## Products
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
-* [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
-* [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
-* [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Before you begin
 {: #prereqs}
@@ -48,6 +54,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Service and Environment Setup (shell)
+{: step}
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
 
 1. Clone the [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) and navigate into the cloned directory and its **backend** subdirectory:
@@ -104,6 +111,7 @@ In this section, you set up the needed services and prepare the environment. All
    {:tip}
 
 ## App ID and GitHub configuration (browser)
+{: step}
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
@@ -123,6 +131,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 
 ## Configure and test Python app
+{: step}
 After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](http://flask.pocoo.org/) microframework. Repositories can be added to and removed from statistics collection. The traffic data can be accessed in a tabular view.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
@@ -137,6 +146,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 ![](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
+{: step}
 With the management app in place, deploy an action, a trigger and a rule to connect the two in {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
 1. Change into the **functions** directory.
@@ -200,12 +210,14 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
+{: step}
 In this tutorial, you deployed a serverless action and a related trigger and rule. They allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Cloud Foundry app to manage users, repositories and to present the traffic statistics in the app portal. Users can see the traffic statistics in searchable tables or visualized in an embedded dashboard ({{site.data.keyword.dynamdashbemb_short}} service, see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
 The Cloud Foundry app manages access through an OpenID Connect client connecting to {{site.data.keyword.appid_short}}.
 ![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
 
 ## Security: Rotate service credentials
+{: step}
 If you use this solution in production, then you should rotate the service credentials on a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency.
 
 - You can recreate and thereby rotate the credentials for the services bound to the backend Cloud Foundry app by unbinding, then again binding the services. Once done, the app needs to be restaged.
@@ -216,6 +228,7 @@ The [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) for t
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
 

@@ -7,147 +7,153 @@ Solution Tutorials
     {: .navgroup id="learn"}
     index.md
     getting-started.md
-
-    {: .topicgroup}
-    Websites and Web Apps
-        scalable-webapp-kubernetes.md
-        vm-to-containers-and-kubernetes.md
-        strategies-for-resilient-applications.md
-        continuous-deployment-to-kubernetes.md
-        scalable-webapp-openshift.md
-        openshift-service-mesh.md
-        openshift-microservices.md
-        static-files-cdn.md
-        dynamic-content-cdn.md
-        pub-sub-object-storage.md
-        lamp-stack.md
-        infrastructure-as-code-terraform.md
-        plan-create-update-deployments.md
-        highly-available-and-scalable-web-application.md
-        mean-stack.md
-        sql-database.md
-        serverless-api-webapp.md
-        multi-region-serverless.md
-        application-log-analysis.md
-
-    {: .topicgroup}
-    Chatbots
-        slack-chatbot-database-watson.md
-        android-watson-chatbot.md
-
-    {: .topicgroup}
-    Security
-        multi-region-webapp.md
-        multi-region-k8s-cis.md
-        create-manage-secure-apis.md
-        cloud-e2e-security.md
-        extended-app-security.md
-
-    {: .topicgroup}
-    Mobile
-        ios-mobile-push-analytics.md
-        android-mobile-push-analytics.md
-        serverless-mobile-backend.md
-
-    {: .topicgroup}
-    Machine Learning and Analytics
-        big-data-log-analytics.md
-        smart-data-lake.md
-        serverless-github-traffic-analytics.md
-        create-deploy-retrain-machine-learning-model.md
-        big-data-analytics-spark.md
-
-    {: .topicgroup}
-    Internet of Things
-        gather-visualize-analyze-iot-data.md
-
-    {: .topicgroup}
-    Identity and Access Management
-        users-teams-applications.md
-
-    {: .topicgroup}
-    Virtual Private Cloud
-        vpc-public-app-private-backend.md
-        vpc-multi-region.md
-        vpc-site2site-vpn.md
-        vpc-app-deploy.md
-        vpc-secure-management-bastion-server.md
-        lamp-stack-on-vpc.md
-        /containers/containers-vpc_ks_tutorial
-
-    {: .topicgroup}
-    Classic Infrastructure
-        secure-network-enclosure.md
-        nat-config-private.md
-        byoip.md
-        configuring-IPSEC-VPN.md
-        linking-secure-network-enclosures.md
-        web-app-private-network.md
-
-    {: .topicgroup}
-    VMware Solutions
-        vmware-solutions-shared-getting-started.md
     {: .navgroup-end}
-    
-    {: .navgroup id="howto"}
+
+    {: .navgroup id="tutorial"}
     {: .topicgroup}
-    Kubernetes
-        scalable-webapp-kubernetes.md
-        vm-to-containers-and-kubernetes.md
-        strategies-for-resilient-applications.md
-        continuous-deployment-to-kubernetes.md
-        dynamic-content-cdn.md
-        pub-sub-object-storage.md
-        plan-create-update-deployments.md
-        application-log-analysis.md
-        multi-region-k8s-cis.md
-        cloud-e2e-security.md
-        users-teams-applications.md
-        /containers/containers-vpc_ks_tutorial
+    By Category
+
+        {: .topicgroup}
+        Websites and Web Apps
+            scalable-webapp-kubernetes.md
+            vm-to-containers-and-kubernetes.md
+            strategies-for-resilient-applications.md
+            continuous-deployment-to-kubernetes.md
+            scalable-webapp-openshift.md
+            openshift-service-mesh.md
+            openshift-microservices.md
+            static-files-cdn.md
+            dynamic-content-cdn.md
+            pub-sub-object-storage.md
+            lamp-stack.md
+            infrastructure-as-code-terraform.md
+            plan-create-update-deployments.md
+            highly-available-and-scalable-web-application.md
+            mean-stack.md
+            sql-database.md
+            serverless-api-webapp.md
+            multi-region-serverless.md
+            application-log-analysis.md
+
+        {: .topicgroup}
+        Chatbots
+            slack-chatbot-database-watson.md
+            android-watson-chatbot.md
+
+        {: .topicgroup}
+        Security
+            multi-region-webapp.md
+            multi-region-k8s-cis.md
+            create-manage-secure-apis.md
+            cloud-e2e-security.md
+            extended-app-security.md
+
+        {: .topicgroup}
+        Mobile
+            ios-mobile-push-analytics.md
+            android-mobile-push-analytics.md
+            serverless-mobile-backend.md
+
+        {: .topicgroup}
+        Machine Learning and Analytics
+            big-data-log-analytics.md
+            smart-data-lake.md
+            serverless-github-traffic-analytics.md
+            create-deploy-retrain-machine-learning-model.md
+            big-data-analytics-spark.md
+
+        {: .topicgroup}
+        Internet of Things
+            gather-visualize-analyze-iot-data.md
+
+        {: .topicgroup}
+        Identity and Access Management
+            users-teams-applications.md
+
+        {: .topicgroup}
+        Virtual Private Cloud
+            vpc-public-app-private-backend.md
+            vpc-multi-region.md
+            vpc-site2site-vpn.md
+            vpc-app-deploy.md
+            vpc-secure-management-bastion-server.md
+            lamp-stack-on-vpc.md
+            /containers/containers-vpc_ks_tutorial
+
+        {: .topicgroup}
+        Classic Infrastructure
+            secure-network-enclosure.md
+            nat-config-private.md
+            byoip.md
+            configuring-IPSEC-VPN.md
+            linking-secure-network-enclosures.md
+            web-app-private-network.md
+
+        {: .topicgroup}
+        VMware Solutions
+            vmware-solutions-shared-getting-started.md
 
     {: .topicgroup}
-    OpenShift
-        scalable-webapp-openshift.md
-        openshift-service-mesh.md
-        openshift-microservices.md
+    By Compute Options
 
-    {: .topicgroup}
-    Cloud Foundry
-        strategies-for-resilient-applications.md
-        static-files-cdn.md
-        plan-create-update-deployments.md
-        mean-stack.md
-        sql-database.md
-        slack-chatbot-database-watson.md
-        multi-region-webapp.md
-        create-manage-secure-apis.md
-        gather-visualize-analyze-iot-data.md
+        {: .topicgroup}
+        Kubernetes
+            scalable-webapp-kubernetes.md
+            vm-to-containers-and-kubernetes.md
+            strategies-for-resilient-applications.md
+            continuous-deployment-to-kubernetes.md
+            dynamic-content-cdn.md
+            pub-sub-object-storage.md
+            plan-create-update-deployments.md
+            application-log-analysis.md
+            multi-region-k8s-cis.md
+            cloud-e2e-security.md
+            users-teams-applications.md
+            /containers/containers-vpc_ks_tutorial
 
-    {: .topicgroup}
-    Cloud Functions
-        strategies-for-resilient-applications.md
-        serverless-api-webapp.md
-        multi-region-serverless.md
-        slack-chatbot-database-watson.md
-        serverless-mobile-backend.md
-        serverless-github-traffic-analytics.md
+        {: .topicgroup}
+        OpenShift
+            scalable-webapp-openshift.md
+            openshift-service-mesh.md
+            openshift-microservices.md
 
-    {: .topicgroup}
-    Infrastructure
-        strategies-for-resilient-applications.md
-        lamp-stack.md
-        infrastructure-as-code-terraform.md
-        highly-available-and-scalable-web-application.md
-        vpc-public-app-private-backend.md
-        vpc-multi-region.md
-        vpc-site2site-vpn.md
-        vpc-app-deploy.md
-        vpc-secure-management-bastion-server.md
-        secure-network-enclosure.md
-        nat-config-private.md
-        byoip.md
-        configuring-IPSEC-VPN.md
-        linking-secure-network-enclosures.md
-        web-app-private-network.md
+        {: .topicgroup}
+        Cloud Foundry
+            strategies-for-resilient-applications.md
+            static-files-cdn.md
+            plan-create-update-deployments.md
+            mean-stack.md
+            sql-database.md
+            slack-chatbot-database-watson.md
+            multi-region-webapp.md
+            create-manage-secure-apis.md
+            gather-visualize-analyze-iot-data.md
+
+        {: .topicgroup}
+        Cloud Functions
+            strategies-for-resilient-applications.md
+            serverless-api-webapp.md
+            multi-region-serverless.md
+            slack-chatbot-database-watson.md
+            serverless-mobile-backend.md
+            serverless-github-traffic-analytics.md
+
+        {: .topicgroup}
+        Infrastructure
+            strategies-for-resilient-applications.md
+            lamp-stack.md
+            infrastructure-as-code-terraform.md
+            highly-available-and-scalable-web-application.md
+            vpc-public-app-private-backend.md
+            vpc-multi-region.md
+            vpc-site2site-vpn.md
+            vpc-app-deploy.md
+            vpc-secure-management-bastion-server.md
+            secure-network-enclosure.md
+            nat-config-private.md
+            byoip.md
+            configuring-IPSEC-VPN.md
+            linking-secure-network-enclosures.md
+            web-app-private-network.md
 
     {: .navgroup-end}

@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance, virtual-servers, vlans
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # Linking secure private networks over the IBM network
 {: #linking-secure-network-enclosures}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance, virtual-servers, vlans"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/) enables users to link workloads hosted in secure private networks across data centers and locations.
 
@@ -32,18 +46,6 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Setup firewall rules for site to site access 
 - Configure routing between sites
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#about)
-* [{{site.data.keyword.virtualmachinesshort}}]( https://{DomainName}/catalog/infrastructure/virtual-server-group)
-* [VLAN Spanning]( https://{DomainName}/docs/infrastructure/vlans?topic=vlans-vlan-spanning#vlan-spanning)
-
-This tutorial might incur costs. The VRA is only available on a monthly pricing plan.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -63,6 +65,7 @@ This tutorial is based on the tutorial, [Isolate workloads with a secure private
 
 ## Configure secure private network sites
 {: #private_network}
+{: step}
 
 The tutorial [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
 
@@ -87,6 +90,7 @@ The [Isolate workloads with a secure private network]( https://{DomainName}/docs
 
 ## Configure VLAN Spanning 
 {: #configure-vlan-spanning}
+{: step}
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers. 
 
@@ -118,6 +122,7 @@ Enable VLAN Spanning:
 
 ## Configure VRA IP Routing 
 {: #vra_routing}
+{: step}
 
 Create the VRA routing in each data center to enable the VSIs in the APP zones in both data centers to communicate. 
 
@@ -147,6 +152,7 @@ The new route to allow the APP zone to communicate via the IBM private network w
 
 ## VRA firewall configuration
 {: #vra_firewall}
+{: step}
 
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center. 
 
@@ -174,6 +180,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 Steps to take to remove the resources created in this tutorial. 
 

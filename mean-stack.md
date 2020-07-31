@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019, 2020
 lastupdated: "2020-07-27"
 lasttested: "2020-07-27"
+
+content-type: tutorial
+services: cloud-foundry-public, databases-for-mongodb
+account-plan:
+completion-time: 1h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -16,6 +22,14 @@ lasttested: "2020-07-27"
 
 # Modern web application using MEAN stack
 {: #mean-stack}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, databases-for-mongodb"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale the database resources.
 
@@ -27,18 +41,6 @@ This tutorial walks you through the creation of a web application using the popu
 - Create a managed database-as-a-service (DBasS).
 - Deploy the Node.js app to the cloud.
 - Scale MongoDB memory and disk resources.
-
-## Services used
-
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.databases-for-mongodb_full_notm}}](https://{DomainName}/catalog/services/databases-for-mongodb)
-* [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
 
 {:#architecture}
 
@@ -63,6 +65,7 @@ You will find instructions to download and install these tools for your operatin
 In addition, make sure you [install Node.js](https://nodejs.org/).
 
 ## Create an instance of MongoDB database in the cloud
+{: step}
 
 {: #createdatabase}
 
@@ -101,6 +104,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
 
 ## Run the MEAN app locally
 {: #runapplocally}
+{: step}
 
 In this section, you will clone a MEAN sample code and run the application locally to test the connection to the MongoDB database running on {{site.data.keyword.cloud_notm}}.
 {: shortdesc}
@@ -135,6 +139,7 @@ In this section, you will clone a MEAN sample code and run the application local
 1. Access your application, create a new user and log in
 
 ## Deploy app to the cloud
+{: step}
 
 {: #deployapp}
 
@@ -150,6 +155,7 @@ In this section, you will deploy the node.js app to the {{site.data.keyword.clou
 
 ## Scaling MongoDB database resources
 {: #scaledatabase}
+{: step}
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 {: shortdesc}
@@ -162,6 +168,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 To remove resource, follow these steps:
 1. Visit the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources). Locate your app.

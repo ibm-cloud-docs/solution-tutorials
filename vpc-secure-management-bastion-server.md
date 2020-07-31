@@ -4,8 +4,14 @@ copyright:
   years: 2019, 2020
 lastupdated: "2020-06-18"
 lasttested: "2019-06-17"
+
+content-type: tutorial
+services: vpc
+account-plan:
+completion-time: 1h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -21,6 +27,14 @@ lasttested: "2019-06-17"
 
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
 
@@ -33,18 +47,6 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 - Learn how to set up a bastion host and security groups with rules
 - Securely manage servers via the bastion host
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-
-- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 ![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
 
@@ -62,6 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Create a bastion host
 {: #create-bastion-host}
+{: step}
 
 In this section, you will create and configure a bastion host along with a security group in a separate subnet.
 
@@ -153,6 +156,7 @@ ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 
 ## Configure a security group with maintenance access rules
 {: #maintenance-security-group}
+{: step}
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
@@ -241,6 +245,7 @@ With access to the bastion working, continue and create the security group for m
 
 ## Use the bastion host to access other instances in the VPC
 {: #bastion-host-access-instances}
+{: step}
 
 In this section, you will create a subnet with virtual server instance and a security group.
 
@@ -341,6 +346,7 @@ Once you're done installing software or performing maintenance, you should remov
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 1. Switch to **Virtual server instances**, **Stop** and **Delete** your instances.
 2. Once the VSIs are gone, switch to **Subnets** and delete your subnets.

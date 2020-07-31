@@ -8,7 +8,7 @@ lasttested: "2019-11-22"
 content-type: tutorial
 services: containers, Registry
 account-plan:
-completion-time:
+completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -20,10 +20,15 @@ completion-time:
 {:pre: .pre}
 
 # Scalable web application on Kubernetes
+{: #scalable-webapp-kubernetes}
 {: toc-content-type="tutorial"}
 {: toc-services="containers, Registry"}
-{: toc-completion-time=""}
-{: #scalable-webapp-kubernetes}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how to <!--##istutorial#-->bind a custom domain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
 {:shortdesc}
@@ -43,19 +48,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 

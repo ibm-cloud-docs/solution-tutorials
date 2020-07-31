@@ -4,8 +4,14 @@ copyright:
   years: 2020
 lastupdated: "2020-05-16"
 lasttested: "2020-05-16"
+
+content-type: tutorial
+services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
+account-plan:
+completion-time: 3h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -21,6 +27,14 @@ lasttested: "2020-05-16"
 
 # Deploy microservices with {{site.data.keyword.openshiftshort}}
 {: #openshift-microservices}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant"}
+{: toc-completion-time="3h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 
@@ -36,21 +50,6 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Observe the cluster using {{site.data.keyword.la_short}}
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.openshiftshort}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-* [{{site.data.keyword.la_short}}](https://{DomainName}/observe/logging/create)
-* [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring/create)
-
-<!--##istutorial#-->
-This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -69,6 +68,7 @@ This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName
 <!--##istutorial#-->
 ## Create {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
+{: step}
 
 With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
@@ -98,6 +98,7 @@ Take a note of the resource group selected above.  This same resource group will
 <!--
 ## Configure the access to your cluster
 {: #access-cluster}
+{: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
 1. Select the account where you have been invited.
@@ -124,6 +125,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 
 ## Deploying an application
 {: #deploy}
+{: step}
 
 In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
@@ -176,6 +178,7 @@ The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Cont
 
 ## Logging and monitoring
 {: #logging-monitoring}
+{: step}
 
 In this section, you will explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
 
@@ -255,6 +258,7 @@ Almost all actions in {{site.data.keyword.openshiftshort}} result in an event be
 
 ## Metrics and dashboards
 {: #metrics}
+{: step}
 
 In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
 
@@ -297,6 +301,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 
 ## Scaling the application
 {: #scaling}
+{: step}
 
 In this section, the metrics observed in the previous section can be used to scale the UI application in response to load.
 
@@ -416,6 +421,7 @@ You can also can delete and create resources like autoscalars with the command l
 
 ## Using the IBM Cloud Operator to create a Cloudant DB
 {: #operator}
+{: step}
 
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
@@ -620,6 +626,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 
 ## Configure {{site.data.keyword.la_short}} agent for {{site.data.keyword.openshiftshort}}  cluster
 {: #configure-logdna}
+{: step}
 
 The {{site.data.keyword.la_short}} agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
 
@@ -690,6 +697,7 @@ For example,
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
 {: #use-logdna}
+{: step}
 
 IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
 
@@ -888,6 +896,7 @@ Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM
 
 ## Configure {{site.data.keyword.monitoringshort}}
 {: #configure-sysdig}
+{: step}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
@@ -938,6 +947,7 @@ Example output:
 
 ## Monitor your Cluster with SysDig
 {: #use-sysdig}
+{: step}
 
 IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
 
@@ -1035,6 +1045,7 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 
 ## Remove resources
 {:#cleanup}
+{: step}
 
 <!--##isworkshop#-->
 <!--

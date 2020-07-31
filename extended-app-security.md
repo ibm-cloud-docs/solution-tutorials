@@ -18,6 +18,11 @@ lasttested: "2020-06-25"
 # Enhance security of your deployed application
 {: #extended-app-security}
 
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
+
 You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
 {:shortdesc}
 
@@ -29,27 +34,6 @@ You already developed and deployed an application on {{site.data.keyword.cloud_n
 * Use activity logs and security advisors to evaluate app security.
 
 
-## Services used
-{: #services}
-
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.at_short}}](https://{DomainName}/observe/activitytracker/create)
-* [{{site.data.keyword.security-advisor_short}}](https://{DomainName}/security-advisor)
-* [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
-* [{{site.data.keyword.hscrypto}}](https://{DomainName}/catalog/services/hyper-protect-crypto-services)
-* [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager)
-* [{{site.data.keyword.hpvs}}](https://{DomainName}/catalog/services/hyper-protect-virtual-servers)
-* [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc/provision/vs)
-* [{{site.data.keyword.datashield_full_notm}}](https://{DomainName}/catalog/services/ibm-cloud-data-shield)
-* [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-postgresql)
-* [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-mongodb)
-
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 An existing solution with the application and connected (micro-) services is extended for enhanced security.
 

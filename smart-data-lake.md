@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-11-27"
 lasttested: "2019-11-27"
+
+content-type: tutorial
+services: cloud-object-storage, cognos-dashboard-embedded, sql-query
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-11-27"
 
 # Build a data lake using object storage
 {: #smart-data-lake}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-object-storage, cognos-dashboard-embedded, sql-query"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
 
@@ -24,16 +38,6 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 - Share data across your organization with {{site.data.keyword.dynamdashbemb_notm}}
-
-## Services used
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [SQL Query](https://{DomainName}/catalog/services/sql-query)
-* [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio)
-* [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
-
-## Architecture
 
 ![Architecture](images/solution29/architecture.png)
 
@@ -59,6 +63,7 @@ In addition, make sure you:
 - and [install Node.js and NPM](https://nodejs.org).
 
 ## Create services
+{: step}
 
 In this section, you will create the services required to build your data lake.
 
@@ -128,6 +133,7 @@ This section uses the command line to create service instances. Alternatively, y
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
+{: step}
 
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
 
@@ -147,6 +153,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Click **Select files** > Browse and select the previously downloaded CSV file.
 
 ## Working with data
+{: step}
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
 
@@ -179,6 +186,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
+{: step}
 
 In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
@@ -257,6 +265,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     {: codeblock}
 
 ## Visualize data using PixieDust
+{: step}
 
 In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
 
@@ -312,6 +321,7 @@ In this section, you will visualize the previous result set using PixieDust and 
 ![Notebook](images/solution29/notebook-mapbox.png)
 
 ## Share your dataset with the organization
+{: step}
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to SQL Query, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
 
@@ -330,6 +340,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 ![Dashboard Chart](images/solution29/dashboard-chart.png)
 
 ## Explore your dashboard
+{: step}
 
 In this section, you'll take a few additional steps to explore the features of the dashboard application and {{site.data.keyword.dynamdashbemb_notm}}.
 
@@ -354,6 +365,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources
+{: step}
 
 Run the following commands to remove services, applications and keys you created and used.
 

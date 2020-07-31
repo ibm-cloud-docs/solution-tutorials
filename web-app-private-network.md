@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance, loadbalancer-service, virtual-servers
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # Hosting web applications from a secure private network
 {: #web-app-private-network}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance, loadbalancer-service, virtual-servers"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Hosting web applications is a common deployment pattern for public cloud, where resources can be scaled on demand to meet short term and long term usage demands. Security for the application workloads is a fundamental prerequisite, to complement the resilience and scalability afforded by public cloud. 
 
@@ -35,18 +49,6 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 - Secure the network with firewall rules
 - Source Network Address Translation (SNAT) for application deployment
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
-* [Load Balancer]( https://{DomainName}/catalog/infrastructure/load-balancer-group)
-* [{{site.data.keyword.virtualmachinesshort}}]( https://{DomainName}/catalog/infrastructure/virtual-server-group)
-
-This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -70,6 +72,7 @@ This tutorial utilises three existing tutorials, which are deployed in sequence.
 
 ## Configure secure private network
 {: #private_network}
+{: step}
 
 Isolated and secure private network environments are central to the IaaS application security model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. 
 The first step is to create the secure private network enclosure within which the web app will be deployed.  
@@ -80,6 +83,7 @@ This tutorial can be followed without change. In a later step three virtual mach
 
 ## Configure NAT for secure application deployment
 {: #nat_config}
+{: step}
 
 Installation of open-source applications requires secure access to the Internet to access the source repositories. To protect the servers in the secure private network from being exposed on the public Internet, Source NAT is used where the source address is obfuscated and firewall rules are used to secure the out-bound application repository requests. All inbound requests are denied. 
 
@@ -90,6 +94,7 @@ This tutorial can be followed without change. In the next step the NAT configura
 
 ## Deploy scalable web app and load balancer
 {: #scalable_app}
+{: step}
 
 A Wordpress installation on Nginx and MySQL, with an Load Balancer is used to illustrate how a scalable and resilient web application can be deployed in the secure private network 
 
@@ -113,6 +118,7 @@ At the end of this step the load balancer should be in a healthy state and the W
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 Steps to take to remove the resources created in this tutorial. 
 

@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-10-07"
 lasttested: "2019-06-04"
+
+content-type: tutorial
+services: openwhisk, mobilepush, appid, Cloudant, tone-analyzer
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-06-04"
 
 # Mobile application with a serverless backend
 {: #serverless-mobile-backend}
+{: toc-content-type="tutorial"}
+{: toc-services="openwhisk, mobilepush, appid, Cloudant, tone-analyzer"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 In this tutorial, you will learn how to use {{site.data.keyword.openwhisk}} along with Cognitive and Data services to build a serverless backend for a mobile application.
 {:shortdesc}
@@ -41,20 +55,6 @@ This tutorial is configurable based on your target platform. You are currently v
 * Analyze user feedback with {{site.data.keyword.toneanalyzershort}}.
 * Send notifications with {{site.data.keyword.mobilepushshort}}.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
-   * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
-   * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
-   * [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer)
-   * [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 The application shown in this tutorial is a feedback app that smartly analyses the tone of the feedback text and appropriately acknowledges the customer through a {{site.data.keyword.mobilepushshort}}.
 
@@ -104,6 +104,7 @@ For Windows 10 users to work with the command line instructions, we recommend in
 {: java}
 
 ## Get the application code
+{: step}
 
 The repository contains both the mobile application and the {{site.data.keyword.openwhisk_short}} actions code.
 
@@ -139,6 +140,7 @@ The repository contains both the mobile application and the {{site.data.keyword.
 
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
+{: step}
 
 In this section, you will provision the services used by the application. You can choose to provision the services from the {{site.data.keyword.Bluemix_notm}} catalog or using the `ibmcloud` command line.
 
@@ -206,6 +208,7 @@ Set the location where services should be created:
 
 ## Configure {{site.data.keyword.mobilepushshort}}
 {: #push_notifications}
+{: step}
 
 When a user submits a new feedback, the application will analyze this feedback and send back a notification to the user. The user may have moved to another task, or may not have the mobile app started so using push notifications is a good way to communicate with the user. The {{site.data.keyword.mobilepushshort}} service makes it possible to send notifications to iOS or Android users via one unified API. In this section, you will configure the {{site.data.keyword.mobilepushshort}} service for your target platform.
 
@@ -233,6 +236,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 
 ## Deploy a serverless backend
 {: #serverless_backend}
+{: step}
 
 With all the services configured, you can now deploy the serverless backend. The following {{site.data.keyword.openwhisk_short}} artifacts will be created in this section:
 
@@ -303,6 +307,7 @@ With all the services configured, you can now deploy the serverless backend. The
 
 ## Configure and run a native mobile application to collect user feedback
 {: #mobile_app}
+{: step}
 
 Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
@@ -351,6 +356,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 {: swift}
 
 ## Remove resources
+{: step}
 
 1. Use `deploy.sh` to remove the {{site.data.keyword.openwhisk_short}} artifacts:
 
