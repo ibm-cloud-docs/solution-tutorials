@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-07-30"
+lastupdated: "2020-07-31"
 lasttested: "2020-05-27"
 
 content-type: tutorial
@@ -297,7 +297,7 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
 3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section to generate load.
-5. Now, check the kiali Graph.
+5. Now, check the Kiali Graph.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
 
@@ -420,7 +420,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 3. Choose the **istio-system** project from the top bar and then click **Create Route**
    1. Name: `istio-ingressgateway-secure`
    2. Service: `istio-ingressgateway`
-   3. Target Port `80->8080`
+   3. Target Port `80->8080(TCP)`
    4. Check `Secure Route`
    5. TLS Termination: `Edge`
    6. Insecure Traffic: `None`
