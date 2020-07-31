@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-07-27"
+lastupdated: "2020-07-31"
 lasttested: "2020-07-27"
 
 content-type: tutorial
@@ -446,6 +446,9 @@ In this step, you will automate the build and deploy process. So that whenever y
 {: step}
 
 This section requires you to own a custom domain and to be able to modify the DNS records of the domain. You will need to create a `CNAME` record pointing to the IBM-provided domain.
+
+Steps for setting up the `CNAME` record vary depending on your DNS provider. For example, if you use GoDaddy, you follow the [Domains Help](https://www.godaddy.com/help/add-a-cname-record-19236) guidance from GoDaddy.
+{:tip}
 
 ### With HTTP
 1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com or project.example.com), so that external clients can reach it by name.
