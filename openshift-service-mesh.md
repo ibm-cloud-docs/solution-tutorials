@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-07-31"
-lasttested: "2020-05-27"
+lasttested: "2020-07-31"
 
 content-type: tutorial
 services: openshift, containers
