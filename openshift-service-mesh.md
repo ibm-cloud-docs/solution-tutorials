@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-27"
+lastupdated: "2020-07-30"
 lasttested: "2020-05-27"
 ---
 
@@ -61,9 +61,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+- Create an {{site.data.keyword.openshiftshort}} cluster:
+  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
+  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
+
+<!--1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **the Latest, Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Location**,
@@ -77,6 +81,8 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Review **Infrastructure permissions checker** to verify the required permissions
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+-->
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -139,7 +145,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 2.  Enter `istio-system` in the **Name** and click **Create**
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
-5.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
+5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
 6.  Under **Istio Service Mesh Control Plane**,click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
@@ -148,7 +154,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
 1. Navigate to **Operators** → **Installed Operators** again.
-2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
+2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
 3. Under **Istio Service Mesh Member Roll**,click **Create Instance**
 4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
 5. Then, click **Create**.
