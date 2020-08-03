@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-16"
+lastupdated: "2020-08-03"
 lasttested: "2020-05-16"
 
 content-type: tutorial
@@ -72,24 +72,13 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 
 With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftshort}} cluster with two worker nodes.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest, Default version of OpenShift**.
-3. Select your OCP entitlement.
-4. Under **Location**:
-   - Select a **Resource group**
-   - Select a **Geography**
-   - Select **Single zone** as **Availability**
-   - Choose a **Worker zone**
-5. Under **Worker pool**:
-   - Select **4 vCPUs 16GB Memory** as the flavor
-   - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On
-6. Review **Infrastructure permissions checker** to verify the required permissions.
-7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
-8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+- Create an {{site.data.keyword.openshiftshort}} cluster:
+  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
+  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
 
-Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
+Take a note of the resource group selected above.  This same resource group will be used for all resources in this tutorial.
 {:note}
 
 <!--#/istutorial#-->
@@ -111,13 +100,13 @@ Take a note of the resource group selected above.  This same resource group will
 The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
-1. When the cluster is ready click the button in the upper right corner to create a [shell](https://{DomainName}/shell).
-1. Initialize the `oc` command environment:
+1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell).
+2. Initialize the `oc` command environment:
    ```sh
    ibmcloud oc cluster config -c mycluster --admin
    ```
    {:pre}
-1. Verify the `oc` command is working:
+3. Verify the `oc` command is working:
    ```sh
    oc get ns
    ```
@@ -216,7 +205,7 @@ Create a script to simulate load.
    $ curl http://$HOST/info
    {"personal":{"name":"Ralph DAlmeida","age":38,"gender":"male","street":"34 Main Street","city":"Toronto","zipcode":"M5H 1T1"},"medications":["Metoprolol","ACE inhibitors","Vitamin D"],"appointments":["2018-01-15 1:00 - Dentist","2018-02-14 4:00 - Internal Medicine","2018-09-30 8:00 - Pediatry"]}
    ```
-1. Run the following script which will endlessly send requests to the application:
+1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
    while sleep 1; do curl --max-time 2 -s http://$HOST/info; done
    ```
@@ -239,7 +228,7 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 1. Switch from the **Logs** tab to the **Terminal** tab.
 1. Run the following Shell commands:
 
-| Command | Description | 
+| Command | Description |
 | :--- | :--- |
 | `ls` | List the project files. |
 | `ps aux` | List the running processes. |
@@ -292,7 +281,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    ```
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
-4. Click on the **Graph** tab.  I turned the traffic generator script on for a while and then stopped it.  Note that the times are GMT:
+4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    <p style="width: 50%;">
 
    ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01.png)
@@ -314,6 +303,7 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
 1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployments** in the left-hand bar. Choose the `patient-health-frontend` Deployment, then choose **Actions > Edit Deployment**.
    ![](images/solution55-openshift-microservices/ocp-deployments.png)
 2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
+
    ```yaml
              resources:
                limits:
@@ -326,19 +316,18 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
    {:codeblock}
    Here is a snippet after you have made the changes:
    ```yaml
-             ports:
-                 - containerPort: 8080
-                 protocol: TCP
-             resources:
-                 limits:
-                 cpu: 30m
-                 memory: 100Mi
-                 requests:
-                 cpu: 3m
-                 memory: 40Mi
-             terminationMessagePath: /dev/termination-log
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 30m
+              memory: 100Mi
+            requests:
+              cpu: 3m
+              memory: 40Mi
+          terminationMessagePath: /dev/termination-log
    ```
-   {:codeblock}
 3. **Save** and **Reload** to see the new version.
 4. Verify that the replication controller has been changed by navigating to **Events**:
    ![Resource Limits](images/solution55-openshift-microservices/ocp-dc-events.png)
@@ -375,7 +364,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
            targetAverageUtilization: 1
    ```
    {:codeblock}
-2. Hit **Create**.
+2. Click **Create**.
 
 ### Test Autoscaler
 
@@ -448,12 +437,12 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    {:pre}
 7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
    ```sh
-   API endpoint:      https://{DomainName}   
-   Region:            us-south   
-   User:              YOU@us.ibm.com   
-   Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567   
-   Resource group:    Default   
-   CF API endpoint:   
+   API endpoint:      https://{DomainName}
+   Region:            us-south
+   User:              YOU@us.ibm.com
+   Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567
+   Resource group:    Default
+   CF API endpoint:
    Org:
    Space:
    ```
@@ -461,11 +450,11 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    - {{site.data.keyword.Bluemix_notm}} API key that represents you and your permissions to use {{site.data.keyword.Bluemix_notm}}
    - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has the keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
    - Kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
-    
-   Use the supplied curl command: 
+
+   Use the supplied curl command:
 
    ```sh
-   curl -sL https://raw.githubusercontent.com/IBM/cloud-operators/master/hack/config-operator.sh | bash 
+   curl -sL https://raw.githubusercontent.com/IBM/cloud-operators/master/hack/config-operator.sh | bash
    ```
    {:pre}
 
@@ -524,21 +513,21 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    youyou@cloudshell:~$ ibmcloud resource service-instance cloudant-service
    Retrieving service instance cloudant-service in all resource groups under ...
    OK
-                            
-   Name:                  cloudant-service   
+
+   Name:                  cloudant-service
    ID:                    crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET
    GUID:                  SECRET
-   Location:              us-south   
-   Service Name:          cloudantnosqldb   
-   Service Plan Name:     standard   
-   Resource Group Name:   default   
-   State:                 active   
-   Type:                  service_instance   
-   Sub Type:                 
-   Created at:            2020-05-06T22:39:25Z   
-   Created by:            youyou@us.ibm.com   
-   Updated at:            2020-05-06T22:40:03Z   
-   Last Operation:                           
+   Location:              us-south
+   Service Name:          cloudantnosqldb
+   Service Plan Name:     standard
+   Resource Group Name:   default
+   State:                 active
+   Type:                  service_instance
+   Sub Type:
+   Created at:            2020-05-06T22:39:25Z
+   Created by:            youyou@us.ibm.com
+   Updated at:            2020-05-06T22:40:03Z
+   Last Operation:
                        Status       create succeeded
                        Message      Provisioning is complete
                        Updated At   2020-05-06 22:40:03.04469305 +0000 UTC
@@ -675,7 +664,7 @@ To verify that the {{site.data.keyword.la_short}} agent is deployed successfully
    logdna-agent-mdgdz   1/1       Running   0          86s
    logdna-agent-qlqwc   1/1       Running   0          86s
    ```
-  
+
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
    * All pods must be in a `Running` state
    * *Stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs
@@ -688,9 +677,9 @@ To check the logs that are generated by a {{site.data.keyword.la_short}} agent, 
    oc logs logdna-agent-<ID>
    ```
    {:pre}
-   Where *ID* is the ID for a {{site.data.keyword.la_short}} agent pod. 
+   Where *ID* is the ID for a {{site.data.keyword.la_short}} agent pod.
 
-For example, 
+For example,
    ```sh
    oc logs logdna-agent-mdgdz
    ```
@@ -708,7 +697,7 @@ This section of the tutorial goes deep into the IBM logging service.  You can st
 
 ### Launch the {{site.data.keyword.la_short}} webUI
 
-Launch the web UI within the context of an IBM Log Analysis with {{site.data.keyword.la_short}} instance, from the IBM Cloud UI. 
+Launch the web UI within the context of an IBM Log Analysis with {{site.data.keyword.la_short}} instance, from the IBM Cloud UI.
 
 1. Select the {{site.data.keyword.la_short}}  instance.
 1. Click **View LogDNA**.
@@ -793,7 +782,7 @@ In a view, you can search events that are displayed through a view for a specifi
 
 You can apply a timestamp by specifying an absolute time, a relative time, or a time range.
 
-Complete the following steps to jump to a specific time: 
+Complete the following steps to jump to a specific time:
 
 1. Launch the {{site.data.keyword.la_short}} web UI.
 2. Click the **Views** icon ![](images/solution55-openshift-microservices/views.png).
@@ -959,13 +948,13 @@ Use views and dashboards to monitor your infrastructure, applications, and servi
 
 The following table lists the different types of pre-defined dashboards:
 
-| Type | Description | 
+| Type | Description |
 | :--- | :--- |
 | Applications | Dashboards that you can use to monitor your applications and infrastructure components. |
 | Host and containers | Dashboards that you can use to monitor resource utilization and system activity on your hosts and in your containers. |
-| Network | Dashboards that you can use to monitor your network connections and activity. | 
-| Service | Dashboards that you can use to monitor the performance of your services, even if those services are deployed in orchestrated containers. | 
-| Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. | 
+| Network | Dashboards that you can use to monitor your network connections and activity. |
+| Service | Dashboards that you can use to monitor the performance of your services, even if those services are deployed in orchestrated containers. |
+| Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. |
 
 
 ### Complete the {{site.data.keyword.monitoringshort_notm}} installation wizard
@@ -1070,7 +1059,7 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 * Delete {{site.data.keyword.la_short}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
-* Cloudant service 
+* Cloudant service
 <!--#/istutorial#-->
 
 ## Related content
