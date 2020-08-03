@@ -51,17 +51,6 @@
             "VPC",
             "Linux"
           ]
-        },
-        {
-          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
-          "url": "hpc-eda.hidden.html",
-          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
-          "imgSrc": "images/solution60-hpc-eda-hidden/hpc-eda-arch.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ]
         }
       ]
     },
@@ -1051,6 +1040,23 @@
           "requirements": [
             "vmware",
             "schematics"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "High Performance Computing",
+      "anchor": "hpc",
+      "solutions": [
+        {
+          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
+          "url": "hpc-eda.html",
+          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
+          "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
           ]
         }
       ]

@@ -56,7 +56,7 @@ This tutorial focuses on building and configuring the following hardware and sof
 
 The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
-![Architecture diagram](images/solution60-hpc-eda-hidden/hpc-eda-arch.svg)
+![Architecture diagram](images/solution60-hpc-eda/hpc-eda-arch.svg)
 
 ## Before you begin
 {: #prereqs}

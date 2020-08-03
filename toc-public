@@ -93,6 +93,10 @@ Solution Tutorials
         VMware Solutions
             vmware-solutions-shared-getting-started.md
 
+        {: .topicgroup}
+        High Performance Computing
+            hpc-eda.md
+
     {: .topicgroup}
     By Compute Options
 
