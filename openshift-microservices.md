@@ -66,20 +66,44 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}}.
 
 <!--##istutorial#-->
-## Create {{site.data.keyword.openshiftshort}} cluster
+<!--This section is identical in all openshift tutorials, copy/paste any changes-->
+## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 {: step}
 
-With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
+With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-- Create an {{site.data.keyword.openshiftshort}} cluster:
-  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
-  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
-
-Take a note of the resource group selected above.  This same resource group will be used for all resources in this tutorial.
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
+3. Select your OCP entitlement.
+4. Under **Infrastructure** choose Classic or VPC
+  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2).
+    - In summary - create or inspect a desired VPC and insure that it contains
+      - One subnet that can be used for this tutorial, take note of the subnet's zone and name
+      - Public gateway attached to the subnet
+      - [Opening required ports in the default security group](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups)
+    - Select the desired VPC
+    - Select an existing **Cloud Object Storage** service or create one if required and then select
+5. Under **Location**
+  - For Openshift on VPC infrastructure
+      - Select a **Resource group**
+      - Uncheck the inapplicable zones
+      - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+      - Select a **Resource group**
+      - Select a **Geography**
+      - Select **Single zone** as **Availability**
+      - Choose a **Datacenter**
+6. Under **Worker pool**,
+   - Select **4 vCPUs 16GB Memory** as the flavor
+   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
+7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
+8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {:note}
+
 
 <!--#/istutorial#-->
 
@@ -129,7 +153,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 
 ### Build and Deploy Application
 
-1. Switch from the **Administrator** to the **Developer** view. Make sure your project is selected.  Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
+1. Switch from the **Administrator** to the **Developer** perspective. Make sure your project is selected.  Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
    ![](images/solution55-openshift-microservices/ocp-project-view.png)
 1. Let's build and deploy the application by selecting **From Git**.
 1. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend` in the Git Repo URL field.
@@ -428,6 +452,8 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 ### Create a Cloudant Service and Bind using the CRDs
 
+Click on the **IBM Cloud Operator** to open it.  Scroll down to the **Requirements** section.
+
 An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Requirements** section of the installed operator.  Steps:
 
 1. Skip the `login` command and the `ibmcloud target --cf -g Default`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.
@@ -458,7 +484,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators** page to bring up the yaml editor.
+9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators > Operator Details** of the **IBM Cloud Operator** page to bring up the yaml editor.
 9. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
@@ -578,7 +604,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {:pre}
-3. Back in the console in the **Topology** view of the **Developer** perspective open the **backend** app to notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
+3. Back in the console in the **Topology** view of the **Developer** perspective open the **backend** app wait for the build to complete and then notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
    ```
    > node app.js
 
@@ -613,46 +639,47 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 2. Launch the Cloudant dashboard and click the `patients` db.
 3. Click through the different patients you can log-in as.
 
-## Configure {{site.data.keyword.la_short}} agent for {{site.data.keyword.openshiftshort}}  cluster
-{: #configure-logdna}
+## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}} to the {{site.data.keyword.openshiftshort}}  cluster
+{: #connect-logging-metrics}
 {: step}
-
-The {{site.data.keyword.la_short}} agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
-
-To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a *LogDNA-agent* pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+It can take a few minutes for logging and metric data to flow through the analysis systems so it is best to connect both at this time for later use.
 
 <!--##isworkshop#-->
 <!--
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.la_short}} has already been provisioned and configured, skip the create and deploy steps and go to the step Verify the agent at the bottom. Find your {{site.data.keyword.la_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.monitoringshort_notm}} has already been connected skip the connect steps and go to the step verify the agent at the bottom. Find your {{site.data.keyword.monitoringshort_notm}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+
+{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.la_short}} has already been connected skip the connect steps and go to the step Verify the agent at the bottom. Find your {{site.data.keyword.la_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
 -->
 <!--#/isworkshop#-->
 
-### Create a {{site.data.keyword.la_short}} service instance
 
-1. Navigate to [Observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
-1. Provide a unique **Service name** such as `<your-initials>-logging`.
-1. Choose a region/location and select a resource group.
-1. Select **7 day Log Search** as your plan and click **Create**.
+1. Navigate to [OpenShift clusters](https://{DomainName}}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+2. Click on your cluster and verify the **Overview** tab on the left is selected
+3. Click the Logging **Connect** button
+   1. Leave **Use private endpoint** checked
+   2. Use the resource group associated with your cluster.
+   3. Create a unique **Service name** such as `<your-initials>-logging`.
+   4. Select **7 day Log Search** as your plan and click **Create**.
+4. Back on the cluster **Overview** tab, click the Metrics **Connect** button
+   1. Leave **Use private endpoint** checked
+   2. Use the resource group associated with your cluster.
+   3. Create a unique **Service name** such as `<your-initials>-metrics`.
+   3. Select the **Graduated Tier** plan.
 
-### Deploy the {{site.data.keyword.la_short}} agent in the cluster
+## Analyze your logs with {{site.data.keyword.la_short}}
+{: #use-logdna}
+{: step}
 
-1. On the {{site.data.keyword.la_short}} instance just created, click **Edit log sources**.
-1. Before running the `curl` command in the next step, make sure you're still logged in to the cluster.
-1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the 5 steps listed:
-   ![](images/solution55-openshift-microservices/logdna-install.png)
+IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
 
-   The {{site.data.keyword.la_short}} agent collects logs with the extension `*.log` and extensionsless files that are stored in the `/var/log` directory of your pod. By default, logs are collected from all namespaces, including `kube-system`, and automatically forwarded to the IBM Log Analysis with {{site.data.keyword.la_short}} service.
+You can use IBM Log Analysis with {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud.
+
+This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfully begin the next section.
+{:note}
 
 ### Verify that the {{site.data.keyword.la_short}} agent is deployed successfully
 
-To verify that the {{site.data.keyword.la_short}} agent is deployed successfully, run the following command:
-
-1. Target the project where the {{site.data.keyword.la_short}} agent is deployed.
-   ```
-   oc project ibm-observe
-   ```
-   {:pre}
-2. Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in a **Running** status.
+Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in a **Running** status.
    ```
    oc get pods -n ibm-observe
    ```
@@ -684,24 +711,13 @@ For example,
    oc logs logdna-agent-mdgdz
    ```
 
-## Analyze your logs with {{site.data.keyword.la_short}}
-{: #use-logdna}
-{: step}
-
-IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
-
-You can use IBM Log Analysis with {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud.
-
-This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfully begin the next section.
-{:note}
-
 ### Launch the {{site.data.keyword.la_short}} webUI
 
 Launch the web UI within the context of an IBM Log Analysis with {{site.data.keyword.la_short}} instance, from the IBM Cloud UI.
 
-1. Select the {{site.data.keyword.la_short}}  instance.
-1. Click **View LogDNA**.
-   ![](images/solution55-openshift-microservices/logdna-launch-ui.png)
+1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+2. Click on your cluster and verify the **Overview** tab on the left is selected
+3. The **Connect** buttons now read **Launch** so click the Logging **Launch** button
 
 The Web UI opens.
 
@@ -709,7 +725,7 @@ The Web UI opens.
 
 In {{site.data.keyword.la_short}}, you can configure custom views to monitor a subset of data. You can also attach an alert to a view to be notified of the presence or absence of log lines.
 
-When you launch the {{site.data.keyword.la_short}} web UI, log entries are displayed with a predefined format. You can modify in the **User Preferences** section how the information in each log line is displayed. You can also filter logs and modify search settings, then bookmark the result as a _view_. You can attach and detach one or more alerts to a view. You can define a custom format for how your lines are shown in the view. You can expand a log line and see the data parsed.
+In the {{site.data.keyword.la_short}} web UI notice the log entries are displayed with a predefined format. You can modify in the **User Preferences** section how the information in each log line is displayed. You can also filter logs and modify search settings, then bookmark the result as a _view_. You can attach and detach one or more alerts to a view. You can define a custom format for how your lines are shown in the view. You can expand a log line and see the data parsed.
 
 ### View events with the default format
 
@@ -889,33 +905,6 @@ Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
-<!--##isworkshop#-->
-<!--
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.monitoringshort_notm}} has already been provisioned and configured, skip the create and deploy steps and go to the step verify the agent at the bottom. Find your {{site.data.keyword.monitoringshort_notm}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
--->
-<!--#/isworkshop#-->
-
-### Create a {{site.data.keyword.monitoringshort_notm}} service instance
-
-1. Click this link for [IBM Cloud Monitoring with Sysdig](https://{DomainName}/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
-   1. Click **Create a monitoring instance**.
-   1. Select the region where your cluster is created (.e.g Dallas).
-   1. Select the **Graduated Tier** plan.
-   1. Use the resource group associated with your cluster.
-   1. Click **Create**.
-1. In the [**Observability** category, under Monitoring](https://{DomainName}/observe/monitoring), locate the service instance you created.
-
-### Deploy the {{site.data.keyword.monitoringshort_notm}} agent in the cluster
-
-1. On the {{site.data.keyword.monitoringshort_notm}} instance click **Edit sources**.
-1. Before running the `curl` command in the next step, make sure you're still logged in to the cluster.
-   ```sh
-   oc project
-   ```
-   {:pre}
-1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the curl command next to **Public Endpoint**.
-   ![](images/solution55-openshift-microservices/sysdig-install.png)
-   The {{site.data.keyword.monitoringshort_notm}} agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
 
 ### Verify that the {{site.data.keyword.monitoringshort_notm}} agent is deployed successfully
 
@@ -956,30 +945,15 @@ The following table lists the different types of pre-defined dashboards:
 | Service | Dashboards that you can use to monitor the performance of your services, even if those services are deployed in orchestrated containers. |
 | Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. |
 
-
-### Complete the {{site.data.keyword.monitoringshort_notm}} installation wizard
-
-1. After the curl command click **View Sysdig** or back on the **Observability** > **Monitoring** page click **View Sysdig** to launch the {{site.data.keyword.monitoringshort_notm}} web UI.
-2. In the {{site.data.keyword.monitoringshort_notm}} Welcome wizard, click **Next**.
-   ![](images/solution55-openshift-microservices/sysdig-wizard1.png)
-3. Select **Kubernetes | GKE | OpenShift** as the installation method.
-   ![](images/solution55-openshift-microservices/sysdig-wizard2.png)
-4. You should see a message `You have X agents connected`. This may take a few minuts. Wait if necessary.  Click **GO TO NEXT STEP**.
-   ![](images/solution55-openshift-microservices/sysdig-wizard3.png)
-5. Setup is complete. Click **LET'S GET STARTED**.
-   ![](images/solution55-openshift-microservices/sysdig-wizard4.png)
-6. Select **Next**.
-   ![](images/solution55-openshift-microservices/sysdig-wizard5.png)
-7. Finally **Complete Onboarding**.
-   ![](images/solution55-openshift-microservices/sysdig-wizard6.png)
-
 ### View the {{site.data.keyword.monitoringshort_notm}} dashboard
 
-Initial data is NOT available on newly created **Observability** > **Monitoring** instances.
+1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+2. Click on your cluster and verify the **Overview** tab on the left is selected
+3. The **Connect** buttons now read **Launch** so click the Monitoring **Launch** button
+
+Initial data may NOT be available on newly created **Monitoring** instances.
 - After a few minutes raw data will be displayed
 - After about an hour indexing will provides the detail required to proceed with this tutorial
-
-Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics on your Kubernetes cluster, nodes, deployments, pods, containers.
 
 1. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
 
