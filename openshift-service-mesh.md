@@ -57,34 +57,43 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
 <!--##istutorial#-->
+<!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 {: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-- Create an {{site.data.keyword.openshiftshort}} cluster:
-  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
-  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
-
-<!--1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest, Default version of {{site.data.keyword.openshiftshort}}**.
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
-4. Under **Location**,
-   - Select a **Resource group**
-   - Select a **Geography**
-   - Select **Single zone** as **Availability**
-   - Choose a **Datacenter**
-5. Under **Worker pool**,
+4. Under **Infrastructure** choose Classic or VPC
+  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2).
+    - In summary - create or inspect a desired VPC and insure that it contains
+      - One subnet that can be used for this tutorial, take note of the subnet's zone and name
+      - Public gateway attached to the subnet
+      - [Opening required ports in the default security group](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups)
+    - Select the desired VPC
+    - Select an existing **Cloud Object Storage** service or create one if required and then select
+5. Under **Location**
+  - For Openshift on VPC infrastructure
+      - Select a **Resource group**
+      - Uncheck the inapplicable zones
+      - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+      - Select a **Resource group**
+      - Select a **Geography**
+      - Select **Single zone** as **Availability**
+      - Choose a **Datacenter**
+6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
-   - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On.
-6. Review **Infrastructure permissions checker** to verify the required permissions
+   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
--->
 
+{: #create_cluster}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -158,9 +167,19 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
 1. Navigate to **Operators** → **Installed Operators** again.
-2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
-3. Under **Istio Service Mesh Member Roll**,click **Create Instance**
-4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
+2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
+3. Under **Istio Service Mesh Member Roll**,click **Create CreateServiceMeshMemberRoll**
+4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits it will look something like this:
+   ```
+   apiVersion: maistra.io/v1
+   kind: ServiceMeshMemberRoll
+   metadata:
+     name: default
+     namespace: istio-system
+   spec:
+     members:
+       - bookinfo
+   ```
 5. Then, click **Create**.
 
 You successfully installed Istio into your cluster.
@@ -258,7 +277,7 @@ An Ingress Gateway resource can be created to allow external requests through th
    ```
    {:pre}
 
-   Visit the application by going to `http://<INGRESS_HOST>/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
+   Visit the application by going to `http://$INGRESS_HOST/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
 
 ## Observe service telemetry: metrics and tracing
 {: #istio_telemetry}
