@@ -127,7 +127,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
-
 ### Configure CLI
 
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.

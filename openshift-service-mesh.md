@@ -92,8 +92,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
-
-{: #create_cluster}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->

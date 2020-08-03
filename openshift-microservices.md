@@ -101,8 +101,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
-
-
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {:note}
 
@@ -655,7 +653,7 @@ It can take a few minutes for logging and metric data to flow through the analys
 <!--#/isworkshop#-->
 
 
-1. Navigate to [OpenShift clusters](kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+1. Navigate to [OpenShift clusters](https://{DomainName}}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Click the Logging **Connect** button
    1. Leave **Use private endpoint** checked
@@ -717,7 +715,7 @@ For example,
 
 Launch the web UI within the context of an IBM Log Analysis with {{site.data.keyword.la_short}} instance, from the IBM Cloud UI.
 
-1. Navigate to [OpenShift clusters](kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. The **Connect** buttons now read **Launch** so click the Logging **Launch** button
 
@@ -949,7 +947,7 @@ The following table lists the different types of pre-defined dashboards:
 
 ### View the {{site.data.keyword.monitoringshort_notm}} dashboard
 
-1. Navigate to [OpenShift clusters](kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. The **Connect** buttons now read **Launch** so click the Monitoring **Launch** button
 
