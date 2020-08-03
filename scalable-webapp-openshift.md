@@ -109,7 +109,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
     - In summary - create or inspect a desired VPC and insure that it contains
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway attached to the subnet
-      - [Opening required ports in the default security group](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups)
+      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
     - Select the desired VPC
     - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
@@ -117,7 +117,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
