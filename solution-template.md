@@ -235,6 +235,21 @@ Notice that the all section content is surrounded by html comments markup `<!--`
 
 ```tf
 resource "ibm_is_vpc" "myvpc" {
-  name = "the name
+  name = "the name using tf"
 }
 ```
+{: codeblock}
+
+```terraform
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using terraform"
+}
+```
+{: codeblock}
+
+```hcl
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using hcl"
+}
+```
+{: codeblock}
