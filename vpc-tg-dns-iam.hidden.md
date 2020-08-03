@@ -940,7 +940,7 @@ You can cd to the team directories in order, and execute `source local.env; terr
 ### Other Considerations
 {: #expand_other}
 
-- The Application team is providing access to the application via a floating IP address.  Consider connecting this to the Cloud Internet Service, CIS.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
+- The Application team is providing access to the application via a floating IP address.  Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The Application team can scale horizontally using a a load balancer like the shared team.
 - The shared team can add additional instances to the load balancer by adding code to the shared/main.tf 
 - The shared team could switch their implementation platform to Kubernetes
