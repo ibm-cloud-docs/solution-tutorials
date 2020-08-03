@@ -24,7 +24,6 @@ completion-time:
 
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, direct-link"}
 {: toc-completion-time=""}
