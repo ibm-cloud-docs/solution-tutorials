@@ -6,7 +6,7 @@ lastupdated: "2020-07-08"
 lasttested: "2020-07-08"
 
 content-type: tutorial
-services: vpc, account, transit-gateway, dns
+services: vpc, account, transit-gateway, dns-svcs
 account-plan:
 completion-time: 2h
 
@@ -24,7 +24,7 @@ completion-time: 2h
 # Team based privacy using IAM, VPC, Transit Gateway and DNS
 {: #vpc-tg-dns-iam}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, account, transit-gateway, dns"}
+{: toc-services="vpc, account, transit-gateway, dns-svcs"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
