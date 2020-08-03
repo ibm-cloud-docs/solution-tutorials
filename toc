@@ -18,7 +18,6 @@ Solution Tutorials
             solution-template.md
             image-classification-code-engine.hidden.md
             vpc-tg-dns-iam.hidden.md
-            hpc-eda.hidden.md
 
         {: .topicgroup}
         Websites and Web Apps
@@ -99,6 +98,10 @@ Solution Tutorials
         {: .topicgroup}
         VMware Solutions
             vmware-solutions-shared-getting-started.md
+
+        {: .topicgroup}
+        High Performance Computing
+            hpc-eda.md
 
     {: .topicgroup}
     By Compute Options

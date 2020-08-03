@@ -24,8 +24,6 @@ tar cf - \
   --exclude=diagrams \
   --exclude="*.hidden.*" \
   --exclude="images/*hidden*" \
-  --exclude=hpc-eda.md \
-  --exclude="images/*hpc-eda*" \
   --exclude=.vscode \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 

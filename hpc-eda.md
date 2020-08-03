@@ -5,7 +5,13 @@ copyright:
 lastupdated: "2020-07-20"
 lasttested: "2020-07-20"
 
+content-type: tutorial
+services: vpc, direct-link
+account-plan:
+completion-time:
 ---
+
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -18,6 +24,14 @@ lasttested: "2020-07-20"
 
 # Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}
 {: #hpc-eda}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc, direct-link"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are commonly run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management){: external}.
 
@@ -39,31 +53,13 @@ This tutorial focuses on building and configuring the following hardware and sof
 
 * Extend an existing on-premises IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_full}}.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* IBM Spectrum&reg; LSF
-* {{site.data.keyword.dl_full}}
-* {{site.data.keyword.vpc_short}}
-* {{site.data.keyword.cloud}} CLI
-* Ansible&reg;
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
-
 The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
-<p style="text-align: center;">
-![Architecture diagram](images/solution60-hpc-eda-hidden/hpc-eda-arch.svg)
-</p>
+![Architecture diagram](images/solution60-hpc-eda/hpc-eda-arch.svg)
 
 ## Before you begin
 {: #prereqs}
+
 You need the following to complete this tutorial:
 * Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF version 10.2 cluster already installed.
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
@@ -78,6 +74,7 @@ You will find instructions to download and install these tools for your operatin
 
 ## Set up the {{site.data.keyword.cloud_notm}} CLI
 {: #set-up-cli}
+{: step}
 
 1. If possible, log in to the on-premise master node as the root user.
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install){: external}.
@@ -125,6 +122,7 @@ You will find instructions to download and install these tools for your operatin
 
 ## Prepare your environment
 {: #prep-environment}
+{: step}
 
 ### Specify the cloud cluster configuration
 {: #specify-cloud-cluster-configuration}
@@ -134,7 +132,7 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
 
   ```
-  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git`
+  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
   ```
   {: pre}
 
@@ -194,6 +192,7 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
 
 ## Provision the cloud resources
 {: #provision-cloud-resources}
+{: step}
 
 If it is not already installed, you need Ansible version 2.7 or higher installed to continue.  If Ansible is already installed, be sure to check the version and update if necessary.
 
@@ -207,7 +206,7 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
 2. The `create_vpc.yml` playbook is a hybrid that combines Ansible configuration with Terraform provisioning. You won’t interact directly with Terraform because all of the functions are orchestrated by Ansible. Because Terraform runs behind the scenes, some of the output files from this process will be familiar to Terraform users. These output files are needed to access the newly provisioned resources and complete the cluster setup. Before running the playbook, specify the location of the files by setting the `GEN_FILES_DIR` environment variable to tell the playbook where you would like the output files placed:
 
   ```
-  export GEN_FILES_DIR=/root/lsf-autoscaler/generated_files
+  export GEN_FILES_DIR=<a directory of your choice>
   ```
   {: pre}
 
@@ -246,6 +245,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 
 ## Connect your on-premises and cloud networks with a VPN
 {: #connect-on-premises-cloud-networks-vpn}
+{: step}
 
 In the previous section, one of the resulting files created was `${GEN_FILES_DIR/vpn.yml}`. This playbook will be used to create a VPN. If you completed all of the information in the `tf_inventory.yml` file, the `vpn.yml` file should contain the information for this section.
 
@@ -300,8 +300,9 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
 {: #deploy-lsf-cloud-cluster}
+{: step}
 
-1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `setup/group_vars` directory with the following parameters:
+1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
   * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
   * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
@@ -313,7 +314,10 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
       cluster_name: onPremCluster
+      host: hostname of the on premises LSF master
+      ip: IP address of the on-premises LSF master
   * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
+  * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
   * **vpn**:
       ip: <vpn_server_ip>
 
@@ -355,6 +359,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 ## Verify and test the multi-cluster
 {: #verify-test-multi-cluster}
+{: step}
 
 From the on-premises master node, complete the following steps.
 
@@ -388,6 +393,7 @@ From the on-premises master node, complete the following steps.
 
 ## Remove resources
 {: #remove-resources}
+{: step}
 
 To clean up any resources that you created in this tutorial, use the following procedure. This is useful if you complete this tutorial as a part of a proof of concept or if the resources are no longer needed after a successful employment of cloud-bursting.
 
