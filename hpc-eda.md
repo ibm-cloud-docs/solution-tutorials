@@ -133,7 +133,7 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
 
   ```
-  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git`
+  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
   ```
   {: pre}
 
@@ -207,7 +207,7 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
 2. The `create_vpc.yml` playbook is a hybrid that combines Ansible configuration with Terraform provisioning. You won’t interact directly with Terraform because all of the functions are orchestrated by Ansible. Because Terraform runs behind the scenes, some of the output files from this process will be familiar to Terraform users. These output files are needed to access the newly provisioned resources and complete the cluster setup. Before running the playbook, specify the location of the files by setting the `GEN_FILES_DIR` environment variable to tell the playbook where you would like the output files placed:
 
   ```
-  export GEN_FILES_DIR=/root/lsf-autoscaler/generated_files
+  export GEN_FILES_DIR=<a directory of your choice>
   ```
   {: pre}
 
@@ -303,7 +303,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 {: #deploy-lsf-cloud-cluster}
 {: step}
 
-1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `setup/group_vars` directory with the following parameters:
+1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
   * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
   * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
@@ -315,7 +315,10 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
       cluster_name: onPremCluster
+      host: hostname of the on premises LSF master
+      ip: IP address of the on-premises LSF master
   * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
+  * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
   * **vpn**:
       ip: <vpn_server_ip>
 
