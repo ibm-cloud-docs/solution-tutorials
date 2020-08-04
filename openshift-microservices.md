@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-08-04"
-lasttested: "2020-05-16"
+lasttested: "2020-08-04"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -442,9 +442,8 @@ Currently, the Example Health `patient-health-frontend` app is using a dummy in-
 Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.openshiftshort}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
-2. Find the **IBM Cloud Operator**, and hit **Install**:
-   ![Operator Install](images/solution55-openshift-microservices/cloudoperatorinstall.png)
-3. Keep the default options and hit **Subscribe**:
+2. Find the **IBM Cloud Operator**, and click **Install**:
+3. Keep the default options and click **Subscribe**:
    ![Operator Subscribe](images/solution55-openshift-microservices/operatorsubscribe.png)
 4. You may need to wait a few seconds and refresh for the operator to show up as `Installed`:
    ![Installed Operators](images/solution55-openshift-microservices/installedoperators.png)
@@ -460,7 +459,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ibmcloud target -g Default
    ```
    {:pre}
-7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
+1. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
    ```sh
    API endpoint:      https://{DomainName}
    Region:            us-south
@@ -471,7 +470,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    Org:
    Space:
    ```
-9. Use the helper script provided by IBM to create the following resources:
+1. Use the helper script provided by IBM to create the following resources:
    - {{site.data.keyword.Bluemix_notm}} API key that represents you and your permissions to use {{site.data.keyword.Bluemix_notm}}
    - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has the keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
    - Kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
@@ -483,8 +482,8 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators > Operator Details** of the **IBM Cloud Operator** page to bring up the yaml editor.
-9. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
+1. Back in the GUI, click the **Create Instance** in the **Service** tile on the **Installed Operators > Operator Details** of the **IBM Cloud Operator** page to bring up the yaml editor.
+1. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Service
@@ -499,7 +498,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 1. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
 1. Click on the service just created, **cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
-5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, (this is the the name provided for the **Service** created earlier).
+1. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Details**, click **Create instance** under the **Binding** tile. Create a cloudant-binding associated with the serviceName `cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Binding
@@ -510,7 +509,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      serviceName: cloudant-service
    ```
    {:codeblock}
-6. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the console shell:
+1. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials** using the cloud shell:
 
    ```
    ibmcloud resource service-instances --service-name cloudantnosqldb
@@ -614,7 +613,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    ```
 4. Let's fix this by setting the environment variable of the **DeploymentConfig** to the **cloudant-binding** secret created earlier in the operator binding section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
    ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig.png)
-5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Hit the **Save** button.
+5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Click **Save**.
    ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret.png)
 6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should should indicate **Running** shortly.  Click on the **Pod** **logs** and notice the databases created.
 
@@ -624,7 +623,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 
 1. Set the **API_URL** environment variable to **default** in the frontend **Deployment**. Navigate to the deployment for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **D**:
 
-2. Go to the **Environment** tab, and in the **Single value(env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
+2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
 
    ```
    oc describe deployment/patient-health-frontend
@@ -634,8 +633,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **cloudant-service**.
-   ![cloudantdb](images/solution55-openshift-microservices/cloudantdb.png)
-2. Launch the Cloudant dashboard and click the `patients` db.
+2. Launch the dashboard and click the `patients` db.
 3. Click through the different patients you can log-in as.
 
 ## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}} to the {{site.data.keyword.openshiftshort}}  cluster
@@ -655,15 +653,18 @@ It can take a few minutes for logging and metric data to flow through the analys
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Click the Logging **Connect** button
-   1. Leave **Use private endpoint** checked
-   2. Use the resource group associated with your cluster.
-   3. Create a unique **Service name** such as `<your-initials>-logging`.
-   4. Select **7 day Log Search** as your plan and click **Create**.
-4. Back on the cluster **Overview** tab, click the Metrics **Connect** button
-   1. Leave **Use private endpoint** checked
-   2. Use the resource group associated with your cluster.
-   3. Create a unique **Service name** such as `<your-initials>-metrics`.
-   3. Select the **Graduated Tier** plan.
+   1. Leave **Use private endpoint** checked and click **Create and connect**.
+   2. Select a region where you have your cluster created.
+   3. Select **7 day Log Search** as your plan.
+   4. Create a unique **Service name** such as `<your-initials>-logging`.
+   5. Use the resource group associated with your cluster and click **Create**.
+4. Back on the cluster **Overview** tab, click the Monitoring **Connect** button
+   1. Leave **Use private endpoint** checked and click **Create and connect**.
+   2. Select a region where you have your cluster created.
+   3. Select **Graduated Tier** as your plan.
+   4. Create a unique **Service name** such as `<your-initials>-monitoring`.
+   5. Use the resource group associated with your cluster.
+   6. Leave IBM platform metrics to Disable and click **Create**.
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
 {: #use-logdna}
@@ -693,21 +694,21 @@ Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in 
 
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
    * All pods must be in a `Running` state
-   * *Stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs
-   * By default, the {{site.data.keyword.la_short}} agent pod that runs on a worker collects logs from all namespaces on that node
+   * *Stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs.
+   * By default, the {{site.data.keyword.la_short}} agent pod that runs on a worker collects logs from all namespaces on that node.
 
 After the agent is configured logs from this cluster will be visible in the {{site.data.keyword.la_short}} web UI covered in the next section. If after a period of time you cannot see logs, check the agent logs.
 
 To check the logs that are generated by a {{site.data.keyword.la_short}} agent, run the following command:
    ```sh
-   oc logs logdna-agent-<ID>
+   oc logs logdna-agent-<ID> -n ibm-observe
    ```
    {:pre}
    Where *ID* is the ID for a {{site.data.keyword.la_short}} agent pod.
 
 For example,
    ```sh
-   oc logs logdna-agent-mdgdz
+   oc logs logdna-agent-mdgdz -n ibm-observe
    ```
 
 ### Launch the {{site.data.keyword.la_short}} webUI
@@ -760,11 +761,11 @@ You can select the events that are displayed through a view by applying a search
    1. Enter the name of the view. Use the following format: `<Enter your user name> patientUI`. For example, `yourname patientui`.
    1. Enter a category. Use the following format: `<Enter your user name>`. For example, `yourname` Then click **Add new category**.
    1. Click **Save view**.
-1. A new category appears on the left navigation panel.
+5. A new view appears on the left navigation panel.
 
 #### Generate application log data
 
-Generate logs by opening the application and logging in with different names (see previous section for simulate load on the application for instructions):
+Generate logs by opening the application and logging in with different names (see previous section for simulate load on the application for instructions).
 
 ### Analyze a log line
 
@@ -773,22 +774,22 @@ At any time, you can view each log line in context.
 Complete the following steps:
 
 1. Click the **Views** icon ![](images/solution55-openshift-microservices/views.png).
-2. Select **Everything** or a view.
-3. Identify a line in the log that you want to explore.
-4. Expand the log line to display information about line identifiers, tags, and labels.
-5. Click **View in Context** to see the log line in context of other log lines from that host, app, or both. This is a very useful feature when you want to troubleshoot a problem.
+1. Select **Everything** or a view.
+1. Identify a line in the log that you want to explore.
+1. Expand the log line to display information about line identifiers, tags, and labels.
+1. Click **View in Context** to see the log line in context of other log lines from that host, app, or both. This is a very useful feature when you want to troubleshoot a problem.
    ![](images/solution55-openshift-microservices/views-img-12.png)
 1. A new pop up window opens. In the window, choose one of the following options:
-   **By Everything** to see the log line in the context of all log records \(everything\) that are available in the {{site.data.keyword.la_short}} instance
-   **By source** to see the log line in the context of the log lines for the same source
-   **By App** to see the log line in the context of the log lines of the app
-   **By Source and App** to see the log line in the combined context of the app and source
+   - **By Everything** to see the log line in the context of all log records \(everything\) that are available in the {{site.data.keyword.la_short}} instance
+   - **By source** to see the log line in the context of the log lines for the same source
+   - **By App** to see the log line in the context of the log lines of the app
+   - **By Source and App** to see the log line in the combined context of the app and source
    Then click **Continue in New Viewer** to get the view in a different page. You might need to scroll down to get this option.
 
    > **Tip: Open a view per type of context to troubleshoot problems.**
 
    ![](images/solution55-openshift-microservices/views-img-13.png)
-6. Click **Copy to clipboard** to copy the message field to the clipboard. Notice that when you copy the log record you get less information than what it is displayed in the view. To get a line with all the fields, you must export data from a custom view.
+1. Expand the selected log and click **Copy to clipboard** to copy the message field to the clipboard. Notice that when you copy the log record you get less information than what it is displayed in the view. To get a line with all the fields, you must export data from a custom view.
 1. When you are finished, close the line.
 
 ### View a subset of the events by applying a timeframe
@@ -820,32 +821,32 @@ Index fields are created on a regular schedule.   Currently it is done at 00:01 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
 1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-microservices/boards.png).
-2. Select **NEW BOARD** to create a new dashboard.
-3. Click **Add Graph**.
-4. Select the Field **All lines**.
-4. Select the Filter **app:patient-health-frontend**.
+1. Select **NEW BOARD** to create a new dashboard.
+1. Click **Add Graph**.
+1. Select the Field **All lines**.
+1. Select the Filter **app:patient-health-frontend**.
 
    ![](images/solution55-openshift-microservices/board-img-4.png)
 
-   Click **Add Graph**.
+1. Click **Add Graph**.
 
    ![](images/solution55-openshift-microservices/board-img-5.png)
 
-5. Note the view that displays the count of logs lines for the frontend app. Click the graph in a peak of data at the time that you want to see logs, and then click **Show logs**.
+1. Note the view that displays the count of logs lines for the frontend app. Click the graph in a peak of data at the time that you want to see logs, and then click **Show logs**.
 
    A new page opens with the relevant log entries.  Click the browser's back button when done with the log lines to return to the graph.
 
-6. Add subplots to analyze the data by applying additonal filtering criteria.
+1. Add subplots to analyze the data by applying additonal filtering criteria.
 
    ![](images/solution55-openshift-microservices/board-img-8.png)
 
-   Click **Show subplots**.
+1. Click **Show subplots**.
 
-   Select **Histogram** and **level**.
+1. Select **Histogram** and **level**.
 
    ![](images/solution55-openshift-microservices/board-img-11.png)
 
-7. Name the dashboard by hitting the pencil **Edit Board** button next to the *New Board N* name".
+1. Name the dashboard by hitting the pencil **Edit Board** button next to the *New Board N* name".
 
    - Enter `patientui` as the name of the dashboard
    - Enter a category, for example, `yourname` then click **Add this as a new board category**
@@ -893,7 +894,8 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 5. Drag the table to improve the presentation.  Verify the screen resembles the following:
     ![](images/solution55-openshift-microservices/screen-img-15.png)
 6. Save the screen. Select **Save Screen**.
-   IMPORTANT: If you do not save the screen, you lose all your widgets.
+   If you do not save the screen, you lose all your widgets.
+   {:important}
 
 Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
 {:note}
@@ -903,7 +905,6 @@ Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM
 {: step}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
-
 
 ### Verify that the {{site.data.keyword.monitoringshort_notm}} agent is deployed successfully
 
@@ -948,7 +949,7 @@ The following table lists the different types of pre-defined dashboards:
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
-3. The **Connect** buttons now read **Launch** so click the Monitoring **Launch** button
+3. The **Connect** button now read **Launch** so click the Monitoring **Launch** button
 
 Initial data may NOT be available on newly created **Monitoring** instances.
 - After a few minutes raw data will be displayed
@@ -1032,7 +1033,7 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 * Delete {{site.data.keyword.la_short}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
-* Cloudant service
+* {{site.data.keyword.cloudant_short_notm}} service
 <!--#/istutorial#-->
 
 ## Related content
