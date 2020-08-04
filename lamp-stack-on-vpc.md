@@ -383,7 +383,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    service mysql stop
    ```
    {: pre}
-1. Move the Apache directory from /var to /data
+1. Move the MySQL directory from /var to /data
    ```sh
    mkdir /data/lib
    mv /var/lib/mysql /data/lib/
