@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-06-02"
 lasttested: "2020-06-02"
+
+content-type: tutorial
+services: openwhisk, cis, certificate-manager
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2020-06-02"
 
 # Deploy serverless apps across multiple regions
 {: #multi-region-serverless}
+{: toc-content-type="tutorial"}
+{: toc-services="openwhisk, cis, certificate-manager"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial shows how to configure {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
 
@@ -33,18 +47,6 @@ Serverless computing platforms give developers a rapid way to build APIs without
 * Expose actions via {{site.data.keyword.APIM}} with a custom domain.
 * Distribute traffic across multiple locations with {{site.data.keyword.cis_full_notm}}.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
-* [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts)
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-svcs)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 The tutorial considers a public web application with a back-end implemented with {{site.data.keyword.openwhisk_short}}. To reduce network latency and prevent outage, the application is deployed in multiple locations. Two locations are configured in the tutorial.
 
@@ -64,6 +66,7 @@ The tutorial considers a public web application with a back-end implemented with
 {{site.data.keyword.cis_full_notm}} requires you to own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
 
 ## Configure a custom domain
+{: step}
 
 The first step is to create an instance of {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) and to point your custom domain {{site.data.keyword.cis_short_notm}} name servers.
 
@@ -106,6 +109,7 @@ For renewing certificates, check the documentation [here](/docs/certificate-mana
 {: tip}
 
 ## Deploy actions in multiple locations
+{: step}
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
 
@@ -196,6 +200,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 Repeat the previous sections to configure more locations.
 
 ## Distribute traffic between locations
+{: step}
 
 **At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
 
@@ -250,6 +255,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
 

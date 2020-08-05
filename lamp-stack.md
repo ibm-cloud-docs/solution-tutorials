@@ -4,8 +4,14 @@ copyright:
   years: 2017, 2019
 lastupdated: "2019-05-20"
 lasttested: "2019-05-20"
+
+content-type: tutorial
+services: virtual-servers
+account-plan:
+completion-time: 1h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-05-20"
 
 # PHP web application on a LAMP Stack
 {: #lamp-stack}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-servers"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting. This combination of software - more commonly called a LAMP stack - is very popular and often used to deliver websites and web applications. Using {{site.data.keyword.BluVirtServers}} you will quickly deploy your LAMP stack with built-in monitoring and vulnerability scanning. To see the LAMP server in action, you will install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
 
@@ -25,16 +39,6 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Host a website or blog by installing and configuring WordPress
 * Utilize monitoring to detect outages and slow performance
 * Assess vulnerabilities and protect from unwanted traffic
-
-## Services used
-
-This tutorial uses the following runtimes and services:
-
-* [{{site.data.keyword.BluVirtServers_short}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
 
 ![Architecture diagram](images/solution4/Architecture.png)
 
@@ -60,6 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    {:tip}
 
 ## Create services
+{: step}
 
 In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic locations. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
 
@@ -82,6 +87,7 @@ After the server is created, you'll see the server login credentials. Although y
   {:tip}
 
 ## Re-install Apache, MySQL, and PHP
+{: step}
 
 It's advised to update the LAMP stack with the latest security patches and bug fixes periodically. In this section, you'll run commands to update Ubuntu package sources and re-install Apache, MySQL and PHP with latest version. Note the caret (^) at the end of the command.
 
@@ -94,6 +100,7 @@ An alternative option is to upgrade all packages with `sudo apt-get update && su
 {:tip}
 
 ## Verify the installation and configuration
+{: step}
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
 
@@ -194,11 +201,13 @@ Experience your LAMP stack by installing an application. The following steps ins
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)
 
 ## Configure domain
+{: step}
 
 To use an existing domain name with your LAMP server, update the A record to point to the virtual server's public IP address.
 You can view the server's public IP address from the dashboard.
 
 ## Server monitoring and usage
+{: step}
 
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. In this section, you'll explore the options that are available to monitor your virtual server and understand the usage of the server at any given time.
 
@@ -230,6 +239,7 @@ Select the **Usage** tab to understand the current server's memory and CPU usage
   ![Server Usage](images/solution4/ServerUsage.png)
 
 ## Server security
+{: step}
 
 {{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and firewalls.
 
@@ -250,6 +260,7 @@ Another way to secure the server is by adding a firewall. Firewalls provide an e
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](https://{DomainName}/docs/infrastructure/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-getting-started-with-hardware-firewall-dedicated#getting-started).
 
 ## Remove resources
+{: step}
 
 To remove your virtual server, complete the following steps.
 

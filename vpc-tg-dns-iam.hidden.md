@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2020-07-08"
 lasttested: "2020-07-08"
 
+content-type: tutorial
+services: vpc, account, transit-gateway, dns-svcs
+account-plan:
+completion-time: 2h
+
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -17,6 +23,14 @@ lasttested: "2020-07-08"
 
 # Team based privacy using IAM, VPC, Transit Gateway and DNS
 {: #vpc-tg-dns-iam}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc, account, transit-gateway, dns-svcs"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro service architecture.  The VPCs are connected to each other using the {{site.data.keyword.tg_full}}.  The shared microservices are accessed through the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate application team isolated by {{site.data.keyword.iamlong}}.  Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
 
@@ -29,24 +43,6 @@ This tutorial walks you through the steps of creating infrastructure for a {{sit
 * Use a separate VPC for each team
 * Connect VPCs via transit gateway
 * Address micro-services using DNS name resolution
-
-## Services Used
-{: #services}
-
-This tutorial uses the following run times and services:
-* [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc/provision/vs)
-* [{{site.data.keyword.iamlong}}](https://{DomainName}/docs/iam?topic=iam-iamoverview#iamoverview)
-* [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-* [{{site.data.keyword.tg_full}}](https://{DomainName}/cloud/transit-gateway)
-* [{{site.data.keyword.dns_full}}](https://{DomainName}/catalog/services/dns-services)
-* [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/vpc/provision/loadBalancer)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
-
-Conceptual architecture:
 
 <p style="text-align: center;">
 
@@ -71,6 +67,7 @@ The teams determined the following architecture could meet their isolation and c
 
 ## Create a local working environment
 {: #create}
+{: step}
 
 All of the operations will be done in a bash shell and making use of terraform and ibmcloud command.  The IBM cloud shell will have the prerequisites required.
 
@@ -103,6 +100,7 @@ All of the operations will be done in a bash shell and making use of terraform a
 
 ## Identity and Access Management
 {: #iam}
+{: step}
 
 The admin team will enable the other teams to administer themselves as much as possible.  The admin team will manage users and control access but will not create and destroy resources. 
 
@@ -370,6 +368,7 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
 
 ## Creating the IAM resources
 {: #admin}
+{: step}
 
 The admin team will be responsible for creating the IAM resources. After fetching the source code and making the initial terraform.tfvars changes suggested above set current directory to ./admin and use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
 
@@ -445,6 +444,7 @@ These resources can be edited and displayed using the ibm cloud console.  Naviga
 
 ## Create {{site.data.keyword.vpc_short}}}} network {{site.data.keyword.tg_short}} {{site.data.keyword.dns_short}}
 {: #network}
+{: step}
 
 
 The network team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances.  It is likely that the number of applications, size of computers, DNS addresses of the micro services etc will be in constant flux and not a concern of the network team.
@@ -622,6 +622,7 @@ The DNS configuration can be created, edited and displayed using the ibm cloud c
 
 ## Create the shared microservice and associated DNS record
 {: #shared}
+{: step}
 
 Change directory, generate an API key in the local.env and become a member of the shared access group:
 
@@ -684,6 +685,7 @@ Navigate to the [resource list](https://{DomainName}/resources) and find the **{
 
 ## Create a publicly facing microservice that uses the shared microservice
 {: #application}
+{: step}
 
 Change directory, generate an API key in the local.env and become a member of the application1 access group:
 
@@ -922,6 +924,7 @@ Now execute the curl commands from the previous application1 section (ignore the
 
 ## Remove resources
 {: #remove_resource}
+{: step}
 
 You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application1, shared, network, admin. There is also a script that will do this for you:
 
@@ -932,12 +935,12 @@ You can cd to the team directories in order, and execute `source local.env; terr
    {:pre}
 
 
-## Expanding on this Solution Tutorial
+## Expand the tutorial
 
 ### Other Considerations
 {: #expand_other}
 
-- The Application team is providing access to the application via a floating IP address.  Consider connecting this to the Cloud Internet Service, CIS.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
+- The Application team is providing access to the application via a floating IP address.  Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The Application team can scale horizontally using a a load balancer like the shared team.
 - The shared team can add additional instances to the load balancer by adding code to the shared/main.tf 
 - The shared team could switch their implementation platform to Kubernetes

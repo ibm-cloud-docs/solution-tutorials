@@ -2,10 +2,16 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-07-27"
+lastupdated: "2020-07-31"
 lasttested: "2020-07-27"
+
+content-type: tutorial
+services: openshift, containers, Registry
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-07-27"
 
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, containers, Registry"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
@@ -34,19 +48,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -85,38 +86,48 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 -->
 <!--#/isworkshop#-->
 
 <!--##istutorial#-->
+<!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
+{: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes. A standard cluster with single availability zone, two (2) worker nodes and the smallest available size (**Flavor**) is sufficient for this tutorial.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-- Create an {{site.data.keyword.openshiftshort}} cluster:
-  - For {{site.data.keyword.openshiftshort}} on VPC Gen 2 infrastructure, you are required to create a VPC on generation 2 compute with subnet(s) prior to creating the {{site.data.keyword.openshiftshort}} cluster. You may follow the instructions provided under [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2_ui).
-  - For {{site.data.keyword.openshiftshort}} on Classic Infrastructure, follow the [Creating a standard classic cluster in the console](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_ui) instructions.
-
-<!--
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **Latest**.
+2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
-4. Under **Location**,
-   - Select a **Resource group**
-   - Select a **Geography**
-   - Select **Single zone** as **Availability**
-   - Choose a **Datacenter**
-5. Under **Worker pool**,
+4. Under **Infrastructure** choose Classic or VPC
+  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+      - One subnet that can be used for this tutorial, take note of the subnet's zone and name
+      - Public gateway is attached to the subnet
+      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
+  - Select the desired VPC
+  - Select an existing **Cloud Object Storage** service or create one if required and then select
+5. Under **Location**
+  - For Openshift on VPC infrastructure
+      - Select a **Resource group**
+      - Uncheck the inapplicable zones
+      - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+      - Select a **Resource group**
+      - Select a **Geography**
+      - Select **Single zone** as **Availability**
+      - Choose a **Datacenter**
+6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
-   - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On.
-6. Review **Infrastructure permissions checker** to verify the required permissions
+   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
--->
+Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
+{:note}
 
 ### Configure CLI
 
@@ -135,6 +146,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 <!--
 ## Configure the access to your cluster
 {: #access-cluster}
+{: step}
 
 `ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
 
@@ -165,6 +177,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 
 ## Generate a starter kit
 {: #generate_starter_kit}
+{: step}
 
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
@@ -211,6 +224,7 @@ In this step, you will create a deploy token to allow read-only access to your r
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
+{: step}
 
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 
@@ -322,7 +336,7 @@ In this step, you will update the generated BuildConfig section of the generated
 5. Search for `containers` and update the image with
    ```yaml
    containers:
-       -image: '<$MYREGISTRY>/<$MYNAMESPACE?/<$MYPROJECT>:latest'
+       -image: '<$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest'
        name: <$MYPROJECT>
    ```
    {:codeblock}
@@ -330,6 +344,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
+{: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
@@ -436,11 +451,15 @@ In this step, you will automate the build and deploy process. So that whenever y
 <!--##istutorial#-->
 ## Use your own custom domain
 {: #custom_domain}
+{: step}
 
 This section requires you to own a custom domain and to be able to modify the DNS records of the domain. You will need to create a `CNAME` record pointing to the IBM-provided domain.
 
+Steps for setting up the CNAME record vary depending on your DNS provider. Under DNS Management/Zone of your domain, add a new `CNAME` record, set **Host(name)** to `openshiftapp` or any subdomain you like and set **Points to** to IBM-provided domain without HTTP or HTTPS
+{:tip}
+
 ### With HTTP
-1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com or project.example.com), so that external clients can reach it by name.
+1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com or openshiftapp.example.com), so that external clients can reach it by name.
    ```sh
    oc expose svc/$MYPROJECT --hostname=<HOSTNAME> --name=$MYPROJECT-domain --port=3000
    ```
@@ -461,6 +480,7 @@ This section requires you to own a custom domain and to be able to modify the DN
 
 ## Monitor the app
 {:#monitor_application}
+{: step}
 
 In this section, you will learn to monitor the health and performance of your application.
 {{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
@@ -489,6 +509,7 @@ In this section, you will learn to monitor the health and performance of your ap
 
 ## Scale the app
 {:#scaling_app}
+{: step}
 
 In this section, you will learn how to autoscale and also manually scale your application.
 
@@ -525,6 +546,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 
 ## Remove resources
 {:#cleanup}
+{: step}
 
 * Delete all application resource objects:
    ```sh

@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # Configure NAT for Internet access from a private network
 {: #nat-config-private}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the Internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to Internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public view.  
 
@@ -31,16 +45,6 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
-
-This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -58,6 +62,7 @@ This tutorial enables hosts in the secure private network enclosure created by t
 
 ## Document Internet services
 {: #Document_outbound}
+{: step}
 
 The first step is to identify the services that will be accessed on the public Internet and to document the ports that must be enabled for outbound and corresponding inbound traffic from the Internet. This list of ports will be required for the firewall rules in a later step. 
 
@@ -71,6 +76,7 @@ Verify if the third party service supports defining a list of allowed source add
 
 ## NAT masquerade to Internet 
 {: #NAT_Masquerade}
+{: step}
 
 Follow the instructions here to configure external Internet access for hosts in the APP zone using NAT masquerade. 
 
@@ -92,6 +98,7 @@ Follow the instructions here to configure external Internet access for hosts in 
 
 ## Create Firewalls
 {: #Create_firewalls}
+{: step}
 
 1.	Create firewall rules for APP-TO-OUTSIDE
    ```
@@ -137,6 +144,7 @@ Follow the instructions here to configure external Internet access for hosts in 
 
 ## Create Zone and apply rules
 {: #Create_zone}
+{: step}
 
 1.	Create zone OUTSIDE to control access to the external Internet.
    ```
@@ -167,6 +175,7 @@ Follow the instructions here to configure external Internet access for hosts in 
 
 ## Remove resources
 {:removeresources}
+{: step}
 Steps to take to remove the resources created in this tutorial. 
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
@@ -176,7 +185,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 2. Cancel the VRA
 3. Cancel any additional VLANs by support ticket. 
 
-## Related material
+## Related content
 {:related}
 
 -	[VRA Network Address Translation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#network-address-translation-nat-) 

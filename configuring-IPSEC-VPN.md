@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: virtual-router-appliance
+account-plan:
+completion-time:
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-04-23"
 
 # VPN into a secure private network
 {: #configuring-IPSEC-VPN}
+{: toc-content-type="tutorial"}
+{: toc-services="virtual-router-appliance"}
+{: toc-completion-time=""}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks. 
 
@@ -46,16 +60,6 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 - Configure IPSec VPN on a Virtual Router Appliance
 - Route traffic through a GRE tunnel
 
-## Services used
-{: #products}
-
-This tutorial uses the following runtimes and services:
-* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
-
-This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -76,6 +80,7 @@ This tutorial connects the secure private enclosure in the [Isolate workloads wi
 
 ## Document VPN configuration
 {: #Document_VPN}
+{: step}
 
 Configuring an IPSec VPN site-to-site link between your data center and {{site.data.keyword.Bluemix_notm}} requires coordination with your onsite networking team to determine many of the configuration parameters, the type of tunnel and IP routing information. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite networking team will specify the configuration to match agreed corporate standards and provide you with the necessary IP address of the data center VPN gateway, and the subnet address ranges that can be accessed.
 
@@ -108,6 +113,7 @@ The following parameters must be agreed and documented between the {{site.data.k
 
 ## Configure IPSec VPN on a VRA
 {: #Configure_VRA_VPN}
+{: step}
 
 To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and all the variables that need to changed, are highlighted below with &lt; &gt;. The changes are identified line by line, for each line that needs to be changed. Values come from the 
 table. 
@@ -152,6 +158,7 @@ table.
 
 ## Configure data center VPN and tunnel
 {: #Configure_DC_VPN}
+{: step}
 
 1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN.
 1. Validate that the public IP address of the DC VPN gateway is accessible over the internet before proceeding:
@@ -175,6 +182,7 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
 
 ## Define GRE tunnel 
 {: #Define_Tunnel}
+{: step}
 
 1. Create the GRE tunnel in VRA edit mode.
    ```
@@ -210,6 +218,7 @@ If no return traffic is seen, the data center networking team will need to monit
 
 ## Create static IP route
 {: #Define_Routing}
+{: step}
 
 Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
@@ -226,6 +235,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
 ## Configure firewall
 {: #Configure_firewall}
+{: step}
 
 1. Create resource groups for allowed icmp traffic and tcp ports. 
    ```
@@ -305,6 +315,7 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 Steps to take to remove the resources created in this tutorial.
 

@@ -129,6 +129,10 @@ if (Object.keys(servicesMap).length == 0) {
 }
 
 const lines = template.split('\n');
+if (readUntil(lines, 0, (value) => value.indexOf('content-type: tutorial') >= 0)) {
+  log('Already processed');
+  exit(0);
+}
 
 // remove the "Services used" section and extract the services used
 const servicesUsedIndex = readUntil(lines, 0, (value) => value.startsWith('## Services '));
@@ -188,13 +192,17 @@ lines.splice(firstAttributeDefinitionIndex, 0,
 );
 
 // first H1
-const firstH1Index = lines.findIndex((value) => {
+let firstH1Index = lines.findIndex((value) => {
   return value.startsWith('# ');
 });
 if (firstH1Index == -1) {
   log('No H1 found');
   exit(1);
 }
+if (lines[firstH1Index + 1].startsWith('{')) {
+  firstH1Index++;
+}
+
 lines.splice(firstH1Index + 1, 0, 
   '{: toc-content-type="tutorial"}',
   `{: toc-services="${services}"}`,
@@ -234,7 +242,7 @@ while ((currentH2Index = readUntil(lines, currentH2Index, (value) => {
 }))) {
 
   if (notAStep.find((toIgnore) => {
-    return lines[currentH2Index].indexOf(toIgnore) >= 0
+    return lines[currentH2Index].toLowerCase().indexOf(toIgnore.toLowerCase()) >= 0
   })) {
     currentH2Index = currentH2Index +1;
     continue;

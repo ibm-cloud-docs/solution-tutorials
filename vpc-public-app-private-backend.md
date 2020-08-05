@@ -4,8 +4,14 @@ copyright:
   years: 2019
 lastupdated: "2019-10-18"
 lasttested: "2019-06-17"
+
+content-type: tutorial
+services: vpc
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -21,6 +27,14 @@ lasttested: "2019-06-17"
 
 # Public frontend and private backend in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
@@ -41,17 +55,6 @@ In short, using VPC you can:
 - Learn how to create a virtual private cloud, subnets and server instances
 - Know how to apply security groups to secure access to the servers
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
@@ -67,6 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
+{: step}
 
 To tighten the security of your servers, it is recommended to only allow connections to the ports required by the applications deployed on the servers. In this tutorial, the application will be a web server, thus it will only need to allow inbound connections on port 80.
 
@@ -109,6 +113,7 @@ Follow the steps described in [this section of the bastion tutorial](https://{Do
 
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
+{: step}
 
 In this section, you will create a subnet, a security group and a virtual server instance for the backend.
 
@@ -168,6 +173,7 @@ To create a virtual server instance in the newly created subnet:
 
 ## Create a frontend subnet, security group and VSI
 {: #frontend-subnet-vsi}
+{: step}
 
 Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
 
@@ -225,6 +231,7 @@ To create a virtual server instance in the newly created subnet:
 
 ## Set up connectivity between frontend and backend
 {: #setup-connectivity-frontend-backend}
+{: step}
 
 With all servers running, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
@@ -368,6 +375,7 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 
 ## Remove resources
 {: #remove-resources}
+{: step}
 
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
 2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.

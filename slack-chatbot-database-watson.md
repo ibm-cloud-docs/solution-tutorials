@@ -4,8 +4,14 @@ copyright:
   years: 2018-2020
 lastupdated: "2020-06-18"
 lasttested: "2020-06-12"
+
+content-type: tutorial
+services: cloud-foundry-public, assistant, openwhisk, Db2onCloud
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-06-12"
 
 # Build a database-driven Slackbot
 {: #slack-chatbot-database-watson}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-foundry-public, assistant, openwhisk, Db2onCloud"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration.
 
@@ -27,19 +41,6 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 * Create, deploy and bind Node.js actions in {{site.data.keyword.openwhisk_short}}
 * Access a Db2 database from {{site.data.keyword.openwhisk_short}} using Node.js
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions/)
-   * [{{site.data.keyword.Db2_on_Cloud_long}} ](https://{DomainName}/catalog/services/db2)
-
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
 
@@ -59,6 +60,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Service and Environment Setup
+{: step}
 In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on GitHub.
 
 1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
@@ -114,6 +116,7 @@ In this section, you are going to set up the needed services and prepare the env
    Keep this information available for the next section.
 
 ## Load the skill / workspace
+{: step}
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
@@ -134,6 +137,7 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
 ## Create an assistant and integrate with Slack
+{: step}
 
 Now, you will create an assistant associated with the skill from before and integrate it with Slack.
 1. Click on **Assistants** in the top left navigation, then click on **Create assistant**.
@@ -142,6 +146,7 @@ Now, you will create an assistant associated with the skill from before and inte
 4. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-slack).
 
 ## Test the Slackbot and learn
+{: step}
 Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
 
 1. Type **help** into the messaging form. The bot should respond with some guidance.
@@ -161,12 +166,14 @@ With some sample data in it is time to search.
 After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/services/assistant?topic=assistant-logs-intro#logs_intro).
 
 ## Share resources
+{: step}
 
 If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/iam?topic=iam-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/iam?topic=iam-groups). Details on how you can set up access control is discussed in the blog [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project).
 
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.Db2_on_Cloud_short}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
 ```sh

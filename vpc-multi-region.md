@@ -4,8 +4,14 @@ copyright:
   years: 2019, 2020
 lastupdated: "2020-01-22"
 lasttested: "2019-06-18"
+
+content-type: tutorial
+services: vpc, cis, certificate-manager
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -21,6 +27,14 @@ lasttested: "2019-06-18"
 
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc, cis, certificate-manager"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in different regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
@@ -35,21 +49,6 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 * Use a load balancer between zones within a region to distribute traffic among virtual servers.
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-
-- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
-- [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/vpc/provision/loadBalancer)
-- [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
-- [{{site.data.keyword.cloudcerts_long_notm}}](https://{DomainName}/catalog/services/cloudcerts)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
   ![Architecture](images/solution41-vpc-multi-region/Architecture.png)
 
@@ -68,6 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Create VPCs, subnets and VSIs
 {: #create-infrastructure}
+{: step}
 
 In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by provisioning of VSIs.
 
@@ -147,6 +147,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 
 ## Install and configure web server on the VSIs
 {: #install-configure-web-server-vsis}
+{: step}
 
 
 Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
@@ -179,6 +180,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 
 ## Distribute traffic between zones with load balancers
 {: #distribute-traffic-with-load-balancers}
+{: step}
 
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
 
@@ -235,6 +237,7 @@ In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.d
 
 ## Configure a global load balancer
 {: #global-load-balancer}
+{: step}
 
 In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the VPC load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
@@ -263,6 +266,7 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
 Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action. The global load balancer is a DNS resolver. Most clients, like browsers, only resolve the DNS address one time or infrequently.  The load is balanced across multiple clients, not for a single client.  You will likely see the response from a single VPC load balancer.
 
 ## Secure with HTTPS
+{: step}
 
 HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
 
@@ -407,6 +411,7 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 - Remove the Global load balancer, origin pools and health checks under the {{site.data.keyword.cis_short_notm}} service
 - Remove the certificates in the {{site.data.keyword.cloudcerts_short}} service.

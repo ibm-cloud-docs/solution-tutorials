@@ -2,10 +2,16 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-27"
-lasttested: "2020-05-27"
+lastupdated: "2020-07-31"
+lasttested: "2020-07-31"
+
+content-type: tutorial
+services: openshift, containers
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2020-05-27"
 
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #openshift-service-mesh}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, containers"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {:shortdesc}
@@ -33,19 +47,6 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-
-- [{{site.data.keyword.openshiftlong}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
 ![](images/solution57-openshift-service-mesh/Architecture.png)
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
@@ -56,33 +57,50 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
 <!--##istutorial#-->
+<!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
+{: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
+In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest, Default version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
-4. Under **Location**,
-   - Select a **Resource group**
-   - Select a **Geography**
-   - Select **Single zone** as **Availability**
-   - Choose a **Datacenter**
-5. Under **Worker pool**,
+4. Under **Infrastructure** choose Classic or VPC
+  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+      - One subnet that can be used for this tutorial, take note of the subnet's zone and name
+      - Public gateway is attached to the subnet
+      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
+  - Select the desired VPC
+  - Select an existing **Cloud Object Storage** service or create one if required and then select
+5. Under **Location**
+  - For Openshift on VPC infrastructure
+      - Select a **Resource group**
+      - Uncheck the inapplicable zones
+      - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+      - Select a **Resource group**
+      - Select a **Geography**
+      - Select **Single zone** as **Availability**
+      - Choose a **Datacenter**
+6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
-   - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On.
-6. Review **Infrastructure permissions checker** to verify the required permissions
+   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
+{:note}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
 {: #access-cluster}
+{: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
 1. Select the account where you have been invited.
@@ -110,6 +128,7 @@ To avoid installing the command line, the recommended approach is to use the {{s
 
 ## Install Service Mesh - Istio
 {: #install_istio}
+{: step}
 
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
 
@@ -139,7 +158,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 2.  Enter `istio-system` in the **Name** and click **Create**
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
-5.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
+5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
 6.  Under **Istio Service Mesh Control Plane**,click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
@@ -149,14 +168,25 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
-3. Under **Istio Service Mesh Member Roll**,click **Create Instance**
-4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
+3. Under **Istio Service Mesh Member Roll**,click **Create CreateServiceMeshMemberRoll**
+4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits it will look something like this:
+   ```
+   apiVersion: maistra.io/v1
+   kind: ServiceMeshMemberRoll
+   metadata:
+     name: default
+     namespace: istio-system
+   spec:
+     members:
+       - bookinfo
+   ```
 5. Then, click **Create**.
 
 You successfully installed Istio into your cluster.
 
 ## Deploy the BookInfo application on Service Mesh
 {: #deploy_bookinfo_app}
+{: step}
 
 The [BookInfo application](https://istio.io/docs/examples/bookinfo/) displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
@@ -225,6 +255,7 @@ Your bookinfo app is running, but you can't access it as the service is not yet 
 
 ## Expose the app with the Istio Ingress Gateway and Route
 {: #ingress_gateway_route}
+{: step}
 
 The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer or node port on each service.
 
@@ -246,10 +277,11 @@ An Ingress Gateway resource can be created to allow external requests through th
    ```
    {:pre}
 
-   Visit the application by going to `http://<INGRESS_HOST>/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
+   Visit the application by going to `http://$INGRESS_HOST/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
 
 ## Observe service telemetry: metrics and tracing
 {: #istio_telemetry}
+{: step}
 
 Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
 
@@ -284,12 +316,13 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
 3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section to generate load.
-5. Now, check the kiali Graph.
+5. Now, check the Kiali Graph.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
 
 ## Perform traffic management
 {: #traffic_management}
+{: step}
 
 Istio’s traffic routing rules let you easily control the flow of traffic and API calls between services. Istio simplifies configuration of service-level properties like circuit breakers, timeouts, and retries, and makes it easy to set up important tasks like A/B testing, canary rollouts, and staged rollouts with percentage-based traffic splits. It also provides out-of-box failure recovery features that help make your application more robust against failures of dependent services or the network.
 
@@ -381,6 +414,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 
 ## Secure your services
 {: #secure_services}
+{: step}
 
 Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
 
@@ -397,6 +431,7 @@ Istio can secure the communication between microservices without requiring appli
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {: #enable_https}
+{: step}
 In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the istio-ingressgateway Pod.
 
 1. Launch the {{site.data.keyword.openshiftshort}} console
@@ -404,7 +439,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 3. Choose the **istio-system** project from the top bar and then click **Create Route**
    1. Name: `istio-ingressgateway-secure`
    2. Service: `istio-ingressgateway`
-   3. Target Port `80->8080`
+   3. Target Port `80->8080(TCP)`
    4. Check `Secure Route`
    5. TLS Termination: `Edge`
    6. Insecure Traffic: `None`
@@ -413,6 +448,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 
 ## Remove resources
 {: #cleanup}
+{: step}
 
 ### Delete the application project
 

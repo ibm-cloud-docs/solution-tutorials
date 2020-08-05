@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-08-12"
 lasttested: "2019-06-03"
+
+content-type: tutorial
+services: containers, Registry, cis
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -19,6 +25,14 @@ lasttested: "2019-06-03"
 
 # Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}
 {: #multi-region-k8s-cis}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, Registry, cis"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
 
@@ -33,18 +47,6 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Protect your application from security threats.
 * Increase application performance with caching.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture
-{: #architecture}
 
 <p style="text-align: center;">
   ![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
@@ -76,6 +78,7 @@ In addition, make sure you:
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
+{: step}
 
 This tutorial deploys a Kubernetes application to clusters in multiple locations. You will start with one location, Dallas, and then repeat these steps for London.
 
@@ -202,6 +205,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 {: tip}
 
 ## And then to another location
+{: step}
 
 Repeat the following steps for the London location:
 * In [Create a Kubernetes cluster](#create_cluster) replace:
@@ -217,6 +221,7 @@ Repeat the following steps for the London location:
 
 
 ## Configure multi-location load-balancing
+{: step}
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
@@ -349,6 +354,7 @@ At this stage, you have successfully configured a Global Load Balancer with Kube
 
 ## Secure the application
 {: #secure_via_CIS}
+{: step}
 
 ### Turn the Web Application Firewall On
 
@@ -386,6 +392,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 ### Remove Kubernetes Cluster resources
 1. Remove the Ingress.

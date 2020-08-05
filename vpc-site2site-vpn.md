@@ -4,8 +4,14 @@ copyright:
   years: 2019
 lastupdated: "2019-10-18"
 lasttested: "2019-09-03"
+
+content-type: tutorial
+services: vpc, cloud-object-storage, databases-for-postgresql
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -17,6 +23,14 @@ lasttested: "2019-09-03"
 
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
+{: toc-content-type="tutorial"}
+{: toc-services="vpc, cloud-object-storage, databases-for-postgresql"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
@@ -41,21 +55,6 @@ In short, using a VPC you can
 * Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud.
 * Securely reach cloud services using private service endpoints.
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
-- [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
-- [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
-- [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-Although there are no networking charges for accessing {{site.data.keyword.cos_full}} and {{site.data.keyword.databases-for-postgresql}} in this tutorial, standard networking charges for access to the VPC will be incurred.
-
-## Architecture
-{: #architecture}
 
 The following diagram shows the virtual private cloud containing an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cloud_notm}} services. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
@@ -87,6 +86,7 @@ In addition:
 
 ## Deploy a virtual app server in a virtual private cloud
 {: #deploy}
+{: step}
 
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Then, you will provision the services and set up the baseline VPC and simulated on-prem resources.
 
@@ -374,6 +374,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
 
 ## Test the connectivity
 {: #test-connectivity}
+{: step}
 
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
@@ -597,6 +598,7 @@ In some situations, it might be desirable to interact directly from an on-premis
 
 ## Remove resources
 {: #remove-resources}
+{: step}
 
 1. In the VPC management console, click on **VPNs**. In the action menu on the VPN gateway select **Delete** to remove gateway.
 2. Next, click **Floating IPs** in the navigation, then on the IP address for your VSIs. In the action menu select **Release**. Confirm that you want to release the IP address.

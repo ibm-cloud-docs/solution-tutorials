@@ -4,6 +4,7 @@ copyright:
   years: 2018, 2019, 2020
 lastupdated: "2020-01-23"
 lasttested: "2019-05-28"
+
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -20,6 +21,11 @@ lasttested: "2019-05-28"
 # Strategies for resilient applications
 {: #strategies-for-resilient-applications}
 
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
+
 Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
 
 - What should I consider when preparing a solution to be globally available?
@@ -34,24 +40,6 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 
 * Learn architectural concepts involved when building resilient applications.
 * Understand how such concepts map to IBM Cloud compute and service offerings
-
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
-* [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-* [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/catalog/services/db2)
-* {{site.data.keyword.databases-for}}
-* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
-* [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
-## Architecture and Concepts
 
 {: #architecture}
 

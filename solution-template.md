@@ -5,8 +5,14 @@ copyright:
 lastupdated: "2019-12-02"
 lasttested: "2019-03-08"
 
+# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
+content-type: tutorial
+services: service1, service2
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:java: #java .ph data-hd-programlang='java'}
 {:swift: #swift .ph data-hd-programlang='swift'}
 {:ios: #ios data-hd-operatingsystem="ios"}
@@ -22,6 +28,14 @@ lasttested: "2019-03-08"
 
 # How to write a tutorial
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+{: toc-content-type="tutorial"}
+{: toc-services="<change me to be the same as services defined earlier>"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
 {:shortdesc}
@@ -32,27 +46,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
-
-## Architecture
-{: #architecture}
-
-intro sentence
-
-<p style="text-align: center;">
-
-  ![Architecture](images/solution1/Architecture.png)
-</p>
+![Architecture](images/solution1/Architecture.png)
 
 1. The user does this
 2. Then that
@@ -100,6 +94,7 @@ In addition, make sure you have:
 
 ## Create services
 {: #setup}
+{: step}
 
 In this section, you will create the services required to ...
 
@@ -120,6 +115,7 @@ In this section, you will create the services required to ...
 
 ## Solution Specific Section
 {: #section_one}
+{: step}
 
 Introductory statement that overviews the section
 
@@ -156,6 +152,7 @@ And this paragraph only appears for Swift code
 
 ## Another Solution Specific Section
 {: #section_two}
+{: step}
 
 Introductory statement that overviews the section
 
@@ -163,6 +160,7 @@ Introductory statement that overviews the section
 
 ## Remove resources
 {: #removeresources}
+{: step}
 
 Steps to take to remove the resources created in this tutorial
 
@@ -230,3 +228,28 @@ This section will only appear in a workshop and not in the tutorial.
 ```
 
 Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+
+### Testing coding styles
+
+#### Terraform
+
+```tf
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using tf"
+}
+```
+{: codeblock}
+
+```terraform
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using terraform"
+}
+```
+{: codeblock}
+
+```hcl
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using hcl"
+}
+```
+{: codeblock}

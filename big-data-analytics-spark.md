@@ -4,8 +4,14 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-05-22"
 lasttested: "2019-05-22"
+
+content-type: tutorial
+services: cloud-object-storage, AnalyticsEngine
+account-plan:
+completion-time: 2h
 ---
 
+{:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,6 +21,14 @@ lasttested: "2019-05-22"
 
 # Analyze and visualize open data with Apache Spark
 {: #big-data-analytics-spark}
+{: toc-content-type="tutorial"}
+{: toc-services="cloud-object-storage, AnalyticsEngine"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 In this tutorial, you will analyze and visualize open data sets using {{site.data.keyword.DSX_full}}, a Jupyter Notebook and Apache Spark. You'll start by combining data that describes population growth, life expectancy and country ISO codes into a single data frame. To discover insights, you'll then use a Python library called Pixiedust to query and visualize data in a variety of ways.
 
@@ -30,17 +44,8 @@ In this tutorial, you will analyze and visualize open data sets using {{site.dat
 * Work with a Jupyter Notebook and a Python kernel
 * Import, transform, analyze and visualize data sets
 
-## Services used
-{: #services}
-
-This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine)
-   * [{{site.data.keyword.DSX_full}}](https://{DomainName}/catalog/services/watson-studio)
-   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
-
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
 ## Service and Environment Setup
+{: step}
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
 You can provision services for {{site.data.keyword.cloud_notm}} from the [Resource List](https://{DomainName}/resources) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
@@ -58,6 +63,7 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
    {:tip}
 
 ## Create and prepare a notebook
+{: step}
 The [Jupyter Notebook](http://jupyter.org/) is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Notebooks and other resources are organized in projects.
 1. Click the **Add to project** button and in the **Choose asset type** dialog select **Notebook**.
 2. Use **Blank** notebook. Enter `MyNotebook` as the **Name**.
@@ -73,6 +79,7 @@ If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the
 {:tip}
 
 ## Load data
+{: step}
 Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://pixiedust.github.io/pixiedust/loaddata.html).
 
 1.  Copy the following line into the next empty cell in your notebook, but don't run it yet.
@@ -96,6 +103,7 @@ Next load three open data sets and make them available within the notebook. The 
 The list of country codes will be used later to simplify data selection by using a country code instead of the exact country name.
 
 ## Transform data
+{: step}
 After the data is made available, transform it slightly and combine the three sets into a single data frame.
 1. The following code block will redefine the data frame for the population data. This is done with a SQL statement that renames the columns. A view is then created and schema printed. Copy this code into the next empty cell and run it.
    ```Python
@@ -140,6 +148,7 @@ After the data is made available, transform it slightly and combine the three se
 Your combined data is ready to be analyzed.
 
 ## Analyze data
+{: step}
 In this part, use [Pixiedust to visualize the data in different charts](https://pixiedust.github.io/pixiedust/displayapi.html). Start by comparing life expectancy for some countries.
 
 1. Copy the code into the next empty cell and run it.
@@ -164,6 +173,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
 
 ## Remove resources
 {:removeresources}
+{: step}
 
 To remove resource, follow these steps:
 1. Visit the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources).
