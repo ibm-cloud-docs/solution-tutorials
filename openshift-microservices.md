@@ -896,7 +896,8 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 5. Drag the table to improve the presentation.  Verify the screen resembles the following:
     ![](images/solution55-openshift-microservices/screen-img-15.png)
 6. Save the screen. Select **Save Screen**.
-   IMPORTANT: If you do not save the screen, you lose all your widgets.
+   If you do not save the screen, you lose all your widgets.
+   {:important}
 
 Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
 {:note}
@@ -954,8 +955,8 @@ The following table lists the different types of pre-defined dashboards:
 3. The **Connect** buttons now read **Launch** so click the Monitoring **Launch** button
 
 Initial data may NOT be available on newly created **Monitoring** instances.
-- After a few minutes raw data will be displayed
-- After about an hour indexing will provides the detail required to proceed with this tutorial
+- After a few minutes, raw data will be displayed
+- After about an hour, indexing will provides the detail required to proceed with this tutorial
 
 1. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
 
@@ -963,9 +964,9 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    {:note}
 
    ![](images/solution55-openshift-microservices/sysdig-select-app.png)
-3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend`. Look for the patient-health-frontend pod entry.
+3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Default Dashboards > Hosts & Containers) from the Top dropdown
    ![](images/solution55-openshift-microservices/sysdig-explore-node.png)
-4. Under **DASHBOARD**, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
+4. Under **DASHBOARD** on the left pane, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
 5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
 1. From the **EXPLORE** tab, select **Deployments**.
 2. Search for `example-health` namespace.
@@ -993,8 +994,8 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    ![](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.
-   - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
-   - Click Copy and Open
+   - In the action menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
+   - Click **Copy and Open**
    - In Yourname Network Overview in the upper right choose **Edit Scope**
    - Change Everywhere to `kubernetes.namespace.name`
    - Change in to `is`
@@ -1029,9 +1030,12 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 <!--##istutorial#-->
 In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
-* If not possible to delete cluster then delete the {{site.data.keyword.openshiftshort}} resources:
-  - oc delete all --all --namespace example-health
-  - oc delete project/example-health
+* If you don't wish to delete the cluster and want to delete the {{site.data.keyword.openshiftshort}} resources created in the cluster. Run the below commands,
+   ```sh
+   oc delete all --all --namespace example-health
+   oc delete project/example-health
+   ```
+   {:pre}
 * Delete {{site.data.keyword.la_short}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
