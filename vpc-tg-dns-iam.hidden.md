@@ -260,7 +260,6 @@ Initialize the basename shell variable and verify some of the resources were cre
    ```
    {:pre}
 
-   ```
 
    ```
    ibmcloud iam service-ids | grep $basename
