@@ -120,7 +120,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
     .architectureDiagramContainer {
         flex-grow: 1 !important;
-        min-width: 250px !important;
         max-width: 100% !important;
         padding: 0 10px !important;
         text-align: center !important;
