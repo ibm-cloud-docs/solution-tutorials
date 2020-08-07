@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-08-05"
-lasttested: "2020-05-16"
+lasttested: "2020-08-05"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -660,7 +660,7 @@ It can take a few minutes for logging and metric data to flow through the analys
    3. Select **7 day Log Search** as your plan.
    4. Create a unique **Service name** such as `<your-initials>-logging`.
    5. Use the resource group associated with your cluster and click **Create**.
-4. Back on the cluster **Overview** tab, click the Metrics **Connect** button. Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
+4. Back on the cluster **Overview** tab, click the Monitoring **Connect** button. Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
    1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
    2. Select a region where you have your cluster created.
    3. Select **Graduated Tier** as your plan.
