@@ -79,13 +79,12 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2).
-    - In summary - create or inspect a desired VPC and insure that it contains
+  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
-      - Public gateway attached to the subnet
+      - Public gateway is attached to the subnet
       - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
-    - Select the desired VPC
-    - Select an existing **Cloud Object Storage** service or create one if required and then select
+  - Select the desired VPC
+  - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Select a **Resource group**
@@ -361,7 +360,7 @@ Now autoscaler can be enabled.
 
 By default, the autoscaler allows you to scale based on CPU or Memory. The UI allows you to do CPU only \(for now\). Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, `1`% can be used with the load being provided.
 
-1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
+1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then click **Create Horizontal Pod Autoscaler**.
 
    ![HPA](images/solution55-openshift-microservices/ocp-hpa.png)
 
@@ -509,7 +508,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      serviceName: cloudant-service
    ```
    {:codeblock}
-1. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials** using the cloud shell:
+6. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
    ```
    ibmcloud resource service-instances --service-name cloudantnosqldb
@@ -652,14 +651,14 @@ It can take a few minutes for logging and metric data to flow through the analys
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
-3. Click the Logging **Connect** button
-   1. Leave **Use private endpoint** checked and click **Create and connect**.
+3. Click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
+   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
    2. Select a region where you have your cluster created.
    3. Select **7 day Log Search** as your plan.
    4. Create a unique **Service name** such as `<your-initials>-logging`.
    5. Use the resource group associated with your cluster and click **Create**.
-4. Back on the cluster **Overview** tab, click the Monitoring **Connect** button
-   1. Leave **Use private endpoint** checked and click **Create and connect**.
+4. Back on the cluster **Overview** tab, click the Monitoring **Connect** button. Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
+   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
    2. Select a region where you have your cluster created.
    3. Select **Graduated Tier** as your plan.
    4. Create a unique **Service name** such as `<your-initials>-monitoring`.
@@ -784,13 +783,14 @@ Complete the following steps:
    - **By source** to see the log line in the context of the log lines for the same source
    - **By App** to see the log line in the context of the log lines of the app
    - **By Source and App** to see the log line in the combined context of the app and source
+
    Then click **Continue in New Viewer** to get the view in a different page. You might need to scroll down to get this option.
 
    > **Tip: Open a view per type of context to troubleshoot problems.**
 
    ![](images/solution55-openshift-microservices/views-img-13.png)
 1. Expand the selected log and click **Copy to clipboard** to copy the message field to the clipboard. Notice that when you copy the log record you get less information than what it is displayed in the view. To get a line with all the fields, you must export data from a custom view.
-1. When you are finished, close the line.
+2. When you are finished, close the line.
 
 ### View a subset of the events by applying a timeframe
 
@@ -809,7 +809,7 @@ Complete the following steps to jump to a specific time:
    - Enter an absolute time to jump to a point in time in your events such as `January 27 10:00am`
    - You can also enter a time range such as `yesterday 10am to yesterday 11am`, `last fri 4:30pm to 11/12 1 AM`, `last wed 4:30pm to 23/05 1 AM`, or `May 20 10am to May 22 10am`. Make sure to include `to` to separate the initial timestamp from the end timestamp
 
-You might get the error message: `Your request is taking longer than expected`, try refreshing your browser after a few minutes of delay to allow logs to flow into the service.  Also insure that the the timeframe selected is likely to have events available for display. It may be required to change the time query, and retry.
+You might get the error message: `Your request is taking longer than expected`, try refreshing your browser after a few minutes of delay to allow logs to flow into the service.  Also, ensure that the the timeframe selected is likely to have events available for display. It may be required to change the time query, and retry.
 
 ### Create a dashboard
 
@@ -840,9 +840,8 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    ![](images/solution55-openshift-microservices/board-img-8.png)
 
-1. Click **Show subplots**.
-
-1. Select **Histogram** and **level**.
+   1. Click **Show subplots**.
+   2. Select **Histogram** and **level**.
 
    ![](images/solution55-openshift-microservices/board-img-11.png)
 
@@ -952,8 +951,8 @@ The following table lists the different types of pre-defined dashboards:
 3. The **Connect** button now read **Launch** so click the Monitoring **Launch** button
 
 Initial data may NOT be available on newly created **Monitoring** instances.
-- After a few minutes raw data will be displayed
-- After about an hour indexing will provides the detail required to proceed with this tutorial
+- After a few minutes, raw data will be displayed
+- After about an hour, indexing will provides the detail required to proceed with this tutorial
 
 1. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
 
@@ -961,9 +960,9 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    {:note}
 
    ![](images/solution55-openshift-microservices/sysdig-select-app.png)
-3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend`. Look for the patient-health-frontend pod entry.
+3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Default Dashboards > Hosts & Containers) from the Top dropdown
    ![](images/solution55-openshift-microservices/sysdig-explore-node.png)
-4. Under **DASHBOARD**, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
+4. Under **DASHBOARD** on the left pane, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
 5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
 1. From the **EXPLORE** tab, select **Deployments**.
 2. Search for `example-health` namespace.
@@ -991,8 +990,8 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    ![](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.
-   - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
-   - Click Copy and Open
+   - In the action menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
+   - Click **Copy and Open**
    - In Yourname Network Overview in the upper right choose **Edit Scope**
    - Change Everywhere to `kubernetes.namespace.name`
    - Change in to `is`
@@ -1027,9 +1026,12 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 <!--##istutorial#-->
 In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
-* If not possible to delete cluster then delete the {{site.data.keyword.openshiftshort}} resources:
-  - oc delete all --all --namespace example-health
-  - oc delete project/example-health
+* If you don't wish to delete the cluster and want to delete the {{site.data.keyword.openshiftshort}} resources created in the cluster. Run the below commands,
+   ```sh
+   oc delete all --all --namespace example-health
+   oc delete project/example-health
+   ```
+   {:pre}
 * Delete {{site.data.keyword.la_short}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
