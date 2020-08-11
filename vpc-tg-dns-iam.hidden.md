@@ -471,7 +471,7 @@ Change directory, generate an API key in the local.env and become a member of th
    source local.env
    ```
 
-The shared team is going to provide micro services.  Although the network team has already created the shared VPC and some network resources the shared team will choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+The shared team is going to provide micro services.  Although the network team has already created the shared VPC and some network resources the shared team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
 In `main.tf` notice these two resources:
    ```
@@ -671,12 +671,12 @@ Results look something like this:
    Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
    Outputs:
-
-   ibm1_curl =
-   ssh root@169.48.152.220
-   curl 169.48.152.220:3000; # get hello world string
-   curl 169.48.152.220:3000/info; # get the private IP address
-   curl 169.48.152.220:3000/remote; # get the remote private IP address
+   
+   ibm1_private_ip = 10.1.0.4
+   ibm1_public_ip = 52.116.140.202
+   ssh = ssh root@52.116.140.202
+   test_info = curl 52.116.140.202:3000/info
+   test_remote = curl 52.116.140.202:3000/remote
    ```
 
 Try the curl commands suggested.  See something like what was captured below using the floating IP address of 169.48.152.220.
@@ -725,15 +725,15 @@ Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg)
    ```
 
 
-Edit the terraform.tfvars file and change `transit_gateway` to `true`
+Edit the terraform.tfvars file and uncomment `transit_gateway = true` to `true`
 
    ```
-   $ edit terraform.tfvars
+   edit terraform.tfvars
    ```
    {:pre}
 
    ```
-   $ terraform apply
+   terraform apply
    ```
    {:pre}
 
@@ -741,11 +741,12 @@ The {{site.data.keyword.tg_short}} can be displayed using the two commands below
 
    ```
    ibmcloud tg gateways
-   ibmcloud tg $basename-tgw
+   GATEWAY_ID=$(ibmcloud tg gateways --output json | sed -e '/^OK$/d' | jq -r '.[]|select(.name=="'$basename-tgw'")|.id')
+   ibmcloud tg connections $GATEWAY_ID
    ```
    {:pre}
 
-Output will resemble this:
+Notice the three VPC connections in the output.  It will resemble this:
 
    ```
    $ ibmcloud tg gateways
@@ -761,7 +762,8 @@ Output will resemble this:
    Resource group ID   bf6e75cd71854576a31056abced2abf0
    Status              available
 
-   $ ibmcloud tg connections e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b
+   $ GATEWAY_ID=$(ibmcloud tg gateways --output json | sed -e '/^OK$/d' | jq -r '.[]|select(.name=="'$basename-tgw'")|.id')
+   $ ibmcloud tg connections $GATEWAY_ID
    Listing connections for gateway e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b under account 
    OK
    
@@ -836,7 +838,7 @@ The `count = var.shared_lb ? 1 : 0` is a terraform construct that enables or dis
 
 Notice how the new record is CNAME record with a URL of the hostname produced by the load balancer: `ibm_is_lb.shared_lb[0].hostname`
 
-Open the terraform.tfvars file and change `shared_lb` to `true`
+Edit the terraform.tfvars file and uncomment `shared_lb = true`
 
    ```
    $ edit terraform.tfvars
@@ -847,7 +849,7 @@ Open the terraform.tfvars file and change `shared_lb` to `true`
    ```
    {:pre}
 
-Now execute the curl commands from the previous application1 section (ignore the ones you just generated).  Notice how the remote_ip is 10.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
+Now execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice how the remote_ip is 10.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```
    $ curl 169.48.152.220:3000/remote
@@ -912,6 +914,8 @@ You can cd to the team directories in order, and execute `source local.env; terr
    ```
    {:pre}
 
+Try the curl commands in the output.
+
 
 ## Expand the tutorial
 
@@ -920,7 +924,7 @@ You can cd to the team directories in order, and execute `source local.env; terr
 
 - The Application team is providing access to the application via a floating IP address.  Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The Application team can scale horizontally using a a load balancer like the shared team.
-- The shared team can add additional instances to the load balancer by adding code to the shared/main.tf 
+- The shared team can add additional instances to the load balancer by adding instances to the shared/main.tf 
 - The shared team could switch their implementation platform to Kubernetes
 
 ### Continuous Delivery
