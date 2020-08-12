@@ -217,14 +217,13 @@ On a terminal:
 
 5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps.
 
+
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
    | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
    | $MYNAMESPACE        | <your\-namespace>                                                    | The registry namespace where the image was built in the previous section\.                                  |
    | $MYIMAGE            | <your\-initials>\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
    | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster <your\-cluster\-name>\. |
-
-
 
 6. Deploy the app:
    ```sh
