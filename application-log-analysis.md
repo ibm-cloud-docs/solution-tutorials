@@ -74,8 +74,6 @@ In addition, make sure you:
 * and [grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam_users)
 <!--#/istutorial#-->
 
-<!--##istutorial#-->
-
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
@@ -85,6 +83,7 @@ In addition, make sure you:
 -->
 <!--#/isworkshop#-->
 
+<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #create_cluster}
 {: step}
@@ -268,16 +267,6 @@ To provision and connect a {{site.data.keyword.la_short}} service,
    logdna-agent-ls6dc   1/1     Running   0          39s
    ```
 
-<!--### Configure the cluster to send logs to your LogDNA instance
-
-To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la_full_notm}} instance, you must install a *logdna-agent* pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
-
-1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
-2. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
-3. Copy and run the first command on a terminal where you have targeted your cluster to create a Kubernetes secret with the LogDNA ingestion key for your service instance.
-4. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log** and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
-5. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.-->
-
 ## Generate and access application logs
 {: generate_application_logs}
 {: step}
@@ -393,15 +382,6 @@ Note: The Sysdig agent installation as provided by the IBM Cloud script includes
   ```
 Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Sysdig Blog](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
-
-
-<!--### Configure {{site.data.keyword.mon_short}}
-
-To Configure Sysdig to monitor health and performance of your cluster:
-1. Click **Launch** and you should see the Sysdig monitor UI. On the welcome page, click **Next**.
-2. Choose **Kubernetes** as your installation method under set up environment.
-3. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
-4. Click **Next** and then **Complete onboarding** to see the `Explore` tab of Sysdig UI.-->
 
 ### Monitor your cluster
 
