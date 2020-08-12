@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-08-07"
-lasttested: "2020-08-07"
+lastupdated: "2020-08-12"
+lasttested: "2020-08-12"
 
 content-type: tutorial
 services: containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig
@@ -349,9 +349,9 @@ In this section, you will modify what and how much is displayed and save this as
 
 You can filter logs by tags, sources, apps or levels.
 
-1. On the top bar, click **All Tags** and select the checkbox **k8s** to see Kubernetes related logs.
-1. Click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
-1. To check container or file logs, click **All Apps** and select the checkbox(s) you are interested in seeing the logs.
+1. On the top bar, click **All Tags** and select the checkbox next to your cluster name to see Kubernetes related logs specific to your cluster.
+2. Click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
+3. To check container or file logs, click **All Apps** and select the checkbox(s) you are interested in seeing the logs.
 
 ### Create a view
 
@@ -448,22 +448,23 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
    - Click **Done** and Double click the box to expand the view.
 5. To monitor the Kubernetes namespace where the application is running,
    - From the Explore tab, select `Deployments`.
+   - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
    - Click the arrow next to `net.http.request.time`.
    - Select `Default Dashboards` > `Kubernetes`.
-   - Select `Kubernetes State` > `Kubernetes State Overview`.
+   - Select `Kubernetes Namespace Overview`.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
-![](images/solution12/wolam_api_counter.png)
+![](images/solution12/wolam_api_counter_total.png)
 
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
-1. To monitor the calls to a given api endpoint of the application,
-   - From the Explore tab, select `Deployments and Pods`.
-   - Select `Prometheus` > `wolam_api_counter` in the `Metrics and Dashboards` dropdown.
-   - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
-1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
-1. To monitor the calls to a given api endpoint of the application by region,
-   - Select Time: **Sum**, Group: **Average**, Segment: **region**
+2. To monitor the calls to a given api endpoint of the application,
+   - From the Explore tab, select `Deployments`.
+   - Select `Metrics` > `Prometheus` > `wolam_api_counter_total` in the `Metrics and Dashboards` dropdown.
+   - Select Time: **Rate**, Group: **Sum**, Segment: **endpoint**
+3. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
+4. To monitor the calls to a given api endpoint of the application by region,
+   - Select Time: **Rate**, Group: **Sum**, Segment: **region**
 
 ### Create a custom dashboard
 
@@ -471,14 +472,14 @@ Along with the pre-defined dashboards, you can create your own custom dashboard 
 
 To create a dashboard:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview**.
-1. Select **Top List** as your new panel and name the panel as **Request time per container**
+1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** by clicking the `edit` icon next to Blank Dashboard.
+1. Select **Top List** as your new panel and name the panel as **Request time per container** by clicking the `edit` icon next to **My Panel**.
    - Under **Metrics**, Type **net.http.request.time**.
-   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
+   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_ e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`
    - Segment by **container.id** and you should see the net request time of each container.
    - Click **save**.
 1. To add a new panel, Click on the **plus** icon and select **Number(#)** as the panel type
-   - Under **Metrics**, Type **net.http.request.count** > Change the time aggregation from **Average(Avg)** to **Sum**.
+   - Under **Metrics**, Type **net.http.request.count** > Click on **RATE** > Change the time aggregation from **Average(Avg)** to **Sum**.
    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
    - Compare to **1 hour** ago and you should see the net request count of each container.
    - Click **save**.
