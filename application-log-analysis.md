@@ -221,16 +221,16 @@ On a terminal:
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
    | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
-   | $MYNAMESPACE        | &lt;your-initials&gt;-app-log-analysis                                                  | The registry namespace where the image was built in the previous section\.                                  |
-   | $MYIMAGE            | &lt;your-initials&gt;-app-log-analysis                                | The name of the container image\.                                                                           |
-   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster &lt;your\-cluster\-name&gt;\. |
+   | $MYNAMESPACE        | <your\-namespace>                                                    | The registry namespace where the image was built in the previous section\.                                  |
+   | $MYIMAGE            | <your\-initials>\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
+   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster <your\-cluster\-name>\. |
 
-1. Deploy the app:
+6. Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-2. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ## Connect a {{site.data.keyword.la_short}} instance
 {: #connect_logna_instance}
