@@ -215,22 +215,22 @@ On a terminal:
    ```
    {: pre}
 
-5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps.
-
-
-   | **Variable**        | **Value**                                                            | **Description**                                                                                             |
-   |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-   | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
-   | $MYNAMESPACE        | <your\-namespace>                                                    | The registry namespace where the image was built in the previous section\.                                  |
-   | $MYIMAGE            | <your\-initials>\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
-   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster <your\-cluster\-name>\. |
-
-6. Deploy the app:
+5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps. *Check the table in this section below for more details*.
+6. Once the `yaml` is updated, deploy the app with the following command:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
 7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+
+
+   | **Variable**        | **Value**                                                            | **Description**                                                                                             |
+   |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+   | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
+   | $MYNAMESPACE        | &lt;your\-namespace&gt;                                                    | The registry namespace where the image was built in the previous section\.                                  |
+   | $MYIMAGE            | &lt;your\-initials&gt;\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
+   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster  &lt;your\-cluster\-name&gt;\. |
+
 
 ## Connect a {{site.data.keyword.la_short}} instance
 {: #connect_logna_instance}
