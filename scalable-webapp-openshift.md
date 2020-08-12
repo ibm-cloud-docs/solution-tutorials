@@ -87,7 +87,8 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 -->
 <!--#/isworkshop#-->
 
@@ -147,20 +148,6 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 ## Configure the access to your cluster
 {: #access-cluster}
 {: step}
-
-`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
-
-1. Open a command prompt.
-1. Run the login command
-   ```sh
-   ibmcloud login
-   ```
-   {:pre}
-2. When prompted, select the region where your cluster was allocated.
-3. Enter your IBMid email and password.
-4. Select the account where you have been invited.
-
-### Log in to your cluster
 
 In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
