@@ -251,14 +251,15 @@ The frontend instance has its software installed but it can not yet be reached.
 
    | Protocol | Source type| Source | Value    | Description |
    |------------|---------------|----------|-----------|------|
-   | TCP        | Any           | 0.0.0.0/0 | Ports 22-22  | This rule allows connections from any IP address to the frontend web server.|
-   | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host.|
+   | TCP        | Any           | 0.0.0.0/0 | Ports 22-22  | This rule allows connections from any IP address to the frontend web server. |
+   | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
    {: caption="Inbound rules" caption-side="bottom"}
 
 3. Next, add this **outbound** rule.
+
    | Protocol | Destination type | Destination | Value    | Description |
    |------------|---------------|----------|-----------|----------|
-   | TCP         | Security group | vpc-pubpriv-backend-sg| Ports 80-80  | This rule allows the frontend server to communicate with the backend server.|
+   | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
    {: caption="Outbound rules" caption-side="bottom"}
 
    The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80.
