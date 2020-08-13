@@ -126,7 +126,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell).
 2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
-   ibmcloud oc cluster config -c <your-initials>-myopenshiftcluster --admin
+   ibmcloud oc cluster config -c <your-cluster-name> --admin
    ```
    {:pre}
 3. Verify the `oc` command is working:
