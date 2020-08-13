@@ -41,10 +41,9 @@ Microservices are popular because they allow an enterprise to organize their dev
 
 * Learn how to isolate infrastructure using IAM and Resource groups
 * Create the VPCs and associated resources: subnets, network ACLs, security groups, instances, ...
-* Connect VPCs via transit gateway
-* Address micro-services using DNS name resolution
-* Transparently configure a Load Balancer within an application
-
+* Address micro-services using DNS name resolution using {{site.data.keyword.dns_short}}
+* Connect VPCs via {{site.data.keyword.tg_short}}
+* Transparently configure a {{site.data.keyword.loadbalancer_short}} for an application
 <p style="text-align: center;">
 
   ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/simple.png)
@@ -273,8 +272,8 @@ The admin team will be responsible for creating the IAM resources. After fetchin
    $ ibmcloud iam service-ids | grep $basename
    ServiceId-5e919b97-380c-4343-a337-3901cafbd956   widget0-application2                                                                                                       2020-07-15T21:25+0000   2020-07-15T22:03+0000   application 2 service id                                                                                                                                              false
    ServiceId-307df062-f4b7-45f8-8ec8-94ad1ed61730   widget0-network                                                                                                            2020-07-15T21:49+0000   2020-07-15T22:03+0000   network service id                                                                                                                                                    false
-   $ ibmcloud iam access-group-policies widget0-network
-   Retrieving all policies of access group widget0-network under account 8675309 as jenny
+   $ ibmcloud iam access-group-policies $basename-network
+   Retrieving all policies of access group widget0-network under account 8675309 as jenny@gotyournumber.com
    OK
    
    Policy ID:   00ceb354-7360-4ad5-9fda-5c03e462c5c0
@@ -299,6 +298,7 @@ The admin team will be responsible for creating the IAM resources. After fetchin
                 Memo                  Policy applies to the resource(s) within the resource group
    ...
    ```
+
 1. Optionally navigate to the account [Resource groups](https://{DomainName}/account/resource-groups ) and find the resource groups.
 1. Optionally navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click the **Service IDs** panel at the top to see the service ID created.
 
