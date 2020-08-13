@@ -105,7 +105,8 @@ Application team access:
   ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/app1.png)
 </p>
 
-### IAM Actual
+### IAM Architecture
+If you have a good understanding of Resource Groups and IAM Access Groups you can quickly skim this section and start the steps to create the resources.
 #### Access Groups
 {: #iam_access_groups}
 Access policies do not need to be assigned to a specific user. Instead, access policies can be assigned to an access group.  Then users can be assigned to the access group.  The use of access groups can greatly simplify a system administrators life.
@@ -164,7 +165,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
     - shared/
     - application1/
 
-1. There is a terraform.tfvars file that you will need to create and edit:
+1. Create and edit the terraform.tfvars file:
    ```
    cp terraform.tfvars.template terraform.tfvars
    ```
@@ -175,7 +176,16 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
    {:pre}
     - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the above prerequisites.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
-    - basename - replace the default value, **widget0**, if required.  Most resources created will use this as a name prefix.
+    - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required.  Most resources created will use this as a name prefix.
+
+1. Windows users only: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
+   ```
+   cp variables.tf terraform.tfvars admin
+   cp variables.tf terraform.tfvars network
+   cp variables.tf terraform.tfvars shared
+   cp variables.tf terraform.tfvars application1
+   ```
+   {:pre}
 
 ### A Note about becoming a team member
 {: #iam_become}
@@ -201,10 +211,16 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
 
 The admin team will be responsible for creating the IAM resources. After fetching the source code and making the initial terraform.tfvars changes suggested above set current directory to ./admin and use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
 
+1. Initialize and verify the basename shell variable.  Verify it matches the basename in the terraform.tfvars file:
+   ```
+   eval $(grep basename terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//')
+   echo basename=$basename
+   ```
+   {:pre}
 1. Change directory, generate and source your personal API key in local.env.  When terraform is invoked it will become you.  Terraform will be the administrator:
    ```
    cd admin
-   echo export TF_VAR_ibmcloud_api_key=$(ibmcloud iam api-key-create widget0-admin --output json | jq .apikey) > local.env
+   echo export TF_VAR_ibmcloud_api_key=$(ibmcloud iam api-key-create $basename-admin --output json | jq .apikey) > local.env
    cat local.env
    source local.env
    ```
@@ -220,19 +236,16 @@ The admin team will be responsible for creating the IAM resources. After fetchin
    terraform apply
    ```
    {:pre}
-1. Initialize the basename shell variable and verify some of the resources were created:
+1. Verify some of the resources were created:
    ```
-   basename=$(terraform output basename)
    ibmcloud resource groups | grep $basename
    ```
    {:pre}
-
 
    ```
    ibmcloud iam access-groups | grep $basename
    ```
    {:pre}
-
 
    ```
    ibmcloud iam service-ids | grep $basename
@@ -244,8 +257,7 @@ The admin team will be responsible for creating the IAM resources. After fetchin
    ```
    {:pre}
 
-
-Output will resemble this:
+   Output will resemble this:
 
    ```
    $ ibmcloud resource groups | grep $basename
@@ -285,9 +297,10 @@ Output will resemble this:
                 Service Name          is
                 vpnGatewayId          *
                 Memo                  Policy applies to the resource(s) within the resource group
-...
+   ...
    ```
-These resources can be edited and displayed using the ibm cloud console.  Navigate to the account [Resource groups](https://{DomainName}/account/resource-groups ) and find the resource groups.  Navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click a **Service IDs** panel at the top.
+1. Optionally navigate to the account [Resource groups](https://{DomainName}/account/resource-groups ) and find the resource groups.
+1. Optionally navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click the **Service IDs** panel at the top to see the service ID created.
 
 ## Create VPCs and DNS (Network Team)
 {: #network}
@@ -309,7 +322,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {:pre}
 
-   The `variables_network.tf` file captures the CIDR block specification and the zone layout.  Below is the shared VPC.  Notice that application1 and application2 are specified without overlapping IP addresses:
+1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout.  In the snippet below notice that shared and application1 are specified without overlapping IP addresses:
 
    ```
    variable network_architecture {
@@ -355,6 +368,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
    The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity.  Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
    ```
+   ibmcloud target -r $(grep ibm_region terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//' -e 's/.*=//' -e 's/"//g')
    ibmcloud is target --gen 2
    ibmcloud is subnets | grep $basename
    ```
@@ -377,10 +391,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
 1. Optionally navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all of the other resources created above.
 
-1. List the {{site.data.keyword.dns_short}} resources
-{: #network_dns}
-
-   The {{site.data.keyword.dns_short}} and zone were created with the terraform snippet:
+1. Optionally investigate the terraform configuration in `main.tf` to understand the the {{site.data.keyword.dns_short}} initialization.  The {{site.data.keyword.dns_short}} instance and zone were created with the terraform snippet:
    ```
    resource "ibm_resource_instance" "dns" {
      name              = "${var.basename}-dns"
@@ -465,8 +476,9 @@ The Admin team has provided them just the right amount of permissions to create 
    cat local.env
    source local.env
    ```
+   {:pre}
 
-   The shared team is going to provide micro-services.  Although the network team has already created the shared VPC and some network resources the shared team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+1. Optionally dig deeper at this point into some of the terraform source code.  The shared team is going to provide micro-services.  Although the network team has already created the shared VPC and some network resources the shared team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
    In `main.tf` notice these two resources:
    ```
@@ -505,11 +517,9 @@ The Admin team has provided them just the right amount of permissions to create 
    }
    ```
 
-   The network_context is the output generated by the network team specifically for the shared team.
+   The `local.network_context` above is the output generated by the network team specifically for the shared team.
 
-   The `count = var.shared_lb ? 1 : 0` is a terraform construct explained later in the {{site.data.keyword.loadbalancer_short}} and can be ignored at this point.
-
-1. Create the resources:
+1. Create the shared resources:
    ```
    terraform init
    terraform apply
@@ -526,7 +536,7 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #application1}
 {: step}
 
-Change directory, generate an API key in the local.env and become a member of the application1 access group:
+1. Change directory, generate an API key in the local.env and become a member of the application1 access group:
 
    ```
    team=application1
@@ -536,18 +546,11 @@ Change directory, generate an API key in the local.env and become a member of th
    source local.env
    ```
    {:pre}
+   The application1 team resources are very similar to the shared team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
 
+1. Optionally investigate the source code that initializes the Centos instance.  It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
-The application1 team resources are very similar to the shared team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
-
-### Linux demo application terraform module
-{: #demo_application}
-
-The Linux demo including DNS configuration and an example nodejs application is provided as a Linux service.  All this has been captured in a terraform module shared by all the teams during this exploratory stage.
-
-In the directory ../common/user_data_app is a terraform module.
-
-**../common/user_data_app/main.tf**:
+   **../common/user_data_app/main.tf**:
    ```
    locals {
      shared_app_user_data_centos = <<EOS
@@ -573,30 +576,15 @@ In the directory ../common/user_data_app is a terraform module.
      value = "${replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)}"
    }
    ```
+   Detailed explination:
+     - [Updating the DNS resolver for your VSI](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-updating-dns-resolver) for centos is accomplished by adding a line to /etc/dhcp/dhclient.conf and executing `dhclient`
+     - Nodejs is installed with the `curl` and `yum` commands
+     - The nodejs application is put into /app.js.
+     - A systemctl service is created for app.js
+     - The service is started
 
-The next few sections document the local.shared_app_user_data_centos value.
-
-### Adjust the DNS configuration
-{: #application_dns}
-
-[Updating the DNS resolver for your VSI](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-updating-dns-resolver) for centos is accomplished by the lines:
-- `supersede domain-name-servers 161.26.0.7, 161.26.0.8;`
-- `dhclient ...`
-
-### Nodejs run time installation
-{: #application_nodjs}
-
-Nodejs is required prerequisite for the application.  Node is installed with the two lines:
-- curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
-- yum install nodejs -y
-
-### app.js
-{: #application_app}
-
-The app is put into /app.js.  A systemctl service is created for the service so it starts up when the instance starts up.
-
-The app.js file has two particularly interesting sections.  First there is a /info link that returns a description of the instance running the app:
-
+1. Optionally investigate the app.js contents.  It has two particularly interesting sections.  First there is a /info link that returns a description of the instance running the app.
+   **../common/user_data_app/app.js**:
    ```
    const server = http.createServer((req, res) => {
      switch(req.url) {
@@ -613,9 +601,7 @@ The app.js file has two particularly interesting sections.  First there is a /in
        getRemote(req, res)
        break
    ```
-
-Second the /remote link calls to a remote server IP and returns a the description of that remote along with the remote_url and remote_ip addresses used to access the remote.
-
+   Second the /remote link calls to a remote server IP and returns a the description of that remote along with the remote_url and remote_ip addresses used to access the remote.
    ```
    const IP='REMOTE_IP'
    
@@ -632,16 +618,14 @@ Second the /remote link calls to a remote server IP and returns a the descriptio
            res.statusCode = 200;
            res.end(JSON.stringify({remote_url: remote_url, remote_ip: resp.connection.remoteAddress, remote_info: rawObj}, null, 3))
    ```
-
- In our case the REMOTE_IP will be `shared.widget.com` because of the following in common/user_data_app/main.tf:
-
+    In our case the REMOTE_IP will be `shared.widget.com` because of the following in common/user_data_app/main.tf:
    ```
    output user_data_centos {
      value = "${replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)}"
    }
    ```
 
-And back in application1/main.tf:
+   And back in application1/main.tf:
 
    ```
    module user_data_app {
@@ -649,9 +633,7 @@ And back in application1/main.tf:
      remote_ip = "shared.widgets.com"
    }
    ```
-
-Create the resources:
-
+1. Create the resources:
    ```
    terraform init
    terraform apply
@@ -659,7 +641,7 @@ Create the resources:
    {:pre}
 
 
-Results look something like this:
+   Results look something like this:
    ```
    $ terraform apply
    ...
@@ -669,15 +651,14 @@ Results look something like this:
    
    ibm1_private_ip = 10.1.0.4
    ibm1_public_ip = 52.116.140.202
-   ssh = ssh root@52.116.140.202
    test_info = curl 52.116.140.202:3000/info
    test_remote = curl 52.116.140.202:3000/remote
    ```
 
-Try the curl commands suggested.  See something like what was captured below using the floating IP address of 169.48.152.220.
+   Try the curl commands suggested.  See something like what was captured below using the floating IP address of 169.48.152.220.
 
    ```
-   $ curl 169.48.152.220:3000/info
+   $ curl 52.116.140.202:3000/info
 
    {
       "req_url": "/info",
@@ -689,10 +670,10 @@ Try the curl commands suggested.  See something like what was captured below usi
       ]
    }
 
-   $ curl 169.48.152.220:3000/remote; # get the remote private IP address
+   $ curl 52.116.140.202:3000/remote # DOES NOT WORK
    ```
 
-Wait, that second curl command did not work!, let's fix that in the next step.  Remember these curl commands, you will use them again shortly
+   Wait, that second curl command did not work! let's fix that in the next step.  Remember these curl commands, you will use them again shortly
 
 ## Create Transit Gateway
 {: #transit_gateway}
@@ -700,14 +681,15 @@ Wait, that second curl command did not work!, let's fix that in the next step.  
 
 IBM Cloud® Transit Gateway is a network service used to interconnect IBM Cloud VPC resources providing dynamic scalability, high availability and peace of mind that data isn’t traversing the public internet.  Earlier the CIDR blocks for each of the VPCs were choosen without overlap to allow transit gateway to route packets by IP address.
 
-Change directory and become a member of the network group (use the existing API key):
+1. Change directory and become a member of the network group (use the existing API key):
 
    ```
    cd ../network
    source local.env
    ```
+   {:pre}
 
-Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 to disable the containing resource based on the value of `transit_gateway`.  For example:
+1. Optionally investigate the terraform files.  Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in disabling the resource.  For example:
 
    ```
    resource "ibm_tg_gateway" "tgw"{
@@ -720,19 +702,20 @@ Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg)
    ```
 
 
-Edit the terraform.tfvars file and uncomment `transit_gateway = true` to `true`
+1. Edit the terraform.tfvars file and uncomment `transit_gateway = true` to `true`
 
    ```
    edit terraform.tfvars
    ```
    {:pre}
 
+1. Apply the change
    ```
    terraform apply
    ```
    {:pre}
 
-The {{site.data.keyword.tg_short}} can be displayed using the two commands below.  A gateway was created that has three connections.  Notice the copy/paste of the GatewayID.
+1. Print the {{site.data.keyword.tg_short}} using the commands below.
 
    ```
    ibmcloud tg gateways
@@ -741,7 +724,7 @@ The {{site.data.keyword.tg_short}} can be displayed using the two commands below
    ```
    {:pre}
 
-Notice the three VPC connections in the output.  It will resemble this:
+   Notice the three VPC connections in the output.  It will resemble this:
 
    ```
    $ ibmcloud tg gateways
@@ -781,12 +764,12 @@ Notice the three VPC connections in the output.  It will resemble this:
    Status          attached
    ```
 
-The {{site.data.keyword.tg_short}} configuration can be created, edited and displayed using the ibm cloud console.  Navigate to the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
+1. Optionally navigate the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
 
-There will now be a path from the application1 VPC to the shared VPC and the curl command should be successful.
+1. Execute the curl command to verify there is a path from the application1 VPC to the shared VPC:
 
    ```
-   $ curl 169.48.152.220:3000/remote; # get the remote private IP address
+   $ curl 169.48.152.220:3000/remote
    
    {
       "remote_url": "http://shared.widgets.com:3000/info",
@@ -807,14 +790,15 @@ There will now be a path from the application1 VPC to the shared VPC and the cur
 {: #shared_lb}
 {: step}
 
-Change directory and become a member of the shared access group (use the existing API key):
+1. Change directory and become a member of the shared access group (use the existing API key):
 
    ```
    cd ../shared
    source local.env
    ```
+   {:pre}
 
-The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC.  The shared team can balance load between multiple instances.  For now the load balancer pool will only have the single instance created earlier.  See the lb.tf for the implementation.  The dns record is this snippet:
+1. Optionally investigate the terraform coniguration files.  The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC.  The shared team can balance load between multiple instances.  For now the load balancer pool will only have the single instance created earlier.  See the lb.tf for the implementation.  The dns record is this snippet:
 
    ```
    # shared.widgets.com
@@ -829,22 +813,22 @@ The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic
    }
    ```
 
-The `count = var.shared_lb ? 1 : 0` is a terraform construct that enables or disables the containing resource based on the value of `shared_lb`.  Change this value from false to true to enable this resource along with the rest of the resources in lb.tf.
+   The `count = var.shared_lb ? 1 : 0` is a terraform construct that enables or disables the containing resource based on the value of `shared_lb`.  Change this value from false to true to enable this resource along with the rest of the resources in lb.tf.
 
-Notice how the new record is CNAME record with a URL of the hostname produced by the load balancer: `ibm_is_lb.shared_lb[0].hostname`
+   Notice how the new record is CNAME record with a URL of the hostname produced by the load balancer: `ibm_is_lb.shared_lb[0].hostname`
 
-Edit the terraform.tfvars file and uncomment `shared_lb = true`
+1. Edit the terraform.tfvars file and uncomment `shared_lb = true`
 
    ```
-   $ edit terraform.tfvars
-   ```
-   {:pre}
-   ```
-   $ terraform apply
+   edit terraform.tfvars
    ```
    {:pre}
+   ```
+   terraform apply
+   ```
+   {:pre}
 
-Now execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice how the remote_ip is 10.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice how the remote_ip is 10.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```
    $ curl 169.48.152.220:3000/remote
@@ -869,7 +853,7 @@ Now execute the curl .../remote command from the previous application1 section (
 {: step}
 The second application team environment is identical to the first.  Optionally create application2 by modifying application1.
 
-Enter the ./application1 directory and create the application2 directory
+1. Enter the ./application1 directory and create the application2 directory
    ```
    cd ../application1
    mkdir ../application2
@@ -878,7 +862,7 @@ Enter the ./application1 directory and create the application2 directory
    ```
    {:pre}
 
-Change directory, generate an API key in the local.env and become a member of the application2 access group:
+1. Change directory, generate an API key in the local.env and become a member of the application2 access group:
 
    ```
    team=application2
@@ -889,28 +873,26 @@ Change directory, generate an API key in the local.env and become a member of th
    ```
    {:pre}
 
-Create the resources:
+1. Create the resources:
 
    ```
    terraform init
    terraform apply
    ```
    {:pre}
+1. Test the curl commands
 
 ## Remove resources
 {: #remove_resource}
 {: step}
 
-You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
+1. Destroy the resources.  You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
 
    ```
    cd ..
    ./bin/destroy.sh
    ```
    {:pre}
-
-Try the curl commands in the output.
-
 
 ## Expand the tutorial
 
