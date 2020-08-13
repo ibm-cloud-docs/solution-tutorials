@@ -263,9 +263,7 @@ The frontend instance has its software installed but it can not yet be reached.
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
    {: caption="Outbound rules" caption-side="bottom"}
 
-   
-5. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
-
+ 
 ### Test the connectivity between the frontend and the backend
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
