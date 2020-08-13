@@ -109,38 +109,22 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    {:pre}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
 4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
-5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**. Your connection values should look something similar to the parameters mentioned below
+5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**. Your connection values should look something similar to the parameters shown in the table below.
 
    On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
    {:tip}
 
-   <table>
-    <thead>
-        <tr>
-            <td><strong>Parameter</strong></td>
-            <td><strong>Value</strong></td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Organization ID</td>
-            <td>Find this value under your USER NAME on the TOP ribbon</td>
-        </tr>
-        <tr>
-            <td>Device Type</td>
-            <td>simulator</td>
-        </tr>
-        <tr>
-            <td>Device ID</td>
-            <td>phone</td>
-        </tr>
-        <tr>
-            <td>Authentication Token</td>
-            <td>myauthtoken</td>
-        </tr>
-    </tbody>
-   </table>
 6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
+
+
+   | Parameter     | Value                                                    |
+   |---------------|----------------------------------------------------------|
+   | Organization ID | Find this value under your USER NAME on the TOP ribbon |
+   | Device Type     | simulator |
+   | Device ID       | phone    |
+   | Authentication Token | myauthtoken |
+   {: caption="Connection information" caption-side="bottom"}
+
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #creat_ecards}

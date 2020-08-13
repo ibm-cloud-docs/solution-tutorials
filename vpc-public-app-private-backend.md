@@ -247,62 +247,23 @@ The frontend instance has its software installed but it can not yet be reached.
    The connection should time out eventually.
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP).
+2. First, add the **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** for values.
+3. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
+4. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
 
-	<table>
-   <thead>
-      <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Source type</strong></td>
-         <td><strong>Source</strong></td>
-         <td><strong>Value</strong></td>
-         <td><strong>Description</strong></td>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 80-80</td>
-         <td>This rule allows connections from any IP address to the frontend web server.</td>
-      </tr>
-      <tr>
-         <td>ICMP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-         <td>This rule allows the frontend server to be pinged by any host.</td>
-      </tr>
-   </tbody>
-   </table>
 
-3. Next, add this **outbound** rule.
+   | Protocol | Source type| Source | Value    | Description |
+   |------------|---------------|----------|-----------|------|
+   | TCP        | Any           | 0.0.0.0/0 | Ports 22-22  | This rule allows connections from any IP address to the frontend web server. |
+   | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
+   {: caption="Inbound rules" caption-side="bottom"}
 
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Destination type</strong></td>
-         <td><strong>Destination</strong></td>
-         <td><strong>Value</strong></td>
-         <td><strong>Description</strong></td>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Security Group</td>
-         <td>vpc-pubpriv-backend-sg</td>
-         <td>Ports 80-80</td>
-         <td>This rule allows the frontend server to communicate with the backend server.</td>
-      </tr>
-   </tbody>
-   </table>
+   | Protocol | Destination type | Destination | Value    | Description |
+   |------------|---------------|----------|-----------|----------|
+   | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
+   {: caption="Outbound rules" caption-side="bottom"}
 
-   The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80.
-1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
-
+ 
 ### Test the connectivity between the frontend and the backend
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
@@ -330,26 +291,11 @@ To allow inbound connections to the backend server, you need to configure the as
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-backend-sg**.
 2. Add the following **inbound** rule using **Add rule**.
 
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Source type</strong></td>
-         <td><strong>Source</strong></td>
-         <td><strong>Value</strong></td>
-         <td><strong>Description</strong></td>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Security group</td>
-         <td>vpc-pubpriv-frontend-sg</td>
-         <td>Ports 80-80</td>
-         <td>This rule allows incoming connections on port 80 from the frontend server to the backend server.</td>
-      </tr>
-   </tbody>
-   </table>
+
+   | Protocol | Source type | Source | Value   | Description |
+   |------------|---------------|----------|-----------|--|
+   | TCP        | Security group | vpc-pubpriv-frontend-sg | Ports 80-80  | This rule allows incoming connections on port 80 from the frontend server to the backend server. |
+   {: caption="Inbound rules" caption-side="bottom"}
 
 ### Confirm the connectivity
 

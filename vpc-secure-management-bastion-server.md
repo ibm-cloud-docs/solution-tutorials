@@ -91,36 +91,18 @@ In this section, you will create and configure a bastion host along with a secur
 Let's create a security group and configure inbound rules to your bastion VSI.
 
 1.  Navigate to **Security groups** and click **New security group**. Enter **vpc-secure-bastion-sg** as name and select your VPC.
-2.  Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP).
-    **Inbound rule:**
-    <table>
-      <thead>
-        <tr>
-          <td><strong>Protocol</strong></td>
-          <td><strong>Source type</strong></td>
-          <td><strong>Source</strong></td>
-          <td><strong>Value</strong></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>TCP</td>
-          <td>Any</td>
-          <td>0.0.0.0/0</td>
-          <td>Ports 22-22</td>
-        </tr>
-        <tr>
-          <td>ICMP</td>
-          <td>Any</td>
-          <td>0.0.0.0/0</td>
-          <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-        </tr>
-      </tbody>
-    </table>
+2.  Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
     {:tip }
 3. Click **Create security group** to create it.
+
+
+   | Protocol | Source type | Source | Value   |
+   |------------|---------------|----------|-----------  |
+   |TCP         |Any            |0.0.0.0/0 |Ports 22-22  |
+   |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**|
+   {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
 ### Create a bastion instance
 {: #create-bastion-instance}
@@ -160,88 +142,38 @@ ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
-1. Navigate to **Security groups** and provision a new security group called **vpc-secure-maintenance-sg** with the below outbound rules
-   <table>
-     <thead>
-       <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Destination type</strong></td>
-         <td><strong>Destination</strong></td>
-         <td><strong>Value</strong></td>
-       </tr>
-     </thead>
-     <tbody>
-       <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 80-80</td>
-       </tr>
-       <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 443-443</td>
-       </tr>
-       <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 53-53</td>
-       </tr>
-       <tr>
-         <td>UDP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 53-53</td>
-       </tr>
-     </tbody>
-   </table>
-
+1. Navigate to **Security groups** and provision a new security group called **vpc-secure-maintenance-sg** with the outbound rules show in the table below.
+   
  DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
  {:tip }
 
-2. Next, add this **inbound** rule which allows SSH access from the bastion host.
-
-   <table>
-    <thead>
-      <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Source type</strong></td>
-         <td><strong>Source</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Security group</td>
-         <td>vpc-secure-bastion-sg</td>
-         <td>Ports 22-22</td>
-      </tr>
-    </tbody>
-   </table>
-
+2. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
 3. Create the security group.
-4. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
-5. Finally, edit the security group and add the following **outbound** rule.
 
-   <table>
-    <thead>
-      <td><strong>Protocol</strong></td>
-      <td><strong>Destination type</strong></td>
-      <td><strong>Destination</strong></td>
-      <td><strong>Value</strong></td>
-    </thead>
-    <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Security group</td>
-         <td>vpc-secure-maintenance-sg</td>
-         <td>Ports 22-22</td>
-      </tr>
-    </tbody>
-   </table>
+
+  | Protocol | Destination type | Destination | Value   |
+  |------------|---------------|----------|-----------  |
+  |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
+  |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
+  |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
+  |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |
+  {: caption="Maintenance: Outbound rules" caption-side="bottom"}
+
+
+  | Protocol | Source type | Source | Value   |
+  |------------|---------------|----------|-----------  |
+  |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |
+  {: caption="Maintenance: Inbound rules" caption-side="bottom"}
+
+
+1. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
+2. Finally, edit the security group and add the following **outbound** rule.
+
+
+  | Protocol | Destination type | Destination | Value   |
+  |------------|---------------|----------|-----------  |
+  |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
+  {: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 ## Use the bastion host to access other instances in the VPC
 {: #bastion-host-access-instances}
