@@ -607,7 +607,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {:pre}
-3. Back in the console in the **Topology** view of the **Developer** perspective open the **backend** app wait for the build to complete and then notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
+3. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
    ```
    > node app.js
 
@@ -1033,7 +1033,7 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 <!--##istutorial#-->
 In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
-* If you don't wish to delete the cluster and want to delete the {{site.data.keyword.openshiftshort}} resources created in the cluster. Run the below commands,
+* To delete the {{site.data.keyword.openshiftshort}} resources without deleting the cluster, run the below commands:
    ```sh
    oc delete all --all --namespace example-health
    oc delete project/example-health
