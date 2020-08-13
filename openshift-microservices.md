@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-08-05"
+lastupdated: "2020-08-13"
 lasttested: "2020-08-05"
 
 content-type: tutorial
@@ -98,7 +98,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
-7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
+7. Under **Resource details**,Set **Cluster name** to **<your-initials>-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {:note}
@@ -113,7 +113,7 @@ Take a note of the resource group selected above.  This same resource group will
 {: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
-1. Select the account where you have been invited.
+1. Select the account where you have been invited by clicking on the account name in the top bar (next to `Manage`).
 1. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
 -->
 <!--#/isworkshop#-->
@@ -124,9 +124,9 @@ The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.o
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell).
-2. Initialize the `oc` command environment:
+2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
-   ibmcloud oc cluster config -c mycluster --admin
+   ibmcloud oc cluster config -c <your-initials>-myopenshiftcluster --admin
    ```
    {:pre}
 3. Verify the `oc` command is working:
@@ -455,23 +455,27 @@ Click on the **IBM Cloud Operator** to open it.  Scroll down to the **Requiremen
 
 An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Requirements** section of the installed operator.  Steps:
 
-1. Skip the `login` command and the `ibmcloud target --cf -g Default`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.
+1. Skip the `login` command and the `ibmcloud target --cf -g <resource_group>`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.
    ```sh
-   ibmcloud target -g Default
+   ibmcloud target -g <resource_group>
    ```
    {:pre}
-7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
+
+   To see the the resource groups in your account, run `ibmcloud resource groups` command
+   {:tip}
+
+2. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
    ```sh
    API endpoint:      https://{DomainName}
    Region:            us-south
    User:              YOU@us.ibm.com
    Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567
-   Resource group:    Default
+   Resource group:    YOUR resource group
    CF API endpoint:
    Org:
    Space:
    ```
-9. Use the helper script provided by IBM to create the following resources:
+3. Use the helper script provided by IBM to create the following resources:
    - {{site.data.keyword.Bluemix_notm}} API key that represents you and your permissions to use {{site.data.keyword.Bluemix_notm}}
    - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has the keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
    - Kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
@@ -483,23 +487,23 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators > Operator Details** of the **IBM Cloud Operator** page to bring up the yaml editor.
-9. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
+4. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators > Operator Details** of the **IBM Cloud Operator** page to bring up the yaml editor.
+5. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account). Replace `<your-initials>`:
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Service
    metadata:
-     name: cloudant-service
+     name: <your-initials>-cloudant-service
      namespace: example-health
    spec:
      serviceClass: cloudantnosqldb
      plan: standard
    ```
    {:codeblock}
-1. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
+6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
-1. Click on the service just created, **cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
-5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, (this is the the name provided for the **Service** created earlier).
+7. Click on the service just created, **<your-initials>-cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
+8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Binding
@@ -507,10 +511,10 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      name: cloudant-binding
      namespace: example-health
    spec:
-     serviceName: cloudant-service
+     serviceName: <your-initials>-cloudant-service
    ```
    {:codeblock}
-6. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
+9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
    ```
    ibmcloud resource service-instances --service-name cloudantnosqldb
@@ -518,12 +522,12 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    {:pre}
 
    ```
-   ibmcloud resource service-instance cloudant-service
+   ibmcloud resource service-instance <your-initials>-cloudant-service
    ```
    {:pre}
 
    ```
-   ibmcloud resource service-keys --instance-name cloudant-service --output json
+   ibmcloud resource service-keys --instance-name <your-initials>-cloudant-service --output json
    ```
    {:pre}
 
@@ -534,18 +538,18 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    Retrieving instances with type service_instance in all resource groups in all locations under ..
    OK
    Name                           Location   State    Type
-   cloudant-service               us-south   active   service_instance
-   youyou@cloudshell:~$ ibmcloud resource service-instance cloudant-service
-   Retrieving service instance cloudant-service in all resource groups under ...
+   <your-initials>-cloudant-service               us-south   active   service_instance
+   youyou@cloudshell:~$ ibmcloud resource service-instance <your-initials>-cloudant-service
+   Retrieving service instance <your-initials>-cloudant-service in all resource groups under ...
    OK
 
-   Name:                  cloudant-service
+   Name:                  <your-initials>-cloudant-service
    ID:                    crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET
    GUID:                  SECRET
    Location:              us-south
    Service Name:          cloudantnosqldb
    Service Plan Name:     standard
-   Resource Group Name:   default
+   Resource Group Name:   Default
    State:                 active
    Type:                  service_instance
    Sub Type:
@@ -556,7 +560,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
                        Status       create succeeded
                        Message      Provisioning is complete
                        Updated At   2020-05-06 22:40:03.04469305 +0000 UTC
-   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name cloudant-service --output json
+   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name <your-initials>-cloudant-service --output json
    [
        {
            "guid": "01234560-902d-4078-9a7f-20446a639aeb",
@@ -633,9 +637,8 @@ The `patient-health-frontend` application has an environment variable for the ba
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
-1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **cloudant-service**.
-   ![cloudantdb](images/solution55-openshift-microservices/cloudantdb.png)
-2. Launch the Cloudant dashboard and click the `patients` db.
+1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **<your-initials>-cloudant-service**.
+2. Launch the Cloudant dashboard by clicking on **Launch Dahboard** button and then click the `patients` db.
 3. Click through the different patients you can log-in as.
 
 ## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}} to the {{site.data.keyword.openshiftshort}}  cluster

@@ -103,8 +103,8 @@ Take a note of the resource group selected above.  This same resource group will
 {: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
-1. Select the account where you have been invited.
-1. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+2. Select the account where you have been invited by clicking on the account name in the top bar.
+3. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
 -->
 <!--#/isworkshop#-->
 
