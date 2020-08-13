@@ -249,7 +249,7 @@ The frontend instance has its software installed but it can not yet be reached.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
 2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP).
 
-   |**Protocol**|**Source type**|**Source**|**Value**    |**Description**|
+   | Protocol | Source type| Source | Value    | Description |
    |------------|---------------|----------|-----------  |--|
    |TCP         |Any            |0.0.0.0/0 |Ports 22-22  |This rule allows connections from any IP address to the frontend web server.|
    |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**|This rule allows the frontend server to be pinged by any host.|
@@ -257,8 +257,8 @@ The frontend instance has its software installed but it can not yet be reached.
 
 3. Next, add this **outbound** rule.
 
-   |**Protocol**|**Destination type**|**Destination**|**Value**    |**Description**|
-   |------------|---------------|----------|-----------  |--|
+   | Protocol | Destination type | Destination | Value    | Description |
+   |------------|---------------|----------|-----------|----------|
    |TCP         |Security group |vpc-pubpriv-backend-sg|Ports 80-80  |This rule allows the frontend server to communicate with the backend server.|
    {: caption="Outbound rules" caption-side="bottom"}
 
@@ -292,8 +292,8 @@ To allow inbound connections to the backend server, you need to configure the as
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-backend-sg**.
 2. Add the following **inbound** rule using **Add rule**.
 
-   |**Protocol**|**Source type**|**Source**|**Value**    |**Description**|
-   |------------|---------------|----------|-----------  |--|
+   | Protocol | Source type | Source | Value   | Description |
+   |------------|---------------|----------|-----------|--|
    |TCP         |Security group |vpc-pubpriv-frontend-sg|Ports 80-80  |This rule allows incoming connections on port 80 from the frontend server to the backend server.|
    {: caption="Inbound rules" caption-side="bottom"}
 
