@@ -116,10 +116,10 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
    | Parameter  | Value       |
    |---------------|------------------------------------------------------|
-   |Organization ID|Find this value under your USER NAME on the TOP ribbon|
-   |Device Type    |simulator|
-   |Device ID      |phone    |
-   |Authentication Token|myauthtoken|
+   | Organization ID| Find this value under your USER NAME on the TOP ribbon|
+   | Device Type    | simulator|
+   | Device ID      | phone    |
+   | Authentication Token| myauthtoken|
    {: caption="Connection information" caption-side="bottom"}
 
 6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
