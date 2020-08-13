@@ -116,6 +116,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
 6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
 
+
    | Parameter     | Value                                                    |
    |---------------|----------------------------------------------------------|
    | Organization ID | Find this value under your USER NAME on the TOP ribbon |
