@@ -87,7 +87,8 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 -->
 <!--#/isworkshop#-->
 
@@ -148,20 +149,6 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 {: #access-cluster}
 {: step}
 
-`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
-
-1. Open a command prompt.
-1. Run the login command
-   ```sh
-   ibmcloud login
-   ```
-   {:pre}
-2. When prompted, select the region where your cluster was allocated.
-3. Enter your IBMid email and password.
-4. Select the account where you have been invited.
-
-### Log in to your cluster
-
 In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
@@ -213,22 +200,9 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
 5. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
-### Create a Git authentication token
+### Create a Git deploy token
 
-In this section, you will create a Git token to allow read-only access to your repository. Two types of tokens can be used:
-   - a **Personal Access Token** to give access to the Git api and to all repositories in your account.
-   - a **Deploy token** to give access to a specific repository.
-
-To generate a personal access token:
-1. Access your personal Git **Settings** from the drop-down menu on the top right of the window. In `us-south` region, the link will point to https://us-south.git.cloud.ibm.com/profile.
-1. Select **Access Tokens** on the left sidedar.
-1. Create new **Personal Access Token**:
-   1. Set the **Name** to **foropenshift**.
-   1. Check **read_repository** as scope.
-   1. Click **Create personal access token**.
-1. Save the generated token for future reference.
-1. Make note of your Git username, visible in the drop-down menu on the top right of the window.
-1. Back to your Git project, click on **Project** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
+In this section, you will create a Git token to allow read-only access to your repository.
 
 To generate a deploy token:
 1. On the left pane of the Git repo page, click **Settings** > **Repository**.

@@ -85,7 +85,9 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
 -->
 <!--#/isworkshop#-->
 

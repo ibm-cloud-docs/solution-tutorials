@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-08-04"
-lasttested: "2020-08-04"
+lastupdated: "2020-08-05"
+lasttested: "2020-08-05"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
