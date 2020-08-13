@@ -114,7 +114,6 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
    {:tip}
 
-
    | Parameter  | Value       |
    |---------------|------------------------------------------------------|
    |Organization ID|Find this value under your USER NAME on the TOP ribbon|
