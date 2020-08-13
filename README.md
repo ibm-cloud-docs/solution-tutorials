@@ -9,3 +9,23 @@
 [Production builds](https://cloud.ibm.com/docs/solution-tutorials/index.html#tutorials) done by the doc team in public.
 
 [Process to make the docs public](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/tree/master/solutions#how-do-we-make-the-solutions-public).
+
+## To get a quick preview of the markdown on my own computer
+
+1. Ensure you have node 10+, npm 6.9+
+1. Change to your tutorials checkout directory
+   ```
+   cd tutorials
+   ```
+1. Run the preview script
+   ```
+   PORT=8080 ./scripts/preview-local.sh
+   ```
+1. Access the generated pages at http://127.0.0.1:8080
+
+Limitations:
+- the script does not render with the doc framework css so some advanced rendering may not work
+- the script does not replace conrefs
+
+_Based on https://test.cloud.ibm.com/docs/writing?topic=writing-transform-local_
+
