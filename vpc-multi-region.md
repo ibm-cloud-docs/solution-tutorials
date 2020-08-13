@@ -103,30 +103,10 @@ To allow traffic to the application you will deploy on virtual server instances,
 
 1. Navigate to **Security groups**.
 2. Create a new security group called **vpc-region1-sg** in **vpc-region1** with a selected **Resource group** and with the below inbound rules:
-   <table>
-     <thead>
-       <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Source type</strong></td>
-         <td><strong>Source</strong></td>
-         <td><strong>Value</strong></td>
-       </tr>
-     </thead>
-     <tbody>
-       <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 80-80</td>
-       </tr>
-       <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 443-443</td>
-       </tr>
-     </tbody>
-   </table>
+   |**Protocol**|**Source type**|**Source**|**Value**    |
+   |------------|---------------|----------|-----------  |
+   |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
+   |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
 
 ### Provision VSIs
 1. Navigate to **Subnets**.
