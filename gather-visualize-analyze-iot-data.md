@@ -115,7 +115,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    {:tip}
 
 
-   | **Parameter**  |**Value**       |
+   | Parameter  | Value       |
    |---------------|------------------------------------------------------|
    |Organization ID|Find this value under your USER NAME on the TOP ribbon|
    |Device Type    |simulator|
