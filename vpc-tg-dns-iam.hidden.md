@@ -44,15 +44,18 @@ Microservices are popular because they allow an enterprise to organize their dev
 * Address micro-services using DNS name resolution using {{site.data.keyword.dns_short}}
 * Connect VPCs via {{site.data.keyword.tg_short}}
 * Transparently configure a {{site.data.keyword.loadbalancer_short}} for an application
+
+### Abstract Architecture:
 <p style="text-align: center;">
 
   ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/simple.png)
 </p>
 
-The user is accessing the applications.  The applications are leveraging some shared micro-services.  The company has separate devops teams that own application1, application2 and shared.  A networking team focuses on connectivity and network security. The devops teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
+In the diagram above the user is accessing the applications.  The applications are leveraging some shared micro-services.  The company has separate devops teams that own application1, application2 and shared.  A networking team focuses on connectivity and network security. The devops teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 The teams determined the following architecture could meet their isolation and connectivity requirements.  Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
+### Concrete Architecture
 <p style="text-align: center;">
 
   ![Architecture](images/solution59-vpc-tg-dns-iam-hidden/architecture.png)
@@ -108,13 +111,13 @@ Application team access:
 If you have a good understanding of Resource Groups and IAM Access Groups you can quickly skim this section and start the steps to create the resources.
 #### Access Groups
 {: #iam_access_groups}
-Access policies do not need to be assigned to a specific user. Instead, access policies can be assigned to an access group.  Then users can be assigned to the access group.  The use of access groups can greatly simplify a system administrators life.
+Access policies do not need to be defined for a specific user. Instead, access policies can be defined for an access group.  Then users can be added to the access group.  The use of access groups can greatly simplify a system administrators life.
 
 The Transit Gateway service instance is managed exclusively by the network team.  Editor access is required for creation.  Manager access to the created instance allows VPCs to be connected to the Transit Gateway.
 
-In this example a single zone, `widgets.com` will be created and access to the zone will be permitted to all of the VPCs. The DNS service instance is created by the network team (Editor access) and permitting the zones requires Manager access.  The IP addresses for Domain Name resolution are made available to all of the VPCs without any IAM access. The shared team needs to list the DNS instances (Viewer) and add an A record which requires Manager access.
+In this example a single zone, `widgets.com` will be created and access to the zone will be permitted to all of the VPCs. The DNS service instance is created by the network team (Editor access) and permitting the zones requires Manager access.  The IP addresses for Domain Name resolution are made available to all of the VPCs without any IAM access. The shared team needs to list the DNS instances (Viewer) and add an A or CNAME record which requires Manager access.
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service, IS, consists of about 15 different service types.  Some are only of concern to the network team, like network ACLs.  Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the network team and operated by the micro-service team, like subnet.  The network team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, Transit Gateway and DNS are summarized for each access group in the table below.  See [IAM access](https://{DomainName}/docs/account?topic=account-userroles) for definitions of Editor, Operator, Viewer and Manager:
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service, IS, consists of about 15 different service types.  Some are only of concern to the network team, like network ACLs.  Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the network team and operated by the micro-service team, like subnet.  The network team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, Transit Gateway and DNS are summarized for each access group in the table below.  See [IAM access](https://{DomainName}/docs/account?topic=account-userroles) for genertal definitions of Editor, Operator, Viewer and Manager.  Each service defines the exact meaning of the roles and actions for VPC look [here](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls).:
 
 Service|network|shared|application
 -|-|-|-|-
@@ -208,7 +211,7 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
 {: #admin}
 {: step}
 
-The admin team will be responsible for creating the IAM resources. After fetching the source code and making the initial terraform.tfvars changes suggested above set current directory to ./admin and use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
+The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
 
 1. Initialize and verify the basename shell variable.  Verify it matches the basename in the terraform.tfvars file:
    ```
@@ -637,7 +640,6 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {:pre}
 
-
    Results look something like this:
    ```
    $ terraform apply
@@ -652,7 +654,7 @@ The Admin team has provided them just the right amount of permissions to create 
    test_remote = curl 52.116.140.202:3000/remote
    ```
 
-   Try the curl commands suggested.  See something like what was captured below using the floating IP address of 169.48.152.220.
+   Try the curl commands suggested.  See something like what was captured below:
 
    ```
    $ curl 52.116.140.202:3000/info
@@ -686,7 +688,7 @@ IBM Cloud® Transit Gateway is a network service used to interconnect IBM Cloud 
    ```
    {:pre}
 
-1. Optionally investigate the terraform files.  Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in disabling the resource.  For example:
+1. Optionally investigate the terraform files.  Open the main.tf file and you will notice the Transit Gateway resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in no resource.  For example:
 
    ```
    resource "ibm_tg_gateway" "tgw"{
@@ -763,7 +765,7 @@ IBM Cloud® Transit Gateway is a network service used to interconnect IBM Cloud 
 
 1. Optionally navigate the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
 
-1. Execute the curl command to verify there is a path from the application1 VPC to the shared VPC:
+1. Execute the curl command that failed earlier to verify there is a path from the application1 VPC to the shared VPC.  It will look something like this:
 
    ```
    $ curl 169.48.152.220:3000/remote
@@ -810,9 +812,7 @@ IBM Cloud® Transit Gateway is a network service used to interconnect IBM Cloud 
    }
    ```
 
-   The `count = var.shared_lb ? 1 : 0` is a terraform construct that enables or disables the containing resource based on the value of `shared_lb`.  Change this value from false to true to enable this resource along with the rest of the resources in lb.tf.
-
-   Notice how the new record is CNAME record with a URL of the hostname produced by the load balancer: `ibm_is_lb.shared_lb[0].hostname`
+   The same `count = var.shared_lb ? 1 : 0` is a used.  Notice a CNAME record is initialized with the load balancer hostname: `ibm_is_lb.shared_lb[0].hostname`
 
 1. Edit the terraform.tfvars file and uncomment `shared_lb = true`
 
