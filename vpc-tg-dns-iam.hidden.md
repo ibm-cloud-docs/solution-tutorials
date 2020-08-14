@@ -1,4 +1,4 @@
----
+e--
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
@@ -284,9 +284,6 @@ The admin team will be responsible for creating the IAM resources. After fetchin
                 Service Name          is
                 flowLogCollectorId    *
                 Memo                  Policy applies to the resource(s) within the resource group
-   
-   
-   
    
    Policy ID:   115ebe9f-eea0-4308-9e7f-bb887d64426b
    Roles:       Editor
