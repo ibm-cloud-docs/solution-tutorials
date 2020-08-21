@@ -83,7 +83,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you will create a Code Engine project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
-1. Navigate to [IBM Code Engine Overview](https://cloud.ibm.com/codeengine/overview) page
+1. Navigate to [IBM Code Engine Overview](https://{DomainName}/codeengine/overview) page
 2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group
