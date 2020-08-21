@@ -74,7 +74,7 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/getting-started.md#getting-started-with-tutorials) guide.
 <!--#/istutorial#-->
 
 ## Create a IBM Code Engine project
@@ -83,14 +83,18 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you will create a Code Engine project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
-1. Navigate to [IBM Code Engine Overview](https://{DomainName}/knative/overview) page
-2. Click on **Create project**.
+1. Navigate to [IBM Code Engine Overview](https://cloud.ibm.com/codeengine/overview) page
+2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group
    - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
    ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
+   ```
+   You may need to target a resource group if one has not already been targeted
+   ```sh
+   ibmcloud target -g <RESOURCE_GROUP>
    ```
    {:pre}
 
