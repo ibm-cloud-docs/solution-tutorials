@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-07-31"
-lasttested: "2020-07-27"
+lastupdated: "2020-08-24"
+lasttested: "2020-08-21"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -199,6 +199,8 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 3. Set the visibility level to **Private** and click **Create project**
 4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
 5. Once you push the code to the private repository, you should see the scaffolded code in the project.
+   You need to use an existing SSH key or create a new key for the push to be successful,check the instructions [here](https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-getting-started#common_gitlab) to create a new SSH key for GitLab.
+   {:tip}
 
 ### Create a Git deploy token
 
