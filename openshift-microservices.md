@@ -37,6 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+{: shortdesc}
 
 ## Objectives
 {: #objectives}
