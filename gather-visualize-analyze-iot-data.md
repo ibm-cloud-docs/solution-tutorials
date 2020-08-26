@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-02-26"
+lastupdated: "2020-08-26"
 lasttested: "2019-12-04"
 
 content-type: tutorial
@@ -167,10 +167,11 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
 ### Create an {{site.data.keyword.cloudant_short_notm}} DB and connect to the app
 {: #create_cloudant_db}
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-   - Select a region and choose **Lite** plan
-   - Enter `iot-db` as the service name
-   - Select **both legacy credentials and IAM** as the authentication method and click **Create**
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) instance:
+   - Under **Select an environment** leave **Multitenant** and select a region
+   - Enter `iot-db` as the instance name
+   - Select **both legacy credentials and IAM** as the authentication method
+   - Choose **Lite** plan and click **Create**
 2. Go to the [Resource list](https://{DomainName}/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
    - On the left menu, click **Service credentials**
    - Click **New credential** and then **Add**
