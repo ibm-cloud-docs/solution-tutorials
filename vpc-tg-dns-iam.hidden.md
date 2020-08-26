@@ -55,6 +55,7 @@ In the diagram above the user is accessing the applications.  The applications a
 
 The teams determined the following architecture could meet their isolation and connectivity requirements.  Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
+
 ### Concrete Architecture
 <p style="text-align: center;">
 
@@ -72,6 +73,8 @@ The teams determined the following architecture could meet their isolation and c
 {: #iam}
 
 The admin team will enable the other teams to administer their resources as much as possible.  The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
+
+Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions.  VPC, for example, defines them [here](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls).
 
 Teams:
 - Admin - define the resource groups, access groups, users, roles, ...
@@ -108,16 +111,16 @@ Application team access:
 </p>
 
 ### IAM Architecture
-If you have a good understanding of Resource Groups and IAM Access Groups you can quickly skim this section and start the steps to create the resources.
+If you have a good understanding of resource groups and IAM Access Groups you can quickly skim this section and start the steps to create the resources.
 #### Access Groups
 {: #iam_access_groups}
-Access policies do not need to be defined for a specific user. Instead, access policies can be defined for an access group.  Then users can be added to the access group.  The use of access groups can greatly simplify a system administrators life.
+An access group will be created for each team.  Access policies are added to access groups, and then users (team members) are added to the access group to grant access.
 
 The Transit Gateway service instance is managed exclusively by the network team.  Editor access is required for creation.  Manager access to the created instance allows VPCs to be connected to the Transit Gateway.
 
-In this example a single zone, `widgets.com` will be created and access to the zone will be permitted to all of the VPCs. The DNS service instance is created by the network team (Editor access) and permitting the zones requires Manager access.  The IP addresses for Domain Name resolution are made available to all of the VPCs without any IAM access. The shared team needs to list the DNS instances (Viewer) and add an A or CNAME record which requires Manager access.
+In this example a single zone, `widgets.com` will be created and access to the zone will be permitted to all of the VPCs. The DNS service instance is created by the network team (Editor role) and permitting the zones requires the Manager role.  The IP addresses for Domain Name resolution are made available to all of the VPCs without any IAM access. The shared team needs to list the DNS instances (Viewer role) and add an A or CNAME record which requires the Manager role.
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service, IS, consists of about 15 different service types.  Some are only of concern to the network team, like network ACLs.  Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the network team and operated by the micro-service team, like subnet.  The network team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, Transit Gateway and DNS are summarized for each access group in the table below.  See [IAM access](https://{DomainName}/docs/account?topic=account-userroles) for genertal definitions of Editor, Operator, Viewer and Manager.  Each service defines the exact meaning of the roles and actions for VPC look [here](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls).:
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types.  Some are only of concern to the network team, like network ACLs.  Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the network team and operated by the micro-service team, like subnet.  The network team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, Transit Gateway and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
 
 Service|network|shared|application
 -|-|-|-|-
@@ -207,11 +210,11 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
    ```
 
 
-## Create the IAM resources (Admin Team)
+## Create the IAM-enabled resources (Admin Team)
 {: #admin}
 {: step}
 
-The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial.  See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM-enabled resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
 
 1. Initialize and verify the basename shell variable.  Verify it matches the basename in the terraform.tfvars file:
    ```
