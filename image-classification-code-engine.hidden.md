@@ -86,19 +86,19 @@ In this section, you will create a Code Engine project. A project is a grouping 
 Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
 
 1. Navigate to [IBM Code Engine Overview](https://{DomainName}/knative/overview) page.
-2. Click on **Create project**.
+1. Click on **Create project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
    - Click on **Create**
-3. In your terminal, ensure you're logged in to the `ibmcloud` CLI.
+1. In your terminal, ensure you're logged in to the `ibmcloud` CLI.
     ```
     ibmcloud login 
     ```
-4. You will also need to target the resource group where you created your project.
+1. You will also need to target the resource group where you created your project.
     ```
     ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
     ```
-5. Make the command line tooling point to your project
+1. Make the command line tooling point to your project
    ```sh
    ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
    ```
@@ -134,7 +134,7 @@ We've already built images for the two applications and pushed them to the {{sit
   
   
 
-2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
+1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ```
    Congratulations! Your Frontend is working
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
@@ -142,7 +142,7 @@ We've already built images for the two applications and pushed them to the {{sit
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the @latest revision.
    {:tip}
-3. For secured browsing, you can also browse the application with `HTTPS`.
+1. For secured browsing, you can also browse the application with `HTTPS`.
 
   <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud code-engine application logs --name frontend`
    {:tip}-->
@@ -167,8 +167,8 @@ Most of these values have a default set if nothing is provided as an option when
   This may already be zero if your application has scaled itself back down due to non use. To see a pod spin up, visit your application again in the browser.  To exit the watch, use `ctrl + c`.
 
 1. To check the autoscaling capabilities of Code Engine, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
-2. Click on **Generate load** to generate traffic.
-3. Run the below command to see the pod count incrementing as part of the autoscaling.
+1. Click on **Generate load** to generate traffic.
+1. Run the below command to see the pod count incrementing as part of the autoscaling.
    ```sh
    kubectl get pods --watch
    ```
@@ -176,14 +176,14 @@ Most of these values have a default set if nothing is provided as an option when
 
    To exit the watch, you can use `ctrl + c`
 
-4. The `watch` command will write a new line each time there is a change in the underlying pod. To more clearly see how many pods were created, you can just do `kubectl get pods`.
+1. The `watch` command will write a new line each time there is a change in the underlying pod. To more clearly see how many pods were created, you can just do `kubectl get pods`.
 
-4. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
+1. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```
     ibmcloud ce application update  --name frontend --max-scale 5
     ```
 
-5. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
+1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
 
     Expected Output:
     
@@ -195,7 +195,7 @@ Most of these values have a default set if nothing is provided as an option when
     frontend-i4fmh-2-deployment-6996489d7c-vzmdd   1/2     Running       0          9s
     ```
 
-6. Once load generation is stopped, wait for a minute to see the pods terminating, eventually scaling down to zero pods.
+1. Once load generation is stopped, wait for a minute to see the pods terminating, eventually scaling down to zero pods.
 
 ### Deploy a backend application and test the connection
 
@@ -208,11 +208,11 @@ Most of these values have a default set if nothing is provided as an option when
    The `--cluster-local` flag will instruct Code Engine to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
    {:tip}
 
-2. Copy the private endpoint (URL) from the output.
+1. Copy the private endpoint (URL) from the output.
 
    You can run `ibmcloud code-engine application get -n backend` command to check the status and details of the backend application.
    {:tip}
-3. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
+1. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
    ```sh
    ibmcloud code-engine application update --name frontend \
    --env BACKEND_URL=<BACKEND_PRIVATE_URL>
@@ -222,7 +222,7 @@ Most of these values have a default set if nothing is provided as an option when
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
    {:tip}
 
-4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, the backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
+1. Refresh the frontend URL on the browser to test the connection to the backend service. Now, the backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {:connect_cloud_services}
@@ -276,7 +276,7 @@ Now, you will need to pass in the credentials for the Cloud Object Storage insta
    {:tip}
 
 
-2. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
+1. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
    ibmcloud code-engine configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
@@ -284,7 +284,7 @@ Now, you will need to pass in the credentials for the Cloud Object Storage insta
    ```
    {:pre}
 
-3. With the configmap defined, you can now update the backend application by asking Code Engine to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
+1. With the configmap defined, you can now update the backend application by asking Code Engine to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
    ```sh
    ibmcloud code-engine application update --name backend \
    --env-from-configmap backend-configuration
@@ -294,7 +294,7 @@ Now, you will need to pass in the credentials for the Cloud Object Storage insta
    To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-4. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
+1. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
    ```sh
    ibmcloud code-engine application get --name backend --more-details
    ```
@@ -336,7 +336,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 This job will read images from Cloud Object Storage, and then classify them using the Visual Recognition Service. It will need to have access to service credentials for both services. 
 
-2. On a terminal, run the following command to create a job definition,
+1. On a terminal, run the following command to create a job definition,
    ```sh
    ibmcloud code-engine jobdef create --name backend-jobdef \
    --image ibmcom/backend-job \
@@ -358,7 +358,7 @@ This job will read images from Cloud Object Storage, and then classify them usin
    --prefix COS_JOB
    ```
    {:pre}
-2. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
+1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
    ibmcloud code-engine jobdef bind --name backend-jobdef \
    --service-instance code-engine-vr \
@@ -370,7 +370,6 @@ This job will read images from Cloud Object Storage, and then classify them usin
 ### Run the job
 
 1. Go to the frontend UI and **upload images** for classification. 
-
 1. With the following command, run a job using the jobdefinition created above
    ```sh
    ibmcloud code-engine job run --name backend-job \
@@ -386,21 +385,18 @@ This job will read images from Cloud Object Storage, and then classify them usin
    When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud code-engine job run --help`.
    {:tip}
 
-2. To check the logs, run the following command
+1. To check the logs, run the following command
    ```sh
    ibmcloud code-engine job logs --name backend-job
    ```
    {:pre}
-3. In the frontend UI, click on the **refresh** button to see the results for each of the uploaded images.
-
-4. To delete the job, run the below command
+1. In the frontend UI, click on the **refresh** button to see the results for each of the uploaded images.
+1. To delete the job, run the below command
    ```sh
    ibmcloud code-engine job delete --name backend-job
    ```
    {:pre}
-
-5. Upload new images, create the job again and hit the **refresh** button to see the results.
-
+1. Upload new images, create the job again and hit the **refresh** button to see the results.
 
 ## Remove resources
 {:#cleanup}
