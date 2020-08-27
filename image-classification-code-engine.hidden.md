@@ -164,7 +164,7 @@ Most of these values have a default set if nothing is provided as an option when
     kubectl get pods --watch
     ```
   
-  This may already be zero if your application has scaled itself back down due to non use. To see a pod spin up, visit your application again in the browser.  To exit the watch, use `ctrl + c`.
+  This may already be zero if your application has scaled itself back down due to non use. To see a pod spin up, visit your application again in the browser. To exit the watch, use `ctrl + c`.
 
 1. To check the autoscaling capabilities of Code Engine, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
 1. Click on **Generate load** to generate traffic.
@@ -180,7 +180,7 @@ Most of these values have a default set if nothing is provided as an option when
 
 1. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```
-    ibmcloud ce application update  --name frontend --max-scale 5
+    ibmcloud ce application update --name frontend --max-scale 5
     ```
 
 1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
