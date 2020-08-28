@@ -54,7 +54,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution55-openshift-microservices/openshift-microservices.drawio.png)
+  ![Architecture](images/solution55-openshift-microservices/Architecture.png)
 </p>
 
 1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **Deployment**, and **Service**.
