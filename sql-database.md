@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2020
-lastupdated: "2020-04-15"
+lastupdated: "2020-08-27"
 lasttested: "2020-04-15"
 
 content-type: tutorial
@@ -47,7 +47,6 @@ This tutorial shows how to provision a SQL (relational) database service, create
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
