@@ -136,8 +136,6 @@ We've already built images for the two applications and pushed them to the {{sit
     With just these two pieces of data, Code Engine can deploy your application and handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
-
-
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ```
    Congratulations! Your Frontend is working
@@ -167,7 +165,7 @@ Most of these values have a default set if nothing is provided as an option when
     ```sh
     kubectl get pods --watch
     ```
-
+    {:pre}
   This may already be zero if your application has scaled itself back down due to non use. To see a pod spin up, visit your application again in the browser. To exit the watch, use `ctrl + c`.
 
 1. To check the autoscaling capabilities of Code Engine, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
@@ -190,7 +188,6 @@ Most of these values have a default set if nothing is provided as an option when
 1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
 
     Expected Output:
-
     ```
     frontend-i4fmh-2-deployment-6996489d7c-4lq4w   2/2     Running       0          59s
     frontend-i4fmh-2-deployment-6996489d7c-5d5nx   1/2     Running       0          8s
