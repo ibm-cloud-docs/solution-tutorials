@@ -128,13 +128,9 @@ We've already built images for the two applications and pushed them to the {{sit
    ibmcloud code-engine application create --name frontend \
    --image ibmcom/frontend
    ```
-
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step
-
    {:pre}
 
-    With just these two pieces of data, Code Engine can deploy your application and handle all of the complexities of configuring it and managing it for you.
-    {:tip}
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data, Code Engine can deploy your application and handle all of the complexities of configuring it and managing it for you.
 
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ```
@@ -144,6 +140,7 @@ We've already built images for the two applications and pushed them to the {{sit
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the @latest revision.
    {:tip}
+
 1. For secured browsing, you can also browse the application with `HTTPS`.
 
   <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud code-engine application logs --name frontend`
@@ -181,9 +178,10 @@ Most of these values have a default set if nothing is provided as an option when
 1. The `watch` command will write a new line each time there is a change in the underlying pod. To more clearly see how many pods were created, you can just do `kubectl get pods`.
 
 1. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
+    ```sh
+    ibmcloud code-engine application update --name frontend --max-scale 5
     ```
-    ibmcloud ce application update --name frontend --max-scale 5
-    ```
+    {:pre}
 
 1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
 
@@ -213,6 +211,7 @@ Most of these values have a default set if nothing is provided as an option when
 
    You can run `ibmcloud code-engine application get -n backend` command to check the status and details of the backend application.
    {:tip}
+
 1. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
    ```sh
    ibmcloud code-engine application update --name frontend \
