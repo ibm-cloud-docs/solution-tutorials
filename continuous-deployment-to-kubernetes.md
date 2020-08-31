@@ -154,6 +154,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
+1. On the left in the Outgoing section click **Push**.
 1. Click on the arrow at the top to get back to the toolchain. 
 1. Click on the **Delivery Pipeline** tile.
 1. Notice a new **BUILD** has started.
