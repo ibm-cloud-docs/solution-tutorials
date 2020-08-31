@@ -77,7 +77,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/getting-started.md#getting-started-with-tutorials) guide.
 <!--#/istutorial#-->
 
-## Create an IBM Code Engine project
+## Create an {{site.data.keyword.IBM_notm}} Code Engine project
 {: #create_coligo_project}
 {: step}
 
@@ -85,20 +85,20 @@ In this section, you will create a Code Engine project. A project is a grouping 
 
 Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
 
-1. Navigate to [IBM Code Engine Overview](https://{DomainName}/knative/overview) page.
-1. Click on **Create project**.
+1. Navigate to [{{site.data.keyword.IBM_notm}} Code Engine Overview](https://{DomainName}/knative/overview) page.
+2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
    - Click on **Create**
-1. In your terminal, ensure you're logged in to the `ibmcloud` CLI.
+3. In your terminal, ensure you're logged in to the `ibmcloud` CLI.
     ```
     ibmcloud login
     ```
-1. You will also need to target the resource group where you created your project.
+4. You will also need to target the resource group where you created your project.
     ```
     ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
     ```
-1. Make the command line tooling point to your project
+5. Make the command line tooling point to your project
    ```sh
    ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
    ```
@@ -116,7 +116,7 @@ Putting components into a single project enables you to manage access control mo
 {: #deploy_app}
 {: step}
 
-Code Engine Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to Code Engine under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to Cloud Object Storage.
+Code Engine Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to Code Engine under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the {{site.data.keyword.cloud_notm}} Container Registry. You will use these pre-built container images to deploy the respective applications.
 
@@ -200,7 +200,7 @@ Most of these values have a default set if nothing is provided as an option when
 
 ### Deploy a backend application and test the connection
 
-1. To deploy a new backend application to store your images into cloud object storage, run this command
+1. To deploy a new backend application to store your images into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
    ibmcloud code-engine application create --name backend \
    --image ibmcom/backend --cluster-local
@@ -262,9 +262,9 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 
-Now, you will need to pass in the credentials for the Cloud Object Storage instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
+Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
-1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your code engine application access to the service credentials for Cloud Object Storage so that it can store images in COS.
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your code engine application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
    ```sh
    ibmcloud code-engine application bind --name backend \
    --service-instance code-engine-cos \
@@ -335,7 +335,7 @@ Jobs in Code Engine are meant to run to completion as batch or standalone execut
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
-This job will read images from Cloud Object Storage, and then classify them using the Visual Recognition Service. It will need to have access to service credentials for both services.
+This job will read images from {{site.data.keyword.cos_full_notm}}, and then classify them using the {{site.data.keyword.visualrecognitionshort}} Service. It will need to have access to service credentials for both services.
 
 1. On a terminal, run the following command to create a job definition,
    ```sh
