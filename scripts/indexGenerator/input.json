@@ -193,7 +193,7 @@
           "name": "Deploy microservices with OpenShift",
           "url": "openshift-microservices.html",
           "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "imgSrc": "images/solution55-openshift-microservices/Architecture.png",
           "tags": [
             "OpenShift",
             "Log Analysis",

@@ -17,7 +17,7 @@
           "url": "getting-started.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-01-20"
+          "lastUpdated": "2020-08-24"
         }
       ]
     },
@@ -100,7 +100,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-07-31"
+          "lastUpdated": "2020-08-24"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -125,7 +125,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-08-05"
+          "lastUpdated": "2020-08-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -241,7 +241,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-15"
+          "lastUpdated": "2020-08-27"
         },
         {
           "name": "Serverless web application and API",
@@ -523,7 +523,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-02-26"
+          "lastUpdated": "2020-08-26"
         }
       ]
     },
