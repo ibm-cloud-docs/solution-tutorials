@@ -7,7 +7,7 @@ lasttested: "2019-11-21"
 
 content-type: tutorial
 services: openwhisk, cognos-dashboard-embedded, Db2whc, appid
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

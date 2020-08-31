@@ -7,7 +7,7 @@ lasttested: "2019-05-23"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
-account-plan:
+account-plan: paid
 completion-time: 1h
 
 ---

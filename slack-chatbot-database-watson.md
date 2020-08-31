@@ -7,7 +7,7 @@ lasttested: "2020-06-12"
 
 content-type: tutorial
 services: cloud-foundry-public, assistant, openwhisk, Db2onCloud
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

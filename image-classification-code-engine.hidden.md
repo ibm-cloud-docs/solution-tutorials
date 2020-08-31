@@ -7,7 +7,7 @@ lasttested: "2020-06-22"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, visual-recognition
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---

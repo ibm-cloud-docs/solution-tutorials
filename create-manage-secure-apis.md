@@ -7,7 +7,7 @@ lasttested: "2019-05-21"
 
 content-type: tutorial
 services: cloud-foundry-public, apiconnect
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

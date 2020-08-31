@@ -7,7 +7,7 @@ lasttested: "2019-10-31"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

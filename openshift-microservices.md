@@ -7,7 +7,7 @@ lasttested: "2020-08-05"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
-account-plan:
+account-plan: paid
 completion-time: 3h
 ---
 

@@ -7,7 +7,7 @@ lasttested: "2020-08-21"
 
 content-type: tutorial
 services: openshift, containers, Registry
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

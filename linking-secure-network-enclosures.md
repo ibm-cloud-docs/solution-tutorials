@@ -7,7 +7,7 @@ lasttested: "2019-04-23"
 
 content-type: tutorial
 services: virtual-router-appliance, virtual-servers, vlans
-account-plan:
+account-plan: paid
 completion-time:
 ---
 

@@ -7,7 +7,7 @@ lasttested: "2019-12-05"
 
 content-type: tutorial
 services: containers, cloud-object-storage, Activity-Tracker-with-LogDNA, Registry, certificate-manager, appid, Cloudant, key-protect, Log-Analysis-with-LogDNA
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---

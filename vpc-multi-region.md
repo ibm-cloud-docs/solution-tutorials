@@ -7,7 +7,7 @@ lasttested: "2019-06-18"
 
 content-type: tutorial
 services: vpc, cis, certificate-manager
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

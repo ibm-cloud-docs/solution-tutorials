@@ -7,7 +7,7 @@ lasttested: "2019-10-22"
 
 content-type: tutorial
 services: assistant, speech-to-text, text-to-speech
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 

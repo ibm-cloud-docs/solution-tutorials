@@ -7,7 +7,7 @@ lasttested: "2019-06-18"
 
 content-type: tutorial
 services: containers, cloud-foundry-public, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, Monitoring-with-Sysdig
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

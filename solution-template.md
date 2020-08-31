@@ -8,7 +8,7 @@ lasttested: "2019-03-08"
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: service1, service2
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

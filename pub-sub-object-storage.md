@@ -7,7 +7,7 @@ lasttested: "2020-05-08"
 
 content-type: tutorial
 services: containers, EventStreams, cloud-object-storage, Registry
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

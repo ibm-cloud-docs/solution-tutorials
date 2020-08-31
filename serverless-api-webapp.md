@@ -7,7 +7,7 @@ lasttested: "2020-06-03"
 
 content-type: tutorial
 services: openwhisk, api-gateway, Cloudant
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

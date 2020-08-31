@@ -7,7 +7,7 @@ lasttested: "2020-07-20"
 
 content-type: tutorial
 services: vpc, direct-link
-account-plan:
+account-plan: paid
 completion-time:
 ---
 

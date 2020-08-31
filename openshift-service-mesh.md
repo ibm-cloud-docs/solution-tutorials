@@ -7,7 +7,7 @@ lasttested: "2020-07-31"
 
 content-type: tutorial
 services: openshift, containers
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

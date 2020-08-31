@@ -7,7 +7,7 @@ lasttested: "2019-06-25"
 
 content-type: tutorial
 services: virtual-servers, cloud-object-storage, terraform
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 

@@ -7,7 +7,7 @@ lasttested: "2019-05-22"
 
 content-type: tutorial
 services: cloud-object-storage, AnalyticsEngine
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

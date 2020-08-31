@@ -7,7 +7,7 @@ lasttested: "2020-07-08"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---

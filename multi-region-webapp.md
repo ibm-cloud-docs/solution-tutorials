@@ -7,7 +7,7 @@ lasttested: "2019-05-20"
 
 content-type: tutorial
 services: cloud-foundry-public, cis, ContinuousDelivery
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

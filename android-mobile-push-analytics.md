@@ -7,7 +7,7 @@ lasttested: "2019-06-20"
 
 content-type: tutorial
 services: mobilepush
-account-plan:
+account-plan: paid
 completion-time: 1h
 
 ---

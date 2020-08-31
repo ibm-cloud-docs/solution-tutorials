@@ -7,7 +7,7 @@ lasttested: "2020-06-02"
 
 content-type: tutorial
 services: openwhisk, cis, certificate-manager
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

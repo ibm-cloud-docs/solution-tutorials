@@ -7,7 +7,7 @@ lasttested: "2019-05-20"
 
 content-type: tutorial
 services: virtual-servers
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 

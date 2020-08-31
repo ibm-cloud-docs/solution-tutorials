@@ -7,7 +7,7 @@ lasttested: "2019-09-03"
 
 content-type: tutorial
 services: vpc, cloud-object-storage, databases-for-postgresql
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

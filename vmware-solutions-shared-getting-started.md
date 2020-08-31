@@ -7,7 +7,7 @@ lasttested: "2020-05-22"
 
 content-type: tutorial
 services: vmwaresolutions, schematics
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

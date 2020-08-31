@@ -7,7 +7,7 @@ lasttested: "2019-06-04"
 
 content-type: tutorial
 services: openwhisk, mobilepush, appid, Cloudant, tone-analyzer
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

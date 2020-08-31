@@ -7,7 +7,7 @@ lasttested: "2019-06-17"
 
 content-type: tutorial
 services: vpc
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 

@@ -7,7 +7,7 @@ lasttested: "2019-06-03"
 
 content-type: tutorial
 services: containers, Registry, cis
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

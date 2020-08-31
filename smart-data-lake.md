@@ -7,7 +7,7 @@ lasttested: "2019-11-27"
 
 content-type: tutorial
 services: cloud-object-storage, cognos-dashboard-embedded, sql-query
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

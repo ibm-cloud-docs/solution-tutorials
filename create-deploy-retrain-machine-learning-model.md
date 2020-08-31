@@ -7,7 +7,7 @@ lasttested: "2020-05-07"
 
 content-type: tutorial
 services: cloud-object-storage, Db2whc
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

@@ -7,7 +7,7 @@ lasttested: "2020-04-15"
 
 content-type: tutorial
 services: cloud-foundry-public, Db2whc
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 

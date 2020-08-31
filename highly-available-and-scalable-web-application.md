@@ -7,7 +7,7 @@ lasttested: "2020-04-08"
 
 content-type: tutorial
 services: virtual-servers, cis, loadbalancer-service, FileStorage
-account-plan:
+account-plan: paid
 completion-time:
 ---
 

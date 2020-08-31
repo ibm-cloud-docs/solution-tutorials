@@ -7,7 +7,7 @@ lasttested: "2020-08-12"
 
 content-type: tutorial
 services: containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---

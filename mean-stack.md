@@ -7,7 +7,7 @@ lasttested: "2020-07-27"
 
 content-type: tutorial
 services: cloud-foundry-public, databases-for-mongodb
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 

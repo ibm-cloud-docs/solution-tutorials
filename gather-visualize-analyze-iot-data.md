@@ -7,7 +7,7 @@ lasttested: "2019-12-04"
 
 content-type: tutorial
 services: cloud-foundry-public, cloud-object-storage, AnalyticsEngine, Cloudant, IoT
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
