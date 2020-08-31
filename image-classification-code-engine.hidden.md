@@ -138,7 +138,7 @@ We've already built images for the two applications and pushed them to the {{sit
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 
-   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the @latest revision.
+   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision.
    {:tip}
 
 1. For secured browsing, you can also browse the application with `HTTPS`.
@@ -150,6 +150,7 @@ We've already built images for the two applications and pushed them to the {{sit
    kubectl get pods --watch
    ```
    {:pre}-->
+
 Congratulations!! You've just deployed a web application to Code Engine with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
@@ -172,17 +173,14 @@ Most of these values have a default set if nothing is provided as an option when
    kubectl get pods --watch
    ```
    {:pre}
-
    To exit the watch, you can use `ctrl + c`
 
 1. The `watch` command will write a new line each time there is a change in the underlying pod. To more clearly see how many pods were created, you can just do `kubectl get pods`.
-
 1. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```sh
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {:pre}
-
 1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
 
     Expected Output:
@@ -274,7 +272,6 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
    If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag. `--service-credential` is an optional flag.
    {:tip}
-
 
 1. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
