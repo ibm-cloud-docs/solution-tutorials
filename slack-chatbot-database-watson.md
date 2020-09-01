@@ -129,7 +129,7 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
    The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
 
   Details will be explained later below once everything is set up.
-  ![](images/solution19/SlackBot_Dialog.png)   
+  ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
 6. On the left, click on **Options** and then on **Webhooks**. 
 
    Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=cloud-functions-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
@@ -156,7 +156,7 @@ Open up your Slack workspace for a test drive of the chatbot. Begin a direct cha
 5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. You will use a pattern-based entity for that field.
 6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, use the exact date of next Thursday, e.g., **2019-05-09** and **22:00** for the end date and time.
 7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case, the user choice is acknowledged and the environment cleaned up.
-  ![](images/solution19/SlackSampleChat.png)
+  ![Sample chat in the Slack app](images/solution19/SlackSampleChat.png)
 
 With some sample data in it is time to search.
 1. Type in **show event information**. Next is a question whether to search by identifier or by date. Enter a **name** and for the next question **"Think 2019"**. Now, the chatbot should display information about that event. The dialog has multiple responses to choose from.

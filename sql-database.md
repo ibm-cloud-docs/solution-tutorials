@@ -32,7 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 
-![](images/solution5/Architecture.png)
+![Architecture diagram](images/solution5/Architecture.png)
 
 ## Objectives
 
@@ -90,7 +90,7 @@ Now that the table "cities" has been created, you are going to load data into it
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
    {:tip }
 3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.    
-  ![](images/solution5/LoadTabSeparator.png)
+  ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
 4. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
 5. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 
