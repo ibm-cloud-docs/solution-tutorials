@@ -41,16 +41,6 @@
             "Knative",
             "Kubernetes"
           ]
-        },
-        {
-          "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
-          "url": "vpc-tg-dns-iam.hidden.html",
-          "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
-          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
-          "tags": [
-            "VPC",
-            "Linux"
-          ]
         }
       ]
     },
@@ -915,6 +905,21 @@
           "tags": [
             "Virtual Private Cloud",
             "Kubernetes"
+          ]
+        },
+        {
+          "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
+          "url": "vpc-tg-dns-iam.html",
+          "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam/architecture.png",
+          "tags": [
+            "Virtual Private Cloud",
+            "Identity and Access Management",
+            "Transit Gateway",
+            "DNS",
+            "Infrastructure",
+            "Network",
+            "Linux"
           ]
         }
       ]

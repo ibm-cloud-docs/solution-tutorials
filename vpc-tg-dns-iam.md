@@ -47,7 +47,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 
 ### Abstract Architecture:
 
-![Architecture](images/solution59-vpc-tg-dns-iam-hidden/simple.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/simple.png)
 
 In the diagram above the user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
@@ -55,7 +55,7 @@ In the diagram above the user is accessing the applications. The applications ar
 
 The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
-![Architecture](images/solution59-vpc-tg-dns-iam-hidden/architecture.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png)
 
 ## Before you begin
 {: #prereqs}
@@ -84,19 +84,19 @@ Teams:
 
 A conceptual team ownership model was implemented.  The *network* team administers a lot of the diagram.
 
-![Architecture](images/solution59-vpc-tg-dns-iam-hidden/network.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/network.png)
 
 #### Shared Team
 
 The *shared* team creates the VSI in its isolated VPC.  In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
 
-![Architecture](images/solution59-vpc-tg-dns-iam-hidden/shared.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/shared.png)
 
 The *application* teams needs the same access as the *shared* team with the exception of manager access to the {{site.data.keyword.dns_short}}.
 
 *Application* team access:
 
-![Architecture](images/solution59-vpc-tg-dns-iam-hidden/app1.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/app1.png)
 
 ### IAM Architecture
 

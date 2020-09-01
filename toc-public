@@ -79,6 +79,7 @@ Solution Tutorials
             vpc-secure-management-bastion-server.md
             lamp-stack-on-vpc.md
             /containers/containers-vpc_ks_tutorial
+            vpc-tg-dns-iam.md
 
         {: .topicgroup}
         Classic Infrastructure
@@ -153,6 +154,7 @@ Solution Tutorials
             vpc-site2site-vpn.md
             vpc-app-deploy.md
             vpc-secure-management-bastion-server.md
+            vpc-tg-dns-iam.md
             secure-network-enclosure.md
             nat-config-private.md
             byoip.md

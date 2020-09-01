@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-08-31"
+lastupdated: "2020-09-01"
 ---
 
 {:shortdesc: .shortdesc}
@@ -920,6 +920,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution56-lamp-stack-on-vpc/Architecture.png" alt="Architecture diagram for the solution PHP web application on a LAMP Stack in VPC Gen2"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-vpc-tg-dns-iam#vpc-tg-dns-iam">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Team based privacy using IAM, VPC, Transit Gateway and DNS
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution59-vpc-tg-dns-iam/architecture.png" alt="Architecture diagram for the solution Team based privacy using IAM, VPC, Transit Gateway and DNS"/>
                 </div>
             </div>
         </div>
