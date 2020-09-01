@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-01-31"
+lastupdated: "2020-09-01"
 lasttested: "2019-05-23"
 
 content-type: tutorial
@@ -48,7 +48,7 @@ This tutorial walks you through the process setting up a continuous integration 
 * Explore and integrate the app to use Slack notifications.
 
 
-![](images/solution21/Architecture.png)
+![Architecture diagram](images/solution21/Architecture.png)
 
 1. The code is pushed to a private Git repository.
 2. The pipeline picks up changes in Git and builds container image.
@@ -93,7 +93,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get.
    {:tip}
 
-   ![](images/solution21/KubernetesPaidClusterCreation.png)
+   ![Configuration dialog for Kubernetes cluster](images/solution21/KubernetesPaidClusterCreation.png)
 
 2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults.
 3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
@@ -143,7 +143,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
 1. After the deploy stages complete, click on **View logs and history** to see the logs.
 1. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![](images/solution21/Logs.png)
+   ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
 
 ## Modify the application and deploy the updates
 {: step}
@@ -174,32 +174,32 @@ In this section, you will complete the deployment pipeline by deploying the appl
 There are [different options](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-1. Rename the **Deploy Stage** to `Deploy dev` by clicking on settings Icon > **Configure Stage**.
-   ![](images/solution21/deploy_stage.png)
+1. Rename the **Deploy Stage** to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
+   ![Access the settings Icon](images/solution21/deploy_stage.png)
 1. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. Change the **stage trigger** to `Run jobs only when this stage is run manually`.
-   ![](images/solution21/prod-stage.png)
+   ![Change the stage trigger](images/solution21/prod-stage.png)
 6. In **Environment properties**, set **CLUSTER_NAMESPACE** to **production**.
 7. **Save** the stage.
 
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
-   ![](images/solution21/full-deploy.png)
+   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
 
 ## Setup Slack notifications
 {: #setup_slack}
 {: step}
 
 1. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
-2. Search for slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
-    ![](images/solution21/configure_slack.png)
+2. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
+    ![Configure the Slack integration](images/solution21/configure_slack.png)
 3. For **Slack webhook**, follow the steps in this [link](https://my.slack.com/services/new/incoming-webhook/). You need to login with your Slack credentials and provide an existing channel name or create a new one.
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** and paste the same under **Slack webhook**.
-5. The slack channel is the channel name you provided while creating a webhook integration above.
+5. The Slack channel is the channel name you provided while creating a webhook integration above.
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. e.g., kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
-    ![](images/solution21/toolchain_slack.png)
-8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
-    ![](images/solution21/slack_channel.png)
+    ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png)
+8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
+    ![Slack app with notification](images/solution21/slack_channel.png)
 
 ## Remove resources
 {: #removeresources}
