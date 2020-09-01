@@ -43,7 +43,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
 
 
-  ![](images/solution12/Architecture.png)
+  ![Architecture diagram](images/solution12/Architecture.png)
 
 1. User connects to the application and generates log entries.
 1. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}.
@@ -379,7 +379,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
 1. Back to the Sysdig UI, under `Explore` choose `Deployments` for `My Groupings`
-    ![](images/solution12/sysdig_groupings.png)
+    ![Sysdig dashboard showing deployments](images/solution12/sysdig_groupings.png)
 2. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 3. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
 4. To monitor the latency of the application,
@@ -398,7 +398,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
-![](images/solution12/wolam_api_counter_total.png)
+![Sysdig dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png)
 
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 2. To monitor the calls to a given api endpoint of the application,

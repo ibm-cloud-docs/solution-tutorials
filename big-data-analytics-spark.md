@@ -34,7 +34,7 @@ In this tutorial, you will analyze and visualize open data sets using {{site.dat
 
 <p style="text-align: center;">
 
-  ![](images/solution23/Architecture.png)
+  ![Architecture diagram](images/solution23/Architecture.png)
 </p>
 
 ## Objectives
@@ -55,7 +55,7 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
 2. In the dashboard, click on the **Create a project** tile > Select **Data Science** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
 3. On the right side of the page, you can **Define storage**. If you have already provisioned storage, select an instance from the list. If not, click on **Add** and follow the instructions in the new browser tab. Once done with service creation, click **Refresh** to see the new service.
 4. Click on the **Create** button to create the project. You will be redirected to the project's overview page.  
-   ![](images/solution23/NewProject.png)
+   ![Screenshot showing a project overview](images/solution23/NewProject.png)
 5. On the overview page, click **Settings**.
 6. From the **Associated services** section, click **Add Service** and select **Analytics Engine** from the menu. In the resulting screen, you can choose an existing service instance or create a new one. Create a new one and make sure that the **Software package** includes **Spark**.
 
@@ -73,7 +73,7 @@ The [Jupyter Notebook](http://jupyter.org/) is an open-source web application th
    import pixiedust
    ```
    {:codeblock}
-   ![](images/solution23/FirstCell_ImportPixiedust.png)
+   ![Screenshot showing a Notebook cell](images/solution23/FirstCell_ImportPixiedust.png)
 
 If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the upper right menu. Navigate to **Analyze data**, then the [**Notebooks** section](https://dataplatform.ibm.com/docs/content/analyze-data/notebooks-parent.html?context=analytics) to learn more about [notebooks and their parts](https://dataplatform.ibm.com/docs/content/analyze-data/parts-of-a-notebook.html?context=analytics&linkInPage=true).
 {:tip}
@@ -159,7 +159,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ```
    {:codeblock}
 2. A scrollable table is shown. Click on the chart icon directly under the code block and select **Line Chart**. A popup dialog with the **Pixiedust: Line Chart Options** will appear. Enter a **Chart Title** like "Comparison of Life Expectancy". From the offered **Fields**, drag **Year** into the **Keys** box, **Life** into the **Values** area. Enter **1000** for **# of Rows to Display** and leave **Aggregation** as **SUM**. Press **OK** to have the line chart plotted. On the right side, make sure that **mapplotlib** is selected as **Renderer**. Click on the **Cluster By** selector and choose **Country**. A chart similar to the following will be shown.
-   ![](images/solution23/LifeExpectancy.png)
+   ![Screenshot showing a graph with life expectancy data](images/solution23/LifeExpectancy.png)
 
 3. Create a chart focusing on the year 2010. Copy the code into the next empty cell and run it.
    ```Python
@@ -169,7 +169,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ```
    {:codeblock}
 4. In the chart selector choose **Map**. In the configuration dialog drag **Country** into the **Keys** area. Move **Life** into the **Values** box. Similar to the first chart, increase the **# of Rows to Display** to **1000**. Press **OK** plot the map. Choose **brunel** as **Renderer**. A world map colored relative to the life expectancy is shown. You can use the mouse to zoom into the map.
-   ![](images/solution23/LifeExpectancyMap2010.png)
+   ![Screenshot showing a worldmap](images/solution23/LifeExpectancyMap2010.png)
 
 ## Remove resources
 {:removeresources}
