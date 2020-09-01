@@ -47,7 +47,7 @@ This tutorial walks you through the process of defining intents and entities and
 - Configure and run the Android app.
 
 
-![](images/solution28-watson-chatbot-android/architecture.png)
+![Architecture diagram](images/solution28-watson-chatbot-android/architecture.png)
 
 1. User launches the mobile application on an Android device.
 2. User sends a text message to {{site.data.keyword.conversationfull}}.
@@ -136,7 +136,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
    Remember to add at least 5 user examples to train your bot better.
    {:tip}
 
-6. Click the **Close panel** ![](images/solution28-watson-chatbot-android/close_icon.png) button next to the intent name to save the intent.
+6. Click the **Close panel** button next to the intent name to save the intent.
 7. Click on **Content Catalog** and select **General**. Click **Add to skill**.
 
    Content catalog helps you in getting started faster by adding existing intents (banking, customer care, insurance, telco, e-commerce and many more). These intents are trained on common questions that users may ask.
@@ -158,12 +158,12 @@ The following are examples of entity names
 1. Click **Entities** on the left pane to see the existing entities.
 2. Click **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
-4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`, `centre`, `branch` etc., and click **Add Value**.
+4. Add `place` as a synonym and click the **+** icon. Repeat with synonyms `office`, `centre`, `branch` etc., and click **Add Value**.
 
    You can use the **Recommend synonyms** button for synonym recommendations. Either select all or individual suggestions as synonyms by clicking **Add selected**.
    {: tip}
 
-5. Click **close panel** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
+5. Click **close panel** to save the changes.
 
 ### Build the dialog flow
 {:#build_dialog}
@@ -174,9 +174,9 @@ A dialog is a branching conversation flow that defines how your application resp
 2. Click **Add node** to add a new node to the dialog.
 3. Under **if assistant recognizes**, enter `#cancel_policy`.
 4. Under **Assistant responds**, select **Text** and enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
-5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
+5. Close the node editor, it saves the node.
 6. Scroll to find the `#greeting` node. Click on the node to see the details.
-7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
+7. Click the **+** icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
 
    A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable. The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a subsequent node. The dialog does so by using context variables.
    {:tip}
@@ -250,8 +250,8 @@ The repository contains Android application code with required gradle dependenci
 
 4. Build and Run the project by clicking **Run** from the Android studio menu > click **Run app** and start the application on a real Android device or with a simulator.
 
-   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
-   ![](images/solution28-watson-chatbot-android/android_chatbot.png)
+   ![Phone showing chat](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
+   ![Phone showing another chat](images/solution28-watson-chatbot-android/android_chatbot.png)
 
    For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
    {:tip}

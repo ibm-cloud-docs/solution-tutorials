@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-01-31"
+lastupdated: "2020-09-01"
 lasttested: "2019-06-20"
 
 content-type: tutorial
@@ -43,7 +43,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Download the code and complete required setup.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
 
-![](images/solution9/Architecture.png)
+![Architecture diagram](images/solution9/Architecture.png)
 1. The user creates a project on the App Development page.
 2. Adds and configures the push notifications SDK to interact with FCM.
 3. Sends a push notification.
@@ -86,13 +86,12 @@ The API key is stored securely and used by the {{site.data.keyword.mobilepushsho
 4. On the left navigation pane, select **Settings** (Click on Settings Icon next to **Overview**)> **Project settings**.
 5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID.
     **Note:**  Server key listed in FCM is the same as Server API Key.
-    ![](images/solution9/fcm_console.png)
+    ![The Cloud Messaging tab is selected](images/solution9/fcm_console.png)
 
 You would also need to generate the `google-services.json` file. Complete the following steps:
 
-1. In the Firebase console, click the **Project Settings** icon > **General** tab  under the project you created above and select **Add Firebase to your Android App**
+1. In the Firebase console, click the **Project Settings** icon > **General** tab under the project you created above and select **Add Firebase to your Android App**
 
-    ![](images/solution9/firebase_project_settings.png)
 2. In **Add Firebase to your Android** app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register {{site.data.keyword.mobilepushshort}} android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > **Continue** > **Finish**.
 
 3. Click **ADD APP** > **Add Firebase to your app**.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
@@ -131,20 +130,20 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
    - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
 
-     ![](images/solution9/configure_push_notifications.png)
+     ![Update credentials for Push notifications](images/solution9/configure_push_notifications.png)
    - Click **Save**. The {{site.data.keyword.mobilepushshort}} service is now configured.
    - Select **Send Notifications**, and compose a message by choosing a send option. The supported options are device by tag, device id, user id, android devices, IOS devices, web notifications, and all devices.
      **Note:** When you select the **All Devices** option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.
    - In the **Message** field, compose your message. Choose to configure the optional settings as required.
    - Click **Send** and verify that your physical device has received the notification.
 
-     ![](images/solution9/android_send_notifications.png)
+     ![Verify that messages can be sent](images/solution9/android_send_notifications.png)
 5. You should see a notification on your Android device.
 
-      ![](images/solution9/android_notifications1.png)   ![](images/solution9/android_notifications2.png)
+      ![Push notification is received on the phone](images/solution9/android_notifications1.png)   ![The phone is showing a new notification](images/solution9/android_notifications2.png)
 6. You can monitor your sent notifications by navigating to **Monitoring** on the {{site.data.keyword.mobilepushshort}} Service.
      The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent {{site.data.keyword.mobilepushshort}}, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
-      ![](images/solution6/monitoring_messages.png)
+      ![Dashboard showing performance statistics](images/solution6/monitoring_messages.png)
 
 ## Related Content
 {: #related_content}
