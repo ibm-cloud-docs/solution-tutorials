@@ -524,7 +524,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
     --cpu-percent=5
    ```
    {:pre}
-3. You can see new pods being provisionsed by running `oc get pods --watch` command.
+3. You can see new pods being provisioned by running `oc get pods --watch` command.
 4. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for all the pods.
 
 ### Manual scaling
@@ -534,7 +534,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
     oc scale dc/$MYPROJECT --replicas=2
    ```
    {:pre}
-2. You can see a new pod being provisionsed by running `oc get pods` command.
+2. You can see a new pod being provisioned by running `oc get pods` command.
 3. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for both the pods.
 
 ## Remove resources
