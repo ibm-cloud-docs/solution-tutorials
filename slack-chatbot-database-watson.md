@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration.
+{: shortdesc}
 
 The Slack integration channels messages between Slack and {{site.data.keyword.conversationshort}}. There, some server-side dialog actions perform SQL queries against a Db2 database. All (but not much) code is written in Node.js.
 

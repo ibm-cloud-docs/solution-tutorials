@@ -33,7 +33,6 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver.  This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro-service architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared micro-services is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared micro-service.
-
 {:shortdesc}
 
 ## Objectives

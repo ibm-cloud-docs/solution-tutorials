@@ -37,9 +37,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
+{:shortdesc}
 
 To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
-{:shortdesc}
 
 ## Objectives
 {: #objectives}

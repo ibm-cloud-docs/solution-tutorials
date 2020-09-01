@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting. This combination of software - more commonly called a LAMP stack - is very popular and often used to deliver websites and web applications. Using {{site.data.keyword.BluVirtServers}} you will quickly deploy your LAMP stack with built-in monitoring and vulnerability scanning. To see the LAMP server in action, you will install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
+{: shortdesc}
 
 ## Objectives
 

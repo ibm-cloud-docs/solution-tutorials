@@ -37,11 +37,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
+{:shortdesc}
 
 A subnet is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Security Groups that act as firewalls to control inbound and outbound traffic for one or more virtual server instances.
 
 A good practice is to have a subnet used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within a different subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define Security Groups to allow or deny traffic to the VSIs.
-{:shortdesc}
 
 In short, using VPC you can:
 - create a software-defined network (SDN),

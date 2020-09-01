@@ -36,13 +36,13 @@ IBM offers a number of ways to securely extend an on-premises computer network w
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instances (VSIs).
 The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
+{:shortdesc}
 
 To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cloud_notm}} services, representing a line of business application.
 The services have direct or private endpoints that can be used for secure no cost ingress/egress when all access is within the same region of the {{site.data.keyword.cloud_notm}}. An on-premises computer will access the microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
-{:shortdesc}
 In short, using a VPC you can
 
 - connect your on-premises systems to services and workloads running in {{site.data.keyword.cloud_notm}},

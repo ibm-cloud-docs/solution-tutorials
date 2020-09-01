@@ -213,7 +213,6 @@ For more information, see [backup and restore](https://{DomainName}/docs/contain
 ### Apply the 12-factor principles
 
 The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply some of these principles. Some of these principles are required in {{site.data.keyword.Bluemix_notm}}.
-{: shortdesc}
 
 Here are some of the key principles required:
 

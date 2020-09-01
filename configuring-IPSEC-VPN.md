@@ -35,6 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks. 
+{:shortdesc}
 
 {{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection. 
 

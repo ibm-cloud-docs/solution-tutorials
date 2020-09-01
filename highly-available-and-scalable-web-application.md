@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
+{: shortdesc}
 
 This tutorial walks you through a scenario with the creation of:
 

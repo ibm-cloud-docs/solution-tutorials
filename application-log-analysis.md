@@ -32,9 +32,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
+{:shortdesc}
 
 Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
-{:shortdesc}
 
 ## Objectives
 {: #objectives}

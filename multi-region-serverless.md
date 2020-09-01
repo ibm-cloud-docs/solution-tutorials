@@ -35,6 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial shows how to configure {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
+{: shortdesc}
 
 Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 

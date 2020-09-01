@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.streaminganalyticsshort}} and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
+{:shortdesc}
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.streaminganalyticsshort}} and {{site.data.keyword.sqlquery_short}}, or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
 

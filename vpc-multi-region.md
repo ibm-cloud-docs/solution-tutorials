@@ -37,10 +37,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in different regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+{:shortdesc}
 
 For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
-
-{:shortdesc}
 
 ## Objectives
 {: #objectives}

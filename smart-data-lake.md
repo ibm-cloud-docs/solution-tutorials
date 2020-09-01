@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
+{: shortdesc}
 
 ## Objectives
 

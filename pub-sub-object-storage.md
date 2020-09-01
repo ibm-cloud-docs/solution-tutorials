@@ -34,7 +34,6 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
-
 {:shortdesc}
 
 You will simulate this pattern using a file processing example. First you will create a UI application which will be used to upload files to {{site.data.keyword.objectstorageshort}} and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.

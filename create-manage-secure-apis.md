@@ -35,7 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to create REST APIs using the LoopBack Node.js API Framework. With Loopback you can quickly create REST APIs that connect devices and browsers to data and services. You'll also add management, visibility, security and rate limiting to your APIs using {{site.data.keyword.apiconnect_long}}.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 

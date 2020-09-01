@@ -32,6 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Learn how easy it is to quickly create a native Android application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
+{: shortdesc}
 
 This tutorial walks you through the creation of a mobile starter application, adding a mobile service, setting up client SDK, importing the code to Android Studio and then further enhancing the application.
 
