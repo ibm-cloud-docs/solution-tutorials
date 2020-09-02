@@ -6,7 +6,7 @@ lastupdated: "2020-09-02"
 lasttested: "2020-09-02"
 
 content-type: tutorial
-services: cloud-object-storage, data-science-experience, pm-20, aiopenscale
+services: cloud-object-storage, ai-openscale
 account-plan: paid
 completion-time: 2h
 ---
@@ -26,7 +26,7 @@ completion-time: 2h
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-object-storage, data-science-experience, pm-20, aiopenscale"}
+{: toc-services="cloud-object-storage, ai-openscale"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
