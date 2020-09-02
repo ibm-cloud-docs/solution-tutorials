@@ -29,6 +29,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
+
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data. {{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
 {: shortdesc}
 

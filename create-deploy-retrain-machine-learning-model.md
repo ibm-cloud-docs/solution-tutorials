@@ -33,6 +33,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
+
 This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a Python function to wrap the deployed model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed function (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {: shortdesc}
 
