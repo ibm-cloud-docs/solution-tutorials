@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-02-02"
-lasttested: "2020-02-02"
+lastupdated: "2020-09-02"
+lasttested: "2020-09-02"
 
 content-type: tutorial
 services: cloud-object-storage, Db2whc
