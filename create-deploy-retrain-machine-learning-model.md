@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-05-27"
-lasttested: "2020-05-07"
+lastupdated: "2020-02-02"
+lasttested: "2020-02-02"
 
 content-type: tutorial
 services: cloud-object-storage, Db2whc
@@ -78,14 +78,14 @@ You can create a project to add data and open a data asset in the data refiner f
   3. Provide a **Service name**
   4. Select a **resource group** and click **Create**
 2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-3. Create a **project** by clicking **Create an empty project**.
+3. Create a **project** by clicking **Create a project** under Start working and then in the subsequent page click **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Under **Define Storage**, Click on **Add** and choose an **existing** Cloud Object Storage service or create a **new** service. If you choose to create a **New** service
    1. Select a **Lite** plan
    2. Click on **Create**
    3. Select a Resource group and change the service name to **cloud-object-storage-tutorial**
    4. Click on **Confirm**
-   5. Hit **Refresh** to see the created service.
+   5. Hit **Refresh** to see the created service
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -117,10 +117,10 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: step}
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
-   1. Select **From blank**.
+   1. On the left pane, click **+New**.
    2. Set the name to **iris_model**.
    3. Under **Associated services**, select the **Machine learning service instance**(`pm-20-tutorial`) created above.
-4. Click **Create**.
+2. Click **Create**.
 
 Once the model is created,
 1. Add training data by clicking **Select from project**.
@@ -148,7 +148,7 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 
 4. Next to the model with *Rank 1* when sorted by Accuracy, click on **Save as** > **Model**.
 5. Check the details of the model and click **Save**.
-6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
+6. From the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
 The accuracy of the model will be improved in the later part of the tutorial.
 
@@ -158,11 +158,15 @@ The accuracy of the model will be improved in the later part of the tutorial.
 
 In this section, you will deploy the saved model and test the deployed model,
 
-1. Under the created model, click on **Deployments** and then click **Add Deployment**.
-   1. Set the **Name** to **iris_deployment**.
-   2. Select **Web Service** as your deployment type.
-2. Click **Save**.
-3. Once the status changes to **Ready** (You may have to refresh the page), Click on the **Name** of the new web service.
+1. Under the created model, click on **Promote to deployment space** and then click **New space +**.
+   1. Set the **Name** to **iris_deployment_space**.
+   2. Select `cloud-object-storage-tutorial` service and `pm-20-tutorial` service from the respective dropdowns
+   3. Click **Create**.
+2. Click **Promote**.
+3. From the received notification, navigate to the deployment space.
+4. Under the deployment space, next to the name of the model you just created, click the **Deploy** icon.
+5. Select **Online** as the Deployment type, provide **iris_deployment** as the name and then click on **Create**
+6. Once the status changes to **Deployed**, Click on the **Name** of the new web service.
 
 ### Test the deployed model
 
@@ -186,8 +190,8 @@ In this section, you will deploy the saved model and test the deployed model,
 
 Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
 
-1. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
-2. **Copy** the *Scoring End-point* in a notepad for future reference.
+1. Under **API reference** tab of the deployment, you can see the *Endpoint*, code snippets in various programming languages, and API Specification.
+2. **Copy** the *Endpoint* in a notepad for future reference.
 3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
