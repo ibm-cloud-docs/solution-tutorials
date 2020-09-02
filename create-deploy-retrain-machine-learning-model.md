@@ -6,7 +6,7 @@ lastupdated: "2020-09-02"
 lasttested: "2020-09-02"
 
 content-type: tutorial
-services: cloud-object-storage, Db2whc
+services: cloud-object-storage, data-science-experience, pm-20, aiopenscale
 account-plan: paid
 completion-time: 2h
 ---
