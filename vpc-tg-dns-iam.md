@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
-lastupdated: "2020-07-08"
-lasttested: "2020-07-08"
+lastupdated: "2020-09-01"
+lasttested: "2020-09-01"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
