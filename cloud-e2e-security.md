@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-06-18"
+lastupdated: "2020-09-03"
 lasttested: "2019-12-05"
 
 content-type: tutorial
@@ -433,7 +433,7 @@ Security is never done. Try the below suggestions to enhance the security of you
   
 ## Share resources
 
-If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/iam?topic=iam-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/iam?topic=iam-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
+If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/account?topic=account-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/account?topic=account-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/account?topic=account-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
 
 You can find information on the individual services and their available IAM access roles here:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-access_reference#service). Note that this service also provides examples for [mapping service roles to typical project roles](https://{DomainName}/docs/containers?topic=containers-users#platform). 
@@ -445,7 +445,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-manage-access#service-access-roles)
 * [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-managing-service-access-roles)
 
-To get started, check out the [best practices for access management and how to define access groups](https://{DomainName}/docs/iam?topic=iam-account_setup#rg_strategy).
+To get started, check out the [best practices for access management and how to define access groups](https://{DomainName}/docs/account?topic=account-account_setup#rg_strategy).
 
 ## Remove resources
 {:removeresources}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-01-10"
+lastupdated: "2020-09-03"
 lasttested: "2019-06-18"
 
 content-type: tutorial
@@ -545,7 +545,7 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam?topic=iam-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
 For the *Developer* role in the *Development* environment, this translates to:
 
