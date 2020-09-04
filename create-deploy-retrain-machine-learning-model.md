@@ -108,7 +108,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. In the top navigation menu, click on `iris-project`, click on **Settings** in the top bar and scroll to **Associated Services** section.
 2. Click **Add Service** and choose **{{site.data.keyword.watson}}**.
 3. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
-4. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
+4. If you have an existing `paid` **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **v2 Standard** plan and click **Create**.
    2. Leave the default values for Region,Plan and Resource group.
    3. Enter `pm-20-tutorial` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
