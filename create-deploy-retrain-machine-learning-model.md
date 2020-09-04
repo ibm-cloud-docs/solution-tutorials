@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-09-02"
+lastupdated: "2020-09-04"
 lasttested: "2020-09-02"
 
 content-type: tutorial
@@ -109,7 +109,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 2. Click **Add Service** and choose **{{site.data.keyword.watson}}**.
 3. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
 4. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
-   1. Choose the **Lite** plan and click **Create**.
+   1. Choose the **v2 Standard** plan and click **Create**.
    2. Leave the default values for Region,Plan and Resource group.
    3. Enter `pm-20-tutorial` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
