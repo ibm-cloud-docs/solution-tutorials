@@ -67,7 +67,7 @@ The following architecture implements the isolation and connectivity requirement
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
-Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions.  VPC, for example, defines them [here](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls).
+Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions.  For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
