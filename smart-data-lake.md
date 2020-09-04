@@ -80,7 +80,16 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud target --cf
     ```
     {: pre}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
+2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
+    ```sh
+    ibmcloud resource groups
+    ```
+    {: pre}
+    ```sh
+    ibmcloud target -g <your-default-resource-group>
+    ```
+    {: pre}
+3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -89,17 +98,17 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
     ```
     {: pre}
-3. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
+4. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
-4. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
+5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
     ibmcloud cf create-service data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
-5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
+6. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
     ```sh
     ibmcloud resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
     ```
@@ -108,7 +117,7 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
     ```
     {: pre}
-6. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
+7. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
     ```sh
     git clone https://github.com/IBM-Cloud/nodejs-data-lake-dashboard.git
     ```
@@ -126,10 +135,10 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    After deployment, the application will be public and listening on a random hostname. You can got to the [Resource List](https://{DomainName}/resources) page, select the app under Cloud Foundry Apps and view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
+    After deployment, the application will be public and listening on a random hostname. You can go to the [Resource List](https://{DomainName}/resources) page, select the app under Cloud Foundry Apps and view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
     {: tip}
 
-7. Confirm the application is active by accessing its public URL in the browser.
+8. Confirm the application is active by accessing its public URL in the browser.
 
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
@@ -192,7 +201,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
-    - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
+    - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.cloud.ibm.com/home2?context=cpdaas&apps=data_science_experience&nocache=true).
     - Click **Create a Project** tile followed by **Create an empty project**.
     - Provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
