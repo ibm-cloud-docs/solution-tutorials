@@ -175,7 +175,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. To complete the configuration, you will update the applications with routes using the custom domain.
 
 ## Configure custom domain and routes to your application
-{: #multi-region-webapp-6}
+{: #multi-region-webapp-9}
 {: step}
 
 {: #add_domain}
@@ -237,7 +237,7 @@ For the application deployed in London, use a separate manifest to configure the
 Finally commit the changes to the manifest files and make sure the builds for both locations succeed.
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
-{: #multi-region-webapp-7}
+{: #multi-region-webapp-10}
 {: step}
 
 It is possible that you do not want to utilize a Global Load Balancer in front of your multi-location applications, but need to map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
@@ -292,7 +292,7 @@ Lets check the health of your multi-location application.
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
 
 ## Remove resources
-{: #multi-region-webapp-10}
+{: #multi-region-webapp-13}
 {: step}
 
 * Delete the toolchain

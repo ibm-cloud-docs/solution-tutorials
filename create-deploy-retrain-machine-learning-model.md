@@ -366,7 +366,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    {:tip}
 
 ## Remove resources
-{: #create-deploy-retrain-machine-learning-model-7}
+{: #create-deploy-retrain-machine-learning-model-0}
 {:removeresources}
 {: step}
 

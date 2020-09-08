@@ -451,7 +451,7 @@ Once the autoscaler is successfully created, you should see
 Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
 ## Remove resources
-{: #scalable-webapp-kubernetes-11}
+{: #scalable-webapp-kubernetes-0}
 {: step}
 
 * Delete the Kubernetes artifacts created for this application:
@@ -464,7 +464,7 @@ Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-ap
 <!--#/istutorial#-->
 
 ## Related content
-{: #scalable-webapp-kubernetes-12}
+{: #scalable-webapp-kubernetes-20}
 
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
 <!-- * [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile) -->

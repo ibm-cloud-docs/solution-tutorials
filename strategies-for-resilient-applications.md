@@ -121,7 +121,7 @@ With multi-zone region architecture you would require to have a local load balan
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-zones).
 
 ## Compute Options
-{: #strategies-for-resilient-applications-1}
+{: #strategies-for-resilient-applications-0}
 
 This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
@@ -314,7 +314,7 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 Many of the services provide stateless APIs and offer high-availability through multi-zone deployments. But still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. Then it is important to understand how configuration and user-specific data can be made available across regions. In some cases this might be by utilizing built-in replication capabilities, in others it could mean to manually keeping data in sync by exporting and importing data sets.
 
 ## Summary
-{: #strategies-for-resilient-applications-4}
+{: #strategies-for-resilient-applications-24}
 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
@@ -330,7 +330,7 @@ Many of the services provide stateless APIs and offer high-availability through 
 | {{site.data.keyword.conversationshort}} | <ul><li>Use Watson API to export and import workspace specification between multiple instances across locations</li></ul> |
 
 ## Related content
-{: #strategies-for-resilient-applications-5}
+{: #strategies-for-resilient-applications-25}
 
 {:related}
 

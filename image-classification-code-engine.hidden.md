@@ -226,7 +226,7 @@ Most of these values have a default set if nothing is provided as an option when
 1. Refresh the frontend URL on the browser to test the connection to the backend service. Now, the backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
-{: #image-classification-code-engine.hidden-4}
+{: #image-classification-code-engine.hidden-0}
 {:connect_cloud_services}
 {: step}
 

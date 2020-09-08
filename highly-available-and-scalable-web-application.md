@@ -348,7 +348,7 @@ In this section, you will create two web application servers.
 1. Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
-{: #highly-available-and-scalable-web-application-6}
+{: #highly-available-and-scalable-web-application-0}
 {: shared_storage}
 {: step}
 

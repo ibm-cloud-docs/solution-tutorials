@@ -163,7 +163,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 4. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png` or, if you are using a custom domain, `https://your-cdn-hostname/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
-{: #static-files-cdn-6}
+{: #static-files-cdn-0}
 {: step}
 
 The application contains a public/index.html web page that includes references to the files now hosted in the {{site.data.keyword.cos_full_notm}}. The backend `app.js` serves this web page and replaces a placeholder with the actual location of your CDN. This way, all assets that are used by the web page are served by the CDN.
@@ -195,7 +195,7 @@ The application contains a public/index.html web page that includes references t
 Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
 ## Remove resources
-{: #static-files-cdn-7}
+{: #static-files-cdn-9}
 {: step}
 
 * Delete the Cloud Foundry application
