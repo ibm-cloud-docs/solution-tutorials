@@ -38,7 +38,7 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 {{site.data.keyword.DSX_full}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
 
 ## Objectives
-{: #objectives}
+{: #gather-visualize-analyze-iot-data-objectives}
 
 * Set up IoT Simulator to collect mobile device sensor data.
 * Send collected data to {{site.data.keyword.iot_short_notm}}.
@@ -58,7 +58,7 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 5. User can now see the visualizations and check the anomalies in the sensor data.
 
 ## Before you begin
-{: #prereqs}
+{: #gather-visualize-analyze-iot-data-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -69,7 +69,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Create IoT Platform
-{: #iot_starter}
+{: #gather-visualize-analyze-iot-data-iot_starter}
 {: step}
 
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
@@ -90,7 +90,7 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
 ## Create device simulator
-{: #create_device_simulator}
+{: #gather-visualize-analyze-iot-data-create_device_simulator}
 {: step}
 Next, you will deploy a Node.js web application and visit it on your phone, which will connect to and send device accelerometer and orientation data to the IoT Platform.
 
@@ -127,7 +127,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
-{: #creat_ecards}
+{: #gather-visualize-analyze-iot-data-creat_ecards}
 {: step}
 Next, you will create a board and cards to display device data in the dashboard.
 
@@ -159,7 +159,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
-{: #historical_data_cloudant}
+{: #gather-visualize-analyze-iot-data-historical_data_cloudant}
 {: step}
 
 In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
@@ -259,7 +259,7 @@ Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}.
 ![](images/solution16/cloudant.png)
 
 ## Detect Anomalies using Machine Learning
-{: #detect_anomalies}
+{: #gather-visualize-analyze-iot-data-detect_anomalies}
 {: step}
 
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
@@ -343,13 +343,14 @@ In {{site.data.keyword.DSX}},:
     ![](images/solution16/density_plots_sensor_data.png)
 
 ## Remove resources
-{:#removeresources}
+{: #gather-visualize-analyze-iot-data-removeresources}
 {: step}
 
 1. Navigate to [Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective {{site.data.keyword.iot_full}}, {{site.data.keyword.iae_full_notm}}, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content
+{: #gather-visualize-analyze-iot-data-8}
 {:related}
 
 * Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)

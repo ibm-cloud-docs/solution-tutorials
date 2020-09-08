@@ -39,6 +39,7 @@ As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [v
 Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk_short}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
 ## Objectives
+{: #serverless-api-webapp-0}
 
 * Deploy a serverless backend and a database
 * Expose a REST API
@@ -62,11 +63,12 @@ The application shown in this tutorial is a simple guestbook website where users
 5. The {{site.data.keyword.openwhisk_short}} actions use [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
 
 ## Before you begin
-{: #prereqs}
+{: #serverless-api-webapp-prereqs}
 
 This guide uses GitHub Pages to host the static website. Make sure you have a public GitHub account.
 
 ## Create the Guestbook database
+{: #serverless-api-webapp-2}
 {: step}
 
 Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
@@ -88,6 +90,7 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    4. Expand the newly created credentials and review them. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
+{: #serverless-api-webapp-3}
 {: step}
 
 In this section, you will create serverless actions (commonly termed as **Functions**). {{site.data.keyword.openwhisk}} (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events. Serverless functions only incur charges for the execution time.
@@ -209,6 +212,7 @@ Complete the sequence:
 1. Click on **Save** and then **Invoke**.
 
 ## Create an API
+{: #serverless-api-webapp-4}
 {: step}
 1. Go to [Actions](https://{DomainName}/functions/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
@@ -226,6 +230,7 @@ Complete the sequence:
 8. Scroll to the end of the page to **Create** the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
+{: #serverless-api-webapp-5}
 {: step}
 
 1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub. You can do this by going to https://github.com/IBM-Cloud/serverless-guestbook in the browser, and then clicking the **Fork** button.
@@ -240,6 +245,7 @@ Complete the sequence:
 
 <!--##istutorial#-->
 ## Optional: Use your own domain for the API
+{: #serverless-api-webapp-6}
 {: step}
 
 Creating a managed API gives you a default endpoint like `https://1234abcd.us-south.apigw.appdomain.cloud/guestbook`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
@@ -293,7 +299,7 @@ Once the DNS changes have been propagated, you will be able to access your guest
 <!--#/istutorial#-->
 
 ## Remove resources
-{:#cleanup}
+{: #serverless-api-webapp-cleanup}
 {: step}
 
 To delete the created {{site.data.keyword.cloudant_short_notm}} service,
@@ -310,6 +316,7 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 5. Under the `guestbook` package, delete all the actions by clicking on the **delete** icon in the respective action rows.
 
 ## Related content
+{: #serverless-api-webapp-8}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
 * [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)

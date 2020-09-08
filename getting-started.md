@@ -35,7 +35,7 @@ This guide will help you set up your development environment to successfully fol
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #getting-started-objectives}
 
 Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
 
@@ -49,7 +49,7 @@ Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
 * **Git** - a free and open source distributed version control system.
 
 ## Microsoft Windows
-{: #windows}
+{: #getting-started-windows}
 
 The following sections assume you are running Microsoft Windows 10 64-bit under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
@@ -173,7 +173,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 Proceed to the configuration [common to all operating systems](#common).
 
 ## Apple macOS
-{: #macos}
+{: #getting-started-macos}
 
 The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
@@ -331,7 +331,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 Proceed to the configuration [common to all operating systems](#common).
 
 ## Ubuntu Linux
-{: #ubuntu}
+{: #getting-started-ubuntu}
 
 The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
@@ -483,7 +483,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 Proceed to the configuration [common to all operating systems](#common).
 
 ## Common to all operating systems
-{: #common}
+{: #getting-started-common}
 
 The next sections are common to all operating systems.
 

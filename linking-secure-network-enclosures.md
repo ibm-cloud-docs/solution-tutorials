@@ -40,7 +40,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #linking-secure-network-enclosures-objectives}
 
 - Link secure networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
 - Setup firewall rules for site to site access 
@@ -59,12 +59,12 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 4. Configure firewall rules for remote site access
 
 ## Before you begin
-{: #prereqs}
+{: #linking-secure-network-enclosures-prereqs}
 
 This tutorial is based on the tutorial, [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network). That tutorial and its prerequisites should be reviewed before commencing. 
 
 ## Configure secure private network sites
-{: #private_network}
+{: #linking-secure-network-enclosures-private_network}
 {: step}
 
 The tutorial [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
@@ -89,7 +89,7 @@ The [Isolate workloads with a secure private network]( https://{DomainName}/docs
 
 
 ## Configure VLAN Spanning 
-{: #configure-vlan-spanning}
+{: #linking-secure-network-enclosures-configure-vlan-spanning}
 {: step}
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers. 
@@ -121,7 +121,7 @@ Enable VLAN Spanning:
    {: codeblock}
 
 ## Configure VRA IP Routing 
-{: #vra_routing}
+{: #linking-secure-network-enclosures-vra_routing}
 {: step}
 
 Create the VRA routing in each data center to enable the VSIs in the APP zones in both data centers to communicate. 
@@ -151,7 +151,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
 The new route to allow the APP zone to communicate via the IBM private network will be now seen. 
 
 ## VRA firewall configuration
-{: #vra_firewall}
+{: #linking-secure-network-enclosures-vra_firewall}
 {: step}
 
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center. 
@@ -179,7 +179,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
 
 ## Remove resources
-{: #removeresources}
+{: #linking-secure-network-enclosures-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial. 
@@ -193,12 +193,14 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 
 ## Extend the tutorial
+{: #linking-secure-network-enclosures-7}
 
 This tutorial can be used in conjunction with the 
 [VPN into a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#vpn-into-a-secure-private-network) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
 
 
 ## Related material
+{: #linking-secure-network-enclosures-8}
 {:related}
 
 1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://{DomainName}/docs/infrastructure/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud#customer-vrf-overview). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://{DomainName}/docs/infrastructure/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud#customer-vrf-overview)

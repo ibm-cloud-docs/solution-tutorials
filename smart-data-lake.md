@@ -34,6 +34,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 {: shortdesc}
 
 ## Objectives
+{: #smart-data-lake-0}
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
@@ -50,6 +51,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 6. Charts are built using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Before you begin
+{: #smart-data-lake-1}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -64,6 +66,7 @@ In addition, make sure you:
 - and [install Node.js and NPM](https://nodejs.org).
 
 ## Create services
+{: #smart-data-lake-2}
 {: step}
 
 In this section, you will create the services required to build your data lake.
@@ -143,6 +146,7 @@ This section uses the command line to create service instances. Alternatively, y
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
+{: #smart-data-lake-3}
 {: step}
 
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
@@ -163,6 +167,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Click **Select files** > Browse and select the previously downloaded CSV file.
 
 ## Working with data
+{: #smart-data-lake-4}
 {: step}
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
@@ -196,6 +201,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
+{: #smart-data-lake-5}
 {: step}
 
 In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
@@ -275,6 +281,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     {: codeblock}
 
 ## Visualize data using PixieDust
+{: #smart-data-lake-6}
 {: step}
 
 In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
@@ -331,6 +338,7 @@ In this section, you will visualize the previous result set using PixieDust and 
 ![Notebook](images/solution29/notebook-mapbox.png)
 
 ## Share your dataset with the organization
+{: #smart-data-lake-7}
 {: step}
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to SQL Query, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
@@ -350,6 +358,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 ![Dashboard Chart](images/solution29/dashboard-chart.png)
 
 ## Explore your dashboard
+{: #smart-data-lake-8}
 {: step}
 
 In this section, you'll take a few additional steps to explore the features of the dashboard application and {{site.data.keyword.dynamdashbemb_notm}}.
@@ -366,6 +375,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 {: tip}
 
 ## Expand the tutorial
+{: #smart-data-lake-9}
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
@@ -375,6 +385,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources
+{: #smart-data-lake-10}
 {: step}
 
 Run the following commands to remove services, applications and keys you created and used.
@@ -421,6 +432,7 @@ ibmcloud cf delete dashboard-nodejs
 {: pre}
 
 ## Related content
+{: #smart-data-lake-11}
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)

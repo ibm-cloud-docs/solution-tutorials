@@ -47,7 +47,7 @@ In this tutorial, you will learn about {{site.data.keyword.cloud_notm}} Code Eng
 Code Engine helps developers by hiding many of the complex tasks like configuration, dependency management etc., Code Engine simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
-{: #objectives}
+{: #image-classification-code-engine.hidden-objectives}
 
 * Understand {{site.data.keyword.cloud_notm}} Code Engine and how it simplifies the developer experience.
 * Understand how easy it is to deploy and scale an application using Code Engine.
@@ -66,7 +66,7 @@ Code Engine helps developers by hiding many of the complex tasks like configurat
 5. User runs a Code Engine job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
-{: #prereqs}
+{: #image-classification-code-engine.hidden-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
@@ -78,7 +78,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Create an {{site.data.keyword.IBM_notm}} Code Engine project
-{: #create_coligo_project}
+{: #image-classification-code-engine.hidden-create_coligo_project}
 {: step}
 
 In this section, you will create a Code Engine project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
@@ -113,7 +113,7 @@ Putting components into a single project enables you to manage access control mo
 
 
 ## Deploy the frontend and backend apps as Code Engine applications
-{: #deploy_app}
+{: #image-classification-code-engine.hidden-deploy_app}
 {: step}
 
 Code Engine Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to Code Engine under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
@@ -223,6 +223,7 @@ Most of these values have a default set if nothing is provided as an option when
 1. Refresh the frontend URL on the browser to test the connection to the backend service. Now, the backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
+{: #image-classification-code-engine.hidden-4}
 {:connect_cloud_services}
 {: step}
 
@@ -320,7 +321,7 @@ Now that you have the backend application connected to the frontend application,
    {:tip}-->
 
 ## Test the application
-{: #test_the_app}
+{: #image-classification-code-engine.hidden-test_the_app}
 {: step}
 
 Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
@@ -396,7 +397,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 1. Upload new images, create the job again and hit the **refresh** button to see the results.
 
 ## Remove resources
-{:#cleanup}
+{: #image-classification-code-engine.hidden-cleanup}
 {: step}
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
@@ -410,6 +411,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
  * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
 
 ## Related resources
-{: #related_resources}
+{: #image-classification-code-engine.hidden-related_resources}
 
 - [{{site.data.keyword.cloud_notm}} Code Engine Documentation](/docs/codeengine)

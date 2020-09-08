@@ -42,7 +42,7 @@ This tutorial walks you through a scenario with the creation of:
 - Configure the second location with the same configurations as the first location, then add {{site.data.keyword.cis_full_notm}} to point traffic to the healthy location if one copy fails.
 
 ## Objectives
-{: #objectives}
+{: #highly-available-and-scalable-web-application-objectives}
 
 * Create {{site.data.keyword.virtualmachinesshort}} to install PHP and MySQL
 * Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
@@ -64,7 +64,7 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 5. At a regular interval, the database content is backed up. A stand-by database server is available in case the master fails.
 
 ## Before you begin
-{: #prereqs}
+{: #highly-available-and-scalable-web-application-prereqs}
 
 ### Configure the VPN access
 
@@ -86,7 +86,7 @@ Contact your Infrastructure master user to get the following permissions:
 - **Network** so that you can create {{site.data.keyword.virtualmachinesshort}} with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
 
 ## Provision one server for the database
-{: #database_server}
+{: #highly-available-and-scalable-web-application-database_server}
 {: step}
 
 In this section, you configure one server to act as the master database.
@@ -111,7 +111,7 @@ In this section, you configure one server to act as the master database.
    {: tip}
 
 ## Install and configure MySQL
-{: #mysql}
+{: #highly-available-and-scalable-web-application-mysql}
 {: step}
 
 The server does not come with a database. In this section, you install MySQL on the server.
@@ -208,7 +208,7 @@ By default MySQL only listens on the local interface. The application servers wi
    {:pre}
 
 ## Create a file storage for database backups
-{: #database_backup}
+{: #highly-available-and-scalable-web-application-database_backup}
 {: step}
 
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
@@ -320,7 +320,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {:codeblock}
 
 ## Provision two servers for the PHP application
-{: #app_servers}
+{: #highly-available-and-scalable-web-application-app_servers}
 {: step}
 
 In this section, you will create two web application servers.
@@ -340,6 +340,7 @@ In this section, you will create two web application servers.
 1. Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
+{: #highly-available-and-scalable-web-application-6}
 {: shared_storage}
 {: step}
 
@@ -419,7 +420,7 @@ Eventually all steps related to the configuration of the servers could be automa
 {: tip}
 
 ## Install and configure the PHP application on the application servers
-{: #php_application}
+{: #highly-available-and-scalable-web-application-php_application}
 {: step}
 
 This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
@@ -595,7 +596,7 @@ If you configured the application servers with only a private network link, you 
 {: tip}
 
 ## Provision one load balancer server in front of the application servers
-{: #load_balancer}
+{: #highly-available-and-scalable-web-application-load_balancer}
 {: step}
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
@@ -660,7 +661,7 @@ The load balancer is configured to check the health of the servers and to redire
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Extend the solution with a 2nd location (optional)
-{: #secondregion}
+{: #highly-available-and-scalable-web-application-secondregion}
 {: step}
 
 To increase resiliency and availability, you can extend the infrastructure setup with a second location and have your application running in two locations.
@@ -685,7 +686,7 @@ To implement this architecture, you would need to do the following in location t
 - Configure {{site.data.keyword.cis_full_notm}} to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
 
 ## Remove resources
-{: #removeresources}
+{: #highly-available-and-scalable-web-application-removeresources}
 {: step}
 
 1. Delete the Load Balancer
@@ -694,7 +695,7 @@ To implement this architecture, you would need to do the following in location t
 4. If a second location is configured, then delete all the resources and the {{site.data.keyword.cis_full_notm}} instance.
 
 ## Related content
-{: #related}
+{: #highly-available-and-scalable-web-application-related}
 
 - To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.

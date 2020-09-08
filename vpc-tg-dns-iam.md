@@ -36,7 +36,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #vpc-tg-dns-iam-objectives}
 
 * Learn how to isolate infrastructure using IAM and Resource groups
 * Create the VPCs and associated resources such as subnets, network ACLs, security groups, instances.
@@ -57,13 +57,13 @@ The following architecture implements the isolation and connectivity requirement
 ![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png)
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-tg-dns-iam-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of required permissions for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Plan the Identity and Access Management Environment
-{: #iam}
+{: #vpc-tg-dns-iam-iam}
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
@@ -136,7 +136,7 @@ A forth resource group, network, will contain {{site.data.keyword.tg_short}}.
 The admin team will create the resource groups. To isolate each team from each other, a team will only be provided Viewer access to its dedicated resource group.
 
 ## Create a local working environment
-{: #create}
+{: #vpc-tg-dns-iam-create}
 {: step}
 
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
@@ -199,7 +199,7 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
 
 
 ## Create the IAM-enabled resources (Admin Team)
-{: #admin}
+{: #vpc-tg-dns-iam-admin}
 {: step}
 
 The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial.  See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM-enabled resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
@@ -294,7 +294,7 @@ The admin team will need to have Admin access to the IAM-enabled resources in th
 1. Optionally navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click the **Service IDs** panel at the top to see the service ID created.
 
 ## Create VPCs and DNS (Network Team)
-{: #network}
+{: #vpc-tg-dns-iam-network}
 {: step}
 
 The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances.  It is likely that the number of applications, size of computers, DNS records for micro-services etc will be in constant flux and not a concern of the *network* team.
@@ -454,7 +454,7 @@ The Admin team has provided them just the right amount of permissions to create 
 1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
 
 ## Create the shared micro-service and associated DNS record (Shared Team)
-{: #shared}
+{: #vpc-tg-dns-iam-shared}
 {: step}
 
 1. Change directory, generate an API key in the local.env and become a member of the shared access group:
@@ -523,7 +523,7 @@ The Admin team has provided them just the right amount of permissions to create 
 1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**.  Notice the Value is the private IP address of the instance.
 
 ## Create a publicly facing micro-service for an application (Application1 Team)
-{: #application1}
+{: #vpc-tg-dns-iam-application1}
 {: step}
 
 1. Change directory, generate an API key in the local.env and become a member of the application1 access group:
@@ -665,7 +665,7 @@ The Admin team has provided them just the right amount of permissions to create 
    Wait, that second curl command did not work! let's fix that in the next step.  Remember these curl commands, you will use them again shortly
 
 ## Create {{site.data.keyword.tg_short}}
-{: #transit_gateway}
+{: #vpc-tg-dns-iam-transit_gateway}
 {: step}
 
 {{site.data.keyword.tg_full_notm}} is a network service used to interconnect IBM Cloud VPC resources providing dynamic scalability, high availability and peace of mind that data isn’t traversing the public internet.  Earlier the CIDR blocks for each of the VPCs were chosen without overlap to allow {{site.data.keyword.tg_short}} to route packets by IP address.
@@ -776,7 +776,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
 
 ## Insert a {{site.data.keyword.loadbalancer_short}} and replace the DNS record
-{: #shared_lb}
+{: #vpc-tg-dns-iam-shared_lb}
 {: step}
 
 1. Change directory and become a member of the shared access group (use the existing API key):
@@ -836,7 +836,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
 
 ## Create a publicly facing micro-service for an application (Application2 Team)
-{: #application2}
+{: #vpc-tg-dns-iam-application2}
 {: step}
 
 The second *application* team environment is identical to the first.  Optionally create application2 by modifying application1.
@@ -871,7 +871,7 @@ The second *application* team environment is identical to the first.  Optionally
 1. Test the curl commands
 
 ## Remove resources
-{: #remove_resource}
+{: #vpc-tg-dns-iam-remove_resource}
 {: step}
 
 1. Destroy the resources.  You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
@@ -883,6 +883,7 @@ The second *application* team environment is identical to the first.  Optionally
    {:pre}
 
 ## Expand the tutorial
+{: #vpc-tg-dns-iam-12}
 
 ### Other Considerations
 {: #expand_other}
@@ -906,12 +907,12 @@ The second *application* team environment is identical to the first.  Optionally
 - A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production.  Is roll back needed?  How would this be accomplished?
 
 ## Conclusions
-{: #conclusions}
+{: #vpc-tg-dns-iam-conclusions}
 
 The architecture of a system is influenced by the containment and ownership of cloud resources.  It is important for architects from all aspects of the system contribute their concerns to the architecture.  Each team needs the ability to control the resources they produce and release.  Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
 
 ## Related content
-{: #related}
+{: #vpc-tg-dns-iam-related}
 
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)

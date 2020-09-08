@@ -45,7 +45,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 {:tip}
 
 ## Objectives
-{: #objectives}
+{: #vmware-solutions-shared-getting-started-objectives}
 
 * Create and explore a {{site.data.keyword.vmwaresolutions_short}} Shared instance in the {{site.data.keyword.Bluemix_notm}}.
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
@@ -68,7 +68,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 
 <!--##istutorial#-->
 ## Before you begin
-{: #prereqs}
+{: #vmware-solutions-shared-getting-started-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -78,7 +78,7 @@ A GitHub account is optional and only required if you plan on modifying the prov
 <!--#/istutorial#-->
 
 ## Create services
-{: #create_services}
+{: #vmware-solutions-shared-getting-started-create_services}
 {: step}
 
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
@@ -118,7 +118,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
 
 ## Review the Terraform template
-{: #review_terraform_template}
+{: #vmware-solutions-shared-getting-started-review_terraform_template}
 {: step}
 
 [Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a data center infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
@@ -319,7 +319,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
   ```
 
 ## Deploy using Schematics
-{: #deploy_using_schematics}
+{: #vmware-solutions-shared-getting-started-deploy_using_schematics}
 {: step}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
@@ -349,7 +349,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 8. Click on **View log** next to the current running plan to follow the logs. At the completion of the apply plan, confirm there are no errors and capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
-{: #access-virtual-machine}
+{: #vmware-solutions-shared-getting-started-access-virtual-machine}
 {: step}
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
@@ -367,7 +367,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     - Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login.
 
 ## Remove resources
-{: #removeresources}
+{: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
@@ -377,13 +377,14 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
 
 ## Expand the tutorial 
+{: #vmware-solutions-shared-getting-started-7}
 
 Want to add to or change this tutorial? Here are some ideas:
 - Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machines and create a new Schematics workspace to use it. 
 - Add to the template to configure the virtual machine for secure SSH.
 
 ## Related content
-{: #related}
+{: #vmware-solutions-shared-getting-started-related}
 
 * [{{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-shared_overview)
 * [{{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)

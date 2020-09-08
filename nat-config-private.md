@@ -40,7 +40,7 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #nat-config-private-objectives}
 
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
@@ -56,12 +56,12 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 3.	Create Internet firewall zone and rules.
 
 ## Before you begin
-{: #prereqs}
+{: #nat-config-private-prereqs}
 
 This tutorial enables hosts in the secure private network enclosure created by the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to access public Internet services. That tutorial must be completed first. 
 
 ## Document Internet services
-{: #Document_outbound}
+{: #nat-config-private-Document_outbound}
 {: step}
 
 The first step is to identify the services that will be accessed on the public Internet and to document the ports that must be enabled for outbound and corresponding inbound traffic from the Internet. This list of ports will be required for the firewall rules in a later step. 
@@ -75,7 +75,7 @@ Verify if the third party service supports defining a list of allowed source add
 
 
 ## NAT masquerade to Internet 
-{: #NAT_Masquerade}
+{: #nat-config-private-NAT_Masquerade}
 {: step}
 
 Follow the instructions here to configure external Internet access for hosts in the APP zone using NAT masquerade. 
@@ -97,7 +97,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
 
 ## Create Firewalls
-{: #Create_firewalls}
+{: #nat-config-private-Create_firewalls}
 {: step}
 
 1.	Create firewall rules for APP-TO-OUTSIDE
@@ -143,7 +143,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
 
 ## Create Zone and apply rules
-{: #Create_zone}
+{: #nat-config-private-Create_zone}
 {: step}
 
 1.	Create zone OUTSIDE to control access to the external Internet.
@@ -174,6 +174,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
 
 ## Remove resources
+{: #nat-config-private-6}
 {:removeresources}
 {: step}
 Steps to take to remove the resources created in this tutorial. 
@@ -186,6 +187,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 3. Cancel any additional VLANs by support ticket. 
 
 ## Related content
+{: #nat-config-private-7}
 {:related}
 
 -	[VRA Network Address Translation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#network-address-translation-nat-) 

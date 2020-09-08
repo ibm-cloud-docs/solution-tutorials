@@ -37,7 +37,7 @@ This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{Domain
 Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 
 ## Objectives
-{: #objectives}
+{: #application-log-analysis-objectives}
 * Deploy an application to a Kubernetes cluster to generate log entries.
 * Access and analyze different types of logs to troubleshoot problems and pre-empt issues.
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
@@ -51,7 +51,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 1. The user will configure {{site.data.keyword.mon_full_notm}} service agent to monitor the health and performance of the {{site.data.keyword.containerlong_notm}} cluster and also the app deployed to the cluster.
 
 ## Before you begin
-{: #prereqs}
+{: #application-log-analysis-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -77,6 +77,7 @@ In addition, make sure you:
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #application-log-analysis-2}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
 1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
@@ -86,7 +87,7 @@ In addition, make sure you:
 
 <!--##istutorial#-->
 ## Create a Kubernetes cluster
-{: #create_cluster}
+{: #application-log-analysis-create_cluster}
 {: step}
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
@@ -101,7 +102,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
-{: #access-cluster}
+{: #application-log-analysis-access-cluster}
 {: step}
 
 In this step, you'll configure `kubectl` to point to the cluster assigned to you.
@@ -117,7 +118,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 <!--#/isworkshop#-->
 
 ## Deploy and configure a Kubernetes app to forward logs
-{: #deploy_configure_kubernetes_app}
+{: #application-log-analysis-deploy_configure_kubernetes_app}
 {: step}
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
@@ -219,7 +220,7 @@ On a terminal:
 
 
 ## Connect a {{site.data.keyword.la_short}} instance
-{: #connect_logna_instance}
+{: #application-log-analysis-connect_logna_instance}
 {: step}
 
 Applications deployed to an {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}} will likely generate some level of diagnostic output, i.e. logs. As a developer or an operator, you may want to access and analyze different types of logs such as worker logs, pod logs, app logs, or network logs to troubleshoot problems and pre-empt issues.
@@ -255,6 +256,7 @@ To provision and connect a {{site.data.keyword.la_short}} service,
    ```
 
 ## Generate and access application logs
+{: #application-log-analysis-7}
 {: generate_application_logs}
 {: step}
 
@@ -278,7 +280,7 @@ You can access the application specific log in the LogDNA UI using the filters.
 1. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error, info, warning etc.,
 
 ## Search and filter logs
-{: #search_filter_logs}
+{: #application-log-analysis-search_filter_logs}
 {: step}
 
 The {{site.data.keyword.la_short}} UI, by default, shows all available log entries(Everything). Most recent entries are shown on the bottom through an automatic refresh.
@@ -331,7 +333,7 @@ In this section, you will create a board and then add a graph with a breakdown t
    - Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
 
 ## Connect {{site.data.keyword.mon_full_notm}} and monitor your cluster
-{: #monitor_cluster_sysdig}
+{: #application-log-analysis-monitor_cluster_sysdig}
 {: step}
 
 In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
@@ -433,7 +435,7 @@ To create a dashboard:
    - Select your cluster name as the value and click **Save**.
 
 ## Remove resources
-{: #remove_resource}
+{: #application-log-analysis-remove_resource}
 {: step}
 
 - Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
@@ -446,7 +448,7 @@ To create a dashboard:
 <!--#/istutorial#-->
 
 ## Expand the tutorial
-{: #expand_tutorial}
+{: #application-log-analysis-expand_tutorial}
 
 - Use the [{{site.data.keyword.at_full}} service](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
 - [Add alerts](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
@@ -454,6 +456,7 @@ To create a dashboard:
 - Examine `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply `app-log-analysis.yaml` to redeploy your updates.
 
 ## Related content
+{: #application-log-analysis-12}
 {:related}
 - [Resetting the ingestion key used by a Kubernetes cluster](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-kube_reset#kube_reset)
 - [Archiving logs to IBM Cloud Object Storage](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-archiving#archiving)

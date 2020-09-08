@@ -50,7 +50,7 @@ In short, using a VPC you can
 - connect your cloud-based systems to services and workloads running on-premises.
 
 ## Objectives
-{: #objectives}
+{: #vpc-site2site-vpn-objectives}
 
 * Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud.
 * Securely reach cloud services using private service endpoints.
@@ -67,7 +67,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-site2site-vpn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -85,7 +85,7 @@ In addition:
 - you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
 ## Deploy a virtual app server in a virtual private cloud
-{: #deploy}
+{: #vpc-site2site-vpn-deploy}
 {: step}
 
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Then, you will provision the services and set up the baseline VPC and simulated on-prem resources.
@@ -373,7 +373,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ## Test the connectivity
-{: #test-connectivity}
+{: #vpc-site2site-vpn-test-connectivity}
 {: step}
 
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
@@ -597,7 +597,7 @@ In some situations, it might be desirable to interact directly from an on-premis
 
 
 ## Remove resources
-{: #remove-resources}
+{: #vpc-site2site-vpn-remove-resources}
 {: step}
 
 1. In the VPC management console, click on **VPNs**. In the action menu on the VPN gateway select **Delete** to remove gateway.
@@ -615,7 +615,7 @@ When using the console, you may need to refresh your browser to see updated stat
 {:tip}
 
 ## Expand the tutorial
-{: #expand-tutorial}
+{: #vpc-site2site-vpn-expand-tutorial}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
@@ -624,7 +624,7 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 
 ## Related content
-{: #related}
+{: #vpc-site2site-vpn-related}
 
 - [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
 - [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)

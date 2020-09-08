@@ -40,7 +40,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 {: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #openshift-microservices-objectives}
 
 <!--##istutorial#-->
 * Deploy an {{site.data.keyword.openshiftshort}} cluster
@@ -69,7 +69,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
-{: #create_openshift_cluster}
+{: #openshift-microservices-create_openshift_cluster}
 {: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
@@ -110,7 +110,7 @@ Take a note of the resource group selected above.  This same resource group will
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
-{: #access-cluster}
+{: #openshift-microservices-access-cluster}
 {: step}
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
@@ -137,7 +137,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    {:pre}
 
 ## Deploying an application
-{: #deploy}
+{: #openshift-microservices-deploy}
 {: step}
 
 In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
@@ -190,7 +190,7 @@ The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Cont
    * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
 
 ## Logging and monitoring
-{: #logging-monitoring}
+{: #openshift-microservices-logging-monitoring}
 {: step}
 
 In this section, you will explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
@@ -270,7 +270,7 @@ When deploying new apps, making configuration changes, or simply inspecting the 
 Almost all actions in {{site.data.keyword.openshiftshort}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
 ## Metrics and dashboards
-{: #metrics}
+{: #openshift-microservices-metrics}
 {: step}
 
 In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
@@ -313,7 +313,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
-{: #scaling}
+{: #openshift-microservices-scaling}
 {: step}
 
 In this section, the metrics observed in the previous section can be used to scale the UI application in response to load.
@@ -433,7 +433,7 @@ You can also can delete and create resources like autoscalars with the command l
 1. Revisit the **Workloads > Deployments** overview page for `patient-health-frontend` deployment and watch it work.
 
 ## Using the IBM Cloud Operator to create a Cloudant DB
-{: #operator}
+{: #openshift-microservices-operator}
 {: step}
 
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
@@ -643,7 +643,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 3. Click through the different patients you can log-in as.
 
 ## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}} to the {{site.data.keyword.openshiftshort}}  cluster
-{: #connect-logging-metrics}
+{: #openshift-microservices-connect-logging-metrics}
 {: step}
 It can take a few minutes for logging and metric data to flow through the analysis systems so it is best to connect both at this time for later use.
 
@@ -673,7 +673,7 @@ It can take a few minutes for logging and metric data to flow through the analys
    6. Leave IBM platform metrics to Disable and click **Create**.
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
-{: #use-logdna}
+{: #openshift-microservices-use-logdna}
 {: step}
 
 {{site.data.keyword.la_full_notm}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. You can use {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
@@ -905,7 +905,7 @@ Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](
 {:note}
 
 ## Configure {{site.data.keyword.mon_short}}
-{: #configure-sysdig}
+{: #openshift-microservices-configure-sysdig}
 {: step}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.mon_short}} agent.
@@ -929,7 +929,7 @@ Example output:
    ```
 
 ## Monitor your Cluster with SysDig
-{: #use-sysdig}
+{: #openshift-microservices-use-sysdig}
 {: step}
 
 {{site.data.keyword.mon_full_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
@@ -1012,7 +1012,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
 
 ## Remove resources
-{:#cleanup}
+{: #openshift-microservices-cleanup}
 {: step}
 
 <!--##isworkshop#-->
@@ -1045,6 +1045,7 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 <!--#/istutorial#-->
 
 ## Related content
+{: #openshift-microservices-13}
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)

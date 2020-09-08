@@ -34,13 +34,14 @@ When building an application, it is very common to define multiple environments 
 Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 ## Objectives
-{: #objectives}
+{: #users-teams-applications-objectives}
 
 * Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
 ## Define a project
+{: #users-teams-applications-1}
 
 Let's consider a sample project with the following components:
 * several microservices deployed in {{site.data.keyword.containershort_notm}},
@@ -66,7 +67,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | Pipeline Service ID  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
-{: #first_objective}
+{: #users-teams-applications-first_objective}
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
@@ -86,6 +87,7 @@ At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog c
 </p>
 
 ## Create the resources for one environment
+{: #users-teams-applications-3}
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
@@ -112,6 +114,7 @@ The following diagram shows where the project resources are created under the ac
 </p>
 
 ## Assign roles within the environment
+{: #users-teams-applications-4}
 
 1. Invite users to the account
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
@@ -142,6 +145,7 @@ The IAM access policies and Cloud Foundry roles are defined in the [Identify and
 </p>
 
 ## Replicate for multiple environments
+{: #users-teams-applications-5}
 
 From there, you can replicate similar steps to build the other environments.
 
@@ -172,6 +176,7 @@ In the `Search` input box of LogDNA UI, use the field `namespace: ` to filter lo
 {: tip}
 
 ## Setup delivery pipeline
+{: #users-teams-applications-6}
 
 When it comes to deploying to the different environments, your continuous integration / continuous delivery pipeline can be setup to drive the full process:
 * continuously update the `Development` environment with the latest and greatest code from the `development` branch, running unit tests and integration tests on the dedicated cluster;
@@ -189,6 +194,7 @@ During the build phase, it is important to properly version the Docker images. Y
 As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Expand the tutorial
+{: #users-teams-applications-7}
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
@@ -197,6 +203,7 @@ Congratulations, your application can now safely be deployed from dev to product
 * Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
 
 ## Related information
+{: #users-teams-applications-8}
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
 * [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)

@@ -40,7 +40,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {:shortdesc: .shortdesc}
 
 ## Objectives
-{:#objectives}
+{: #ios-mobile-push-analytics-objectives}
 
 - Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
 - Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
@@ -57,13 +57,13 @@ This tutorial walks you through the creation of a mobile starter application, ad
 5. The notification is received on the device and monitored.
 
 ## Before you begin
-{: #prereqs}
+{: #ios-mobile-push-analytics-prereqs}
 
 1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile app from Swift starter kit
-{: #get_code}
+{: #ios-mobile-push-analytics-get_code}
 {: step}
 
 1. Navigate to [App Development Dashboard](https://{DomainName}/developer/appservice/dashboard) and click **Get Started**.
@@ -80,7 +80,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
 ## Download the code and setup client SDKs
-{: #download_code}
+{: #ios-mobile-push-analytics-download_code}
 {: step}
 
 If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
@@ -105,7 +105,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
   {: pre:}
 
 ## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
-{: #obtain_apns_credentials}
+{: #ios-mobile-push-analytics-obtain_apns_credentials}
 {: step}
 
    For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
@@ -200,7 +200,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 ![](images/solution6/Mobile_push_configure.png)
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
-{: #configure_push}
+{: #ios-mobile-push-analytics-configure_push}
 {: step}
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
@@ -223,7 +223,7 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ![](images/solution6/monitoring_messages.png)
 
 ## Related Content
-{: #related_content}
+{: #ios-mobile-push-analytics-related_content}
 
 - [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)

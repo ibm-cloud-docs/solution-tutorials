@@ -39,13 +39,14 @@ In this tutorial, you will analyze and visualize open data sets using {{site.dat
 </p>
 
 ## Objectives
-{: #objectives}
+{: #big-data-analytics-spark-objectives}
 
 * Deploy {{site.data.keyword.iae_short}} and {{site.data.keyword.DSX_short}} on {{site.data.keyword.cloud_notm}}
 * Work with a Jupyter Notebook and a Python kernel
 * Import, transform, analyze and visualize data sets
 
 ## Service and Environment Setup
+{: #big-data-analytics-spark-1}
 {: step}
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
@@ -64,6 +65,7 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
    {:tip}
 
 ## Create and prepare a notebook
+{: #big-data-analytics-spark-2}
 {: step}
 The [Jupyter Notebook](http://jupyter.org/) is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Notebooks and other resources are organized in projects.
 1. Click the **Add to project** button and in the **Choose asset type** dialog select **Notebook**.
@@ -80,6 +82,7 @@ If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the
 {:tip}
 
 ## Load data
+{: #big-data-analytics-spark-3}
 {: step}
 Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://pixiedust.github.io/pixiedust/loaddata.html).
 
@@ -104,6 +107,7 @@ Next load three open data sets and make them available within the notebook. The 
 The list of country codes will be used later to simplify data selection by using a country code instead of the exact country name.
 
 ## Transform data
+{: #big-data-analytics-spark-4}
 {: step}
 After the data is made available, transform it slightly and combine the three sets into a single data frame.
 1. The following code block will redefine the data frame for the population data. This is done with a SQL statement that renames the columns. A view is then created and schema printed. Copy this code into the next empty cell and run it.
@@ -149,6 +153,7 @@ After the data is made available, transform it slightly and combine the three se
 Your combined data is ready to be analyzed.
 
 ## Analyze data
+{: #big-data-analytics-spark-5}
 {: step}
 In this part, use [Pixiedust to visualize the data in different charts](https://pixiedust.github.io/pixiedust/displayapi.html). Start by comparing life expectancy for some countries.
 
@@ -173,6 +178,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ![Screenshot showing a worldmap](images/solution23/LifeExpectancyMap2010.png)
 
 ## Remove resources
+{: #big-data-analytics-spark-6}
 {:removeresources}
 {: step}
 
@@ -181,6 +187,7 @@ To remove resource, follow these steps:
 2. Locate the services each by using the **Offering** filter, then choose **Delete** from the context menu.
 
 ## Expand the tutorial
+{: #big-data-analytics-spark-7}
 Below are some ideas and suggestions to enhance this tutorial.
 * Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice
 * Compute and visualize the population growth rates per country on a world map
@@ -188,6 +195,7 @@ Below are some ideas and suggestions to enhance this tutorial.
 * Export the combined data to a file or database
 
 ## Related content
+{: #big-data-analytics-spark-8}
 {:related}
 Provided below are links related to the topics covered in this tutorial.
 * [Watson Data Platform](https://dataplatform.ibm.com): Use Watson Data Platform to collaborate and build smarter applications. Quickly visualize and discover insights from your data and collaborate across teams.

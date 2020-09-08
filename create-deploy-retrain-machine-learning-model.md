@@ -45,7 +45,7 @@ In the terminology of machine learning, classification is considered an instance
 {{site.data.keyword.DSX}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
 
 ## Objectives
-{: #objectives}
+{: #create-deploy-retrain-machine-learning-model-objectives}
 
 * Import data to a project.
 * Build a machine learning model.
@@ -63,7 +63,7 @@ In the terminology of machine learning, classification is considered an instance
 5. The deployed machine learning model is monitored for quality, accuracy and other key parameters with the test data.
 
 ## Import data to a project
-{: #import_data_project}
+{: #create-deploy-retrain-machine-learning-model-import_data_project}
 {: step}
 
 A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
@@ -102,7 +102,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Associate the {{site.data.keyword.pm_short}} service
-{:#associate_services}
+{: #create-deploy-retrain-machine-learning-model-associate_services}
 {: step}
 
 1. In the top navigation menu, click on `iris-project`, click on **Settings** in the top bar and scroll to **Associated Services** section.
@@ -114,7 +114,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    3. Enter `pm-20-tutorial` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
-{:#build_model}
+{: #create-deploy-retrain-machine-learning-model-build_model}
 {: step}
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
@@ -154,7 +154,7 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 The accuracy of the model will be improved in the later part of the tutorial.
 
 ## Deploy and test your model
-{:#deploy_model}
+{: #create-deploy-retrain-machine-learning-model-deploy_model}
 {: step}
 
 In this section, you will deploy the saved model and test the deployed model,
@@ -186,7 +186,7 @@ In this section, you will deploy the saved model and test the deployed model,
 3. You can change the input data and continue testing your model.
 
 ## Try out the API
-{:#try_api}
+{: #create-deploy-retrain-machine-learning-model-try_api}
 {: step}
 
 Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
@@ -239,7 +239,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    {:tip}
 
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
-{:#monitor_openscale}
+{: #create-deploy-retrain-machine-learning-model-monitor_openscale}
 {: step}
 
 {{site.data.keyword.aios_full}} tracks and measures outcomes from your AI models, and helps ensure they remain fair, explainable, and compliant wherever your models were built or are running. {{site.data.keyword.aios_short}} also detects and helps correct the drift in accuracy when an AI model is in production.
@@ -360,6 +360,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    {:tip}
 
 ## Remove resources
+{: #create-deploy-retrain-machine-learning-model-7}
 {:removeresources}
 {: step}
 
@@ -367,6 +368,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 2. Delete the services which you created for this tutorial.
 
 ## Related content
+{: #create-deploy-retrain-machine-learning-model-8}
 {:related}
 
 - [{{site.data.keyword.watson}} Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)

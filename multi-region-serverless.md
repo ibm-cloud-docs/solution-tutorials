@@ -42,7 +42,7 @@ Serverless computing platforms give developers a rapid way to build APIs without
 {{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end.
 
 ## Objectives
-{: #objectives}
+{: #multi-region-serverless-objectives}
 
 * Deploy {{site.data.keyword.openwhisk_short}} actions.
 * Expose actions via {{site.data.keyword.APIM}} with a custom domain.
@@ -62,11 +62,12 @@ The tutorial considers a public web application with a back-end implemented with
 4. The API is implemented with {{site.data.keyword.openwhisk_short}}.
 
 ## Before you begin
-{: #prereqs}
+{: #multi-region-serverless-prereqs}
 
 {{site.data.keyword.cis_full_notm}} requires you to own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
 
 ## Configure a custom domain
+{: #multi-region-serverless-2}
 {: step}
 
 The first step is to create an instance of {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) and to point your custom domain {{site.data.keyword.cis_short_notm}} name servers.
@@ -110,6 +111,7 @@ For renewing certificates, check the documentation [here](/docs/certificate-mana
 {: tip}
 
 ## Deploy actions in multiple locations
+{: #multi-region-serverless-3}
 {: step}
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
@@ -201,6 +203,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 Repeat the previous sections to configure more locations.
 
 ## Distribute traffic between locations
+{: #multi-region-serverless-4}
 {: step}
 
 **At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
@@ -255,7 +258,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Revert the code changes to get back to a healthy origin.
 
 ## Remove resources
-{: #removeresources}
+{: #multi-region-serverless-removeresources}
 {: step}
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
@@ -275,7 +278,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Remove [actions](https://{DomainName}/functions/actions)
 
 ## Related content
-{: #related}
+{: #multi-region-serverless-related}
 
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
 * [Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis)

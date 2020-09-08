@@ -33,7 +33,7 @@ The lessons in this tutorial include concepts for how to take an existing app, c
 Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
 
 ## Objectives
-{: #objectives}
+{: #vm-to-containers-and-kubernetes-objectives}
 
 - Understand how to identify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
 - Learn how to containerize a VM based app.
@@ -42,7 +42,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 
 ## Architecture
-{:#architecture}
+{: #vm-to-containers-and-kubernetes-architecture}
 
 ### Traditional app architecture with VMs
 
@@ -104,7 +104,7 @@ By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you 
 - Highly available, IBM-managed Kubernetes masters.
 
 ## Sizing clusters
-{: #sizing_clusters}
+{: #vm-to-containers-and-kubernetes-sizing_clusters}
 
 As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters in {{site.data.keyword.containerlong_notm}} provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, by changing either the number or size of worker nodes.
 
@@ -127,7 +127,7 @@ To make the above more specific, let's assume you want to run a production web a
 3. For the production cluster, you might want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
 
 ## Decide what Database option to use
-{: #database_options}
+{: #vm-to-containers-and-kubernetes-database_options}
 
 With Kubernetes, you have two options for handling databases:
 
@@ -141,7 +141,7 @@ With Kubernetes, you have two options for handling databases:
    - Use the database-as-a-service (DBaaS) in your application.
 
 ## Decide where to store application files
-{: #decide_where_to_store_data}
+{: #vm-to-containers-and-kubernetes-decide_where_to_store_data}
 
 {{site.data.keyword.containershort_notm}} provides several options to store and share data across pods. Not all storage options offer the same level of persistence and availability in disaster situations.
 {: shortdesc}
@@ -208,7 +208,7 @@ File shares and block storage are provisioned into the same location as your clu
 For more information, see [backup and restore](https://{DomainName}/docs/containers?topic=containers-storage_planning#storage_planning) options for NFS file storage and block storage.
 
 ## Prepare your code
-{: #prepare_code}
+{: #vm-to-containers-and-kubernetes-prepare_code}
 
 ### Apply the 12-factor principles
 
@@ -244,7 +244,7 @@ One way of using secrets in Kubernetes in by doing something like this:
    {: pre}
 
 ## Containerize your app
-{: #build_docker_images}
+{: #vm-to-containers-and-kubernetes-build_docker_images}
 
 To containerize your app, you must create a Docker image.
 {: shortdesc}
@@ -291,7 +291,7 @@ To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
    {: pre}
 
 ## Deploy your app to a Kubernetes cluster
-{: #deploy_to_kubernetes}
+{: #vm-to-containers-and-kubernetes-deploy_to_kubernetes}
 
 After a container image is built and pushed to the cloud, next you need to deploy to your Kubernetes cluster. To do that you would need to create a deployment.yaml file.
 {: shortdesc}
@@ -315,7 +315,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
    {: pre}
 
 ## Summary
-{: #summary}
+{: #vm-to-containers-and-kubernetes-summary}
 
 In this tutorial, you learned the following:
 
@@ -327,12 +327,12 @@ In this tutorial, you learned the following:
 - Create Kubernetes deployment files and deploy the Docker image to Kubernetes.
 
 ## Put everything learned to practice, run the JPetStore app in your cluster
-{: #runthejpetstore}
+{: #vm-to-containers-and-kubernetes-runthejpetstore}
 
 To put everything you've learned in practice, follow the [demonstration](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice.
 
 ## Related Content
-{: #related}
+{: #vm-to-containers-and-kubernetes-related}
 
 - [Get started](https://developer.ibm.com/gettingstarted/containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).

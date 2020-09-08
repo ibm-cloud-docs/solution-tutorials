@@ -37,7 +37,7 @@ Learn how easy it is to quickly create a native Android application with high-va
 This tutorial walks you through the creation of a mobile starter application, adding a mobile service, setting up client SDK, importing the code to Android Studio and then further enhancing the application.
 
 ## Objectives
-{: #objectives}
+{: #android-mobile-push-analytics-objectives}
 
 * Create a mobile app with {{site.data.keyword.mobilepushshort}} service.
 * Obtain FCM credentials.
@@ -52,13 +52,13 @@ This tutorial walks you through the creation of a mobile starter application, ad
 5. The notification is received on the device and monitored.
 
 ## Before you begin
-{: #prereqs}
+{: #android-mobile-push-analytics-prereqs}
 
 - [Android Studio](https://developer.android.com/studio/index.html) for importing and enhancing your code.
 - Google account to log into Firebase console for Sender ID and Server API Key.
 
 ## Create Android mobile app from starter kit
-{: #get_code}
+{: #android-mobile-push-analytics-get_code}
 {: step}
 The {{site.data.keyword.Bluemix_notm}} App Development allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [App Development](https://{DomainName}/appservice/dashboard) and click on **Get Started**.
@@ -74,7 +74,7 @@ The {{site.data.keyword.Bluemix_notm}} App Development allows you to fast-track 
 In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 ## Obtain FCM credentials
-{: #obtain_fcm_credentials}
+{: #android-mobile-push-analytics-obtain_fcm_credentials}
 {: step}
 
 Firebase Cloud Messaging (FCM) is the gateway used to deliver {{site.data.keyword.mobilepushshort}} to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the {{site.data.keyword.mobilepushshort}} service on the console, you need to get your FCM credentials (Sender ID and API key).
@@ -106,7 +106,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 In the next step, you will download the scaffolded code and setup the Push Android SDK.
 
 ## Download the code and complete required setup
-{: #download_code}
+{: #android-mobile-push-analytics-download_code}
 {: step}
 
 If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} App Development to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
@@ -119,7 +119,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
 1. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
 
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
-{: #configure_push}
+{: #android-mobile-push-analytics-configure_push}
 {: step}
 
 1. {{site.data.keyword.mobilepushshort}} SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
@@ -147,7 +147,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
       ![Dashboard showing performance statistics](images/solution6/monitoring_messages.png)
 
 ## Related Content
-{: #related_content}
+{: #android-mobile-push-analytics-related_content}
 - [Customize the {{site.data.keyword.mobilepushshort}} settings](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_4#push_step_4_Android)
 - [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)

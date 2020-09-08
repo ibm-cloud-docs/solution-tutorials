@@ -42,7 +42,7 @@ This tutorial walks you through the deployment of a bastion host to securely acc
 To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ## Objectives
-{: #objectives}
+{: #vpc-secure-management-bastion-server-objectives}
 
 - Learn how to set up a bastion host and security groups with rules
 - Securely manage servers via the bastion host
@@ -56,14 +56,14 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 4. The internet user makes an HTTP/HTTPS request to the web server.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-secure-management-bastion-server-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys).
 - The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
-{: #create-bastion-host}
+{: #vpc-secure-management-bastion-server-create-bastion-host}
 {: step}
 
 In this section, you will create and configure a bastion host along with a security group in a separate subnet.
@@ -137,7 +137,7 @@ ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 {:pre}
 
 ## Configure a security group with maintenance access rules
-{: #maintenance-security-group}
+{: #vpc-secure-management-bastion-server-maintenance-security-group}
 {: step}
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
@@ -176,7 +176,7 @@ With access to the bastion working, continue and create the security group for m
   {: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 ## Use the bastion host to access other instances in the VPC
-{: #bastion-host-access-instances}
+{: #vpc-secure-management-bastion-server-bastion-host-access-instances}
 {: step}
 
 In this section, you will create a subnet with virtual server instance and a security group.
@@ -277,7 +277,7 @@ Once you're done installing software or performing maintenance, you should remov
 4. Click **Save** for the changes to be applied.
 
 ## Remove resources
-{: #removeresources}
+{: #vpc-secure-management-bastion-server-removeresources}
 {: step}
 
 1. Switch to **Virtual server instances**, **Stop** and **Delete** your instances.
@@ -288,6 +288,6 @@ When using the console, you may need to refresh your browser to see updated stat
 {:tip}
 
 ## Related content
-{: #related}
+{: #vpc-secure-management-bastion-server-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)

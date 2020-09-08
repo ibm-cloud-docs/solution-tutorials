@@ -48,7 +48,7 @@ This tutorial is configurable based on your target platform. You are currently v
 {: java}
 
 ## Objectives
-{: #objectives}
+{: #serverless-mobile-backend-objectives}
 
 * Deploy a serverless mobile backend with {{site.data.keyword.openwhisk_short}}.
 * Add user authentication to a mobile app with {{site.data.keyword.appid_short}}.
@@ -71,7 +71,7 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 7. The user receives the notification on the device.
 
 ## Before you begin
-{: #prereqs}
+{: #serverless-mobile-backend-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -104,6 +104,7 @@ For Windows 10 users to work with the command line instructions, we recommend in
 {: java}
 
 ## Get the application code
+{: #serverless-mobile-backend-2}
 {: step}
 
 The repository contains both the mobile application and the {{site.data.keyword.openwhisk_short}} actions code.
@@ -139,7 +140,7 @@ The repository contains both the mobile application and the {{site.data.keyword.
 {: swift}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
-{: #provision_services}
+{: #serverless-mobile-backend-provision_services}
 {: step}
 
 In this section, you will provision the services used by the application. You can choose to provision the services from the {{site.data.keyword.Bluemix_notm}} catalog or using the `ibmcloud` command line.
@@ -207,7 +208,7 @@ Set the location where services should be created:
    {: pre}
 
 ## Configure {{site.data.keyword.mobilepushshort}}
-{: #push_notifications}
+{: #serverless-mobile-backend-push_notifications}
 {: step}
 
 When a user submits a new feedback, the application will analyze this feedback and send back a notification to the user. The user may have moved to another task, or may not have the mobile app started so using push notifications is a good way to communicate with the user. The {{site.data.keyword.mobilepushshort}} service makes it possible to send notifications to iOS or Android users via one unified API. In this section, you will configure the {{site.data.keyword.mobilepushshort}} service for your target platform.
@@ -235,7 +236,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 {: swift}
 
 ## Deploy a serverless backend
-{: #serverless_backend}
+{: #serverless-mobile-backend-serverless_backend}
 {: step}
 
 With all the services configured, you can now deploy the serverless backend. The following {{site.data.keyword.openwhisk_short}} artifacts will be created in this section:
@@ -306,7 +307,7 @@ With all the services configured, you can now deploy the serverless backend. The
    {: tip}
 
 ## Configure and run a native mobile application to collect user feedback
-{: #mobile_app}
+{: #serverless-mobile-backend-mobile_app}
 {: step}
 
 Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
@@ -356,6 +357,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 {: swift}
 
 ## Remove resources
+{: #serverless-mobile-backend-7}
 {: step}
 
 1. Use `deploy.sh` to remove the {{site.data.keyword.openwhisk_short}} artifacts:
@@ -368,5 +370,6 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the {{site.data.keyword.Bluemix_notm}} console.
 
 ## Related content
+{: #serverless-mobile-backend-8}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/services/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/services/appid?topic=appid-login-widget#login-widget).

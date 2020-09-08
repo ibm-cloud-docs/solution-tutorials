@@ -49,7 +49,7 @@ In short, using VPC you can:
 - have fine control of inbound and outbound traffic.
 
 ## Objectives
-{: #objectives}
+{: #vpc-public-app-private-backend-objectives}
 
 - Understand the infrastructure objects available for virtual private clouds
 - Learn how to create a virtual private cloud, subnets and server instances
@@ -63,13 +63,13 @@ In short, using VPC you can:
 3. The frontend requests private resources from the secured backend and serves results to the user.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-public-app-private-backend-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Create a Virtual Private Cloud
-{: #create-vpc}
+{: #vpc-public-app-private-backend-create-vpc}
 {: step}
 
 To tighten the security of your servers, it is recommended to only allow connections to the ports required by the applications deployed on the servers. In this tutorial, the application will be a web server, thus it will only need to allow inbound connections on port 80.
@@ -112,7 +112,7 @@ Follow the steps described in [this section of the bastion tutorial](https://{Do
 Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
 ## Create a backend subnet, security group and VSI
-{: #backend-subnet-vsi}
+{: #vpc-public-app-private-backend-backend-subnet-vsi}
 {: step}
 
 In this section, you will create a subnet, a security group and a virtual server instance for the backend.
@@ -172,7 +172,7 @@ To create a virtual server instance in the newly created subnet:
 7. Click **Create virtual server instance**.
 
 ## Create a frontend subnet, security group and VSI
-{: #frontend-subnet-vsi}
+{: #vpc-public-app-private-backend-frontend-subnet-vsi}
 {: step}
 
 Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
@@ -230,7 +230,7 @@ To create a virtual server instance in the newly created subnet:
 7. Select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
-{: #setup-connectivity-frontend-backend}
+{: #vpc-public-app-private-backend-setup-connectivity-frontend-backend}
 {: step}
 
 With all servers running, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
@@ -320,7 +320,7 @@ Once the servers are removed from the maintenance group, they can no longer be a
 In this tutorial, you deployed two tiers of an application, one frontend server visible from the public Internet and one backend server only accessible within the VPC by the frontend server. You configured security group rules to ensure traffic would be allowed only the specific ports required by the application.
 
 ## Remove resources
-{: #remove-resources}
+{: #vpc-public-app-private-backend-remove-resources}
 {: step}
 
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.

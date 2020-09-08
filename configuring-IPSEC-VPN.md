@@ -55,7 +55,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #configuring-IPSEC-VPN-objectives}
 
 - Document configuration parameters for IPSec VPN
 - Configure IPSec VPN on a Virtual Router Appliance
@@ -75,12 +75,12 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 6.	Configure firewall 
 
 ## Before you begin
-{: #prereqs}
+{: #configuring-IPSEC-VPN-prereqs}
 
 This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
 
 ## Document VPN configuration
-{: #Document_VPN}
+{: #configuring-IPSEC-VPN-Document_VPN}
 {: step}
 
 Configuring an IPSec VPN site-to-site link between your data center and {{site.data.keyword.Bluemix_notm}} requires coordination with your onsite networking team to determine many of the configuration parameters, the type of tunnel and IP routing information. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite networking team will specify the configuration to match agreed corporate standards and provide you with the necessary IP address of the data center VPN gateway, and the subnet address ranges that can be accessed.
@@ -113,7 +113,7 @@ The following parameters must be agreed and documented between the {{site.data.k
 | &lt;Shared-Secret&gt; | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
 
 ## Configure IPSec VPN on a VRA
-{: #Configure_VRA_VPN}
+{: #configuring-IPSEC-VPN-Configure_VRA_VPN}
 {: step}
 
 To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and all the variables that need to changed, are highlighted below with &lt; &gt;. The changes are identified line by line, for each line that needs to be changed. Values come from the 
@@ -158,7 +158,7 @@ table.
    {: codeblock}
 
 ## Configure data center VPN and tunnel
-{: #Configure_DC_VPN}
+{: #configuring-IPSEC-VPN-Configure_DC_VPN}
 {: step}
 
 1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN.
@@ -182,7 +182,7 @@ table.
 The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Public IP>[500].......` should be found in the output. If this does not exist or shows 'CONNECTING' there is an error in the VPN configuration.  
 
 ## Define GRE tunnel 
-{: #Define_Tunnel}
+{: #configuring-IPSEC-VPN-Define_Tunnel}
 {: step}
 
 1. Create the GRE tunnel in VRA edit mode.
@@ -218,7 +218,7 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
 If no return traffic is seen, the data center networking team will need to monitor the traffic flows at the VPN and tunnel interfaces at the remote site to localise the issue. 
 
 ## Create static IP route
-{: #Define_Routing}
+{: #configuring-IPSEC-VPN-Define_Routing}
 {: step}
 
 Create the VRA routing to direct traffic to the remote subnet via the tunnel.
@@ -235,7 +235,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    {: codeblock}
 
 ## Configure firewall
-{: #Configure_firewall}
+{: #configuring-IPSEC-VPN-Configure_firewall}
 {: step}
 
 1. Create resource groups for allowed icmp traffic and tcp ports. 
@@ -315,6 +315,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet.
 
 ## Remove resources
+{: #configuring-IPSEC-VPN-8}
 {:removeresources}
 {: step}
 
@@ -328,6 +329,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 3. Cancel any additional VLANs by support ticket. 
 
 ## Related content
+{: #configuring-IPSEC-VPN-9}
 {:related}
 - [IBM Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#vra-basics)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/infrastructure/subnets?topic=subnets-about-subnets-and-ips)

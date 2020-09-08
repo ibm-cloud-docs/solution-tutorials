@@ -40,7 +40,7 @@ Learn how easy it is to quickly create a voice-enabled Android-native chatbot wi
 This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer queries. You will learn how to enable {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services for easy interaction with the Android app.
 
 ## Objectives
-{: #objectives}
+{: #android-watson-chatbot-objectives}
 
 - Use {{site.data.keyword.conversationshort}} to customize and deploy a chatbot.
 - Allow end users to interact with chatbot using voice and audio.
@@ -56,12 +56,12 @@ This tutorial walks you through the process of defining intents and entities and
 5. The response from {{site.data.keyword.conversationfull}} is sent back to the mobile application.
 
 ## Before you begin
-{: #prereqs}
+{: #android-watson-chatbot-prereqs}
 
 - Download and install [Android Studio](https://developer.android.com/studio/index.html).
 
 ## Create services
-{: #setup}
+{: #android-watson-chatbot-setup}
 {: step}
 
 In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
@@ -98,7 +98,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 3. Expand the newly created credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 ## Create a skill
-{: #create_workspace}
+{: #android-watson-chatbot-create_workspace}
 {: step}
 
 A skill is a container for the artifacts that define the conversation flow.
@@ -184,6 +184,7 @@ A dialog is a branching conversation flow that defines how your application resp
 8. Test the dialog flow using the **Try it** button.
 
 ## Link the skill to an assistant
+{: #android-watson-chatbot-4}
 {: step}
 
 An **assistant** is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the **skills** it needs to satisfy your customers' goals.
@@ -197,7 +198,7 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 2. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
-{:#configure_run_android_app}
+{: #android-watson-chatbot-configure_run_android_app}
 {: step}
 
 The repository contains Android application code with required gradle dependencies.
@@ -262,6 +263,7 @@ The repository contains Android application code with required gradle dependenci
 
 
 ## Remove resources
+{: #android-watson-chatbot-6}
 {:removeresources}
 {: step}
 
@@ -272,6 +274,7 @@ The repository contains Android application code with required gradle dependenci
    - {{site.data.keyword.texttospeechfull}}
 
 ## Related content
+{: #android-watson-chatbot-7}
 {:related}
 
 - [Creating entities, Synonyms, System entities](https://{DomainName}/docs/services/assistant?topic=assistant-entities#creating-entities)

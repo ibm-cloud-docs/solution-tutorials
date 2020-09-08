@@ -41,7 +41,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #solution-template-objectives}
 
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
@@ -52,7 +52,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 2. Then that
 
 ## Before you begin
-{: #prereqs}
+{: #solution-template-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
@@ -87,6 +87,7 @@ In addition, make sure you have:
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #solution-template-2}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
 1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
@@ -95,7 +96,7 @@ In addition, make sure you have:
 <!--#/isworkshop#-->
 
 ## Create services
-{: #setup}
+{: #solution-template-setup}
 {: step}
 
 In this section, you will create the services required to ...
@@ -116,7 +117,7 @@ In this section, you will create the services required to ...
 3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
 ## Solution Specific Section
-{: #section_one}
+{: #solution-template-section_one}
 {: step}
 
 Introductory statement that overviews the section
@@ -153,7 +154,7 @@ And this paragraph only appears for Swift code
 {: swift}
 
 ## Another Solution Specific Section
-{: #section_two}
+{: #solution-template-section_two}
 {: step}
 
 Introductory statement that overviews the section
@@ -161,12 +162,13 @@ Introductory statement that overviews the section
 ### Another sub section
 
 ## Remove resources
-{: #removeresources}
+{: #solution-template-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+{: #solution-template-7}
 
 Want to add to or change this tutorial? Here are some ideas:
 - idea with [link]() to resources to help implement the idea
@@ -176,13 +178,13 @@ Want to add to or change this tutorial? Here are some ideas:
 - this section is optional
 
 ## Related content
-{: #related}
+{: #solution-template-related}
 
 * [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
 * [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
 
 ## Writing guide
-{: #writing_guide}
+{: #solution-template-writing_guide}
 
 ### Creating links
 
@@ -201,6 +203,7 @@ Finally refer to the link topic under the content and design documentation if yo
 Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
+{: #solution-template-10}
 
 Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
 
@@ -222,7 +225,7 @@ To have content showing only in a workshop, use:
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
-{: #access-cluster}
+{: #solution-template-access-cluster}
 
 This section will only appear in a workshop and not in the tutorial.
 -->

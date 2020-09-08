@@ -41,7 +41,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 * running on a different domain than your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
 
 ## Objectives
-{: #objectives}
+{: #static-files-cdn-objectives}
 
 * Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
 * Make content globally available with a Content Delivery Network (CDN).
@@ -56,7 +56,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 3. If the content is not available in the CDN or has expired, the CDN pulls the content from the origin.
 
 ## Before you begin
-{: #prereqs}
+{: #static-files-cdn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -75,7 +75,7 @@ In addition, contact the master user of your Infrastructure account to get the f
 These permissions are required to be able to view and use the Storage and CDN services.
 
 ## Get the web application code
-{: #get_code}
+{: #static-files-cdn-get_code}
 {: step}
 
 Let's consider a simple web application with different types of content like images, videos and cascading style sheets. You will store the content in a storage bucket and configure the CDN to use the bucket as its origin.
@@ -88,7 +88,7 @@ To start, retrieve the application code:
   {: pre}
 
 ## Create an Object Storage
-{: #create_cos}
+{: #static-files-cdn-create_cos}
 {: step}
 
 {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
@@ -103,7 +103,7 @@ To start, retrieve the application code:
 1. Select **Endpoint** in the left menu and identify the service endpoint to use with the bucket you created. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public service endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
 ## Upload files to a bucket
-{: #upload}
+{: #static-files-cdn-upload}
 {: step}
 
 In this section, you will use the {{site.data.keyword.cos_short}} plugin to upload files to the bucket.
@@ -136,6 +136,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    `http://<SERVICE_ENDPOINT>/<YOUR_BUCKET_NAME>/a-picture.png`
 
 ## Make the files globally available with a CDN
+{: #static-files-cdn-5}
 {: step}
 
 In this section, you will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (your bucket in {{site.data.keyword.cos_full_notm}}) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
@@ -160,6 +161,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 4. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png` or, if you are using a custom domain, `https://your-cdn-hostname/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
+{: #static-files-cdn-6}
 {: step}
 
 The application contains a public/index.html web page that includes references to the files now hosted in the {{site.data.keyword.cos_full_notm}}. The backend `app.js` serves this web page and replaces a placeholder with the actual location of your CDN. This way, all assets that are used by the web page are served by the CDN.
@@ -191,6 +193,7 @@ The application contains a public/index.html web page that includes references t
 Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
 ## Remove resources
+{: #static-files-cdn-7}
 {: step}
 
 * Delete the Cloud Foundry application
@@ -198,6 +201,7 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
 
 ## Related content
+{: #static-files-cdn-8}
 
 * [{{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage?topic=cloud-object-storage-iam)

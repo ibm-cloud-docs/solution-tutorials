@@ -49,7 +49,7 @@ This tutorial focuses on building and configuring the following hardware and sof
 * Storage
 
 ## Objectives
-{: #objectives}
+{: #hpc-eda-objectives}
 
 * Extend an existing on-premises IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_full}}.
 
@@ -58,7 +58,7 @@ The following diagram shows how the IBM Spectrum LSF on-premise cluster is exten
 ![Architecture diagram](images/solution60-hpc-eda/hpc-eda-arch.svg)
 
 ## Before you begin
-{: #prereqs}
+{: #hpc-eda-prereqs}
 
 You need the following to complete this tutorial:
 * Because this tutorial demonstrates how to add compute capacity to your on-premise Spectrum LSF cluster, it assumes you have an  on-premise Spectrum LSF version 10.2 cluster already installed.
@@ -73,7 +73,7 @@ You will also need the following in {{site.data.keyword.cloud_notm}}:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
 ## Set up the {{site.data.keyword.cloud_notm}} CLI
-{: #set-up-cli}
+{: #hpc-eda-set-up-cli}
 {: step}
 
 1. If possible, log in to the on-premise master node as the root user.
@@ -121,7 +121,7 @@ You will find instructions to download and install these tools for your operatin
   {: pre}
 
 ## Prepare your environment
-{: #prep-environment}
+{: #hpc-eda-prep-environment}
 {: step}
 
 ### Specify the cloud cluster configuration
@@ -191,7 +191,7 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
   {: pre}
 
 ## Provision the cloud resources
-{: #provision-cloud-resources}
+{: #hpc-eda-provision-cloud-resources}
 {: step}
 
 If it is not already installed, you need Ansible version 2.7 or higher installed to continue.  If Ansible is already installed, be sure to check the version and update if necessary.
@@ -244,7 +244,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
   {: pre}
 
 ## Connect your on-premises and cloud networks with a VPN
-{: #connect-on-premises-cloud-networks-vpn}
+{: #hpc-eda-connect-on-premises-cloud-networks-vpn}
 {: step}
 
 In the previous section, one of the resulting files created was `${GEN_FILES_DIR/vpn.yml}`. This playbook will be used to create a VPN. If you completed all of the information in the `tf_inventory.yml` file, the `vpn.yml` file should contain the information for this section.
@@ -299,7 +299,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   {: pre}
 
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
-{: #deploy-lsf-cloud-cluster}
+{: #hpc-eda-deploy-lsf-cloud-cluster}
 {: step}
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
@@ -358,7 +358,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
   {: pre}
 
 ## Verify and test the multi-cluster
-{: #verify-test-multi-cluster}
+{: #hpc-eda-verify-test-multi-cluster}
 {: step}
 
 From the on-premises master node, complete the following steps.
@@ -392,7 +392,7 @@ From the on-premises master node, complete the following steps.
   {: pre}
 
 ## Remove resources
-{: #remove-resources}
+{: #hpc-eda-remove-resources}
 {: step}
 
 To clean up any resources that you created in this tutorial, use the following procedure. This is useful if you complete this tutorial as a part of a proof of concept or if the resources are no longer needed after a successful employment of cloud-bursting.

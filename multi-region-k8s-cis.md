@@ -40,7 +40,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 {: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #multi-region-k8s-cis-objectives}
 
 * Deploy an application on multiple Kubernetes clusters in different locations.
 * Distribute traffic across multiple clusters with a Global Load Balancer.
@@ -60,7 +60,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 5. {{site.data.keyword.cis_full_notm}} is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 ## Before you begin
-{: #prereqs}
+{: #multi-region-k8s-cis-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -79,6 +79,7 @@ In addition, make sure you:
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
+{: #multi-region-k8s-cis-2}
 {: step}
 
 This tutorial deploys a Kubernetes application to clusters in multiple locations. You will start with one location, Dallas, and then repeat these steps for London.
@@ -206,6 +207,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 {: tip}
 
 ## And then to another location
+{: #multi-region-k8s-cis-3}
 {: step}
 
 Repeat the following steps for the London location:
@@ -222,6 +224,7 @@ Repeat the following steps for the London location:
 
 
 ## Configure multi-location load-balancing
+{: #multi-region-k8s-cis-4}
 {: step}
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
@@ -354,7 +357,7 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
 At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster - or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
 
 ## Secure the application
-{: #secure_via_CIS}
+{: #multi-region-k8s-cis-secure_via_CIS}
 {: step}
 
 ### Turn the Web Application Firewall On
@@ -392,6 +395,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
    ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
 
 ## Remove resources
+{: #multi-region-k8s-cis-6}
 {:removeresources}
 {: step}
 
@@ -407,6 +411,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 1. Remove the health checks.
 
 ## Related content
+{: #multi-region-k8s-cis-7}
 {:related}
 
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)

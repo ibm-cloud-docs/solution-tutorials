@@ -40,7 +40,7 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #web-app-private-network-objectives}
 
 - Create Virtual Servers to install PHP and MySQL
 - Provision a Load Balancer to distribute requests to the application servers
@@ -60,7 +60,7 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 3.	Deploy scalable web app and load balancer
 
 ## Before you begin
-{: #prereqs}
+{: #web-app-private-network-prereqs}
 
 This tutorial utilises three existing tutorials, which are deployed in sequence. All three should be reviewed before commencing:
 
@@ -71,7 +71,7 @@ This tutorial utilises three existing tutorials, which are deployed in sequence.
 
 
 ## Configure secure private network
-{: #private_network}
+{: #web-app-private-network-private_network}
 {: step}
 
 Isolated and secure private network environments are central to the IaaS application security model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. 
@@ -82,7 +82,7 @@ The first step is to create the secure private network enclosure within which th
 This tutorial can be followed without change. In a later step three virtual machines will be deployed in the APP zone as Nginx web servers and a MySQL database. 
 
 ## Configure NAT for secure application deployment
-{: #nat_config}
+{: #web-app-private-network-nat_config}
 {: step}
 
 Installation of open-source applications requires secure access to the Internet to access the source repositories. To protect the servers in the secure private network from being exposed on the public Internet, Source NAT is used where the source address is obfuscated and firewall rules are used to secure the out-bound application repository requests. All inbound requests are denied. 
@@ -93,7 +93,7 @@ This tutorial can be followed without change. In the next step the NAT configura
 
 
 ## Deploy scalable web app and load balancer
-{: #scalable_app}
+{: #web-app-private-network-scalable_app}
 {: step}
 
 A Wordpress installation on Nginx and MySQL, with an Load Balancer is used to illustrate how a scalable and resilient web application can be deployed in the secure private network 
@@ -117,7 +117,7 @@ At the end of this step the load balancer should be in a healthy state and the W
 
 
 ## Remove resources
-{: #removeresources}
+{: #web-app-private-network-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial. 
@@ -132,6 +132,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 5. Delete the File Storage services
 
 ## Expand the tutorial 
+{: #web-app-private-network-6}
 
 1. In this tutorial only two virtual servers are initially provisioned as the app tier, more servers could be added automatically to handle additional load. [Auto Scale]( https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 

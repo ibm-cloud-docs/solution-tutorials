@@ -27,7 +27,7 @@ You already developed and deployed an application on {{site.data.keyword.cloud_n
 {: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #extended-app-security-objectives}
 
 * Learn about enhanced data encryption options.
 * Isolate your application runtime for extended security.
@@ -43,7 +43,7 @@ An existing solution with the application and connected (micro-) services is ext
 </p>
 
 ## Assess your application
-{: #app_properties}
+{: #extended-app-security-app_properties}
 
 You developed a solution and successfully deployed it to {{site.data.keyword.cloud_notm}}. Now you want to look into how to harden the app environment. This can be part of the regular activities of (agile) development and the next steps towards a fully secure app or by increasing requirements for an app already in production. 
 
@@ -56,7 +56,7 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 * and much more.
 
 ## Isolate runtime environments, networks traffic and data
-{: #isolate_environments}
+{: #extended-app-security-isolate_environments}
 
 One of the fundamental principles of Cloud Computing is the sharing of resources. This could be from the sharing of a machine (i.e., the sharing of applications by many users who are running on the same computer) to just sharing the data center and parts of the infrastructure. In the following, you learn how you can isolate runtime environments, network traffic and stored data to increase application security.
 
@@ -85,7 +85,7 @@ When your application does not serve public users, but is only accessed from cor
 It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
 
 ## Evaluate and monitor app security
-{: #evaluate_security}
+{: #extended-app-security-evaluate_security}
 
 Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/services/appid?topic=appid-at-monitor-runtime) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-about). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-cloud_services).
 
@@ -98,7 +98,7 @@ The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs
 </p>
 
 ## Control encryption keys
-{: #control_encryption}
+{: #extended-app-security-control_encryption}
 
 Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key).
 
@@ -122,11 +122,12 @@ One of the most often used services is {{site.data.keyword.cos_short}}. After yo
 A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
 
 ## Conclusions
+{: #extended-app-security-5}
 
 In this tutorial, you learned how to increase application security by moving from standard to advanced capabilities. The journey included the isolation of compute, network and data resources, and also included asserting greater control over encryption keys. Security by design is not a hollow phrase, it means to assess security requirements early on and take them into account when designing a solution. As you have seen, {{site.data.keyword.cloud_notm}} provides the building blocks for different security requirements and types of applications. Now you are recommended to combine the blocks for your secure cloud application. And don't forget to check out the next section with links to further security-related resources.
 
 ## Related content
-{: #related}
+{: #extended-app-security-related}
 
 * Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)

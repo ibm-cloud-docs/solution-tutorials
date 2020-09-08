@@ -42,7 +42,7 @@ This tutorial walks you through the steps of setting up isolated workloads by pr
 For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 ## Objectives
-{: #objectives}
+{: #vpc-multi-region-objectives}
 
 * Understand the isolation of workloads through infrastructure objects available for virtual private clouds.
 * Use a load balancer between zones within a region to distribute traffic among virtual servers.
@@ -59,13 +59,13 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 6. The request is routed to the load balancers both on the global and local level. The request is then fulfilled by the available server instance.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-multi-region-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Create VPCs, subnets and VSIs
-{: #create-infrastructure}
+{: #vpc-multi-region-create-infrastructure}
 {: step}
 
 In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by provisioning of VSIs.
@@ -128,7 +128,7 @@ To allow traffic to the application you will deploy on virtual server instances,
 Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region2** by following the same naming conventions as above.
 
 ## Install and configure web server on the VSIs
-{: #install-configure-web-server-vsis}
+{: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
 
 
@@ -161,7 +161,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Distribute traffic between zones with load balancers
-{: #distribute-traffic-with-load-balancers}
+{: #vpc-multi-region-distribute-traffic-with-load-balancers}
 {: step}
 
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
@@ -218,7 +218,7 @@ In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.d
    {:tip}
 
 ## Configure a global load balancer
-{: #global-load-balancer}
+{: #vpc-multi-region-global-load-balancer}
 {: step}
 
 In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the VPC load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
@@ -248,6 +248,7 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
 Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action. The global load balancer is a DNS resolver. Most clients, like browsers, only resolve the DNS address one time or infrequently.  The load is balanced across multiple clients, not for a single client.  You will likely see the response from a single VPC load balancer.
 
 ## Secure with HTTPS
+{: #vpc-multi-region-6}
 {: step}
 
 HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
@@ -392,7 +393,7 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 {:tip}
 
 ## Remove resources
-{: #removeresources}
+{: #vpc-multi-region-removeresources}
 {: step}
 
 - Remove the Global load balancer, origin pools and health checks under the {{site.data.keyword.cis_short_notm}} service
@@ -402,6 +403,6 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 
 
 ## Related content
-{: #related}
+{: #vpc-multi-region-related}
 
 * [Using Load Balancers in IBM Cloud VPC](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc)

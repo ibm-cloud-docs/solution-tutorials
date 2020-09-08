@@ -36,7 +36,7 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 - Are there any service-specific considerations?
 
 ## Objectives
-{: #objectives}
+{: #strategies-for-resilient-applications-objectives}
 
 * Learn architectural concepts involved when building resilient applications.
 * Understand how such concepts map to IBM Cloud compute and service offerings
@@ -113,6 +113,7 @@ With multi-zone region architecture you would require to have a local load balan
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-zones).
 
 ## Compute Options
+{: #strategies-for-resilient-applications-1}
 
 This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
@@ -189,7 +190,7 @@ The components required for such architecture:
 The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
 
 ## Databases and application files
-{: #databaseservices}
+{: #strategies-for-resilient-applications-databaseservices}
 
 {{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
 
@@ -286,13 +287,14 @@ When adding a second region, you can use the snapshots feature of {{site.data.ke
 Replication can be scheduled to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#snapshots).
 
 ## Non-database services
-{: #nondatabaseservices}
+{: #strategies-for-resilient-applications-nondatabaseservices}
 
 {{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party services. When planning for multi-region architecture, you need to understand how services can work in a multi-region setup.
 
 Many of the services provide stateless APIs and offer high-availability through multi-zone deployments. But still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. Then it is important to understand how configuration and user-specific data can be made available across regions. In some cases this might be by utilizing built-in replication capabilities, in others it could mean to manually keeping data in sync by exporting and importing data sets.
 
 ## Summary
+{: #strategies-for-resilient-applications-4}
 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
@@ -308,6 +310,7 @@ Many of the services provide stateless APIs and offer high-availability through 
 | {{site.data.keyword.conversationshort}} | <ul><li>Use Watson API to export and import workspace specification between multiple instances across locations</li></ul> |
 
 ## Related content
+{: #strategies-for-resilient-applications-5}
 
 {:related}
 

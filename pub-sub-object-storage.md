@@ -40,7 +40,7 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 You will simulate this pattern using a file processing example. First you will create a UI application which will be used to upload files to {{site.data.keyword.objectstorageshort}} and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 
 ## Objectives
-{: #objectives}
+{: #pub-sub-object-storage-objectives}
 
 * Implement a producer-consumer pattern with {{site.data.keyword.messagehub}}
 * Bind services to a Kubernetes cluster
@@ -59,7 +59,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 4. When ready, workers listen for messages and begin processing the new file.
 
 ## Before you begin
-{: #prereqs}
+{: #pub-sub-object-storage-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -75,7 +75,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Create a Kubernetes cluster
-{: #create_kube_cluster}
+{: #pub-sub-object-storage-create_kube_cluster}
 {: step}
 
 1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
@@ -103,6 +103,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
 
 ## Create a {{site.data.keyword.messagehub}} instance
+{: #pub-sub-object-storage-3}
 {: step}
  {: #create_messagehub}
 
@@ -128,7 +129,7 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 {:tip}
 
 ## Create an {{site.data.keyword.objectstorageshort}} service
-{: #create_cos}
+{: #pub-sub-object-storage-create_cos}
 {: step}
 
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
@@ -148,6 +149,7 @@ The `cluster service bind` command creates a cluster secret that holds the crede
    {:pre}
 
 ## Deploy the UI application to the cluster
+{: #pub-sub-object-storage-5}
 {: step}
 
 The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
@@ -170,6 +172,7 @@ The UI application is a simple Node.js Express web application which allows the 
    ![](images/solution25/files_uploaded.png)
 
 ## Deploy the worker application to the cluster
+{: #pub-sub-object-storage-6}
 {: step}
 
 The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-topic` topic upon completion. The UI application will listen this topic and update the status.
@@ -193,6 +196,7 @@ The worker application is a Java application which listens to the {{site.data.ke
 In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
 
 ## Remove resources
+{: #pub-sub-object-storage-7}
 {:removeresources}
 {: step}
 
@@ -203,6 +207,7 @@ Navigate to [Resource List](https://{DomainName}/resources/) and
 4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
 
 ## Related content
+{: #pub-sub-object-storage-8}
 {:related}
 
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)

@@ -44,7 +44,7 @@ Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a
 Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Objectives
-{: #objectives}
+{: #plan-create-update-deployments-objectives}
 
 * Define a set of environments to deploy
 * Write scripts using the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the deployment of these environments
@@ -63,7 +63,7 @@ Multiple environments are pretty common in a project to support the different ph
 5. The environments are fully configured, ready to be used.
 
 ## Overview of the available tools
-{: #tools}
+{: #plan-create-update-deployments-tools}
 {: step}
 
 The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
@@ -73,7 +73,7 @@ Another tool introduced in [this tutorial](https://{DomainName}/docs/solution-tu
 To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.Bluemix_notm}} has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of {{site.data.keyword.Bluemix_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.Bluemix_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS ({{site.data.keyword.openwhisk_short}}) resources.
 
 ## Write scripts to automate the deployment
-{: #scripts}
+{: #plan-create-update-deployments-scripts}
 {: step}
 
 As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, adding a continuous integration pipeline to automatically deploy infrastructure changes.
@@ -281,6 +281,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```
 
 ## Deploy this environment in your account
+{: #plan-create-update-deployments-3}
 {: step}
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
@@ -629,6 +630,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
 You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
+{: #plan-create-update-deployments-4}
 {: step}
 
 1. Navigate to the `development` folder under `roles`
@@ -664,6 +666,7 @@ You can repeat the steps for `testing` and `production`.
    {: codeblock}
 
 ## Related content
+{: #plan-create-update-deployments-5}
 
 * [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
 * [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)

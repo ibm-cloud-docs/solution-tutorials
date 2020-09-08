@@ -43,7 +43,7 @@ This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC
 After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
 
 ## Objectives
-{: #objectives}
+{: #vpc-app-deploy-objectives}
 
 * Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
 * Utilize manual steps for updating the operating system software and installing new software.
@@ -77,7 +77,7 @@ While provisioning the resources, you will also deploy applications on the virtu
 You will explore how to consume these different sources.
 
 ## Before you begin
-{: #before-you-begin}
+{: #vpc-app-deploy-before-you-begin}
 
 ### Create a VPC ssh key
 {: #create-ssh-key}
@@ -134,7 +134,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
    {:tip}
 
 ## Basics of software installation
-{: #basics}
+{: #vpc-app-deploy-basics}
 {: step}
 
 ### Provision virtual server instances from base images
@@ -203,7 +203,7 @@ The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM
 In the next sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash) to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
 
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
-{: #cli}
+{: #vpc-app-deploy-cli}
 {: step}
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
@@ -340,7 +340,7 @@ This section uses a shell script found in the [Public frontend and private backe
    {:pre}
 
 ## Provisioning infrastructure with Terraform
-{: #terraform}
+{: #vpc-app-deploy-terraform}
 {: step}
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
@@ -507,7 +507,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    {:pre}
 
 ## Installing software with Ansible
-{: #ansible}
+{: #vpc-app-deploy-ansible}
 {: step}
 
 [Ansible](https://www.ansible.com/) is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/) and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
@@ -667,7 +667,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    {:pre}
 
 ## Related content
-{: #related}
+{: #vpc-app-deploy-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
