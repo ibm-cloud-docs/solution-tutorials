@@ -35,7 +35,8 @@ tutorials.forEach((file) => {
 
   let sectionTitleIndex = 0;
   let sectionIndex = 0;
-  while ((sectionTitleIndex = readUntil(lines, sectionTitleIndex, (line) => line.startsWith('## '))) != null) {
+  while ((sectionTitleIndex = readUntil(lines, sectionTitleIndex,
+      (line) => line.startsWith('## ') || line.startsWith('### ') || line.startsWith('#### '))) != null) {
     const section = lines[sectionTitleIndex];
     const anchor = lines[sectionTitleIndex + 1];
     if (!(anchor.startsWith('{: #') || anchor.startsWith('{:#'))) {
