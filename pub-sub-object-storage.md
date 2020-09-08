@@ -104,7 +104,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
 
 ## Create a {{site.data.keyword.messagehub}} instance
-{: #pub-sub-object-storage-3}
+{: #pub-sub-object-storage-0}
 {: step}
  {: #create_messagehub}
 

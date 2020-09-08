@@ -162,7 +162,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
 ## Create a CDN instance
-{: #dynamic-content-cdn-3}
+{: #dynamic-content-cdn-0}
 {: step}
 
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
@@ -189,7 +189,7 @@ After you have successfully created the CDN mapping:
    * You application is now accessible through the CNAME only: `https://<CNAME>`.  Note that the application is not available via todo.exampledomain.net - this will take a little additional configuration and associated delay.
 
 ## Enable Dynamic Content Acceleration (DCA)
-{: #dynamic-content-cdn-4}
+{: #dynamic-content-cdn-6}
 {: step}
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
@@ -213,7 +213,7 @@ You can use common website performance tools such as [Web Page Test](https://www
 After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
 
 ## Conclusion
-{: #dynamic-content-cdn-6}
+{: #dynamic-content-cdn-conclusion}
 {: step}
 
 With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, {{site.data.keyword.cdn_full}} consults the most recent data to send that request over the best path to the origin.
@@ -230,7 +230,7 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 * Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones) if you were using the service.
 
 ## Related content
-{: #dynamic-content-cdn-8}
+{: #dynamic-content-cdn-10}
 
 * [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)

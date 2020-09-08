@@ -208,7 +208,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 {: tip}
 
 ## And then to another location
-{: #multi-region-k8s-cis-3}
+{: #multi-region-k8s-cis-0}
 {: step}
 
 Repeat the following steps for the London location:

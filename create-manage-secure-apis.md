@@ -120,7 +120,7 @@ A model is a JavaScript object with both Node and REST APIs that represents data
 ![Model generator](images/solution13/models.png)
 
 ## Create {{site.data.keyword.apiconnect_short}} service
-{: #create-manage-secure-apis-3}
+{: #create-manage-secure-apis-6}
 {: step}
 
 To prepare for the next steps, you will create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}}. {{site.data.keyword.apiconnect_short}} acts as the gateway to your API and also provides management, security and rate limits.
@@ -129,7 +129,7 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
-{: #create-manage-secure-apis-4}
+{: #create-manage-secure-apis-7}
 {: step}
 
 {: #publish}
@@ -157,7 +157,7 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
 The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
 
 ## API Gateway
-{: #create-manage-secure-apis-5}
+{: #create-manage-secure-apis-8}
 {: step}
 
 Until now, you have been designing and testing your API locally. In this section, you will use {{site.data.keyword.apiconnect_short}} to test your deployed API on {{site.data.keyword.Bluemix_notm}}.
@@ -182,7 +182,7 @@ Your managed and secure API URL is displayed next to each operation and it shoul
 {: tip}
 
 ## Rate Limiting
-{: #create-manage-secure-apis-6}
+{: #create-manage-secure-apis-9}
 {: step}
 
 Setting rate limits enables you to manage the network traffic for your APIs and for specific operations within your APIs. A rate limit is the maximum number of calls allowed in a particular time interval.
@@ -198,7 +198,7 @@ Setting rate limits enables you to manage the network traffic for your APIs and 
 Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_rate_limit#setting-up-rate-limits) or explore the API Designer to see all the management features available.
 
 ## Expand the tutorial
-{: #create-manage-secure-apis-7}
+{: #create-manage-secure-apis-10}
 
 Congratulations, you have built an API that is both managed and secure. Below are additional suggestions to enhance your API.
 
@@ -207,7 +207,7 @@ Congratulations, you have built an API that is both managed and secure. Below ar
 * Review API **Analytics** and **Visualizations** [available](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_insights_analytics#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
 
 ## Related content
-{: #create-manage-secure-apis-8}
+{: #create-manage-secure-apis-11}
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
 * [Getting started with {{site.data.keyword.apiconnect_long}}](https://{DomainName}/docs/services/apiconnect?topic=apiconnect-index#index)

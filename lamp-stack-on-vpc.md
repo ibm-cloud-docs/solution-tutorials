@@ -172,7 +172,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
   {:tip}
 
 ## Install Apache, MySQL, and PHP
-{: #lamp-stack-on-vpc-3}
+{: #lamp-stack-on-vpc-6}
 {: step}
 
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
@@ -207,7 +207,7 @@ When the server is spun up for the first time, it is possible that it is already
    {: pre}
   
 ## Verify the installation and configuration
-{: #lamp-stack-on-vpc-4}
+{: #lamp-stack-on-vpc-7}
 {: step}
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
@@ -242,7 +242,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 ![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
 
 ## Install and configure WordPress
-{: #lamp-stack-on-vpc-5}
+{: #lamp-stack-on-vpc-8}
 {: step}
 
 Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page).
@@ -297,13 +297,13 @@ Experience your LAMP stack by installing an application. The following steps ins
    ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
 ## Configure domain
-{: #lamp-stack-on-vpc-6}
+{: #lamp-stack-on-vpc-9}
 {: step}
 
 To use an existing domain name with your LAMP server, update the A record to point to the VSI's floating IP address.
 
 ## Server monitoring and log management
-{: #lamp-stack-on-vpc-7}
+{: #lamp-stack-on-vpc-monitoring_log}
 {: step}
 
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. Several options are available to monitor your VSI and capture logs in a central location for analysis.
@@ -440,6 +440,6 @@ When using the console, you may need to refresh your browser to see updated stat
 {:tip}
 
 ## Related content
-{: #lamp-stack-on-vpc-10}
+{: #lamp-stack-on-vpc-17}
 
 * [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)

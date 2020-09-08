@@ -284,7 +284,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```
 
 ## Deploy this environment in your account
-{: #plan-create-update-deployments-3}
+{: #plan-create-update-deployments-0}
 {: step}
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
@@ -643,7 +643,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
 You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
-{: #plan-create-update-deployments-4}
+{: #plan-create-update-deployments-17}
 {: step}
 
 1. Navigate to the `development` folder under `roles`
@@ -679,7 +679,7 @@ You can repeat the steps for `testing` and `production`.
    {: codeblock}
 
 ## Related content
-{: #plan-create-update-deployments-5}
+{: #plan-create-update-deployments-18}
 
 * [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
 * [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)

@@ -163,7 +163,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    {:pre}
 
 ### Build the application
-{: #application-log-analysis-7}
+{: #application-log-analysis-build}
 
 On a terminal:
 
@@ -276,7 +276,7 @@ Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/
 1. Generate several log entries by submitting messages at different levels. The UI allows to change the logger setting for the server log level as well. Change the server-side log level in-between to make it more interesting. For example, you can log a "500 internal server error" as an **error** or "This is my first log entry" as an **info**.
 
 ### Access application logs
-{: #application-log-analysis-12}
+{: #application-log-analysis-access}
 
 You can access the application specific log in the LogDNA UI using the filters.
 

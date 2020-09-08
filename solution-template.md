@@ -170,7 +170,7 @@ Introductory statement that overviews the section
 Steps to take to remove the resources created in this tutorial
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-{: #solution-template-7}
+{: #solution-template-0}
 
 Want to add to or change this tutorial? Here are some ideas:
 - idea with [link]() to resources to help implement the idea

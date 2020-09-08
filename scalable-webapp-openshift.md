@@ -571,7 +571,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 <!--#/istutorial#-->
 
 ## Related content
-{: #scalable-webapp-openshift-12}
+{: #scalable-webapp-openshift-0}
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)

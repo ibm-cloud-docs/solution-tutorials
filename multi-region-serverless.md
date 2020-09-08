@@ -113,7 +113,7 @@ For renewing certificates, check the documentation [here](/docs/certificate-mana
 {: tip}
 
 ## Deploy actions in multiple locations
-{: #multi-region-serverless-3}
+{: #multi-region-serverless-0}
 {: step}
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
@@ -208,7 +208,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 Repeat the previous sections to configure more locations.
 
 ## Distribute traffic between locations
-{: #multi-region-serverless-4}
+{: #multi-region-serverless-9}
 {: step}
 
 **At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
