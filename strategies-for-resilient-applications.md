@@ -36,7 +36,7 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 - Are there any service-specific considerations?
 
 ## Objectives
-{: #objectives}
+{: #strategies-for-resilient-applications-objectives}
 
 * Learn architectural concepts involved when building resilient applications.
 * Understand how such concepts map to IBM Cloud compute and service offerings
@@ -50,10 +50,12 @@ Below is a multi-region architecture showcasing the different components that ma
 The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections.
 
 ### Disaster recovery with two regions
+{: #strategies-for-resilient-applications-1}
 
 To facilitate disaster recovery, two widely accepted architectures are used: **active/active** and **active/passive**. Each architecture has its own costs and benefits related to time and effort during recovery.
 
 #### Active-active configuration
+{: #strategies-for-resilient-applications-2}
 
 In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions in real time.
 
@@ -64,6 +66,7 @@ This configuration provides higher availability with less manual remediation tha
 When considering **recovery point objective** (RPO) in the active/active scenario, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
 
 #### Active-passive configuration
+{: #strategies-for-resilient-applications-3}
 
 An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs.
 
@@ -72,18 +75,21 @@ An active/passive architecture relies on one active region and a second (passive
 Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
 
 ### Disaster recovery with three regions
+{: #strategies-for-resilient-applications-4}
 
 In today's era of "Always On" services with zero tolerance for downtime, customers expect every business service to remain accessible around the clock anywhere in the world. A cost-effective strategy for enterprises involves architecting your infrastructure for continuous availability rather than building disaster recovery infrastructures.
 
 Using three data centers provides greater resiliency and availability than two. It can also offer better performance by spreading the load more evenly across data centers. If the enterprise has only two data centers, a variant of this is to deploy two applications in one data center and deploy the third application in the second data center. Alternatively, you can deploy business logic and presentation layers in the 3-active topology and deploy the data layer in the 2-active topology.
 
 #### Active-active-active (3-active) configuration
+{: #strategies-for-resilient-applications-5}
 
 ![](images/solution39/Active-active-active.png)
 
 Requests are served by the application running in any of the three active data centers. A case study on IBM.com website indicates that 3-active requires only 50% of the compute, memory, and network capacity per cluster, but 2-active requires 100% per cluster. The data layer is where the cost difference stands out. For further details, read [*Always On: Assess, Design, Implement, and Manage Continuous Availability*](http://www.redbooks.ibm.com/redpapers/pdfs/redp5109.pdf).
 
 #### Active-active-passive configuration
+{: #strategies-for-resilient-applications-6}
 
 ![](images/solution39/Active-active-passive.png)
 
@@ -92,6 +98,7 @@ In this scenario, when either of the two active applications in the primary and 
 Refer to [this guide](https://www.ibm.com/cloud/garage/content/manage/hadr-on-premises-app/) for more on disaster recovery.
 
 ### Multi-regions architectures
+{: #strategies-for-resilient-applications-7}
 
 In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application.
 
@@ -105,6 +112,7 @@ Deploying a solution across multiple regions comes with the following benefits:
 - Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case have to store data in multiple regions.
 
 ### Multi-zones within regions architectures
+{: #strategies-for-resilient-applications-8}
 
 Building multi-zones regions applications means having your application deployed across zones within a region and then you may also have two or three regions.
 
@@ -113,12 +121,14 @@ With multi-zone region architecture you would require to have a local load balan
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-zones).
 
 ## Compute Options
+{: #strategies-for-resilient-applications-0}
 
 This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
 Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#databaseservices), and [non-database-services](#nondatabaseservices).
 
 ### Cloud Foundry
+{: #strategies-for-resilient-applications-10}
 
 Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions. The architecture for Cloud Foundry multi-region looks like this:
 
@@ -127,6 +137,7 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
 
 ### Kubernetes
+{: #strategies-for-resilient-applications-11}
 
 With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. {{site.data.keyword.containershort_notm}} can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#vpc_basics), VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
 
@@ -143,6 +154,7 @@ The Kubernetes multi-region architecture looks like this.
 The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis) walks you through the steps to deploy such architecture.
 
 ### {{site.data.keyword.openwhisk_short}}
+{: #strategies-for-resilient-applications-12}
 
 {{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for {{site.data.keyword.openwhisk_short}} multi-region looks like this.
 
@@ -156,6 +168,7 @@ The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{sit
 Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
 
 ### Virtual server instances on VPC Infrastructure
+{: #strategies-for-resilient-applications-13}
 {{site.data.keyword.vsi_is_full}} offer the capability to achieve a multi-region architecture. You can provision instances in many available zones on {{site.data.keyword.cloud_notm}}.
 
 IBM Cloud VPC adds a network orchestration layer that eliminates the pod boundary, creating infinite capacity for scaling instances. The network orchestration layer handles all of the networking for all virtual server instances that are within an IBM Cloud VPC across regions and zones.
@@ -167,6 +180,7 @@ The below architecture demonstrates deploying isolated workloads by provisioning
 The tutorial [**Deploy isolated workloads across multiple locations and zones**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
 
 ### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} on Classic Infrastructure
+{: #strategies-for-resilient-applications-14}
 
 {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers in many available locations on {{site.data.keyword.cloud_notm}}.
 
@@ -189,7 +203,7 @@ The components required for such architecture:
 The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
 
 ## Databases and application files
-{: #databaseservices}
+{: #strategies-for-resilient-applications-databaseservices}
 
 {{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
 
@@ -209,6 +223,7 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 - What are the disaster recovery approaches for each?
 
 ### {{site.data.keyword.cloudant}}
+{: #strategies-for-resilient-applications-16}
 
 {{site.data.keyword.cloudant}} is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed {{site.data.keyword.Bluemix_notm}} service, {{site.data.keyword.cloudant}} elastically scales throughput and storage independently. {{site.data.keyword.cloudant}} is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
@@ -219,6 +234,7 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides?topic=cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/services/Cloudant/guides?topic=cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
 
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
+{: #strategies-for-resilient-applications-17}
 
 {{site.data.keyword.cloud_notm}} offers several [Db2 database services](https://{DomainName}/catalog/?search=db2). These are:
 
@@ -229,16 +245,19 @@ Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides
 In the following, we will focus on {{site.data.keyword.Db2_on_Cloud_short}} as DBaaS for operational workloads. These workloads are typical for the applications discussed in this tutorial.
 
 #### Multi-region support for {{site.data.keyword.Db2_on_Cloud_short}}
+{: #strategies-for-resilient-applications-18}
 
 {{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-fs#overview). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-ha#ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
 More information is available in the [High Availability documentation](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-ha#ha).
 
 #### Backup and restore
+{: #strategies-for-resilient-applications-19}
 
 {{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-bnr#br) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for}}
+{: #strategies-for-resilient-applications-20}
 
 {{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:
 * [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
@@ -263,6 +282,7 @@ All of these services share the same characteristics:
 
 
 ### {{site.data.keyword.cos_full_notm}}
+{: #strategies-for-resilient-applications-21}
 
 {{site.data.keyword.cos_full_notm}} (COS) provides durable, secure and cost-effective cloud storage. Information stored with {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations. When creating storage buckets within a COS instance, you decide in which location the bucket should be created and which resiliency option to use.
 
@@ -274,6 +294,7 @@ There are three types of bucket resiliency:
 Refer to [this documentation](https://{DomainName}/docs/services/cloud-object-storage/basics?topic=cloud-object-storage-endpoints#select-regions-and-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
 
 ### {{site.data.keyword.filestorage_full_notm}}
+{: #strategies-for-resilient-applications-22}
 
 {{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based file storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. {{site.data.keyword.filestorage_short}} shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
@@ -286,13 +307,14 @@ When adding a second region, you can use the snapshots feature of {{site.data.ke
 Replication can be scheduled to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#snapshots).
 
 ## Non-database services
-{: #nondatabaseservices}
+{: #strategies-for-resilient-applications-nondatabaseservices}
 
 {{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party services. When planning for multi-region architecture, you need to understand how services can work in a multi-region setup.
 
 Many of the services provide stateless APIs and offer high-availability through multi-zone deployments. But still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. Then it is important to understand how configuration and user-specific data can be made available across regions. In some cases this might be by utilizing built-in replication capabilities, in others it could mean to manually keeping data in sync by exporting and importing data sets.
 
 ## Summary
+{: #strategies-for-resilient-applications-24}
 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
@@ -308,6 +330,7 @@ Many of the services provide stateless APIs and offer high-availability through 
 | {{site.data.keyword.conversationshort}} | <ul><li>Use Watson API to export and import workspace specification between multiple instances across locations</li></ul> |
 
 ## Related content
+{: #strategies-for-resilient-applications-25}
 
 {:related}
 

@@ -7,7 +7,7 @@ lasttested: "2019-05-21"
 
 content-type: tutorial
 services: cloud-foundry-public, apiconnect
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -35,9 +35,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to create REST APIs using the LoopBack Node.js API Framework. With Loopback you can quickly create REST APIs that connect devices and browsers to data and services. You'll also add management, visibility, security and rate limiting to your APIs using {{site.data.keyword.apiconnect_long}}.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
+{: #create-manage-secure-apis-0}
 
 * Build a REST API with little to no coding
 * Publish your API on {{site.data.keyword.Bluemix_notm}} to reach developers
@@ -51,16 +52,19 @@ This tutorial demonstrates how to create REST APIs using the LoopBack Node.js AP
 3. Users and applications consume API
 
 ## Before you begin
+{: #create-manage-secure-apis-1}
 
 * Download and install [Node.js](https://nodejs.org/en/download/) version 8.15.0, or a higher 8.x.x version. It is recommended to use [nvm](https://github.com/creationix/nvm) to manage your Node.js versions.
 
 ## Create a REST API in Node.js
+{: #create-manage-secure-apis-2}
 {: step}
 
 {: #create_api}
 In this section, you will create an API in Node.js using [LoopBack](https://loopback.io/doc/index.html). LoopBack is a highly-extensible, open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding.
 
 ### Create application
+{: #create-manage-secure-apis-3}
 
 1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
@@ -75,6 +79,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 <!-- ![APIC Loopback scaffolding](images/solution13/apic_loopback.png) -->
 
 ### Add a data source
+{: #create-manage-secure-apis-4}
 
 Data sources represent backend systems such as databases, external REST APIs, SOAP web services and storage services. Data sources typically provide create, retrieve, update and delete (CRUD) functions. While Loopback supports many types of [data sources](http://loopback.io/doc/en/lb3/Connectors-reference.html), for the sake of simplicity, you will use an in-memory data store with your API.
 
@@ -99,6 +104,7 @@ Data sources represent backend systems such as databases, external REST APIs, SO
 ![API Designer datasources](images/solution13/datastore.png)
 
 ### Add a model
+{: #create-manage-secure-apis-5}
 
 A model is a JavaScript object with both Node and REST APIs that represents data in backend systems. Models are connected to these systems via data sources. In this section, you will define the structure of your data and connect it to the data source previously created.
 
@@ -114,6 +120,7 @@ A model is a JavaScript object with both Node and REST APIs that represents data
 ![Model generator](images/solution13/models.png)
 
 ## Create {{site.data.keyword.apiconnect_short}} service
+{: #create-manage-secure-apis-6}
 {: step}
 
 To prepare for the next steps, you will create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}}. {{site.data.keyword.apiconnect_short}} acts as the gateway to your API and also provides management, security and rate limits.
@@ -122,6 +129,7 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
+{: #create-manage-secure-apis-7}
 {: step}
 
 {: #publish}
@@ -149,6 +157,7 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
 The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
 
 ## API Gateway
+{: #create-manage-secure-apis-8}
 {: step}
 
 Until now, you have been designing and testing your API locally. In this section, you will use {{site.data.keyword.apiconnect_short}} to test your deployed API on {{site.data.keyword.Bluemix_notm}}.
@@ -173,6 +182,7 @@ Your managed and secure API URL is displayed next to each operation and it shoul
 {: tip}
 
 ## Rate Limiting
+{: #create-manage-secure-apis-9}
 {: step}
 
 Setting rate limits enables you to manage the network traffic for your APIs and for specific operations within your APIs. A rate limit is the maximum number of calls allowed in a particular time interval.
@@ -188,6 +198,7 @@ Setting rate limits enables you to manage the network traffic for your APIs and 
 Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_rate_limit#setting-up-rate-limits) or explore the API Designer to see all the management features available.
 
 ## Expand the tutorial
+{: #create-manage-secure-apis-10}
 
 Congratulations, you have built an API that is both managed and secure. Below are additional suggestions to enhance your API.
 
@@ -196,6 +207,7 @@ Congratulations, you have built an API that is both managed and secure. Below ar
 * Review API **Analytics** and **Visualizations** [available](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_insights_analytics#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
 
 ## Related content
+{: #create-manage-secure-apis-11}
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
 * [Getting started with {{site.data.keyword.apiconnect_long}}](https://{DomainName}/docs/services/apiconnect?topic=apiconnect-index#index)

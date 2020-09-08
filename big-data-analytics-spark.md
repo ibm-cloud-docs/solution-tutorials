@@ -7,7 +7,7 @@ lasttested: "2019-05-22"
 
 content-type: tutorial
 services: cloud-object-storage, AnalyticsEngine
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -31,20 +31,22 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will analyze and visualize open data sets using {{site.data.keyword.DSX_full}}, a Jupyter Notebook and Apache Spark. You'll start by combining data that describes population growth, life expectancy and country ISO codes into a single data frame. To discover insights, you'll then use a Python library called Pixiedust to query and visualize data in a variety of ways.
+{:shortdesc}
 
 <p style="text-align: center;">
 
-  ![](images/solution23/Architecture.png)
+  ![Architecture diagram](images/solution23/Architecture.png)
 </p>
 
 ## Objectives
-{: #objectives}
+{: #big-data-analytics-spark-objectives}
 
 * Deploy {{site.data.keyword.iae_short}} and {{site.data.keyword.DSX_short}} on {{site.data.keyword.cloud_notm}}
 * Work with a Jupyter Notebook and a Python kernel
 * Import, transform, analyze and visualize data sets
 
 ## Service and Environment Setup
+{: #big-data-analytics-spark-1}
 {: step}
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
@@ -55,7 +57,7 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
 2. In the dashboard, click on the **Create a project** tile > Select **Data Science** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
 3. On the right side of the page, you can **Define storage**. If you have already provisioned storage, select an instance from the list. If not, click on **Add** and follow the instructions in the new browser tab. Once done with service creation, click **Refresh** to see the new service.
 4. Click on the **Create** button to create the project. You will be redirected to the project's overview page.  
-   ![](images/solution23/NewProject.png)
+   ![Screenshot showing a project overview](images/solution23/NewProject.png)
 5. On the overview page, click **Settings**.
 6. From the **Associated services** section, click **Add Service** and select **Analytics Engine** from the menu. In the resulting screen, you can choose an existing service instance or create a new one. Create a new one and make sure that the **Software package** includes **Spark**.
 
@@ -63,6 +65,7 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
    {:tip}
 
 ## Create and prepare a notebook
+{: #big-data-analytics-spark-2}
 {: step}
 The [Jupyter Notebook](http://jupyter.org/) is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Notebooks and other resources are organized in projects.
 1. Click the **Add to project** button and in the **Choose asset type** dialog select **Notebook**.
@@ -73,12 +76,13 @@ The [Jupyter Notebook](http://jupyter.org/) is an open-source web application th
    import pixiedust
    ```
    {:codeblock}
-   ![](images/solution23/FirstCell_ImportPixiedust.png)
+   ![Screenshot showing a Notebook cell](images/solution23/FirstCell_ImportPixiedust.png)
 
 If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the upper right menu. Navigate to **Analyze data**, then the [**Notebooks** section](https://dataplatform.ibm.com/docs/content/analyze-data/notebooks-parent.html?context=analytics) to learn more about [notebooks and their parts](https://dataplatform.ibm.com/docs/content/analyze-data/parts-of-a-notebook.html?context=analytics&linkInPage=true).
 {:tip}
 
 ## Load data
+{: #big-data-analytics-spark-3}
 {: step}
 Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://pixiedust.github.io/pixiedust/loaddata.html).
 
@@ -103,6 +107,7 @@ Next load three open data sets and make them available within the notebook. The 
 The list of country codes will be used later to simplify data selection by using a country code instead of the exact country name.
 
 ## Transform data
+{: #big-data-analytics-spark-4}
 {: step}
 After the data is made available, transform it slightly and combine the three sets into a single data frame.
 1. The following code block will redefine the data frame for the population data. This is done with a SQL statement that renames the columns. A view is then created and schema printed. Copy this code into the next empty cell and run it.
@@ -148,6 +153,7 @@ After the data is made available, transform it slightly and combine the three se
 Your combined data is ready to be analyzed.
 
 ## Analyze data
+{: #big-data-analytics-spark-5}
 {: step}
 In this part, use [Pixiedust to visualize the data in different charts](https://pixiedust.github.io/pixiedust/displayapi.html). Start by comparing life expectancy for some countries.
 
@@ -159,7 +165,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ```
    {:codeblock}
 2. A scrollable table is shown. Click on the chart icon directly under the code block and select **Line Chart**. A popup dialog with the **Pixiedust: Line Chart Options** will appear. Enter a **Chart Title** like "Comparison of Life Expectancy". From the offered **Fields**, drag **Year** into the **Keys** box, **Life** into the **Values** area. Enter **1000** for **# of Rows to Display** and leave **Aggregation** as **SUM**. Press **OK** to have the line chart plotted. On the right side, make sure that **mapplotlib** is selected as **Renderer**. Click on the **Cluster By** selector and choose **Country**. A chart similar to the following will be shown.
-   ![](images/solution23/LifeExpectancy.png)
+   ![Screenshot showing a graph with life expectancy data](images/solution23/LifeExpectancy.png)
 
 3. Create a chart focusing on the year 2010. Copy the code into the next empty cell and run it.
    ```Python
@@ -169,9 +175,10 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ```
    {:codeblock}
 4. In the chart selector choose **Map**. In the configuration dialog drag **Country** into the **Keys** area. Move **Life** into the **Values** box. Similar to the first chart, increase the **# of Rows to Display** to **1000**. Press **OK** plot the map. Choose **brunel** as **Renderer**. A world map colored relative to the life expectancy is shown. You can use the mouse to zoom into the map.
-   ![](images/solution23/LifeExpectancyMap2010.png)
+   ![Screenshot showing a worldmap](images/solution23/LifeExpectancyMap2010.png)
 
 ## Remove resources
+{: #big-data-analytics-spark-6}
 {:removeresources}
 {: step}
 
@@ -180,6 +187,7 @@ To remove resource, follow these steps:
 2. Locate the services each by using the **Offering** filter, then choose **Delete** from the context menu.
 
 ## Expand the tutorial
+{: #big-data-analytics-spark-7}
 Below are some ideas and suggestions to enhance this tutorial.
 * Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice
 * Compute and visualize the population growth rates per country on a world map
@@ -187,6 +195,7 @@ Below are some ideas and suggestions to enhance this tutorial.
 * Export the combined data to a file or database
 
 ## Related content
+{: #big-data-analytics-spark-8}
 {:related}
 Provided below are links related to the topics covered in this tutorial.
 * [Watson Data Platform](https://dataplatform.ibm.com): Use Watson Data Platform to collaborate and build smarter applications. Quickly visualize and discover insights from your data and collaborate across teams.

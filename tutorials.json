@@ -17,7 +17,7 @@
           "url": "getting-started.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-01-20"
+          "lastUpdated": "2020-08-24"
         }
       ]
     },
@@ -86,7 +86,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2020-01-31"
+          "lastUpdated": "2020-09-01"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -100,7 +100,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-07-31"
+          "lastUpdated": "2020-08-24"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -119,13 +119,13 @@
           "name": "Deploy microservices with OpenShift",
           "url": "openshift-microservices.html",
           "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "imgSrc": "images/solution55-openshift-microservices/Architecture.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-08-05"
+          "lastUpdated": "2020-08-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -241,7 +241,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-15"
+          "lastUpdated": "2020-08-27"
         },
         {
           "name": "Serverless web application and API",
@@ -417,7 +417,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2020-01-31"
+          "lastUpdated": "2020-09-01"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -523,7 +523,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-02-26"
+          "lastUpdated": "2020-08-26"
         }
       ]
     },
@@ -632,6 +632,22 @@
             "WordPress"
           ],
           "lastUpdated": "2020-07-23"
+        },
+        {
+          "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
+          "url": "vpc-tg-dns-iam.html",
+          "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam/architecture.png",
+          "tags": [
+            "Virtual Private Cloud",
+            "Identity and Access Management",
+            "Transit Gateway",
+            "DNS",
+            "Infrastructure",
+            "Network",
+            "Linux"
+          ],
+          "lastUpdated": "2020-07-08"
         }
       ]
     },

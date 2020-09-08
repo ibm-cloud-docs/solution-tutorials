@@ -7,7 +7,7 @@ lasttested: "2020-07-27"
 
 content-type: tutorial
 services: cloud-foundry-public, databases-for-mongodb
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 
@@ -32,8 +32,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale the database resources.
+{: shortdesc}
 
 ## Objectives
+{: #mean-stack-0}
 
 {: #objectives}
 
@@ -52,7 +54,7 @@ This tutorial walks you through the creation of a web application using the popu
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
 ## Before you begin
-{: #prereqs}
+{: #mean-stack-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -65,6 +67,7 @@ You will find instructions to download and install these tools for your operatin
 In addition, make sure you [install Node.js](https://nodejs.org/).
 
 ## Create an instance of MongoDB database in the cloud
+{: #mean-stack-2}
 {: step}
 
 {: #createdatabase}
@@ -103,7 +106,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
   {: codeblock} 
 
 ## Run the MEAN app locally
-{: #runapplocally}
+{: #mean-stack-runapplocally}
 {: step}
 
 In this section, you will clone a MEAN sample code and run the application locally to test the connection to the MongoDB database running on {{site.data.keyword.cloud_notm}}.
@@ -139,6 +142,7 @@ In this section, you will clone a MEAN sample code and run the application local
 1. Access your application, create a new user and log in
 
 ## Deploy app to the cloud
+{: #mean-stack-4}
 {: step}
 
 {: #deployapp}
@@ -154,7 +158,7 @@ In this section, you will deploy the node.js app to the {{site.data.keyword.clou
 2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-random-name.mybluemix.net`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
 
 ## Scaling MongoDB database resources
-{: #scaledatabase}
+{: #mean-stack-scaledatabase}
 {: step}
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
@@ -167,6 +171,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the  rescaling is in progress.
 
 ## Remove resources
+{: #mean-stack-6}
 {:removeresources}
 {: step}
 
@@ -176,6 +181,7 @@ To remove resource, follow these steps:
 3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
 
 ## Related Content
+{: #mean-stack-7}
 
 {: #related}
 

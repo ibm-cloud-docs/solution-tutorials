@@ -7,7 +7,7 @@ lasttested: "2019-05-20"
 
 content-type: tutorial
 services: virtual-servers
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 
@@ -31,8 +31,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting. This combination of software - more commonly called a LAMP stack - is very popular and often used to deliver websites and web applications. Using {{site.data.keyword.BluVirtServers}} you will quickly deploy your LAMP stack with built-in monitoring and vulnerability scanning. To see the LAMP server in action, you will install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
+{: shortdesc}
 
 ## Objectives
+{: #lamp-stack-0}
 
 * Provision a LAMP server in minutes
 * Apply the latest Apache, MySQL and PHP version
@@ -45,6 +47,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 1. End user accesses the LAMP server and applications using a web browser
 
 ## Before you begin
+{: #lamp-stack-1}
 
 {: #prereqs}
 
@@ -52,6 +55,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
   * Network permission required to complete the **Public and Private Network Uplink**
 
 ### Configure the VPN access
+{: #lamp-stack-2}
 
 1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
 
@@ -64,6 +68,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
    {:tip}
 
 ## Create services
+{: #lamp-stack-3}
 {: step}
 
 In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic locations. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
@@ -87,6 +92,7 @@ After the server is created, you'll see the server login credentials. Although y
   {:tip}
 
 ## Re-install Apache, MySQL, and PHP
+{: #lamp-stack-reinstall}
 {: step}
 
 It's advised to update the LAMP stack with the latest security patches and bug fixes periodically. In this section, you'll run commands to update Ubuntu package sources and re-install Apache, MySQL and PHP with latest version. Note the caret (^) at the end of the command.
@@ -100,6 +106,7 @@ An alternative option is to upgrade all packages with `sudo apt-get update && su
 {:tip}
 
 ## Verify the installation and configuration
+{: #lamp-stack-verify}
 {: step}
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
@@ -148,6 +155,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 ![PHP info](images/solution4/PHPInfo.png)
 
 ### Install and configure WordPress
+{: #lamp-stack-6}
 
 Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page).
 
@@ -201,17 +209,20 @@ Experience your LAMP stack by installing an application. The following steps ins
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)
 
 ## Configure domain
+{: #lamp-stack-configure}
 {: step}
 
 To use an existing domain name with your LAMP server, update the A record to point to the virtual server's public IP address.
 You can view the server's public IP address from the dashboard.
 
 ## Server monitoring and usage
+{: #lamp-stack-8}
 {: step}
 
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. In this section, you'll explore the options that are available to monitor your virtual server and understand the usage of the server at any given time.
 
 ### Server monitoring
+{: #lamp-stack-9}
 
 Two basic monitoring types are available: SERVICE PING and SLOW PING.
 
@@ -234,16 +245,19 @@ If a response is not received in the allotted time frame, an alert is sent to th
    ![Two Monitors](images/solution4/TwoMonitoring.png)
 
 ### Server usage
+{: #lamp-stack-10}
 
 Select the **Usage** tab to understand the current server's memory and CPU usage.
   ![Server Usage](images/solution4/ServerUsage.png)
 
 ## Server security
+{: #lamp-stack-11}
 {: step}
 
 {{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and firewalls.
 
 ### Vulnerability scanner
+{: #lamp-stack-12}
 
 The vulnerability scanner scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
 
@@ -254,12 +268,14 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
    ![Vulnerability Results](images/solution4/VulnerabilityResults.png)
 
 ### Firewalls
+{: #lamp-stack-13}
 
 Another way to secure the server is by adding a firewall. Firewalls provide an essential security layer: preventing unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use. Firewall options are provisioned on demand without service interruptions.
 
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](https://{DomainName}/docs/infrastructure/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-getting-started-with-hardware-firewall-dedicated#getting-started).
 
 ## Remove resources
+{: #lamp-stack-14}
 {: step}
 
 To remove your virtual server, complete the following steps.
@@ -269,6 +285,7 @@ To remove your virtual server, complete the following steps.
 3. Click **Actions** for the virtual server you want to remove and select **Cancel**.
 
 ## Related content
+{: #lamp-stack-15}
 
 * [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
 * [PHP web application on a LAMP Stack in VPC](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)

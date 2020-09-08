@@ -7,7 +7,7 @@ lasttested: "2019-06-03"
 
 content-type: tutorial
 services: containers, Registry, cis
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -37,9 +37,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
 
 This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple locations.
+{: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #multi-region-k8s-cis-objectives}
 
 * Deploy an application on multiple Kubernetes clusters in different locations.
 * Distribute traffic across multiple clusters with a Global Load Balancer.
@@ -59,7 +60,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 5. {{site.data.keyword.cis_full_notm}} is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 ## Before you begin
-{: #prereqs}
+{: #multi-region-k8s-cis-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -78,11 +79,13 @@ In addition, make sure you:
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
+{: #multi-region-k8s-cis-2}
 {: step}
 
 This tutorial deploys a Kubernetes application to clusters in multiple locations. You will start with one location, Dallas, and then repeat these steps for London.
 
 ### Create a Kubernetes cluster
+{: #multi-region-k8s-cis-3}
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 
@@ -99,7 +102,7 @@ Create the Kubernetes cluster:
 While the cluster is getting ready, you are going to prepare the application.
 
 ### Create a namespace in {{site.data.keyword.registryshort_notm}}
-{: #create_namespace}
+{: #multi-region-k8s-cis-create_namespace}
 
 1. Target the {{site.data.keyword.Bluemix_notm}} CLI to Dallas.
    ```bash
@@ -117,7 +120,7 @@ You can also reuse an existing namespace if you have one in the location. You ca
 {: tip}
 
 ### Build the application
-{: #build_application}
+{: #multi-region-k8s-cis-build_application}
 
 This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
 
@@ -133,7 +136,7 @@ This step builds the application into a Docker image. You can skip this step if 
    {: pre}
 
 ### Build and push a Docker image to the location-specific registry
-{: #push_image}
+{: #multi-region-k8s-cis-push_image}
 
 1. Ensure your local Docker engine can push to registry in Dallas.
    ```bash
@@ -151,7 +154,7 @@ This step builds the application into a Docker image. You can skip this step if 
   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
-{: #deploy_application}
+{: #multi-region-k8s-cis-deploy_application}
 
 The cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
 
@@ -188,7 +191,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    {: pre}
 
 ### Get the domain name and IP address assigned to the cluster
-{: #CSALB_IP_subdomain}
+{: #multi-region-k8s-cis-CSALB_IP_subdomain}
 
 When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
 
@@ -205,6 +208,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 {: tip}
 
 ## And then to another location
+{: #multi-region-k8s-cis-0}
 {: step}
 
 Repeat the following steps for the London location:
@@ -221,6 +225,7 @@ Repeat the following steps for the London location:
 
 
 ## Configure multi-location load-balancing
+{: #multi-region-k8s-cis-4}
 {: step}
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
@@ -234,7 +239,7 @@ To configure a global load balancer, you will need:
 * and to define origin pools pointing to the clusters.
 
 ### Register a custom domain with {{site.data.keyword.cis_full_notm}}
-{: #create_cis_instance}
+{: #multi-region-k8s-cis-create_cis_instance}
 
 The first step is to create an instance of {{site.data.keyword.cis_short_notm}} and to point your custom domain to {{site.data.keyword.cis_short_notm}} name servers.
 
@@ -251,6 +256,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
    {:tip}
 
 ### Configure Health Check for the Global Load Balancer
+{: #multi-region-k8s-cis-12}
 
 A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
@@ -264,10 +270,12 @@ A health check helps gain insight into the availability of pools so that traffic
    {:tip}
 
 ### Define Origin Pools
+{: #multi-region-k8s-cis-13}
 
 A pool is a group of origin servers that traffic is intelligently routed to when attached to a GLB. With clusters in the United Kingdom and United States, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest clusters based on the geographical location of the user requests.
 
 #### One pool for the cluster in London
+{: #multi-region-k8s-cis-14}
 1. Click **Create Pool**.
 2. Set **Name** to **UK**
 3. Set **Health check** to the one created in the previous section
@@ -277,6 +285,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 7. Click **Provision 1 Resource**.
 
 #### One pool for the cluster in Dallas
+{: #multi-region-k8s-cis-15}
 1. Click **Create Pool**.
 2. Set **Name** to **US**
 3. Set **Health check** to the one created in the previous section
@@ -286,6 +295,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 7. Click **Provision 1 Resource**.
 
 #### And one pool with both clusters
+{: #multi-region-k8s-cis-16}
 1. Click **Create Pool**.
 1. Set **Name** to **All**
 1. Set **Health check** to the one created in the previous section
@@ -296,6 +306,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 2. Click **Provision 1 Resource**.
 
 ### Create the Global Load Balancer
+{: #multi-region-k8s-cis-17}
 
 With the origin pools defined, you can complete the configuration of the load balancer.
 
@@ -322,6 +333,7 @@ With this configuration, users in Europe and in Asia will be redirected to the c
 1. Click **Provision 1 Resource**.
 
 ### Create Ingress Resource for Kubernetes clusters per location
+{: #multi-region-k8s-cis-18}
 
 The Global Load Balancer is now ready to serve requests. All health checks should be passing successfully. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
 
@@ -353,10 +365,11 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
 At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster - or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
 
 ## Secure the application
-{: #secure_via_CIS}
+{: #multi-region-k8s-cis-secure_via_CIS}
 {: step}
 
 ### Turn the Web Application Firewall On
+{: #multi-region-k8s-cis-20}
 
 The Web Application Firewall(WAF) protects your web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
 
@@ -372,7 +385,7 @@ For a secured connection with HTTPS, you can either obtain a certificate from [L
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks
-{: #proxy_setting}
+{: #multi-region-k8s-cis-proxy_setting}
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
 
@@ -391,21 +404,25 @@ In addition, you can now control what content gets cached by {{site.data.keyword
    ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
 
 ## Remove resources
+{: #multi-region-k8s-cis-6}
 {:removeresources}
 {: step}
 
 ### Remove Kubernetes Cluster resources
+{: #multi-region-k8s-cis-23}
 1. Remove the Ingress.
 1. Remove the service.
 1. Remove the deployment.
 1. Delete the clusters if you created them specifically for this tutorial.
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
+{: #multi-region-k8s-cis-24}
 1. Remove the GLB.
 1. Remove the origin pools.
 1. Remove the health checks.
 
 ## Related content
+{: #multi-region-k8s-cis-7}
 {:related}
 
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)

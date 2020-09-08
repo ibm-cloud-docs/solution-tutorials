@@ -7,7 +7,7 @@ lasttested: "2019-11-27"
 
 content-type: tutorial
 services: cloud-object-storage, cognos-dashboard-embedded, sql-query
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -31,8 +31,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
+{: shortdesc}
 
 ## Objectives
+{: #smart-data-lake-0}
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
@@ -49,6 +51,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 6. Charts are built using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Before you begin
+{: #smart-data-lake-1}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -63,6 +66,7 @@ In addition, make sure you:
 - and [install Node.js and NPM](https://nodejs.org).
 
 ## Create services
+{: #smart-data-lake-2}
 {: step}
 
 In this section, you will create the services required to build your data lake.
@@ -79,7 +83,16 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud target --cf
     ```
     {: pre}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
+2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
+    ```sh
+    ibmcloud resource groups
+    ```
+    {: pre}
+    ```sh
+    ibmcloud target -g <your-default-resource-group>
+    ```
+    {: pre}
+3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -88,17 +101,17 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
     ```
     {: pre}
-3. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
+4. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
-4. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
+5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
     ibmcloud cf create-service data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
-5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
+6. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
     ```sh
     ibmcloud resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
     ```
@@ -107,7 +120,7 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
     ```
     {: pre}
-6. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
+7. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
     ```sh
     git clone https://github.com/IBM-Cloud/nodejs-data-lake-dashboard.git
     ```
@@ -125,14 +138,15 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    After deployment, the application will be public and listening on a random hostname. You can got to the [Resource List](https://{DomainName}/resources) page, select the app under Cloud Foundry Apps and view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
+    After deployment, the application will be public and listening on a random hostname. You can go to the [Resource List](https://{DomainName}/resources) page, select the app under Cloud Foundry Apps and view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
     {: tip}
 
-7. Confirm the application is active by accessing its public URL in the browser.
+8. Confirm the application is active by accessing its public URL in the browser.
 
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
+{: #smart-data-lake-3}
 {: step}
 
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
@@ -153,6 +167,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Click **Select files** > Browse and select the previously downloaded CSV file.
 
 ## Working with data
+{: #smart-data-lake-4}
 {: step}
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
@@ -186,12 +201,13 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
+{: #smart-data-lake-5}
 {: step}
 
 In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
-    - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
+    - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.cloud.ibm.com/home2?context=cpdaas&apps=data_science_experience&nocache=true).
     - Click **Create a Project** tile followed by **Create an empty project**.
     - Provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
@@ -265,6 +281,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     {: codeblock}
 
 ## Visualize data using PixieDust
+{: #smart-data-lake-6}
 {: step}
 
 In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
@@ -321,6 +338,7 @@ In this section, you will visualize the previous result set using PixieDust and 
 ![Notebook](images/solution29/notebook-mapbox.png)
 
 ## Share your dataset with the organization
+{: #smart-data-lake-7}
 {: step}
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to SQL Query, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
@@ -340,6 +358,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 ![Dashboard Chart](images/solution29/dashboard-chart.png)
 
 ## Explore your dashboard
+{: #smart-data-lake-8}
 {: step}
 
 In this section, you'll take a few additional steps to explore the features of the dashboard application and {{site.data.keyword.dynamdashbemb_notm}}.
@@ -356,6 +375,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 {: tip}
 
 ## Expand the tutorial
+{: #smart-data-lake-9}
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
@@ -365,6 +385,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources
+{: #smart-data-lake-10}
 {: step}
 
 Run the following commands to remove services, applications and keys you created and used.
@@ -411,6 +432,7 @@ ibmcloud cf delete dashboard-nodejs
 {: pre}
 
 ## Related content
+{: #smart-data-lake-11}
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)

@@ -7,7 +7,7 @@ lasttested: "2019-10-24"
 
 content-type: tutorial
 services: CDN, containers, Registry, dns
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---
@@ -38,6 +38,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. This tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
+{: shortdesc}
 
 Applications also contain personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
 
@@ -48,7 +49,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 * automatically compress images for lower latency.
 
 ## Objectives
-{: #objectives}
+{: #dynamic-content-cdn-objectives}
 
 * Deploy a starter dynamic web application to a {{site.data.keyword.containershort_notm}} cluster.
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
@@ -68,7 +69,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 5. {{site.data.keyword.cdn_full}} interacts with the application to fetch dynamic contents.
 
 ## Before you begin
-{: #prereqs}
+{: #dynamic-content-cdn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -90,6 +91,7 @@ In addition:
 - and obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
 ## Deploy a dynamic web application to be accelerated
+{: #dynamic-content-cdn-2}
 {: step}
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
@@ -97,6 +99,7 @@ Let's consider a simple dynamic web application for collaboration for a team geo
 This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
+{: #dynamic-content-cdn-3}
 
 1. Clone the application
    ```bash
@@ -133,6 +136,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 {: pre}
 
 ### Run the application in the cluster
+{: #dynamic-content-cdn-4}
 
 1. Run the command below to target the cluster where to deploy the application.
    ```bash
@@ -158,6 +162,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
 ## Create a CDN instance
+{: #dynamic-content-cdn-0}
 {: step}
 
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
@@ -184,6 +189,7 @@ After you have successfully created the CDN mapping:
    * You application is now accessible through the CNAME only: `https://<CNAME>`.  Note that the application is not available via todo.exampledomain.net - this will take a little additional configuration and associated delay.
 
 ## Enable Dynamic Content Acceleration (DCA)
+{: #dynamic-content-cdn-6}
 {: step}
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
@@ -199,6 +205,7 @@ To activate DCA:
 5. Click **Save**. You have successfully accelerated your application deployed in {{site.data.keyword.containershort_notm}} cluster with **Dynamic Content Acceleration**.
 
 ## Verify DCA performance
+{: #dynamic-content-cdn-5}
 {: step}
 
 You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.
@@ -206,6 +213,7 @@ You can use common website performance tools such as [Web Page Test](https://www
 After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
 
 ## Conclusion
+{: #dynamic-content-cdn-conclusion}
 {: step}
 
 With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, {{site.data.keyword.cdn_full}} consults the most recent data to send that request over the best path to the origin.
@@ -213,6 +221,7 @@ With DCA turned on and the detection path specified, CDN edge servers periodical
 With **Prefetching** enabled, DCA also finds which content is required by the application and preemptively fetches content from origin and stores it close to the user by analyzing user behavior data and web sessions. The **Image compression** option serves compressed images to reduces the amount of content required to load a page, especially when end users have slow network speed. DCA also employs TCP-layer optimizations that accelerate connection set-up and reduce round trips.
 
 ## Remove resources
+{: #dynamic-content-cdn-7}
 {: step}
 
 * Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster).
@@ -221,6 +230,7 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 * Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones) if you were using the service.
 
 ## Related content
+{: #dynamic-content-cdn-10}
 
 * [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
