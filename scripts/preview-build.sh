@@ -53,6 +53,9 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tut
 # generate a list of all solutions, suitable to use in github issues
 (cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
 
+# check that all section IDs are unique
+(cd scripts/add-section-titles && npm install && node add-section-titles.js)
+
 # generate the new files
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
