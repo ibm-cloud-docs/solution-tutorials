@@ -1,7 +1,10 @@
 const fs = require('fs');
 const { exit } = require('process');
 
-const rewrite = true
+const rewrite = process.argv[2] == "true"
+if (rewrite) {
+  console.log('Will rewrite');
+}
 
 let directory = '../..'
 let tutorials = fs.readdirSync(directory);
@@ -19,6 +22,8 @@ function readUntil(array, start, match) {
   return null;
 }
 
+let exitCode = 0;
+
 tutorials.forEach((file) => {
   function log(...data) {
     console.log(`[${file}] ${data}`);
@@ -30,7 +35,7 @@ tutorials.forEach((file) => {
   const lines = fs.readFileSync(filename).toString('utf-8').split('\n');
 
   let sectionPrefix = file.replace('.md', '')
-  log(`Using ${sectionPrefix} as prefix`);
+  // log(`Using ${sectionPrefix} as prefix`);
 
 
   let sectionTitleIndex = 0;
@@ -42,6 +47,7 @@ tutorials.forEach((file) => {
     if (!(anchor.startsWith('{: #') || anchor.startsWith('{:#'))) {
       log(`No anchor found for section ${section}, adding one`);
       lines.splice(sectionTitleIndex + 1, 0, `{: #${sectionPrefix}-${sectionIndex}}`);
+      exitCode = 1
     } else {
       sectionId = anchor.trim()
         .replace('{:', '')
@@ -53,6 +59,8 @@ tutorials.forEach((file) => {
       }
       if (allSectionIds.has(sectionId)) {
         log(`Duplicate ID ${sectionId}`);
+        lines[sectionTitleIndex + 1] = `{: #${sectionPrefix}-${sectionIndex}}`
+        exitCode = 1
       }
       allSectionIds.add(sectionId)
     }
@@ -67,3 +75,5 @@ tutorials.forEach((file) => {
     fs.writeFileSync(filename, lines.join('\n'));
   }
 });
+
+exit(exitCode);
