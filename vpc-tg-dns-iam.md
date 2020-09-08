@@ -45,12 +45,14 @@ Microservices are popular because they allow an enterprise to organize their dev
 * Transparently configure a {{site.data.keyword.loadbalancer_short}} for an application.
 
 ### Abstract Architecture:
+{: #vpc-tg-dns-iam-1}
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/simple.png)
 
 In the diagram above the user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 ### Concrete Architecture
+{: #vpc-tg-dns-iam-2}
 
 The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
@@ -77,15 +79,17 @@ Teams:
 - Application2 - create VSI and block devices in the application2 VPC.
 
 ### IAM Conceptual
-{: #iam_conceptual}
+{: #vpc-tg-dns-iam-iam_conceptual}
 
 #### Network Team
+{: #vpc-tg-dns-iam-6}
 
 A conceptual team ownership model was implemented.  The *network* team administers a lot of the diagram.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/network.png)
 
 #### Shared Team
+{: #vpc-tg-dns-iam-7}
 
 The *shared* team creates the VSI in its isolated VPC.  In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
 
@@ -98,11 +102,12 @@ The *application* teams needs the same access as the *shared* team with the exce
 ![Architecture](images/solution59-vpc-tg-dns-iam/app1.png)
 
 ### IAM Architecture
+{: #vpc-tg-dns-iam-8}
 
 If you have a good understanding of resource groups and IAM Access Groups you can quickly skim this section and start the steps to create the resources.
 
 #### Access Groups
-{: #iam_access_groups}
+{: #vpc-tg-dns-iam-iam_access_groups}
 
 An access group will be created for each team.  Access policies are added to access groups, and then users (team members) are added to the access group to grant access.
 
@@ -121,7 +126,7 @@ IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor
 IS: VPC, Subnet, Security Group|Editor|Operator|Operator
 
 #### Resource Groups
-{: #iam_resource_groups}
+{: #vpc-tg-dns-iam-iam_resource_groups}
 
 The *shared* team and the *network* team are now nicely separated.  But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
@@ -181,7 +186,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
    {:pre}
 
 ### A Note about becoming a team member
-{: #iam_become}
+{: #vpc-tg-dns-iam-iam_become}
 
 It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using the api key for the team.  The service ID names are ${basename}-x where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```
@@ -886,7 +891,7 @@ The second *application* team environment is identical to the first.  Optionally
 {: #vpc-tg-dns-iam-12}
 
 ### Other Considerations
-{: #expand_other}
+{: #vpc-tg-dns-iam-expand_other}
 
 - The *Application* team is providing access to the application via a floating IP address.  Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a a load balancer like the *shared* team.
@@ -894,13 +899,13 @@ The second *application* team environment is identical to the first.  Optionally
 - The *shared* team could switch their implementation platform to Kubernetes
 
 ### Continuous Delivery
-{: #expand_cd}
+{: #vpc-tg-dns-iam-expand_cd}
 
 - Installation of software is currently done when the VPC instance is created.  The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
 - For shared micro-services, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
-{: #expand_automation}
+{: #vpc-tg-dns-iam-expand_automation}
 
 - For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
 - The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.

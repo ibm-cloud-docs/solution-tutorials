@@ -84,7 +84,7 @@ A GitHub account is optional and only required if you plan on modifying the prov
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
 ### {{site.data.keyword.vmwaresolutions_short}} Shared
-{: #create-vmware-solutions-shared}
+{: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
 1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
 2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
@@ -97,7 +97,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
-{: #access-vmware-solutions-shared}
+{: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
 
 1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
 2. Click on the newly created instance `vmware-tutorial`.
@@ -128,7 +128,7 @@ In a previous step you created a virtual data center(VDC). This tutorial include
 The `main.tf` file contains most of the critical sections for this template.
 
 ### Create a routed network
-{:#create_routed_network}
+{: #vmware-solutions-shared-getting-started-create_routed_network}
 
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
 
@@ -154,7 +154,7 @@ An organization VDC network with a routed connection provides controlled access 
   ```
 
 ### Create a firewall and SNAT rule to access the Internet
-{:#create_internet_rules}
+{: #vmware-solutions-shared-getting-started-create_internet_rules}
 
 You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
@@ -191,7 +191,7 @@ You can create rules to allow or deny traffic, this section creates a firewall a
   ```
 
 ### Create a firewall rule to access the IBM Cloud private network
-{:#create_private_rules}
+{: #vmware-solutions-shared-getting-started-create_private_rules}
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will enable your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
@@ -229,7 +229,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
   ```
 
 ### Create vApp and VM
-{:#create_vm}
+{: #vmware-solutions-shared-getting-started-create_vm}
 
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
@@ -267,7 +267,7 @@ A vApp consists of one or more virtual machines that communicate over a network 
   ```
 
 ### Create a firewall rule to allow to SSH into the VM from the Internet
-{:#create_ssh_rules}
+{: #vmware-solutions-shared-getting-started-create_ssh_rules}
 
 You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
 
@@ -325,7 +325,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
 
 ### 	{{site.data.keyword.bplong_notm}}
-{: #create-schematics}
+{: #vmware-solutions-shared-getting-started-create-schematics}
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
 2. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.

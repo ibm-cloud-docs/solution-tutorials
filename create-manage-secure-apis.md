@@ -64,6 +64,7 @@ This tutorial demonstrates how to create REST APIs using the LoopBack Node.js AP
 In this section, you will create an API in Node.js using [LoopBack](https://loopback.io/doc/index.html). LoopBack is a highly-extensible, open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding.
 
 ### Create application
+{: #create-manage-secure-apis-3}
 
 1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
@@ -78,6 +79,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 <!-- ![APIC Loopback scaffolding](images/solution13/apic_loopback.png) -->
 
 ### Add a data source
+{: #create-manage-secure-apis-4}
 
 Data sources represent backend systems such as databases, external REST APIs, SOAP web services and storage services. Data sources typically provide create, retrieve, update and delete (CRUD) functions. While Loopback supports many types of [data sources](http://loopback.io/doc/en/lb3/Connectors-reference.html), for the sake of simplicity, you will use an in-memory data store with your API.
 
@@ -102,6 +104,7 @@ Data sources represent backend systems such as databases, external REST APIs, SO
 ![API Designer datasources](images/solution13/datastore.png)
 
 ### Add a model
+{: #create-manage-secure-apis-5}
 
 A model is a JavaScript object with both Node and REST APIs that represents data in backend systems. Models are connected to these systems via data sources. In this section, you will define the structure of your data and connect it to the data source previously created.
 

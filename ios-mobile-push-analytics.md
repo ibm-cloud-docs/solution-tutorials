@@ -113,6 +113,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
    You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by {{site.data.keyword.mobilepushshort}} service and used to connect to APNs server as a provider.
 
 ### Registering an App ID
+{: #ios-mobile-push-analytics-5}
 
    The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the {{site.data.keyword.mobilepushshort}} service are configured to the App ID.
    Ensure that you have an [Apple Developers](https://developer.apple.com/) account. This is a mandatory prerequisite.
@@ -128,6 +129,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      ![](images/solution6/push_ios_register_appid.png)
 
 ### Create a development and distribution APNs SSL certificate
+{: #ios-mobile-push-analytics-6}
    Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
@@ -162,6 +164,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
       {:tip}
 
 ### Creating a development provisioning profile
+{: #ios-mobile-push-analytics-7}
    The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
 
    Ensure that you have registered an App ID, enabled it for {{site.data.keyword.mobilepushshort}} service, and configured it to use a development and production APNs SSL certificate.
@@ -176,6 +179,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      - **For iOS and watchOS apps**
 
 ### Creating a store distribution provisioning profile
+{: #ios-mobile-push-analytics-8}
    Use the store provisioning profile to submit your app for distribution to the App Store.
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
@@ -183,6 +187,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_2#push_step_2).
 
 ### Configure the service instance
+{: #ios-mobile-push-analytics-9}
 
    To use the {{site.data.keyword.mobilepushshort}} service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
 

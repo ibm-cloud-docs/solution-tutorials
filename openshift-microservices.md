@@ -120,6 +120,7 @@ Take a note of the resource group selected above.  This same resource group will
 <!--#/isworkshop#-->
 
 ### Initialize a Cloud Shell
+{: #openshift-microservices-3}
 
 The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
@@ -143,6 +144,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
 ### Create Project
+{: #openshift-microservices-5}
 
 A project is a collection of resources managed by a devops team.  An administrator will create the project and the developers can create applications that can be built and deployed.
 
@@ -152,6 +154,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project Details** > **example-health** on the top.
 
 ### Build and Deploy Application
+{: #openshift-microservices-6}
 
 1. Switch from the **Administrator** to the **Developer** perspective. Make sure your project is selected.  Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
    ![](images/solution55-openshift-microservices/ocp-project-view.png)
@@ -167,6 +170,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 1. Click **Create** at the bottom of the window to build and deploy the application.
 
 ### View Application
+{: #openshift-microservices-7}
 
 1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
 1. Select the **node** **patient-health-frontend** to bring up the details view of the `Deployment`.  Note the **D** next to **patient-health-frontend**.  The Pods, Builds, Services and Routes are visible.
@@ -196,6 +200,7 @@ The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Cont
 In this section, you will explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
 
 ### Simulate Load on the Application
+{: #openshift-microservices-9}
 
 Create a script to simulate load.
 
@@ -236,6 +241,7 @@ Create a script to simulate load.
    {:pre}
 
 ### {{site.data.keyword.openshiftshort}} Logging
+{: #openshift-microservices-10}
 
 Since there is only one pod, seeing the application logs will be straight forward.
 
@@ -246,6 +252,7 @@ Since there is only one pod, seeing the application logs will be straight forwar
    ![Pod Logs](images/solution55-openshift-microservices/ocp43-pod-logs.png)
 
 ### {{site.data.keyword.openshiftshort}} Terminal
+{: #openshift-microservices-11}
 
 One of the great things about Kubernetes is the ability to quickly debug your application pods with SSH terminals. This is great for development, but generally is not recommended in production environments. {{site.data.keyword.openshiftshort}} makes it even easier by allowing you to launch a terminal directly in the dashboard.
 
@@ -260,6 +267,7 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 | `curl localhost:8080/info` | output from the node app.js process |
 
 ### {{site.data.keyword.openshiftshort}} Monitoring
+{: #openshift-microservices-12}
 
 When deploying new apps, making configuration changes, or simply inspecting the state of your cluster, the Project-scope Dashboard gives a Developer clear insights.
 
@@ -276,6 +284,7 @@ Almost all actions in {{site.data.keyword.openshiftshort}} result in an event be
 In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
 
 ### Grafana
+{: #openshift-microservices-14}
 
 Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](https://grafana.com/) preinstalled.
 
@@ -291,6 +300,7 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 5. There is a lot more to investigate with Grafana, but instead the fully managed cloud {{site.data.keyword.la_short}} service will be covered in detail later. {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
 ### Prometheus
+{: #openshift-microservices-15}
 
 Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch:
 
@@ -319,6 +329,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 In this section, the metrics observed in the previous section can be used to scale the UI application in response to load.
 
 ### Enable Resource Limits
+{: #openshift-microservices-17}
 
 Before autoscaling maximum CPU and memory resource limits must be established.
 
@@ -357,6 +368,7 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
    ![Resource Limits](images/solution55-openshift-microservices/ocp-dc-events.png)
 
 ### Enable Autoscaler
+{: #openshift-microservices-18}
 
 Now autoscaler can be enabled.
 
@@ -391,6 +403,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 2. Click **Create**.
 
 ### Test Autoscaler
+{: #openshift-microservices-19}
 
 If you're not running the script to simulate load, the number of pods should stay at 1.
 
@@ -407,6 +420,7 @@ If you're not running the script to simulate load, the number of pods should sta
 That's it! You now have a highly available and automatically scaled front-end Node.js application. {{site.data.keyword.openshiftshort}} is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
 
 ### Autoscaling from the command line
+{: #openshift-microservices-20}
 
 You can also can delete and create resources like autoscalars with the command line.
 
@@ -439,6 +453,7 @@ You can also can delete and create resources like autoscalars with the command l
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
 ### Enable the IBM Cloud Operator
+{: #openshift-microservices-22}
 
 Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.openshiftshort}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
 
@@ -451,6 +466,7 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
    ![Installed Operators](images/solution55-openshift-microservices/installedoperators.png)
 
 ### Create a Cloudant Service and Bind using the CRDs
+{: #openshift-microservices-23}
 
 Click on the **IBM Cloud Operator** to open it.  Scroll down to the **Requirements** section.
 
@@ -595,6 +611,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
 
 ### Deploy the Node.js Patient Backend Database App
+{: #openshift-microservices-24}
 
 Now you'll create the Node.js app that will populate your Cloudant DB with patient data. It will also serve data to the front-end application deployed earlier.
 
@@ -624,6 +641,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should should indicate **Running** shortly.  Click on the **Pod** **logs** and notice the databases created.
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
+{: #openshift-microservices-25}
 
 The `patient-health-frontend` application has an environment variable for the backend microservice url.
 
@@ -682,6 +700,7 @@ This section of the tutorial goes deep into the IBM logging service.  You can st
 {:note}
 
 ### Verify that the {{site.data.keyword.la_short}} agent is deployed successfully
+{: #openshift-microservices-28}
 
 Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in a **Running** status.
    ```
@@ -716,6 +735,7 @@ For example,
    ```
 
 ### Launch the {{site.data.keyword.la_short}} webUI
+{: #openshift-microservices-29}
 
 Launch the web UI within the context of a {{site.data.keyword.la_short}} instance, from the IBM Cloud UI.
 
@@ -726,12 +746,14 @@ Launch the web UI within the context of a {{site.data.keyword.la_short}} instanc
 The Web UI opens.
 
 ### Create a custom view
+{: #openshift-microservices-30}
 
 In {{site.data.keyword.la_short}}, you can configure custom views to monitor a subset of data. You can also attach an alert to a view to be notified of the presence or absence of log lines.
 
 In the {{site.data.keyword.la_short}} web UI notice the log entries are displayed with a predefined format. You can modify in the **User Preferences** section how the information in each log line is displayed. You can also filter logs and modify search settings, then bookmark the result as a _view_. You can attach and detach one or more alerts to a view. You can define a custom format for how your lines are shown in the view. You can expand a log line and see the data parsed.
 
 ### View events with the default format
+{: #openshift-microservices-31}
 
 Generate load on the application with the `curl` loop used earlier.
 
@@ -740,6 +762,7 @@ Generate load on the application with the `curl` loop used earlier.
    ![](images/solution55-openshift-microservices/views-img-1.png)
 
 ### Customize your default view
+{: #openshift-microservices-32}
 
 In the **USER PREFERENCES** section, you can modify the order of the data fields that are displayed per line.
 
@@ -751,6 +774,7 @@ In the **USER PREFERENCES** section, you can modify the order of the data fields
    ![](images/solution55-openshift-microservices/views-img-19.png)
 
 ### Create a custom view to monitor logs
+{: #openshift-microservices-33}
 
 You can select the events that are displayed through a view by applying a search query in the search bar, selecting values in the search area, or a combination of both. You can save that view for reuse later.
 
@@ -768,10 +792,12 @@ You can select the events that are displayed through a view by applying a search
 5. A new view appears on the left navigation panel.
 
 #### Generate application log data
+{: #openshift-microservices-34}
 
 Generate logs by opening the application and logging in with different names (see previous section for simulate load on the application for instructions):
 
 ### Analyze a log line
+{: #openshift-microservices-35}
 
 At any time, you can view each log line in context.
 
@@ -798,6 +824,7 @@ Complete the following steps:
 3. When you are finished, close the line.
 
 ### View a subset of the events by applying a timeframe
+{: #openshift-microservices-36}
 
 In a view, you can search events that are displayed through a view for a specific timeframe.
 
@@ -817,6 +844,7 @@ Complete the following steps to jump to a specific time:
 You might get the error message: `Your request is taking longer than expected`, try refreshing your browser after a few minutes of delay to allow logs to flow into the service.  Also, ensure that the the timeframe selected is likely to have events available for display. It may be required to change the time query, and retry.
 
 ### Create a dashboard
+{: #openshift-microservices-37}
 
 You can create a dashboard to monitor your app graphically through interactive graphs. For example, you can use graphs to analyze patterns and trends over a period of time.
 
@@ -859,6 +887,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 A new category appears on the left navigation panel.
 
 ### Create a screen to monitor your app
+{: #openshift-microservices-38}
 
 You can create a screen to monitor your app graphically through metrics \(counters\), operational KPIs \(gauges\), tables, and time-shifted graphs \(graphs that you can use to analyze patterns and trends for comparison analysis\).
 
@@ -912,6 +941,7 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
 
 
 ### Verify that the {{site.data.keyword.mon_short}} agent is deployed successfully
+{: #openshift-microservices-40}
 
 Verify that the `sysdig-agent` pods on each node have a **Running** status.
 
@@ -937,6 +967,7 @@ Example output:
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
 
 ### View SysDig pre-defined views and dashboards
+{: #openshift-microservices-42}
 
 Use views and dashboards to monitor your infrastructure, applications, and services. You can use pre-defined dashboards. You can also create custom dashboards through the Web UI or programmatically. You can backup and restore dashboards by using Python scripts.
 
@@ -951,6 +982,7 @@ The following table lists the different types of pre-defined dashboards:
 | Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. |
 
 ### View the {{site.data.keyword.mon_short}} dashboard
+{: #openshift-microservices-43}
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
@@ -976,6 +1008,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    ![](images/solution55-openshift-microservices/explore-img-9.png)
 
 ### Explore the cluster and the node capacity
+{: #openshift-microservices-44}
 
 4. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** check out the two dashboards:
    * **Overview by Host**
@@ -988,6 +1021,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    - Check the **Total Pod CPU Usage**. It is the total amount of CPU that is used by all Pods on the node or cluster
 
 ### Explore the Network
+{: #openshift-microservices-45}
 
 1. Select **DASHBOARD** > **Default Dashboards** > **Network > Overview**.
 

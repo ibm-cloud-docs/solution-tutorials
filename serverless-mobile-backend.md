@@ -148,6 +148,7 @@ In this section, you will provision the services used by the application. You ca
 It is recommended that you create a new space to provision the services and deploy the serverless backend. This helps to keep all the resources together.
 
 ### Provision services from the {{site.data.keyword.Bluemix_notm}} catalog
+{: #serverless-mobile-backend-4}
 
 1. Go to the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/)
 2. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
@@ -156,6 +157,7 @@ It is recommended that you create a new space to provision the services and depl
 5. Create a [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
 
 ### Provision services from the command line
+{: #serverless-mobile-backend-5}
 
 With the command line, run the following commands to provision the services and retrieve their credentials:
 
@@ -214,6 +216,7 @@ Set the location where services should be created:
 When a user submits a new feedback, the application will analyze this feedback and send back a notification to the user. The user may have moved to another task, or may not have the mobile app started so using push notifications is a good way to communicate with the user. The {{site.data.keyword.mobilepushshort}} service makes it possible to send notifications to iOS or Android users via one unified API. In this section, you will configure the {{site.data.keyword.mobilepushshort}} service for your target platform.
 
 ### Configure Firebase Cloud Messaging (FCM)
+{: #serverless-mobile-backend-7}
 {: java}
 
    1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
@@ -227,6 +230,7 @@ When a user submits a new feedback, the application will analyze this feedback a
    {: java}
 
 ### Configure Apple Push Notifications Service (APNs)
+{: #serverless-mobile-backend-8}
 {: swift}
 
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
@@ -258,6 +262,7 @@ With all the services configured, you can now deploy the serverless backend. The
 | `feedback-analyze-rule`       | Rule                           | Links the trigger `feedback-analyze-trigger` with the sequence `feedback-analyze-sequence` |
 
 ### Compile the code
+{: #serverless-mobile-backend-10}
 {: java}
 1. From the root of the checkout directory, compile the actions code
 {: java}
@@ -269,6 +274,7 @@ With all the services configured, you can now deploy the serverless backend. The
    {: java}
 
 ### Configure and deploy the actions
+{: #serverless-mobile-backend-11}
 {: java}
 
 2. Copy template.local.env to local.env
@@ -288,6 +294,7 @@ With all the services configured, you can now deploy the serverless backend. The
    {: tip}
 
 ### Configure and deploy the actions
+{: #serverless-mobile-backend-12}
 {: swift}
 
 1. Copy template.local.env to local.env

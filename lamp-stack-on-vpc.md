@@ -86,6 +86,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create SSH Key(s)
+{: #lamp-stack-on-vpc-3}
 1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
@@ -104,6 +105,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create VPC, Subnet(s) and Security Group(s)
+{: #lamp-stack-on-vpc-4}
 1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
@@ -142,6 +144,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create Virtual Server Instance
+{: #lamp-stack-on-vpc-5}
 
 1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 18.x by running the following command.  
    ```sh
@@ -306,10 +309,12 @@ To use an existing domain name with your LAMP server, update the A record to poi
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. Several options are available to monitor your VSI and capture logs in a central location for analysis.
 
 ### Server monitoring
+{: #lamp-stack-on-vpc-11}
 
 You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-ubuntu) documentation. 
 
 ### Server logging
+{: #lamp-stack-on-vpc-12}
 
 You can use {{site.data.keyword.la_full_notm}} to manage system and application logs in the IBM Cloud.
 
@@ -363,6 +368,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}   
 
 ### Configure Apache to use the new /data file system
+{: #lamp-stack-on-vpc-14}
 
 1. Stop the Apache service
    ```sh
@@ -386,6 +392,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}   
 
 ### Configure MySQL to use the new /data file system
+{: #lamp-stack-on-vpc-15}
 
 1. Stop the MySQL service
    ```sh

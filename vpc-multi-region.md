@@ -90,6 +90,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 To confirm the creation of subnet, click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
 
 ### Create subnet in a different zone
+{: #vpc-multi-region-3}
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet, select **vpc-region1** as the VPC, and select a **Resource group**.
 1. Select a location zone 2 for example: **Dallas 2**
@@ -97,6 +98,7 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 1. Leave the public gateway to **Detached** and click **Create subnet**.
 
 ### Create a security group to allow inbound traffic to your application
+{: #vpc-multi-region-4}
 
 To allow traffic to the application you will deploy on virtual server instances, you need to enable inbound rules for HTTP (80) and HTTPS (443) ports. In later steps, when creating virtual server instances, you will add these instances to the security group defining those rules.
 
@@ -111,6 +113,7 @@ To allow traffic to the application you will deploy on virtual server instances,
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Provision VSIs
+{: #vpc-multi-region-5}
 1. Navigate to **Subnets**.
 1. Verify status is available and click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
    1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name.
@@ -167,6 +170,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
 
 ### Configure load balancers
+{: #vpc-multi-region-8}
 
 1. Navigate to **Load balancers** and click **New load balancer**.
 2. Enter **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud, select the resource group, **region1** as the region and Load balancer Type: **Public**.
@@ -194,6 +198,7 @@ In this section, you will create two load balancers. One in each region to distr
 7. Click **Create load balancer** to provision a load balancer.
 
 ### Test the load balancers
+{: #vpc-multi-region-9}
 
 1. Wait until the status of the load balancer changes to **Active**.
 2. Open the **Hostname** in a web browser.
@@ -205,6 +210,7 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 **REPEAT** the steps 1-7 above in **region 2**.
 
 ### Provision a {{site.data.keyword.cis_short_notm}} instance and configure custom domain
+{: #vpc-multi-region-10}
 
 In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) instance, configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
@@ -224,6 +230,7 @@ In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.d
 In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the VPC load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
 ### Distribute traffic across regions with a global load balancer
+{: #vpc-multi-region-12}
 Open the {{site.data.keyword.cis_short_notm}} service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
@@ -254,6 +261,7 @@ Wait until the **Health** check status changes to **Healthy**. Open the link **l
 HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
 
 ### Create and authorize a {{site.data.keyword.cloudcerts_short}} instance
+{: #vpc-multi-region-14}
 
 Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm}}.
 
@@ -272,6 +280,7 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - Assign the **Manager** service access role.
 
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate
+{: #vpc-multi-region-15}
 This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
@@ -326,6 +335,7 @@ The wildcard certificate created will allow access to domain name like vpc-lb-re
 In a browser open https://**lb.mydomain.com** to verify success
 
 ### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
+{: #vpc-multi-region-16}
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
 
 It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record.
@@ -381,6 +391,7 @@ In a browser open https://**lb.mydomain.com** to verify success
 
 
 ### Failover test
+{: #vpc-multi-region-17}
 By now, you should have seen that most of the time you are hitting the servers in **region 1** as it's assigned higher weight compared to the servers in **region 2**. Let's introduce a health check failure in the **region 1** origin pool,
 
 1. Navigate to the list of **virtual server instances**.

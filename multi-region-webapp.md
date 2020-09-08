@@ -147,12 +147,14 @@ When deploying a real world application, you will likely want to use your own do
 In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyword.cis_full_notm}} to manage the traffic across multiple locations. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
 ### Before creating a GLB, create a health check for the GLB.
+{: #multi-region-webapp-6}
 
 1. In the {{site.data.keyword.cis_full_notm}} application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Resource**.
    ![Health Check](images/solution1/health_check.png)
 
 ### After that, create an origin pool with two origins.
+{: #multi-region-webapp-7}
 
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the location of your node.js application.
@@ -162,6 +164,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
    ![Origin Pool](images/solution1/origin_pool.png)
 
 ### Create a Global Load Balancer (GLB).
+{: #multi-region-webapp-8}
 
 1. Click **Create Load Balancer**.
 2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.

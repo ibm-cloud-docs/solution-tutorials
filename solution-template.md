@@ -135,6 +135,7 @@ Introductory statement that overviews the section
 7. Try to limit to 7 steps.
 
 ### A sub section
+{: #solution-template-5}
 
    ```bash
    some shellscript
@@ -160,6 +161,7 @@ And this paragraph only appears for Swift code
 Introductory statement that overviews the section
 
 ### Another sub section
+{: #solution-template-7}
 
 ## Remove resources
 {: #solution-template-removeresources}
@@ -187,6 +189,7 @@ Want to add to or change this tutorial? Here are some ideas:
 {: #solution-template-writing_guide}
 
 ### Creating links
+{: #solution-template-12}
 
 For anchors within the same document always only use the following format:
   [link_description](#anchor_name)
@@ -199,6 +202,7 @@ If you have an old format html link that you are trying to translate to the new 
 Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
 
 ### Conrefs
+{: #solution-template-13}
 
 Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
@@ -208,6 +212,7 @@ Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the
 Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
 
 ### Tutorial-only content
+{: #solution-template-15}
 
 To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
 
@@ -218,6 +223,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ```
 
 ### Workshop-only content
+{: #solution-template-16}
 
 To have content showing only in a workshop, use:
 
@@ -235,8 +241,10 @@ This section will only appear in a workshop and not in the tutorial.
 Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
+{: #solution-template-18}
 
 #### Terraform
+{: #solution-template-19}
 
 ```tf
 resource "ibm_is_vpc" "myvpc" {

@@ -69,7 +69,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 In this section, you will create and configure a bastion host along with a security group in a separate subnet.
 
 ### Create a subnet
-{: #create-bastion-subnet}
+{: #vpc-secure-management-bastion-server-create-bastion-subnet}
 
 1. Click **Subnets** under **Network** on the left pane, then **New subnet**.
    - Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.
@@ -86,7 +86,7 @@ In this section, you will create and configure a bastion host along with a secur
 2. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
-{: #create-configure-security-group }
+{: #vpc-secure-management-bastion-server-create-configure-security-group }
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
@@ -105,7 +105,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
    {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
 ### Create a bastion instance
-{: #create-bastion-instance}
+{: #vpc-secure-management-bastion-server-create-bastion-instance}
 
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
@@ -127,6 +127,7 @@ With the subnet and security group already in place, next, create the bastion vi
 1. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
 
 ### Test your bastion
+{: #vpc-secure-management-bastion-server-6}
 
 Once your bastion's floating IP address is active, try connecting to it using **ssh**:
 
@@ -184,7 +185,7 @@ In this section, you will create a subnet with virtual server instance and a sec
 If you already have virtual server instances in your VPC that you want to connect to, you can skip the next three sections and start [adding your virtual server instances to the maintenance security group](#add-vsi-to-maintenance).
 
 ### Create a subnet
-{: #create-private-subnet}
+{: #vpc-secure-management-bastion-server-create-private-subnet}
 
 To create a new subnet,
 
@@ -200,6 +201,7 @@ To create a new subnet,
 1. Click **Create subnet** to provision it.
 
 ### Create a security group
+{: #vpc-secure-management-bastion-server-10}
 
 To create a new security group:
 
@@ -208,6 +210,7 @@ To create a new security group:
 3. Click **Create security group**.
 
 ### Create a virtual server instance
+{: #vpc-secure-management-bastion-server-11}
 
 To create a virtual server instance in the newly created subnet:
 1. Click on the subnet **vpc-secure-private-subnet** created earlier under **Subnets**.
@@ -224,7 +227,7 @@ To create a virtual server instance in the newly created subnet:
 1. Click **Create virtual server instance**.
 
 ### Add virtual servers to the maintenance security group
-{: #add-vsi-to-maintenance}
+{: #vpc-secure-management-bastion-server-add-vsi-to-maintenance}
 
 For administrative work on the servers, you have to associate the specific virtual servers with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
@@ -236,6 +239,7 @@ Let's enable the maintenance security group for the server.
 4. Click **Save** for the changes to be applied.
 
 ### Connect to the instance
+{: #vpc-secure-management-bastion-server-13}
 
 To SSH into an instance using its **private IP**, you will use the bastion host as your **jump host**.
 
@@ -252,6 +256,7 @@ To SSH into an instance using its **private IP**, you will use the bastion host 
    {:tip }
 
 ### Install software and perform maintenance tasks
+{: #vpc-secure-management-bastion-server-14}
 
 Once connected, you can install software on the virtual server or perform maintenance tasks.
 
@@ -268,6 +273,7 @@ To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to
 {:tip}
 
 ### Disable the maintenance security group
+{: #vpc-secure-management-bastion-server-15}
 
 Once you're done installing software or performing maintenance, you should remove the virtual servers from the maintenance security group to keep them isolated.
 

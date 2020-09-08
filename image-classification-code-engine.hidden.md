@@ -121,6 +121,7 @@ Code Engine Applications run your code to serve HTTP requests, autoscale up and 
 We've already built images for the two applications and pushed them to the {{site.data.keyword.cloud_notm}} Container Registry. You will use these pre-built container images to deploy the respective applications.
 
 ### Deploy a frontend application
+{: #image-classification-code-engine.hidden-4}
 
 1. To deploy a new Code Engine application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
 
@@ -154,6 +155,7 @@ We've already built images for the two applications and pushed them to the {{sit
 Congratulations!! You've just deployed a web application to Code Engine with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
+{: #image-classification-code-engine.hidden-5}
 
 When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a number of other knobs you have control over. Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
 
@@ -195,6 +197,7 @@ Most of these values have a default set if nothing is provided as an option when
 1. Once load generation is stopped, wait for a minute to see the pods terminating, eventually scaling down to zero pods.
 
 ### Deploy a backend application and test the connection
+{: #image-classification-code-engine.hidden-6}
 
 1. To deploy a new backend application to store your images into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
@@ -230,7 +233,7 @@ Most of these values have a default set if nothing is provided as an option when
 In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
-{:#create_services}
+{: #image-classification-code-engine.hidden-create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
@@ -259,6 +262,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
+{: #image-classification-code-engine.hidden-9}
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
@@ -329,6 +333,7 @@ Now that you have the backend application connected to the frontend application 
 Jobs in Code Engine are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Code Engine application does.
 
 ### Create a job definition
+{: #image-classification-code-engine.hidden-11}
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
@@ -347,6 +352,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to jobdef
+{: #image-classification-code-engine.hidden-12}
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
@@ -366,6 +372,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:pre}
 
 ### Run the job
+{: #image-classification-code-engine.hidden-13}
 
 1. Go to the frontend UI and **upload images** for classification.
 1. With the following command, run a job using the jobdefinition created above

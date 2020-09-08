@@ -80,7 +80,7 @@ You will explore how to consume these different sources.
 {: #vpc-app-deploy-before-you-begin}
 
 ### Create a VPC ssh key
-{: #create-ssh-key}
+{: #vpc-app-deploy-create-ssh-key}
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
@@ -88,7 +88,7 @@ When provisioning virtual server instances, an SSH key will be injected into the
 1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
 ### Set environment variables
-{: #set-env}
+{: #vpc-app-deploy-set-env}
 
 This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
@@ -138,7 +138,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
 {: step}
 
 ### Provision virtual server instances from base images
-{: #base-vsi-images}
+{: #vpc-app-deploy-base-vsi-images}
 
 When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images. The output will look like:
 
@@ -161,7 +161,7 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
 ### Initialize and customize cloud instances with cloud-init
-{: #cloud_init}
+{: #vpc-app-deploy-cloud_init}
 
 When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
@@ -192,7 +192,7 @@ The `curl` command accessing www.python.org demonstrates the attempt to access a
 Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
 
 ### Upload from the filesystem and execute on the instance
-{: #scp-ssh}
+{: #vpc-app-deploy-scp-ssh}
 
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
@@ -211,12 +211,12 @@ The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with al
 This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
 
 ### Before you begin
-{: #cli-before-you-begin}
+{: #vpc-app-deploy-cli-before-you-begin}
 
 1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 ### Provision subnets and virtual server instances
-{: #cli-provision}
+{: #vpc-app-deploy-cli-provision}
 
 1. Change to the tutorial folder:
    ```sh
@@ -294,7 +294,7 @@ This section uses a shell script found in the [Public frontend and private backe
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #cli-test}
+{: #vpc-app-deploy-cli-test}
 
  To validate the deployment:
 
@@ -331,7 +331,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ```
 
 ### Remove resources
-{: #cli-cleanup}
+{: #vpc-app-deploy-cli-cleanup}
 
 1. Delete the VPC and **all of the resources** in the VPC:
    ```sh
@@ -346,11 +346,12 @@ This section uses a shell script found in the [Public frontend and private backe
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
 ### Before you begin
-{: #terraform-before-you-begin}
+{: #vpc-app-deploy-terraform-before-you-begin}
 
 Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 
 ### Provision a single virtual server instance
+{: #vpc-app-deploy-15}
 
 Before deploying a more complex architecture and in order to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server through SSH.
 
@@ -391,7 +392,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
    {:pre}
 
 ### Provision subnets and virtual server instances
-{: #terraform-provision}
+{: #vpc-app-deploy-terraform-provision}
 
 The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Public frontend and private backend in a Virtual Private Cloud_ tutorial.
 
@@ -466,7 +467,7 @@ To provision the resources:
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #terraform-test}
+{: #vpc-app-deploy-terraform-test}
 
 Now that Terraform has deployed resources, you can validate they were correctly provisioned.
 
@@ -498,7 +499,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```
 
 ### Remove resources
-{: #terraform-cleanup}
+{: #vpc-app-deploy-terraform-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh
@@ -515,7 +516,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 
 ### Before you begin
-{: #ansible-before-you-begin}
+{: #vpc-app-deploy-ansible-before-you-begin}
 
 This section uses both Terraform and Ansible.
 
@@ -523,6 +524,7 @@ This section uses both Terraform and Ansible.
 1. Follow [these instructions](https://{DomainName}/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
 ### Ansible Playbook
+{: #vpc-app-deploy-21}
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
 
@@ -556,6 +558,7 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
    ```
 
 ### Ansible Inventory
+{: #vpc-app-deploy-22}
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
@@ -574,7 +577,7 @@ Ansible works against multiple systems in your infrastructure at the same time. 
    ```
 
 ### Provision subnets and virtual server instances
-{: #ansible-provision}
+{: #vpc-app-deploy-ansible-provision}
 
 The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out. The Ansible script will install software from the mirrors and then upload software from your workstation.
 
@@ -619,7 +622,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #ansible-test}
+{: #vpc-app-deploy-ansible-test}
 
 Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
 
@@ -651,7 +654,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```
 
 ### Remove resources
-{: #ansible-cleanup}
+{: #vpc-app-deploy-ansible-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh

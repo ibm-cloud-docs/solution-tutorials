@@ -164,6 +164,7 @@ This generates a starter application complete with the code and all the necessar
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
+{: #scalable-webapp-kubernetes-7}
 
 1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
    ```sh
@@ -192,6 +193,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:pre}
 
 ### Build the container image
+{: #scalable-webapp-kubernetes-8}
 
 1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
    ```sh
@@ -215,6 +217,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 
 ### Deploy the application
+{: #scalable-webapp-kubernetes-9}
 <!--##istutorial#-->
 
 1. Gain access to your cluster as described on the Access tab of your cluster.
@@ -232,6 +235,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 #### With Helm 2
+{: #scalable-webapp-kubernetes-10}
 
 1. Install Helm into your cluster [by following steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
 1. Change to the chart directory:
@@ -246,6 +250,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:pre}
 
 #### With Helm 3
+{: #scalable-webapp-kubernetes-11}
 
 1. Change to the chart directory:
    ```sh
@@ -259,6 +264,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:pre}
 
 ### View the application
+{: #scalable-webapp-kubernetes-12}
 
 1. List the Kubernetes services in the namespace:
    ```sh
@@ -337,6 +343,7 @@ This section requires you to own a custom domain and to be able to modify the DN
 See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers?topic=containers-ingress#ingress) for more information.
 
 ### with HTTP
+{: #scalable-webapp-kubernetes-15}
 
 1. Create an Ingress file `ingress-customdomain-http.yml` pointing to your domain:
    ```yaml
@@ -363,6 +370,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 3. Access your application at `http://<my-custom-domain.com>/`
 
 ### with HTTPS
+{: #scalable-webapp-kubernetes-16}
 
 If you were to try to access your application with HTTPS at this time `https://<my-custom-domain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 

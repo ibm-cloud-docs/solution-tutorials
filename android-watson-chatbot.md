@@ -112,7 +112,7 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
 ### Define an intent
-{:#define_intent}
+{: #android-watson-chatbot-define_intent}
 
 An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support. By recognizing the intent expressed in a user's input, the {{site.data.keyword.conversationshort}} service can choose the correct dialog flow for responding to it. In the tool, the name of an intent is always prefixed with the `#` character.
 
@@ -143,7 +143,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
    {:tip}
 
 ### Define an entity
-{:#define_entity}
+{: #android-watson-chatbot-define_entity}
 
 An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the {{site.data.keyword.conversationshort}} service can choose the specific actions to take to fulfill an intent. In the tool, the name of an entity is always prefixed with the `@` character.
 
@@ -166,7 +166,7 @@ The following are examples of entity names
 5. Click **close panel** to save the changes.
 
 ### Build the dialog flow
-{:#build_dialog}
+{: #android-watson-chatbot-build_dialog}
 
 A dialog is a branching conversation flow that defines how your application responds when it recognizes the defined intents and entities. You use the dialog builder in the tool to create conversations with users, providing responses based on the intents and entities that you recognize in their input.
 

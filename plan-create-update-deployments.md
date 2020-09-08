@@ -95,6 +95,7 @@ The repository is structured as follow:
 | [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
 
 ### Heavy lifting with Terraform
+{: #plan-create-update-deployments-3}
 
 The *Development*, *Testing* and *Production* environments pretty much look the same.
 
@@ -107,6 +108,7 @@ They share a common organization and environment-specific resources. They will d
 ![](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
 
 ### Global Configuration
+{: #plan-create-update-deployments-4}
 
 All environments share a common Cloud Foundry organization and each environment has its own space.
 
@@ -141,6 +143,7 @@ EOF
    ```
 
 ### Individual Environments
+{: #plan-create-update-deployments-5}
 
 There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html) you could put together common configuration as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository so that you can reference a specific version of a module in your environment files.
 
@@ -285,6 +288,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 {: step}
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
+{: #plan-create-update-deployments-7}
 
 1. Follow [these instructions](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to install the CLI
 1. Validate the installation by running:
@@ -294,6 +298,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    {: codeblock}
 
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+{: #plan-create-update-deployments-8}
 
 1. [Download and install Terraform for your system.](https://learn.hashicorp.com/terraform/getting-started/install.html)
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
@@ -309,6 +314,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    {: codeblock}
 
 ### Get the code
+{: #plan-create-update-deployments-9}
 
 If you have not done it yet, clone the tutorial repository:
 
@@ -318,6 +324,7 @@ If you have not done it yet, clone the tutorial repository:
    {: codeblock}
 
 ### Set Platform API key
+{: #plan-create-update-deployments-10}
 
 1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
 
@@ -330,10 +337,12 @@ If you have not done it yet, clone the tutorial repository:
 1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
 ### Create or reuse a Cloud Foundry organization
+{: #plan-create-update-deployments-11}
 
 You can choose either to create a new organization or to reuse (import) an existing one. To create the parent organization of the three deployment environments, **you need to be the account owner**.
 
 #### To create a new organization
+{: #plan-create-update-deployments-12}
 
 1. Change to the `terraform/global` directory
 1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
@@ -376,6 +385,7 @@ Once Terraform completes, it will have created:
 > This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
 
 #### To reuse an organization you are managing
+{: #plan-create-update-deployments-13}
 
 If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform. Make sure to be in the region where the Cloud Foundry org exists.
 
@@ -408,6 +418,7 @@ If you are not the account owner but you manage an organization in the account, 
    {: codeblock}
 
 ### Create per-environment space, cluster and services
+{: #plan-create-update-deployments-14}
 
 This section will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
 
@@ -490,6 +501,7 @@ Once Terraform completes, it will have created:
 You can repeat the steps for `testing` and `production`.
 
 ### To reuse an existing resource group
+{: #plan-create-update-deployments-15}
 Instead of creating a new resource group, you can import an existing resource group into Terraform
 
 1. Retrieve the resource group ID
@@ -534,6 +546,7 @@ Instead of creating a new resource group, you can import an existing resource gr
 You can repeat the steps for `testing` and `production`.
 
 ### Assign user policies
+{: #plan-create-update-deployments-16}
 
 In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 

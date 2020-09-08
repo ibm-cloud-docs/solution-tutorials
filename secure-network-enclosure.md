@@ -68,6 +68,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 {: #secure-network-enclosure-prereqs}
 
 ### Configure the VPN access
+{: #secure-network-enclosure-2}
 
 In this tutorial, the network enclosure created is not visible on the public internet. The VRA and any servers will only be accessible through the private network, and you will use your VPN for connectivity.
 
@@ -82,6 +83,7 @@ In this tutorial, the network enclosure created is not visible on the public int
    {:tip}
 
 ### Check account permissions
+{: #secure-network-enclosure-3}
 
 Contact your infrastructure master user to get the following permissions:
 - **Quick Permissions** - Basic User
@@ -89,14 +91,17 @@ Contact your infrastructure master user to get the following permissions:
 - **Services** manage SSH Keys
 
 ### Upload SSH keys
+{: #secure-network-enclosure-4}
 
 Using the portal [Upload the SSH public key](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-getting-started-tutorial#getting-started-tutorial) that will be used to access and administer the VRA and private network.
 
 ### Target data center
+{: #secure-network-enclosure-5}
 
 Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network.
 
 ### Order VLANs
+{: #secure-network-enclosure-6}
 
 To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, select **Pod** under **Location** and make sure to request the VLAN in the same data center and pod as you plan to create the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
 
@@ -126,6 +131,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 {:tip}
 
 ### Review deployed VRA
+{: #secure-network-enclosure-8}
 
 1. Inspect the new VRA. On the [Infrastructure Dashboard](https://{DomainName}/classic) Select **Network** in the left pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page. Click on the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page.
 
@@ -257,6 +263,7 @@ When the VRA configuration is committed, the running configuration is changed an
 If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`. 
 
 ### Configure VRA IP routing
+{: #secure-network-enclosure-13}
 
 Configure the VRA virtual network interface to route to the new subnet from the {{site.data.keyword.Bluemix_notm}} private network.
 
@@ -311,6 +318,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 This completes the IP routing configuration.
 
 ### Configure secure enclosure
+{: #secure-network-enclosure-14}
 
 The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls#manage-firewalls) before proceeding.
 
@@ -433,6 +441,7 @@ Two zones are defined:
    {: codeblock}
 
 ### Debugging firewall rules
+{: #secure-network-enclosure-15}
 
 The firewall logs can be viewed from the VRA operational command prompt. In this configuration, only dropped traffic for each zone is logged to aid in diagnosis of firewall misconfiguration.
 

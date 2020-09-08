@@ -99,6 +99,7 @@ Let's consider a simple dynamic web application for collaboration for a team geo
 This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
+{: #dynamic-content-cdn-3}
 
 1. Clone the application
    ```bash
@@ -135,6 +136,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 {: pre}
 
 ### Run the application in the cluster
+{: #dynamic-content-cdn-4}
 
 1. Run the command below to target the cluster where to deploy the application.
    ```bash

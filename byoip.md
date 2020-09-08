@@ -81,7 +81,7 @@ The decision tree here can be used to determine the appropriate implement patter
 The following notes provide further guidance:
 
 ### Is NAT problematic for your applications?
-{: #nat_consideration}
+{: #byoip-nat_consideration}
 
 There are following two distinctive cases where NAT could be problematic. In these cases, NAT should not be used.
 
@@ -90,17 +90,17 @@ There are following two distinctive cases where NAT could be problematic. In the
 
 
 ### No address overlapping
-{: #no-overlap}
+{: #byoip-no-overlap}
 
 Is 10.0.0.0/8 used in the on-premise network? When no address overlaps exist between the on-premise and the {{site.data.keyword.Bluemix_notm}} private network, GRE tunneling as described in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN) can be used between on-premise and IBM Cloud to avoid the need for NAT translation. This requires a review of network address usage with on-site network team.
 
 ### Partial address overlapping
-{: #partial_overlap}
+{: #byoip-partial_overlap}
 
 If any of the 10.0.0.0/8 range is in use on the on-premise network, are there non-overlapping subnets available on the {{site.data.keyword.Bluemix_notm}} network? Review existing network address usage with on-site network team and contact {{site.data.keyword.Bluemix_notm}} technical sales to identify available non-overlapping networks.
 
 ### Is IP aliasing problematic?
-{: #ip_alias}
+{: #byoip-ip_alias}
 
 If no overlap-safe addresses exist, IP aliasing can be implemented on virtual and bare-metal servers deployed in the secure private network enclosure. IP aliasing assigns multiple subnet addresses on one or more network interfaces on each server.
 

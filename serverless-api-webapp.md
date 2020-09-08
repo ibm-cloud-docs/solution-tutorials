@@ -96,6 +96,7 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
 In this section, you will create serverless actions (commonly termed as **Functions**). {{site.data.keyword.openwhisk}} (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events. Serverless functions only incur charges for the execution time.
 
 ### Sequence of actions to save the guestbook entry
+{: #serverless-api-webapp-4}
 
 You will create a **sequence** which is a chain of actions. In a sequence, the output of one action acts as input to the following action and so on. The first sequence you will create is used to persist a guest message. Provided a name, an emailID and a comment, the sequence will:
    * Create a document to be persisted.
@@ -158,6 +159,7 @@ Now, add the second action to that sequence:
 6. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
+{: #serverless-api-webapp-5}
 
 The second sequence is used to retrieve the existing guestbook entries. This sequence will:
    * List all documents from the database.
@@ -251,6 +253,7 @@ Complete the sequence:
 Creating a managed API gives you a default endpoint like `https://1234abcd.us-south.apigw.appdomain.cloud/guestbook`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
 
 ### Obtain a certificate for the custom domain
+{: #serverless-api-webapp-9}
 
 Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *guestbook-api.mydomain.com*. The certificate will need to be issued for *guestbook-api.mydomain.com* (or **.mydomain.com*).
 
@@ -269,6 +272,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
    ```
 
 ### Import the certificate to a central repository
+{: #serverless-api-webapp-10}
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
@@ -278,6 +282,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
    * **Import**.
 
 ### Configure the custom domain for the managed API
+{: #serverless-api-webapp-11}
 
 1. Go to [APIs / Custom domains](https://{DomainName}/apis/domains).
 1. In the Region selector, select the location where you deployed the actions.

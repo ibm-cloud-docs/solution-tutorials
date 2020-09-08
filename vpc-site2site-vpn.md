@@ -91,7 +91,7 @@ In addition:
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Then, you will provision the services and set up the baseline VPC and simulated on-prem resources.
 
 ### Get the code
-{: #setup}
+{: #vpc-site2site-vpn-setup}
 The tutorial uses scripts to deploy a baseline of infrastructure resources before you create the VPN gateways. These scripts and the code for the microservice is available in a GitHub repository.
 
 1. Get the application's code:
@@ -108,10 +108,10 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
 
 
 ### Create services
-{: #create-services}
+{: #vpc-site2site-vpn-create-services}
 
 #### {{site.data.keyword.cos_short}}
-{: #create-cos}
+{: #vpc-site2site-vpn-create-cos}
 
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
@@ -138,7 +138,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    {: codeblock}
 
 #### {{site.data.keyword.databases-for-postgresql}}
-{: #create-postgresql}
+{: #vpc-site2site-vpn-create-postgresql}
 
 In this section, you will create the database service.
 
@@ -201,7 +201,7 @@ In this section, you will create the database service.
    ```
 
 ### Create Virtual Private Cloud baseline resources
-{: #create-vpc}
+{: #vpc-site2site-vpn-create-vpc}
 The tutorial provides a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
@@ -246,7 +246,7 @@ In the following, create these resources by configuring and then running a setup
    Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create an on-premises virtual server
-{: #create-onprem}
+{: #vpc-site2site-vpn-create-onprem}
 
 To simulate the on-premises environment, you create a virtual server (VSI) with classic infrastructure. In the same directory as for the previous section, follow these steps:
 1. Edit the file **config.sh** and adapt the settings to your environment. Change the value of **SSHKEYNAME_CLASSIC** to the name or comma-separated list of names of SSH keys for classic infrastructure (see "Before you begin"). Modify **DATACENTER_ONPREM** to a different value if needed. You can obtain the list of supported data centers using `ibmcloud sl vs options`.
@@ -261,7 +261,7 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
 
 
 ### Create the Virtual Private Network gateway and connection
-{: #create-vpn}
+{: #vpc-site2site-vpn-create-vpn}
 
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
@@ -274,6 +274,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
 
 ### Create the on-premises Virtual Private Network gateway
+{: #vpc-site2site-vpn-10}
 {: create-on-prem}
 
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
@@ -379,7 +380,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
-{: #test-with-ssh}
+{: #vpc-site2site-vpn-test-with-ssh}
 
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server.
 
@@ -417,7 +418,7 @@ To test that the VPN connection has been successfully established, use the simul
 
 
 ### Set up a microservice for testing
-{: #setup-microservice}
+{: #vpc-site2site-vpn-setup-microservice}
 
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
@@ -513,7 +514,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 
 ### Test using a microservice
-{: #test-with-microservice}
+{: #vpc-site2site-vpn-test-with-microservice}
 
 With the microservice app set up and running, test the scenario by accessing the cloud resources from the on-prem machine.
 
@@ -572,7 +573,7 @@ With the microservice app set up and running, test the scenario by accessing the
 6. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it.
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
-{: #test-service-endpoint}
+{: #vpc-site2site-vpn-test-service-endpoint}
 
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 

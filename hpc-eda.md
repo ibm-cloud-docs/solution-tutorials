@@ -125,7 +125,7 @@ You will find instructions to download and install these tools for your operatin
 {: step}
 
 ### Specify the cloud cluster configuration
-{: #specify-cloud-cluster-configuration}
+{: #hpc-eda-specify-cloud-cluster-configuration}
 
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
@@ -141,7 +141,7 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 3. Save the tf_inventory.yml file and create a backup copy.
 
 #### The tf_inventory.yml file parameters
-{: #tf_inventory-parameters}
+{: #hpc-eda-tf_inventory-parameters}
 
 Much of the work needed to configure your cloud cluster is configuring the following parameters in the tf_inventory.yml file:
 
@@ -165,7 +165,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
 ### Create an {{site.data.keyword.cloud_notm}} API key
-{: #create-api-key}
+{: #hpc-eda-create-api-key}
 
 You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to provide Terraform with the credential it needs to provision resources on your behalf. If you do not already have an `api-key`, you can create one with the following commands:
 

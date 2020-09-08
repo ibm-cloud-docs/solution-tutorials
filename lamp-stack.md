@@ -55,6 +55,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
   * Network permission required to complete the **Public and Private Network Uplink**
 
 ### Configure the VPN access
+{: #lamp-stack-2}
 
 1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
 
@@ -154,6 +155,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 ![PHP info](images/solution4/PHPInfo.png)
 
 ### Install and configure WordPress
+{: #lamp-stack-6}
 
 Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page).
 
@@ -220,6 +222,7 @@ You can view the server's public IP address from the dashboard.
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. In this section, you'll explore the options that are available to monitor your virtual server and understand the usage of the server at any given time.
 
 ### Server monitoring
+{: #lamp-stack-9}
 
 Two basic monitoring types are available: SERVICE PING and SLOW PING.
 
@@ -242,6 +245,7 @@ If a response is not received in the allotted time frame, an alert is sent to th
    ![Two Monitors](images/solution4/TwoMonitoring.png)
 
 ### Server usage
+{: #lamp-stack-10}
 
 Select the **Usage** tab to understand the current server's memory and CPU usage.
   ![Server Usage](images/solution4/ServerUsage.png)
@@ -253,6 +257,7 @@ Select the **Usage** tab to understand the current server's memory and CPU usage
 {{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and firewalls.
 
 ### Vulnerability scanner
+{: #lamp-stack-12}
 
 The vulnerability scanner scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
 
@@ -263,6 +268,7 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
    ![Vulnerability Results](images/solution4/VulnerabilityResults.png)
 
 ### Firewalls
+{: #lamp-stack-13}
 
 Another way to secure the server is by adding a firewall. Firewalls provide an essential security layer: preventing unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use. Firewall options are provisioned on demand without service interruptions.
 

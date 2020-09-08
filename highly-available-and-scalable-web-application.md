@@ -67,6 +67,7 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 {: #highly-available-and-scalable-web-application-prereqs}
 
 ### Configure the VPN access
+{: #highly-available-and-scalable-web-application-2}
 
 In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your VPN connection to work on the servers.
 
@@ -81,6 +82,7 @@ You can choose to skip this step and make all your servers visible on the public
 {: tip}
 
 ### Check account permissions
+{: #highly-available-and-scalable-web-application-3}
 
 Contact your Infrastructure master user to get the following permissions:
 - **Network** so that you can create {{site.data.keyword.virtualmachinesshort}} with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
@@ -117,6 +119,7 @@ In this section, you configure one server to act as the master database.
 The server does not come with a database. In this section, you install MySQL on the server.
 
 ### Install MySQL
+{: #highly-available-and-scalable-web-application-6}
 
 1. Connect to the server by using SSH:
    ```sh
@@ -145,6 +148,7 @@ The server does not come with a database. In this section, you install MySQL on 
    {:tip}
 
 ### Create a database for the application
+{: #highly-available-and-scalable-web-application-7}
 
 1. Login to MySQL and create a database called `wordpress`:
    ```sh
@@ -182,6 +186,7 @@ The server does not come with a database. In this section, you install MySQL on 
 5. Make note of the database name, user and password. You will need them when configuring the application servers.
 
 ### Make the MySQL server visible to other servers on the network
+{: #highly-available-and-scalable-web-application-8}
 
 By default MySQL only listens on the local interface. The application servers will need to connect to the database so the MySQL configuration needs to be changed to listen on the private network interfaces.
 
@@ -214,7 +219,7 @@ By default MySQL only listens on the local interface. The application servers wi
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
 ### Create the file storage
-{: #create_for_backup}
+{: #highly-available-and-scalable-web-application-create_for_backup}
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog , and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
@@ -227,6 +232,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 4. **Create** the volume.
 
 ### Authorize the database server to use the file storage
+{: #highly-available-and-scalable-web-application-11}
 
 Before a virtual server can mount a file storage, it needs to be authorized.
 
@@ -234,6 +240,7 @@ Before a virtual server can mount a file storage, it needs to be authorized.
 2. Under **Authorized Hosts**, click **Authorize Host** and select the virtual(database) server (Choose **Devices** > Virtual Server as Device Type > Type the name of the server).
 
 ### Mount the file storage for database backups
+{: #highly-available-and-scalable-web-application-12}
 
 The file storage can be mounted as an NFS drive into the virtual server.
 
@@ -296,6 +303,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {: tip}
 
 ### Setup a backup at regular interval
+{: #highly-available-and-scalable-web-application-13}
 
 1. Create `/root/dbbackup.sh` shell script (use `touch` and `nano`) with the following commands by replacing `CHANGE_ME` with the database password you specified earlier:
    ```sh
@@ -347,7 +355,7 @@ In this section, you will create two web application servers.
 This file storage is used to share the application files between **app1** and **app2** servers.
 
 ### Create the file storage
-{: #create_for_sharing}
+{: #highly-available-and-scalable-web-application-create_for_sharing}
 
 In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
@@ -360,6 +368,7 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
    - Click continue to create the service.
 
 ### Configure regular snapshots
+{: #highly-available-and-scalable-web-application-17}
 
 [Snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
@@ -370,10 +379,12 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
    3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save.
 
 ### Authorize the application servers to use the file storage
+{: #highly-available-and-scalable-web-application-18}
 
 1. Under **Authorized Hosts**, click **Authorize Host** to authorize the application servers(app1 and app2) to use this file storage.
 
 ### Mount file storage
+{: #highly-available-and-scalable-web-application-19}
 
 Repeat the following steps on each application server(app1 and app2):
 
@@ -426,6 +437,7 @@ Eventually all steps related to the configuration of the servers could be automa
 This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
 
 ### Install nginx and PHP
+{: #highly-available-and-scalable-web-application-21}
 
 Repeat the following steps on each application server:
 
@@ -500,6 +512,7 @@ Repeat the following steps on each application server:
    {:pre}
 
 ### Install and configure WordPress
+{: #highly-available-and-scalable-web-application-22}
 
 As Wordpress will be installed on the File Storage mount, you only need to do the following steps on one of the servers. Let's pick **app1**.
 
@@ -613,6 +626,7 @@ At this point, we have two application servers with separate IP addresses. They 
 6. Review and **Create** to complete the wizard.
 
 ### Change Wordpress configuration to use the load balancer URL
+{: #highly-available-and-scalable-web-application-24}
 
 The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to [the blog URL and injects this location in the pages](https://codex.wordpress.org/Settings_General_Screen). If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
 
@@ -627,6 +641,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
    {: tip}
 
 ### Test the Load Balancer behavior
+{: #highly-available-and-scalable-web-application-25}
 
 The load balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
 

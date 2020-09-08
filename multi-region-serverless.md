@@ -84,6 +84,7 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
    {:tip}
 
 ### Create a {{site.data.keyword.cloudcerts_short}} instance and verify ownership of your domain.
+{: #multi-region-serverless-3}
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location by providing a service name and resource group.
 2. Before a certificate can be issued to you, {{site.data.keyword.cloudcerts_short}} must verify that you control all of the domains that you list in your request. To do so, {{site.data.keyword.cloudcerts_short}}uses DNS validation. Complete the following steps to verify ownership of your domains in Internet Services (CIS),
@@ -96,6 +97,7 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
    5. Click **Authorize**.
 
 ### Order a certificate
+{: #multi-region-serverless-4}
 
 1. Navigate to your [Resource list](https://{DomainName}/resources) and under **Services**, click on name of the **{{site.data.keyword.cloudcerts_short}}** service your created.
 2. Under **Your certificates**, click on **Order**.
@@ -126,6 +128,7 @@ The action **doWork** implements one of your API operations. The action **health
 The three following sections will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
 ### Define actions
+{: #multi-region-serverless-6}
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
 2. Switch to the target namespace and location where to deploy the actions.
@@ -158,6 +161,7 @@ The three following sections will need to be repeated for every location where y
 8. **Save**
 
 ### Expose the actions with a managed API
+{: #multi-region-serverless-7}
 
 The next step involves creating a managed API to expose your actions.
 
@@ -180,6 +184,7 @@ The next step involves creating a managed API to expose your actions.
 1. **Save** the API
 
 ### Configure the custom domain for the managed API
+{: #multi-region-serverless-8}
 
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in {{site.data.keyword.cis_full_notm}}.
 
@@ -214,6 +219,7 @@ Repeat the previous sections to configure more locations.
 </p>
 
 ### Create a health check
+{: #multi-region-serverless-10}
 
 {{site.data.keyword.cis_full_notm}} will be regularly calling this endpoint to check the health of the back-end.
 
@@ -224,6 +230,7 @@ Repeat the previous sections to configure more locations.
    1. Click on **Create**.
 
 ### Create origin pools
+{: #multi-region-serverless-11}
 
 By creating one pool per location, you can later configure geo routes in your global load balancer to redirect users to the closest location. Another option would be to create a single pool with all locations and have the load balancer cycle through the origins in the pool.
 
@@ -237,6 +244,7 @@ For every location:
 1. Click on **Create**.
 
 ### Create a global load balancer
+{: #multi-region-serverless-12}
 
 1. Create a load balancer.
 1. Set **Balancer hostname** to **api.mydomain.com**.
@@ -246,6 +254,7 @@ For every location:
 After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
 ### Test fail over
+{: #multi-region-serverless-13}
 
 To test the fail over, a pool health check must fail so that the GLB would redirect to the next healthy pool. To simulate a failure, you can modify the health check function to make it fail.
 
@@ -262,6 +271,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 {: step}
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
+{: #multi-region-serverless-15}
 
 1. Remove the GLB.
 1. Remove the origin pools.
@@ -269,10 +279,12 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Remove the {{site.data.keyword.cis_short_notm}} instance (optional)
 
 ### Remove {{site.data.keyword.cloudcerts_short}} resources
+{: #multi-region-serverless-16}
 1. Remove the certificate from the {{site.data.keyword.cloudcerts_short}} instance
 1. Remove the {{site.data.keyword.cloudcerts_short}} instance (optional)
 
 ### Remove actions
+{: #multi-region-serverless-17}
 
 1. Remove [APIs](https://{DomainName}/functions/apimanagement)
 1. Remove [actions](https://{DomainName}/functions/actions)

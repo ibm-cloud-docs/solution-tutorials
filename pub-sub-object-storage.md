@@ -84,6 +84,7 @@ You will find instructions to download and install these tools for your operatin
 2. Check the state of your **Cluster** and **Worker Nodes** and wait for them to be **Normal**.
 
 ### Configure kubectl
+{: #pub-sub-object-storage-3}
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 

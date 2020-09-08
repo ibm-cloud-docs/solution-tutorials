@@ -109,6 +109,7 @@ Take a note of the resource group selected above.  This same resource group will
 <!--#/isworkshop#-->
 
 ### Access the cluster using the {{site.data.keyword.Bluemix_notm}} Shell
+{: #openshift-service-mesh-3}
 
 In this step, you'll configure `oc` to point to your newly created cluster. To easily connect to the cluster, you need the {{site.data.keyword.openshiftshort}} CLI `oc` that exposes commands for managing your applications, as well as lower level tools to interact with each component of your system.
 
@@ -141,6 +142,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** - Based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
 
 ### Install the Operators
+{: #openshift-service-mesh-5}
 
 1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
@@ -151,6 +153,7 @@ This installs the Operators in the default `openshift-operators` project and mak
 {:tip}
 
 ### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
+{: #openshift-service-mesh-6}
 
 The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
 
@@ -163,6 +166,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
+{: #openshift-service-mesh-7}
 
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
@@ -286,6 +290,7 @@ An Ingress Gateway resource can be created to allow external requests through th
 Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
 
 ### Visualize Metrics with Grafana
+{: #openshift-service-mesh-11}
 
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
 
@@ -306,6 +311,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
 ### Observe your Service mesh with Kiali
+{: #openshift-service-mesh-12}
 
 Kiali is an open-source project that installs as an add-on on top of Istio to visualize your service mesh. Kiali provides deeper insight into how your microservices interact with one another, and provides features such as circuit breakers and request rates for your services.
 
@@ -331,6 +337,7 @@ Istio’s traffic management model relies on the Envoy proxies (sidecars) that a
 Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#VirtualService), [Destination Rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#Destination), and [Service Entries](https://istio.io/docs/reference/config/istio.networking.v1alpha3.html#ServiceEntry).
 
 ### A/B testing with Istio
+{: #openshift-service-mesh-14}
 
 A/B testing is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
 
@@ -394,6 +401,7 @@ A/B testing is a method of performing identical tests against two separate servi
    {:tip}
 
 ### Canary deployment
+{: #openshift-service-mesh-15}
 In Canary Deployments, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
 
 1. Run the below command to send 80% of traffic to v1,
@@ -451,6 +459,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 {: step}
 
 ### Delete the application project
+{: #openshift-service-mesh-19}
 
 - To delete the bookinfo project, run the below command
   ```sh
@@ -459,6 +468,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
   {:pre}
 
 ### Removing the ServiceMeshControlPlane from the CLI
+{: #openshift-service-mesh-20}
 
 1. Run this command to retrieve the name of the installed ServiceMeshControlPlane,
    ```sh
@@ -475,6 +485,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
    {:tip}
 
 ### Remove the Operators
+{: #openshift-service-mesh-21}
 
 1. Navigate to the **Operators** → **Installed Operators** page of the web console.
 2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **Red Hat OpenShift Service Mesh** Operator.
@@ -483,6 +494,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 
 <!--##istutorial#-->
 ### Delete the cluster
+{: #openshift-service-mesh-22}
 Delete the cluster to delete everything in one-go. This action is irreversible.
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.

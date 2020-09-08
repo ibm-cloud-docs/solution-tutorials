@@ -61,7 +61,7 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 One of the fundamental principles of Cloud Computing is the sharing of resources. This could be from the sharing of a machine (i.e., the sharing of applications by many users who are running on the same computer) to just sharing the data center and parts of the infrastructure. In the following, you learn how you can isolate runtime environments, network traffic and stored data to increase application security.
 
 ### Use dedicated resources and virtual private clouds
-{: #isolate_runtimes}
+{: #extended-app-security-isolate_runtimes}
 
 To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some of the compute options.
 
@@ -76,7 +76,7 @@ Look into running virtual servers or {{site.data.keyword.containershort}} on [{{
 When working with database systems, consider using service plans with dedicated resources or services with enhanced security. Examples are [dedicated hardware plans for {{site.data.keyword.cloudant}}](https://{DomainName}/docs/services/Cloudant?topic=cloudant-ibm-cloud-public#dedicated-hardware-plan) that offers HIPAA compliance or services like [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-postgresql) and [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-mongodb) which offer highly secure database environments for sensitive data.
 
 ### Secure network traffic
-{: #isolate_networks}
+{: #extended-app-security-isolate_networks}
 
 In most cases an application consists of the app itself and one or many services. These services are reachable over the public internet, but can also accessed on so-called [private service endpoints](https://{DomainName}/docs/resources?topic=resources-service-endpoints). To increase security by isolating network traffic, follow the [instructions to enable virtual routing and forwarding (VRF)](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint). In the documentation, you can also find a [list of services that support private endpoints](https://{DomainName}/docs/resources?topic=resources-private-network-endpoints).
 
@@ -103,6 +103,7 @@ The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs
 Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key).
 
 ### Integrated services
+{: #extended-app-security-7}
 
 More and more data services support the integration with either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}}. To see if they can be used with the services in your deployed solution, check out the list of:
 
@@ -112,6 +113,7 @@ More and more data services support the integration with either {{site.data.keyw
 Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more.
 
 ### Example: Cloud Object Storage
+{: #extended-app-security-8}
 
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key with optionally making use of BYOK or KYOK, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 

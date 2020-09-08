@@ -71,7 +71,7 @@ A project is how you organize your resources to achieve a particular goal. Your 
 You can create a project to add data and open a data asset in the data refiner for cleansing and shaping your data.
 
 ### Create a project
-{: #create_project}
+{: #create-deploy-retrain-machine-learning-model-create_project}
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
   1. Select a **region** preferably **Dallas**
@@ -90,7 +90,7 @@ You can create a project to add data and open a data asset in the data refiner f
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
-{: #import_data}
+{: #create-deploy-retrain-machine-learning-model-import_data}
 
 As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
@@ -170,6 +170,7 @@ In this section, you will deploy the saved model and test the deployed model,
 6. Once the status changes to **Deployed**, Click on the **Name** of the new web service.
 
 ### Test the deployed model
+{: #create-deploy-retrain-machine-learning-model-7}
 
 1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
    ```json
@@ -247,6 +248,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 For ease of understanding, the tutorial concentrates only on improving the quality (accuracy) of the AI model through {{site.data.keyword.aios_short}}.
 
 ### Deploy a Python function using a notebook
+{: #create-deploy-retrain-machine-learning-model-10}
 In this section, you will wrap the AutoAI model deployment in a Python function and deploy the Python function to explore {{site.data.keyword.aios_full_notm}}
 
 Deploying functions gives you the ability to hide details (such as credentials), preprocess data before passing it to models, perform error handling, and include calls to multiple models, all within the deployed function instead of in your application.
@@ -265,6 +267,7 @@ Deploying functions gives you the ability to hide details (such as credentials),
 6. This should create a deployment under `iris_project`.
 
 ### Provision {{site.data.keyword.aios_full_notm}} service
+{: #create-deploy-retrain-machine-learning-model-11}
 
 In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
@@ -277,6 +280,7 @@ In this section, you will create a {{site.data.keyword.aios_short}} service to m
 3. Click on **Manual setup** to manually setup the monitors.
 
 ### Selecting a deployment
+{: #create-deploy-retrain-machine-learning-model-12}
 In this section, as part of preparing your model for monitoring you will set up and enable monitors for each deployment that you are tracking with {{site.data.keyword.aios_full_notm}}.
 
 1. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
@@ -293,6 +297,7 @@ In this section, as part of preparing your model for monitoring you will set up 
 4. Click **Configure monitors** to setup your monitors.
 
 ### Provide model details
+{: #create-deploy-retrain-machine-learning-model-13}
 Provide information about your model so that {{site.data.keyword.aios_full_notm}} can access the database and understand how the model is set up.
 
 1. Provide the Model details by clicking the **edit** icon on the Model input tile and select
@@ -347,6 +352,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
 As the tutorial uses a small dataset, configuring Fairness and Drift won't have an impact.
 
 ### Evaluate the deployed model
+{: #create-deploy-retrain-machine-learning-model-14}
 In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
 
 1. Click on **Actions** and then **Evaluate now**.
