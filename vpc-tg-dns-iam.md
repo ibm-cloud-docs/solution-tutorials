@@ -133,7 +133,7 @@ The shared resource group will also contain the DNS service.
 
 A forth resource group, network, will contain {{site.data.keyword.tg_short}}.
 
-The admin team will create the resource groups.  Each team will be provided Viewer access to the resource groups required.  The Shared and Application2 will not have Viewer access to Application1, for example, further isolating them from the other micro-service teams.
+The admin team will create the resource groups. To isolate each team from each other, a team will only be provided Viewer access to its dedicated resource group.
 
 ## Create a local working environment
 {: #create}
@@ -691,7 +691,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
 
 
-1. Edit the terraform.tfvars file and uncomment `transit_gateway = true` to `true`
+1. Edit the terraform.tfvars file and uncomment the line `transit_gateway = true` to enable the provisioning of {{site.data.keyword.tg_short}}
 
    ```
    edit terraform.tfvars
@@ -815,7 +815,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {:pre}
 
-1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice how the remote_ip is 10.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```
    $ curl 169.48.152.220:3000/remote
