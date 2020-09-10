@@ -4,7 +4,7 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Infrastructure"
+    "Virtual Servers"
   ],
   "categories": [
     {
@@ -64,6 +64,7 @@
             "Cloud Foundry",
             "Cloud Functions",
             "Infrastructure",
+            "Virtual Servers",
             "Bare Metal",
             "Databases",
             "File Storage",
@@ -176,7 +177,8 @@
             "Infrastructure",
             "PHP",
             "WordPress",
-            "Vulnerability Scanner"
+            "Vulnerability Scanner",
+            "Virtual Servers"
           ],
           "lastUpdated": "2019-05-20"
         },
@@ -188,6 +190,7 @@
           "tags": [
             "Terraform",
             "Infrastructure",
+            "Virtual Servers",
             "PHP",
             "Object Storage"
           ],
@@ -204,7 +207,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2020-01-10"
+          "lastUpdated": "2020-09-03"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -213,6 +216,7 @@
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -299,7 +303,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2020-09-03"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -371,7 +375,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2020-09-03"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -490,7 +494,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-05-27"
+          "lastUpdated": "2020-09-04"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -544,7 +548,7 @@
             "DevOps"
           ],
           "guide": true,
-          "lastUpdated": "2020-03-18"
+          "lastUpdated": "2020-09-03"
         }
       ]
     },
@@ -562,6 +566,7 @@
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -574,6 +579,7 @@
           "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -587,6 +593,7 @@
           "featuredPosition": 1,
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -599,6 +606,7 @@
           "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -611,6 +619,7 @@
           "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -644,10 +653,11 @@
             "Transit Gateway",
             "DNS",
             "Infrastructure",
+            "Virtual Servers",
             "Network",
             "Linux"
           ],
-          "lastUpdated": "2020-07-08"
+          "lastUpdated": "2020-09-01"
         }
       ]
     },
@@ -662,6 +672,7 @@
           "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -675,6 +686,7 @@
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -701,6 +713,7 @@
           "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -717,7 +730,8 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "VLAN Spanning"
+            "VLAN Spanning",
+            "Virtual Servers"
           ],
           "lastUpdated": "2019-03-07"
         },
@@ -731,7 +745,8 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Router Appliance VPN"
+            "Virtual Router Appliance VPN",
+            "Virtual Servers"
           ],
           "lastUpdated": "2019-03-07"
         }

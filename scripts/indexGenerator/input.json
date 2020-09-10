@@ -4,7 +4,7 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Infrastructure"
+    "Virtual Servers"
   ],
   "categories": [
     {
@@ -100,6 +100,7 @@
             "Cloud Foundry",
             "Cloud Functions",
             "Infrastructure",
+            "Virtual Servers",
             "Bare Metal",
             "Databases",
             "File Storage",
@@ -268,7 +269,8 @@
             "Infrastructure",
             "PHP",
             "WordPress",
-            "Vulnerability Scanner"
+            "Vulnerability Scanner",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_servers"
@@ -284,6 +286,7 @@
           "tags": [
             "Terraform",
             "Infrastructure",
+            "Virtual Servers",
             "PHP",
             "Object Storage"
           ],
@@ -320,6 +323,7 @@
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -800,6 +804,7 @@
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -815,6 +820,7 @@
           "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -835,6 +841,7 @@
           "featuredPosition": 1,
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -856,6 +863,7 @@
           "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -872,6 +880,7 @@
           "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -918,6 +927,7 @@
             "Transit Gateway",
             "DNS",
             "Infrastructure",
+            "Virtual Servers",
             "Network",
             "Linux"
           ]
@@ -935,6 +945,7 @@
           "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -952,6 +963,7 @@
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -985,6 +997,7 @@
           "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -1002,7 +1015,8 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "VLAN Spanning"
+            "VLAN Spanning",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
@@ -1020,7 +1034,8 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Router Appliance VPN"
+            "Virtual Router Appliance VPN",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
