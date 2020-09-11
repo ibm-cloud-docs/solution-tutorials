@@ -57,14 +57,17 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
   ![Architecture](images/solution55-openshift-microservices/Architecture.png)
 </p>
 
-1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **Deployment**, and **Service**.
-1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.openshiftshort}} registry for **Deployment** provisioning.
+1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
+1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.openshiftshort}} registry for **DeploymentConfig** provisioning.
 1. Users access the frontend application.
 1. The {{site.data.keyword.cloudant_short_notm}} database instance is provisioned through an IBM Cloud Operator Service.
 1. The backend application is connected to the database with an IBM Cloud Operator Binding.
 1. {{site.data.keyword.la_short}} is provisioned and agent deployed.
 1. {{site.data.keyword.mon_short}} is provisioned and agent deployed.
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}}.
+
+There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts) that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend). If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
+
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
@@ -128,6 +131,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell).
 2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
+   ibmcloud oc clusters
    ibmcloud oc cluster config -c <your-cluster-name> --admin
    ```
    {:pre}
@@ -136,6 +140,13 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc get ns
    ```
    {:pre}
+4. Optionally clone the patient-health-frontend repository to investigate the scripts associated with the steps below.  Checkout the [README](https://github.com/IBM-Cloud/patient-health-frontend)
+   ```sh
+   git clone https://github.com/IBM-Cloud/patient-health-frontend
+   cd patient-health-frontend/scripts
+   ```
+   {:pre}
+
 
 ## Deploying an application
 {: #openshift-microservices-deploy}
@@ -166,6 +177,7 @@ A project is a collection of resources managed by a devops team.  An administrat
    * **Builder Image Version** leave at the default
    * **Application Name** delete all of the characters (this will default to the **Name**)
    * **Name** patient-health-frontend
+   * Select **Deployment Config**
    * Leave defaults for other selections
 1. Click **Create** at the bottom of the window to build and deploy the application.
 
@@ -173,7 +185,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 {: #openshift-microservices-7}
 
 1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
-1. Select the **node** **patient-health-frontend** to bring up the details view of the `Deployment`.  Note the **D** next to **patient-health-frontend**.  The Pods, Builds, Services and Routes are visible.
+1. Select the **node** **patient-health-frontend** to bring up the details view of the `DeploymentConfig`.  Note the **DC** next to **patient-health-frontend**.  The Pods, Builds, Services and Routes are visible.
    ![](images/solution55-openshift-microservices/ocp-topo-app-details.png)
 
    * **Pods**: Your Node.js application containers
@@ -236,7 +248,7 @@ Create a script to simulate load.
    ```
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 1; do curl --max-time 2 -s http://$HOST/info; done
+   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info; done
    ```
    {:pre}
 
@@ -315,6 +327,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    ```
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
+   {:pre}
 4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    <p style="width: 50%;">
 
@@ -333,11 +346,11 @@ In this section, the metrics observed in the previous section can be used to sca
 
 Before autoscaling maximum CPU and memory resource limits must be established.
 
-Verify script to simulate load is running. Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deployment
+Verify script to simulate load is running. Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deploymentConfig
 
-1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployments** in the left-hand bar. Choose the `patient-health-frontend` Deployment, then choose **Actions > Edit Deployment**.
+1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployment Configs** in the left-hand bar. Choose the `patient-health-frontend` Deployment Configs, then choose **Actions > Edit Deployment Config**.
    ![](images/solution55-openshift-microservices/ocp-deployments.png)
-2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
+2. In the YAML editor, go to line 44. In the section **spec > template > spec > containers** (not **spec > stratagies**), add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
    ```yaml
              resources:
@@ -378,7 +391,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
    ![HPA](images/solution55-openshift-microservices/ocp-hpa.png)
 
-   If you edit in the changes make sure that the spec > scaleTargetRef > name matches the name of the deployment: `patient-health-frontend`.  You can just copy/paste in the entire section below:
+   If you edit in the changes make sure that the spec > scaleTargetRef > name matches the name of the deployment config: `patient-health-frontend`.  You can just copy/paste in the entire section below:
 
    ```yaml
    apiVersion: autoscaling/v2beta1
@@ -388,8 +401,8 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
      namespace: example-health
    spec:
      scaleTargetRef:
-       apiVersion: apps/v1
-       kind: Deployment
+       apiVersion: apps.openshift.io/v1
+       kind: DeploymentConfig
        name: patient-health-frontend
      minReplicas: 1
      maxReplicas: 10
@@ -407,7 +420,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
 If you're not running the script to simulate load, the number of pods should stay at 1.
 
-1. Check by opening the **Overview** page of the deployment.  Click **Workloads** > **Deployments** and click **patient-health-frontend** and make sure the **Overview** panel is selected.
+1. Check by opening the **Overview** page of the deployment config.  Click **Workloads** > **Deployment Config** and click **patient-health-frontend** and make sure the **Overview** panel is selected.
 2. Start simulating load (see previous section to simulate load on the application).
    <p style="width: 50%;">
 
@@ -441,10 +454,10 @@ You can also can delete and create resources like autoscalars with the command l
    {:pre}
 1. Create a new autoscaler with a max of 9 pods:
    ```
-   oc autoscale deployment/patient-health-frontend --name patient-hpa --min 1 --max 9 --cpu-percent=1
+   oc autoscale deploymentconfig/patient-health-frontend --name patient-hpa --min 1 --max 9 --cpu-percent=1
    ```
    {:pre}
-1. Revisit the **Workloads > Deployments** overview page for `patient-health-frontend` deployment and watch it work.
+1. Revisit the **Workloads > Deployment Configs** overview page for `patient-health-frontend` deployment and watch it work.
 
 ## Using the IBM Cloud Operator to create a Cloudant DB
 {: #openshift-microservices-operator}
@@ -539,12 +552,16 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    {:pre}
 
    ```
-   ibmcloud resource service-instance <your-initials>-cloudant-service
+   YOURINITIALS=<your-initials>
+   ```
+
+   ```
+   ibmcloud resource service-instance $YOURINITIALS-cloudant-service
    ```
    {:pre}
 
    ```
-   ibmcloud resource service-keys --instance-name <your-initials>-cloudant-service --output json
+   ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
    ```
    {:pre}
 
@@ -577,7 +594,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
                        Status       create succeeded
                        Message      Provisioning is complete
                        Updated At   2020-05-06 22:40:03.04469305 +0000 UTC
-   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name <your-initials>-cloudant-service --output json
+   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
    [
        {
            "guid": "01234560-902d-4078-9a7f-20446a639aeb",
@@ -645,12 +662,12 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 The `patient-health-frontend` application has an environment variable for the backend microservice url.
 
-1. Set the **API_URL** environment variable to **default** in the frontend **Deployment**. Navigate to the deployment for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **D**:
+1. Set the **API_URL** environment variable to **default** in the frontend **Deployment Config**. Navigate to the deployment config for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **DC**:
 
 2. Go to the **Environment** tab, and in the **Single value(env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
 
    ```
-   oc describe deployment/patient-health-frontend
+   oc describe deploymentconfig/patient-health-frontend
    ```
    {:pre}
 
