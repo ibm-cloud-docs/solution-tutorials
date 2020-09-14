@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-08-31"
+lastupdated: "2020-09-14"
 lasttested: "2020-06-22"
 
 content-type: tutorial
@@ -85,7 +85,7 @@ In this section, you will create a Code Engine project. A project is a grouping 
 
 Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
 
-1. Navigate to [{{site.data.keyword.IBM_notm}} Code Engine Overview](https://{DomainName}/knative/overview) page.
+1. Navigate to [{{site.data.keyword.IBM_notm}} Code Engine Overview](https://{DomainName}/codeengine/overview) page.
 2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
