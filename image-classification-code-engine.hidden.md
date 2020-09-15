@@ -26,7 +26,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Image classification with Code Engine
+# Image classification with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, containers, cloud-object-storage, visual-recognition"}
@@ -36,22 +36,22 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-Beta limitations : You can create only 1 project per location. All projects and all their contents are automatically deleted after 7 days. [Learn more](https://{DomainName}/docs/codeengine?topic=codeengine-kn-limits#kn-limits_experimental)
+{{site.data.keyword.codeenginefull}} Beta limitations : You can create only 1 project per location. All projects and all their contents are automatically deleted after 7 days. [Learn more](https://{DomainName}/docs/codeengine?topic=codeengine-kn-limits#kn-limits_experimental)
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will learn about {{site.data.keyword.cloud_notm}} Code Engine by deploying an image classification application. You will create a Code Engine project, target the project and deploy Code Engine components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Code Engine components. You will also understand the auto-scaling capability of Code Engine where instances are scaled up or down (to zero) based on incoming workload.
+In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, target the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
-{{site.data.keyword.cloud_notm}} Code Engine provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then Code Engine can host and manage them for you - all on a Kubernetes-based infrastructure. And Code Engine does this without the need for you to learn, or even know about, Kubernetes. The Code Engine experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
+{{site.data.keyword.codeenginefull_notm}} provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then {{site.data.keyword.codeengineshort}} can host and manage them for you - all on a Kubernetes-based infrastructure. And {{site.data.keyword.codeengineshort}} does this without the need for you to learn, or even know about, Kubernetes. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
 
-Code Engine helps developers by hiding many of the complex tasks like configuration, dependency management etc., Code Engine simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
+{{site.data.keyword.codeengineshort}} helps developers by hiding many of the complex tasks like configuration, dependency management etc., {{site.data.keyword.codeengineshort}} simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
 {: #image-classification-code-engine.hidden-objectives}
 
-* Understand {{site.data.keyword.cloud_notm}} Code Engine and how it simplifies the developer experience.
-* Understand how easy it is to deploy and scale an application using Code Engine.
+* Understand {{site.data.keyword.codeenginefull}} and how it simplifies the developer experience.
+* Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
 * Learn the use of jobs to execute run to completion workloads.
 
 
@@ -60,33 +60,32 @@ Code Engine helps developers by hiding many of the complex tasks like configurat
   ![Architecture](images/solution54-code-engine-hidden/architecture_diagram.png)
 </p>
 
-1. Developer creates a Code Engine project and deploys a frontend and a backend Code Engine application.
+1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
 2. Developer connects the frontend (UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
 4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
-5. User runs a Code Engine job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
+5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
 {: #image-classification-code-engine.hidden-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
-   * code-engine plugin (`code-engine`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The code engine plugin will give you access to code engine commands on {{site.data.keyword.cloud_notm}}.
-* `kubectl` - The Kubernetes command-line tool, kubectl, can be used to deploy and manage applications on Kubernetes. Using kubectl, you can inspect cluster resources; create, delete, and update components; look at your new cluster; and bring up example apps.
+   * code-engine plugin (`code-engine`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/getting-started.md#getting-started-with-tutorials) guide.
 <!--#/istutorial#-->
 
-## Create an {{site.data.keyword.IBM_notm}} Code Engine project
+## Create an {{site.data.keyword.codeenginefull_notm}} project
 {: #image-classification-code-engine.hidden-create_coligo_project}
 {: step}
 
-In this section, you will create a Code Engine project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
+In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
 
 Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
 
-1. Navigate to [{{site.data.keyword.IBM_notm}} Code Engine Overview](https://{DomainName}/codeengine/overview) page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
@@ -104,26 +103,26 @@ Putting components into a single project enables you to manage access control mo
    {:pre}
 5. Make the command line tooling point to your project
    ```sh
-   ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
+   ibmcloud code-engine project target --name <PROJECT_NAME> --kubecfg
    ```
    {:pre}
 
-   `--kubecfg` flag appends the project to the default Kubernetes configuration file. Code Engine abstracts the underlying Kubernetes resources away from you, but in some cases you might want more control over these resources. Adding this flag will enable you to access any underlying Kubernetes resources by using the Kubernetes CLI, `kubectl`.
+   `--kubecfg` flag appends the project to the default Kubernetes configuration file. {{site.data.keyword.codeengineshort}} abstracts the underlying Kubernetes resources away from you, but in some cases you might want more control over these resources. Adding this flag will enable you to access any underlying Kubernetes resources by using the Kubernetes CLI, `kubectl`.
    {:tip}
 
 
-## Deploy the frontend and backend apps as Code Engine applications
+## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
 {: #image-classification-code-engine.hidden-deploy_app}
 {: step}
 
-Code Engine Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to Code Engine under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
+{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to {{site.data.keyword.codeengineshort}} under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications.
 
 ### Deploy a frontend application
 {: #image-classification-code-engine.hidden-4}
 
-1. To deploy a new Code Engine application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
+1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
 
    ```sh
    ibmcloud code-engine application create --name frontend \
@@ -131,7 +130,7 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), Code Engine has deployed your application and will handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ```
@@ -139,10 +138,8 @@ We've already built images for the two applications and pushed them to the publi
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 
-   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision.
+   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the name, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Running Instances` and their state.
    {:tip}
-
-1. For secured browsing, you can also browse the application with `HTTPS`.
 
   <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud code-engine application logs --name frontend`
    {:tip}-->
@@ -152,38 +149,35 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}-->
 
-Congratulations!! You've just deployed a web application to Code Engine with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
 {: #image-classification-code-engine.hidden-5}
 
 When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a number of other knobs you have control over. Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
 
-Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, Code Engine deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
+Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, {{site.data.keyword.codeengineshort}} deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
 
-1. Because Code Engine is built on top of a Kubernetes stack, you are able to access the additional Kubernetes cluster resources if you need to get more control or information. For example, let's see how many pods are currently running on our Kubernetes cluster.
-    ```sh
-    kubectl get pods --watch
-    ```
-    {:pre}
-  This may already be zero if your application has scaled itself back down due to non use. To see a pod spin up, visit your application again in the browser. To exit the watch, use `ctrl + c`.
+Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes stack, you should be able to access the additional Kubernetes cluster resources if you need to get more control or information.
 
-1. To check the autoscaling capabilities of Code Engine, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
-1. Click on **Generate load** to generate traffic.
-1. Run the below command to see the pod count incrementing as part of the autoscaling.
+1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
+2. Click on **Generate load** to generate traffic.
+3. Run the below command to see the instance(pod) count incrementing as part of the autoscaling.
    ```sh
-   kubectl get pods --watch
+   ibmcloud code-engine application get -n frontend
    ```
    {:pre}
-   To exit the watch, you can use `ctrl + c`
 
-1. The `watch` command will write a new line each time there is a change in the underlying pod. To more clearly see how many pods were created, you can just do `kubectl get pods`.
-1. The default for maximum number of instances when an application is created is 10 pods, so you should see that there were 10 pods created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
+    By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag.
+   {: tip}
+
+4. The default for maximum number of instances when an application is created is 10 instances, so you should see that there were 10 instances created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```sh
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {:pre}
-1. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `kubectl get pods --watch` command to see the pod count increasing to 5.
+5. Once load generation is stopped, wait for a minute to see the instances terminating, eventually scaling down to zero instances.
+6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:
     ```
@@ -194,8 +188,6 @@ Most of these values have a default set if nothing is provided as an option when
     frontend-i4fmh-2-deployment-6996489d7c-vzmdd   1/2     Running       0          9s
     ```
 
-1. Once load generation is stopped, wait for a minute to see the pods terminating, eventually scaling down to zero pods.
-
 ### Deploy a backend application and test the connection
 {: #image-classification-code-engine.hidden-6}
 
@@ -205,7 +197,7 @@ Most of these values have a default set if nothing is provided as an option when
    --image ibmcom/backend --cluster-local
    ```
    {:pre}
-   The `--cluster-local` flag will instruct Code Engine to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
+   The `--cluster-local` flag will instruct {{site.data.keyword.codeengineshort}} to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
    {:tip}
 
 1. Copy the private endpoint (URL) from the output.
@@ -266,7 +258,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
-1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your code engine application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
    ```sh
    ibmcloud code-engine application bind --name backend \
    --service-instance code-engine-cos \
@@ -286,7 +278,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```
    {:pre}
 
-1. With the configmap defined, you can now update the backend application by asking Code Engine to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
+1. With the configmap defined, you can now update the backend application by asking {{site.data.keyword.codeengineshort}} to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
    ```sh
    ibmcloud code-engine application update --name backend \
    --env-from-configmap backend-configuration
@@ -330,7 +322,7 @@ Now that you have the backend application connected to the frontend application,
 
 Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
 
-Jobs in Code Engine are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Code Engine application does.
+Jobs in {{site.data.keyword.codeengineshort}} are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a {{site.data.keyword.codeengineshort}} application does.
 
 ### Create a job definition
 {: #image-classification-code-engine.hidden-11}
@@ -420,4 +412,4 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 ## Related resources
 {: #image-classification-code-engine.hidden-related_resources}
 
-- [{{site.data.keyword.cloud_notm}} Code Engine Documentation](/docs/codeengine)
+- [{{site.data.keyword.codeenginefull_notm}} Documentation](/docs/codeengine)
