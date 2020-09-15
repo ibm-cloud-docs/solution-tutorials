@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-14"
-lasttested: "2020-06-22"
+lastupdated: "2020-09-15"
+lasttested: "2020-09-15"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, visual-recognition
@@ -35,9 +35,10 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-<!--#/istutorial#-->
 
-> WORK-IN-PROGRESS
+Beta limitations : You can create only 1 project per location. All projects and all their contents are automatically deleted after 7 days. [Learn more](https://{DomainName}/docs/codeengine?topic=codeengine-kn-limits#kn-limits_experimental)
+{: tip}
+<!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.cloud_notm}} Code Engine by deploying an image classification application. You will create a Code Engine project, target the project and deploy Code Engine components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Code Engine components. You will also understand the auto-scaling capability of Code Engine where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
@@ -89,22 +90,21 @@ Putting components into a single project enables you to manage access control mo
 2. Click on **Start with a project**.
    - Select a Location preferably Dallas
    - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
-   - Click on **Create**
-3. In your terminal, ensure you're logged in to the `ibmcloud` CLI.
-    ```
-    ibmcloud login
-    ```
+   - Click on **Create** and then **Confirm & create**
+   - Wait until the project `status` changes to **Active**
+3. In a terminal on your machine, ensure you're logged in to the `ibmcloud` CLI.
+   ```sh
+   ibmcloud login
+   ```
+   {:pre}
 4. You will also need to target the resource group where you created your project.
-    ```
-    ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
-    ```
+   ```
+   ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
+   ```
+   {:pre}
 5. Make the command line tooling point to your project
    ```sh
    ibmcloud code-engine target --name <PROJECT_NAME> --kubecfg
-   ```
-   You may need to target a resource group if one has not already been targeted
-   ```sh
-   ibmcloud target -g <RESOURCE_GROUP>
    ```
    {:pre}
 
@@ -118,7 +118,7 @@ Putting components into a single project enables you to manage access control mo
 
 Code Engine Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to Code Engine under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
 
-We've already built images for the two applications and pushed them to the {{site.data.keyword.cloud_notm}} Container Registry. You will use these pre-built container images to deploy the respective applications.
+We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications.
 
 ### Deploy a frontend application
 {: #image-classification-code-engine.hidden-4}
@@ -131,7 +131,7 @@ We've already built images for the two applications and pushed them to the {{sit
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data, Code Engine can deploy your application and handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), Code Engine has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ```
