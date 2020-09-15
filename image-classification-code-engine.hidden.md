@@ -234,23 +234,23 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **code-engine-cos** and select a resource group.
    3. Click on **Create**.
-2. Under **Service Credentials**, click on **New credential**
+2. Under **Service credentials**, click on **New credential**
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
    <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
-3. Create a **Custom** bucket named `<your-initials>-code-engine`,
+3. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
    1. Select **Cross Region** resiliency
    2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
 4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
-5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+5. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **code-engine-vr** and select a resource group.
    3. Click on **Create**.
-7. Under **Service Credentials**, click on **New credential**
+7. Under **Service credentials**, click on **New credential**
    1. Give it a name - `vr-for-code-engine` and select **Writer** as the role
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
@@ -288,10 +288,10 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```
    {:pre}
 
-   To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
+   To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmaps are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-1. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
+1. To verify whether the backend application is updated with the binding and configmap. You can run the below command with `--more-details` flag and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
    ibmcloud code-engine application get --name backend --more-details
    ```
@@ -375,7 +375,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ibmcloud code-engine job run --name backend-job \
    --jobdef backend-jobdef \
    --image ibmcom/backend-job \
-   --arraysize 1 \
+   --array-indices 1 \
    --retrylimit 2 \
    --memory 128M \
    --cpu 1
