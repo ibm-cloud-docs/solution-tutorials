@@ -141,8 +141,11 @@ We've already built images for the two applications and pushed them to the publi
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the name, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Running Instances` and their state.
    {:tip}
 
-  <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud code-engine application logs --name frontend`
-   {:tip}-->
+1. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the name of the instance from the `ibmcloud code-engine application get -n frontend` command
+   ```
+   ibmcloud code-engine application logs --instance <INSTANCE_NAME>
+   ```
+   {:pre}
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
    kubectl get pods --watch
@@ -168,8 +171,8 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    ```
    {:pre}
 
-    By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag.
-   {: tip}
+   By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag.
+   {:tip}
 
 4. The default for maximum number of instances when an application is created is 10 instances, so you should see that there were 10 instances created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```sh
