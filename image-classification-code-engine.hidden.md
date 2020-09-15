@@ -107,13 +107,9 @@ Putting components into a single project enables you to manage access control mo
    {:pre}
 5. Make the command line tooling point to your project
    ```sh
-   ibmcloud code-engine project target --name <PROJECT_NAME> --kubecfg
+   ibmcloud code-engine project target --name <PROJECT_NAME>
    ```
    {:pre}
-
-   `--kubecfg` flag appends the project to the default Kubernetes configuration file. {{site.data.keyword.codeengineshort}} abstracts the underlying Kubernetes resources away from you, but in some cases you might want more control over these resources. Adding this flag will enable you to access any underlying Kubernetes resources by using the Kubernetes CLI, `kubectl`.
-   {:tip}
-
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
 {: #image-classification-code-engine.hidden-deploy_app}
@@ -150,11 +146,6 @@ We've already built images for the two applications and pushed them to the publi
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
    {:pre}
-<!--4. List the pods of the service and notice that it has a running pod
-   ```sh
-   kubectl get pods --watch
-   ```
-   {:pre}-->
 
 Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
