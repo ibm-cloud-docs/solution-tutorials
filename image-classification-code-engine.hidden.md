@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {:beta}
 <!--#/istutorial#-->
 
-In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, target the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
+In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
 {{site.data.keyword.codeenginefull_notm}} provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then {{site.data.keyword.codeengineshort}} can host and manage them for you - all on a Kubernetes-based infrastructure. And {{site.data.keyword.codeengineshort}} does this without the need for you to learn, or even know about, Kubernetes. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
@@ -77,13 +77,13 @@ This tutorial requires:
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/getting-started.md#getting-started-with-tutorials) guide.
 
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+**Note:** To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
 <!--#/istutorial#-->
 
 
 ## Create an {{site.data.keyword.codeenginefull_notm}} project
-{: #image-classification-code-engine.hidden-create_coligo_project}
+{: #image-classification-code-engine.hidden-create_code_engine_project}
 {: step}
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
@@ -214,7 +214,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
    {:tip}
 
-1. Refresh the frontend URL on the browser to test the connection to the backend service. Now, the backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
+2. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {: #image-classification-code-engine.hidden-0}
@@ -287,52 +287,30 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmaps are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-1. To verify whether the backend application is updated with the binding and configmap. You can run the below command with `--more-details` flag and look for the `Service Bindings` and `Environment Variables` sections in the output
+2. To verify whether the backend application is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
-   ibmcloud code-engine application get --name backend --more-details
+   ibmcloud code-engine application get --name backend
    ```
    {:pre}
-
-<!--## Test the entire application
-{:test_app}
-
-Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification,
-
-1. Before testing the application, let's create a secret for {{site.data.keyword.visualrecognitionshort}} service to be used with the jobs in the subsequent steps,
-   ```sh
-   ibmcloud code-engine secret create --name vr-secret \
-   --from-literal=VR_APIKEY=<VISUAL_RECOGNITION_APIKEY> \
-   --from-literal=VR_URL=<VISUAL_RECOGNITION_URL>
-   ```
-   {:pre}
-2. Test the app by uploading an image through the frontend UI
-   1. Click on **Upload image** and point to the image on your computer.
-   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-code-engine`.
-3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
-4. Upload multiple images and test the application.
-5. Check the results of the classified images on the UI.
-
-   If you are interested in checking the job details, run the command `ibmcloud code-engine job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud code-engine job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud code-engine job logs --name <JOBRUN_NAME> `
-   {:tip}-->
 
 ## Test the application
 {: #image-classification-code-engine.hidden-test_the_app}
 {: step}
 
-Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
+Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job configuration and use the job configuration to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service.
 
 Jobs in {{site.data.keyword.codeengineshort}} are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a {{site.data.keyword.codeengineshort}} application does.
 
-### Create a job definition
+### Create a job configuration
 {: #image-classification-code-engine.hidden-11}
 
-Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
+Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. When you create a `job`, you can specify workload configuration information that is used each time the job is run. You can create a job from the console or with the CLI.
 
 This job will read images from {{site.data.keyword.cos_full_notm}}, and then classify them using the {{site.data.keyword.visualrecognitionshort}} Service. It will need to have access to service credentials for both services.
 
-1. On a terminal, run the following command to create a job definition,
+1. On a terminal, run the following command to create a job configuration,
    ```sh
-   ibmcloud code-engine jobdef create --name backend-jobdef \
+   ibmcloud code-engine job create --name backend-job \
    --image ibmcom/backend-job \
    --env-from-configmap backend-configuration \
    --env VR_VERSION='2018-03-19'
@@ -342,12 +320,12 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    You can set the version of {{site.data.keyword.visualrecognitionshort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/apidocs/visual-recognition/visual-recognition-v3#versioning)
    {:tip}
 
-### Bind the {{site.data.keyword.cloud_notm}} services to jobdef
+### Bind the {{site.data.keyword.cloud_notm}} services to job
 {: #image-classification-code-engine.hidden-12}
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud code-engine jobdef bind --name backend-jobdef \
+   ibmcloud code-engine job bind --name backend-job \
    --service-instance code-engine-cos \
    --service-credential cos-for-code-engine \
    --prefix COS_JOB
@@ -355,10 +333,15 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:pre}
 1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud code-engine jobdef bind --name backend-jobdef \
+   ibmcloud code-engine job bind --name backend-job \
    --service-instance code-engine-vr \
    --service-credential vr-for-code-engine \
    --prefix VR_JOB
+   ```
+   {:pre}
+2. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
+   ```sh
+   ibmcloud code-engine job get --name backend-job
    ```
    {:pre}
 
@@ -366,10 +349,11 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 {: #image-classification-code-engine.hidden-13}
 
 1. Go to the frontend UI and **upload images** for classification.
-1. With the following command, run a job using the jobdefinition created above
+2. To run a job with the configuration created above, use the `jobrun submit` command,
+
    ```sh
-   ibmcloud code-engine job run --name backend-job \
-   --jobdef backend-jobdef \
+   ibmcloud code-engine jobrun submit --name backend-jobrun \
+   --job backend-job \
    --image ibmcom/backend-job \
    --array-indices 1 \
    --retrylimit 2 \
@@ -378,21 +362,29 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```
    {:pre}
 
-   When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud code-engine job run --help`.
+   When you run a job, you can override many of the variables that you set in the job configuration. To check the variables, run `ibmcloud code-engine jobrun submit --help`.
    {:tip}
 
-1. To check the logs, run the following command
+3. To check the status of the `jobrun`, run the following command
    ```sh
-   ibmcloud code-engine job logs --name backend-job
+   ibmcloud code-engine jobrun get --name backend-jobrun
    ```
    {:pre}
-1. In the frontend UI, click on the **refresh** button to see the results for each of the uploaded images.
-1. To delete the job, run the below command
+4. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look like something like `backend-jobrun-1-0`.
    ```sh
-   ibmcloud code-engine job delete --name backend-job
+   ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
    {:pre}
-1. Upload new images, create the job again and hit the **refresh** button to see the results.
+5. In the frontend UI, click on the **refresh** button (next to Upload image) to see the results for each of the uploaded images.
+6. Upload new images, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
+   ```sh
+   ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun \
+   --array-indices 1 \
+   --retrylimit 2 \
+   --memory 128M \
+   --cpu 1
+   ```
+   {:pre}
 
 ## Remove resources
 {: #image-classification-code-engine.hidden-cleanup}
