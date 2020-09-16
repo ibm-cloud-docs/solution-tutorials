@@ -495,18 +495,6 @@
             "Db2 Warehouse"
           ],
           "lastUpdated": "2020-09-04"
-        },
-        {
-          "name": "Analyze and visualize open data with Apache Spark",
-          "url": "big-data-analytics-spark.html",
-          "description": "Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.",
-          "imgSrc": "images/solution23/Architecture.png",
-          "tags": [
-            "Apache Spark",
-            "Watson Studio",
-            "Cloud Object Storage"
-          ],
-          "lastUpdated": "2019-05-22"
         }
       ]
     },

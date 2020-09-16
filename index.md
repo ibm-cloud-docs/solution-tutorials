@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-09-10"
+lastupdated: "2020-09-16"
 ---
 
 {:shortdesc: .shortdesc}
@@ -752,23 +752,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" alt="Architecture diagram for the solution Build, deploy, test and monitor a predictive machine learning model"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/solution-tutorials?topic=solution-tutorials-big-data-analytics-spark#big-data-analytics-spark">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Analyze and visualize open data with Apache Spark
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution23/Architecture.png" alt="Architecture diagram for the solution Analyze and visualize open data with Apache Spark"/>
                 </div>
             </div>
         </div>
