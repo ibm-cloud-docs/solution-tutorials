@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-15"
-lasttested: "2020-09-15"
+lastupdated: "2020-09-16"
+lasttested: "2020-09-16"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, visual-recognition
@@ -25,6 +25,7 @@ completion-time: 2h
 {:pre: .pre}
 {:important: .important}
 {:note: .note}
+{:beta: .beta}
 
 # Image classification with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
@@ -36,8 +37,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-{{site.data.keyword.codeenginefull}} Beta limitations : You can create only 1 project per location. All projects and all their contents are automatically deleted after 7 days. [Learn more](https://{DomainName}/docs/codeengine?topic=codeengine-kn-limits#kn-limits_experimental)
-{: tip}
+{{site.data.keyword.codeenginefull_notm}} is available as a beta service. Beta runtimes and services might be unstable or change frequently. Be aware of [beta limitations](https://{DomainName}/docs/codeengine?topic=codeengine-limits). {: beta}
 <!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, target the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
@@ -71,7 +71,7 @@ In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by d
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
-   * code-engine plugin (`code-engine`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
+   * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/getting-started.md#getting-started-with-tutorials) guide.
@@ -107,7 +107,7 @@ Putting components into a single project enables you to manage access control mo
    {:pre}
 5. Make the command line tooling point to your project
    ```sh
-   ibmcloud code-engine project target --name <PROJECT_NAME>
+   ibmcloud code-engine project select --name <PROJECT_NAME>
    ```
    {:pre}
 
@@ -138,10 +138,10 @@ We've already built images for the two applications and pushed them to the publi
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 
-   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the name, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, and various revisions and routing for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Running Instances` and their state.
+   Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Instances` and their status.
    {:tip}
 
-1. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the name of the instance from the `ibmcloud code-engine application get -n frontend` command
+2. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of the instance from the `ibmcloud code-engine application get -n frontend` command
    ```
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
@@ -166,7 +166,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    ```
    {:pre}
 
-   By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag.
+   By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag with `application update` command.
    {:tip}
 
 4. The default for maximum number of instances when an application is created is 10 instances, so you should see that there were 10 instances created. If you didn't want to allow as many instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
