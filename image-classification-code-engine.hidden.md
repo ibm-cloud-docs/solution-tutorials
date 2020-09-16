@@ -134,10 +134,7 @@ We've already built images for the two applications and pushed them to the publi
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
-   ```
-   Congratulations! Your Frontend is working
-   Oops!! Looks like the Connection to the backend is failing. Time to add a backend
-   ```
+   ![](images/solution54-code-engine-hidden/frontend-501.png)
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Instances` and their status.
    {:tip}
@@ -215,6 +212,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    {:tip}
 
 2. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
+   ![](images/solution54-code-engine-hidden/frontend.png)
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {: #image-classification-code-engine.hidden-0}
@@ -350,7 +348,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 
 1. Go to the frontend UI and **upload images** for classification.
 2. To run a job with the configuration created above, use the `jobrun submit` command,
-
    ```sh
    ibmcloud code-engine jobrun submit --name backend-jobrun \
    --job backend-job \
@@ -375,8 +372,8 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
    {:pre}
-5. In the frontend UI, click on the **refresh** button (next to Upload image) to see the results for each of the uploaded images.
-6. Upload new images, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
+5. In the frontend UI, click on the **refresh** button (next to Upload image) to see the results for each of the uploaded images by expanding **Show results** on each image.
+6. Upload new images or delete individual image by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
    ```sh
    ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun \
    --array-indices 1 \
