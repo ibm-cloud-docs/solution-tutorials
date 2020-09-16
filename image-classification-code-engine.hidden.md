@@ -35,9 +35,10 @@ completion-time: 2h
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
+{:tip}
 
-{{site.data.keyword.codeenginefull_notm}} is available as a beta service. Beta runtimes and services might be unstable or change frequently. Be aware of [beta limitations](https://{DomainName}/docs/codeengine?topic=codeengine-limits). {: beta}
+{{site.data.keyword.codeenginefull_notm}} is available as a beta service. Beta runtimes and services might be unstable or change frequently. Be aware of [beta limitations](https://{DomainName}/docs/codeengine?topic=codeengine-limits).
+{:beta}
 <!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, target the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
