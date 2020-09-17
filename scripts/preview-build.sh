@@ -5,6 +5,7 @@ mkdir -p builddocs/input
 DOMAIN_NAME_RULES=( \
   "console.bluemix.net" \
   "/cloud.ibm.com" \
+  "/test.cloud.ibm.com" \
   "console.cloud.ibm.com" \
 )
 for rule in "${DOMAIN_NAME_RULES[@]}"
