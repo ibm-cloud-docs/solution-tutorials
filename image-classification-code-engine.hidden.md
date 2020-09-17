@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-16"
+lastupdated: "2020-09-17"
 lasttested: "2020-09-16"
 
 content-type: tutorial
@@ -228,46 +228,35 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **code-engine-cos** and select a resource group.
    3. Click on **Create**.
-2. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
-    <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
-   2. Click **Add**.
-   <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
-3. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
+2. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
    1. Select **Cross Region** resiliency
    2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
-4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
-5. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
-6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
+3. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
+4. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **code-engine-vr** and select a resource group.
    3. Click on **Create**.
-7. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role
-    <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
-   2. Click **Add**.
-   <!--3. Expand the `for-code-engine` credentials, copy and **save** the credentials for future reference.-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #image-classification-code-engine.hidden-9}
 
-Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
+Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically creates and adds credentials for a service to the environment variables of the container for your application or job.
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
    ```sh
    ibmcloud code-engine application bind --name backend \
    --service-instance code-engine-cos \
-   --service-credential cos-for-code-engine \
    --prefix COS
    ```
    {:pre}
 
-   If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag. `--service-credential` is an optional flag.
+   If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag.
    {:tip}
 
-1. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
+2. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
    ibmcloud code-engine configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
@@ -275,7 +264,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```
    {:pre}
 
-1. With the configmap defined, you can now update the backend application by asking {{site.data.keyword.codeengineshort}} to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
+3. With the configmap defined, you can now update the backend application by asking {{site.data.keyword.codeengineshort}} to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
    ```sh
    ibmcloud code-engine application update --name backend \
    --env-from-configmap backend-configuration
@@ -285,7 +274,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmaps are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-2. To verify whether the backend application is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
+4. To verify whether the backend application is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
    ibmcloud code-engine application get --name backend
    ```
@@ -311,7 +300,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ibmcloud code-engine job create --name backend-job \
    --image ibmcom/backend-job \
    --env-from-configmap backend-configuration \
-   --env VR_VERSION='2018-03-19'
    ```
    {:pre}
 
@@ -325,7 +313,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```sh
    ibmcloud code-engine job bind --name backend-job \
    --service-instance code-engine-cos \
-   --service-credential cos-for-code-engine \
    --prefix COS_JOB
    ```
    {:pre}
@@ -333,7 +320,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```sh
    ibmcloud code-engine job bind --name backend-job \
    --service-instance code-engine-vr \
-   --service-credential vr-for-code-engine \
    --prefix VR_JOB
    ```
    {:pre}
@@ -349,13 +335,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 1. Go to the frontend UI and **upload images** for classification.
 2. To run a job with the configuration created above, use the `jobrun submit` command,
    ```sh
-   ibmcloud code-engine jobrun submit --name backend-jobrun \
-   --job backend-job \
-   --image ibmcom/backend-job \
-   --array-indices 1 \
-   --retrylimit 2 \
-   --memory 128M \
-   --cpu 1
+   ibmcloud code-engine jobrun submit --name backend-jobrun --job backend-job
    ```
    {:pre}
 
@@ -375,11 +355,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 5. In the frontend UI, click on the **refresh** button (next to Upload image) to see the results for each of the uploaded images by expanding **Show results** on each image.
 6. Upload new images or delete individual image by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
    ```sh
-   ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun \
-   --array-indices 1 \
-   --retrylimit 2 \
-   --memory 128M \
-   --cpu 1
+   ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun
    ```
    {:pre}
 
