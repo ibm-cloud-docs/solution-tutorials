@@ -299,7 +299,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```sh
    ibmcloud code-engine job create --name backend-job \
    --image ibmcom/backend-job \
-   --env-from-configmap backend-configuration \
+   --env-from-configmap backend-configuration
    ```
    {:pre}
 
