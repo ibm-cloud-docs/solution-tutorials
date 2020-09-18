@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-17"
+lastupdated: "2020-09-18"
 lasttested: "2020-09-16"
 
 content-type: tutorial
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {:beta}
 <!--#/istutorial#-->
 
-In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
+In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} components - applications and jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
 {{site.data.keyword.codeenginefull_notm}} provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then {{site.data.keyword.codeengineshort}} can host and manage them for you - all on a Kubernetes-based infrastructure. And {{site.data.keyword.codeengineshort}} does this without the need for you to learn, or even know about, Kubernetes. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
@@ -91,9 +91,9 @@ In this section, you will create a {{site.data.keyword.codeengineshort}} project
 Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
 
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
-2. Click on **Start with a project**.
-   - Select a Location preferably Dallas
-   - Provide a project name and select a Resource group where you will create your project. Resource groups are a way for you to organize your account resources into customizable groupings.
+2. On the left pane, click on **Projects** and then click **Create project**,
+   - Select a Location
+   - Provide a project name and select a Resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
    - Click on **Create** and then **Confirm & create**
    - Wait until the project `status` changes to **Active**
 3. In a terminal on your machine, ensure you're logged in to the `ibmcloud` CLI.
@@ -126,8 +126,7 @@ We've already built images for the two applications and pushed them to the publi
 1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
 
    ```sh
-   ibmcloud code-engine application create --name frontend \
-   --image ibmcom/frontend
+   ibmcloud code-engine application create --name frontend --image ibmcom/frontend
    ```
    {:pre}
 
@@ -189,8 +188,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
 
 1. To deploy a new backend application to store your images into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
-   ibmcloud code-engine application create --name backend \
-   --image ibmcom/backend --cluster-local
+   ibmcloud code-engine application create --name backend --image ibmcom/backend --cluster-local
    ```
    {:pre}
    The `--cluster-local` flag will instruct {{site.data.keyword.codeengineshort}} to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
@@ -203,8 +201,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
 
 1. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
    ```sh
-   ibmcloud code-engine application update --name frontend \
-   --env BACKEND_URL=<BACKEND_PRIVATE_URL>
+   ibmcloud code-engine application update --name frontend --env BACKEND_URL=<BACKEND_PRIVATE_URL>
    ```
    {:pre}
 
@@ -226,7 +223,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **code-engine-cos** and select a resource group.
+   2. Set **Service name** to **code-engine-cos** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 2. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
    1. Select **Cross Region** resiliency
@@ -237,7 +234,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 4. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
-   2. Set **Service name** to **code-engine-vr** and select a resource group.
+   2. Set **Service name** to **code-engine-vr** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
@@ -247,9 +244,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
    ```sh
-   ibmcloud code-engine application bind --name backend \
-   --service-instance code-engine-cos \
-   --prefix COS
+   ibmcloud code-engine application bind --name backend --service-instance code-engine-cos --prefix COS
    ```
    {:pre}
 
@@ -258,16 +253,13 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
 2. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
-   ibmcloud code-engine configmap create --name backend-configuration \
-   --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
-   --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
+   ibmcloud code-engine configmap create --name backend-configuration --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
    {:pre}
 
 3. With the configmap defined, you can now update the backend application by asking {{site.data.keyword.codeengineshort}} to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
    ```sh
-   ibmcloud code-engine application update --name backend \
-   --env-from-configmap backend-configuration
+   ibmcloud code-engine application update --name backend --env-from-configmap backend-configuration
    ```
    {:pre}
 
@@ -297,9 +289,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 
 1. On a terminal, run the following command to create a job configuration,
    ```sh
-   ibmcloud code-engine job create --name backend-job \
-   --image ibmcom/backend-job \
-   --env-from-configmap backend-configuration
+   ibmcloud code-engine job create --name backend-job --image ibmcom/backend-job --env-from-configmap backend-configuration
    ```
    {:pre}
 
@@ -311,16 +301,12 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud code-engine job bind --name backend-job \
-   --service-instance code-engine-cos \
-   --prefix COS_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --prefix COS_JOB
    ```
    {:pre}
 1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud code-engine job bind --name backend-job \
-   --service-instance code-engine-vr \
-   --prefix VR_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-vr --prefix VR_JOB
    ```
    {:pre}
 2. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
