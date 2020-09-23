@@ -86,7 +86,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 - create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
-   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
+   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
    - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 - and obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
