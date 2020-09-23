@@ -34,6 +34,7 @@ Solution Tutorials
             serverless-api-webapp.md
             multi-region-serverless.md
             application-log-analysis.md
+            image-classification-code-engine.md
 
         {: .topicgroup}
         Chatbots
@@ -141,6 +142,10 @@ Solution Tutorials
             slack-chatbot-database-watson.md
             serverless-mobile-backend.md
             serverless-github-traffic-analytics.md
+
+        {: .topicgroup}
+        Code Engine
+            image-classification-code-engine.md
 
         {: .topicgroup}
         Virtual Servers

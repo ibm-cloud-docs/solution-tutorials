@@ -4,6 +4,7 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
+    "Code Engine",
     "Virtual Servers"
   ],
   "categories": [
@@ -283,6 +284,17 @@
             "Availability Monitoring"
           ],
           "lastUpdated": "2020-08-12"
+        },
+        {
+          "name": "Image Classification with Code Engine",
+          "url": "image-classification-code-engine.html",
+          "description": "Create a Code Engine project and deploy an image classification application.",
+          "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative"
+          ],
+          "lastUpdated": "2020-09-23"
         }
       ]
     },

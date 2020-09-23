@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-09-16"
+lastupdated: "2020-09-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -494,6 +494,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor application health with LogDNA and Sysdig"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-image-classification-code-engine#image-classification-code-engine">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Image Classification with Code Engine
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a Code Engine project and deploy an image classification application.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution54-code-engine/architecture_diagram.png" alt="Architecture diagram for the solution Image Classification with Code Engine"/>
                 </div>
             </div>
         </div>

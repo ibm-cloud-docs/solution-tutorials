@@ -49,7 +49,7 @@ In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by d
 {{site.data.keyword.codeengineshort}} helps developers by hiding many of the complex tasks like configuration, dependency management etc., {{site.data.keyword.codeengineshort}} simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
-{: #image-classification-code-engine.hidden-objectives}
+{: #image-classification-code-engine-objectives}
 
 * Understand {{site.data.keyword.codeenginefull}} and how it simplifies the developer experience.
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
@@ -58,7 +58,7 @@ In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by d
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution54-code-engine-hidden/architecture_diagram.png)
+  ![Architecture](images/solution54-code-engine/architecture_diagram.png)
 </p>
 
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
@@ -68,7 +68,7 @@ In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by d
 5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
-{: #image-classification-code-engine.hidden-prereqs}
+{: #image-classification-code-engine-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
@@ -83,7 +83,7 @@ You will find instructions to download and install these tools for your operatin
 
 
 ## Create an {{site.data.keyword.codeenginefull_notm}} project
-{: #image-classification-code-engine.hidden-create_code_engine_project}
+{: #image-classification-code-engine-create_code_engine_project}
 {: step}
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
@@ -113,7 +113,7 @@ Putting components into a single project enables you to manage access control mo
    {:pre}
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
-{: #image-classification-code-engine.hidden-deploy_app}
+{: #image-classification-code-engine-deploy_app}
 {: step}
 
 {{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to {{site.data.keyword.codeengineshort}} under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
@@ -121,7 +121,7 @@ Putting components into a single project enables you to manage access control mo
 We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications.
 
 ### Deploy a frontend application
-{: #image-classification-code-engine.hidden-4}
+{: #image-classification-code-engine-4}
 
 1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
 
@@ -136,7 +136,7 @@ We've already built images for the two applications and pushed them to the publi
    {:tip}
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
-   ![](images/solution54-code-engine-hidden/frontend-501.png)
+   ![](images/solution54-code-engine/frontend-501.png)
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Instances` and their status.
    {:tip}
@@ -150,7 +150,7 @@ We've already built images for the two applications and pushed them to the publi
 Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
-{: #image-classification-code-engine.hidden-5}
+{: #image-classification-code-engine-5}
 
 When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a number of other knobs you have control over. Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
 
@@ -187,7 +187,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
     ```
 
 ### Deploy a backend application and test the connection
-{: #image-classification-code-engine.hidden-6}
+{: #image-classification-code-engine-6}
 
 1. To deploy a new backend application to store your images into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
@@ -212,17 +212,17 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    {:tip}
 
 4. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
-   ![](images/solution54-code-engine-hidden/frontend.png)
+   ![](images/solution54-code-engine/frontend.png)
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
-{: #image-classification-code-engine.hidden-0}
+{: #image-classification-code-engine-0}
 {:connect_cloud_services}
 {: step}
 
 In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
-{: #image-classification-code-engine.hidden-create_services}
+{: #image-classification-code-engine-create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
@@ -247,7 +247,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    2. Click **Add**.
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
-{: #image-classification-code-engine.hidden-9}
+{: #image-classification-code-engine-9}
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
@@ -282,7 +282,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    {:pre}
 
 ## Test the application
-{: #image-classification-code-engine.hidden-test_the_app}
+{: #image-classification-code-engine-test_the_app}
 {: step}
 
 Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job configuration and use the job configuration to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service.
@@ -290,7 +290,7 @@ Now that you have the backend application connected to the frontend application 
 Jobs in {{site.data.keyword.codeengineshort}} are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a {{site.data.keyword.codeengineshort}} application does.
 
 ### Create a job configuration
-{: #image-classification-code-engine.hidden-11}
+{: #image-classification-code-engine-11}
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. When you create a `job`, you can specify workload configuration information that is used each time the job is run. You can create a job from the console or with the CLI.
 
@@ -306,7 +306,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to job
-{: #image-classification-code-engine.hidden-12}
+{: #image-classification-code-engine-12}
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
@@ -325,7 +325,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:pre}
 
 ### Run the job
-{: #image-classification-code-engine.hidden-13}
+{: #image-classification-code-engine-13}
 
 1. Go to the frontend UI and **upload images** for classification.
 2. To run a job with the configuration created above, use the `jobrun submit` command,
@@ -355,7 +355,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:pre}
 
 ## Remove resources
-{: #image-classification-code-engine.hidden-cleanup}
+{: #image-classification-code-engine-cleanup}
 {: step}
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
@@ -369,6 +369,6 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
  * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
 
 ## Related resources
-{: #image-classification-code-engine.hidden-related_resources}
+{: #image-classification-code-engine-related_resources}
 
 - [{{site.data.keyword.codeenginefull_notm}} Documentation](/docs/codeengine)
