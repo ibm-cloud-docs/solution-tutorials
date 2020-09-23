@@ -132,13 +132,16 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.47e3a07f-2c7f.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
-1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
+   For the source code used in this solution tutorial,refer the [GitHub repo](https://github.com/IBM-Cloud/code-engine-image-classification).
+   {:tip}
+
+2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![](images/solution54-code-engine-hidden/frontend-501.png)
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of `Instances` and their status.
    {:tip}
 
-2. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of the instance from the `ibmcloud code-engine application get -n frontend` command
+3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of the instance from the `ibmcloud code-engine application get -n frontend` command
    ```
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
