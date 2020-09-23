@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-18"
+lastupdated: "2020-09-23"
 lasttested: "2020-09-16"
 
 content-type: tutorial
@@ -225,26 +225,32 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **code-engine-cos** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
-2. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
+2. Under **Service credentials**, click on **New credential**
+   1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
+   2. Click **Add**.
+3. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` ,
    1. Select **Cross Region** resiliency
    2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
-3. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
-4. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
-5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
+4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
+5. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **code-engine-vr** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
+7. Under **Service credentials**, click on **New credential**
+   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role
+   2. Click **Add**.
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #image-classification-code-engine.hidden-9}
 
-Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically creates and adds credentials for a service to the environment variables of the container for your application or job.
+Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
    ```sh
-   ibmcloud code-engine application bind --name backend --service-instance code-engine-cos --prefix COS
+   ibmcloud code-engine application bind --name backend --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
    {:pre}
 
@@ -301,7 +307,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --prefix COS_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
    {:pre}
 1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
