@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-09-23"
-lasttested: "2020-09-16"
+lasttested: "2020-09-23"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, visual-recognition
@@ -130,7 +130,7 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.a0459755-fd51.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.47e3a07f-2c7f.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
 1. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![](images/solution54-code-engine-hidden/frontend-501.png)
@@ -194,12 +194,12 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    The `--cluster-local` flag will instruct {{site.data.keyword.codeengineshort}} to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
    {:tip}
 
-1. Copy the private endpoint (URL) from the output.
+2. Copy and save the private endpoint (URL) from the output to use it in the next command.
 
    You can run `ibmcloud code-engine application get -n backend` command to check the status and details of the backend application.
    {:tip}
 
-1. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
+3. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
    ```sh
    ibmcloud code-engine application update --name frontend --env BACKEND_URL=<BACKEND_PRIVATE_URL>
    ```
@@ -208,7 +208,7 @@ Because {{site.data.keyword.codeengineshort}} is built on top of a Kubernetes st
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
    {:tip}
 
-2. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
+4. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
    ![](images/solution54-code-engine-hidden/frontend.png)
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
@@ -233,14 +233,14 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
-4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
-5. Under **Endpoints**, copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+4. On the left pane under **Endpoints**, Select **Cross Region** resiliency and select a Location near to you.
+5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **code-engine-vr** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 7. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role
+   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role.
    2. Click **Add**.
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
@@ -312,7 +312,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    {:pre}
 1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-vr --prefix VR_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-vr --service-credential vr-for-code-engine --prefix VR_JOB
    ```
    {:pre}
 2. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
@@ -339,7 +339,7 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ibmcloud code-engine jobrun get --name backend-jobrun
    ```
    {:pre}
-4. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look like something like `backend-jobrun-1-0`.
+4. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look something like `backend-jobrun-1-0`.
    ```sh
    ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
