@@ -23,12 +23,14 @@ completion-time:
 {:external: target="_blank" .external}
 
 # Provision an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_short}}
-{: #hpc-eda}
+{: #hpc-lsf-on-vpc}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, direct-link"}
-{: toc-completion-time=""}
+{: toc-completion-time="2h"}
 
 <!--##istutorial#-->
+This tutorial demonstrates how to provision and configure IBM Cloud resources create an IBM Spectrum LSF cluster.
+
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
@@ -40,13 +42,17 @@ There are many reasons to consider hosting your IBM Spectrum LSF managed workloa
 This tutorial and the associated automation scripts will provide an easy way to get started by giving you an automated path to provisioning cloud based resources and configuring them to run an IBM Spectrum LSF Cluster.
 
 ## Objectives
-{: #hpc-eda-objectives}
+{: #hpc-lsf-on-vpc-objectives}
 
 * Automatically provision the resources needed for an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_full}}.
 * Install and configure the Cloud based LSF cluster using Ansible automation.
 
+The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
+
+![Architecture diagram](images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg)
+
 ## Before you begin
-{: #hpc-eda-prereqs}
+{: #hpc-lsf-on-vpc-prereqs}
 
 You need the following to complete this tutorial:
 * A workstation or cloud instance to serve as the orchestrator for this deployment.  it must be capable of running the following tools
@@ -58,10 +64,10 @@ You will find instructions to download and install these tools for your operatin
 
 You will also need:
 * An {{site.data.keyword.cloud_notm}} billable account
-* A Spectrum LSF version 10.2 or higher installation binary.
+* A Spectrum LSF version 10.2 or higher installation binary. See [IBM Spectrum LSF Suites](https://www.ibm.com/products/hpc-workload-management) or contact your IBM Sales representative for details.
 
 ## Set up the {{site.data.keyword.cloud_notm}} CLI
-{: #hpc-eda-set-up-cli}
+{: #hpc-lsf-on-vpc-set-up-cli}
 {: step}
 
 1. Log into the machine you will use for this deployment.
@@ -109,11 +115,11 @@ You will also need:
   {: pre}
 
 ## Prepare your environment
-{: #hpc-eda-prep-environment}
+{: #hpc-lsf-on-vpc-prep-environment}
 {: step}
 
 ### Specify the cloud cluster configuration
-{: #hpc-eda-specify-cloud-cluster-configuration}
+{: #hpc-lsf-on-vpc-specify-cloud-cluster-configuration}
 
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
@@ -129,7 +135,7 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 3. Save the tf_inventory.yml file and create a backup copy.
 
 #### The tf_inventory.yml file parameters
-{: #hpc-eda-tf_inventory-parameters}
+{: #hpc-lsf-on-vpc-tf_inventory-parameters}
 
 Much of the work needed to configure your cloud cluster is configuring the following parameters in the tf_inventory.yml file:
 
@@ -153,7 +159,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
 ### Create an {{site.data.keyword.cloud_notm}} API key
-{: #hpc-eda-create-api-key}
+{: #hpc-lsf-on-vpc-create-api-key}
 
 You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to provide Terraform with the credential it needs to provision resources on your behalf. If you do not already have an `api-key`, you can create one with the following commands:
 
@@ -179,7 +185,7 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
   {: pre}
 
 ## Provision the cloud resources
-{: #hpc-eda-provision-cloud-resources}
+{: #hpc-lsf-on-vpc-provision-cloud-resources}
 {: step}
 
 If it is not already installed, you need Ansible version 2.7 or higher installed to continue.  If Ansible is already installed, be sure to check the version and update if necessary.
@@ -233,7 +239,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 
 
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
-{: #hpc-eda-deploy-lsf-cloud-cluster}
+{: #hpc-lsf-on-vpc-deploy-lsf-cloud-cluster}
 {: step}
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
@@ -263,7 +269,7 @@ All other parameters will be ignored for this configuration and can be left at d
   * If you specified userids with the lsf_user_list parameter in the lsf_install configuration file, the directory ${GEN_FILES_DIR}/userkeys will now contain the login credentials for those userids.
 
 ## Verify and test the multi-cluster
-{: #hpc-eda-verify-test-multi-cluster}
+{: #hpc-lsf-on-vpc-verify-test-multi-cluster}
 {: step}
 
 complete the following steps.
@@ -306,13 +312,14 @@ You should now be logged in to the master node, where you can run commands to ch
   {: pre}
 
 4.  If you specified userids with the lsf_user_list parameter in the lsf_install configuration file, you can also login with those userids and run the tests.  The procedure to login is the following:
+
   ```
   ssh -F ${GEN_FILES_DIR}/ssh_config -i ${GEN_FILES_DIR}/userkeys/id_rsa_<username> <username>@<cloud_master_ip>
   ```
-{: pre}
+  {: pre}
 
 ## Remove resources
-{: #hpc-eda-remove-resources}
+{: #hpc-lsf-on-vpc-remove-resources}
 {: step}
 
 To clean up any resources that you created in this tutorial, use the following procedure. This is useful if you complete this tutorial as a part of a proof of concept or you don't need the cluster any longer.
