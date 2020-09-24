@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-23"
+lastupdated: "2020-09-24"
 lasttested: "2020-09-23"
 
 content-type: tutorial
@@ -130,7 +130,7 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.47e3a07f-2c7f.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.b7bb43f4-525e.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
    The application source code used to build the container images - `ibmcom/*` is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-image-classification) for your reference.
    {:tip}
