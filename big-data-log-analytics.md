@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-10-31"
-lasttested: "2019-10-31"
+  years: 2018, 2019, 2020
+lastupdated: "2020-09-28"
+lasttested: "2020-09-28"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics
@@ -70,7 +70,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
-In addition, [install Node.js](https://nodejs.org). 
+In addition, [install Node.js](https://nodejs.org).
 
 ## Create services
 {: #big-data-log-analytics-setup}
@@ -82,45 +82,54 @@ In this section, you will create the services required to perform analysis of lo
 {: #big-data-log-analytics-new-cos}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   1. Set **Service name** to **log-analysis-cos**.
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   1. Click **Create**
-1. Under **Service Credentials**, create new credential and select **Include HMAC Credential**.
-   1. Make note of the _access_key_id_ and _secret_access_key_ values.
-1. Create a **Custom bucket** named `<your-initial>-log-analysis` with **Cross Region** resiliency.
-1. Under **Endpoint**, find the **private** endpoint to access your bucket.
+   2. Set **Service name** to **log-analysis-cos**.
+   3. Select a **Resource group** where you plan to create all the services required for this tutorial and click **Create**.
+2. Under **Service credentials**, click on **New credential**
+   1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
+   2. Set Include HMAC Credential to **On** and click **Add**.
+   3. Make note of the _access_key_id_ and _secret_access_key_ values.
+3. Under **Buckets**, create a **Custom bucket** named `<your-initial>-log-analysis` with **Cross Region** resiliency, a **Location** near to you and a **Smart Tier** storage class.
+4. Under **Endpoints**, find the **private** endpoint to access your bucket.
 
 ### {{site.data.keyword.messagehub}}
 {: #big-data-log-analytics-new-eventstreams}
 
 1. Create an instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
-   1. Set the **Service name** to **log-analysis-hub**.
-   1. Select the **Lite** plan.
-   1. Click **Create**.
-1. Switch to **Topics**, click **Create topic**
-   1. Set the **Topic Name** to `webserver`.
-   1. Click the **Create topic** button.
-1. Under **Service credentials**, create new credential named `webserver-flow`.
-1. Make note of the values. They will be used in the next section.
+   1. Select a region where you plan to create all the services required for this tutorial.
+   2. Select the **Lite** plan.
+   3. Set the **Service name** to **log-analysis-hub**.
+   4. Select a **Resource group** and click **Create**.
+2. Under **Manage**, Switch to **Topics** and click **Create topic**
+   1. Set the **Topic Name** to `webserver` and click **Next**.
+   2. Select **1** partition and click **Next**.
+   3. Set message retention to **1 Day** and click the **Create topic** button.
+3.  Under **Service credentials**, click on **New credential**
+   1. Provide a name for the credential - `es-for-log-analysis`.
+   2. select **Writer** as the role and click **Add**.
+4. Make note of the values. They will be used in the next section.
 
 ### {{site.data.keyword.sqlquery_short}}
 {: #big-data-log-analytics-new-sqlquery}
 
 1. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query).
-   1. Set the **Service name** to **log-analysis-sql**.
-   1. Select the **Lite** plan.
-   1. Click **Create**.
+   1. Select a region.
+   2. Select the **Lite** plan.
+   3. Set the **Service name** to **log-analysis-sql**.
+   4. Select a **Resource group** and click **Create**.
 
 ### {{site.data.keyword.iae_short}}
 {: #big-data-log-analytics-new-iae}
 
 1. Create an instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
-   1. Set the **Service name** to **log-analysis-iae**
-   1. Click on Configure. 
-1. Set **Hardware configuration** to **Default**.
-1. Set **Number of compute nodes** to **1**.
-1. Select the **latest** version of **Spark and Hadoop** as the **Software Package**.
-1. Under Advanced Options enter the below given configuration options for the {{site.data.keyword.cos_short}} which was created in the previous step. 
+   1. Select a region.
+   2. Select the **Lite** plan.
+   2. Set the **Service name** to **log-analysis-iae**
+   3. Select a **Resource group** and click on **Configure**.
+2. Set **Hardware configuration** to **Default**.
+3. Set **Number of compute nodes** to **1**.
+4. Select the **latest** version of **Spark and Hadoop** as the **Software package**.
+5. Under **Ambari configuration (optional)**, enter the below given configuration options for the {{site.data.keyword.cos_short}} which was created in the previous step.
 
    ```json
    {
@@ -131,15 +140,15 @@ In this section, you will create the services required to perform analysis of lo
      }
    }
    ```
-   {: codeblock}
+   {: pre}
 
    where:
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
       - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
       - `cosEndpoint` is a private endpoint to access the {{site.data.keyword.cos_short}} bucket.
-1. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
-1. Under **Service credentials**, create new credential.
-1. From the credentials, make note of the `ssh` value giving the *ssh* command line to execute to connect to the cluster.
+6. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
+7. Under **Service credentials**, create new credential.
+8. From the credentials, make note of the `ssh` value giving the *ssh* command line to execute to connect to the cluster.
 
 ## Process log messages with Streams in Watson Data Platform
 {: #big-data-log-analytics-configure-streams}
@@ -406,7 +415,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
 
 1. First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
    ```sh
-   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
    ```
    {: pre}
 2. Connect to the Hive server by using with Beeline client.
@@ -414,7 +423,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
    ```
    {: pre}
-   The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
+   The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page.
 3. Create an external hive table with the following command.
    ```sql
    CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
@@ -439,10 +448,10 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
 
 1. SSH to the cluster
    ```sh
-   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
    ```
    {: pre}
-2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster. 
+2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster.
    ```sh
    pyspark
    ```
@@ -452,7 +461,7 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    df = spark.read.csv('cos://<bucketname>.<identifer>/<objectname>')
    ```
    {: codeblock}
-   For example if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/: 
+   For example if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
    ```sh
    df = spark.read.csv('cos://john-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
    ```
@@ -465,7 +474,7 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    df_query.show(10)
    ```
    {: codeblock}
-   The query given here can be replaced with any other query which needs to be performed. 
+   The query given here can be replaced with any other query which needs to be performed.
 
 ## Expand the tutorial
 {: #big-data-log-analytics-expand}
