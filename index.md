@@ -503,7 +503,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Image Classification with Code Engine
+                Visual Recognition with Code Engine
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">

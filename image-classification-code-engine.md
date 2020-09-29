@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-28"
+lastupdated: "2020-09-29"
 lasttested: "2020-09-23"
 
 content-type: tutorial
@@ -27,7 +27,7 @@ completion-time: 2h
 {:note: .note}
 {:beta: .beta}
 
-# Image classification with {{site.data.keyword.codeengineshort}}
+# Visual recognition with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, containers, cloud-object-storage, visual-recognition"}
