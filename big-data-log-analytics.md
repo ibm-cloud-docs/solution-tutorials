@@ -180,6 +180,7 @@ In this section, you will begin configuring a Streams flow that receives log mes
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
+    * Select **JSON** from **Record value parsing**
     * Click **Continue**.
 8. Leave the **Preview Data** page open; it will be used in the next section.
 
@@ -214,10 +215,10 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093 --producer.config event-streams.config --topic webserver
     ```
 5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
-    ```javascript
+    ```json
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: codeblock}
+    {: pre}
 ![Preview page](images/solution31/preview_data.png)
 
 ### Create a Streams flow target
@@ -238,35 +239,35 @@ In this section, you will complete the streams flow configuration by defining a 
 3. Click **Save**.
 4. Click the **>** play button to **Start the streams flow**.
 5. After the flow is started, again send multiple log messages from the Kafka console tool. You can watch as messages arrive by viewing the `webserver-flow` in Streams Designer.
-    ```javascript
+    ```json
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: codeblock}
-6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted.
+    {: pre}
+6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted under `logs` folder.
    ![webserver-flow](images/solution31/flow.png)
 
 ### Add conditional behavior to Streams flows
 {: #big-data-log-analytics-streamslogic}
 
-Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.keyword.messagehub}} to {{site.data.keyword.cos_short}}. More than likely, teams will want to know events of interest in realtime. For example individual teams might benefit from alerts when HTTP 500 (application error) events occur. In this section, you will add conditional logic to the flow to identify HTTP 200 (OK) and non HTTP 200 codes.
+Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.keyword.messagehub}} to {{site.data.keyword.cos_short}}. More than likely, teams will want to know events of interest in realtime. For example, individual teams might benefit from alerts when HTTP 500 (application error) events occur. In this section, you will add conditional logic to the flow to identify HTTP 200 (OK) and non HTTP 200 codes.
 
 1. Use the pencil button to **Edit the streams flow**.
 2. Create a filter node that handles HTTP 200 responses.
-   * From the **Nodes** palette, drag the **Filter** node from **PROCESSING AND ANALYTICS** to the canvas.
-   * Type `OK` in the name textbox, which currently contains the word `Filter`.
+   * From the **Nodes** palette, drag and drop the **Filter** node from **Processing and Analytics** to the canvas.
+   * Click on the **Filter** node your just dropped to see a pane on the right side. Hover on to the word `Filter`, click the **Edit** icon and enter `OK`.
    * Enter the following statement in the **Condition Expression** text area.
       ```sh
       responseCode == 200
       ```
-      {: codeblock}
+      {: pre}
    * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
-   * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
+   * From the **Nodes** palette, drag the **Debug** node found under **Targets** to the canvas.
    * Connect the **Debug** node to the **OK** node by drawing a line between the two.
 3. Repeat the process to create a `Not OK` filter using the same nodes and the following condition statement.
    ```sh
    responseCode >= 300
    ```
-   {: codeblock}
+   {: pre}
 4. Click the play button to **Save and run the streams flow**.
 5. When prompted click the link to **run the new version**.
    ![Flow designer](images/solution31/flow_design.png)
