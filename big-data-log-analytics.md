@@ -107,7 +107,7 @@ In this section, you will create the services required to perform analysis of lo
 3.  Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `es-for-log-analysis`.
    2. select **Writer** as the role and click **Add**.
-4. Make note of the values. They will be used in the next section.
+4. Make note of the values. They will be used in the `event-streams.config` file in the next section.
 
 ### {{site.data.keyword.sqlquery_short}}
 {: #big-data-log-analytics-new-sqlquery}
@@ -147,7 +147,9 @@ In this section, you will create the services required to perform analysis of lo
       - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
       - `cosEndpoint` is a private endpoint to access the {{site.data.keyword.cos_short}} bucket.
 6. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
-7. Under **Service credentials**, create new credential.
+7. Under **Service credentials**, create **New credential**.
+   * Provide `iae-for-log-analysis` as the credential name.
+   * Select **Writer** as the role and click **Add**.
 8. From the credentials, make note of the `ssh` value giving the *ssh* command line to execute to connect to the cluster.
 
 ## Process log messages with Streams in Watson Data Platform
@@ -159,32 +161,35 @@ In this section, you will create the services required to perform analysis of lo
 
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
-1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Select the **New project** button or tile, then the **Basic** tile and click **OK**.
+1. In your browser, access [{{site.data.keyword.cpd_full_notm}}](https://dataplatform.{DomainName}).
+2. Click on **Create a project** and then click **Create an empty project**.
     * Enter the **Name** `webserver-logs`.
-    * The **Storage** option should be set to `log-analysis-cos`. If not, select the service instance.
+    * The **Define storage** option should be set to `log-analysis-cos`. If not, select the service instance.
     * Click the **Create** button.
-4. Click the **Add to project** button then **Streams flow** from the top navigation bar.
+3. Click the **Add to project** button then **Streams flow** from the top navigation bar.
     * Click **Associate an IBM Streaming Analytics instance with a container-based plan**.
-    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**.
-    * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
-    * Type the streams flow **Name** as `webserver-flow`.
-    * Finish by clicking **Create**.
-5. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
+    * Click on **New Service** and then click the {{site.data.keyword.streaminganalyticsshort}} tile
+       * Select a region where you have other services provisioned
+       * Select the **Lite** plan
+       * Provide the **Service name** as `log-analysis-sa` and click **Create**.
+4. Select `log-analysis-sa` from the list and click **Associate service**.
+5. Type the streams flow **Name** as `webserver-flow`.
+6. Select **Wizard** and click **Create**.
+7. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
     * Click **Continue**.
-6. Leave the **Preview Data** page open; it will be used in the next section.
+8. Leave the **Preview Data** page open; it will be used in the next section.
 
 ### Using Kafka console tools with {{site.data.keyword.messagehub}}
 {: #big-data-log-analytics-kafkatools}
 
 The `webserver-flow` is currently idle and awaiting messages. In this section, you will configure Kafka console tools to work with {{site.data.keyword.messagehub}}. Kafka console tools allow you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}, which will trigger the `webserver-flow`.
 
-1. Download and unzip the [Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz).
-2. Change directory to `bin` and create a text file named `message-hub.config` with the following contents.
+1. Download and unzip the [Kafka 2.6.x client](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.6.0/kafka_2.13-2.6.0.tgz).
+2. Change directory to `bin` and create a text file named `event-streams.config` with the following contents.
     ```sh
     sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
     security.protocol=SASL_SSL
@@ -194,20 +199,19 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ssl.endpoint.identification.algorithm=HTTPS
     ```
     {: codeblock}
-3. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials** from the previous section. Save `message-hub.config`.
+3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
-    ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL --producer.config message-hub.config --topic webserver
+    ./kafka-console-producer.sh --bootstrap-server KAFKA_BROKERS_SASL --producer.config event-streams.config --topic webserver
     ```
     {: pre}
     ```sh
-    ./kafka-console-producer.sh --broker-list \
-    kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
-    --producer.config message-hub.config --topic webserver
+    ./kafka-console-producer.sh --bootstrap-server broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
+    broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
+    broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
+    broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
+    broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
+    broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093 --producer.config event-streams.config --topic webserver
     ```
 5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```javascript
