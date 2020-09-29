@@ -103,7 +103,7 @@ In this section, you will learn the basics of a terraform configuration by using
    - [terraform.tfvars.template](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars.template) - variables that terraform will prompt you to enter.
 4. Copy the `terraform.tfvars.template` file to `terraform.tfvars`.  Open the `terraform.tfvars` with your IDE, modify the file by adding the values mentioned in the previous section.  Any variable defaults in the `.tf` files can be specified in this file.
 
-Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: `~/.ssh/id_rsa.pub` (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-ssh-keys) will help you create the pair if needed.
+Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: `~/.ssh/id_rsa.pub` (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) will help you create the pair if needed.
 
 ## Create a LAMP stack server from the terraform configuration
 {: #infrastructure-as-code-terraform-Createserver}

@@ -58,8 +58,8 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 ## Before you begin
 {: #vpc-secure-management-bastion-server-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 - The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
@@ -75,9 +75,6 @@ In this section, you will create and configure a bastion host along with a secur
    - Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.
    - Select a location and zone.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-   {:note}
 1. Switch the **Public gateway** to **Attached**.
 
    Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
@@ -193,10 +190,6 @@ To create a new subnet,
    - Enter **vpc-secure-private-subnet** as name, then select the VPC you created.
    - Select a location.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-   {:note}
-
 1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 

@@ -61,8 +61,8 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 ## Before you begin
 {: #vpc-multi-region-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Create VPCs, subnets and VSIs
 {: #vpc-multi-region-create-infrastructure}
@@ -72,7 +72,7 @@ In this section, you will create your own VPC in region 1 with subnets created i
 
 To create your own {{site.data.keyword.vpc_short}} in region 1,
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC for Gen 1 or 2**
+1. Navigate to [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**
 2. Under **New virtual private cloud** section:
    * Enter **vpc-region1** as name for your VPC.
    * Select a **Resource group**.
@@ -416,4 +416,4 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 ## Related content
 {: #vpc-multi-region-related}
 
-* [Using Load Balancers in IBM Cloud VPC](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc)
+* [Using Load Balancers in IBM Cloud VPC](/docs/vpc?topic=vpc-nlb-vs-elb)

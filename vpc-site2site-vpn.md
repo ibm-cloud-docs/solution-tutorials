@@ -64,7 +64,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
 4. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
-5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
+5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc?topic=vpc-build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
 {: #vpc-site2site-vpn-prereqs}
@@ -80,7 +80,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 In addition:
-- check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
+- check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 - you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
@@ -214,12 +214,8 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
-3. Make sure that your CLI environment is set up to the target generation you want to use, VPC resources. Run:
+3. Make sure that your CLI environment is set up to the target generation 2. Run:
    ```sh
-   ibmcloud is target --gen 1
-   
-   or
-
    ibmcloud is target --gen 2
    ```
    {: codeblock}
@@ -265,7 +261,7 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
 
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
+1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
 2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
 3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (**VSI_ONPREM_IP**). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 4. For **Local subnets** use the information provided for **CLOUD_CIDR** and add the CIDR for the IBM Cloud service endpoints: 166.8.0.0/14, 161.26.0.0/16. For **Peer subnets** the one for **ONPREM_CIDR**.
@@ -620,13 +616,13 @@ When using the console, you may need to refresh your browser to see updated stat
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
+- Add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic across multiple instances.
 - Deploy the [application on a public server, your data and services on a private host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
 ## Related content
 {: #vpc-site2site-vpn-related}
 
-- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
-- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc?topic=vpc-infrastructure-cli-plugin-vpc-reference)
+- [VPC using the REST APIs](/docs/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis)
 - Solution tutorial: [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
