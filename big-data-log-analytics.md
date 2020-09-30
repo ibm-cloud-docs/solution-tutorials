@@ -207,16 +207,16 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ```
     {: pre}
     ```sh
-    ./kafka-console-producer.sh --bootstrap-server broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
-    broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
-    broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
-    broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
-    broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093, \
-    broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093 --producer.config event-streams.config --topic webserver
+    ./kafka-console-producer.sh --bootstrap-server  "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" --producer.config event-streams.config --topic webserver
     ```
 5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```json
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
+    { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
 ![Preview page](images/solution31/preview_data.png)
@@ -240,7 +240,7 @@ In this section, you will complete the streams flow configuration by defining a 
 4. Click the **>** play button to **Start the streams flow**.
 5. After the flow is started, again send multiple log messages from the Kafka console tool. You can watch as messages arrive by viewing the `webserver-flow` in Streams Designer.
     ```json
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
+    { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted under `logs` folder.
@@ -269,7 +269,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
    ```
    {: pre}
 4. Click the play button to **Save and run the streams flow**.
-5. When prompted click the link to **run the new version**.
+5. When prompted click the link to **Yes, run the new version**.
    ![Flow designer](images/solution31/flow_design.png)
 
 ### Increasing message load
@@ -280,12 +280,13 @@ To view conditional handling in your Streams flow, you will increase the message
 This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). See the npmjs page for troubleshooting instructions if the simulator installation fails. If problems persist, you can skip to the next section and manually upload the data.
 
 1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
-2. Clone and install the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator).
+2. Clone the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator) and Change to the simulator's directory
     ```sh
     git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
+    cd kafka-log-simulator
     ```
     {: pre}
-3. Change to the simulator's directory and run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials** used earlier. An example is provided.
+3. Run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials** used earlier. An example is provided.
     ```sh
     npm install
     ```
