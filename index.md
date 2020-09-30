@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-09-23"
+lastupdated: "2020-09-30"
 ---
 
 {:shortdesc: .shortdesc}
@@ -510,7 +510,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a Code Engine project and deploy an image classification application.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution54-code-engine/architecture_diagram.png" alt="Architecture diagram for the solution Image Classification with Code Engine"/>
+                    <img class="architectureDiagram" src = "images/solution54-code-engine/architecture_diagram.png" alt="Architecture diagram for the solution Visual Recognition with Code Engine"/>
                 </div>
             </div>
         </div>

@@ -49,7 +49,7 @@ This tutorial and the associated automation scripts will provide an easy way to 
 
 The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
 
-![Architecture diagram](images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg)
+![Architecture diagram](images/solution61-hpc-lsf-on-vpc-hidden/hpc-lsf-on-vpc-arch.svg)
 
 ## Before you begin
 {: #hpc-lsf-on-vpc-prereqs}
