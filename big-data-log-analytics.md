@@ -140,7 +140,7 @@ In this section, you will create the services required to perform analysis of lo
      }
    }
    ```
-   {: pre}
+   {: codeblock}
 
    where:
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
@@ -191,7 +191,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 
 1. Download and unzip the [Kafka 2.6.x client](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.6.0/kafka_2.13-2.6.0.tgz).
 2. Change directory to `bin` and create a text file named `event-streams.config` with the following contents.
-    ```sh
+    ```
     sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
     security.protocol=SASL_SSL
     sasl.mechanism=PLAIN
@@ -218,7 +218,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
+    {: codeblock}
 ![Preview page](images/solution31/preview_data.png)
 
 ### Create a Streams flow target
@@ -242,7 +242,7 @@ In this section, you will complete the streams flow configuration by defining a 
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
+    {: codeblock}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will be added 60 seconds after messages have entered the flow or the flow is restarted under `logs` folder.
    ![webserver-flow](images/solution31/flow.png)
 
@@ -259,7 +259,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
       ```sh
       responseCode == 200
       ```
-      {: pre}
+      {: codeblock}
    * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
    * From the **Nodes** palette, drag the **Debug** node found under **Targets** to the canvas.
    * Connect the **Debug** node to the **OK** node by drawing a line between the two.
@@ -267,7 +267,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
    ```sh
    responseCode >= 300
    ```
-   {: pre}
+   {: codeblock}
 4. Click the play button to **Save and run the streams flow**.
 5. When prompted click the link to **Yes, run the new version**.
    ![Flow designer](images/solution31/flow_design.png)
@@ -343,7 +343,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ORDER BY 2 DESC
     LIMIT 10
     ```
-    {: pre}
+    {: codeblock}
 3. Retrieve the Object SQL URL from the logs file.
     * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
