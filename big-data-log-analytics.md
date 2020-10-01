@@ -228,7 +228,7 @@ In this section, you will complete the streams flow configuration by defining a 
 
 1. On the `webserver-flow` **Preview Page**, click the **Continue** button.
 2. Select the **{{site.data.keyword.cos_full_notm}}** tile as a target.
-    * Click **Add Connection** and select `log-analysis-cos`.
+    * Click **Add Connection** and select `log-analysis-cos`. Check whether **Secret Key** and **Access Key** are populated. If not, select **Cloud Object Storage** under IBM services and enter the service credentials manually from the `log-analysis-cos` service page.
     * Click **Create**.
     * Enter the **File path** `/YOUR_BUCKET_NAME/logs/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one created in the first section.
     * Select **csv** in the **Format** dropdown.
