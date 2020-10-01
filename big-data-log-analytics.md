@@ -243,7 +243,7 @@ In this section, you will complete the streams flow configuration by defining a 
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
-6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted under `logs` folder.
+6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will be added 60 seconds after messages have entered the flow or the flow is restarted under `logs` folder.
    ![webserver-flow](images/solution31/flow.png)
 
 ### Add conditional behavior to Streams flows
@@ -350,7 +350,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     * On the `http-logs_TIME.csv` file, click the action menu
     * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
-5. Click on the latest **Completed** job to see the result under the **Result** tab. While some pages - like the Kennedy Space Center(ksc) home page - are expected one mission is quite popular at the time.
+5. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
     ```sql
@@ -427,7 +427,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    ```
    {: pre}
 
-   You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier. You can generate a `password` under the **Manage** tab of the service.
+   You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier and an option to generate `password` under the **Manage** tab of the service.
    {:tip}
 
 2. Connect to the Hive server by using with Beeline client.
@@ -435,7 +435,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    beeline -u 'jdbc:hive2://chs-xxxxx-mn001.<change-me>.<region>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive' -n clsadmin -p <PASSWORD>
    ```
    {: pre}
-   The hive_jdbc service endpoint can be found under the **service credentials** tab of the IAE resource page.
+   The hive_jdbc service endpoint can be found under the **service credentials** tab of the `log-analysis-iae` service page.
 3. Create an external hive table with the following command.
    ```sql
    CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifier>/logs/' tblproperties ("skip.header.line.count"="1");
@@ -473,9 +473,9 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    df = spark.read.csv('cos://<bucketname>.<identifier>/<objectname>')
    ```
    {: codeblock}
-   For example, if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
+   For example, if the name of the bucket is `<your-initial>-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
    ```sh
-   df = spark.read.csv('cos://john-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
+   df = spark.read.csv('cos://<your-initial>-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
    ```
    {: codeblock}
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
