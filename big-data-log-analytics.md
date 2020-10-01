@@ -2,13 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-09-28"
-lasttested: "2020-09-28"
+lastupdated: "2020-10-01"
+lasttested: "2020-10-01"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics
 account-plan: paid
-completion-time: 2h
+completion-time: 3h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -23,7 +23,7 @@ completion-time: 2h
 {: #big-data-log-analytics}
 {: toc-content-type="tutorial"}
 {: toc-services="cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics"}
-{: toc-completion-time="2h"}
+{: toc-completion-time="3h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -203,11 +203,11 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
-    ./kafka-console-producer.sh --bootstrap-server KAFKA_BROKERS_SASL --producer.config event-streams.config --topic webserver
+    ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL --producer.config event-streams.config --topic webserver
     ```
     {: pre}
     ```sh
-    ./kafka-console-producer.sh --bootstrap-server  "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
+    ./kafka-console-producer.sh --broker-list  "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
     "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
     "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
     "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
@@ -301,16 +301,18 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     ```
     {: pre}
     ```sh
-    node dist/index.js --file /Users/ibmcloud/Downloads/NASA_access_log_Jul95 \
-    --parser httpd --broker-list \
-    "kafka04-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
-    kafka05-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
-    kafka02-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
-    kafka01-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
-    kafka03-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093" \
-    --api-key 12345678901234567890 \
-    --topic webserver --rate 100
+    node dist/index.js --file /Users/VMac/Downloads/NASA_access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+    "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+    "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+    "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+    "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+    "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" \
+    --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzjj --topic webserver --rate 100
     ```
+
+    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
+    {:tip}
+
 4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
 6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
@@ -329,27 +331,27 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
 If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately. You can use the {{site.data.keyword.cos_short}} plugin for the {{site.data.keyword.cloud_notm}} CLI to upload the file to the bucket: `ibmcloud cos upload --bucket <YOUR_BUCKET_NAME> --key logs/http-logs_20191031_143106.csv.gz  --file http-logs_20191031_143106.csv.gz --region us-geo`.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Select **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
+1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Click **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995?
     -- Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://ap-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE REQUEST LIKE '%.htm%'
     GROUP BY REQUEST
     ORDER BY 2 DESC
     LIMIT 10
     ```
-    {: codeblock}
+    {: pre}
 3. Retrieve the Object SQL URL from the logs file.
     * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
-    * Click the overflow menu on the `http-logs_TIME.csv` file and select **Object SQL URL**.
-    * **Copy** the URL to the clipboard.
+    * On the `http-logs_TIME.csv` file, click the action menu
+    * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
-5. The result can be seen on the **Result** tab. While some pages - like the Kennedy Space Center home page - are expected one mission is quite popular at the time.
-6. Select the **Query Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
+5. Click on the latest **Completed** job to see the result under the **Result** tab. While some pages - like the Kennedy Space Center(ksc) home page - are expected one mission is quite popular at the time.
+6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
     ```sql
     -- Who are the top 5 viewers?
@@ -421,22 +423,26 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
 
 1. First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
    ```sh
-   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.<region>.ae.appdomain.cloud
    ```
    {: pre}
+
+   You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier. You can generate a `password` under the **Manage** tab of the service.
+   {:tip}
+
 2. Connect to the Hive server by using with Beeline client.
    ```sh
-   beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
+   beeline -u 'jdbc:hive2://chs-xxxxx-mn001.<change-me>.<region>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive' -n clsadmin -p <PASSWORD>
    ```
    {: pre}
-   The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page.
+   The hive_jdbc service endpoint can be found under the **service credentials** tab of the IAE resource page.
 3. Create an external hive table with the following command.
    ```sql
-   CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
+   CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifier>/logs/' tblproperties ("skip.header.line.count"="1");
    ```
    {: codeblock}
 
-   The value of `<identifer>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
+   The value of `<identifier>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. **Note** that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
 4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
    ```sql
    SELECT HOST, COUNT(*)
@@ -464,10 +470,10 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    {: pre}
 3. Create a Spark dataframe of a csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
    ```sh
-   df = spark.read.csv('cos://<bucketname>.<identifer>/<objectname>')
+   df = spark.read.csv('cos://<bucketname>.<identifier>/<objectname>')
    ```
    {: codeblock}
-   For example if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
+   For example, if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
    ```sh
    df = spark.read.csv('cos://john-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
    ```
