@@ -88,7 +88,7 @@ In this section, you will create the services required to perform analysis of lo
 2. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
    2. Set Include HMAC Credential to **On** and click **Add**.
-   3. Make note of the _access_key_id_ and _secret_access_key_ values.
+   3. Make note of the **access_key_id** and **secret_access_key** values.
 3. Under **Buckets**, create a **Custom bucket** named `<your-initial>-log-analysis` with **Cross Region** resiliency, a **Location** near to you and a **Smart Tier** storage class.
 4. Under **Endpoints**, find the **private** endpoint to access your bucket.
 
@@ -124,7 +124,7 @@ In this section, you will create the services required to perform analysis of lo
 1. Create an instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
    1. Select a region.
    2. Select the **Lite** plan.
-   2. Set the **Service name** to **log-analysis-iae**
+   2. Set the **Service name** to **log-analysis-iae**.
    3. Select a **Resource group** and click on **Configure**.
 2. Set **Hardware configuration** to **Default**.
 3. Set **Number of compute nodes** to **1**.
