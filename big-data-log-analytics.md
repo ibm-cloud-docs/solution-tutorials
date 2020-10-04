@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-10-01"
+lastupdated: "2020-10-05"
 lasttested: "2020-10-01"
 
 content-type: tutorial
@@ -337,7 +337,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     -- What are the top 10 web pages on NASA from July 1995?
     -- Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://ap-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://ap-geo/YOUR_BUCKET_NAME/logs/http-logs_<TIME>.csv
     WHERE REQUEST LIKE '%.htm%'
     GROUP BY REQUEST
     ORDER BY 2 DESC
@@ -347,7 +347,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
 3. Retrieve the Object SQL URL from the logs file.
     * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
-    * On the `http-logs_TIME.csv` file, click the action menu
+    * On the `http-logs_<TIME>.csv` file, click the action menu
     * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
 5. Click on the latest **Completed** job to see the result under the **Result** tab.
@@ -507,6 +507,7 @@ From the [Resource List](https://{DomainName}/resources?search=log-analysis), us
 * log-analysis-hub
 * log-analysis-sql
 * log-analysis-cos
+* log-analysis-iae
 
 ## Related content
 {: #big-data-log-analytics-8}
