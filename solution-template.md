@@ -8,7 +8,7 @@ lasttested: "2019-03-08"
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: service1, service2
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -41,7 +41,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 {:shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #solution-template-objectives}
 
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
@@ -52,7 +52,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 2. Then that
 
 ## Before you begin
-{: #prereqs}
+{: #solution-template-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
@@ -87,6 +87,7 @@ In addition, make sure you have:
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #solution-template-2}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
 1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
@@ -95,7 +96,7 @@ In addition, make sure you have:
 <!--#/isworkshop#-->
 
 ## Create services
-{: #setup}
+{: #solution-template-setup}
 {: step}
 
 In this section, you will create the services required to ...
@@ -116,7 +117,7 @@ In this section, you will create the services required to ...
 3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
 ## Solution Specific Section
-{: #section_one}
+{: #solution-template-section_one}
 {: step}
 
 Introductory statement that overviews the section
@@ -134,6 +135,7 @@ Introductory statement that overviews the section
 7. Try to limit to 7 steps.
 
 ### A sub section
+{: #solution-template-5}
 
    ```bash
    some shellscript
@@ -153,20 +155,22 @@ And this paragraph only appears for Swift code
 {: swift}
 
 ## Another Solution Specific Section
-{: #section_two}
+{: #solution-template-section_two}
 {: step}
 
 Introductory statement that overviews the section
 
 ### Another sub section
+{: #solution-template-7}
 
 ## Remove resources
-{: #removeresources}
+{: #solution-template-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+{: #solution-template-0}
 
 Want to add to or change this tutorial? Here are some ideas:
 - idea with [link]() to resources to help implement the idea
@@ -176,15 +180,16 @@ Want to add to or change this tutorial? Here are some ideas:
 - this section is optional
 
 ## Related content
-{: #related}
+{: #solution-template-related}
 
 * [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
 * [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
 
 ## Writing guide
-{: #writing_guide}
+{: #solution-template-writing_guide}
 
 ### Creating links
+{: #solution-template-12}
 
 For anchors within the same document always only use the following format:
   [link_description](#anchor_name)
@@ -197,14 +202,17 @@ If you have an old format html link that you are trying to translate to the new 
 Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
 
 ### Conrefs
+{: #solution-template-13}
 
 Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
+{: #solution-template-10}
 
 Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
 
 ### Tutorial-only content
+{: #solution-template-15}
 
 To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
 
@@ -215,6 +223,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ```
 
 ### Workshop-only content
+{: #solution-template-16}
 
 To have content showing only in a workshop, use:
 
@@ -222,7 +231,7 @@ To have content showing only in a workshop, use:
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
-{: #access-cluster}
+{: #solution-template-access-cluster}
 
 This section will only appear in a workshop and not in the tutorial.
 -->
@@ -232,26 +241,14 @@ This section will only appear in a workshop and not in the tutorial.
 Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
+{: #solution-template-18}
 
 #### Terraform
-
-```tf
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using tf"
-}
-```
-{: codeblock}
+{: #solution-template-19}
 
 ```terraform
 resource "ibm_is_vpc" "myvpc" {
   name = "the name using terraform"
-}
-```
-{: codeblock}
-
-```hcl
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using hcl"
 }
 ```
 {: codeblock}

@@ -7,7 +7,7 @@ lasttested: "2019-05-17"
 
 content-type: tutorial
 services: cloud-foundry-public, CDN, cloud-object-storage
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+{: shortdesc}
 
 Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
 
@@ -40,7 +41,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 * running on a different domain than your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
 
 ## Objectives
-{: #objectives}
+{: #static-files-cdn-objectives}
 
 * Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
 * Make content globally available with a Content Delivery Network (CDN).
@@ -55,7 +56,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 3. If the content is not available in the CDN or has expired, the CDN pulls the content from the origin.
 
 ## Before you begin
-{: #prereqs}
+{: #static-files-cdn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -74,7 +75,7 @@ In addition, contact the master user of your Infrastructure account to get the f
 These permissions are required to be able to view and use the Storage and CDN services.
 
 ## Get the web application code
-{: #get_code}
+{: #static-files-cdn-get_code}
 {: step}
 
 Let's consider a simple web application with different types of content like images, videos and cascading style sheets. You will store the content in a storage bucket and configure the CDN to use the bucket as its origin.
@@ -87,7 +88,7 @@ To start, retrieve the application code:
   {: pre}
 
 ## Create an Object Storage
-{: #create_cos}
+{: #static-files-cdn-create_cos}
 {: step}
 
 {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
@@ -102,7 +103,7 @@ To start, retrieve the application code:
 1. Select **Endpoint** in the left menu and identify the service endpoint to use with the bucket you created. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public service endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
 ## Upload files to a bucket
-{: #upload}
+{: #static-files-cdn-upload}
 {: step}
 
 In this section, you will use the {{site.data.keyword.cos_short}} plugin to upload files to the bucket.
@@ -135,11 +136,13 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    `http://<SERVICE_ENDPOINT>/<YOUR_BUCKET_NAME>/a-picture.png`
 
 ## Make the files globally available with a CDN
+{: #static-files-cdn-5}
 {: step}
 
 In this section, you will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (your bucket in {{site.data.keyword.cos_full_notm}}) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
 
 ### Create a CDN instance
+{: #static-files-cdn-6}
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
 2. On the next dialog, set the **Hostname** for the CDN to your custom domain. Although you set a custom domain, you can still access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
@@ -152,6 +155,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 9. Accept the **Master Service Agreement** and click **Create**.
 
 ### Access your content through the CDN CNAME
+{: #static-files-cdn-7}
 
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
 2. If you earlier picked *DV SAN Certificate*, you will be prompted for domain validation once the inital setup is completed. Follow the steps shown when clicking on **View domain validation**.
@@ -159,6 +163,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 4. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png` or, if you are using a custom domain, `https://your-cdn-hostname/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
+{: #static-files-cdn-0}
 {: step}
 
 The application contains a public/index.html web page that includes references to the files now hosted in the {{site.data.keyword.cos_full_notm}}. The backend `app.js` serves this web page and replaces a placeholder with the actual location of your CDN. This way, all assets that are used by the web page are served by the CDN.
@@ -190,6 +195,7 @@ The application contains a public/index.html web page that includes references t
 Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
 ## Remove resources
+{: #static-files-cdn-9}
 {: step}
 
 * Delete the Cloud Foundry application
@@ -197,6 +203,7 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
 
 ## Related content
+{: #static-files-cdn-8}
 
 * [{{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage?topic=cloud-object-storage-iam)

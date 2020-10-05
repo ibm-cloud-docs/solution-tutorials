@@ -7,7 +7,7 @@ lasttested: "2020-01-29"
 
 content-type: tutorial
 services: mobilepush, appid
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -40,7 +40,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {:shortdesc: .shortdesc}
 
 ## Objectives
-{:#objectives}
+{: #ios-mobile-push-analytics-objectives}
 
 - Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
 - Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
@@ -57,13 +57,13 @@ This tutorial walks you through the creation of a mobile starter application, ad
 5. The notification is received on the device and monitored.
 
 ## Before you begin
-{: #prereqs}
+{: #ios-mobile-push-analytics-prereqs}
 
 1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile app from Swift starter kit
-{: #get_code}
+{: #ios-mobile-push-analytics-get_code}
 {: step}
 
 1. Navigate to [App Development Dashboard](https://{DomainName}/developer/appservice/dashboard) and click **Get Started**.
@@ -80,7 +80,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
 ## Download the code and setup client SDKs
-{: #download_code}
+{: #ios-mobile-push-analytics-download_code}
 {: step}
 
 If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
@@ -105,7 +105,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
   {: pre:}
 
 ## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
-{: #obtain_apns_credentials}
+{: #ios-mobile-push-analytics-obtain_apns_credentials}
 {: step}
 
    For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
@@ -113,6 +113,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
    You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by {{site.data.keyword.mobilepushshort}} service and used to connect to APNs server as a provider.
 
 ### Registering an App ID
+{: #ios-mobile-push-analytics-5}
 
    The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the {{site.data.keyword.mobilepushshort}} service are configured to the App ID.
    Ensure that you have an [Apple Developers](https://developer.apple.com/) account. This is a mandatory prerequisite.
@@ -128,6 +129,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      ![](images/solution6/push_ios_register_appid.png)
 
 ### Create a development and distribution APNs SSL certificate
+{: #ios-mobile-push-analytics-6}
    Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
@@ -162,6 +164,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
       {:tip}
 
 ### Creating a development provisioning profile
+{: #ios-mobile-push-analytics-7}
    The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
 
    Ensure that you have registered an App ID, enabled it for {{site.data.keyword.mobilepushshort}} service, and configured it to use a development and production APNs SSL certificate.
@@ -176,6 +179,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      - **For iOS and watchOS apps**
 
 ### Creating a store distribution provisioning profile
+{: #ios-mobile-push-analytics-8}
    Use the store provisioning profile to submit your app for distribution to the App Store.
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
@@ -183,6 +187,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_2#push_step_2).
 
 ### Configure the service instance
+{: #ios-mobile-push-analytics-9}
 
    To use the {{site.data.keyword.mobilepushshort}} service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
 
@@ -200,7 +205,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 ![](images/solution6/Mobile_push_configure.png)
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
-{: #configure_push}
+{: #ios-mobile-push-analytics-configure_push}
 {: step}
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
@@ -223,7 +228,7 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ![](images/solution6/monitoring_messages.png)
 
 ## Related Content
-{: #related_content}
+{: #ios-mobile-push-analytics-related_content}
 
 - [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)

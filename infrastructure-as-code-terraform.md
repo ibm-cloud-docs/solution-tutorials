@@ -7,7 +7,7 @@ lasttested: "2019-06-25"
 
 content-type: tutorial
 services: virtual-servers, cloud-object-storage, terraform
-account-plan:
+account-plan: paid
 completion-time: 1h
 ---
 
@@ -33,9 +33,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
 In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server termed as **LAMP** stack. You will then update the configuration to add the {{site.data.keyword.cos_full_notm}} service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
+{: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #infrastructure-as-code-terraform-objectives}
 
 * Configure Terraform and the {{site.data.keyword.Bluemix_notm}} Provider for Terraform.
 * Use Terraform to create, update, scale and finally destroy a LAMP stack configuration.
@@ -51,7 +52,7 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 1. `terraform` calls the {{site.data.keyword.cloud_notm}} API to provision the resources.
 
 ## Before you begin
-{: #prereqs}
+{: #infrastructure-as-code-terraform-prereqs}
 
 This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
@@ -66,6 +67,7 @@ In addition, contact your Infrastructure master user to get the following permis
 - API Key
 
 ## Prerequisites
+{: #infrastructure-as-code-terraform-2}
 {: step}
 
 {: #prereq}
@@ -82,6 +84,7 @@ ibmcloud_api_key = "<platform_api_key>"
 Note the values for the **SoftLayer** username and api key, and the {{site.data.keyword.Bluemix_notm}} API Key.  These will be used in the next section.
 
 ## Prepare terraform configuration
+{: #infrastructure-as-code-terraform-3}
 {: step}
 
 {: #terraformconfig}
@@ -100,10 +103,10 @@ In this section, you will learn the basics of a terraform configuration by using
    - [terraform.tfvars.template](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars.template) - variables that terraform will prompt you to enter.
 4. Copy the `terraform.tfvars.template` file to `terraform.tfvars`.  Open the `terraform.tfvars` with your IDE, modify the file by adding the values mentioned in the previous section.  Any variable defaults in the `.tf` files can be specified in this file.
 
-Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: `~/.ssh/id_rsa.pub` (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-ssh-keys) will help you create the pair if needed.
+Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: `~/.ssh/id_rsa.pub` (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) will help you create the pair if needed.
 
 ## Create a LAMP stack server from the terraform configuration
-{: #Createserver}
+{: #infrastructure-as-code-terraform-Createserver}
 {: step}
 In this section, you will learn how to create a LAMP stack server from the terraform configuration sample. The configuration is used to provision a virtual machine instance and install **A**pache, **M**ySQL (**M**ariaDB), and **P**HP onto that instance.
 
@@ -130,6 +133,7 @@ In this section, you will learn how to create a LAMP stack server from the terra
 {: tip}
 
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
+{: #infrastructure-as-code-terraform-5}
 {: step}
 
 {: #modify}
@@ -176,7 +180,7 @@ In this section, you are going to look at how to scale the virtual server resour
    {: pre}
 
 ## Verify VM and {{site.data.keyword.cos_short}}
-{: #verifyvm}
+{: #infrastructure-as-code-terraform-verifyvm}
 {: step}
 
 In this section, you are going to verify the VM and {{site.data.keyword.cos_short}} to make sure it has been created successfully.
@@ -196,7 +200,7 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
    More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage).
 
 ## Remove resources
-{: #deleteresources}
+{: #infrastructure-as-code-terraform-deleteresources}
 {: step}
 
 Delete resources using the following command:
@@ -208,6 +212,7 @@ Delete resources using the following command:
 **Note:** To delete resources, you would need Infrastructure admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 ## Related content
+{: #infrastructure-as-code-terraform-8}
 
 - [Terraform](https://www.terraform.io/)
 - [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)

@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-02-26"
+lastupdated: "2020-08-26"
 lasttested: "2019-12-04"
 
 content-type: tutorial
 services: cloud-foundry-public, cloud-object-storage, AnalyticsEngine, Cloudant, IoT
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -29,16 +29,16 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
-This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
-{:shortdesc}
-{{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
+
+This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data. {{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
+{: shortdesc}
 
 Simply register and connect your device, be it a sensor, a gateway, or something else, to  {{site.data.keyword.iot_short_notm}} and start sending data securely up to the cloud using the open, lightweight MQTT messaging protocol. You can set up and manage your devices using your online dashboard or our secure APIs, so that your apps can access and use your live and historical data.
 
 {{site.data.keyword.DSX_full}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
 
 ## Objectives
-{: #objectives}
+{: #gather-visualize-analyze-iot-data-objectives}
 
 * Set up IoT Simulator to collect mobile device sensor data.
 * Send collected data to {{site.data.keyword.iot_short_notm}}.
@@ -58,7 +58,7 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 5. User can now see the visualizations and check the anomalies in the sensor data.
 
 ## Before you begin
-{: #prereqs}
+{: #gather-visualize-analyze-iot-data-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -69,7 +69,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Create IoT Platform
-{: #iot_starter}
+{: #gather-visualize-analyze-iot-data-iot_starter}
 {: step}
 
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
@@ -90,7 +90,7 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
 ## Create device simulator
-{: #create_device_simulator}
+{: #gather-visualize-analyze-iot-data-create_device_simulator}
 {: step}
 Next, you will deploy a Node.js web application and visit it on your phone, which will connect to and send device accelerometer and orientation data to the IoT Platform.
 
@@ -127,19 +127,19 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
-{: #creat_ecards}
+{: #gather-visualize-analyze-iot-data-creat_ecards}
 {: step}
 Next, you will create a board and cards to display device data in the dashboard.
 
 ### Create a board
-{: #create_board}
+{: #gather-visualize-analyze-iot-data-create_board}
 
 1. Select **Boards** from the left menu, and then click **Create New Board**.
 2. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.
 3. Select the board that you just created to open it.
 
 ### Display device data
-{: #display_device_data}
+{: #gather-visualize-analyze-iot-data-display_device_data}
 
 1. Click **Add New Card**, and then select the **Line Chart** card type, which is located in the Devices section.
 2. Select your device from the list, then click **Next**.
@@ -159,18 +159,19 @@ Next, you will create a board and cards to display device data in the dashboard.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
-{: #historical_data_cloudant}
+{: #gather-visualize-analyze-iot-data-historical_data_cloudant}
 {: step}
 
 In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
 
 ### Create an {{site.data.keyword.cloudant_short_notm}} DB and connect to the app
-{: #create_cloudant_db}
+{: #gather-visualize-analyze-iot-data-create_cloudant_db}
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-   - Select a region and choose **Lite** plan
-   - Enter `iot-db` as the service name
-   - Select **both legacy credentials and IAM** as the authentication method and click **Create**
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) instance:
+   - Under **Select an environment** leave **Multitenant** and select a region
+   - Enter `iot-db` as the instance name
+   - Select **both legacy credentials and IAM** as the authentication method
+   - Choose **Lite** plan and click **Create**
 2. Go to the [Resource list](https://{DomainName}/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
    - On the left menu, click **Service credentials**
    - Click **New credential** and then **Add**
@@ -182,7 +183,7 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
    - Connect and restage the app.
 
 ### Create a data connector to store the historical data
-{:#historical_data_connector}
+{: #gather-visualize-analyze-iot-data-historical_data_connector}
 
 Setting up a new connection is a four-step process:
 
@@ -258,13 +259,13 @@ Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}.
 ![](images/solution16/cloudant.png)
 
 ## Detect Anomalies using Machine Learning
-{: #detect_anomalies}
+{: #gather-visualize-analyze-iot-data-detect_anomalies}
 {: step}
 
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
 ### Create a new project
-{: #create_project}
+{: #gather-visualize-analyze-iot-data-create_project}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://{DomainName}/catalog/services/data-science-experience).
 2. **Create** the service
    - Select a region and choose **Lite** pricing plan
@@ -275,14 +276,14 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
-{: #connection_cloudant}
+{: #gather-visualize-analyze-iot-data-connection_cloudant}
 
 1. Click on **+ Add to Project** > **Connection**
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Verify the **Credentials** and then click **Create**.
 
 ### Select or Create an {{site.data.keyword.iae_full_notm}} service
-{: #analytics_engine}
+{: #gather-visualize-analyze-iot-data-analytics_engine}
 
 If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
 1. Go to {{site.data.keyword.cloud_notm}} catalog, select [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
@@ -308,6 +309,7 @@ In {{site.data.keyword.DSX}},:
 1. Click **Select**.
 
 ### Create a Jupyter (ipynb) notebook
+{: #gather-visualize-analyze-iot-data-14}
 1. Click **+ Add to Project** and add a new **Notebook**.
 2. Select **From URL** and Enter `Anomaly-detection-notebook` as your Notebook **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
@@ -319,6 +321,7 @@ In {{site.data.keyword.DSX}},:
    {:tip}
 
 ### Run the notebook and detect anomalies
+{: #gather-visualize-analyze-iot-data-15}
 1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
@@ -342,13 +345,14 @@ In {{site.data.keyword.DSX}},:
     ![](images/solution16/density_plots_sensor_data.png)
 
 ## Remove resources
-{:#removeresources}
+{: #gather-visualize-analyze-iot-data-removeresources}
 {: step}
 
 1. Navigate to [Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective {{site.data.keyword.iot_full}}, {{site.data.keyword.iae_full_notm}}, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content
+{: #gather-visualize-analyze-iot-data-8}
 {:related}
 
 * Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)

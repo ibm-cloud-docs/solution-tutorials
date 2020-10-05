@@ -7,7 +7,7 @@ lasttested: "2019-06-17"
 
 content-type: tutorial
 services: vpc
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -37,11 +37,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
+{:shortdesc}
 
 A subnet is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Security Groups that act as firewalls to control inbound and outbound traffic for one or more virtual server instances.
 
 A good practice is to have a subnet used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within a different subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define Security Groups to allow or deny traffic to the VSIs.
-{:shortdesc}
 
 In short, using VPC you can:
 - create a software-defined network (SDN),
@@ -49,7 +49,7 @@ In short, using VPC you can:
 - have fine control of inbound and outbound traffic.
 
 ## Objectives
-{: #objectives}
+{: #vpc-public-app-private-backend-objectives}
 
 - Understand the infrastructure objects available for virtual private clouds
 - Learn how to create a virtual private cloud, subnets and server instances
@@ -63,13 +63,13 @@ In short, using VPC you can:
 3. The frontend requests private resources from the secured backend and serves results to the user.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-public-app-private-backend-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Create a Virtual Private Cloud
-{: #create-vpc}
+{: #vpc-public-app-private-backend-create-vpc}
 {: step}
 
 To tighten the security of your servers, it is recommended to only allow connections to the ports required by the applications deployed on the servers. In this tutorial, the application will be a web server, thus it will only need to allow inbound connections on port 80.
@@ -81,7 +81,7 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
 {:note}
 
-1. Navigate to the **VPC overview** ([Gen 1](https://{DomainName}/vpc/overview) / [Gen 2](https://{DomainName}/vpc-ext/overview)) page and click on **Create a VPC**.
+1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
@@ -91,62 +91,61 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC with Gen 1 compute, select **Use VPC default** for your subnet access control list (ACL).
-   {:note}
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the **Subnets** ([Gen 1](https://{DomainName}/vpc/network/subnets) / [Gen 2](https://{DomainName}/vpc-ext/network/subnets)) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
+{: #vpc-public-app-private-backend-3}
 
 Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
 
 ### Create a bastion instance
+{: #vpc-public-app-private-backend-4}
 
 Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#create-bastion-instance) to create the bastion virtual server instance.
 
 ### Configure a security group with maintenance access rules
+{: #vpc-public-app-private-backend-5}
 
 Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
 ## Create a backend subnet, security group and VSI
-{: #backend-subnet-vsi}
+{: #vpc-public-app-private-backend-backend-subnet-vsi}
 {: step}
 
 In this section, you will create a subnet, a security group and a virtual server instance for the backend.
 
 ### Create a subnet for the backend
+{: #vpc-public-app-private-backend-7}
 
 To create a new subnet for the backend,
 
-1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
    * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-   
-   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL).
-   {:note}
-
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.   
 1. Click **Create subnet** to provision it.
 
 ### Create a backend security group
+{: #vpc-public-app-private-backend-8}
 
 The backend security group controls the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:
-1. Select [**Security groups**](https://{DomainName}/vpc/network/securityGroups) under **Network**, then click **New security group**.
+1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **New security group**.
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
 3. Click **Create security group**.
 
 You will later edit the security group to add the inbound and outbound rules.
 
 ### Create a backend virtual server instance
+{: #vpc-public-app-private-backend-9}
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
+1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
@@ -172,27 +171,25 @@ To create a virtual server instance in the newly created subnet:
 7. Click **Create virtual server instance**.
 
 ## Create a frontend subnet, security group and VSI
-{: #frontend-subnet-vsi}
+{: #vpc-public-app-private-backend-frontend-subnet-vsi}
 {: step}
 
 Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
 
 ### Create a subnet for the frontend
+{: #vpc-public-app-private-backend-11}
 
 To create a new subnet for the frontend,
 
-1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-   {:note}
-
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 1. Click **Create subnet** to provision it.
 
 ### Create a frontend security group
+{: #vpc-public-app-private-backend-12}
 
 To create a new security group for the frontend:
 1. Click **Security groups** under Network, then **New security group**.
@@ -200,10 +197,11 @@ To create a new security group for the frontend:
 3. Click **Create security group**.
 
 ### Create a frontend virtual server instance
+{: #vpc-public-app-private-backend-13}
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
+1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
@@ -230,12 +228,13 @@ To create a virtual server instance in the newly created subnet:
 7. Select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
-{: #setup-connectivity-frontend-backend}
+{: #vpc-public-app-private-backend-setup-connectivity-frontend-backend}
 {: step}
 
 With all servers running, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
 ### Configure the frontend security group
+{: #vpc-public-app-private-backend-15}
 
 The frontend instance has its software installed but it can not yet be reached.
 
@@ -265,10 +264,11 @@ The frontend instance has its software installed but it can not yet be reached.
 
  
 ### Test the connectivity between the frontend and the backend
+{: #vpc-public-app-private-backend-16}
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the **Virtual Server Instances** list ([Gen 1](https://{DomainName}/vpc/compute/vs) / [Gen 2](https://{DomainName}/vpc-ext/compute/vs)), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the [**Virtual Server Instances**](https://{DomainName}/vpc-ext/compute/vs) list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
@@ -285,6 +285,7 @@ The backend server is running the same web server software as the frontend serve
    After 30 seconds, the call should timeout. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection.
 
 ### Configure the backend security group
+{: #vpc-public-app-private-backend-17}
 
 To allow inbound connections to the backend server, you need to configure the associated security group.
 
@@ -298,6 +299,7 @@ To allow inbound connections to the backend server, you need to configure the as
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Confirm the connectivity
+{: #vpc-public-app-private-backend-18}
 
 1. Call the backend web server from the frontend server again:
    ```sh
@@ -306,6 +308,7 @@ To allow inbound connections to the backend server, you need to configure the as
 1. The request returns quickly and outputs the message `I'm the backend server` from the backend web server. This completes the configuration of the connectivity between the servers.
 
 ### Complete the maintenance
+{: #vpc-public-app-private-backend-19}
 
 With the frontend and backend server software properly installed and working, the servers can be removed from the maintenance security group.
 
@@ -320,7 +323,7 @@ Once the servers are removed from the maintenance group, they can no longer be a
 In this tutorial, you deployed two tiers of an application, one frontend server visible from the public Internet and one backend server only accessible within the VPC by the frontend server. You configured security group rules to ensure traffic would be allowed only the specific ports required by the application.
 
 ## Remove resources
-{: #remove-resources}
+{: #vpc-public-app-private-backend-remove-resources}
 {: step}
 
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.

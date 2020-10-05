@@ -7,7 +7,7 @@ lasttested: "2020-06-03"
 
 content-type: tutorial
 services: openwhisk, api-gateway, Cloudant
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -32,12 +32,14 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
+{: shortdesc}
 
 As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
 
 Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk_short}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
 ## Objectives
+{: #serverless-api-webapp-0}
 
 * Deploy a serverless backend and a database
 * Expose a REST API
@@ -61,11 +63,12 @@ The application shown in this tutorial is a simple guestbook website where users
 5. The {{site.data.keyword.openwhisk_short}} actions use [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
 
 ## Before you begin
-{: #prereqs}
+{: #serverless-api-webapp-prereqs}
 
 This guide uses GitHub Pages to host the static website. Make sure you have a public GitHub account.
 
 ## Create the Guestbook database
+{: #serverless-api-webapp-2}
 {: step}
 
 Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
@@ -87,11 +90,13 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    4. Expand the newly created credentials and review them. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
+{: #serverless-api-webapp-3}
 {: step}
 
 In this section, you will create serverless actions (commonly termed as **Functions**). {{site.data.keyword.openwhisk}} (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events. Serverless functions only incur charges for the execution time.
 
 ### Sequence of actions to save the guestbook entry
+{: #serverless-api-webapp-4}
 
 You will create a **sequence** which is a chain of actions. In a sequence, the output of one action acts as input to the following action and so on. The first sequence you will create is used to persist a guest message. Provided a name, an emailID and a comment, the sequence will:
    * Create a document to be persisted.
@@ -154,10 +159,11 @@ Now, add the second action to that sequence:
 6. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
+{: #serverless-api-webapp-5}
 
 The second sequence is used to retrieve the existing guestbook entries. This sequence will:
    * List all documents from the database.
-   * Format the documents and returning them.
+   * Format the documents and return them.
 
 1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create**.
 2. Then, after selecting **Action**, use `set-read-input` as name. Again, select **guestbook** as package and a **Node.js** version as runtime. Click **Create**.
@@ -208,6 +214,7 @@ Complete the sequence:
 1. Click on **Save** and then **Invoke**.
 
 ## Create an API
+{: #serverless-api-webapp-6}
 {: step}
 1. Go to [Actions](https://{DomainName}/functions/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
@@ -225,6 +232,7 @@ Complete the sequence:
 8. Scroll to the end of the page to **Create** the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
+{: #serverless-api-webapp-7}
 {: step}
 
 1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub. You can do this by going to https://github.com/IBM-Cloud/serverless-guestbook in the browser, and then clicking the **Fork** button.
@@ -239,11 +247,13 @@ Complete the sequence:
 
 <!--##istutorial#-->
 ## Optional: Use your own domain for the API
+{: #serverless-api-webapp-custom-domain}
 {: step}
 
 Creating a managed API gives you a default endpoint like `https://1234abcd.us-south.apigw.appdomain.cloud/guestbook`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
 
 ### Obtain a certificate for the custom domain
+{: #serverless-api-webapp-9}
 
 Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *guestbook-api.mydomain.com*. The certificate will need to be issued for *guestbook-api.mydomain.com* (or **.mydomain.com*).
 
@@ -262,6 +272,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
    ```
 
 ### Import the certificate to a central repository
+{: #serverless-api-webapp-10}
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
@@ -271,6 +282,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
    * **Import**.
 
 ### Configure the custom domain for the managed API
+{: #serverless-api-webapp-11}
 
 1. Go to [APIs / Custom domains](https://{DomainName}/apis/domains).
 1. In the Region selector, select the location where you deployed the actions.
@@ -292,7 +304,7 @@ Once the DNS changes have been propagated, you will be able to access your guest
 <!--#/istutorial#-->
 
 ## Remove resources
-{:#cleanup}
+{: #serverless-api-webapp-cleanup}
 {: step}
 
 To delete the created {{site.data.keyword.cloudant_short_notm}} service,
@@ -309,6 +321,7 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 5. Under the `guestbook` package, delete all the actions by clicking on the **delete** icon in the respective action rows.
 
 ## Related content
+{: #serverless-api-webapp-13}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
 * [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)

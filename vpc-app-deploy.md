@@ -7,7 +7,7 @@ lasttested: "2019-08-05"
 
 content-type: tutorial
 services: vpc
-account-plan:
+account-plan: paid
 completion-time: 2h
 
 ---
@@ -43,7 +43,7 @@ This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC
 After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
 
 ## Objectives
-{: #objectives}
+{: #vpc-app-deploy-objectives}
 
 * Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
 * Utilize manual steps for updating the operating system software and installing new software.
@@ -77,18 +77,18 @@ While provisioning the resources, you will also deploy applications on the virtu
 You will explore how to consume these different sources.
 
 ## Before you begin
-{: #before-you-begin}
+{: #vpc-app-deploy-before-you-begin}
 
 ### Create a VPC ssh key
-{: #create-ssh-key}
+{: #vpc-app-deploy-create-ssh-key}
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-1. If you don't have an SSH key on your local machine, refer to these instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
 1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
 ### Set environment variables
-{: #set-env}
+{: #vpc-app-deploy-set-env}
 
 This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
@@ -134,11 +134,11 @@ It will walk you through example steps on a terminal using the shell, `terraform
    {:tip}
 
 ## Basics of software installation
-{: #basics}
+{: #vpc-app-deploy-basics}
 {: step}
 
 ### Provision virtual server instances from base images
-{: #base-vsi-images}
+{: #vpc-app-deploy-base-vsi-images}
 
 When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images. The output will look like:
 
@@ -156,12 +156,12 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 
-{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the service endpoints available for {{site.data.keyword.vpc_short}} (see details for [Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc) and [Gen 2](/docs/vpc?topic=vpc-service-endpoints-for-vpc)). There is no ingress cost for reading the mirrors.
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints](/docs/vpc?topic=vpc-service-endpoints-for-vpc) available for {{site.data.keyword.vpc_short}}. There is no ingress cost for reading the mirrors.
 
 Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
 ### Initialize and customize cloud instances with cloud-init
-{: #cloud_init}
+{: #vpc-app-deploy-cloud_init}
 
 When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
@@ -192,7 +192,7 @@ The `curl` command accessing www.python.org demonstrates the attempt to access a
 Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
 
 ### Upload from the filesystem and execute on the instance
-{: #scp-ssh}
+{: #vpc-app-deploy-scp-ssh}
 
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
@@ -203,7 +203,7 @@ The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM
 In the next sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash) to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
 
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
-{: #cli}
+{: #vpc-app-deploy-cli}
 {: step}
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
@@ -211,12 +211,12 @@ The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with al
 This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
 
 ### Before you begin
-{: #cli-before-you-begin}
+{: #vpc-app-deploy-cli-before-you-begin}
 
 1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 ### Provision subnets and virtual server instances
-{: #cli-provision}
+{: #vpc-app-deploy-cli-provision}
 
 1. Change to the tutorial folder:
    ```sh
@@ -294,7 +294,7 @@ This section uses a shell script found in the [Public frontend and private backe
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #cli-test}
+{: #vpc-app-deploy-cli-test}
 
  To validate the deployment:
 
@@ -331,7 +331,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ```
 
 ### Remove resources
-{: #cli-cleanup}
+{: #vpc-app-deploy-cli-cleanup}
 
 1. Delete the VPC and **all of the resources** in the VPC:
    ```sh
@@ -340,17 +340,18 @@ This section uses a shell script found in the [Public frontend and private backe
    {:pre}
 
 ## Provisioning infrastructure with Terraform
-{: #terraform}
+{: #vpc-app-deploy-terraform}
 {: step}
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
 ### Before you begin
-{: #terraform-before-you-begin}
+{: #vpc-app-deploy-terraform-before-you-begin}
 
 Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 
 ### Provision a single virtual server instance
+{: #vpc-app-deploy-15}
 
 Before deploying a more complex architecture and in order to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server through SSH.
 
@@ -391,7 +392,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
    {:pre}
 
 ### Provision subnets and virtual server instances
-{: #terraform-provision}
+{: #vpc-app-deploy-terraform-provision}
 
 The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Public frontend and private backend in a Virtual Private Cloud_ tutorial.
 
@@ -466,7 +467,7 @@ To provision the resources:
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #terraform-test}
+{: #vpc-app-deploy-terraform-test}
 
 Now that Terraform has deployed resources, you can validate they were correctly provisioned.
 
@@ -498,7 +499,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```
 
 ### Remove resources
-{: #terraform-cleanup}
+{: #vpc-app-deploy-terraform-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh
@@ -507,7 +508,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    {:pre}
 
 ## Installing software with Ansible
-{: #ansible}
+{: #vpc-app-deploy-ansible}
 {: step}
 
 [Ansible](https://www.ansible.com/) is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/) and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
@@ -515,7 +516,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 
 ### Before you begin
-{: #ansible-before-you-begin}
+{: #vpc-app-deploy-ansible-before-you-begin}
 
 This section uses both Terraform and Ansible.
 
@@ -523,6 +524,7 @@ This section uses both Terraform and Ansible.
 1. Follow [these instructions](https://{DomainName}/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
 ### Ansible Playbook
+{: #vpc-app-deploy-21}
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
 
@@ -556,6 +558,7 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
    ```
 
 ### Ansible Inventory
+{: #vpc-app-deploy-22}
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
@@ -574,7 +577,7 @@ Ansible works against multiple systems in your infrastructure at the same time. 
    ```
 
 ### Provision subnets and virtual server instances
-{: #ansible-provision}
+{: #vpc-app-deploy-ansible-provision}
 
 The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out. The Ansible script will install software from the mirrors and then upload software from your workstation.
 
@@ -619,7 +622,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    {:pre}
 
 ### Test the configuration of the virtual servers
-{: #ansible-test}
+{: #vpc-app-deploy-ansible-test}
 
 Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
 
@@ -651,7 +654,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```
 
 ### Remove resources
-{: #ansible-cleanup}
+{: #vpc-app-deploy-ansible-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh
@@ -667,8 +670,10 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    {:pre}
 
 ## Related content
-{: #related}
+{: #vpc-app-deploy-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
+- [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/technologies/infrastructure/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/)
+- [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/technologies/infrastructure/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
 

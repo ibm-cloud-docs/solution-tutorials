@@ -7,7 +7,7 @@ lasttested: "2019-11-21"
 
 content-type: tutorial
 services: openwhisk, cognos-dashboard-embedded, Db2whc, appid
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -29,11 +29,14 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
+
 In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless action to retrieve the traffic data and store it in a SQL database. Moreover, a Cloud Foundry app is used to manage repositories and provide access to the statistics for data analytics. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution with the initial set of features supporting single-tenant mode.
+{: shortdesc}
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
 ## Objectives
+{: #serverless-github-traffic-analytics-0}
 
 * Deploy a Python database app with multi-tenant support and secured access
 * Integrate App ID as OpenID Connect-based authentication provider
@@ -41,7 +44,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
 ## Before you begin
-{: #prereqs}
+{: #serverless-github-traffic-analytics-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -54,6 +57,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 ## Service and Environment Setup (shell)
+{: #serverless-github-traffic-analytics-2}
 {: step}
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
 
@@ -111,6 +115,7 @@ In this section, you set up the needed services and prepare the environment. All
    {:tip}
 
 ## App ID and GitHub configuration (browser)
+{: #serverless-github-traffic-analytics-3}
 {: step}
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
@@ -131,6 +136,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 
 ## Configure and test Python app
+{: #serverless-github-traffic-analytics-4}
 {: step}
 After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](http://flask.pocoo.org/) microframework. Repositories can be added to and removed from statistics collection. The traffic data can be accessed in a tabular view.
 
@@ -146,6 +152,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 ![](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
+{: #serverless-github-traffic-analytics-5}
 {: step}
 With the management app in place, deploy an action, a trigger and a rule to connect the two in {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
@@ -210,6 +217,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
+{: #serverless-github-traffic-analytics-6}
 {: step}
 In this tutorial, you deployed a serverless action and a related trigger and rule. They allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Cloud Foundry app to manage users, repositories and to present the traffic statistics in the app portal. Users can see the traffic statistics in searchable tables or visualized in an embedded dashboard ({{site.data.keyword.dynamdashbemb_short}} service, see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
@@ -217,6 +225,7 @@ The Cloud Foundry app manages access through an OpenID Connect client connecting
 ![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
 
 ## Security: Rotate service credentials
+{: #serverless-github-traffic-analytics-7}
 {: step}
 If you use this solution in production, then you should rotate the service credentials on a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency.
 
@@ -227,6 +236,7 @@ The [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) for t
 
 
 ## Remove resources
+{: #serverless-github-traffic-analytics-8}
 {:removeresources}
 {: step}
 
@@ -250,6 +260,7 @@ To clean up the resources used for this tutorial, you can delete the related ser
 
 
 ## Expand the tutorial
+{: #serverless-github-traffic-analytics-9}
 Want to add to or change this tutorial? Here are some ideas:
 * Expand the app for multi-tenant support.
 * Integrate a chart for the data.
@@ -259,6 +270,7 @@ Want to add to or change this tutorial? Here are some ideas:
 * Explore the social coding relationships between developers using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
 ## Related Content
+{: #serverless-github-traffic-analytics-10}
 {:related}
 Here are links to additional information on the topics covered in this tutorial.
 

@@ -1,30 +1,43 @@
 #!/bin/bash
+set -e
+
+ROOT_DIR="$( cd "$(dirname "$0")" ; cd ..; pwd -P )"
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
 
 # Generate index.md
-cd indexGenerator
-node app.js
-cd ../..
+(cd "$ROOT_DIR/scripts/indexGenerator" && npm install && node app.js)
 
-mkdir -p builddocs/input
+mkdir -p "$ROOT_DIR/builddocs/input"
 
 # copy all files to doc input folder
-tar cf - \
+(cd "$ROOT_DIR" && tar cf - \
   --exclude=builddocs \
   --exclude=scripts \
   --exclude=diagrams \
   --exclude=.vscode \
   --exclude=.git \
   --exclude=README.md \
-  . | (cd builddocs/input && tar xvf - )
+  . | (cd "$ROOT_DIR/builddocs/input" && tar xvf - ))
 
 # generate the new files
-marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt
+npm install -g marked-it-cli
+marked-it-cli "$ROOT_DIR/builddocs/input" --output="$ROOT_DIR/builddocs/output" --overwrite --header-file="$ROOT_DIR/scripts/header.txt"
 
 # revert the "?topic" links to plain html files
-sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
+if [[ "$machine" == "Mac" ]]; then
+  sed -i '' 's/"\/docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' "$ROOT_DIR/builddocs/output/index.html"
+else
+  sed -i 's/"\/docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' "$ROOT_DIR/builddocs/output/index.html"
+fi
 
 # start server
-watch-http-server builddocs/output/ &
-
-# stop server and relauch script on *.md file changes
-fswatch -1 -e ".*" -i "\\.md$" . | xargs -n1 -I{} kill $! && cd ./scripts && ./$(basename $0) && exit
+npm install -g http-server
+http-server "$ROOT_DIR/builddocs/output"

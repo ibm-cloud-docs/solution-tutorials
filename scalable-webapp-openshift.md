@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-07-31"
-lasttested: "2020-07-27"
+lastupdated: "2020-08-24"
+lasttested: "2020-08-21"
 
 content-type: tutorial
 services: openshift, containers, Registry
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -38,7 +38,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
 ## Objectives
-{: #objectives}
+{: #scalable-webapp-openshift-objectives}
 
 * Scaffold a starter application.
 * Deploy the application to the {{site.data.keyword.openshiftlong_notm}} cluster.
@@ -62,7 +62,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 6. Users access the application.
 
 ## Before you begin
-{: #prereqs}
+{: #scalable-webapp-openshift-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -86,6 +86,7 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #scalable-webapp-openshift-2}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
 1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
@@ -95,7 +96,7 @@ In addition, make sure you [set up a registry namespace](/docs/services/Registry
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
-{: #create_openshift_cluster}
+{: #scalable-webapp-openshift-create_openshift_cluster}
 {: step}
 
 With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
@@ -131,6 +132,7 @@ Take a note of the resource group selected above.  This same resource group will
 {:note}
 
 ### Configure CLI
+{: #scalable-webapp-openshift-4}
 
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
@@ -146,7 +148,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 <!--##isworkshop#-->
 <!--
 ## Configure the access to your cluster
-{: #access-cluster}
+{: #scalable-webapp-openshift-access-cluster}
 {: step}
 
 In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
@@ -163,12 +165,13 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 <!--#/isworkshop#-->
 
 ## Generate a starter kit
-{: #generate_starter_kit}
+{: #scalable-webapp-openshift-generate_starter_kit}
 {: step}
 
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 ### Using ibmcloud dev plugin
+{: #scalable-webapp-openshift-7}
 
 1. On a terminal, start the `ibmcloud dev` wizard by running the below command
    ```sh
@@ -188,6 +191,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
 
 ### Push the code to a Private IBM Cloud Git repo
+{: #scalable-webapp-openshift-8}
 
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
@@ -200,7 +204,11 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
 5. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
+   You need to use an existing SSH key or create a new key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#common_gitlab) to create a new SSH key for GitLab.
+   {:tip}
+
 ### Create a Git deploy token
+{: #scalable-webapp-openshift-9}
 
 In this section, you will create a Git token to allow read-only access to your repository.
 
@@ -213,12 +221,13 @@ To generate a deploy token:
 1. Click on **Project** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
-{: #create_openshift_app}
+{: #scalable-webapp-openshift-create_openshift_app}
 {: step}
 
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 
 ### Generate a build configuration yaml file
+{: #scalable-webapp-openshift-11}
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
 
@@ -247,6 +256,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    {:tip}
 
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
+{: #scalable-webapp-openshift-12}
 
 In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
 
@@ -285,6 +295,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    {:pre}
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
+{: #scalable-webapp-openshift-13}
 
 In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
@@ -333,12 +344,13 @@ In this step, you will update the generated BuildConfig section of the generated
 6. Save the YAML file.
 
 ## Deploy the application to cluster
-{:#deploy_app_to_cluster}
+{: #scalable-webapp-openshift-deploy_app_to_cluster}
 {: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
 ### Create the app using the updated yaml
+{: #scalable-webapp-openshift-15}
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project:
    ```sh
@@ -374,6 +386,7 @@ In this section, you will deploy the application to the cluster using the genera
    {:pre}
 
 ### Access the app through IBM provided domain
+{: #scalable-webapp-openshift-16}
 To access the app, you need to create a route. A route announces your service to the world.
 
 1. Create a route by running the below command in a terminal
@@ -389,7 +402,7 @@ To access the app, you need to create a route. A route announces your service to
 1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
 
 ### Secure the default IBM provided domain route
-{: #secure_default_route}
+{: #scalable-webapp-openshift-secure_default_route}
 
 1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
    ```sh
@@ -399,6 +412,7 @@ To access the app, you need to create a route. A route announces your service to
 1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *$MYPROJECT-https* in a browser.
 
 ### Update the app and redeploy
+{: #scalable-webapp-openshift-18}
 In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
 
 1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the {{site.data.keyword.openshiftshort}} Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
@@ -440,7 +454,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 
 <!--##istutorial#-->
 ## Use your own custom domain
-{: #custom_domain}
+{: #scalable-webapp-openshift-custom_domain}
 {: step}
 
 This section requires you to own a custom domain and to be able to modify the DNS records of the domain. You will need to create a `CNAME` record pointing to the IBM-provided domain.
@@ -449,6 +463,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 {:tip}
 
 ### With HTTP
+{: #scalable-webapp-openshift-20}
 1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com or openshiftapp.example.com), so that external clients can reach it by name.
    ```sh
    oc expose svc/$MYPROJECT --hostname=<HOSTNAME> --name=$MYPROJECT-domain --port=3000
@@ -457,6 +472,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 2. Access your application at `http://<HOSTNAME>/`
 
 ### With HTTPS
+{: #scalable-webapp-openshift-21}
 
 1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
    ```sh
@@ -469,7 +485,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 <!--#/istutorial#-->
 
 ## Monitor the app
-{:#monitor_application}
+{: #scalable-webapp-openshift-monitor_application}
 {: step}
 
 In this section, you will learn to monitor the health and performance of your application.
@@ -498,12 +514,13 @@ In this section, you will learn to monitor the health and performance of your ap
   {:tip}
 
 ## Scale the app
-{:#scaling_app}
+{: #scalable-webapp-openshift-scaling_app}
 {: step}
 
 In this section, you will learn how to autoscale and also manually scale your application.
 
 ### Autoscaling
+{: #scalable-webapp-openshift-24}
 
 You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword.openshiftshort}} should automatically increase or decrease the scale of a deployment configuration(dc) or replication controller(rc), based on metrics collected from the pods that belong to that `dc` or `rc`.
 
@@ -521,21 +538,22 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
     --cpu-percent=5
    ```
    {:pre}
-3. You can see new pods being provisionsed by running `oc get pods --watch` command.
+3. You can see new pods being provisioned by running `oc get pods --watch` command.
 4. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for all the pods.
 
 ### Manual scaling
+{: #scalable-webapp-openshift-25}
 
 1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment configuration or replication controller
    ```sh
     oc scale dc/$MYPROJECT --replicas=2
    ```
    {:pre}
-2. You can see a new pod being provisionsed by running `oc get pods` command.
+2. You can see a new pod being provisioned by running `oc get pods` command.
 3. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for both the pods.
 
 ## Remove resources
-{:#cleanup}
+{: #scalable-webapp-openshift-cleanup}
 {: step}
 
 * Delete all application resource objects:
@@ -553,6 +571,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 <!--#/istutorial#-->
 
 ## Related content
+{: #scalable-webapp-openshift-0}
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)

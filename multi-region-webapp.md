@@ -7,7 +7,7 @@ lasttested: "2019-05-20"
 
 content-type: tutorial
 services: cloud-foundry-public, cis, ContinuousDelivery
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -31,10 +31,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) pipeline.
+{: shortdesc}
 
 Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a location, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple locations](https://{DomainName}/docs/overview?topic=overview-whatis-platform#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest location to reduce latency.
 
 ## Objectives
+{: #multi-region-webapp-0}
 
 * Deploy a Cloud Foundry application to multiple locations with {{site.data.keyword.contdelivery_short}}.
 * Map a custom domain to the application.
@@ -50,7 +52,7 @@ This tutorial involves an active/active scenario where two copies of the applica
 </p>
 
 ## Create a Node.js application
-{: #create}
+{: #multi-region-webapp-create}
 {: step}
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
@@ -66,7 +68,7 @@ Great start! You have your very own Node.js starter application running in {{sit
 Next, let's push the source code of your application to a repository and deploy your changes automatically.
 
 ## Set up source control and {{site.data.keyword.contdelivery_short}}
-{: #devops}
+{: #multi-region-webapp-devops}
 {: step}
 
 In this step, you set up a git source control repository to store your code and then create a pipeline, which deploys any code changes automatically.
@@ -106,7 +108,7 @@ In this step, you set up a git source control repository to store your code and 
 Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
 ## Deploy to another location
-{: #deploy_another_region}
+{: #multi-region-webapp-deploy_another_region}
 {: step}
 
 Next, we will deploy the same application to a different {{site.data.keyword.Bluemix_notm}} location. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another location.
@@ -120,7 +122,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 7. Click **Save** and run the new stage by clicking the **Play button**.
 
 ## Register a custom domain with {{site.data.keyword.cis_full_notm}}
-{: #domain_cis}
+{: #multi-region-webapp-domain_cis}
 {: step}
 
 [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.
@@ -137,6 +139,7 @@ When deploying a real world application, you will likely want to use your own do
   {:tip}
 
 ## Add Global Load Balancing to the application
+{: #multi-region-webapp-5}
 {: step}
 
 {: #add_glb}
@@ -144,12 +147,14 @@ When deploying a real world application, you will likely want to use your own do
 In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyword.cis_full_notm}} to manage the traffic across multiple locations. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
 ### Before creating a GLB, create a health check for the GLB.
+{: #multi-region-webapp-6}
 
 1. In the {{site.data.keyword.cis_full_notm}} application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Resource**.
    ![Health Check](images/solution1/health_check.png)
 
 ### After that, create an origin pool with two origins.
+{: #multi-region-webapp-7}
 
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the location of your node.js application.
@@ -159,6 +164,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
    ![Origin Pool](images/solution1/origin_pool.png)
 
 ### Create a Global Load Balancer (GLB).
+{: #multi-region-webapp-8}
 
 1. Click **Create Load Balancer**.
 2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
@@ -169,6 +175,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. To complete the configuration, you will update the applications with routes using the custom domain.
 
 ## Configure custom domain and routes to your application
+{: #multi-region-webapp-9}
 {: step}
 
 {: #add_domain}
@@ -230,6 +237,7 @@ For the application deployed in London, use a separate manifest to configure the
 Finally commit the changes to the manifest files and make sure the builds for both locations succeed.
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
+{: #multi-region-webapp-10}
 {: step}
 
 It is possible that you do not want to utilize a Global Load Balancer in front of your multi-location applications, but need to map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
@@ -263,7 +271,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
    {: pre}
 
 ## Bind SSL certificate to your application
-{: #ssl}
+{: #multi-region-webapp-ssl}
 {: step}
 
 1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
@@ -272,7 +280,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 4. Access your application with https instead of http.
 
 ## Monitor application performance
-{: #monitor}
+{: #multi-region-webapp-monitor}
 {: step}
 
 Lets check the health of your multi-location application.
@@ -284,6 +292,7 @@ Lets check the health of your multi-location application.
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
 
 ## Remove resources
+{: #multi-region-webapp-13}
 {: step}
 
 * Delete the toolchain
@@ -293,6 +302,7 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 * Delete the {{site.data.keyword.cis_full_notm}} instance
 
 ## Related content
+{: #multi-region-webapp-11}
 
 * [Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials?topic=cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
 * [Autoscaling for Cloud Foundry applications](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-autoscale_cloud_foundry_apps)
