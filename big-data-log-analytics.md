@@ -175,7 +175,7 @@ In this section, you will begin configuring a Streams flow that receives log mes
 4. Select `log-analysis-sa` from the list and click **Associate service**.
 5. Type the streams flow **Name** as `webserver-flow`.
 6. Select **Wizard** and click **Create**.
-7. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
+7. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile. _If you see a connection error, create [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio) service with **Lite** plan in the same region._
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
