@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-07-31"
+lastupdated: "2020-10-05"
 lasttested: "2020-07-31"
 
 content-type: tutorial
@@ -67,7 +67,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Stable, Default version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.4.20 version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -230,7 +230,7 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
 
    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.4/service_mesh/service_mesh_arch/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
    {:tip}
 
 3.  Verify that the pods are up and running.
@@ -506,8 +506,8 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 ## Related content
 {: #openshift-service-mesh-0}
 
-- [Understanding Red Hat {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/understanding-ossm.html)
+- [Understanding Red Hat {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.4/service_mesh/service_mesh_arch/understanding-ossm.html)
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
-- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/ossm-vs-community.html)
+- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.4/service_mesh/service_mesh_arch/ossm-vs-community.html)
 - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
 - [Istio Observability](https://istio.io/docs/concepts/observability/)
