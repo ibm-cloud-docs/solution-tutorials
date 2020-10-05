@@ -230,7 +230,7 @@ In this section, you will complete the streams flow configuration by defining a 
 2. Select the **{{site.data.keyword.cos_full_notm}}** tile as a target.
     * Click **Add Connection** and select `log-analysis-cos`. Check whether **Secret Key** and **Access Key** are populated. If not, select **Cloud Object Storage** under IBM services and enter the service credentials manually from the `log-analysis-cos` service page.
     * Click **Create**.
-    * Enter the **File path** `/YOUR_BUCKET_NAME/logs/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one created in the first section.
+    * Enter the **File path** `/<YOUR_BUCKET_NAME>/logs/http-logs_%TIME.csv`. Only replace `<YOUR_BUCKET_NAME>` with the one created in the first section.
     * Select **csv** in the **Format** dropdown.
     * Check the **Column header row** checkbox.
     * Select **Time** in the **File Creation Policy** dropdown.
@@ -337,7 +337,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     -- What are the top 10 web pages on NASA from July 1995?
     -- Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://ap-geo/YOUR_BUCKET_NAME/logs/http-logs_<TIME>.csv
+    FROM cos://ap-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     WHERE REQUEST LIKE '%.htm%'
     GROUP BY REQUEST
     ORDER BY 2 DESC
@@ -356,7 +356,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ```sql
     -- Who are the top 5 viewers?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     GROUP BY HOST
     ORDER BY 2 DESC
     LIMIT 5
@@ -366,7 +366,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ```sql
     -- Which viewer has suspicious activity based on application failures?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     WHERE `responseCode` == 500
     GROUP BY HOST
     ORDER BY 2 DESC
@@ -376,7 +376,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ```sql
     -- Which requests showed a page not found error to the user?
     SELECT DISTINCT REQUEST
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     WHERE `responseCode` == 404
     ```
     {: codeblock}
@@ -384,7 +384,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ```sql
     -- What are the top 10 largest files?
     SELECT DISTINCT REQUEST, BYTES
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     WHERE BYTES > 0
     ORDER BY CAST(BYTES as Integer) DESC
     LIMIT 10
@@ -394,7 +394,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ```sql
     -- What is the distribution of total traffic by hour?
     SELECT SUBSTRING(TIMESTAMP, 13, 2), COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     GROUP BY 1
     ORDER BY 1 ASC
     ```
@@ -404,12 +404,12 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     -- Why did the previous result return an empty hour?
     -- Hint, find the malformed hostname.
     SELECT HOST, REQUEST
-    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
+    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
     ```
     {: codeblock}
 
-FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/logs/` to run SQL queries on all files in the bucket.
+FROM clauses are not limited to a single file. Use `cos://us-geo/<YOUR_BUCKET_NAME>/logs/` to run SQL queries on all files in the bucket.
 {: tip}
 
 ## Investigating data using {{site.data.keyword.iae_short}}
