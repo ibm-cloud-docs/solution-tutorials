@@ -105,10 +105,13 @@ You will create a **sequence** which is a chain of actions. In a sequence, the o
 Start by creating the first action:
 
 1. In the browser, open a tab and go to [**Functions**](https://{DomainName}/functions).
-2. From the namespace drop-down on the top right either select an existing namespace or use **Create Namespace** to create a new one.
-2. With a namespace selected, click on **Actions** in the left pane and then **Create** on the right.
-3. Under **Create** click on **Action** to open the **Create Action** form.
-4. Enter `prepare-entry-for-save` as name, click **Create Package** to create a new package with name `guestbook` and pick a **Node.js** as **Runtime** (Note: Pick the latest version). Click **Create** to create the action.
+2. From the namespace drop-down, either select an existing namespace or use **Create Namespace** to create a new one.
+2. Go to the [**Actions** list](https://{DomainName}/functions/actions).
+1. **Create** a new action:
+   1. Set **Name** as `prepare-entry-for-save` as name.
+   2. Click **Create Package** to create a new package with name `guestbook`.
+   3. Pick a **Node.js** as **Runtime** (Note: Pick the latest version).
+   4. Click **Create** to create the action.
 5. In the new dialog replace the existing code with the code snippet below:
    ```js
    /**
