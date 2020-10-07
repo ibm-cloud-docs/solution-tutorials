@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-10-06"
+lastupdated: "2020-10-07"
 lasttested: "2020-10-06"
 
 content-type: tutorial
@@ -33,7 +33,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.4/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.4/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
@@ -72,16 +72,16 @@ This tutorial requires:
 * a Docker engine,
 * `oc` to interact with OpenShift,
 * `git` to clone source code repository,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_gitlab)
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
 <!--#/istutorial#-->
 
-In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 <!--##isworkshop#-->
 <!--
@@ -107,10 +107,10 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.4.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-      - [Opening required ports in the default security group](/docs/containers?topic=containers-vpc-network-policy#security_groups)
+      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
   - Select the desired VPC
   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
@@ -118,7 +118,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -195,6 +195,9 @@ This generates a starter application complete with the code and all the necessar
 
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
+   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_gitlab).
+   {:tip}
+
 1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
 
    The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
@@ -204,13 +207,10 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
 5. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
-   You need to use an existing SSH key or create a new key for the push to be successful,check the instructions [here](/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_gitlab) to create a new SSH key for GitLab.
-   {:tip}
-
 ### Create a Git deploy token
 {: #scalable-webapp-openshift-9}
 
-In this section, you will create a Git token to allow read-only access to your repository.
+In this section, you will create a Git deploy token to allow **read-only** access to your repository.
 
 To generate a deploy token:
 1. On the left pane of the Git repo page, click **Settings** > **Repository**.
@@ -285,7 +285,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ```
    {:pre}
 1. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
-   For creating an API key, refer to this [link](/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
+   For creating an API key, refer to this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
@@ -507,7 +507,7 @@ In this section, you will learn to monitor the health and performance of your ap
 6. Check the CPU and memory usage.
 7. For logging, you can use the in-built `oc logs` command.
 
-  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-health) to setup LogDNA and Sysdig add-ons to monitor cluster health.
+  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup LogDNA and Sysdig add-ons to monitor cluster health.
   {:tip}
 
 ## Scale the app
@@ -536,7 +536,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    ```
    {:pre}
 3. You can see new pods being provisioned by running `oc get pods --watch` command.
-4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
+4. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
 
 ### Manual scaling
 {: #scalable-webapp-openshift-25}
@@ -547,7 +547,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    ```
    {:pre}
 2. You can see a new pod being provisioned by running `oc get pods` command.
-3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
+3. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
 
 ## Remove resources
 {: #scalable-webapp-openshift-cleanup}
@@ -570,6 +570,6 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 ## Related content
 {: #scalable-webapp-openshift-0}
 
-* [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
+* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.4/nodes/pods/nodes-pods-autoscaling.html)
 * [Secured routes](https://docs.openshift.com/container-platform/4.4/networking/routes/secured-routes.html)
