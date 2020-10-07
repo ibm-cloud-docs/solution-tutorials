@@ -21,10 +21,13 @@ completion-time: 2h
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
-{:tip: .tip}
 {:pre: .pre}
+{:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
+{:tip: .tip}
+{:preview: .preview}
+{:beta: .beta}
 
 # How to write a tutorial
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
