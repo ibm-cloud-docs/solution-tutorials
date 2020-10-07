@@ -16,7 +16,6 @@ Solution Tutorials
         {: .topicgroup}
         Work In Progress
             solution-template.md
-            image-classification-code-engine.hidden.md
 
         {: .topicgroup}
         Websites and Web Apps
@@ -39,6 +38,7 @@ Solution Tutorials
             serverless-api-webapp.md
             multi-region-serverless.md
             application-log-analysis.md
+            image-classification-code-engine.md
 
         {: .topicgroup}
         Chatbots
@@ -65,7 +65,6 @@ Solution Tutorials
             smart-data-lake.md
             serverless-github-traffic-analytics.md
             create-deploy-retrain-machine-learning-model.md
-            big-data-analytics-spark.md
 
         {: .topicgroup}
         Internet of Things
@@ -102,13 +101,13 @@ Solution Tutorials
         {: .topicgroup}
         High Performance Computing
             hpc-eda.md
+            hpc-lsf-on-vpc.hidden.md
 
     {: .topicgroup}
     By Compute Options
 
         {: .topicgroup}
         Kubernetes
-            image-classification-code-engine.hidden.md
             scalable-webapp-kubernetes.md
             vm-to-containers-and-kubernetes.md
             strategies-for-resilient-applications.md
@@ -150,7 +149,11 @@ Solution Tutorials
             serverless-github-traffic-analytics.md
 
         {: .topicgroup}
-        Infrastructure
+        Code Engine
+            image-classification-code-engine.md
+
+        {: .topicgroup}
+        Virtual Servers
             strategies-for-resilient-applications.md
             lamp-stack.md
             infrastructure-as-code-terraform.md
@@ -163,7 +166,6 @@ Solution Tutorials
             vpc-tg-dns-iam.md
             secure-network-enclosure.md
             nat-config-private.md
-            byoip.md
             configuring-IPSEC-VPN.md
             linking-secure-network-enclosures.md
             web-app-private-network.md

@@ -21,10 +21,13 @@ completion-time: 2h
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
-{:tip: .tip}
 {:pre: .pre}
+{:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
+{:tip: .tip}
+{:preview: .preview}
+{:beta: .beta}
 
 # How to write a tutorial
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
@@ -246,23 +249,9 @@ Notice that the all section content is surrounded by html comments markup `<!--`
 #### Terraform
 {: #solution-template-19}
 
-```tf
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using tf"
-}
-```
-{: codeblock}
-
 ```terraform
 resource "ibm_is_vpc" "myvpc" {
   name = "the name using terraform"
-}
-```
-{: codeblock}
-
-```hcl
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using hcl"
 }
 ```
 {: codeblock}

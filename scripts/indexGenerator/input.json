@@ -4,7 +4,8 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Infrastructure"
+    "Code Engine",
+    "Virtual Servers"
   ],
   "categories": [
     {
@@ -30,17 +31,6 @@
           "url": "solution-template.html",
           "description": "Solution Template",
           "imgSrc": ""
-        },
-        {
-          "name": "Image Classification with Code Engine",
-          "url": "image-classification-code-engine.hidden.html",
-          "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
-          "tags": [
-            "Code Engine",
-            "Knative",
-            "Kubernetes"
-          ]
         }
       ]
     },
@@ -100,6 +90,7 @@
             "Cloud Foundry",
             "Cloud Functions",
             "Infrastructure",
+            "Virtual Servers",
             "Bare Metal",
             "Databases",
             "File Storage",
@@ -268,7 +259,8 @@
             "Infrastructure",
             "PHP",
             "WordPress",
-            "Vulnerability Scanner"
+            "Vulnerability Scanner",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_servers"
@@ -284,6 +276,7 @@
           "tags": [
             "Terraform",
             "Infrastructure",
+            "Virtual Servers",
             "PHP",
             "Object Storage"
           ],
@@ -320,6 +313,7 @@
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -419,6 +413,16 @@
             "sysdig"
           ],
           "supportsCloudShell": false
+        },
+        {
+          "name": "Visual Recognition with Code Engine",
+          "url": "image-classification-code-engine.html",
+          "description": "Create a Code Engine project and deploy an image classification application.",
+          "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative"
+          ]
         }
       ]
     },
@@ -715,23 +719,6 @@
             "db2_warehouse"
           ],
           "supportsCloudShell": "not_applicable"
-        },
-        {
-          "name": "Analyze and visualize open data with Apache Spark",
-          "url": "big-data-analytics-spark.html",
-          "description": "Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.",
-          "imgSrc": "images/solution23/Architecture.png",
-          "tags": [
-            "Apache Spark",
-            "Watson Studio",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine"
-          ],
-          "supportsCloudShell": "not_applicable"
         }
       ]
     },
@@ -800,6 +787,7 @@
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -815,6 +803,7 @@
           "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -835,6 +824,7 @@
           "featuredPosition": 1,
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -856,6 +846,7 @@
           "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -872,6 +863,7 @@
           "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -918,6 +910,7 @@
             "Transit Gateway",
             "DNS",
             "Infrastructure",
+            "Virtual Servers",
             "Network",
             "Linux"
           ]
@@ -935,6 +928,7 @@
           "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -952,6 +946,7 @@
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -985,6 +980,7 @@
           "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -1002,7 +998,8 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "VLAN Spanning"
+            "VLAN Spanning",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
@@ -1020,7 +1017,8 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Router Appliance VPN"
+            "Virtual Router Appliance VPN",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
@@ -1058,6 +1056,18 @@
           "url": "hpc-eda.html",
           "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
           "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "hidden": true,
+          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
+          "url": "hpc-lsf-on-vpc.hidden.html",
+          "description": "Provision and configure IBM Cloud resources create an IBM Spectrum LSF cluster.",
+          "imgSrc": "images/solution61-hpc-lsf-on-vpc-hidden/hpc-lsf-on-vpc-arch.svg",
           "tags": [
             "Storage",
             "HPC",

@@ -84,7 +84,7 @@ You will explore how to consume these different sources.
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-1. If you don't have an SSH key on your local machine, refer to these instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
 1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
 ### Set environment variables
@@ -156,7 +156,7 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 
-{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the service endpoints available for {{site.data.keyword.vpc_short}} (see details for [Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc) and [Gen 2](/docs/vpc?topic=vpc-service-endpoints-for-vpc)). There is no ingress cost for reading the mirrors.
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints](/docs/vpc?topic=vpc-service-endpoints-for-vpc) available for {{site.data.keyword.vpc_short}}. There is no ingress cost for reading the mirrors.
 
 Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 

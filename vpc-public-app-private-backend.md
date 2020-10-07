@@ -65,8 +65,8 @@ In short, using VPC you can:
 ## Before you begin
 {: #vpc-public-app-private-backend-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Create a Virtual Private Cloud
 {: #vpc-public-app-private-backend-create-vpc}
@@ -81,7 +81,7 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
 {:note}
 
-1. Navigate to the **VPC overview** ([Gen 1](https://{DomainName}/vpc/overview) / [Gen 2](https://{DomainName}/vpc-ext/overview)) page and click on **Create a VPC**.
+1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
@@ -91,13 +91,10 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC with Gen 1 compute, select **Use VPC default** for your subnet access control list (ACL).
-   {:note}
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the **Subnets** ([Gen 1](https://{DomainName}/vpc/network/subnets) / [Gen 2](https://{DomainName}/vpc-ext/network/subnets)) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
 {: #vpc-public-app-private-backend-3}
@@ -125,14 +122,10 @@ In this section, you will create a subnet, a security group and a virtual server
 
 To create a new subnet for the backend,
 
-1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
    * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-   
-   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL).
-   {:note}
-
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.   
 1. Click **Create subnet** to provision it.
 
 ### Create a backend security group
@@ -141,7 +134,7 @@ To create a new subnet for the backend,
 The backend security group controls the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:
-1. Select [**Security groups**](https://{DomainName}/vpc/network/securityGroups) under **Network**, then click **New security group**.
+1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **New security group**.
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
 3. Click **Create security group**.
 
@@ -152,7 +145,7 @@ You will later edit the security group to add the inbound and outbound rules.
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
+1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
@@ -188,14 +181,10 @@ Similar to the backend, you will create a frontend subnet with virtual server in
 
 To create a new subnet for the frontend,
 
-1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
-   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-   {:note}
-
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 1. Click **Create subnet** to provision it.
 
@@ -212,7 +201,7 @@ To create a new security group for the frontend:
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
+1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
@@ -279,7 +268,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the **Virtual Server Instances** list ([Gen 1](https://{DomainName}/vpc/compute/vs) / [Gen 2](https://{DomainName}/vpc-ext/compute/vs)), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the [**Virtual Server Instances**](https://{DomainName}/vpc-ext/compute/vs) list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
