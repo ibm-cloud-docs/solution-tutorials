@@ -240,18 +240,18 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 {: #hpc-lsf-on-vpc-deploy-lsf-cloud-cluster}
 {: step}
 
-1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
+1.  To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
-Note: you will need at least the following 3 paramaters for this configuration.  
-  * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
-  * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-  * **bin**: The name of the LSF install file which currently resides in the local_path.
+  Note: you will need at least the following 3 paramaters for this configuration.  
+    * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
+    * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
+    * **bin**: The name of the LSF install file which currently resides in the local_path.
 
-Additionally, you can add user credentials with the following parameters found in the cloud only: section of group_vars:
-  * **lsf_user_list**: A comma separated list of user ids that will be created and given login credentials on the new cluster.
-  * **lsf_user_group**: The group to which the users will be added.
+    Additionally, you can add user credentials with the following parameters found in the cloud only: section of group_vars:
+    * **lsf_user_list**: A comma separated list of user ids that will be created and given login credentials on the new cluster.
+    * **lsf_user_group**: The group to which the users will be added.
 
-All other parameters will be ignored for this configuration and can be left at default values.
+    All other parameters will be ignored for this configuration and can be left at default values.
 
 2. Install LSF:
 
@@ -270,7 +270,7 @@ All other parameters will be ignored for this configuration and can be left at d
 {: #hpc-lsf-on-vpc-verify-test-multi-cluster}
 {: step}
 
-complete the following steps.
+Complete the following steps.
 
 1. Login to your master node using the login node as a jump box.  You could do this in 2 steps by ssh'ing to the login box public IP then ssh'ing to the master node's private IP, but the scripts have created an ssh configuration file that allows you to login in 1 step using the ssh proxyjump feature.
 
@@ -279,7 +279,7 @@ complete the following steps.
   ```
   {: pre}
 
-You should now be logged in to the master node, where you can run commands to check the cluster.
+  You should now be logged in to the master node, where you can run commands to check the cluster.
 
 2. The `lsclusters` command displays some information about the cluster:
 
