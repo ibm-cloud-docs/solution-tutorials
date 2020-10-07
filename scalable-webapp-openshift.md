@@ -342,8 +342,8 @@ In this step, you will update the generated BuildConfig section of the generated
 5. Search for `containers` and update the image with
    ```yaml
    containers:
-       -image: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
-       name: $MYPROJECT
+   - image: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
+     name: $MYPROJECT
    ```
    {:codeblock}
 6. Save the YAML file.
