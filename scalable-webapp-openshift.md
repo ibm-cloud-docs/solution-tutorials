@@ -303,7 +303,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
 In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
 1. Edit the generated **openshift.yaml**.
-1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and add a `dockerImageRepository` definition under `spec` by replacing the placeholders `<$MYREGISTRY>`,`<$MYNAMESPACE>`, and `<$MYPROJECT>`  with the actual values identified in the previous steps:
+1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<$MYREGISTRY>`,`<$MYNAMESPACE>`, and `<$MYPROJECT>`  with the actual values identified in the previous steps:
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -333,7 +333,7 @@ In this step, you will update the generated BuildConfig section of the generated
      output:
        to:
          kind: DockerImage
-         name: '<$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest'
+         name: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
        pushSecret:
          name: push-secret
    ```
@@ -342,8 +342,8 @@ In this step, you will update the generated BuildConfig section of the generated
 5. Search for `containers` and update the image with
    ```yaml
    containers:
-       -image: '<$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest'
-       name: $MYPROJECT
+   - image: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
+     name: $MYPROJECT
    ```
    {:codeblock}
 6. Save the YAML file.
