@@ -438,8 +438,3 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
-
-## Related content
-{: #lamp-stack-on-vpc-17}
-
-* [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
