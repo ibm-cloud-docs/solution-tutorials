@@ -42,7 +42,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Utilize monitoring to detect outages and slow performance
 * Assess vulnerabilities and protect from unwanted traffic
 
-![Architecture diagram](images/solution4/Architecture.png)
+![Architecture diagram](images/solution4.hidden/Architecture.png)
 
 1. End user accesses the LAMP server and applications using a web browser
 
@@ -112,13 +112,13 @@ An alternative option is to upgrade all packages with `sudo apt-get update && su
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
 
 1. Verify Ubuntu by opening the public IP address in the browser. You should see the Ubuntu welcome page.
-   ![Verify Ubuntu](images/solution4/VerifyUbuntu.png)
+   ![Verify Ubuntu](images/solution4.hidden/VerifyUbuntu.png)
 2. Verify port 80 is available for web traffic by running the following command.
    ```sh
    sudo netstat -ntlp | grep LISTEN
    ```
    {: pre}
-   ![Verify Port](images/solution4/VerifyPort.png)
+   ![Verify Port](images/solution4.hidden/VerifyPort.png)
 3. Review the Apache, MySQL and PHP versions installed by using the following commands.
    ```sh
    apache2 -v
@@ -152,7 +152,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    {: pre}
 7. View the PHP info page you created: open a browser and go to `http://{YourPublicIPAddress}/info.php`. Substitute the public IP address of your virtual server. It will look similar to the following image.
 
-![PHP info](images/solution4/PHPInfo.png)
+![PHP info](images/solution4.hidden/PHPInfo.png)
 
 ### Install and configure WordPress
 {: #lamp-stack-6}
@@ -206,7 +206,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    ```
    {: pre}
 8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{yourVMPublicIPAddress}/wordpress`. Substitute the public IP address of your VM. It should look similar to the following image.
-   ![WordPress site running](images/solution4/WordPressSiteRunning.png)
+   ![WordPress site running](images/solution4.hidden/WordPressSiteRunning.png)
 
 ## Configure domain
 {: #lamp-stack-configure}
@@ -242,13 +242,13 @@ Since SERVICE PING is added by default, add SLOW PING monitoring with the follow
 **Note**: Duplicate monitors with the same configurations are not allowed. Only one monitor per configuration can be created.
 
 If a response is not received in the allotted time frame, an alert is sent to the email address on the {{site.data.keyword.Bluemix_notm}} account.
-   ![Two Monitors](images/solution4/TwoMonitoring.png)
+   ![Two Monitors](images/solution4.hidden/TwoMonitoring.png)
 
 ### Server usage
 {: #lamp-stack-10}
 
 Select the **Usage** tab to understand the current server's memory and CPU usage.
-  ![Server Usage](images/solution4/ServerUsage.png)
+  ![Server Usage](images/solution4.hidden/ServerUsage.png)
 
 ## Server security
 {: #lamp-stack-11}
@@ -265,7 +265,7 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 2. Click **Scan** to start the scan.
 3. After the scan completes, click **Scan Complete** to view the scan report.
 4. Review any reported vulnerabilities.
-   ![Vulnerability Results](images/solution4/VulnerabilityResults.png)
+   ![Vulnerability Results](images/solution4.hidden/VulnerabilityResults.png)
 
 ### Firewalls
 {: #lamp-stack-13}

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-09-30"
+lastupdated: "2020-10-08"
 ---
 
 {:shortdesc: .shortdesc}
@@ -341,40 +341,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution25/Architecture.png" alt="Architecture diagram for the solution Asynchronous data processing using object storage and pub/sub messaging"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/solution-tutorials?topic=solution-tutorials-lamp-stack#lamp-stack">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Web application on LAMP stack
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution4/Architecture.png" alt="Architecture diagram for the solution Web application on LAMP stack"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Deploy a LAMP stack using Terraform
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution10/architecture-2.png" alt="Architecture diagram for the solution Deploy a LAMP stack using Terraform"/>
                 </div>
             </div>
         </div>

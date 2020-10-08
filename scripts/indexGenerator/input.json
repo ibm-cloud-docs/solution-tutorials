@@ -31,6 +31,43 @@
           "url": "solution-template.html",
           "description": "Solution Template",
           "imgSrc": ""
+        },
+        {
+          "name": "Deploy a LAMP stack using Terraform (Retired)",
+          "url": "infrastructure-as-code-terraform.hidden.html",
+          "description": "Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.",
+          "imgSrc": "images/solution10.hidden/architecture-2.png",
+          "tags": [
+            "Terraform",
+            "Infrastructure",
+            "Virtual Servers",
+            "PHP",
+            "Object Storage"
+          ],
+          "requirements": [
+            "virtual_servers",
+            "cloud_object_storage",
+            "terraform"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
+        {
+          "name": "Web application on LAMP stack (Retired)",
+          "url": "lamp-stack.hidden.html",
+          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
+          "imgSrc": "images/solution4.hidden/Architecture.png",
+          "tags": [
+            "Infrastructure",
+            "PHP",
+            "WordPress",
+            "Vulnerability Scanner",
+            "Virtual Servers"
+          ],
+          "requirements": [
+            "virtual_servers"
+          ],
+          "supportsCloudShell": "yes_with_modifications",
+          "lastUpdated": "2019-05-20"
         }
       ]
     },
@@ -249,43 +286,6 @@
             "container_registry"
           ],
           "supportsCloudShell": false
-        },
-        {
-          "name": "Web application on LAMP stack",
-          "url": "lamp-stack.html",
-          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
-          "imgSrc": "images/solution4/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "PHP",
-            "WordPress",
-            "Vulnerability Scanner",
-            "Virtual Servers"
-          ],
-          "requirements": [
-            "virtual_servers"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "lastUpdated": "2019-05-20"
-        },
-        {
-          "name": "Deploy a LAMP stack using Terraform",
-          "url": "infrastructure-as-code-terraform.html",
-          "description": "Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.",
-          "imgSrc": "images/solution10/architecture-2.png",
-          "tags": [
-            "Terraform",
-            "Infrastructure",
-            "Virtual Servers",
-            "PHP",
-            "Object Storage"
-          ],
-          "requirements": [
-            "virtual_servers",
-            "cloud_object_storage",
-            "terraform"
-          ],
-          "supportsCloudShell": "yes_with_modifications"
         },
         {
           "name": "Plan, create and update deployment environments",
