@@ -66,7 +66,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 ### Create application
 {: #create-manage-secure-apis-3}
 
-1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
+1. Follow the instructions [here](https://{DomainName}/docs/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
     ```sh
     apic loopback
@@ -135,7 +135,7 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 {: #publish}
 You will use the API Designer to deploy your application to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application and also publish your API definition to **{{site.data.keyword.apiconnect_short}}**. The API Designer is your local toolkit. If you closed it, relaunch it with `apic edit` from the project directory.
 
-The application can also be manually deployed using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_rest_landing#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically.
+The application can also be manually deployed using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://{DomainName}/docs/apiconnect/tutorials?topic=apiconnect-tut_rest_landing#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically.
 {:tip}
 
 1. Back in the API Designer, click the **Publish** link in the banner. Then click **Add and Manage Targets > Add IBM Bluemix target**.
@@ -195,7 +195,7 @@ Setting rate limits enables you to manage the network traffic for your APIs and 
   ![Rate limit page](images/solution13/rate_limit.png)
 6. Follow the steps in [Publish API to {{site.data.keyword.Bluemix_notm}}](#publish) section to re-publish your API.
 
-Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_rate_limit#setting-up-rate-limits) or explore the API Designer to see all the management features available.
+Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://{DomainName}/docs/apiconnect/tutorials?topic=apiconnect-tut_rate_limit#setting-up-rate-limits) or explore the API Designer to see all the management features available.
 
 ## Expand the tutorial
 {: #create-manage-secure-apis-10}
@@ -204,10 +204,10 @@ Congratulations, you have built an API that is both managed and secure. Below ar
 
 * Add data persistence using the [{{site.data.keyword.cloudant}}](https://{DomainName}/catalog/services/cloudant) LoopBack connector
 * Use the API Designer to [view additional settings](http://127.0.0.1:9000/#/design/apis/editor/entries-api:1.0.0) to manage your API
-* Review API **Analytics** and **Visualizations** [available](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_insights_analytics#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
+* Review API **Analytics** and **Visualizations** [available](https://{DomainName}/docs/apiconnect/tutorials?topic=apiconnect-tut_insights_analytics#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
 
 ## Related content
 {: #create-manage-secure-apis-11}
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
-* [Getting started with {{site.data.keyword.apiconnect_long}}](https://{DomainName}/docs/services/apiconnect?topic=apiconnect-index#index)
+* [Getting started with {{site.data.keyword.apiconnect_long}}](https://{DomainName}/docs/apiconnect?topic=apiconnect-index#index)

@@ -232,6 +232,6 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 ## Related content
 {: #dynamic-content-cdn-10}
 
-* [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
+* [Getting Started with CDN](https://{DomainName}/docs/CDN?topic=CDN-getting-started#getting-started)
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
-* [IBM Cloud Container Registry](https://{DomainName}/docs/services/Registry?topic=registry-getting-started#getting-started)
+* [IBM Cloud Container Registry](https://{DomainName}/docs/Registry?topic=registry-getting-started#getting-started)

@@ -494,7 +494,7 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
 * Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
-* Follow the [Build a data lake using Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
+* Follow the [Build a data lake using Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake) tutorial to add a dashboard to log data
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://{DomainName}/catalog/services/app-connect).
 
 ## Remove services
@@ -514,4 +514,4 @@ From the [Resource List](https://{DomainName}/resources?search=log-analysis), us
 {:related}
 
 * [Apache Kafka](https://kafka.apache.org/)
-* [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/services/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)
+* [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)

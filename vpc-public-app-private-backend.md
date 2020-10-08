@@ -99,17 +99,17 @@ To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainNa
 ### Create and configure bastion security group
 {: #vpc-public-app-private-backend-3}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
+Follow the steps described in [this section of the bastion tutorial](https://{DomainName}docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
 
 ### Create a bastion instance
 {: #vpc-public-app-private-backend-4}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#create-bastion-instance) to create the bastion virtual server instance.
+Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-bastion-instance) to create the bastion virtual server instance.
 
 ### Configure a security group with maintenance access rules
 {: #vpc-public-app-private-backend-5}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
+Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
 ## Create a backend subnet, security group and VSI
 {: #vpc-public-app-private-backend-backend-subnet-vsi}
