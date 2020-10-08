@@ -61,15 +61,15 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 ## Before you begin
 {: #linking-secure-network-enclosures-prereqs}
 
-This tutorial is based on the tutorial, [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network). That tutorial and its prerequisites should be reviewed before commencing. 
+This tutorial is based on the tutorial, [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure). That tutorial and its prerequisites should be reviewed before commencing. 
 
 ## Configure secure private network sites
 {: #linking-secure-network-enclosures-private_network}
 {: step}
 
-The tutorial [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
+The tutorial [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
 
-The [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
+The [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
 | Item  | Datacenter1 | Datacenter2 |
 |:------ |:--- | :--- |
@@ -196,7 +196,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 {: #linking-secure-network-enclosures-7}
 
 This tutorial can be used in conjunction with the 
-[VPN into a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#vpn-into-a-secure-private-network) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
+[VPN into a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
 
 
 ## Related material

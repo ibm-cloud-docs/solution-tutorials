@@ -448,8 +448,6 @@ kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=
 Once the autoscaler is successfully created, you should see
 `horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`
 
-Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
-
 ## Remove resources
 {: #scalable-webapp-kubernetes-0}
 {: step}
@@ -466,8 +464,7 @@ Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-ap
 ## Related content
 {: #scalable-webapp-kubernetes-20}
 
-* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
-<!-- * [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile) -->
+* [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
 * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)

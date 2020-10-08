@@ -135,7 +135,7 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
   ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
 6. On the left, click on **Options** and then on **Webhooks**. 
 
-   Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=cloud-functions-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
+   Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=openwhisk-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
 
 7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
@@ -215,7 +215,7 @@ Chatbot-related blog posts:
 
 Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.Db2_on_Cloud_short}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)

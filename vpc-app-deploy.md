@@ -122,7 +122,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is keys
       ```
       {:pre}
-   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
    * `TF_VAR_generation` specifies which generation of compute you want to use. It defaults to 2.
 6. Load the variables into the environment:
    ```sh
@@ -213,7 +213,7 @@ This section uses a shell script found in the [Public frontend and private backe
 ### Before you begin
 {: #vpc-app-deploy-cli-before-you-begin}
 
-1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
 
 ### Provision subnets and virtual server instances
 {: #vpc-app-deploy-cli-provision}

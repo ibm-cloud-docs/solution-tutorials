@@ -227,7 +227,7 @@ Do you want to learn more? Here are some ideas of what you can do next:
 {: #continuous-deployment-to-kubernetes-related}
 
 * End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
-* [Security](https://{DomainName}/docs/containers?topic=containers-security#cluster) for IBM Cloud Container Service.
+* [Security](https://{DomainName}/docs/containers?topic=containers-security) for {{site.data.keyword.containerlong_notm}}.
 * Toolchain [integrations](https://{DomainName}/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
 * Analyze logs and monitor application health with [LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 

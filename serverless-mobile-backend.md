@@ -236,7 +236,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics-obtain_apns_credentials) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend

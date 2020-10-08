@@ -206,7 +206,7 @@ Congratulations, your application can now safely be deployed from dev to product
 {: #users-teams-applications-8}
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
-* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
+* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/account?topic=account-account_setup#bp_resourcegroups)
 * [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
