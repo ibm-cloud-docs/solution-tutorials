@@ -44,7 +44,7 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 
 <p style="text-align: center;">
 
-  ![Architecture diagram](images/solution10/architecture-2.png)
+  ![Architecture diagram](images/solution10.hidden/architecture-2.png)
 </p>
 
 1. A set of Terraform files are created to describe the LAMP stack configuration.
@@ -125,9 +125,9 @@ In this section, you will learn how to create a LAMP stack server from the terra
     terraform apply
    ```
    {: pre}
-   You should see an output similar to below.![Source Control URL](images/solution10/created.png)
+   You should see an output similar to below.![Source Control URL](images/solution10.hidden/created.png)
 4. Next, head over to your [infrastructure device list](https://{DomainName}/classic/devices) to verify that the server was created.
-   ![Source Control URL](images/solution10/configuration.png)
+   ![Source Control URL](images/solution10.hidden/configuration.png)
 
 **Note:** after running the terraform apply command successfully, you should see a new `terraform.tfstate` file added to your directory. This file contains the full deployment configuration and is used by terraform as a baseline to compare against future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
 {: tip}
@@ -189,13 +189,13 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 
 1. On the left side menu, click on **Infrastructure** to view the list of virtual server devices.
 2. Click **Devices** -> **Device List** to find the server created. You should see your server device listed.
-3. Click on the server to view more information on the server configuration. Looking at the screenshot below, we can see that the server is successfully created. ![Source Control URL](images/solution10/configuration.png)
-4. Next, let's test the server in the web browser. Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10/LAMP.png)
+3. Click on the server to view more information on the server configuration. Looking at the screenshot below, we can see that the server is successfully created. ![Source Control URL](images/solution10.hidden/configuration.png)
+4. Next, let's test the server in the web browser. Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10.hidden/LAMP.png)
 
 
 **Verify {{site.data.keyword.cos_full_notm}}**
 
-1. From the [Resource list](https://{DomainName}/resources) of the **{{site.data.keyword.Bluemix_notm}} Dashboard**, you should see an instance of the {{site.data.keyword.cos_full_notm}} service been created for you and ready for use. ![object-storage](images/solution10/ibm-cloud-object-storage.png)
+1. From the [Resource list](https://{DomainName}/resources) of the **{{site.data.keyword.Bluemix_notm}} Dashboard**, you should see an instance of the {{site.data.keyword.cos_full_notm}} service been created for you and ready for use. ![object-storage](images/solution10.hidden/ibm-cloud-object-storage.png)
 
    More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage).
 
@@ -209,7 +209,7 @@ Delete resources using the following command:
    ```
    {: pre}
 
-**Note:** To delete resources, you would need Infrastructure admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
+**Note:** To delete resources, you would need Infrastructure admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10.hidden/rm.png)
 
 ## Related content
 {: #infrastructure-as-code-terraform-8}

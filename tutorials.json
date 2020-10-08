@@ -102,7 +102,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-08-24"
+          "lastUpdated": "2020-10-07"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -115,7 +115,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2020-07-31"
+          "lastUpdated": "2020-10-05"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-08-13"
+          "lastUpdated": "2020-10-05"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -168,34 +168,6 @@
             "Cloud Object Storage"
           ],
           "lastUpdated": "2020-05-08"
-        },
-        {
-          "name": "Web application on LAMP stack",
-          "url": "lamp-stack.html",
-          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
-          "imgSrc": "images/solution4/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "PHP",
-            "WordPress",
-            "Vulnerability Scanner",
-            "Virtual Servers"
-          ],
-          "lastUpdated": "2019-05-20"
-        },
-        {
-          "name": "Deploy a LAMP stack using Terraform",
-          "url": "infrastructure-as-code-terraform.html",
-          "description": "Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.",
-          "imgSrc": "images/solution10/architecture-2.png",
-          "tags": [
-            "Terraform",
-            "Infrastructure",
-            "Virtual Servers",
-            "PHP",
-            "Object Storage"
-          ],
-          "lastUpdated": "2019-06-25"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -467,7 +439,7 @@
             "Streaming Analytics",
             "Analytics Engine"
           ],
-          "lastUpdated": "2019-10-31"
+          "lastUpdated": "2020-10-05"
         },
         {
           "name": "Build a data lake with Object Storage",

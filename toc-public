@@ -25,8 +25,6 @@ Solution Tutorials
             static-files-cdn.md
             dynamic-content-cdn.md
             pub-sub-object-storage.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             plan-create-update-deployments.md
             highly-available-and-scalable-web-application.md
             mean-stack.md
@@ -150,8 +148,6 @@ Solution Tutorials
         {: .topicgroup}
         Virtual Servers
             strategies-for-resilient-applications.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             highly-available-and-scalable-web-application.md
             vpc-public-app-private-backend.md
             vpc-multi-region.md
