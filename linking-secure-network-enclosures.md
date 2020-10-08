@@ -189,8 +189,6 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. Cancel any additional VLANs by support ticket. 
-
 
 ## Extend the tutorial
 {: #linking-secure-network-enclosures-7}
