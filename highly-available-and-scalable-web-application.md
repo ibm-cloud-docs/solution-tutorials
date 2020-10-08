@@ -427,7 +427,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/vsi?topic=virtual-servers-managing-a-provisioning-script#managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started#creating-an-image-template).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started#creating-an-image-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
@@ -714,5 +714,5 @@ To implement this architecture, you would need to do the following in location t
 
 - To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
-- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 - To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.

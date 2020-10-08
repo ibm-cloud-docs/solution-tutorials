@@ -355,7 +355,7 @@ In {{site.data.keyword.DSX}},:
 {: #gather-visualize-analyze-iot-data-8}
 {:related}
 
-* Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model)
 * [Data store connector for {{site.data.keyword.cloudant_short_notm}}](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html)
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/overview-ws.html)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)
