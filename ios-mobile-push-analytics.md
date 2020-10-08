@@ -184,7 +184,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Double-click the downloaded provisioning profile to install it into Xcode.
-     After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_2#push_step_2).
+     After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/mobilepush?topic=mobile-pushnotification-push_step_2#push_step_2).
 
 ### Configure the service instance
 {: #ios-mobile-push-analytics-9}
@@ -230,6 +230,6 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ## Related Content
 {: #ios-mobile-push-analytics-related_content}
 
-- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-security-in-push-notifications#overview-push)
+- [Tag-based notifications](https://{DomainName}/docs/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/mobilepush?topic=mobile-pushnotification-security-in-push-notifications#overview-push)

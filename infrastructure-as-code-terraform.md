@@ -197,7 +197,7 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 
 1. From the [Resource list](https://{DomainName}/resources) of the **{{site.data.keyword.Bluemix_notm}} Dashboard**, you should see an instance of the {{site.data.keyword.cos_full_notm}} service been created for you and ready for use. ![object-storage](images/solution10/ibm-cloud-object-storage.png)
 
-   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage).
+   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage).
 
 ## Remove resources
 {: #infrastructure-as-code-terraform-deleteresources}
@@ -215,7 +215,7 @@ Delete resources using the following command:
 {: #infrastructure-as-code-terraform-8}
 
 - [Terraform](https://www.terraform.io/)
-- [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
+- [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
 - [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 - [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn)
 - * [PHP web application on a LAMP Stack in VPC](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)

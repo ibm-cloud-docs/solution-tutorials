@@ -57,12 +57,12 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 ### Configure the VPN access
 {: #lamp-stack-2}
 
-1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
+1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your user page under the Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
    For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access), such as vpn.ams01.softlayer.com as the gateway address.
    {:tip}
@@ -81,7 +81,7 @@ In this section, you will provision a public virtual server with a fixed configu
 
 After the server is created, you'll see the server login credentials. Although you can connect through SSH using the server public IP address, it is recommended to access the server through the Private Network and to disable SSH access on the public network.
 
-1. Follow [these steps](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-restricting-ssh-access-on-a-public-network#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
+1. Follow [these steps](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-restricting-ssh-access-on-a-public-network#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
 1. Using your username, password and private IP address, connect to the server with SSH.
    ```sh
    sudo ssh root@<Private-IP-Address>
@@ -272,7 +272,7 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 
 Another way to secure the server is by adding a firewall. Firewalls provide an essential security layer: preventing unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use. Firewall options are provisioned on demand without service interruptions.
 
-Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](https://{DomainName}/docs/infrastructure/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-getting-started-with-hardware-firewall-dedicated#getting-started).
+Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](https://{DomainName}/docs/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-getting-started-with-hardware-firewall-dedicated#getting-started).
 
 ## Remove resources
 {: #lamp-stack-14}

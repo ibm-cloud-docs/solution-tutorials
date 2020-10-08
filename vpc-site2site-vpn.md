@@ -81,8 +81,8 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 - check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
+- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started#prereqs).
+- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
 ## Deploy a virtual app server in a virtual private cloud
 {: #vpc-site2site-vpn-deploy}

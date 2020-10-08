@@ -72,7 +72,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 
 In this tutorial, the network enclosure created is not visible on the public internet. The VRA and any servers will only be accessible through the private network, and you will use your VPN for connectivity.
 
-1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
+1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact a master user for access.
      {:tip}
@@ -241,7 +241,7 @@ The private VLAN(s) for the virtual server are associated by the {{site.data.key
 
 3. Click on the VLAN number to view the VLAN details. Under Devices, the provisioned VSI can be seen. Under Subnets, the Primary Subnet which is to be used with the VRA is seen. Make a note of the Private VLAN Number &lt;nnnn&gt; as this will be used in a later step.
 
-   For proper identification of a VLAN, check [VLAN identification](/docs/infrastructure/vlans?topic=vlans-about-vlans#vlan-identification)
+   For proper identification of a VLAN, check [VLAN identification](/docs/vlans?topic=vlans-about-vlans#vlan-identification)
    {:tip}
 
 4. Click on the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet network, gateway addresses and CIDR (/26) as these are required for further VRA configuration.
@@ -291,7 +291,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
 
-   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
+   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
    {: tip}
 
 

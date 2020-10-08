@@ -205,6 +205,6 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 ## Related content
 {: #static-files-cdn-8}
 
-* [{{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage)
-* [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage?topic=cloud-object-storage-iam)
-* [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
+* [{{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage)
+* [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
+* [Getting Started with CDN](https://{DomainName}/docs/CDN?topic=CDN-getting-started#getting-started)

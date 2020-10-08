@@ -84,7 +84,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: note}
 <!--#/istutorial#-->
 
-In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 <!--##isworkshop#-->
 <!--
@@ -289,7 +289,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ```
    {:pre}
 1. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
-   For creating an API key, refer to this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
+   For creating an API key, refer to this [link](https://{DomainName}/docs/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
@@ -477,7 +477,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 ### With HTTPS
 {: #scalable-webapp-openshift-21}
 
-1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
+1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
    ```sh
    oc create route edge $MYPROJECT-httpsca --service=$MYPROJECT --cert=example.pem --key=example.key --ca-cert=ca.pem --hostname=<www.HOSTNAME> --port=3000
    ```

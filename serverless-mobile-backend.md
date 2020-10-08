@@ -379,4 +379,4 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 ## Related content
 {: #serverless-mobile-backend-15}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/services/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/services/appid?topic=appid-login-widget#login-widget).
+* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/appid?topic=appid-login-widget#login-widget).

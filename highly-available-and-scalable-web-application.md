@@ -71,12 +71,12 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 
 In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your VPN connection to work on the servers.
 
-1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
+1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
@@ -370,7 +370,7 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
 ### Configure regular snapshots
 {: #highly-available-and-scalable-web-application-17}
 
-[Snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
+[Snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
 1. Select the file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
 2. Under **Snapshots**, edit the **snapshot schedule**. The schedule could be defined as follow:
@@ -427,7 +427,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/vsi?topic=virtual-servers-managing-a-provisioning-script#managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/infrastructure/image-templates?topic=image-templates-getting-started#creating-an-image-template).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/vsi?topic=virtual-servers-managing-a-provisioning-script#managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started#creating-an-image-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
@@ -620,7 +620,7 @@ At this point, we have two application servers with separate IP addresses. They 
 1. Select the same datacenter as *app1* and *app2* servers.
 1. Select the same subnet as the one where *app1* and *app2* where provisioned.
 1. Select the **IBM system pool** for **Public IPs**.
-1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
+1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers.
 6. Review and **Create** to complete the wizard.
@@ -715,4 +715,4 @@ To implement this architecture, you would need to do the following in location t
 - To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
-- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.
+- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.

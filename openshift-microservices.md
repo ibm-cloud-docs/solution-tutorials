@@ -689,7 +689,7 @@ It can take a few minutes for logging and metric data to flow through the analys
 <!--#/isworkshop#-->
 
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
    1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
@@ -945,7 +945,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    If you do not save the screen, you lose all your widgets.
    {:important}
 
-Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
+Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/Log-Analysis-with-LogDNA/index.html#getting-started).
 {:note}
 
 ## Configure {{site.data.keyword.mon_short}}
@@ -1058,7 +1058,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 
     ![](images/solution55-openshift-microservices/dashboard-img-5.png)
 
-Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
+Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/Monitoring-with-Sysdig/index.html#getting-started).
 
 ## Remove resources
 {: #openshift-microservices-cleanup}
