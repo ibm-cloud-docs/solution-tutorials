@@ -70,8 +70,8 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 <!--##istutorial#-->
 In addition, make sure you:
-- [grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
-* and [grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Sysdig-iam#iam_users)
+- [grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam#user_logdna)
+* and [grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam_users)
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -461,15 +461,15 @@ To create a dashboard:
 ## Expand the tutorial
 {: #application-log-analysis-expand_tutorial}
 
-- Use the [{{site.data.keyword.at_full}} service](/docs/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
-- [Add alerts](/docs/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
-- [Export logs](/docs/Log-Analysis-with-LogDNA?topic=LogDNA-export#export) to a local file.
+- Use the [{{site.data.keyword.at_full}} service](/docs/Activity-Tracker-with-LogDNA?topic=Activity-Tracker-with-LogDNA-getting-started#getting-started) to track how applications interact with IBM Cloud services.
+- [Add alerts](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#alerts) to your view.
+- [Export logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-export#export) to a local file.
 - Examine `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply `app-log-analysis.yaml` to redeploy your updates.
 
 ## Related content
 {: #application-log-analysis-12}
 {:related}
-- [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=LogDNA-kube_reset#kube_reset)
-- [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=LogDNA-archiving#archiving)
+- [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-kube_reset#kube_reset)
+- [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-archiving#archiving)
 - [Configuring alerts in Sysdig](https://docs.sysdig.com/en/alerts.html)
-- [Working with notification channels in Sysdig UI](/docs/Monitoring-with-Sysdig?topic=Sysdig-notifications#notifications)
+- [Working with notification channels in Sysdig UI](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-notifications#notifications)

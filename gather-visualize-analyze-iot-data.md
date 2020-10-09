@@ -292,7 +292,7 @@ If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
 4. In the configuration page, set the Software package to **AE 1.2 Spark and Hadoop** and click **Create**.
 
 Once the service is provisioned or if you have an existing service instance you want to use and configured with software package **AE 1.2 Spark and Hadoop**:
-1. From the [Resources list](https://{DomainName}/resources}), open the created service.
+1. From the [Resources list](https://{DomainName}/resources), open the created service.
 2. Under **Service credentials**, create new credential:
    - Set **Name** to **wdp-writer**
    - Set **Role** to **Writer** and click **Add**

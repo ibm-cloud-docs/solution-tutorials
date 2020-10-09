@@ -227,11 +227,11 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 
 {{site.data.keyword.cloudant}} is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed {{site.data.keyword.Bluemix_notm}} service, {{site.data.keyword.cloudant}} elastically scales throughput and storage independently. {{site.data.keyword.cloudant}} is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/Cloudant/api?topic=cloudant-replication-api#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
+{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-api#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
 
 ![active-active](images/solution39/Active-active.png)
 
-Refer to [these instructions](https://{DomainName}/docs/Cloudant/guides?topic=cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/Cloudant/guides?topic=cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
+Refer to [these instructions](https://{DomainName}/docs/Cloudant?topic=Cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
 
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
 {: #strategies-for-resilient-applications-17}
@@ -247,7 +247,7 @@ In the following, we will focus on {{site.data.keyword.Db2_on_Cloud_short}} as D
 #### Multi-region support for {{site.data.keyword.Db2_on_Cloud_short}}
 {: #strategies-for-resilient-applications-18}
 
-{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-fs#overview). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha#ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
+{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](/docs/Db2onCloud?topic=Db2onCloud-getting-started). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
 More information is available in the [High Availability documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha#ha).
 
@@ -275,7 +275,7 @@ All of these services share the same characteristics:
   - [MongoDB](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
 * Each cluster is spread over multiple zones.
 * Data is replicated across the zones.
-* Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-dashboard-settings#settings) for details.
+* Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-resources-scaling) for details.
 * Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=cloud-databases-dashboard-backups).
 * Data at rest, backups and network traffic are encrypted.
 * Each [service can be managed using the {{site.data.keyword.databases-for}} CLI plugin](https://{DomainName}/docs/databases-cli-plugin?topic=databases-cli-plugin-cdb-reference)

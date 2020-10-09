@@ -74,7 +74,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 In addition, make sure you:
-- [set up a registry namespace](/docs/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
+- [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 <!--##istutorial#-->

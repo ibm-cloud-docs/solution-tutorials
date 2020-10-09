@@ -377,7 +377,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 {: #create-deploy-retrain-machine-learning-model-8}
 {:related}
 
-- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
+- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
 - [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data)
 - [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
 - [Machine learning & AI](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/wml-ai.html?context=analytics)

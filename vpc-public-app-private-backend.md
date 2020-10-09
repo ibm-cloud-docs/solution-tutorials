@@ -99,7 +99,7 @@ To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainNa
 ### Create and configure bastion security group
 {: #vpc-public-app-private-backend-3}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
+Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
 
 ### Create a bastion instance
 {: #vpc-public-app-private-backend-4}

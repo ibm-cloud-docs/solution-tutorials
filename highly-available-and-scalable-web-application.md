@@ -76,7 +76,7 @@ In this tutorial, the load balancer is the front door for the application users.
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
@@ -427,7 +427,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started#creating-an-image-template).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started-with-image-templates#creating-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
