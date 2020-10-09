@@ -334,4 +334,4 @@ If the cleanup process times out before it completes, Terraform prints out a lis
 
 
 ## Additional documentation
-Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV_10.1.0/lsf_welcome/lsf_welcome.html){: external} for information on additional commands and tasks.
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html){: external} for information on additional commands and tasks.
