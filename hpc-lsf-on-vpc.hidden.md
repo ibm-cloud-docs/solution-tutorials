@@ -279,7 +279,7 @@ Complete the following steps.
   ```
   {: pre}
 
-  You should now be logged in to the master node, where you can run commands to check the cluster.
+  You should now be logged in to the master node, where you can run LSF commands to check the cluster.
 
 2. The `lsclusters` command displays some information about the cluster:
 
@@ -331,3 +331,7 @@ Make sure `GEN_FILE_DIR` is set.
   {: pre}
 
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
+
+
+## Additional documentation
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV_10.1.0/lsf_welcome/lsf_welcome.html) for information on additional commands and tasks.
