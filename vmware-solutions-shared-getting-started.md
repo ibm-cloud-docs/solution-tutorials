@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
+On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
    - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
    - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
 {:shortdesc}
@@ -386,7 +386,7 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #vmware-solutions-shared-getting-started-related}
 
-* [{{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmware-solutions-shared_overview)
+* [{{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_overview)
 * [{{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
 * [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware)
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)

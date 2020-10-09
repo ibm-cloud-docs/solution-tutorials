@@ -211,7 +211,7 @@ Navigate to [Resource List](https://{DomainName}/resources/) and
 {: #pub-sub-object-storage-8}
 {:related}
 
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
-* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/EventStreams?topic=eventstreams-getting_started#messagehub)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-cloud-object-storage)
+* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/EventStreams?topic=EventStreams-getting_started#messagehub)
 * [Manage Access to Object Storage](https://{DomainName}/docs/cloud-object-storage-infrastructure?topic=cloud-object-storage-infrastructure-managing-access#managing-access)
 * [{{site.data.keyword.messagehub}} data processing with {{site.data.keyword.openwhisk_short}}](https://github.com/IBM/openwhisk-data-processing-message-hub)
