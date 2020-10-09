@@ -33,7 +33,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial demonstrates how to provision and configure {{site.data.keyword.Bluemix_notm}} resources create an IBM Spectrum LSF cluster.
+This tutorial demonstrates how to provision and configure {{site.data.keyword.Bluemix_notm}} resources to create an IBM Spectrum LSF cluster.
 {:shortdesc}
 
 There are many reasons to consider hosting your IBM Spectrum LSF managed workload on the {{site.data.keyword.cloud}}.  While some reasons might be specific to a particular enterprise, this tutorial will demonstrate the advantages in the areas of cost, speed and flexibility. {{site.data.keyword.vpc_full}} offers essentially unlimited compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.
@@ -146,7 +146,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |worker_nodes|The number of LSF worker nodes to deploy to the cluster.|
 |master_nodes|The number of LSF master nodes to deploy to the cluster.|
 |key_name|This is the name of an ssh public key that you have stored in the IBM Cloud.  This key will be added to the access list of all newly provisioned virtual resources.<br>Note: If you use the key name of the public key for the machine and userid you plan to use for the deployer (such as /root/.ssh/id_rsa.pub), you will not need to add anything to the access lists of all the nodes before deploying LSF.<br>You can create the key instance in the cloud using the following commands:<br><br>`ibmcloud is keys (to view existing keys)`<br>`ibmcloud is key-create <descriptive name for key> @/root/.ssh/id_rsa.pub`|
-|ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as <name of private key>.public (such as id_rsa.public ).|
+|ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as <name of private key>.pub (such as id_rsa.pub ).|
 |lsf_cluster_name|The name you want LSF to apply to your cloud based cluster.|
 |worker_profile<br>master_profile<br>login_profile<br>|These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:<br><br>`ibmcloud is in-prs`<br><br>The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
 |image_name|This should be a recent RedHat or Centos amd64 release. You can see the available options with the following command.<br><br> `ibmcloud is images`|
@@ -242,7 +242,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 
 1.  To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
-  Note: you will need at least the following 3 paramaters for this configuration.  
+  Note: you will need at least the following 3 paramaters for this configuration.
     * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
     * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
     * **bin**: The name of the LSF install file which currently resides in the local_path.
@@ -266,7 +266,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
   * Sets up the NFS server on the master node including creating and mounting the filesystem.
   * If you specified userids with the lsf_user_list parameter in the lsf_install configuration file, the directory ${GEN_FILES_DIR}/userkeys will now contain the login credentials for those userids.
 
-## Verify and test the multi-cluster
+## Verify and test the cluster
 {: #hpc-lsf-on-vpc-verify-test-multi-cluster}
 {: step}
 
@@ -275,11 +275,11 @@ Complete the following steps.
 1. Login to your master node using the login node as a jump box.  You could do this in 2 steps by ssh'ing to the login box public IP then ssh'ing to the master node's private IP, but the scripts have created an ssh configuration file that allows you to login in 1 step using the ssh proxyjump feature.
 
   ```
-  ssh -F ${GEN_FILES_DIR}/ssh_config <local IP: 10.x.x.x>
+  ssh -F ${GEN_FILES_DIR}/ssh_config <private IP: 10.x.x.x>
   ```
   {: pre}
 
-  You should now be logged in to the master node, where you can run commands to check the cluster.
+  You should now be logged in to the master node, where you can run LSF commands to check the cluster.
 
 2. The `lsclusters` command displays some information about the cluster:
 
@@ -326,8 +326,12 @@ Make sure `GEN_FILE_DIR` is set.
 {: note}
 
   ```
-  ansible-playbook -i tf_inventory.yml clean_vpc.yml
+  ansible-playbook -i ${GEN_FILES_DIR}/tf_inventory.yml clean_vpc.yml
   ```
   {: pre}
 
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
+
+
+## Additional documentation
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html){: external} for information on additional commands and tasks.
