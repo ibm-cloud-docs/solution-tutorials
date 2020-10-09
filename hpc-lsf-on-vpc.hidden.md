@@ -333,5 +333,7 @@ Make sure `GEN_FILE_DIR` is set.
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
 
 
-## Additional documentation
+## Related content
+{: #hpc-lsf-on-vpc-related}
+
 Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html){: external} for information on additional commands and tasks.
