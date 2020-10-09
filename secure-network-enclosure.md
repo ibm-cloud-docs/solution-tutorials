@@ -350,9 +350,8 @@ Two zones are defined:
      ```
      {: codeblock}
 
-   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL01, DAL10, WDC04, and your target data center. The example here is DAL01, DAL10, WDC04 (two addresses), and LON06.
+   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL10, WDC04, and your target data center. The example here is DAL10, WDC04 (two addresses), and LON06.
      ```
-     set resources group address-group ibmprivate address 10.0.64.0/19
      set resources group address-group ibmprivate address 10.200.80.0/20
      set resources group address-group ibmprivate address 10.3.160.0/20
      set resources group address-group ibmprivate address 10.201.0.0/20
