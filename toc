@@ -16,8 +16,6 @@ Solution Tutorials
         {: .topicgroup}
         Work In Progress
             solution-template.md
-            infrastructure-as-code-terraform.hidden.md
-            lamp-stack.hidden.md
 
         {: .topicgroup}
         Websites and Web Apps
@@ -154,8 +152,6 @@ Solution Tutorials
 
         {: .topicgroup}
         Virtual Servers
-            infrastructure-as-code-terraform.hidden.md
-            lamp-stack.hidden.md
             strategies-for-resilient-applications.md
             highly-available-and-scalable-web-application.md
             vpc-public-app-private-backend.md
