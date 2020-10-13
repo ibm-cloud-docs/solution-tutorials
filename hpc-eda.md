@@ -8,7 +8,7 @@ lasttested: "2020-07-20"
 content-type: tutorial
 services: vpc, direct-link
 account-plan: paid
-completion-time:
+completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -26,7 +26,7 @@ completion-time:
 {: #hpc-eda}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, direct-link"}
-{: toc-completion-time=""}
+{: toc-completion-time="2h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

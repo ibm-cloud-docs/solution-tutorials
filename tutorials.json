@@ -755,6 +755,18 @@
             "Virtual Private Cloud"
           ],
           "lastUpdated": "2020-07-20"
+        },
+        {
+          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
+          "url": "hpc-lsf-on-vpc.html",
+          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
+          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2020-10-12"
         }
       ]
     }

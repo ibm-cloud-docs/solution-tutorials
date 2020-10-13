@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-10-12"
+lastupdated: "2020-10-13"
 ---
 
 {:shortdesc: .shortdesc}
@@ -1054,6 +1054,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution60-hpc-eda/hpc-eda-arch.svg" alt="Architecture diagram for the solution Extend an existing IBM Spectrum LSF cluster to the IBM Cloud"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-hpc-lsf-on-vpc#hpc-lsf-on-vpc">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg" alt="Architecture diagram for the solution Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud"/>
                 </div>
             </div>
         </div>

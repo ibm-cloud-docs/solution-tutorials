@@ -2,13 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-21"
-lasttested: "2020-09-21"
+lastupdated: "2020-10-12"
+lasttested: "2020-10-12"
 
 content-type: tutorial
-services: vpc, direct-link
+services: vpc
 account-plan: paid
-completion-time:
+completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -25,7 +25,7 @@ completion-time:
 # Provision an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_short}}
 {: #hpc-lsf-on-vpc}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, direct-link"}
+{: toc-services="vpc"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -45,9 +45,7 @@ This tutorial and the associated automation scripts will provide an easy way to 
 * Automatically provision the resources needed for an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_full}}.
 * Install and configure the Cloud based LSF cluster using Ansible automation.
 
-The following diagram shows how the IBM Spectrum LSF on-premise cluster is extended in the cloud.
-
-![Architecture diagram](images/solution61-hpc-lsf-on-vpc-hidden/hpc-lsf-on-vpc-arch.svg)
+![Architecture diagram](images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg)
 
 ## Before you begin
 {: #hpc-lsf-on-vpc-prereqs}

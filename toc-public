@@ -95,6 +95,7 @@ Solution Tutorials
         {: .topicgroup}
         High Performance Computing
             hpc-eda.md
+            hpc-lsf-on-vpc.md
 
     {: .topicgroup}
     By Compute Options

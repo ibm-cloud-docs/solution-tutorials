@@ -1026,11 +1026,10 @@
           ]
         },
         {
-          "hidden": true,
           "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
-          "url": "hpc-lsf-on-vpc.hidden.html",
-          "description": "Provision and configure IBM Cloud resources create an IBM Spectrum LSF cluster.",
-          "imgSrc": "images/solution61-hpc-lsf-on-vpc-hidden/hpc-lsf-on-vpc-arch.svg",
+          "url": "hpc-lsf-on-vpc.html",
+          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
+          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
           "tags": [
             "Storage",
             "HPC",
