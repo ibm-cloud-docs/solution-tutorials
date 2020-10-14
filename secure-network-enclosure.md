@@ -151,9 +151,8 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    {:tip}
 
    Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` command. When in `edit` mode the prompt changes from `$` to `#`. After a successful VRA configuration change you can view your changes with the `compare` command and check your changes with the `validate` command. By committing a change with the `commit` command it will be applied to the running configuration, and automatically saved to the startup configuration.
-
-
    {:tip}
+   
 2. Enhance security by only allowing SSH login. Now that SSH login is successful using the private network, disable access via userid/password authentication.
    ```
    configure
@@ -162,6 +161,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    exit
    ```
    {: codeblock}
+   
    From this point in this tutorial, it is assumed that all VRA commands are entered at the `edit` prompt after using the `configure` command.
 3. Review the initial configuration.
    ```
@@ -214,8 +214,8 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    - Set **Profile** to **C1.1x1**
    - Add the **SSH Key** you specified earlier.
    - Set **Operating System** to **CentOS 7.x - Minimal**
-   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA when the VLAN is associated with the VRA.
-   - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier, and submit the order.
+   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet.
+   - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier.
 3. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
 4. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email.
 5. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN.
