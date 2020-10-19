@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.
 
-This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.
+This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.
 {:shortdesc}
 
 This tutorial is a starting point for classic networking on the {{site.data.keyword.Bluemix_notm}} and should not be considered a production capability as is. Additional capabilities that might be considered are:
@@ -105,7 +105,7 @@ Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure pr
 
 To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, select **Pod** under **Location** and make sure to request the VLAN in the same data center and pod as you plan to create the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
 
-To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans#order-vlans).
+To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans).
 
 ## Provision Virtual Router Appliance
 {: #secure-network-enclosure-VRA}
@@ -320,7 +320,7 @@ This completes the IP routing configuration.
 ### Configure secure enclosure
 {: #secure-network-enclosure-14}
 
-The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls#manage-firewalls) before proceeding.
+The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls) before proceeding.
 
 Two zones are defined:
    - INSIDE:  The IBM private network and the IBM management network
@@ -501,7 +501,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Related content
 {: #secure-network-enclosure-related}
 
-- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#vra-basics)
+- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips#about-subnets-and-ips)
 - [IBM QRadar Security Intelligence Platform](http://www.ibm.com/support/knowledgecenter/SS42VS)
 - [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)

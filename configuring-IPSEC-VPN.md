@@ -331,7 +331,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Related content
 {: #configuring-IPSEC-VPN-9}
 {:related}
-- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#vra-basics)
+- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips)
 - [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)
 - [Brocade Vyatta Network OS IPsec Site-to-Site VPN Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-ipsec-vpn.pdf)

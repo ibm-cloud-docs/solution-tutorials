@@ -712,7 +712,7 @@ To implement this architecture, you would need to do the following in location t
 ## Related content
 {: #highly-available-and-scalable-web-application-related}
 
-- To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
+- To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://www.youtube.com/watch?v=Dk9mVkOkCg0){: new_window}
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 - To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.
