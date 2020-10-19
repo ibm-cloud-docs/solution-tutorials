@@ -168,7 +168,7 @@ With some sample data in it is time to search.
 2. With {{site.data.keyword.conversationshort}} as a backend, it is possible to enter more complex phrases and thereby skipping parts of the dialog. Use **show event by the name "Think 2019"** as input. The chatbot directly returns the event record.
 3. Now you are going to search by date. A search is defined by a pair of dates, the event start date has to be between. With **search conference by date in February 2019** as input, the result should be the **Think 2019** event again. The entity **February** is interpreted as two dates, February 1st, and February 28th, thereby providing input for the start and end of the date range. [If no year 2019 would be specified, a February looking ahead would be identified](https://{DomainName}/docs/assistant?topic=assistant-system-entities#system-entities-sys-date-time).
 
-After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/assistant?topic=assistant-logs-intro#logs_intro).
+After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/assistant?topic=assistant-logs).
 
 ## Share resources
 {: #slack-chatbot-database-watson-6}
@@ -219,4 +219,4 @@ Documentation and SDKs:
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.Db2_on_Cloud_short}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
-* [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/Cloudant?topic=cloudant-overview#overview)
+* [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/Cloudant?topic=Cloudant-about)

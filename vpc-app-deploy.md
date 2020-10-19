@@ -673,7 +673,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 {: #vpc-app-deploy-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
+- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 - [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/technologies/infrastructure/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/)
 - [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/technologies/infrastructure/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
 

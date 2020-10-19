@@ -290,7 +290,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 {: #plan-create-update-deployments-7}
 
-1. Follow [these instructions](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to install the CLI
+1. Follow [these instructions](/docs/cli?topic=cli-install-ibmcloud-cli) to install the CLI
 1. Validate the installation by running:
    ```sh
    ibmcloud
@@ -681,6 +681,6 @@ You can repeat the steps for `testing` and `production`.
 ## Related content
 {: #plan-create-update-deployments-18}
 
-* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
+* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 * [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)

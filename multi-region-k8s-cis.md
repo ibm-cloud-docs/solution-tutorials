@@ -75,7 +75,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition, make sure you:
 - own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers.
-- [set up a registry namespace](/docs/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
+- [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
@@ -425,10 +425,10 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 {: #multi-region-k8s-cis-7}
 {:related}
 
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
-* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-2-configure-your-security-level-selectively)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
+* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers)
-* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/Registry?topic=registry-registry_overview#registry_planning)
+* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/Registry?topic=Registry-registry_overview)
 * [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)

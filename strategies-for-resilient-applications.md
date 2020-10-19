@@ -254,7 +254,7 @@ More information is available in the [High Availability documentation](https://{
 #### Backup and restore
 {: #strategies-for-resilient-applications-19}
 
-{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-bnr#br) provides details on how you can restore data to the desired date and time.
+{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-bnr) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for}}
 {: #strategies-for-resilient-applications-20}
@@ -291,14 +291,14 @@ There are three types of bucket resiliency:
    - **Regional** resiliency will spread data across a single metropolitan area. This can be seen as a multi-zones within a region configuration.
    - **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
 
-Refer to [this documentation](https://{DomainName}/docs/cloud-object-storage/basics?topic=cloud-object-storage-endpoints#select-regions-and-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
+Refer to [this documentation](https://{DomainName}/docs/cloud-object-storage/basics?topic=cloud-object-storage-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
 
 ### {{site.data.keyword.filestorage_full_notm}}
 {: #strategies-for-resilient-applications-22}
 
 {{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based file storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. {{site.data.keyword.filestorage_short}} shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/FileStorage?topic=FileStorage-about#getting-started-with-file-storage) for a full list of features.
+Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/FileStorage?topic=FileStorage-about) for a full list of features.
 
 Once attached to your servers, a {{site.data.keyword.filestorage_short}} service can be used easily to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region.
 

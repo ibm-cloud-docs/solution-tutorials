@@ -70,7 +70,7 @@ In this section, you set up the needed services and prepare the environment. All
 
 2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
-3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/Db2whc?topic=Db2whc-plans_cfgs#availability).
+3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/Db2whc?topic=Db2whc-deploy_with_cli).
    ```sh
    ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
@@ -277,4 +277,4 @@ Here are links to additional information on the topics covered in this tutorial.
 Documentation and SDKs:
 * [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=openwhisk-getting-started)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/appid?topic=appid-gettingstarted#gettingstarted)
+* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/appid?topic=appid-getting-started)

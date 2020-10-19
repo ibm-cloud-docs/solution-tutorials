@@ -232,4 +232,4 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 
 - [Tag-based notifications](https://{DomainName}/docs/mobilepush?topic=mobilepush-tag_based_notifications#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/mobilepush?topic=mobilepush-apis-for-push-notifications)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/mobilepush?topic=mobilepush-security-in-push-notifications#overview-push)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/mobilepush?topic=mobilepush-security-in-push-notifications)

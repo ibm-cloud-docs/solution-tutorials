@@ -371,7 +371,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation).
 {: tip}
 
 ## Expand the tutorial
