@@ -67,7 +67,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.4.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.5.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -146,7 +146,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 
 1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
-3. Search for **Elasticsearch Operator**, click **Install** and then **Subscribe**
+3. Search for **Elasticsearch Operator**, click on the tile, click on **Install**, Leave the default selection and click on **Install**.
 4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
@@ -162,7 +162,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
-6.  Under **Istio Service Mesh Control Plane**,click **Create Instance**.
+6.  On the Details tab, under **Istio Service Mesh Control Plane** tile,click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -172,7 +172,7 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
-3. Under **Istio Service Mesh Member Roll**,click **Create CreateServiceMeshMemberRoll**
+3. On the Details tab, under **Istio Service Mesh Member Roll** tile,click **Create Instance** and then select **YAML View**
 4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits it will look something like this:
    ```
    apiVersion: maistra.io/v1
@@ -299,9 +299,9 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    2. Select Project: **istio-system** from the top bar
    3. Click the URL(Location) next to **grafana**
    4. Log into OpenShift and allow the requested permissions to see the Grafana dashboard.
-2. Click on **Home** ,then **Istio** and **Istio Service Dashboard**.
-3. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
-4. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
+2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **Istio** and **Istio Service Dashboard**.
+1. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
+2. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
