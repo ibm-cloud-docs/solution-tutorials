@@ -80,7 +80,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 <!--#/istutorial#-->
 
 In addition, make sure you:
-- [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
+- [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 <!--##istutorial#-->
@@ -374,7 +374,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 
 If you were to try to access your application with HTTPS at this time `https://<my-custom-domain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
-1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3). To generate a trusted certificate, you can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3). To generate a trusted certificate, you can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key:
    ```sh
@@ -448,8 +448,6 @@ kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=
 Once the autoscaler is successfully created, you should see
 `horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`
 
-Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
-
 ## Remove resources
 {: #scalable-webapp-kubernetes-0}
 {: step}
@@ -466,8 +464,7 @@ Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-ap
 ## Related content
 {: #scalable-webapp-kubernetes-20}
 
-* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
-<!-- * [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile) -->
+* [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
 * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)

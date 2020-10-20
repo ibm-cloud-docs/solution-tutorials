@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-10-07"
+lastupdated: "2020-10-20"
 lasttested: "2020-10-06"
 
 content-type: tutorial
@@ -30,7 +30,7 @@ completion-time: 2h
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: important}
+{: tip}
 <!--#/istutorial#-->
 
 This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
@@ -84,7 +84,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: note}
 <!--#/istutorial#-->
 
-In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 <!--##isworkshop#-->
 <!--
@@ -289,7 +289,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ```
    {:pre}
 1. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
-   For creating an API key, refer to this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
+   For creating an API key, refer to this [link](https://{DomainName}/docs/Registry?topic=Registry-registry_access#registry_access_user_apikey_create).
    {:tip}
 1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
@@ -477,7 +477,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 ### With HTTPS
 {: #scalable-webapp-openshift-21}
 
-1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
+1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
    ```sh
    oc create route edge $MYPROJECT-httpsca --service=$MYPROJECT --cert=example.pem --key=example.key --ca-cert=ca.pem --hostname=<www.HOSTNAME> --port=3000
    ```

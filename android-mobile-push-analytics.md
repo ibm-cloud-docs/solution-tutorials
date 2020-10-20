@@ -61,7 +61,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {: #android-mobile-push-analytics-get_code}
 {: step}
 The {{site.data.keyword.Bluemix_notm}} App Development allows you to fast-track your mobile app development by creating your app from a Starter Kit.
-1. Navigate to [App Development](https://{DomainName}/appservice/dashboard) and click on **Get Started**.
+1. Navigate to [App Development](https://{DomainName}/developer/appservice/dashboard) and click on **Get Started**.
 2. Scroll and click on **Mobile App with Push Notifications** starter kit.
 3. Click **Create app** and enter an app name(this will be your android project name as well) > select a resource group.
 4. Select **Android** as your platform.
@@ -148,8 +148,8 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
 
 ## Related Content
 {: #android-mobile-push-analytics-related_content}
-- [Customize the {{site.data.keyword.mobilepushshort}} settings](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_4#push_step_4_Android)
-- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-security-in-push-notifications#overview-push)
+- [Customize the {{site.data.keyword.mobilepushshort}} settings](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_4#push_step_4_Android)
+- [Tag-based notifications](https://{DomainName}/docs/mobilepush?topic=mobilepush-tag_based_notifications#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/mobilepush?topic=mobilepush-apis-for-push-notifications)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/mobilepush?topic=mobilepush-security-in-push-notifications)
 

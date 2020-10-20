@@ -66,7 +66,7 @@ Multiple environments are pretty common in a project to support the different ph
 {: #plan-create-update-deployments-tools}
 {: step}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
 Another tool introduced in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
@@ -290,7 +290,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 {: #plan-create-update-deployments-7}
 
-1. Follow [these instructions](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to install the CLI
+1. Follow [these instructions](/docs/cli?topic=cli-install-ibmcloud-cli) to install the CLI
 1. Validate the installation by running:
    ```sh
    ibmcloud
@@ -681,6 +681,6 @@ You can repeat the steps for `testing` and `production`.
 ## Related content
 {: #plan-create-update-deployments-18}
 
-* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
+* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 * [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)

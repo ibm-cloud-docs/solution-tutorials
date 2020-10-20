@@ -139,7 +139,7 @@ The same application is deployed in multiple regions and a global load balancer 
 ### Kubernetes
 {: #strategies-for-resilient-applications-11}
 
-With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. {{site.data.keyword.containershort_notm}} can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#vpc_basics), VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
+With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. {{site.data.keyword.containershort_notm}} can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics), VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
 
 The Kubernetes multi-region architecture looks like this.
 
@@ -227,11 +227,11 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 
 {{site.data.keyword.cloudant}} is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed {{site.data.keyword.Bluemix_notm}} service, {{site.data.keyword.cloudant}} elastically scales throughput and storage independently. {{site.data.keyword.cloudant}} is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/services/Cloudant/api?topic=cloudant-replication-api#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
+{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-api#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
 
 ![active-active](images/solution39/Active-active.png)
 
-Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides?topic=cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/services/Cloudant/guides?topic=cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
+Refer to [these instructions](https://{DomainName}/docs/Cloudant?topic=Cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
 
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
 {: #strategies-for-resilient-applications-17}
@@ -247,14 +247,14 @@ In the following, we will focus on {{site.data.keyword.Db2_on_Cloud_short}} as D
 #### Multi-region support for {{site.data.keyword.Db2_on_Cloud_short}}
 {: #strategies-for-resilient-applications-18}
 
-{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-fs#overview). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-ha#ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
+{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](/docs/Db2onCloud?topic=Db2onCloud-getting-started). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
-More information is available in the [High Availability documentation](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-ha#ha).
+More information is available in the [High Availability documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha#ha).
 
 #### Backup and restore
 {: #strategies-for-resilient-applications-19}
 
-{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-bnr#br) provides details on how you can restore data to the desired date and time.
+{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-bnr) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for}}
 {: #strategies-for-resilient-applications-20}
@@ -268,17 +268,17 @@ More information is available in the [High Availability documentation](https://{
 
 All of these services share the same characteristics:
 * For high availability they are deployed in clusters. Details can be found in the documentation of each service:
-  - [PostgreSQL](https://{DomainName}/docs/services/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
-  - [Redis](https://{DomainName}/docs/services/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
-  - [Elasticsearch](https://{DomainName}/docs/services/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
-  - [etcd](https://{DomainName}/docs/services/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
-  - [MongoDB](https://{DomainName}/docs/services/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
+  - [PostgreSQL](https://{DomainName}/docs/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
+  - [Redis](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
+  - [Elasticsearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
+  - [etcd](https://{DomainName}/docs/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
+  - [MongoDB](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
 * Each cluster is spread over multiple zones.
 * Data is replicated across the zones.
-* Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/services/databases-for-redis?topic=databases-for-redis-dashboard-settings#settings) for details.
-* Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/services/databases-for-postgresql?topic=cloud-databases-dashboard-backups).
+* Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-resources-scaling) for details.
+* Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=cloud-databases-dashboard-backups).
 * Data at rest, backups and network traffic are encrypted.
-* Each [service can be managed using the {{site.data.keyword.databases-for}} CLI plugin](https://{DomainName}/docs/databases-cli-plugin?topic=cloud-databases-cli-cdb-reference#cloud-databases-cli-plug-in)
+* Each [service can be managed using the {{site.data.keyword.databases-for}} CLI plugin](https://{DomainName}/docs/databases-cli-plugin?topic=databases-cli-plugin-cdb-reference)
 
 
 ### {{site.data.keyword.cos_full_notm}}
@@ -291,20 +291,20 @@ There are three types of bucket resiliency:
    - **Regional** resiliency will spread data across a single metropolitan area. This can be seen as a multi-zones within a region configuration.
    - **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
 
-Refer to [this documentation](https://{DomainName}/docs/services/cloud-object-storage/basics?topic=cloud-object-storage-endpoints#select-regions-and-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
+Refer to [this documentation](https://{DomainName}/docs/cloud-object-storage/basics?topic=cloud-object-storage-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
 
 ### {{site.data.keyword.filestorage_full_notm}}
 {: #strategies-for-resilient-applications-22}
 
 {{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based file storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. {{site.data.keyword.filestorage_short}} shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-about#getting-started-with-file-storage) for a full list of features.
+Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/FileStorage?topic=FileStorage-about) for a full list of features.
 
 Once attached to your servers, a {{site.data.keyword.filestorage_short}} service can be used easily to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region.
 
 When adding a second region, you can use the snapshots feature of {{site.data.keyword.filestorage_short}} to take a snapshot automatically or manually, and then reuse it within the second passive region.
 
-Replication can be scheduled to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#snapshots).
+Replication can be scheduled to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#snapshots).
 
 ## Non-database services
 {: #strategies-for-resilient-applications-nondatabaseservices}
@@ -334,9 +334,9 @@ Many of the services provide stateless APIs and offer high-availability through 
 
 {:related}
 
-- [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started)
+- [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
-- [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#secure-web-application-across-multiple-regions)
-- [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#deploy-serverless-apps-across-multiple-regions)
-- [Kubernetes, resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
-- [Virtual Servers, build highly available and scalable web app](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
+- [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp)
+- [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
+- [Kubernetes, resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis)
+- [Virtual Servers, build highly available and scalable web app](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application)
