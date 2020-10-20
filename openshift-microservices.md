@@ -19,6 +19,7 @@ completion-time: 3h
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
+{:external: target="_blank" .external}
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
@@ -125,7 +126,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.4/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html){: external}  exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**
@@ -535,9 +536,9 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
 7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
-8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).
+8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Binding** tab.  Open the **Binding** tab, click **Create Binding** and select **YAML View**.  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
-   apiVersion: ibmcloud.ibm.com/v1alpha1
+   apiVersion: ibmcloud.ibm.com/v1
    kind: Binding
    metadata:
      name: cloudant-binding
@@ -548,7 +549,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    {:codeblock}
 9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
-   ```
+   ```sh
    ibmcloud resource service-instances --service-name cloudantnosqldb
    ```
    {:pre}
@@ -557,12 +558,12 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    YOURINITIALS=<your-initials>
    ```
 
-   ```
+   ```sh
    ibmcloud resource service-instance $YOURINITIALS-cloudant-service
    ```
    {:pre}
 
-   ```
+   ```sh
    ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
    ```
    {:pre}
@@ -644,7 +645,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {:pre}
-3. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
+3. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **patient-health-backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
    ```
    > node app.js
 
@@ -654,10 +655,10 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    Cannot find Cloudant credentials, set CLOUDANT_URL.
    ```
 4. Let's fix this by setting the environment variable of the **DeploymentConfig** to the **cloudant-binding** secret created earlier in the operator binding section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
-   ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig.png)
+   ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig-ocp45.png)
 5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Click **Save**.
-   ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret.png)
-6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should should indicate **Running** shortly.  Click on the **Pod** **logs** and notice the databases created.
+   ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret-ocp45.png)
+6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should indicate **Running** shortly.  Click on **View logs** next tothe running pod and notice the databases created.
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
 {: #openshift-microservices-25}
@@ -676,7 +677,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
-2. Launch the Cloudant dashboard by clicking on **Launch Dahboard** button and then click the `patients` db.
+2. Launch the Cloudant dashboard by clicking on **Launch Dashboard** button and then click the `patients` db.
 3. Click through the different patients you can log-in as.
 
 ## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}} to the {{site.data.keyword.openshiftshort}}  cluster
@@ -1103,4 +1104,4 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 - [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.4/nodes/pods/nodes-pods-autoscaling.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.5/nodes/pods/nodes-pods-autoscaling.html){: external}
