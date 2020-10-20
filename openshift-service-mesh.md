@@ -90,7 +90,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
-7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
+7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {:note}
@@ -499,7 +499,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 Delete the cluster to delete everything in one-go. This action is irreversible.
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
-2. Click on the action menu next to `myopenshiftcluster` and select **Delete**.
+2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
 4. Click on **Delete**
 <!--#/istutorial#-->
