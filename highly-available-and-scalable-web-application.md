@@ -370,7 +370,7 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
 ### Configure regular snapshots
 {: #highly-available-and-scalable-web-application-17}
 
-[Snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
+[Snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
 1. Select the file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
 2. Under **Snapshots**, edit the **snapshot schedule**. The schedule could be defined as follow:
