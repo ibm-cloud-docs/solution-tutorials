@@ -147,7 +147,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 
 1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
-3. Search for **Elasticsearch Operator**, click on the tile, click on **Install**, Leave the default selection and click on **Install**.
+3. Search for **Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
 4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
@@ -163,7 +163,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
-6.  On the Details tab, under **Istio Service Mesh Control Plane** tile,click **Create Instance**.
+6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -173,7 +173,7 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
-3. On the Details tab, under **Istio Service Mesh Member Roll** tile,click **Create Instance** and then select **YAML View**
+3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** and then select **YAML View**
 4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits it will look something like this:
    ```
    apiVersion: maistra.io/v1

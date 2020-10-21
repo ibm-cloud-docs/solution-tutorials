@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-20"
+lastupdated: "2020-10-21"
 lasttested: "2020-10-20"
 
 content-type: tutorial
@@ -176,7 +176,7 @@ A project is a collection of resources managed by a devops team.  An administrat
    * Note that the builder image automatically detected the language Node.js
    * **Builder Image Version** leave at the default
    * **Application Name** delete all of the characters (this will default to the **Name**)
-   * **Name** - patient-health-frontend
+   * **Name** patient-health-frontend
    * Select **Deployment Config**
    * Leave defaults for other selections
 2. Click **Create** at the bottom of the window to build and deploy the application.
@@ -387,7 +387,7 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
 
 Now autoscaler can be enabled.
 
-By default, the autoscaler allows you to scale based on CPU or Memory. The UI allows you to do CPU only \(for now\). Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, `1`% can be used with the load being provided.
+By default, the autoscaler allows you to scale based on CPU or Memory. Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, `1`% can be used with the load being provided.
 
 1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then click **Create Horizontal Pod Autoscaler**.
 
@@ -658,7 +658,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig-ocp45.png)
 5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Click **Save**.
    ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret-ocp45.png)
-6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should indicate **Running** shortly.  Click on **View logs** next tothe running pod and notice the databases created.
+6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should indicate **Running** shortly.  Click on **View logs** next to the running pod and notice the databases created.
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
 {: #openshift-microservices-25}
