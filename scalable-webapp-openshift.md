@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-10-20"
+lastupdated: "2020-10-21"
 lasttested: "2020-10-06"
 
 content-type: tutorial
@@ -80,7 +80,7 @@ This tutorial requires:
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. To install new version  of `oc` on {{site.data.keyword.cloud-shell_short}}, refer [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_shell)
 {: note}
 <!--#/istutorial#-->
 

@@ -130,6 +130,9 @@ The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.o
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**
+   To install new version  of `oc` on {{site.data.keyword.cloud-shell_short}}, refer [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_shell)
+   {:tip}
+
 2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
    ibmcloud oc clusters

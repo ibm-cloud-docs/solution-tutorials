@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-19"
-lasttested: "2020-07-31"
+lastupdated: "2020-10-21"
+lasttested: "2020-10-20"
 
 content-type: tutorial
 services: openshift, containers
@@ -122,6 +122,9 @@ To avoid installing the command line, the recommended approach is to use the {{s
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**
+   To install new version  of `oc` on {{site.data.keyword.cloud-shell_short}}, refer [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_shell)
+   {:tip}
+
 5. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
