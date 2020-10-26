@@ -135,7 +135,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc version
    ```
    {:pre}
-1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_shell).
+1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
    ibmcloud oc clusters

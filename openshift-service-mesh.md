@@ -127,7 +127,7 @@ To avoid installing the command line, the recommended approach is to use the {{s
    oc version
    ```
    {:pre}
-1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started#getting-started-common_shell).
+1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 5. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
