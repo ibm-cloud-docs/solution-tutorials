@@ -70,7 +70,7 @@ In this section, you set up the needed services and prepare the environment. All
 
 2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
-3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/services/Db2whc?topic=Db2whc-plans_cfgs#availability).
+3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/Db2whc?topic=Db2whc-deploy_with_cli).
    ```sh
    ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
@@ -122,7 +122,7 @@ The following steps are all performed using your Internet browser. First, you co
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **Enabled**, all other providers to **Disabled**.
 
-   You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
+   You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {:tip}
 
 3. Click on the **Authentication Settings** tab in the same dialog. In **Add web redirect URLs** enter the **url** of your application + `/redirect_uri`, for example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
@@ -161,7 +161,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    cd ../functions
    ```
    {: pre}
-2. [Create a new IAM namespace](https://{DomainName}/docs/openwhisk?topic=cloud-functions-namespaces#namespaces_create) which will hold the objects. It is created in your currently set resource group.
+2. [Create a new IAM namespace](https://{DomainName}/docs/openwhisk?topic=openwhisk-namespaces#create_iam_namespace) which will hold the objects. It is created in your currently set resource group.
    ```sh
    ibmcloud fn namespace create ghstats --description "objects for GitHub statistics"
    ```
@@ -172,7 +172,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ```
    {: pre}
 
-3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-runtimes#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=openwhisk-runtimes#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```sh
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
@@ -197,7 +197,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    }
    ```
    {:codeblock}
-6. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-pkg_alarms). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+6. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=openwhisk-triggers). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```sh
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
@@ -275,7 +275,6 @@ Want to add to or change this tutorial? Here are some ideas:
 Here are links to additional information on the topics covered in this tutorial.
 
 Documentation and SDKs:
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=openwhisk-getting-started)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/services/appid?topic=appid-gettingstarted#gettingstarted)
-* [Python runtime on IBM Cloud](https://{DomainName}/docs/runtimes/python?topic=Python-python_runtime#python_runtime)
+* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/appid?topic=appid-getting-started)

@@ -126,7 +126,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {:pre}
 
-The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
+The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-service-binding) for more info
 {:tip}
 
 ## Create an {{site.data.keyword.objectstorageshort}} service
@@ -194,7 +194,7 @@ The worker application is a Java application which listens to the {{site.data.ke
 4. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
-In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
+In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=openwhisk-use_cases). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
 
 ## Remove resources
 {: #pub-sub-object-storage-7}
@@ -211,7 +211,7 @@ Navigate to [Resource List](https://{DomainName}/resources/) and
 {: #pub-sub-object-storage-8}
 {:related}
 
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
-* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/services/EventStreams?topic=eventstreams-getting_started#messagehub)
-* [Manage Access to Object Storage](https://{DomainName}/docs/infrastructure/cloud-object-storage-infrastructure?topic=cloud-object-storage-infrastructure-managing-access#managing-access)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-cloud-object-storage)
+* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/EventStreams?topic=EventStreams-getting_started)
+* [Manage Access to Object Storage](https://{DomainName}/docs/cloud-object-storage-infrastructure?topic=cloud-object-storage-infrastructure-managing-access#managing-access)
 * [{{site.data.keyword.messagehub}} data processing with {{site.data.keyword.openwhisk_short}}](https://github.com/IBM/openwhisk-data-processing-message-hub)

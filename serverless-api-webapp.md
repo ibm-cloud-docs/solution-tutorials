@@ -34,7 +34,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
 {: shortdesc}
 
-As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
+As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk?topic=openwhisk-use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
 
 Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk_short}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
@@ -327,6 +327,6 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 {: #serverless-api-webapp-13}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
-* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
-* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases)
-* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-apigateway)
+* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=openwhisk-getting-started)
+* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=openwhisk-use_cases)
+* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=openwhisk-apigateway)

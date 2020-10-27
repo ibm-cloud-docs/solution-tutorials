@@ -29,8 +29,6 @@ Solution Tutorials
             static-files-cdn.md
             dynamic-content-cdn.md
             pub-sub-object-storage.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             plan-create-update-deployments.md
             highly-available-and-scalable-web-application.md
             mean-stack.md
@@ -101,7 +99,7 @@ Solution Tutorials
         {: .topicgroup}
         High Performance Computing
             hpc-eda.md
-            hpc-lsf-on-vpc.hidden.md
+            hpc-lsf-on-vpc.md
 
     {: .topicgroup}
     By Compute Options
@@ -155,8 +153,6 @@ Solution Tutorials
         {: .topicgroup}
         Virtual Servers
             strategies-for-resilient-applications.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             highly-available-and-scalable-web-application.md
             vpc-public-app-private-backend.md
             vpc-multi-region.md

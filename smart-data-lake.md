@@ -74,7 +74,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
     ```sh
     ibmcloud login
     ```
@@ -371,7 +371,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation).
 {: tip}
 
 ## Expand the tutorial

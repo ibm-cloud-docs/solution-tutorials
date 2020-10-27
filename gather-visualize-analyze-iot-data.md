@@ -292,7 +292,7 @@ If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
 4. In the configuration page, set the Software package to **AE 1.2 Spark and Hadoop** and click **Create**.
 
 Once the service is provisioned or if you have an existing service instance you want to use and configured with software package **AE 1.2 Spark and Hadoop**:
-1. From the [Resources list](https://{DomainName/resources}), open the created service.
+1. From the [Resources list](https://{DomainName}/resources), open the created service.
 2. Under **Service credentials**, create new credential:
    - Set **Name** to **wdp-writer**
    - Set **Role** to **Writer** and click **Add**
@@ -355,7 +355,7 @@ In {{site.data.keyword.DSX}},:
 {: #gather-visualize-analyze-iot-data-8}
 {:related}
 
-* Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model)
 * [Data store connector for {{site.data.keyword.cloudant_short_notm}}](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html)
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/overview-ws.html)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)

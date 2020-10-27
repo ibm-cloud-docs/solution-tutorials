@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-29"
+lastupdated: "2020-10-19"
 lasttested: "2020-09-23"
 
 content-type: tutorial
@@ -237,7 +237,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 4. On the left pane under **Endpoints**, Select **Cross Region** resiliency and select a Location near to you.
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
-   1. Select a region and select **Lite** plan.
+   1. Select a region and select **Standard** plan.
    2. Set **Service name** to **code-engine-vr** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 7. Under **Service credentials**, click on **New credential**

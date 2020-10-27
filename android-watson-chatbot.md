@@ -277,9 +277,9 @@ The repository contains Android application code with required gradle dependenci
 {: #android-watson-chatbot-7}
 {:related}
 
-- [Creating entities, Synonyms, System entities](https://{DomainName}/docs/services/assistant?topic=assistant-entities#creating-entities)
-- [Context Variables](https://{DomainName}/docs/services/assistant?topic=assistant-dialog-runtime#dialog-runtime-context-variables)
-- [Building a complex dialog](https://{DomainName}/docs/services/assistant?topic=assistant-tutorial#tutorial)
-- [Gathering information with slots](https://{DomainName}/docs/services/assistant?topic=assistant-dialog-slots#dialog-slots)
-- [Deployment options](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-integration-add#deploy-integration-add)
-- [Improve your skill](https://{DomainName}/docs/services/assistant?topic=assistant-logs)
+- [Creating entities, Synonyms, System entities](https://{DomainName}/docs/assistant?topic=assistant-entities#entities-creating-task)
+- [Context Variables](https://{DomainName}/docs/assistant?topic=assistant-dialog-runtime#dialog-runtime-context-variables)
+- [Building a complex dialog](https://{DomainName}/docs/assistant?topic=assistant-tutorial#tutorial)
+- [Gathering information with slots](https://{DomainName}/docs/assistant?topic=assistant-dialog-slots#dialog-slots)
+- [Deployment options](https://{DomainName}/docs/assistant?topic=assistant-deploy-integration-add#deploy-integration-add)
+- [Improve your skill](https://{DomainName}/docs/assistant?topic=assistant-logs)

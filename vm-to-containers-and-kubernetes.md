@@ -22,7 +22,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-container_index#container_index) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-getting-started) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
@@ -117,14 +117,14 @@ As you design your cluster architecture, you want to balance costs against avail
 To run a production app in the cloud by using Kubernetes, consider the following items:
 
 1. Do you expect traffic from a specific geographic location? If yes, select the location that is physically closest to you for best performance.
-2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#replicate-for-multiple-environments) solution guide for creating multiple environments.
-3. What [hardware](https://{DomainName}/docs/containers?topic=containers-plan_clusters#planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
+2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications-5) solution guide for creating multiple environments.
+3. What [hardware](https://{DomainName}/docs/containers?topic=containers-planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
 6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
-7. When to increase the number of worder nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
+7. When to increase the number of worder nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind a IBM Cloud database service to your pod.
-9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#vpc_basics) or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
+9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics) or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
 To make the above more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
 
@@ -355,4 +355,4 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
 - Deploy the production cluster [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
-- Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-locations) for high availability.
+- Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) for high availability.

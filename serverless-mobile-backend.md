@@ -236,7 +236,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics-obtain_apns_credentials) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend
@@ -379,4 +379,4 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 ## Related content
 {: #serverless-mobile-backend-15}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/services/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/services/appid?topic=appid-login-widget#login-widget).
+* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/appid?topic=appid-login-widget#login-widget).

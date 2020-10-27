@@ -120,7 +120,7 @@ The following diagram shows where the project resources are created under the ac
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/account?topic=account-cfaccess#cfaccess) to assign the right roles based on the environment.
 
-Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam).
+Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
@@ -191,7 +191,7 @@ When configuring the DevOps pipeline, make sure to use the API key of a service 
 
 During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
-As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
+As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Expand the tutorial
 {: #users-teams-applications-7}
@@ -206,10 +206,10 @@ Congratulations, your application can now safely be deployed from dev to product
 {: #users-teams-applications-8}
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
-* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
+* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/account?topic=account-account_setup)
 * [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
-* [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam)
-* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam)
+* [Grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam)
+* [Grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam)

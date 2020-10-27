@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-08-24"
+lastupdated: "2020-10-22"
 lasttested: "2020-01-20"
 
 ---
@@ -95,7 +95,11 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### oc
 {: #getting-started-windows_oc}
 
-1. Download the latest 4.3 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.3/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/.
+
+   Replace `4.5` in the URL with the version number you wish to install
+   {:tip}
+
 1. Move `oc.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
@@ -222,18 +226,22 @@ The following sections assume you are running macOS High Sierra or later under a
 ### oc
 {: #getting-started-macos_oc}
 
-1. Download the latest 4.3 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.3/.
-1. Extract `oc.tar.gz`:
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/.
+
+   Replace `4.5` in the URL with the version number you wish to install
+   {:tip}
+
+2. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz
    ```
    {:pre}
-1. Move the `oc` binary to your PATH.
+3. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {:pre}
-1. Verify the installation with:
+4. Verify the installation with:
    ```sh
    oc version
    ```
@@ -383,7 +391,11 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #getting-started-ubuntu_oc}
 
-1. Download the latest 4.3 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.3/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/.
+
+   Replace `4.5` in the URL with the version number you wish to install
+   {:tip}
+
 1. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz
@@ -524,3 +536,31 @@ To verify the configuration:
 1. Checkout the project from the command line by cloning with the SSH link.
 1. Update the README file.
 1. Commit and push the changes.
+
+### Update oc on {{site.data.keyword.cloud-shell_short}}
+{: #getting-started-common_shell}
+
+1. Download the latest 4.x OpenShift CLI (`oc`)
+   ```sh
+   curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/linux/oc.tar.gz --output oc.tar.gz
+   ```
+   {:pre}
+
+   Replace `4.5` in the URL with the version number you wish to update to
+   {:tip}
+
+2. Extract `oc.tar.gz`:
+   ```sh
+   tar zxvf oc.tar.gz
+   ```
+   {:pre}
+3. Add your current directory to `PATH`
+   ```sh
+   export PATH=$PWD:$PATH
+   ```
+   {:pre}
+4. Verify the installation with:
+   ```sh
+   oc version
+   ```
+   {:pre}

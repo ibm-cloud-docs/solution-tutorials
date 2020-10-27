@@ -122,7 +122,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is keys
       ```
       {:pre}
-   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
    * `TF_VAR_generation` specifies which generation of compute you want to use. It defaults to 2.
 6. Load the variables into the environment:
    ```sh
@@ -213,7 +213,7 @@ This section uses a shell script found in the [Public frontend and private backe
 ### Before you begin
 {: #vpc-app-deploy-cli-before-you-begin}
 
-1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
 
 ### Provision subnets and virtual server instances
 {: #vpc-app-deploy-cli-provision}
@@ -673,7 +673,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 {: #vpc-app-deploy-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
+- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 - [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/technologies/infrastructure/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/)
 - [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/technologies/infrastructure/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
 

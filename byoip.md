@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial presents a brief overview of BYOIP implementation patterns that can be used with {{site.data.keyword.Bluemix_notm}} and a decision tree for identifying the appropriate pattern when realizing the secure enclosure as described in the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#isolate-workloads-with-a-secure-private-network) tutorial. Setup may require additional input from your onsite network team, {{site.data.keyword.Bluemix_notm}} technical support or IBM Services.
+This tutorial presents a brief overview of BYOIP implementation patterns that can be used with {{site.data.keyword.Bluemix_notm}} and a decision tree for identifying the appropriate pattern when realizing the secure enclosure as described in the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) tutorial. Setup may require additional input from your onsite network team, {{site.data.keyword.Bluemix_notm}} technical support or IBM Services.
 {:shortdesc}
 
 Bring Your own IP (BYOIP) is a frequent requirement where its desired to connect existing client networks to infrastructure provisioned on the {{site.data.keyword.Bluemix_notm}}. The intent is typically to minimize change to the clients network routing configuration and operations with the adoption of a single IP address space based on the clients existing IP addressing scheme.
@@ -66,7 +66,7 @@ The addressing scheme is unified by routing IP traffic over a GRE tunnel between
 4. Virtual Overlay Network
 [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
 
-Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/vmware?topic=VMware-vmware-getting-started).
+Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/vmware?topic=vmware-vmware-getting-started).
 
 ## Pattern decision tree
 {: #byoip-decision_tree}

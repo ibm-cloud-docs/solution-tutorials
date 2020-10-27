@@ -292,5 +292,5 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 ## Related content
 {: #multi-region-serverless-related}
 
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 * [Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis)

@@ -84,7 +84,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
   ```
   {: codeblock}
 
-  You can find more CLI commands [here](https://{DomainName}/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
+  You can find more CLI commands [here](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli).
 
 2. Create an instance of {{site.data.keyword.databases-for-mongodb}}. This can also be done using the [console UI](https://{DomainName}/catalog/services/databases-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
@@ -185,6 +185,6 @@ To remove resource, follow these steps:
 
 {: #related}
 
-- Set up source control and [continuous delivery](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#devops).
+- Set up source control and [continuous delivery](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp-devops).
 - Secure web application across [multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp).
 - Create, secure and manage [REST APIs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-manage-secure-apis#create-manage-secure-apis).

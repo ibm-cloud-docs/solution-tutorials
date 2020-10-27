@@ -92,7 +92,7 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Import data
 {: #create-deploy-retrain-machine-learning-model-import_data}
 
-As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
 **Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_initial.csv) which consists of 40 instances of each species.
@@ -362,7 +362,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
-   To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/services/ai-openscale?topic=ai-openscale-anlz_metrics)
+   To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
    {:tip}
 
 ## Remove resources
@@ -377,8 +377,8 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 {: #create-deploy-retrain-machine-learning-model-8}
 {:related}
 
-- [{{site.data.keyword.watson}} Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
-- [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#data_experiencee)
-- [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
-- [Machine learning & AI](https://dataplatform.ibm.com/docs/content/analyze-data/wml-ai.html?audience=wdp&context=wdp)
+- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
+- [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data)
+- [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
+- [Machine learning & AI](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/wml-ai.html?context=analytics)
 - [{{site.data.keyword.aios_short}} documentation](https://{DomainName}/docs/ai-openscale)
