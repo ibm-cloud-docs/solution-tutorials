@@ -56,7 +56,7 @@ You need the following to complete this tutorial:
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 * {{site.data.keyword.cloud_notm}} CLI
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 You will also need:
 * An {{site.data.keyword.cloud_notm}} billable account

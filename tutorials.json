@@ -18,7 +18,7 @@
           "url": "getting-started.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-08-24"
+          "lastUpdated": "2020-10-22"
         }
       ]
     },
@@ -102,7 +102,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-10-07"
+          "lastUpdated": "2020-10-21"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -115,7 +115,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2020-10-05"
+          "lastUpdated": "2020-10-21"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-10-05"
+          "lastUpdated": "2020-10-21"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2020-09-29"
+          "lastUpdated": "2020-10-19"
         }
       ]
     },
