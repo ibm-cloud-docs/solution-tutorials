@@ -15,7 +15,7 @@
       "solutions": [
         {
           "name": "Getting Started",
-          "url": "getting-started.html",
+          "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg"
         }
