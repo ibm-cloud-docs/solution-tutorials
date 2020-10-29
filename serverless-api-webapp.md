@@ -247,7 +247,7 @@ Create a {{site.data.keyword.cos_short}} instance:
 Create a bucket configured for static website hosting:
 1. Click **Create a bucket**
 1. Click Custom bucket
-1. Enter a bucket name that is unique is across all ibm accounts.  Try <yourinitials>-guestbook.
+1. Enter a bucket name that is unique is across all ibm accounts.  Try `<yourinitials>-guestbook`.
 1. Select Resiliency **Regional**
 1. Select a Location, choose a region consistent with the {{site.data.keyword.cloudant_short_notm}} instance
 1. Keep the Storage class default
