@@ -239,7 +239,7 @@ Complete the sequence:
 Create a {{site.data.keyword.cos_short}} bucket configured with static website hosting containing the files for the guestbook javascript application that uses the cloudant database.
 
 Create a {{site.data.keyword.cos_short}} instance:
-1. Select [Cloud Object Storage](https://cloud.ibm.com/objectstorage/create) from the catalog
+1. Select [Cloud Object Storage](https://{DomainName}/objectstorage/create) from the catalog
 1. Chose a **unique** service name for the insrtance, such as `<yourinitials>-guestbook-cos`
 1. Select a resource group.
 1. Click **Create**
