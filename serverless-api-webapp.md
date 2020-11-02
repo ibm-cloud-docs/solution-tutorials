@@ -269,12 +269,14 @@ Copy the files in the docs/ of https://github.com/IBM-Cloud/serverless-guestbook
 
 ![](images/solution8/Guestbook.png)
 
+<!--##istutorial#-->
 ## Optionally configure a custom domain
 {: #serverless-api-webapp-custom-domain}
 {: step}
 You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
 
 A custom domain can also be assigned to the static website bucket.
+<!--#/istutorial#-->
 
 ## Remove resources
 {: #serverless-api-webapp-cleanup}
