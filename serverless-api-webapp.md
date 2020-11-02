@@ -75,7 +75,7 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    2. Select **IAM and legacy credentials** as authentication method.
    3. Make sure the **Lite** plan is selected. If you already have a Lite plan, select another service plan.
    4. Click **Create**.
-2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
+2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
 4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partitioned** under **Partitioning**. Click **Create** to create the database.
 5. Switch back to the browser tab with the service dashboard page. Go to **Service credentials**, then:
@@ -269,6 +269,13 @@ Copy the files in the docs/ of https://github.com/IBM-Cloud/serverless-guestbook
 
 ![](images/solution8/Guestbook.png)
 
+## Optionally configure a custom domain
+{: #serverless-api-webapp-custom-domain}
+{: step}
+You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
+
+A custom domain can also be assigned to the static website bucket.
+
 ## Remove resources
 {: #serverless-api-webapp-cleanup}
 {: step}
@@ -291,12 +298,6 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 3. Click on the **delete** icon in the `guestbook` API row and then **Delete** on the modal window.
 4. On the left pane, click on **Actions**.
 5. Under the `guestbook` package, delete all the actions by clicking on the **delete** icon in the respective action rows.
-
-## Configure a custom domain
-{: #serverless-api-webapp-custom-domain}
-[Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless) explains how to create a custom domain for an API. Navigate to [APIs / Custom domains](https://{DomainName}/apis/domains) and find the guestbook API that you just created.
-
-A custom domain can also be assigned to the static website bucket.
 
 ## Related content
 {: #serverless-api-webapp-13}
