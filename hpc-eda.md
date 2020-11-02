@@ -70,7 +70,7 @@ You will also need the following in {{site.data.keyword.cloud_notm}}:
 * An {{site.data.keyword.cloud_notm}} billable account
 * {{site.data.keyword.cloud_notm}} CLI
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 ## Set up the {{site.data.keyword.cloud_notm}} CLI
 {: #hpc-eda-set-up-cli}
