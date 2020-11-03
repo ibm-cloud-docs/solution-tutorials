@@ -139,7 +139,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 2. Initialize the `oc` command environment by passing the cluster name:
    ```sh
    ibmcloud oc clusters
-   ibmcloud oc cluster config -c <your-initials>-myopenshiftcluster --admin
+   ibmcloud oc cluster config -c <your-cluster-name> --admin
    ```
    {:pre}
 3. Verify the `oc` command is working:
