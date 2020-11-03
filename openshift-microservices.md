@@ -350,7 +350,7 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
 
 1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployment Configs** in the left-hand bar. Choose the `patient-health-frontend` Deployment Configs, then choose **Actions menu (three vertical dots) > Edit Deployment Config**.
    ![](images/solution55-openshift-microservices/ocp45-deployments.png)
-2. In the YAML editor, find the section **spec > template > spec > containers** (not **spec > stratagies**), add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
+2. In the YAML editor, find the section **spec > template > spec > containers** (not **spec > strategies**), add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
    ```yaml
              resources:
