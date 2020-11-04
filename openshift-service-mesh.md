@@ -14,7 +14,6 @@ completion-time: 2h
 {:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:external: target="_blank" .external}
 {:codeblock: .codeblock}
 {:screen: .screen}
 {:tip: .tip}
@@ -237,7 +236,7 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
 
    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.5/service_mesh/v1x/ossm-vs-community.html){: external}  comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.5/service_mesh/v1x/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
    {:tip}
 
 3.  Verify that the pods are up and running.
@@ -513,8 +512,8 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 ## Related content
 {: #openshift-service-mesh-0}
 
-- [Understanding Red Hat {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.5/service_mesh/v1x/ossm-architecture.html){: external}
+- [Understanding Red Hat {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.5/service_mesh/v1x/ossm-architecture.html)
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
-- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.5/service_mesh/service_mesh_arch/ossm-vs-community.html){: external}
+- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.5/service_mesh/service_mesh_arch/ossm-vs-community.html)
 - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
 - [Istio Observability](https://istio.io/docs/concepts/observability/)

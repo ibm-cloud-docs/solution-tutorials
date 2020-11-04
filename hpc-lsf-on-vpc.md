@@ -20,7 +20,6 @@ completion-time: 2h
 {:pre: .pre}
 {:important: .important}
 {:note: .note}
-{:external: target="_blank" .external}
 
 # Provision an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_short}}
 {: #hpc-lsf-on-vpc}
@@ -67,7 +66,7 @@ You will also need:
 {: step}
 
 1. Log into the machine you will use for this deployment.
-2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install){: external}.
+2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
   ```
@@ -119,7 +118,7 @@ You will also need:
 
 With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LSF hybrid cloud scripts and use the CLI to gather the information that you need to set up and use the automated provisioning and cloud cluster setup scripts.
 
-1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud){: external} from GitHub.
+1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud) from GitHub.
 
   ```
   git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
@@ -334,4 +333,4 @@ If the cleanup process times out before it completes, Terraform prints out a lis
 ## Related content
 {: #hpc-lsf-on-vpc-related}
 
-Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html){: external} for information on additional commands and tasks.
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html) for information on additional commands and tasks.
