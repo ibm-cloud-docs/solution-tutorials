@@ -129,6 +129,7 @@ The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.o
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**.
+   ![](images/solution55-openshift-microservices/cloudshell-icon.png)
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
@@ -684,9 +685,8 @@ It can take a few minutes for logging and metric data to flow through the analys
 
 <!--##isworkshop#-->
 <!--
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.mon_short}} has already been connected skip the connect steps. Find your {{site.data.keyword.mon_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.mon_short}} or {{site.data.keyword.la_short}} has already been connected, skip the connect steps. Find your {{site.data.keyword.mon_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
 
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.la_short}} has already been connected skip the connect steps. Find your {{site.data.keyword.la_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
 -->
 <!--#/isworkshop#-->
 
@@ -734,7 +734,7 @@ Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in 
 
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
    * All pods must be in a `Running` state
-   * *Stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs.
+   * *stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs.
    * By default, the {{site.data.keyword.la_short}} agent pod that runs on a worker collects logs from all namespaces on that node.
 
 After the agent is configured logs from this cluster will be visible in the {{site.data.keyword.la_short}} web UI covered in the next section. If after a period of time you cannot see logs, check the agent logs.
