@@ -87,6 +87,7 @@ To start, retrieve the application code:
 
    ```sh
    git clone https://github.com/IBM-Cloud/webapp-with-cos-and-cdn
+   cd webapp-with-cos-and-cdn
    ```
   {: pre}
 
