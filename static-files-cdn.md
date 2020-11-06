@@ -215,7 +215,7 @@ while sleep 1; do curl --output /tmp/slow http://$PUBLIC_ENDPOINT/$BUCKET_NAME/a
 
 If you are using {{site.data.keyword.cloud-shell_short}} you can change the location to a region with more distance from the bucket to see a more substantial performance change.
 
-### Optional: access index.html through COS and other content through CDN
+### Access index.html through COS and other content through CDN
 {: #static-files-cdn-8}
 All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.yourdomain.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
 
@@ -224,12 +224,18 @@ Upload cdn.html into the index.html and open the application in a browser:
    ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file cdn.html
    ```
 
-Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configuration** panel scroll down to the **Static website hosting endpoints** section and copy the **Public** url into a browser tab.  Since you configured this earlier to redirect to `index.html` the web application will be displayed and content will be delivered through the CDN.
+Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configuration** panel scroll down to the **Static website hosting endpoints** section and copy the **Public** url into a browser tab.  Since you configured this earlier to redirect to `index.html` the web application will be displayed and content will be delivered through the CDN.  For me the url was fredflinstone-mywebsite.s3-web.us-south.cloud-object-storage.appdomain.cloud notice the s3-web.
+
+### Access the static website through custom subdomain
+{: #static-files-cdn-9}
+
+Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.yourdomain.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.yourdomain.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// url.  You can explicitly specify http://yourdomain.com or better yet insure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
 
 ## Remove resources
-{: #static-files-cdn-9}
+{: #static-files-cdn-10}
 {: step}
 
+* Delete the {{site.data.keyword.cis_short_notm}} DNS CNAME and Page Rule
 * Delete the {{site.data.keyword.cdn_full}} service
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
 
@@ -239,3 +245,4 @@ Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configurati
 * [{{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
 * [Getting Started with CDN](https://{DomainName}/docs/CDN?topic=CDN-getting-started#getting-started)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
