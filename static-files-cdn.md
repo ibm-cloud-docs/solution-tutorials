@@ -45,7 +45,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 
 * Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
 * Make content globally available with a Content Delivery Network (CDN).
-* Expose files by using a Cloud Foundry web application.
+* Expose files by using a static website application.
 
 <p style="text-align: center;">
 ![Architecture](images/solution3/Architecture.png)
@@ -183,7 +183,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 3. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
 4. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
 5. Select **Object Storage** to configure the CDN for COS.
-6. Set the **Endpoint** to your bucket API endpoint it was $PUBLIC_ENDPOINT.  A regional bucket in us-south: **s3.us-south.cloud-object-storage.appdomain.cloud**.
+6. Set the **Endpoint** to your bucket API endpoint ($PUBLIC_ENDPOINT).  Above thie was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
 7. Set **Bucket name** to $BUCKET_NAME
 7. Enable HTTP (80)
 7. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.

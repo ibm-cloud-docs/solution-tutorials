@@ -275,7 +275,7 @@ Copy the files in the docs/ of https://github.com/IBM-Cloud/serverless-guestbook
 {: step}
 You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
 
-A custom domain can also be assigned to the static website bucket.
+A custom domain can also be assigned to the static website bucket. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos). Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint that will be used for the CNAME target.
 <!--#/istutorial#-->
 
 ## Remove resources
