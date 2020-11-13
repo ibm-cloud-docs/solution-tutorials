@@ -240,7 +240,7 @@ Accessing the website at the URL provided by the COS bucket is great, but access
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
 
 ## Related content
-{: #static-files-cdn-8}
+{: #static-files-related-content}
 
 * [{{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
