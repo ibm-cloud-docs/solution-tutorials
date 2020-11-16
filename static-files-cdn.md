@@ -59,8 +59,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #static-files-cdn-prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
+* {{site.data.keyword.cloud_notm}} CLI with the {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
 * `git` to clone source code repository.
 * `jq` to query JSON files,
 
