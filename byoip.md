@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2020-11-19"
 lasttested: "2019-04-23"
 
 ---
@@ -17,9 +17,16 @@ lasttested: "2019-04-23"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # Bring Your Own IP Address
 {: #byoip}
+
+This tutorial describes the use of **Classic Infrastructure**. Virtual Private Cloud (VPC) resources may be a more flexible alternative. Check out the following VPC benefits.
+- [Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes)
+- [Getting started with Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)
+- [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
+{: note}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
