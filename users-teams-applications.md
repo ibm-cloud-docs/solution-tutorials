@@ -97,15 +97,16 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an {{site.data.keyword.cloud_notm}} location](https://{DomainName}) where to deploy the environment.
+1. Most cloud service instances are regional.  Keep this in mind and choose the same region for all resources in this tutorial.
+1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. For Cloud Foundry services and apps:
    1. [Create an organization for the project](https://{DomainName}/docs/account?topic=account-orgsspacesusers#createorg).
    1. [Create a Cloud Foundry space for the environment](https://{DomainName}/docs/account?topic=account-orgsspacesusers#spaceinfo).
    1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
-1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, and {{site.data.keyword.cloudant_short_notm}} in this group.
+1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
 1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
-1. Configure {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} to send logs and to monitor the cluster.
+1. From the Kubernetes cluster connect to the {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} service instances to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
 
@@ -124,7 +125,7 @@ Refer to the documentation of services to understand how a service is mapping IA
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
-Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/account?topic=account-userlistview). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
+Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
 {: tip}
 
 A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
@@ -138,7 +139,11 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
-The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
+The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
+1. Select or create an access group.
+1. Select the **Access policies** tab
+1. Click **Assign access** button to assign policies as shown below
+1. Click the **Users** tab of the **Access group** to add users to the group
 
 <p style="text-align: center;">
   <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" alt="Configuration of permissions for the developer role" />
@@ -158,7 +163,7 @@ From there, you can replicate similar steps to build the other environments.
   <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" alt="Diagram showing separate clusters to isolate environments" />
 </p>
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 Separate Kubernetes clusters for the environments come with good properties:
 * no matter the environment, all clusters will tend to look the same;
@@ -198,9 +203,9 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
-* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
+* Add a [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain) to automate the delivery of changes to the kubernetes cluster
 * Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
+* Investigate [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
 
 ## Related information
 {: #users-teams-applications-8}
