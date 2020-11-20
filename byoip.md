@@ -22,7 +22,7 @@ lasttested: "2019-04-23"
 # Bring Your Own IP Address
 {: #byoip}
 
-This tutorial describes the use of **Classic Infrastructure**. [{{site.data.keyword.vpc_full}}](https://cloud.ibm.com/docs/vpc) resources might be a more flexible alternative.  [Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes) IP address range into a [{{site.data.keyword.vpc_short}}
+This tutorial describes the use of **Classic Infrastructure**. [{{site.data.keyword.vpc_full}}](https://cloud.ibm.com/docs/vpc) resources might be a more flexible alternative.  In {{site.data.keyword.vpc_short}} you can [bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes) IP address range.
 {: note}
 
 <!--##istutorial#-->
