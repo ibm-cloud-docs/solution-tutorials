@@ -22,19 +22,7 @@ lasttested: "2019-04-23"
 # Bring Your Own IP Address
 {: #byoip}
 
-Testnote This tutorial describes the use of **Classic Infrastructure**. Virtual Private Cloud (VPC) resources may be a more flexible alternative. Check out the following VPC benefits.
-{: note}
-
-Testnote2 This tutorial describes the use of **Classic Infrastructure**. Virtual Private Cloud (VPC) resources may be a more flexible alternative. Check out the following VPC benefits.
-[Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes)
-[Getting started with Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)
-[Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
-{: note}
-
-This tutorial describes the use of **Classic Infrastructure**.  {{site.data.keyword.vpc_full}} resources may be a more flexible alternative. Check out the following VPC benefits.
-- [Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes)
-- [Getting started with Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)
-- [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
+This tutorial describes the use of **Classic Infrastructure**. [{{site.data.keyword.vpc_full}}](https://cloud.ibm.com/docs/vpc) resources might be a more flexible alternative.  [Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes) IP address range into a [{{site.data.keyword.vpc_short}}
 {: note}
 
 <!--##istutorial#-->
