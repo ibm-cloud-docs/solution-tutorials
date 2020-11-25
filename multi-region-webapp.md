@@ -122,22 +122,23 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 4. Rename stage to "Deploy to UK" and select **JOBS**.
 5. Change **IBM Cloud region** to **London - https://api.eu-gb.cf.cloud.ibm.com**. Create a **space** named eu-gb if you don't have one.
 7. Click **Save** and run the new stage by clicking the **Play button**.
-7. Navigate via **View console** to see the application and **Visit app URL**.  The **Details** tab of the application will provide a rouote in the format <hostname>.<domain>.  Verify your two applications look something like this:
+7. Navigate via **View console** to see the application and **Visit app URL**.  Take note of the live application in the URL in the browser.  Back in the console for the app show the **Details** tab and note the **route** list in the format `<hostname>.<domain>`.
+
 
 You can edit the routes to have similar domains from the application page by using the **Actions > Edit routes**.  Make note of this information in a table like the following.
 
+
+Verify your two applications look something like this:
 
 |Host name|Domain|Organization|Space|
 |--|--|--|--|
 |myusername-nodeapp|us-south.cf.appdomain.cloud|myaccount-org|us-south|
 |myusername-nodeapp|eu-gb.mybluemix.net|myaccount-org|eu-gb|
 
-The **Host name** is the initial part of the DNS subdomain shown on the **Details** panel under the **Routes** section.  Verify you can visit each applications in the browser using `<Host name>.<Domain>`: https://myusername-nodeapp.us-south.cf.appdomain.cloud,  https://myusername-nodeapp.eu-gb.mybluemix.net
-When you see the contents of this table used your values.
-  
+The **Host name** is the initial part of the DNS subdomain shown on the **Details** panel under the **Routes** section.  Verify you can visit each applications in the browser using `<Host name>.<Domain>`: https://myusername-nodeapp.us-south.cf.appdomain.cloud,  https://myusername-nodeapp.eu-gb.mybluemix.net.
 
 The host name will default to the application name but if that does not provide a unique route to the application a more random string will be generated and must be noted in your copy of the table above.
-{:tip}
+{: tip}
 
 ## Register a custom domain with {{site.data.keyword.cis_full_notm}}
 {: #multi-region-webapp-domain_cis}
@@ -154,7 +155,7 @@ When deploying a real world application, you will likely want to use your own do
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
-  {:tip}
+  {: tip}
 
 ## Add Global Load Balancing to the application
 {: #multi-region-webapp-5}
@@ -174,45 +175,46 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 ### Create an origin pool with two origins.
 {: #multi-region-webapp-7}
 
-The two applications look something like this:
+Values are copied from the table of applications (substitute your values):
 
 |Host name|Domain|Organization|Space|
 |--|--|--|--|
 |myusername-nodeapp|us-south.cf.appdomain.cloud|myaccount-org|us-south|
 |myusername-nodeapp|eu-gb.mybluemix.net|myaccount-org|eu-gb|
 
-
 1. Select **Origin pools** and click **Create**.
-2. Enter a name for the pool: myusername-nodeapp.
-3. Enter a name for the first origin, **us-south**, and the full subdomain of the application in Dallas: `<myusername-nodeapp>.us-south.cf.appdomain.cloud`.
-4. Similarly, add another origin, **eu-gb**,  with the full subdomain of the application in London: `<myusername-nodeapp>.eu-gb.mybluemix.net`.
+2. Enter a name for the pool: `myusername-nodeapp`.
+3. Enter a name for the first origin, **us-south**, and the full subdomain of the application in Dallas: `myusername-nodeapp`.`us-south.cf.appdomain.cloud`.
+4. Similarly, add another origin, **eu-gb**,  with the full subdomain of the application in London: `myusername-nodeapp`.`eu-gb.mybluemix.net`.
 4. Select a **Health check region** close to the location of one of your applications.
 4. Select the **Health check** created earlier.
 5. Click **Save**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
 You may need to wait for the health checks to complete and refresh in the browser to see a Healthy status.
-{:tip}
+{: tip}
 
 ### Create a Global Load Balancer (GLB).
 {: #multi-region-webapp-8}
 
 1. Select **Load balancers** and click **Create**.
 1. Keep the defaults of **Enable**: **On** and **Proxy**: **Off**.
-2. Enter the name for the Global Load Balancer, **myusername-nodeapp**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (`http://myusername-nodeapp.<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
+2. Enter the name for the Global Load Balancer, **myusername-nodeapp**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (http://`<gbl_name>`.`<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
 3. Click **Add route**.
 3. Select the **Region**: **Default**.
 3. Select the origin pool that you just created.
 4. Click **Create**.
    ![Global Load Balancer](images/solution1/load_balancer.png)
 
-The applications (.i.e origins) can not yet be reached.  The health checks for the origin subdomains, like `myusername-nodeapp.us-south.cf.appdomain.cloud`, are healthy. The GLB is resolving `myusername-nodeapp.<your_domain_name>` to the IP addresses of one of the Cloud Foundry regions (us-south or eu-gb) in your account based on health. However, when Cloud Foundry receives the request it does not know how to route it to an application.  Cloud Foundry **routes** need to be created to map the subdomain, `myusername-nodeapp.<your_domain_name>`, to the application.  Next step will fix this in each region.
+The applications (.i.e origins) can not yet be reached.  The health checks for the origin subdomains, like `myusername-nodeapp`.`us-south.cf.appdomain.cloud`, are healthy. The GLB is resolving `<glb_name>`.`<your_domain_name>` to the IP addresses of one of the Cloud Foundry regions (us-south or eu-gb) in your account based on health. However, when Cloud Foundry receives the request it does not know how to route it to an application.  Cloud Foundry **routes** need to be created to map the subdomain, `<glb_name>`.`<your_domain_name>`, to the application.  Next step will fix this in each region.
 
 ## Configure custom domain and routes to your application
 {: #multi-region-webapp-9}
 {: step}
 
 {: #add_domain}
+
+Values are copied from the table of applications (substitute your values):
 
 |Host name|Domain|Organization|Space|
 |--|--|--|--|
@@ -229,14 +231,14 @@ In this step, you will map the custom domain name to the secure endpoint for the
    2. Select **US-South** and click **Add**.
 6. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas.
    1. Click **Actions...** > **Edit Routes**.
-   1. Notice the existing route, `<myusername-nodeapp>` . `<us-south.cf.appdomain.com>` (keep this route for health checks).
+   1. Notice the existing route, `myusername-nodeapp` . `us-south.cf.appdomain.com` (keep this route for health checks).
    1. Click **Add Route**.
    1. Enter the GLB hostname you configured earlier, `<glb_name>`, in the **Enter host (optional)** field.
    1. Select the custom domain, `<your_domain_name>`, Click **Save**.
 8. Similarly, configure the domain and route for the application in London.
 
 HTTPS access will not work correctly.  This will be fixed in the step below:  **Bind SSL certificate to your application**
-{:tip}
+{: tip}
 
 At this point, you can visit your application with the URL http://`<glb_name>.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-location applications. You can verify this by stopping your application in Dallas, keeping application in London active, and accessing the application through the Global Load Balancer.
 
@@ -253,7 +255,7 @@ Although this works at this moment, as we have configured continuous delivery in
 	  memory: 256M
 	  instances: 1
 	  routes:
-	  - route: <myusername-nodeapp>.<us-south.cf.appdomain.cloud>
+	  - route: myusername-nodeapp.us-south.cf.appdomain.cloud
 	  - route: <glb_name>.<your_domain_name>
 	  disk_quota: 1024M
    ```
@@ -269,7 +271,7 @@ For the application deployed in London, use a separate manifest to configure the
 	  memory: 256M
 	  instances: 1
 	  routes:
-	  - route: <myusername-nodeapp>.<eu-gb.mybluemix.net>
+	  - route: myusername-nodeapp.eu-gb.mybluemix.net
 	  - route: <glb_name>.<your_domain_name>
 	  disk_quota: 1024M
    ```
@@ -298,7 +300,7 @@ With the Cloud Intenet Services application, take the following steps to set up 
    ![CNAME records](images/solution1/cnames.png)
 
 When using another default domain than `mybluemix.net` such as `cf.appdomain.cloud` or `cf.cloud.ibm.com`, make sure to use the [respective system domain](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-custom-domains#mapcustomdomain).
-{:tip}
+{: tip}
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider.
 
@@ -311,7 +313,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 	  memory: 256M
 	  instances: 1
 	  routes:
-	  - route: <myusername-nodeapp>.<us-south.cf.appdomain.cloud>
+	  - route: myusername-nodeapp.us-south.cf.appdomain.cloud
 	  - route: <your_subdomain>.<your_domain_name>
 	  disk_quota: 1024M
    ```
