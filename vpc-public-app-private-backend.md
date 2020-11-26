@@ -187,7 +187,8 @@ To create a new subnet for the frontend,
 
 1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
-   * Select a location.
+   * Select a resource group same as your VPC.
+   * Select a Location and zone.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 1. Click **Create subnet** to provision it.
@@ -196,9 +197,10 @@ To create a new subnet for the frontend,
 {: #vpc-public-app-private-backend-12}
 
 To create a new security group for the frontend:
-1. Click **Security groups** under Network, then **New security group**.
+1. Click **Security groups** under Network, then click **Create**.
 2. Enter **vpc-pubpriv-frontend-sg** as name and select the VPC you created earlier.
-3. Click **Create security group**.
+3. Select a resource group same as your VPC.
+4. Click **Create security group**.
 
 ### Create a frontend virtual server instance
 {: #vpc-public-app-private-backend-13}
@@ -206,14 +208,16 @@ To create a new security group for the frontend:
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
-2. Click **Attached resources**, then **New instance**.
+2. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
-   1. Select the VPC you created and resource group as earlier.
-   1. Select the same **Location** as before.
-   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check other available profiles, click **All profiles**
-   1. Set **SSH keys** to the the SSH key you created earlier.
-   1. Set **User data** to
+   2. Select the resource group as earlier.
+   3. Select the same **Location** as before.
+   4. Select **Public** type of virtual server.
+   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
+   6. Select **Compute** with 2 vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
+   7. Set **SSH keys** to the the SSH key you created earlier.
+   8. Set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
@@ -223,13 +227,13 @@ To create a virtual server instance in the newly created subnet:
       ```
       {:pre}
       This will install a simple web server into the instance.
-   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
-6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+2. Under **Networking**, select the VPC your created.
+3. Under **Network interfaces**, click on the **Edit** icon
    * Select **vpc-pubpriv-frontend-subnet** as the subnet.
    * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
    * Click **Save**.
    * Click **Create virtual server instance**.
-7. Select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+4. Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click on the **Edit** icon. Under **Floating IP address** ,associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
 {: #vpc-public-app-private-backend-setup-connectivity-frontend-backend}
@@ -247,17 +251,17 @@ The frontend instance has its software installed but it can not yet be reached.
    curl -v -m 30 http://<floating-ip-address-of-the-frontend-vsi>
    ```
    {:pre}
-   The connection should time out eventually.
+   _The connection should time out eventually._
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-2. First, add the **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** for values.
+2. First, add the **inbound** rules by clicking **Add**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** below for values.
 3. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
 4. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
 
 
    | Protocol | Source type| Source | Value    | Description |
    |------------|---------------|----------|-----------|------|
-   | TCP        | Any           | 0.0.0.0/0 | Ports 22-22  | This rule allows connections from any IP address to the frontend web server. |
+   | TCP        | Any           | 0.0.0.0/0 | Ports 80-80  | This rule allows connections from any IP address to the frontend web server. |
    | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
    {: caption="Inbound rules" caption-side="bottom"}
 
@@ -286,7 +290,7 @@ The backend server is running the same web server software as the frontend serve
    ```sh
    curl -v -m 30 http://<private-ip-address-of-the-backend-vsi>
    ```
-   After 30 seconds, the call should timeout. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection.
+   _After 30 seconds, the call should timeout. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection._
 
 ### Configure the backend security group
 {: #vpc-public-app-private-backend-17}
@@ -294,7 +298,7 @@ The backend server is running the same web server software as the frontend serve
 To allow inbound connections to the backend server, you need to configure the associated security group.
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-backend-sg**.
-2. Add the following **inbound** rule using **Add rule**.
+2. Add the following **inbound** rule by clicking **Add**.
 
 
    | Protocol | Source type | Source | Value   | Description |
@@ -318,7 +322,7 @@ With the frontend and backend server software properly installed and working, th
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-secure-maintenance-sg**.
 1. Select **Attached interfaces**.
-1. **Edit interfaces** and uncheck the **vpc-pubpriv-frontend-vsi** and **vpc-pubpriv-backend-vsi** interfaces.
+1. Click **Edit interfaces**, expand and uncheck the **vpc-pubpriv-frontend-vsi** and **vpc-pubpriv-backend-vsi** interfaces.
 1. **Save** the configuration.
 1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to confirm it is still working as expected.
 
@@ -330,10 +334,10 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 {: #vpc-public-app-private-backend-remove-resources}
 {: step}
 
-1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
-2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
+1. In the VPC Infrastructure console, click on **Floating IPs** under **Network**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances by clicking on the respective action menu.
 3. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
-4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
+4. After the subnets have been deleted, switch to **VPCs** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
