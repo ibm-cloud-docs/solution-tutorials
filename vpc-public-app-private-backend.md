@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019
-lastupdated: "2019-10-18"
-lasttested: "2019-06-17"
+  years: 2019,2020
+lastupdated: "2020-11-26"
+lasttested: "2020-11-26"
 
 content-type: tutorial
 services: vpc
@@ -66,7 +66,7 @@ In short, using VPC you can:
 {: #vpc-public-app-private-backend-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Create a Virtual Private Cloud
 {: #vpc-public-app-private-backend-create-vpc}
@@ -81,15 +81,15 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
 {:note}
 
-1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create a VPC**.
-1. Under **New virtual private cloud** section:
+1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.
+1. Under **New Virtual Private Cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
 1. Uncheck SSH and ping from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 1. You will create your first subnet, under **New subnet for VPC**:
    * As a unique name enter **vpc-secure-bastion-subnet**.
-   * Select a location.
+   * Select a **Location**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
@@ -122,11 +122,12 @@ In this section, you will create a subnet, a security group and a virtual server
 
 To create a new subnet for the backend,
 
-1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **Create**.
    * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
-   * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.   
-1. Click **Create subnet** to provision it.
+   * Select a resource group same as your VPC.
+   * Select a Location and zone.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+2. Click **Create subnet** to provision it.
 
 ### Create a backend security group
 {: #vpc-public-app-private-backend-8}
@@ -134,9 +135,10 @@ To create a new subnet for the backend,
 The backend security group controls the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:
-1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **New security group**.
+1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
-3. Click **Create security group**.
+3. Select a resource group same as your VPC.
+4. Click **Create security group**.
 
 You will later edit the security group to add the inbound and outbound rules.
 
@@ -146,14 +148,16 @@ You will later edit the security group to add the inbound and outbound rules.
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
-2. Click **Attached resources**, then **New instance**.
+2. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
-   1. Select the VPC you created and resource group as earlier.
-   1. Select the same **Location** as before.
-   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check available profiles, click **All profiles**.
-   1. Set **SSH keys** to the the SSH key you created earlier.
-   1. Set **User data** to
+   2. Select the resource group as earlier.
+   3. Select the same **Location** as before.
+   4. Select **Public** type of virtual server.
+   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
+   6. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
+   7. Set **SSH keys** to the the SSH key you created earlier.
+   8. Set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
@@ -163,12 +167,12 @@ To create a virtual server instance in the newly created subnet:
       ```
       {:pre}
       This will install a simple web server into the instance.
-   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
-6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+2. Under **Networking**, select the VPC your created.
+3. Under **Network interfaces**, click on the **Edit** icon
    * Select **vpc-pubpriv-backend-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
    * Click **Save**.
-7. Click **Create virtual server instance**.
+4. Click **Create virtual server instance**.
 
 ## Create a frontend subnet, security group and VSI
 {: #vpc-public-app-private-backend-frontend-subnet-vsi}
@@ -262,7 +266,7 @@ The frontend instance has its software installed but it can not yet be reached.
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
    {: caption="Outbound rules" caption-side="bottom"}
 
- 
+
 ### Test the connectivity between the frontend and the backend
 {: #vpc-public-app-private-backend-16}
 
