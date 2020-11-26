@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-06-18"
-lasttested: "2019-06-17"
+lastupdated: "2020-11-26"
+lasttested: "2020-11-26"
 
 content-type: tutorial
 services: vpc
@@ -71,24 +71,25 @@ In this section, you will create and configure a bastion host along with a secur
 ### Create a subnet
 {: #vpc-secure-management-bastion-server-create-bastion-subnet}
 
-1. Click **Subnets** under **Network** on the left pane, then **New subnet**.
-   - Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.
-   - Select a location and zone.
+1. Click **Subnets** under **Network** on the left pane, then click **Create**.
+   - Enter **vpc-secure-bastion-subnet** as name, then select the Virtual Private Cloud you created.
+   - Select a resource group same as your VPC.
+   - Select a Location and zone.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Switch the **Public gateway** to **Attached**.
+2. Switch the **Public gateway** to **Attached**.
 
    Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
    {:tip}
 
-2. Click **Create subnet** to provision it.
+3. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
 {: #vpc-secure-management-bastion-server-create-configure-security-group }
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
-1.  Navigate to **Security groups** and click **New security group**. Enter **vpc-secure-bastion-sg** as name and select your VPC.
-2.  Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
+1.  Navigate to **Security groups** and click **Create**. Enter **vpc-secure-bastion-sg** as name, select your Virtual Private Cloud(VPC) and select a Resource group same as your VPC.
+2.  Now, create the following inbound rules by clicking **Add** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
     {:tip }
@@ -107,21 +108,24 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
-1. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC and resource group.
-1. Select a **Location** and make sure to later use the same location again.
-1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile.
-1. To create a new **SSH key**, click **New key**
+2. Click on **Attached resources** and under Attached instances, click **Create** to provision a New virtual server called **vpc-secure-bastion-vsi** under the same resource group as your subnet.
+3. Select a **Location** and make sure to later use the same location again.
+4. Select **Public** type of virtual server.
+5. Select **Ubuntu Linux** as your Operating System. You can pick any version of the image.
+6. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile by clicking **View all profiles**.
+7. To create a new **SSH key**, click **New key**
    - Enter **vpc-ssh-key** as key name.
+   - Select the same resource group as your VSI.
    - Leave the **Region** as is.
    - Copy the contents of your existing local SSH key and paste it under **Public key**.
    - Click **Add SSH key**.
-1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
-1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+8. Scroll to select the VPC under **Networking**
+9. Under **Network interfaces**, click on the **Edit** icon
    - Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
    - Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    - Click **Save**.
-1. Click **Create virtual server instance**.
-1. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
+10. Click **Create virtual server instance**.
+11. Once the instance is up and **Running**, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP by clicking on the **Edit** icon under **Network interfaces**
 
 ### Test your bastion
 {: #vpc-secure-management-bastion-server-6}
@@ -140,8 +144,8 @@ ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
-1. Navigate to **Security groups** and provision a new security group called **vpc-secure-maintenance-sg** with the outbound rules show in the table below.
-   
+1. Navigate to **Security groups** and **create** a new security group called **vpc-secure-maintenance-sg** with the **outbound** rules show in the table below.
+
  DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
  {:tip }
 
