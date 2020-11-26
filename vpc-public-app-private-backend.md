@@ -83,14 +83,14 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
 
 1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.
 1. Under **New Virtual Private Cloud** section:
-   * Enter **vpc-pubpriv** as name for your VPC.
-   * Select a **Resource group**.
-   * Optionally, add **Tags** to organize your resources.
+   1. Enter **vpc-pubpriv** as name for your VPC.
+   2. Select a **Resource group**.
+   3. Optionally, add **Tags** to organize your resources.
 1. Uncheck SSH and ping from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 1. You will create your first subnet, under **New subnet for VPC**:
-   * As a unique name enter **vpc-secure-bastion-subnet**.
-   * Select a **Location**.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   1. As a unique name enter **vpc-secure-bastion-subnet**.
+   2. Select a **Location**.
+   3. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
@@ -123,10 +123,10 @@ In this section, you will create a subnet, a security group and a virtual server
 To create a new subnet for the backend,
 
 1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **Create**.
-   * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
-   * Select a resource group same as your VPC.
-   * Select a Location and zone.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   1. Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
+   2. Select a resource group same as your VPC.
+   3. Select a Location and zone.
+   4. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 2. Click **Create subnet** to provision it.
 
 ### Create a backend security group
@@ -148,7 +148,7 @@ You will later edit the security group to add the inbound and outbound rules.
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
-2. Click **Attached resources**, under **Attached instances** click **Create**.
+1. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
    2. Select the resource group as earlier.
@@ -167,12 +167,12 @@ To create a virtual server instance in the newly created subnet:
       ```
       {:pre}
       This will install a simple web server into the instance.
-2. Under **Networking**, select the VPC your created.
-3. Under **Network interfaces**, click on the **Edit** icon
-   * Select **vpc-pubpriv-backend-subnet** as the subnet.
-   * Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
-   * Click **Save**.
-4. Click **Create virtual server instance**.
+1. Under **Networking**, select the VPC your created.
+1. Under **Network interfaces**, click on the **Edit** icon
+   1. Select **vpc-pubpriv-backend-subnet** as the subnet.
+   2. Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
+   3. Click **Save**.
+1. Click **Create virtual server instance**.
 
 ## Create a frontend subnet, security group and VSI
 {: #vpc-public-app-private-backend-frontend-subnet-vsi}
@@ -186,10 +186,10 @@ Similar to the backend, you will create a frontend subnet with virtual server in
 To create a new subnet for the frontend,
 
 1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
-   * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
-   * Select a resource group same as your VPC.
-   * Select a Location and zone.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   1. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
+   2. Select a resource group same as your VPC.
+   3. Select a Location and zone.
+   4. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 1. Click **Create subnet** to provision it.
 
@@ -229,10 +229,10 @@ To create a virtual server instance in the newly created subnet:
       This will install a simple web server into the instance.
 2. Under **Networking**, select the VPC your created.
 3. Under **Network interfaces**, click on the **Edit** icon
-   * Select **vpc-pubpriv-frontend-subnet** as the subnet.
-   * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
-   * Click **Save**.
-   * Click **Create virtual server instance**.
+   1. Select **vpc-pubpriv-frontend-subnet** as the subnet.
+   2. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
+   3. Click **Save**.
+   4. Click **Create virtual server instance**.
 4. Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click on the **Edit** icon. Under **Floating IP address** ,associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
@@ -254,9 +254,9 @@ The frontend instance has its software installed but it can not yet be reached.
    _The connection should time out eventually._
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-2. First, add the **inbound** rules by clicking **Add**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** below for values.
-3. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
-4. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
+1. First, add the **inbound** rules by clicking **Add**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** below for values.
+1. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
+1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
 
 
    | Protocol | Source type| Source | Value    | Description |
