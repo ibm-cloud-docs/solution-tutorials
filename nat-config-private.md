@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2020-11-30"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -22,12 +22,16 @@ completion-time:
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # Configure NAT for Internet access from a private network
 {: #nat-config-private}
 {: toc-content-type="tutorial"}
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
+
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [network ACLs](https://{DomainName}/docs/vpc?topic=vpc-using-acls) and [public gateways](https://cloud.ibm.com/docs/vpc?topic=vpc-about-networking-for-vpc#external-connectivity).
+{: note}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
