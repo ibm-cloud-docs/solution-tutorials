@@ -173,7 +173,7 @@ In this section, you will deploy the saved model and test the deployed model,
 ### Test the deployed model
 {: #create-deploy-retrain-machine-learning-model-7}
 
-1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
+1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the `JSON`below as input.
    ```json
       {
       "input_data": [{
@@ -184,6 +184,7 @@ In this section, you will deploy the saved model and test the deployed model,
       }]
     }
    ```
+   {:codeblock}
 2. Click **Predict** and you should see the **Predictions** JSON output under **Result**.
 3. You can change the input data and continue testing your model.
 
@@ -224,7 +225,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    ```
    {:pre}
 
-   If you observe, the code is from the **cURL** tab of the deployment your created above. Thereafter, replacing the [$ARRAY_OF_INPUT_FIELDS] placeholder with  **["sepal_length", "sepal_width", "petal_length","petal_width"]**, `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
+   If you observe, the code is from the **cURL** tab of the deployment your created above. Thereafter, replacing the `[$ARRAY_OF_INPUT_FIELDS]` placeholder with  **["sepal_length", "sepal_width", "petal_length","petal_width"]**, `[$ARRAY_OF_VALUES_TO_BE_SCORED]` placeholder with **[5.1,3.5,1.4,0.2]** and `[$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED]` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
    {:tip}
 
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
@@ -284,7 +285,6 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    4. Copy and paste the credentials without any trailing spaces and click **Connect**
    5. Select the Bucket that starts with `irisproject-donotdelete-`
    6. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-
 3.  Select **species** as your label column and click **Next**.
 4.  Select **all** the four training features and click **Next**.
 5.  Select **Automatic logging** as the **Scoring method** and back on your cloud shell, run the **cURL** code generate the prediction results for logging. Click **Check now** to see **Logging is active Click Next**.
