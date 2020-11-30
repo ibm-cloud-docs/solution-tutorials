@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
-lastupdated: "2020-11-26"
+lastupdated: "2020-11-30"
 lasttested: "2020-11-26"
 
 content-type: tutorial
@@ -66,7 +66,7 @@ In short, using VPC you can:
 {: #vpc-public-app-private-backend-prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Create a Virtual Private Cloud
 {: #vpc-public-app-private-backend-create-vpc}
@@ -81,7 +81,7 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
 {:note}
 
-1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.
+1. Navigate to the **[Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs)** page and click on **Create**.
 1. Under **New Virtual Private Cloud** section:
    1. Enter **vpc-pubpriv** as name for your VPC.
    2. Select a **Resource group**.
