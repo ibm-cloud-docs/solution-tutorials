@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2020-11-23"
-lasttested: "2019-05-20"
+lasttested: "2020-11-30"
 
 content-type: tutorial
 services: cloud-foundry-public, cis, ContinuousDelivery
