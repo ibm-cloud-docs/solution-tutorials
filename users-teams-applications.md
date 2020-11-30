@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-09-03"
-lasttested: "2019-04-19"
+lastupdated: "2020-11-19"
+lasttested: "2020-11-19"
 
 ---
 
@@ -80,7 +80,7 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
   <img src="./images/solution20-users-teams-applications/iam-model.png" style="width: 70%;" alt="Diagram of IAM model" />
 </p>
 
-At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
+Most services in the {{site.data.keyword.cloud_notm}} catalog are managed by using IAM. A few continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.  If you do not have requirements for Cloud Foundry applications and are using resources that support IAM then ignore the Organization and Space text below.
 
 <p style="text-align: center;">
   <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" style="width: 70%;" alt="Diagram of Cloud Foundry model" />
@@ -203,7 +203,6 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add a [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain) to automate the delivery of changes to the kubernetes cluster
 * Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
 * Investigate [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
 
