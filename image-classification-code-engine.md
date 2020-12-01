@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-19"
-lasttested: "2020-09-23"
+lastupdated: "2020-12-01"
+lasttested: "2020-12-01"
 
 content-type: tutorial
-services: codeengine, containers, cloud-object-storage, visual-recognition
+services: codeengine, containers, cloud-object-storage
 account-plan: paid
 completion-time: 2h
 
@@ -27,10 +27,10 @@ completion-time: 2h
 {:note: .note}
 {:beta: .beta}
 
-# Visual recognition with {{site.data.keyword.codeengineshort}}
+# Text analysis with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
 {: toc-content-type="tutorial"}
-{: toc-services="codeengine, containers, cloud-object-storage, visual-recognition"}
+{: toc-services="codeengine, containers, cloud-object-storage"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -41,15 +41,17 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {:beta}
 <!--#/istutorial#-->
 
-In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying an image classification (visual recognition) application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} components - applications and jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
+In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying a text analysis application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} components - applications and jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} components. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
 {{site.data.keyword.codeenginefull_notm}} provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then {{site.data.keyword.codeengineshort}} can host and manage them for you - all on a Kubernetes-based infrastructure. And {{site.data.keyword.codeengineshort}} does this without the need for you to learn, or even know about, Kubernetes. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
 
 {{site.data.keyword.codeengineshort}} helps developers by hiding many of the complex tasks like configuration, dependency management etc., {{site.data.keyword.codeengineshort}} simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
+With {{site.data.keyword.nlufull}}, developers can analyze semantic features of text input, including categories, concepts, emotion, entities, keywords, metadata, relations, semantic roles, and sentiment.
+
 ## Objectives
-{: #image-classification-code-engine-objectives}
+{: #text-analysis-code-engine-objectives}
 
 * Understand {{site.data.keyword.codeenginefull}} and how it simplifies the developer experience.
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
@@ -64,11 +66,11 @@ In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by d
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
 2. Developer connects the frontend (UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
-4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
-5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
+4. User uploads a text file(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
+5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to analyze text by pushing the text to {{site.data.keyword.nlushort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
-{: #image-classification-code-engine-prereqs}
+{: #text-analysis-code-engine-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
@@ -83,7 +85,7 @@ You will find instructions to download and install these tools for your operatin
 
 
 ## Create an {{site.data.keyword.codeenginefull_notm}} project
-{: #image-classification-code-engine-create_code_engine_project}
+{: #text-analysis-code-engine-create_code_engine_project}
 {: step}
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of the components of your project that are typically meant to go together as part of some overall workload.
@@ -113,15 +115,15 @@ Putting components into a single project enables you to manage access control mo
    {:pre}
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
-{: #image-classification-code-engine-deploy_app}
+{: #text-analysis-code-engine-deploy_app}
 {: step}
 
-{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to {{site.data.keyword.codeengineshort}} under the targeted project. This front-end web application will allow users to upload images, while the backend application will write the image to {{site.data.keyword.cos_full_notm}}.
+{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to {{site.data.keyword.codeengineshort}} under the targeted project. This front-end web application will allow users to upload text files, while the backend application will write the file to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications.
 
 ### Deploy a frontend application
-{: #image-classification-code-engine-4}
+{: #text-analysis-code-engine-4}
 
 1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
 
@@ -130,9 +132,9 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.b7bb43f4-525e.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
 
-   The application source code used to build the container images - `ibmcom/*` is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-image-classification) for your reference.
+   The application source code used to build the container images - `ibmcom/*` is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.
    {:tip}
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
@@ -150,7 +152,7 @@ We've already built images for the two applications and pushed them to the publi
 Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Scale the application
-{: #image-classification-code-engine-5}
+{: #text-analysis-code-engine-5}
 
 When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a number of other knobs you have control over. Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
 
@@ -177,17 +179,17 @@ Most of these values have a default set if nothing is provided as an option when
 
     Expected Output:
     ```
-    frontend-i4fmh-2-deployment-6996489d7c-4lq4w   2/2     Running       0          59s
-    frontend-i4fmh-2-deployment-6996489d7c-5d5nx   1/2     Running       0          8s
-    frontend-i4fmh-2-deployment-6996489d7c-697g2   1/2     Running       0          6s
-    frontend-i4fmh-2-deployment-6996489d7c-t27d2   1/2     Running       0          8s
-    frontend-i4fmh-2-deployment-6996489d7c-vzmdd   1/2     Running       0          9s
+    frontend-gxbsr-2-deployment-5f55c4cf6f-869fb  2/2      Running  0         24s
+    frontend-gxbsr-2-deployment-5f55c4cf6f-bg2cn  1/2      Running  0         9s
+    frontend-gxbsr-2-deployment-5f55c4cf6f-ckxqw  2/2      Running  0         9s
+    frontend-gxbsr-2-deployment-5f55c4cf6f-djcj6  2/2      Running  0         9s
+    frontend-gxbsr-2-deployment-5f55c4cf6f-wb6j8  2/2      Running  0         9s
     ```
 
 ### Deploy a backend application and test the connection
-{: #image-classification-code-engine-6}
+{: #text-analysis-code-engine-6}
 
-1. To deploy a new backend application to store your images into {{site.data.keyword.cos_full_notm}}, run this command
+1. To deploy a new backend application to store your text files into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
    ibmcloud code-engine application create --name backend --image ibmcom/backend --cluster-local
    ```
@@ -209,18 +211,18 @@ Most of these values have a default set if nothing is provided as an option when
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
    {:tip}
 
-4. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload an image and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image. Clicking on **Upload image** should also show a similar error message.
+4. Refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload a text file(.txt) and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the text files. Clicking on **Upload text file** should also show a similar error message.
    ![](images/solution54-code-engine/frontend.png)
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
-{: #image-classification-code-engine-0}
+{: #text-analysis-code-engine-0}
 {:connect_cloud_services}
 {: step}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the text files into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.nlushort}} will be used later in the tutorial to perform text analysis on the uploaded text files.
 
-### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
-{: #image-classification-code-engine-create_services}
+### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services
+{: #text-analysis-code-engine-create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
@@ -236,20 +238,20 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    4. Click **Create bucket**
 4. On the left pane under **Endpoints**, Select **Cross Region** resiliency and select a Location near to you.
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
-6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
-   1. Select a region and select **Standard** plan.
-   2. Set **Service name** to **code-engine-vr** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
+6. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
+   1. Select a region and select **Lite** plan.
+   2. Set **Service name** to **code-engine-nlu** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 7. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `vr-for-code-engine` and select **Writer** as the role.
+   1. Give it a name - `nlu-for-code-engine` and select **Writer** as the role.
    2. Click **Add**.
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
-{: #image-classification-code-engine-9}
+{: #text-analysis-code-engine-9}
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
-1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store images in COS.
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store files in COS.
    ```sh
    ibmcloud code-engine application bind --name backend --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
@@ -258,7 +260,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag.
    {:tip}
 
-2. You will also need to provide the application with your Bucket name where you want to store the images, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
+2. You will also need to provide the application with your Bucket name where you want to store the text files, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
    ibmcloud code-engine configmap create --name backend-configuration --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
@@ -280,19 +282,19 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    {:pre}
 
 ## Test the application
-{: #image-classification-code-engine-test_the_app}
+{: #text-analysis-code-engine-test_the_app}
 {: step}
 
-Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading images for image classification. To test, you will create a job configuration and use the job configuration to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service.
+Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading files for text analysis. To test, you will create a job configuration and use the job configuration to run a job to analyze text using {{site.data.keyword.nlushort}} service.
 
 Jobs in {{site.data.keyword.codeengineshort}} are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a {{site.data.keyword.codeengineshort}} application does.
 
 ### Create a job configuration
-{: #image-classification-code-engine-11}
+{: #text-analysis-code-engine-11}
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. When you create a `job`, you can specify workload configuration information that is used each time the job is run. You can create a job from the console or with the CLI.
 
-This job will read images from {{site.data.keyword.cos_full_notm}}, and then classify them using the {{site.data.keyword.visualrecognitionshort}} Service. It will need to have access to service credentials for both services.
+This job will read text files from {{site.data.keyword.cos_full_notm}}, and then analyze them using the {{site.data.keyword.nlushort}} Service. It will need to have access to service credentials for both services.
 
 1. On a terminal, run the following command to create a job configuration,
    ```sh
@@ -300,32 +302,32 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```
    {:pre}
 
-   You can set the version of {{site.data.keyword.visualrecognitionshort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/apidocs/visual-recognition/visual-recognition-v3#versioning)
+   You can set the version of {{site.data.keyword.nlushort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/docs/natural-language-understanding?topic=natural-language-understanding-versioning)
    {:tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to job
-{: #image-classification-code-engine-12}
+{: #text-analysis-code-engine-12}
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
    ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
    {:pre}
-1. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
+2. Similarly, let's bind {{site.data.keyword.nlushort}} service with a prefix `NLU_JOB` to analyze the uploaded text files,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-vr --service-credential vr-for-code-engine --prefix VR_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
    ```
    {:pre}
-2. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
+3. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
    ibmcloud code-engine job get --name backend-job
    ```
    {:pre}
 
 ### Run the job
-{: #image-classification-code-engine-13}
+{: #text-analysis-code-engine-13}
 
-1. Go to the frontend UI and **upload images** for classification.
+1. Go to the frontend UI and **upload text files** for text analysis.
 2. To run a job with the configuration created above, use the `jobrun submit` command,
    ```sh
    ibmcloud code-engine jobrun submit --name backend-jobrun --job backend-job
@@ -345,15 +347,15 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
    {:pre}
-5. In the frontend UI, click on the **refresh** button (next to Upload image) to see the results for each of the uploaded images by expanding **Show results** on each image.
-6. Upload new images or delete individual image by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
+5. In the frontend UI, click on the **refresh** button (next to Upload text file) to see the **Keywords** and **JSON** for each of the uploaded text files.
+6. Upload new files or delete individual file by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
    ```sh
    ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun
    ```
    {:pre}
 
 ## Remove resources
-{: #image-classification-code-engine-cleanup}
+{: #text-analysis-code-engine-cleanup}
 {: step}
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
@@ -362,11 +364,11 @@ This job will read images from {{site.data.keyword.cos_full_notm}}, and then cla
    ```
    {:pre}
 2. Navigate to [Resource List](https://{DomainName}/resources/)
-3. Delete the services you have created:
+3. Delete the services you created:
  * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
- * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
+ * [{{site.data.keyword.nlufull}}](https://{DomainName}/catalog/services/natural-language-understanding)
 
 ## Related resources
-{: #image-classification-code-engine-related_resources}
+{: #text-analysis-code-engine-related_resources}
 
-- [{{site.data.keyword.codeenginefull_notm}} Documentation](/docs/codeengine)
+- [{{site.data.keyword.codeenginefull_notm}} Documentation](https://{DomainName}/docs/codeengine)

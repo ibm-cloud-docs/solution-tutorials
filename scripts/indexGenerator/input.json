@@ -378,9 +378,9 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Visual Recognition with Code Engine",
+          "name": "Text Analysis with Code Engine",
           "url": "image-classification-code-engine.html",
-          "description": "Create a Code Engine project and deploy an image classification application.",
+          "description": "Create a Code Engine project and deploy a text analysis application.",
           "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
           "tags": [
             "Code Engine",
