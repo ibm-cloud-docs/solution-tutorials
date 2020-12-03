@@ -6,7 +6,7 @@ lastupdated: "2020-12-02"
 lasttested: "2020-12-01"
 
 content-type: tutorial
-services: codeengine, containers, cloud-object-storage
+services: codeengine, containers, cloud-object-storage, natural-language-understanding
 account-plan: paid
 completion-time: 2h
 
@@ -30,7 +30,7 @@ completion-time: 2h
 # Text analysis with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
 {: toc-content-type="tutorial"}
-{: toc-services="codeengine, containers, cloud-object-storage"}
+{: toc-services="codeengine, containers, cloud-object-storage, natural-language-understanding"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
