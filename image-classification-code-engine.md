@@ -6,7 +6,7 @@ lastupdated: "2020-12-02"
 lasttested: "2020-12-01"
 
 content-type: tutorial
-services: codeengine, containers, cloud-object-storage
+services: codeengine, containers, cloud-object-storage, natural-language-understanding
 account-plan: paid
 completion-time: 2h
 
@@ -30,7 +30,7 @@ completion-time: 2h
 # Text analysis with {{site.data.keyword.codeengineshort}}
 {: #image_classification_code_engine}
 {: toc-content-type="tutorial"}
-{: toc-services="codeengine, containers, cloud-object-storage"}
+{: toc-services="codeengine, containers, cloud-object-storage, natural-language-understanding"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -88,7 +88,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of {{site.data.keyword.codeengineshort}} entities such as applications, jobs, and builds. Projects are used to manage resources and provide access to its entities.
 
-Putting components into a single project enables you to manage access control more easily. The components within a project share the same private network, which enables them to talk to each other securely.
+Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what is a project, check the [documentation](https://{DomainName}/docs/codeengine?topic=codeengine-manage-project)
 
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
@@ -118,7 +118,7 @@ Putting components into a single project enables you to manage access control mo
 
 {{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your front-end and back-end applications to {{site.data.keyword.codeengineshort}} under the targeted project. This front-end web application will allow users to upload text files, while the backend application will write the file to {{site.data.keyword.cos_full_notm}}.
 
-We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications.
+We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications. You can create applications from the console or CLI.
 
 ### Deploy a frontend application
 {: #text-analysis-code-engine-4}
@@ -287,8 +287,6 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
 Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading files for text analysis. To test, you will create a job configuration and use the job configuration to run a job to analyze text using {{site.data.keyword.nlushort}} service.
 
-Jobs in {{site.data.keyword.codeengineshort}} are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a {{site.data.keyword.codeengineshort}} application does.
-
 ### Create a job configuration
 {: #text-analysis-code-engine-11}
 
@@ -308,7 +306,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 ### Bind the {{site.data.keyword.cloud_notm}} services to job
 {: #text-analysis-code-engine-12}
 
-1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
+1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs to read the uploaded files and to store the results,
    ```sh
    ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
@@ -365,8 +363,8 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    {:pre}
 2. Navigate to [Resource List](https://{DomainName}/resources/)
 3. Delete the services you created:
- * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
- * [{{site.data.keyword.nlufull}}](https://{DomainName}/catalog/services/natural-language-understanding)
+ * {{site.data.keyword.cos_full}}
+ * {{site.data.keyword.nlufull}}
 
 ## Related resources
 {: #text-analysis-code-engine-related_resources}

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
-lastupdated: "2020-06-25"
-lasttested: "2020-06-25"
+lastupdated: "2020-12-03"
+lasttested: "2020-12-03"
 
 ---
 
@@ -65,7 +65,7 @@ One of the fundamental principles of Cloud Computing is the sharing of resources
 
 To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some of the compute options.
 
-Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc) to benefit from isolation of compute and network resources.
+Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc-ext) to benefit from isolation of compute and network resources.
 
   Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
   {: #tip}
@@ -80,18 +80,18 @@ When working with database systems, consider using service plans with dedicated 
 
 In most cases an application consists of the app itself and one or many services. These services are reachable over the public internet, but can also accessed on so-called [service endpoints](https://{DomainName}/docs/account?topic=account-service-endpoints-overview). To increase security by isolating network traffic, follow the [instructions to enable virtual routing and forwarding (VRF)](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint). In the documentation, you can also find a [list of services that support private endpoints](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint#use-service-endpoint).
 
-When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=label%3Aibm%20vpn). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
+When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=vpn%20label%3Aibm_created#search_results). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
 
 It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
 
 ## Evaluate and monitor app security
 {: #extended-app-security-evaluate_security}
 
-Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/appid?topic=appid-at-monitor-runtime) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-getting-started). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-cloud_services).
+Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/appid?topic=appid-at-events#at-monitor-runtime-activity) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-getting-started). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-cloud_services).
 
 By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
 
-The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs/security-advisor?topic=security-advisor-about) enables centralized security management through a unified dashboard. It alerts security admins to issues and guides them to understand, prioritize, manage, and resolve security issues that are related to their cloud applications and workloads. [Access the advisor portal](https://{DomainName}/security-advisor#/overview) and explore the offered security services, add plugins to your {{site.data.keyword.containershort_notm}} clusters to gain additional security insights.
+The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs/security-advisor?topic=security-advisor-about) enables centralized security management through a unified dashboard. It alerts security admins to issues and guides them to understand, prioritize, manage, and resolve security issues that are related to their cloud applications and workloads. [Access the advisor portal](https://{DomainName}/security-advisor#/dashboard) and explore the offered security services, add plugins to your {{site.data.keyword.containershort_notm}} clusters to gain additional security insights.
 
 <p style="text-align: center;">
   ![Security Advisor](images/solution51-extended-app-security/Sol51_SecurityAdvisor.png)
