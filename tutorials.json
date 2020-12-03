@@ -15,10 +15,10 @@
       "solutions": [
         {
           "name": "Getting Started",
-          "url": "getting-started.html",
+          "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-10-22"
+          "lastUpdated": "2020-11-24"
         }
       ]
     },
@@ -140,7 +140,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-05-17"
+          "lastUpdated": "2020-11-04"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -258,15 +258,15 @@
           "lastUpdated": "2020-08-12"
         },
         {
-          "name": "Visual Recognition with Code Engine",
+          "name": "Text Analysis with Code Engine",
           "url": "image-classification-code-engine.html",
-          "description": "Create a Code Engine project and deploy an image classification application.",
+          "description": "Create a Code Engine project and deploy a text analysis application.",
           "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
           "tags": [
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2020-10-19"
+          "lastUpdated": "2020-12-02"
         }
       ]
     },
@@ -319,7 +319,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-11-18"
+          "lastUpdated": "2020-11-23"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -375,7 +375,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2020-06-25"
+          "lastUpdated": "2020-12-03"
         }
       ]
     },
@@ -478,7 +478,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-09-04"
+          "lastUpdated": "2020-11-30"
         }
       ]
     },
@@ -520,7 +520,7 @@
             "DevOps"
           ],
           "guide": true,
-          "lastUpdated": "2020-09-03"
+          "lastUpdated": "2020-11-19"
         }
       ]
     },
@@ -542,7 +542,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -595,7 +595,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
@@ -649,7 +649,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-02-03"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -663,7 +663,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -676,7 +676,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2020-11-19"
         },
         {
           "name": "VPN into a secure private network",
@@ -690,7 +690,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "Linking secure private networks over the IBM network",
@@ -705,7 +705,7 @@
             "VLAN Spanning",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2020-11-30"
         },
         {
           "name": "Hosting web applications from a secure private network",
@@ -720,7 +720,7 @@
             "Virtual Router Appliance VPN",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2020-11-30"
         }
       ]
     },
