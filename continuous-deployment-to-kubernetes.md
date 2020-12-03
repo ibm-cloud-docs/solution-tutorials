@@ -198,6 +198,7 @@ In this step, you will clean up the resources to remove what you created above.
   - Copy the Git URL and paste into a browser
   - In the git repository: select Settings on the right then General > Advanced > Remove Project
 - Delete the toolchain.
+- Delete the images from the Kubernetes Registry
 <!--##istutorial#-->
 - Delete the cluster.
 <!--#/istutorial#-->
