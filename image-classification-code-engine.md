@@ -281,11 +281,14 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```
    {:pre}
 
+5. Go to the frontend UI and **upload text files** for text analysis. You should see the uploaded files with `Not analyzed` tag on them.
+
+
 ## Test the application
 {: #text-analysis-code-engine-test_the_app}
 {: step}
 
-Now that you have the backend application connected to the frontend application and provided all the required credentials, let's test it by uploading files for text analysis. To test, you will create a job to specify workload configuration information that is used each time that the job is run to analyze text using {{site.data.keyword.nlushort}} service.
+Now, you have the backend application connected to the frontend application. You have provided all the required credentials through service binding and uploaded files for text analysis. To complete the test, you will create a job to specify workload configuration information that is used each time that the job is run to analyze text using {{site.data.keyword.nlushort}} service.
 
 ### Create a job
 {: #text-analysis-code-engine-11}
@@ -325,8 +328,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 ### Run the job
 {: #text-analysis-code-engine-13}
 
-1. Go to the frontend UI and **upload text files** for text analysis.
-2. To run a job with the configuration created above, use the `jobrun submit` command,
+1. To run a job with the configuration created above, use the `jobrun submit` command,
    ```sh
    ibmcloud code-engine jobrun submit --name backend-jobrun --job backend-job
    ```
@@ -335,18 +337,18 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    When you run a job, you can override many of the variables that you set in the job configuration. To check the variables, run `ibmcloud code-engine jobrun submit --help`.
    {:tip}
 
-3. To check the status of the `jobrun`, run the following command
+2. To check the status of the `jobrun`, run the following command
    ```sh
    ibmcloud code-engine jobrun get --name backend-jobrun
    ```
    {:pre}
-4. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look something like `backend-jobrun-1-0`.
+3. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look something like `backend-jobrun-1-0`.
    ```sh
    ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
    {:pre}
-5. In the frontend UI, click on the **refresh** button (next to Upload text file) to see the **Keywords** and **JSON** for each of the uploaded text files.
-6. Upload new files or delete individual file by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
+4. In the frontend UI, click on the **refresh** button (next to Upload text file) to see the **Keywords** and **JSON** for each of the uploaded text files. The tag on each file should now change to `Analyzed`.
+5. Upload new files or delete individual file by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
    ```sh
    ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun
    ```
