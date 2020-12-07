@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-09-03"
-lasttested: "2019-12-05"
+lastupdated: "2020-12-07"
+lasttested: "2020-12-07"
 
 content-type: tutorial
 services: containers, cloud-object-storage, Activity-Tracker-with-LogDNA, Registry, certificate-manager, appid, Cloudant, key-protect, Log-Analysis-with-LogDNA
@@ -299,17 +299,16 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-4. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
+4. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$IMAGE_REPOSITORY`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`, `$BASENAME`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
 | Variable | Value | Description |
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
-| `$REGISTRY_URL` | *us.icr.io* | The registry where the image was built in the previous section. |
-| `$REGISTRY_NAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
-| `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the container image. |
+| `$IMAGE_REPOSITORY` | *us.icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$BASENAME` | *secure-file-storage* | The prefix used to identify resources. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
 {: tip}
@@ -440,7 +439,6 @@ In this tutorial, services are utilized for different purposes, from storing fil
 - replacing the access data in existing Kubernetes secrets and applying the changes,
 - and, after verification, deactivating the old credentials by deleting the old service keys.
 
-The [GitHub repository](https://github.com/IBM-Cloud/secure-file-storage) for this tutorial includes scripts to automate the steps, either by invoking them on the command line or as part of a continuous delivery pipeline.
 
 ## Expand the tutorial
 {: #cloud-e2e-security-21}
