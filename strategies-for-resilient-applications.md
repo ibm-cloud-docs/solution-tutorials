@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-01-23"
-lasttested: "2019-05-28"
+lastupdated: "2020-12-07"
+lasttested: "2019-12-07"
 
 ---
 
@@ -125,7 +125,7 @@ You can learn more about regions and zones [here](https://{DomainName}/docs/cont
 
 This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
-Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#databaseservices), and [non-database-services](#nondatabaseservices).
+Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#strategies-for-resilient-applications-databaseservices), and [non-database-services](#strategies-for-resilient-applications-nondatabaseservices).
 
 ### Cloud Foundry
 {: #strategies-for-resilient-applications-10}
@@ -205,7 +205,7 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 ## Databases and application files
 {: #strategies-for-resilient-applications-databaseservices}
 
-{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
+{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog?category=databases#services) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
 
 **Key features:**
 
@@ -236,7 +236,7 @@ Refer to [these instructions](https://{DomainName}/docs/Cloudant?topic=Cloudant-
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
 {: #strategies-for-resilient-applications-17}
 
-{{site.data.keyword.cloud_notm}} offers several [Db2 database services](https://{DomainName}/catalog/?search=db2). These are:
+{{site.data.keyword.cloud_notm}} offers several Db2 database services. These are:
 
 - [**{{site.data.keyword.Db2_on_Cloud_short}}**](https://{DomainName}/catalog/services/db2): A fully-managed cloud SQL database for typical operational, OLTP-like workloads.
 - [**{{site.data.keyword.dashdbshort_notm}}**](https://{DomainName}/catalog/services/db2-warehouse): A fully-managed cloud data warehouse service for high performance, petabyte-scale analytic workloads. It offers both SMP and MPP service plans and utilizes an optimized columnar data store and in-memory processing.
@@ -257,7 +257,7 @@ More information is available in the [High Availability documentation](https://{
 {{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-bnr) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for}}
-{: #strategies-for-resilient-applications-20}
+{: #strategies-for-resilient-applications-databaseservices}
 
 {{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:
 * [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
