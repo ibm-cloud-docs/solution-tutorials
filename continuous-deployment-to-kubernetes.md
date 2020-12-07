@@ -72,14 +72,14 @@ This tutorial requires:
 Create a cluster
 {: shortdesc}
 
-1. Open [kubernetes clusters](https://cloud.ibm.com/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
-1. Click **Create cluster**
-1. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure
-1. Choose desired resource group
-1. Choose desired Geography, Availability and Metro
-1. One zone, one worker node per zone and the smallest **flavor** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial.
-1. Master service endpoint of **Public endpoint only**
-1. Choose a cluster name that you can remember
+1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
+2. Click **Create cluster**
+3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure
+4. Choose desired resource group
+5. Choose desired Geography, Availability and Metro
+6. One zone, one worker node per zone and the smallest **flavor** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial.
+7. Master service endpoint of **Public endpoint only**
+8. Choose a cluster name that you can remember
 
 **Note:** Do not proceed until your workers are ready.
 <!--#/istutorial#-->
@@ -132,14 +132,14 @@ The toolchain will build your application and deploy it to the cluster.
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
-1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains`
 1. Click the **Eclipse Orion Web IDE** tile.
 1. Expand the `<your-initial>-mynodestarter` and then `public`.
 1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
 1. On the left in the Outgoing section click **Push**.
-1. Click on the arrow at the top to get back to the toolchain. 
+1. Click on the arrow at the top to get back to the toolchain.
 1. Click on the **Delivery Pipeline** tile.
 1. Notice a new **BUILD** has started.
 1. Wait for the **DEPLOY** stage to complete.
