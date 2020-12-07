@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-10-07"
-lasttested: "2019-06-04"
+  years: 2017, 2019, 2020
+lastupdated: "2020-12-07"
+lasttested: "2020-12-07"
 
 content-type: tutorial
 services: openwhisk, mobilepush, appid, Cloudant, tone-analyzer
@@ -96,7 +96,7 @@ Additionally you will need the following software and accounts:
    3. Bash shell, cURL
    {: swift}
 
-In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} tutorial for either [Android](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-android-mobile-push-analytics#android-mobile-push-analytics) or [iOS](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
+In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} steps for either [Android](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_android) or [iOS](https:///docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_ios) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
 
 For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
@@ -179,7 +179,7 @@ Set the location where services should be created:
    {: pre}
 
    ```sh
-   ibmcloud resource service-instance-create serverlessfollowup-tone tone-analyzer lite $REGION 
+   ibmcloud resource service-instance-create serverlessfollowup-tone tone-analyzer lite $REGION
    ```
    {: pre}
 
@@ -226,7 +226,7 @@ When a user submits a new feedback, the application will analyze this feedback a
       2. and one with the package name set to: **serverlessfollowup.app**
    4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
    5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
-   6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
+   6. Navigate to the **Push Notifications** service page and under **Configure service**, click **Configure** on the **Android** tile and set the value of the Sender ID and Server Key.
    {: java}
 
 ### Configure Apple Push Notifications Service (APNs)
@@ -236,7 +236,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics-obtain_apns_credentials) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_2#enable-push-ios-notifications) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend
@@ -282,8 +282,11 @@ With all the services configured, you can now deploy the serverless backend. The
    ```sh
    cp template.local.env local.env
    ```
-3. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
- and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   {: pre}
+3. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}} serviceand {{site.data.keyword.appid_short}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources) (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   You can find the credentials for each of the service under **Service credentials** tab. If you don't see an auto-generated credential, click **New credential** to create one.
+   {:tip}
+
 4. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
    ```sh
    ./deploy.sh --install
@@ -301,8 +304,11 @@ With all the services configured, you can now deploy the serverless backend. The
    ```sh
    cp template.local.env local.env
    ```
-2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
-   and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   {:pre}
+2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}} serviceand {{site.data.keyword.appid_short}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources) (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   You can find the credentials for each of the service under **Service credentials** tab. If you don't see an auto-generated credential, click **New credential** to create one.
+   {:tip}
+
 3. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
 
    ```sh
@@ -312,6 +318,7 @@ With all the services configured, you can now deploy the serverless backend. The
 
    You can use `./deploy.sh --uninstall` to remove the {{site.data.keyword.openwhisk_short}} artifacts once you have completed the tutorial.
    {: tip}
+4. Copy and **save** the `namespace` from the output of the `install` command above for future reference.
 
 ## Configure and run a native mobile application to collect user feedback
 {: #serverless-mobile-backend-mobile_app}
@@ -319,8 +326,8 @@ With all the services configured, you can now deploy the serverless backend. The
 
 Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
-1. With Android Studio, open the project located in the `android` folder of your checkout directory.
-2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the organization and space names where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch command prompt or terminal and run the command
+1. Launch **Android Studio**, open the project located in the `android` folder of your checkout directory.
+2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and namespace where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch command prompt or terminal and run the command
    ```sh
    ibmcloud fn property get --apihost
    ```
@@ -374,7 +381,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
    ```
    {: pre}
 
-2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the {{site.data.keyword.Bluemix_notm}} console.
+2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources).
 
 ## Related content
 {: #serverless-mobile-backend-15}
