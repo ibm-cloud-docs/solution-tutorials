@@ -203,7 +203,7 @@ The components required for such architecture:
 The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
 
 ## Databases and application files
-{: #strategies-for-resilient-applications-databaseservices}
+{: #databases-and-application-files}
 
 {{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog?category=databases#services) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
 
