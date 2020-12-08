@@ -210,7 +210,8 @@ The repository contains Android application code with required gradle dependenci
    {:pre}
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
-   The ASSISTANT URL is from the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. NOT the workspace URL.
+
+   You can find the ASSISTANT URL in the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. The Assistant URL is NOT same as the workspace URL.
    {:tip}
 
    ```xml
