@@ -298,7 +298,8 @@ To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
 2. Once a Dockerfile is created, next you would need to build the container image and push it to {{site.data.keyword.registrylong_notm}}. You can build a container using a command like:
    ```sh
-   ibmcloud cr build -t <image_name> <directory_of_Dockerfile>
+   docker build . -t <image_name>
+   docker push <image_name>
    ```
    {: pre}
 
