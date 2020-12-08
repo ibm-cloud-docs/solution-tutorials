@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-12-12"
-lasttested: "2019-06-10"
+  years: 2017, 2019, 2020
+lastupdated: "2020-12-08"
+lasttested: "2020-12-08"
 
 ---
 
@@ -22,7 +22,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-getting-started) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-getting-started) delivers powerful tools by combining container and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
@@ -71,7 +71,7 @@ The following diagram shows an example of a modern container architecture that r
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.
 2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine.
 3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes.
-4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/?category=data).
+4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services).
 
 ### VMs, containers, and Kubernetes
 {: #vm-to-containers-and-kubernetes-4}
@@ -141,8 +141,8 @@ With Kubernetes, you have two options for handling databases:
    - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile) here.
    - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret).
    - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml).
-2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/?category=data). To use this option, you would need to do the following:
-   - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/?category=data).
+2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To use this option, you would need to do the following:
+   - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services).
    - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
    - Use the database-as-a-service (DBaaS) in your application.
 
@@ -235,7 +235,7 @@ Here are some of the key principles required:
 {: #vm-to-containers-and-kubernetes-17}
 {: secrets}
 
-It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a docker image.
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
 
 One way of using secrets in Kubernetes in by doing something like this:
 
@@ -258,7 +258,7 @@ One way of using secrets in Kubernetes in by doing something like this:
 ## Containerize your app
 {: #vm-to-containers-and-kubernetes-build_docker_images}
 
-To containerize your app, you must create a Docker image.
+To containerize your app, you must create a container image.
 {: shortdesc}
 
 An image is created from a [Dockerfile](https://docs.docker.com/engine/reference/builder/#usage), which is a file that contains instructions and commands to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
@@ -336,8 +336,8 @@ In this tutorial, you learned the following:
 - How to define clusters for different environment types (dev, test, and production).
 - How to handle data storage and the importance of persistent data storage.
 - Apply the 12-factor principles to your app and use secrets for credentials in Kubernetes.
-- Build docker images and push them to {{site.data.keyword.registrylong_notm}}.
-- Create Kubernetes deployment files and deploy the Docker image to Kubernetes.
+- Build container images and push them to {{site.data.keyword.registrylong_notm}}.
+- Create Kubernetes deployment files and deploy the container image to Kubernetes.
 
 ## Put everything learned to practice, run the JPetStore app in your cluster
 {: #vm-to-containers-and-kubernetes-runthejpetstore}
