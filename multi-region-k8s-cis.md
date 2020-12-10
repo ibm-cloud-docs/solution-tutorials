@@ -265,9 +265,9 @@ Repeat the following steps for the London location:
   * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
 * In the [Deploy the application to the Kubernetes cluster](#multi-region-k8s-cis-deploy_application) replace:
   * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
-* In the [Build and push a Docker image to the location-specific registry](#push_image) replace:
+* In the [Build and push a Docker image to the location-specific registry](#multi-region-k8s-cis-push_image) replace:
   * the registry **us.icr.io** with **uk.icr.io**.
-* [Configure the Ingress for the DNS subdomain](#CSALB_IP_subdomain)
+* [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress)
 
 ## Configure multi-location load-balancing
 {: #multi-region-k8s-cis-4}
@@ -279,7 +279,7 @@ In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
-* to retrieve the IP addresses or subdomain names of the Kubernetes clusters,
+* to retrieve the Ingress Subdomain of the Kubernetes clusters,
 * to configure health checks to validate the availability of your application,
 * and to define origin pools pointing to the clusters.
 
@@ -303,7 +303,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 ### Verify the Global Load Balancer name
 {: #multi-region-k8s-cis-12}
 
-Earlier in [Configure the Ingress for the DNS subdomain](#CSALB_IP_subdomain) you chose a `<glb_name>.<your_domain_name>`.  Verify the `<your_domain_name>` is consistent.  Verify the `<glb_name>` is not used by an existing GLB or by existing DNS record:
+Earlier in [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress) you chose a `<glb_name>.<your_domain_name>`.  Verify the `<your_domain_name>` is consistent.  Verify the `<glb_name>` is not used by an existing GLB or by existing DNS record:
 1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the left navigation menu to select **Reliability** > **Global Load Balancers**.
 1. Select the **Load balancers** tab and inspect.
 1. Select the  **Reliability** > **DNS** and inspect.
@@ -389,9 +389,9 @@ Repeat the process to create the following:
 
 With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
 
-1. Click **Create**
+4. Click **Create**
 
-At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster - or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
+At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
 
 ## Secure the application
 {: #multi-region-k8s-cis-secure_via_CIS}
