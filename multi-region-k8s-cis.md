@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-08-12"
-lasttested: "2019-06-03"
+lastupdated: "2020-12-09"
+lasttested: "2020-12-09"
 
 content-type: tutorial
 services: containers, Registry, cis
@@ -455,9 +455,9 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 {:related}
 
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
-* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
+* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers)
 * [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/Registry?topic=Registry-registry_overview)
 * [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
-* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
+* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
