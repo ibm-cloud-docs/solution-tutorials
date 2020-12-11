@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-12-08"
+lastupdated: "2020-12-11"
 lasttested: "2020-12-08"
 
 ---
@@ -50,7 +50,6 @@ Depending on the type of app that you have, the steps to migrate your app might 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
 <p style="text-align: center;">
-   
    ![Architecture diagram](images/solution30/traditional_architecture.png)
 </p>
 
@@ -235,14 +234,14 @@ Here are some of the key principles required:
 {: #vm-to-containers-and-kubernetes-17}
 {: secrets}
 
-It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or SSH keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
 
 One way of using secrets in Kubernetes in by doing something like this:
 
-1. Create a file called `watson-secrets.txt` and store the service credentials inside it.
+1. Create a file called `cloud-secrets.txt` and store the service credentials of any cloud service inside it.
    ```
    {
-       "url": "https://gateway.watsonplatform.net/visual-recognition/api",
+       "url": "<SERVICE_URL>",
        "api_key": <API_Key>
    }
    ```
@@ -251,7 +250,7 @@ One way of using secrets in Kubernetes in by doing something like this:
 2. Then, create a Kubernetes secret by running a command below and verify that the secret is created by using `kubectl get secrets` after running the command below:
 
    ```sh
-   kubectl create secret generic watson-visual-secret --from-file=watson-secrets.txt=./watson-secrets.txt
+   kubectl create secret generic cloud-service-secret --from-file=cloud-secrets.txt=./cloud-secrets.txt
    ```
    {: pre}
 
@@ -314,7 +313,7 @@ After a container image is built and pushed to the cloud, next you need to deplo
 
 To create Kubernetes deployment.yaml files, you would need to do something like this:
 
-1. Create a deployment.yaml file, here is an example of a [deployment YAML](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) file.
+1. Create a deployment.yaml file, here is an example of a [deployment YAML](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml) file.
 
 2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
@@ -343,7 +342,7 @@ In this tutorial, you learned the following:
 ## Put everything learned to practice, run the JPetStore app in your cluster
 {: #vm-to-containers-and-kubernetes-runthejpetstore}
 
-To put everything you've learned in practice, follow the [demonstration](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice.
+To put everything you've learned in practice, follow the [demonstration](https://github.com/IBM-Cloud/jpetstore-kubernetes/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by running image classification as a separate microservice.
 
 ## Related Content
 {: #vm-to-containers-and-kubernetes-related}
