@@ -323,6 +323,11 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
    ```
    {: codeblock}
+   You can check for existing add-ons with this command:
+   ```sh
+      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
 3. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
    ```sh
    ibmcloud ks ingress secret ls -c <your-cluster-name>
@@ -353,18 +358,28 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 <!--##isworkshop#-->
 <!--
 1. Gain access to your cluster as described on the **Access** tab of your cluster.
-2. Create the secret used by the application to obtain service credentials:
+2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
+   ```sh
+   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+   You can check for existing add-ons with this command:
+   ```sh
+      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+3. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
-3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
    ```
    {: codeblock}
-4. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
-4. Deploy the app.
+5. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
