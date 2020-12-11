@@ -31,7 +31,7 @@ Solution Tutorials
             serverless-api-webapp.md
             multi-region-serverless.md
             application-log-analysis.md
-            image-classification-code-engine.md
+            text-analysis-code-engine.md
 
         {: .topicgroup}
         Chatbots
@@ -48,8 +48,6 @@ Solution Tutorials
 
         {: .topicgroup}
         Mobile
-            ios-mobile-push-analytics.md
-            android-mobile-push-analytics.md
             serverless-mobile-backend.md
 
         {: .topicgroup}
@@ -143,7 +141,7 @@ Solution Tutorials
 
         {: .topicgroup}
         Code Engine
-            image-classification-code-engine.md
+            text-analysis-code-engine.md
 
         {: .topicgroup}
         Virtual Servers
