@@ -301,7 +301,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
    {:tip}
 
 ### Verify the Global Load Balancer name
-{: #multi-region-k8s-cis-12}
+{: #multi-region-k8s-cis-glb}
 
 Earlier in [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress) you chose a `<glb_name>.<your_domain_name>`.  Verify the `<your_domain_name>` is consistent.  Verify the `<glb_name>` is not used by an existing GLB or by existing DNS record:
 1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the left navigation menu to select **Reliability** > **Global Load Balancers**.
