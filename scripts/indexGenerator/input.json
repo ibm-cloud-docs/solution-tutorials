@@ -379,7 +379,7 @@
         },
         {
           "name": "Text Analysis with Code Engine",
-          "url": "image-classification-code-engine.html",
+          "url": "text-analysis-code-engine.html",
           "description": "Create a Code Engine project and deploy a text analysis application.",
           "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
           "tags": [

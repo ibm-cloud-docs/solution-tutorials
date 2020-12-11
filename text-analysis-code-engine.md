@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-12-02"
+lastupdated: "2020-12-11"
 lasttested: "2020-12-01"
 
 content-type: tutorial
@@ -28,7 +28,7 @@ completion-time: 2h
 {:beta: .beta}
 
 # Text analysis with {{site.data.keyword.codeengineshort}}
-{: #image_classification_code_engine}
+{: #text-analysis-code-engine}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, containers, cloud-object-storage, natural-language-understanding"}
 {: toc-completion-time="2h"}
