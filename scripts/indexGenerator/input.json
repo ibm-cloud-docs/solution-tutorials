@@ -379,7 +379,7 @@
         },
         {
           "name": "Text Analysis with Code Engine",
-          "url": "image-classification-code-engine.html",
+          "url": "text-analysis-code-engine.html",
           "description": "Create a Code Engine project and deploy a text analysis application.",
           "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
           "tags": [
@@ -542,37 +542,6 @@
       "name": "Mobile",
       "anchor": "mobile",
       "solutions": [
-        {
-          "name": "iOS mobile app with Push Notifications",
-          "url": "ios-mobile-push-analytics.html",
-          "description": "Create an iOS Swift application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution6/Architecture.png",
-          "tags": [
-            "iOS",
-            "Swift",
-            "Push Notifications"
-          ],
-          "requirements": [
-            "xcode",
-            "app_id"
-          ],
-          "supportsCloudShell": "not_applicable"
-        },
-        {
-          "name": "Android native mobile app with Push Notifications",
-          "url": "android-mobile-push-analytics.html",
-          "description": "Write an Android native application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution9/Architecture.png",
-          "tags": [
-            "Android",
-            "Java",
-            "Push Notifications"
-          ],
-          "requirements": [
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable"
-        },
         {
           "name": "Mobile application with a serverless backend",
           "url": "serverless-mobile-backend.html",

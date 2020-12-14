@@ -69,9 +69,7 @@ This tutorial requires:
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-Create a cluster
-{: shortdesc}
-
+Create a cluster:
 1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
 2. Click **Create cluster**
 3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure

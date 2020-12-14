@@ -239,7 +239,7 @@ In the following, create these resources by configuring and then running a setup
    - 3 security groups with ingress and egress rules
    - 2 VSIs: vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
 
-   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
+   Note the values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create an on-premises virtual server
 {: #vpc-site2site-vpn-create-onprem}
@@ -253,21 +253,32 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
    ```
    {: codeblock}
 
-3. Note down the returned values for **VSI_ONPREM_IP** and **ONPREM_CIDR**.
+3. Note down the returned values for **VSI_ONPREM_IP** and **ONPREM_CIDR**.  These values have also been added to the file **network_config.sh**
 
 
 ### Create the Virtual Private Network gateway and connection
 {: #vpc-site2site-vpn-create-vpn}
 
-In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
+In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.  Values that come from the **network_config.sh** file created earlier are referenced with a **$x** like **$VSI_ONPREM_IP**
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
-2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
-3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (**VSI_ONPREM_IP**). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
-4. For **Local subnets** use the information provided for **CLOUD_CIDR** and add the CIDR for the IBM Cloud service endpoints: 166.8.0.0/14, 161.26.0.0/16. For **Peer subnets** the one for **ONPREM_CIDR**.
-5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
-6. Wait for the VPN gateway to become available (you may need to refresh the screen).
-7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
+1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPN gateways** in the navigation tab and insure the **VPN Gateway** tab is selected and click **Create**.  In the form **New VPN gateway for VPC**
+1. Set **VPN gateway name** to **vpns2s-gateway**
+1. Select the **Virtual Private Cloud** from the drop down created or specified earlier
+1. Select the same resource group
+1. Select **vpns2s-cloud-subnet** as the subnet.
+1. Select **Policy-based** as the **Mode**
+1. Leave **New VPN connection for VPC** activated. 
+1. Set **VPN connection name** to **vpns2s-gateway-conn**.
+1. Set **Peer gateway address** to **$VSI_ONPREM_IP** (the floating IP address of **vpns2s-onprem-vsi**).
+1. Set **Preshared key** to **20_PRESHARED_KEY_KEEP_SECRET_19**
+1. Set **Local subnets** to **$CLOUD_CIDR**
+1. Set **Peer subnets** to **$ONPREM_CIDR**.
+1. Leave the defaults for **Dead peer detection**, IKE policy - Auto (IKEv2) and IPsec Policy - Auto
+1. Click **Create VPN gateway**
+
+
+- Wait for the VPN gateway to become available (you may need to refresh the screen).
+- Note the assigned VPN gateway **IP address** it will be referenced as **$GW_CLOUD_IP** below.
 
 ### Create the on-premises Virtual Private Network gateway
 {: #vpc-site2site-vpn-10}
@@ -298,7 +309,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    {:pre}
 
    ```sh
-   apt-get install strongswan
+   apt-get install strongswan -y
    ```
    {:pre}
 
@@ -319,14 +330,14 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
+5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **$VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
-   VSI_ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   $VSI_ONPREM_IP $GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:codeblock}
 
-6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **$ONPREM_IP**, **$ONPREM_CIDR**, **$GW_CLOUD_IP**, and **$CLOUD_CIDR** with the respective known values.
 
    ```sh
    # basic configuration
@@ -340,10 +351,10 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    conn tutorial-site2site-onprem-to-cloud
       authby=secret
       left=%defaultroute
-      leftid=VSI_ONPREM_IP
-      leftsubnet=ONPREM_CIDR
-      right=GW_CLOUD_IP
-      rightsubnet=CLOUD_CIDR,166.8.0.0/14,161.26.0.0/16
+      leftid=VSI_$ONPREM_IP
+      leftsubnet=$ONPREM_CIDR
+      right=$GW_CLOUD_IP
+      rightsubnet=$CLOUD_CIDR,166.8.0.0/14,161.26.0.0/16
       ike=aes256-sha2_256-modp1024!
       esp=aes256-sha2_256!
       keyingtries=0
@@ -430,9 +441,10 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: codeblock}
 
-2. Now copy over the code for the app and the credentials from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI.
+2. The app is only run on the cloud VSI but some of the configuration information is also needed on the on premesis VSI so copy the directory to both computers.  The command uses the bastion as jump host to the cloud VSI.
    ```sh
-   scp -r  -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
+   scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
+   scp -r nodejs-graphql root@$VSI_ONPREM_IP:nodejs-graphql
    ```
    {:pre}
 2. Connect to the cloud VSI, again using the bastion as jump host.
@@ -449,7 +461,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 
 4. Install Node.js and the Node package manager (NPM).
    ```sh
-   apt-get update; apt-get install nodejs npm
+   apt-get update; apt-get install nodejs npm -y
    ```
    {:pre}
 
@@ -574,13 +586,14 @@ With the microservice app set up and running, test the scenario by accessing the
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
 1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the
-**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later.
+**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.connection.cli.composed to be used later if you jave the jq command handy this script will pull it out of the file: `jq '.[]|.credentials.connection.cli.composed' pg_credentials.json`.
 
 2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
 
    ```sh
-   apt-get install postgresql-client
+   apt-get install postgresql-client -y
    ```
+   {:pre}
 
 3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint.
 
@@ -589,6 +602,7 @@ In some situations, it might be desirable to interact directly from an on-premis
    ```sql
    select * from accounts;
    ```
+   {:pre}
 
    You should get a listing of all records previously created via the curl command in the previous section. This demonstrate that you are able to access the {{site.data.keyword.databases-for-postgresql}} database over the private endpoint from an on-premises server.
 
@@ -607,6 +621,16 @@ In some situations, it might be desirable to interact directly from an on-premis
    BASENAME=vpns2s ./onprem-vsi-remove.sh
    ```
    {:codeblock}
+7. Delete the instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   ```sh
+   ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage standard global
+   ```
+   {: codeblock}
+8. Deletre the instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql).
+   ```sh
+   ibmcloud resource service-instance-create vpns2s-pg databases-for-postgresql databases-for-postgresql-standard <region_name> --service-endpoints private
+   ```
+   {: codeblock}
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}

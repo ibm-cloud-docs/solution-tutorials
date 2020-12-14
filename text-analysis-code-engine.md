@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-12-02"
+lastupdated: "2020-12-11"
 lasttested: "2020-12-01"
 
 content-type: tutorial
@@ -28,7 +28,7 @@ completion-time: 2h
 {:beta: .beta}
 
 # Text analysis with {{site.data.keyword.codeengineshort}}
-{: #image_classification_code_engine}
+{: #text-analysis-code-engine}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, containers, cloud-object-storage, natural-language-understanding"}
 {: toc-completion-time="2h"}
@@ -231,7 +231,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 2. Under **Service credentials**, click on **New credential**
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
    2. Click **Add**.
-3. under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` , _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
+3. Under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` , _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
    1. Select **Cross Region** resiliency.
    2. Select a location.
    3. Select a **Standard** storage class for high performance and low latency.
