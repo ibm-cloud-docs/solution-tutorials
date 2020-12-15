@@ -104,13 +104,13 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Clone the application
    ```bash
    git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Change to the application directory
    ```bash
    cd cdn-with-cda-todolist
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Notice how **myname-** is used to create a unique namespace name within the registry.  Feel free to use an exising namespace.
 1. Create a namespace to store the container image.
    ```bash
@@ -118,22 +118,22 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    MYNAMESPACE=myname-cdn-with-cda
    ibmcloud cr namespace-add $MYNAMESPACE
    ```
-	 {: pre}
+   {: pre}
 1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}} and use **cdn-with-cda-todolist** as the image name:
    ```bash
    docker build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest .
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Log in {{site.data.keyword.registryshort_notm}}:
    ```bash
    ibmcloud cr login
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Push the image to {{site.data.keyword.registryshort_notm}}:
    ```bash
    docker push $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 
 ### Run the application in the cluster
 {: #dynamic-content-cdn-4}
@@ -141,24 +141,24 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Run the command below to target the cluster where to deploy the application.
    ```bash
    ibmcloud ks cluster config --cluster mycluster
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
    ibmcloud ks cluster get --cluster mycluster
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:
    ```bash
    cp deployment.sample.yaml deployment.yaml
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
 1. Deploy the application to the cluster:
    ```bash
    kubectl apply -f deployment.yaml
-	 ```
-	 {: pre}
+   ```
+   {: pre}
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
 ## Create a CDN instance
@@ -170,18 +170,18 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
    1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
    1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
-	 1. Leave **Host header** and **Path** empty.
-	 1. Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
-	 1. Check HTTP port.
-	 1. Check HTTPS port and select **Wildcard** SSL certificate.
+   1. Leave **Host header** and **Path** empty.
+   1. Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
+   1. Check HTTP port.
+   1. Check HTTPS port and select **Wildcard** SSL certificate.
 
       With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
-			{: note}
+      {: note}
 1. Accept the **Master Service Agreement** and click **Create**.
 1. In the DNS service provider for your custom domain, create a new CNAME record mapping the CDN domain to the Custom CNAME. If using [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
    1. Click the name of your domain.
-	 1. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
-	 1. Click **Add Record**.
+   1. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
+   1. Click **Add Record**.
       ![](images/solution52-cdn-dca/dns_record.png)
 
 After you have successfully created the CDN mapping:
