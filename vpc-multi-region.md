@@ -212,20 +212,6 @@ In this section, you will create two load balancers. One in each region to distr
 
 If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the next section.
 
-<!--- ### Provision a {{site.data.keyword.cis_short_notm}} instance and configure custom domain
-{: #vpc-multi-region-10}
-
-In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) instance, configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
-
-1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
-3. When the service instance is provisioned, set your domain name by clicking **Add domain**, enter your domain name and click **Connect and continue**.
-4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed. If you are using the IBM Classic Domain Name Server you can find instructions [here](https://{DomainName}/docs/dns?topic=dns-add-edit-or-delete-custom-name-servers-for-a-domain).
-5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
-
-   When the domain's status on the overview page changes from *Pending* to *Active*, you can use the `dig <mydomain.com> ns` command to verify that the new name servers have taken effect.
-   {:tip}
--->
 ## Configure multi-location load-balancing
 {: #vpc-multi-region-global-load-balancer}
 {: step}
@@ -256,37 +242,6 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
-
-<!-- ### Configure a global load balancer
-{: #vpc-multi-region-11}
-
-In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the VPC load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
-
-### Distribute traffic across regions with a global load balancer
-{: #vpc-multi-region-12}
-Open the {{site.data.keyword.cis_short_notm}} service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
-
-1. Navigate to **Reliability**...**Global Load Balancers**...**Load balancers** and click **Create**.
-2. Enter the prefix **lb** to provide a balancer hostname (the resulting fully qualified name would be **lb.mydomain.com**), leave Proxy off, leave TTL as 60 seconds.
-3. Click **Add route** to define a default origin pool
-   - **Name**: lb-region1
-   - **Health check**: Create new
-     - **Monitor Type**: HTTP
-     - **Path**: /
-     - **Port**: 80
-   - **Health check region**: Eastern North America
-   - **origins**
-     - **name**: region1
-     - **address**: Hostname of **region1** VPC Load balancer, see the overview page of the VPC load balancer
-     - **weight**: 1
-     - Click **Add**
-
-4. **ADD** one more **origin pool** pointing to **region 2** load balancer in the **Eastern North America** region and click **Create** to provision your global load balancer.
-
-5. Click **Create**
-
-Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action. The global load balancer is a DNS resolver. Most clients, like browsers, only resolve the DNS address one time or infrequently.  The load is balanced across multiple clients, not for a single client.  You will likely see the response from a single VPC load balancer.
--->
 
 ### Configure Health Check for the Global Load Balancer
 {: #vpc-multi-region-11}
