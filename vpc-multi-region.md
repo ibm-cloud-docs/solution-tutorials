@@ -236,7 +236,7 @@ In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
-* to retrieve the IP addresses or hostnames of the VPC load balancers clusters,
+* to retrieve the IP addresses or hostnames of the VPC load balancers,
 * to configure health checks to validate the availability of your application,
 * and to define origin pools pointing to the VPC load balancers.
 
@@ -317,7 +317,7 @@ A pool is a group of origin VSIs that traffic is intelligently routed to when at
 6. Set **Origin Address** to hostname of **region1** VPC Load balancer, see the overview page of the VPC load balancer.
 7. Click **Save**.
 
-#### One pool for the cluster in region 2
+#### One pool for the VSIs in region 2
 {: #vpc-multi-region-18}
 1. Click **Create**.
 2. Set **Name** to **region-2-pool**
