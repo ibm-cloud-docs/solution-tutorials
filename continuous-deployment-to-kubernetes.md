@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-09-01"
-lasttested: "2019-05-23"
+lastupdated: "2020-12-03"
+lasttested: "2020-12-03"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
@@ -59,21 +59,6 @@ This tutorial walks you through the process setting up a continuous integration 
 {: #continuous-deployment-to-kubernetes-prereq}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-  * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-  * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-  * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `helm` to deploy charts,
-* `git` to clone source code repository,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
-
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
-
-In addition, make sure you:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
@@ -84,18 +69,15 @@ In addition, make sure you:
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.
-{: shortdesc}
-
-1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Later you will be required to repeat these steps and create a production cluster.
-
-   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get.
-   {:tip}
-
-   ![Configuration dialog for Kubernetes cluster](images/solution21/KubernetesPaidClusterCreation.png)
-
-2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults.
-3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+Create a cluster:
+1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
+2. Click **Create cluster**
+3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure
+4. Choose desired resource group
+5. Choose desired Geography, Availability and Metro
+6. One zone, one worker node per zone and the smallest **flavor** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial.
+7. Master service endpoint of **Public endpoint only**
+8. Choose a cluster name that you can remember
 
 **Note:** Do not proceed until your workers are ready.
 <!--#/istutorial#-->
@@ -115,10 +97,10 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-{{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+{{site.data.keyword.containershort_notm}} offers a selection of starter applications to generate all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.  The cloud console is used in this example but the ibmcloud cli, `ibmcloud dev create`, is also available.
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
-2. Under **Starter Kits**, section click on the **Get a Starter Kit** button.
+2. Click **Starter Kits**
 3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
 4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
 
@@ -140,7 +122,7 @@ Now that you successfully created the starter application, you can automate its 
 The toolchain will build your application and deploy it to the cluster.
 
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
-1. After the deploy stages complete, click on **View logs and history** to see the logs.
+1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
 
@@ -148,18 +130,18 @@ The toolchain will build your application and deploy it to the cluster.
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
-1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains` 
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains`
 1. Click the **Eclipse Orion Web IDE** tile.
 1. Expand the `<your-initial>-mynodestarter` and then `public`.
 1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
 1. On the left in the Outgoing section click **Push**.
-1. Click on the arrow at the top to get back to the toolchain. 
+1. Click on the arrow at the top to get back to the toolchain.
 1. Click on the **Delivery Pipeline** tile.
 1. Notice a new **BUILD** has started.
 1. Wait for the **DEPLOY** stage to complete.
-1. Click the application **url** under Last Execution result to view your changes live.
+1. After the DEPLOY stage passes, click on **View logs and history** to see the logs and open the application.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
@@ -174,13 +156,14 @@ In this section, you will complete the deployment pipeline by deploying the appl
 There are [different options](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-1. Rename the **Deploy Stage** to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
+1. Rename the **DEPLOY** stage to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
    ![Access the settings Icon](images/solution21/deploy_stage.png)
+1. To save the changes scroll down and click **Save**
 1. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
-5. Change the **stage trigger** to `Run jobs only when this stage is run manually`.
-   ![Change the stage trigger](images/solution21/prod-stage.png)
-6. In **Environment properties**, set **CLUSTER_NAMESPACE** to **production**.
+5. On the **Input** panel change the **stage trigger** to `Run jobs only when this stage is run manually`.
+6. In **Environment properties** panel, set **CLUSTER_NAMESPACE** to **production**.
 7. **Save** the stage.
+7. Click the **Play** button on the **Deploy prod** stage just created.
 
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
    ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
@@ -208,7 +191,12 @@ You now have the full deployment setup. To deploy from dev to production, you mu
 In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
+  - Click on the configuration for the **BUILD** stage
+  - Select the **Input** panel
+  - Copy the Git URL and paste into a browser
+  - In the git repository: select Settings on the right then General > Advanced > Remove Project
 - Delete the toolchain.
+- Delete the images from the Kubernetes Registry
 <!--##istutorial#-->
 - Delete the cluster.
 <!--#/istutorial#-->

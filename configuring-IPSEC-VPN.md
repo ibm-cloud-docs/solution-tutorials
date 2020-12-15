@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2020-11-30"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -22,6 +22,7 @@ completion-time:
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # VPN into a secure private network
 {: #configuring-IPSEC-VPN}
@@ -29,28 +30,31 @@ completion-time:
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
 
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](https://{DomainName}/docs/vpc?topic=vpc-vsi_best_practices), [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [VPN](https://{DomainName}/docs/vpc?topic=vpc-using-vpn), [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) and [network ACLs](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
+{: note}
+
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
 
-The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks. 
+The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks.
 {:shortdesc}
 
-{{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection. 
+{{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection.
 
 See [{{site.data.keyword.BluDirectLink}}
-]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link) 
-for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}}. A VPN over the public internet provides a lower cost option, though without bandwidth guarantees. 
+]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
+for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}}. A VPN over the public internet provides a lower cost option, though without bandwidth guarantees.
 
 There are two suitable VPN options for connectivity over the public internet to servers provisioned on the {{site.data.keyword.Bluemix_notm}}:
 
 -	[IPSEC VPN]( https://{DomainName}/catalog/infrastructure/ipsec-vpn)
 -	[Virtual Router Appliance VPN](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
-This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 
+This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network.
 
-This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec 
+This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec
 VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {:shortdesc}
 
@@ -72,7 +76,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 3.	Configuration of data center VPN and tunnel
 4.	Create GRE tunnel
 5.	Create static IP route
-6.	Configure firewall 
+6.	Configure firewall
 
 ## Before you begin
 {: #configuring-IPSEC-VPN-prereqs}
@@ -85,17 +89,17 @@ This tutorial connects the secure private enclosure in the [Isolate workloads wi
 
 Configuring an IPSec VPN site-to-site link between your data center and {{site.data.keyword.Bluemix_notm}} requires coordination with your onsite networking team to determine many of the configuration parameters, the type of tunnel and IP routing information. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite networking team will specify the configuration to match agreed corporate standards and provide you with the necessary IP address of the data center VPN gateway, and the subnet address ranges that can be accessed.
 
-Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.   
+Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.
 
 <p style="text-align: center;">
 
   ![](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
 </p>
 
-The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team. 
+The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team.
 
 | Item  | Description |
-|:------ |:--- | 
+|:------ |:--- |
 | &lt;ike group name&gt; | Name given to the IKE group for the connection. |
 | &lt;ike encryption&gt; | Agreed IKE encryption standard to be used between {{site.data.keyword.Bluemix_notm}} and the client data center, typically *aes256*. |
 | &lt;ike hash&gt; | Agreed IKE hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically *sha1*. |
@@ -104,20 +108,20 @@ The following parameters must be agreed and documented between the {{site.data.k
 | &lt;esp encryption&gt; | Agreed ESP encryption standard between {{site.data.keyword.Bluemix_notm}} and client data center, typically *aes256*. |
 | &lt;esp hash&gt; | Agreed ESP hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically *sha1*. |
 | &lt;esp-lifetime&gt; | ESP lifetime from client data center, typically *1800*. |
-| &lt;DC VPN Public IP&gt;  | Internet facing public IP address of the VPN gateway at the client data centre. | 
+| &lt;DC VPN Public IP&gt;  | Internet facing public IP address of the VPN gateway at the client data centre. |
 | &lt;VRA Public IP&gt; | Public IP address of the VRA. |
 | &lt;Remote tunnel IP\/24&gt; | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.   |
 | &lt;Local tunnel IP\/24&gt; | IP address assigned to local end of IPSec tunnel.   |
 | &lt;DC Subnet/CIDR&gt; | IP address of subnet to be accessed in client data center and CIDR. |
-| &lt;App Zone subnet/CIDR&gt; | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. | 
+| &lt;App Zone subnet/CIDR&gt; | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. |
 | &lt;Shared-Secret&gt; | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
 
 ## Configure IPSec VPN on a VRA
 {: #configuring-IPSEC-VPN-Configure_VRA_VPN}
 {: step}
 
-To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and all the variables that need to changed, are highlighted below with &lt; &gt;. The changes are identified line by line, for each line that needs to be changed. Values come from the 
-table. 
+To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and all the variables that need to changed, are highlighted below with &lt; &gt;. The changes are identified line by line, for each line that needs to be changed. Values come from the
+table.
 
 1. SSH into VRA and enter `[edit]` mode.
    ```bash
@@ -179,9 +183,9 @@ table.
    ```
    {: codeblock}
 
-The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Public IP>[500].......` should be found in the output. If this does not exist or shows 'CONNECTING' there is an error in the VPN configuration.  
+The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Public IP>[500].......` should be found in the output. If this does not exist or shows 'CONNECTING' there is an error in the VPN configuration.
 
-## Define GRE tunnel 
+## Define GRE tunnel
 {: #configuring-IPSEC-VPN-Define_Tunnel}
 {: step}
 
@@ -207,15 +211,15 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
    ping <Remote tunnel IP>
    ```
    {: codeblock}
-   The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic. 
+   The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic.
 4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway.
    ```
    monitor interface tunnel tun0 traffic
-   monitor interface bonding dp0bond1 traffic 
+   monitor interface bonding dp0bond1 traffic
    ```
    {: codeblock}
 
-If no return traffic is seen, the data center networking team will need to monitor the traffic flows at the VPN and tunnel interfaces at the remote site to localise the issue. 
+If no return traffic is seen, the data center networking team will need to monitor the traffic flows at the VPN and tunnel interfaces at the remote site to localise the issue.
 
 ## Create static IP route
 {: #configuring-IPSEC-VPN-Define_Routing}
@@ -227,7 +231,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP>
    ```
-   {: codeblock}   
+   {: codeblock}
 2. Review the VRA routing table from the VRA command line. At this time no traffic will transverse the route as no firewall rules exist to allow traffic via the tunnel. Firewall rules are required for traffic initiated at either side.
    ```bash
    show ip route
@@ -238,7 +242,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 {: #configuring-IPSEC-VPN-Configure_firewall}
 {: step}
 
-1. Create resource groups for allowed icmp traffic and tcp ports. 
+1. Create resource groups for allowed icmp traffic and tcp ports.
    ```
    set res group icmp-group icmpgrp type 8
    set res group icmp-group icmpgrp type 11
@@ -276,7 +280,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
    set security firewall name TUNNEL-TO-APP rule 200 protocol icmp
    set security firewall name TUNNEL-TO-APP rule 200 icmp group icmpgrp
-   set security firewall name TUNNEL-TO-APP rule 200 action accept 
+   set security firewall name TUNNEL-TO-APP rule 200 action accept
    commit
    ```
    {: codeblock}
@@ -322,11 +326,11 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
-{:tip}  
+{:tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. Cancel any additional VLANs by support ticket. 
+3. Cancel any additional VLANs by support ticket.
 
 ## Related content
 {: #configuring-IPSEC-VPN-9}

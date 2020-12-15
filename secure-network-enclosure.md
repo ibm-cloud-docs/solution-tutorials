@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-02-03"
+lastupdated: "2020-11-30"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -22,12 +22,16 @@ completion-time:
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # Isolating workloads with a secure private network
 {: #secure-network-enclosure}
 {: toc-content-type="tutorial"}
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
+
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](https://{DomainName}/docs/vpc?topic=vpc-vsi_best_practices), [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [VPN](https://{DomainName}/docs/vpc?topic=vpc-using-vpn) and [flow logs](https://{DomainName}/docs/vpc?topic=vpc-flow-logs)
+{: note}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -54,7 +58,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Secure the VRA and enclosure with firewall rules
 
 
-![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png) 
+![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png)
 
 1. Configure VPN
 2. Deploy VRA
@@ -152,7 +156,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
    Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` command. When in `edit` mode the prompt changes from `$` to `#`. After a successful VRA configuration change you can view your changes with the `compare` command and check your changes with the `validate` command. By committing a change with the `commit` command it will be applied to the running configuration, and automatically saved to the startup configuration.
    {:tip}
-   
+
 2. Enhance security by only allowing SSH login. Now that SSH login is successful using the private network, disable access via userid/password authentication.
    ```
    configure
@@ -161,7 +165,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    exit
    ```
    {: codeblock}
-   
+
    From this point in this tutorial, it is assumed that all VRA commands are entered at the `edit` prompt after using the `configure` command.
 3. Review the initial configuration.
    ```
@@ -233,7 +237,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as *Route Around*. Click on the **Manage VLANs** button.
-   
+
    The *Associate VLAN* link is enabled allowing you to add other provisioned VLANs. If no VLANs are available on the same router as the VRA, the link is grayed out. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
    {:tip}
 
@@ -260,7 +264,7 @@ This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} conso
 
 When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
-If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`. 
+If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`.
 
 ### Configure VRA IP routing
 {: #secure-network-enclosure-13}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-10-22"
+lastupdated: "2020-11-24"
 lasttested: "2020-01-20"
 
 ---
@@ -59,7 +59,11 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 {: #getting-started-windows_cli}
 
 1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify the installation with:
+
+   To avoid the installation of CLI, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+   {:tip}
+
+2. Verify the installation with:
    ```sh
    ibmcloud version
    ```
@@ -187,7 +191,11 @@ The following sections assume you are running macOS High Sierra or later under a
 {: #getting-started-macos_cli}
 
 1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify the installation with:
+
+   To avoid the installation of CLI, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+   {:tip}
+
+2. Verify the installation with:
    ```sh
    ibmcloud version
    ```
@@ -349,7 +357,11 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 {: #getting-started-ubuntu_cli}
 
 1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify the installation with:
+
+   To avoid the installation of CLI you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+   {:tip}
+
+2. Verify the installation with:
    ```sh
    ibmcloud version
    ```

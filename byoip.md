@@ -22,10 +22,7 @@ lasttested: "2019-04-23"
 # Bring Your Own IP Address
 {: #byoip}
 
-This tutorial describes the use of **Classic Infrastructure**. Virtual Private Cloud (VPC) resources may be a more flexible alternative. Check out the following VPC benefits.
-- [Bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes)
-- [Getting started with Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)
-- [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, you can [bring your own subnet](https://{DomainName}/docs/vpc?topic=vpc-configuring-address-prefixes) IP address range to a {{site.data.keyword.vpc_short}}.
 {: note}
 
 <!--##istutorial#-->
@@ -60,7 +57,7 @@ The choice of pattern is determined by the applications intended to be hosted on
 ## Implementation patterns overview
 {: #byoip-patterns_overview}
 
-1. **NAT**: NAT address translation at the on-premise client router. Perform on premise NAT to translate the client addressing scheme to the IP addresses assigned by {{site.data.keyword.Bluemix_notm}} to provisioned IaaS services.  
+1. **NAT**: NAT address translation at the on-premise client router. Perform on premise NAT to translate the client addressing scheme to the IP addresses assigned by {{site.data.keyword.Bluemix_notm}} to provisioned IaaS services.
 2. **GRE Tunneling**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between {{site.data.keyword.Bluemix_notm}} and the on-premise network, typically via VPN. This is the scenario illustrated in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN).
 
    There are two sub-patterns depending on the potential for address space overlap.
@@ -111,7 +108,7 @@ If any of the 10.0.0.0/8 range is in use on the on-premise network, are there no
 
 If no overlap-safe addresses exist, IP aliasing can be implemented on virtual and bare-metal servers deployed in the secure private network enclosure. IP aliasing assigns multiple subnet addresses on one or more network interfaces on each server.
 
-IP aliasing is a commonly used technique, though it is recommended to review server and application configurations to determine if they work well under multi-home and IP alias configurations.  
+IP aliasing is a commonly used technique, though it is recommended to review server and application configurations to determine if they work well under multi-home and IP alias configurations.
 
 Additional routing configuration on the VRA will be required to create dynamic routes (e.g. BGP) or static routes for the BYOIP subnets.
 

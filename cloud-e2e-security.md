@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-09-03"
-lasttested: "2019-12-05"
+lastupdated: "2020-12-11"
+lasttested: "2020-12-07"
 
 content-type: tutorial
 services: containers, cloud-object-storage, Activity-Tracker-with-LogDNA, Registry, certificate-manager, appid, Cloudant, key-protect, Log-Analysis-with-LogDNA
@@ -121,10 +121,10 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
+Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.19.**
 {: tip}
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. A **minimum Kubernetes version of 1.19 is required**. Make sure to select an appropriate version when creating the cluster.
   - Set the cluster name to **secure-file-storage-cluster**.
   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
     - Make sure to attach a Public Gateway for each of the subnets that you create as it is required for App ID.
@@ -231,7 +231,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -299,17 +299,16 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-4. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
+4. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$IMAGE_REPOSITORY`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`, `$BASENAME`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
 | Variable | Value | Description |
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
-| `$REGISTRY_URL` | *us.icr.io* | The registry where the image was built in the previous section. |
-| `$REGISTRY_NAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
-| `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the container image. |
+| `$IMAGE_REPOSITORY` | *us.icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$BASENAME` | *secure-file-storage* | The prefix used to identify resources. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
 {: tip}
@@ -319,17 +318,37 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
 <!--##istutorial#-->
 1. Gain access to your cluster as described on the **Access** tab of your cluster.
-2. Create the secret used by the application to obtain service credentials:
+2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
+   ```sh
+   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+   You can check for existing add-ons with this command:
+   ```sh
+      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+3. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
+   ```sh
+   ibmcloud ks ingress secret ls -c <your-cluster-name>
+   ```
+   {: codeblock}   
+   Now use its name and CRN to create a secret in the namespace:
+   ```sh
+   ibmcloud ks ingress secret create -c <your-cluster-name> -n <your-namespace> --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
+   ```
+   {: codeblock}   
+4. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
-3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
-4. Deploy the app.
+6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -339,18 +358,28 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 <!--##isworkshop#-->
 <!--
 1. Gain access to your cluster as described on the **Access** tab of your cluster.
-2. Create the secret used by the application to obtain service credentials:
+2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
+   ```sh
+   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+   You can check for existing add-ons with this command:
+   ```sh
+      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+3. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
-3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
    ```
    {: codeblock}
-4. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
-4. Deploy the app.
+5. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -440,7 +469,6 @@ In this tutorial, services are utilized for different purposes, from storing fil
 - replacing the access data in existing Kubernetes secrets and applying the changes,
 - and, after verification, deactivating the old credentials by deleting the old service keys.
 
-The [GitHub repository](https://github.com/IBM-Cloud/secure-file-storage) for this tutorial includes scripts to automate the steps, either by invoking them on the command line or as part of a continuous delivery pipeline.
 
 ## Expand the tutorial
 {: #cloud-e2e-security-21}
