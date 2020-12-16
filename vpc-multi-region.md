@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-01-22"
-lasttested: "2019-06-18"
+lastupdated: "2020-12-16"
+lasttested: "2020-12-16"
 
 content-type: tutorial
 services: vpc, cis, certificate-manager
