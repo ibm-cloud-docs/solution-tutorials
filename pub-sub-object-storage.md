@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-05-08"
-lasttested: "2020-05-08"
+lastupdated: "2020-12-16"
+lasttested: "2020-12-16"
 
 content-type: tutorial
 services: containers, EventStreams, cloud-object-storage, Registry
@@ -68,7 +68,8 @@ This tutorial requires:
    * `dev` plugin,
 * a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
-* `git` to clone source code repository.
+* `git` to clone source code repository,
+* `jq` to query JSON files.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -79,7 +80,7 @@ You will find instructions to download and install these tools for your operatin
 {: step}
 
 1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-   1. Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster
+   1. Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster. _Select **Free** from the Pricing plan dropdown_.
    2. Select a resource group and click **Create**
 2. Check the state of your **Cluster** and **Worker Nodes** and wait for them to be **Normal**.
 
@@ -88,7 +89,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
+1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created. *Skip this step if you are using {{site.data.keyword.cloud-shell_short}}*
 2. When the cluster is ready, retrieve the cluster configuration:
    ```sh
    ibmcloud ks cluster config --cluster mycluster
@@ -111,15 +112,15 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
 1. From the Catalog, create a [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) service
-   1. Select a region preferably Dallas
+   1. Select a region
    2. Select the **Standard** pricing plan
    3. Set the **Service name** to `myeventstreams`
    4. Select a resource group and Click **Create**
-2. Under **Manage**, switch to **Topics**.
-   1. Click on **Create topic** and provide **work-topic** as the Topic name. Click **Next**
+2. Under **Manage**,
+   1. Provide **work-topic** as the Topic name. Click **Next**
    2. Select **1** partition, click **Next** and choose **a day** of Message retention.
    3. Click **Create topic**
-   4. Repeat the above steps to create a topic named **result-topic**, with 1 partition and message retention of a day.
+   4. Repeat the above steps by clicking **create topic** to create a topic named **result-topic**, with 1 partition and message retention of a day.
 3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myeventstreams --role Manager
@@ -136,16 +137,22 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
 
 1. From the Catalog, create a [**{{site.data.keyword.cos_short}}**](https://{DomainName}/catalog/services/cloud-object-storage) service,
-   1. Select a region preferably Dallas
+   1. Select a region
    2. Select the Lite pricing plane
    3. Name the service `myobjectstorage`
    4. Select a resource group and click **Create**
 2. Under Buckets, Click **Create bucket**.
-3. Create a **custom bucket** by setting the bucket name to a unique name such as `username-mybucket`.
-4. Select **Cross Region** Resiliency and **us-geo** Location and click **Create bucket**
-5. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
+3. Create a **custom bucket** by setting the bucket name to a unique name such as `username-mybucket`. _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).**Note:** PII is information that can identify any user (natural person) by name, location, or any other means._
+4. Select **Cross Region** Resiliency, change the selected **location** if you wish to, **Smart-Tier** storage class, and click **Create bucket**.
+5. Click on **Endpoints**, copy and save the **public** endpoint next to `<region>-geo`. _Resiliency and location should be automatically selected._
+6. Create an {{site.data.keyword.cos_short}} service key `cos-for-pub-sub` to be used with Kubernetes secret in the next step
    ```sh
-   ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myobjectstorage
+   ibmcloud resource service-key-create cos-for-pub-sub  Writer --instance-name myobjectstorage
+   ```
+   {:pre}
+7. Provide the service credentials to your cluster by creating a secret `binding-myobjectstorage` in the `default` Kubernetes namespace.
+   ```sh
+   kubectl create secret generic binding-myobjectstorage --from-literal="binding=$(ibmcloud resource service-key cos-for-pub-sub --output JSON | jq --raw-output '.[].credentials')" --namespace default
    ```
    {:pre}
 
@@ -161,7 +168,7 @@ The UI application is a simple Node.js Express web application which allows the 
    cd pub-sub-storage-processing/pubsub-ui
    ```
    {:pre}
-2. Open `config.js` and update `COSBucketName` with your bucket name.
+2. Open `config.js`, update `COSBucketName` with your bucket name and `EndPointURL` with the endpoint you saved earlier.
 3. Build and deploy the application. The deploy command generates a docker image, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
    ```sh
    ibmcloud dev build
@@ -183,7 +190,7 @@ The worker application is a Java application which listens to the {{site.data.ke
    cd ../pubsub-worker
    ```
    {:pre}
-2. Open `resources/cos.properties` and update `bucket.name` property with your bucket name.
+2. Open `resources/cos.properties`, update `bucket.name` property with your bucket name, endpoint URL and the geo you selected for the endpoint.
 3. Build and deploy the worker application.
    ```sh
    ibmcloud dev build
@@ -201,11 +208,11 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 {:removeresources}
 {: step}
 
-Navigate to [Resource List](https://{DomainName}/resources/) and
-1. Delete Kubernetes cluster `mycluster`
-2. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
-3. Delete {{site.data.keyword.messagehub}} `myeventstreams`
-4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
+1. Navigate to [Resource List](https://{DomainName}/resources/) and
+2. Delete Kubernetes cluster `mycluster`
+3. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
+4. Delete {{site.data.keyword.messagehub}} `myeventstreams`
+5. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
 
 ## Related content
 {: #pub-sub-object-storage-8}
