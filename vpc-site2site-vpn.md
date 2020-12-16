@@ -261,10 +261,10 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
 
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.  Values that come from the **network_config.sh** file created earlier are referenced with a **$x** like **$VSI_ONPREM_IP**
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPN gateways** in the navigation tab and insure the **VPN Gateway** tab is selected and click **Create**.  In the form **New VPN gateway for VPC**
+1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPN gateways** in the navigation tab and insure the **VPN Gateway** tab is selected and click **Create**.  The form **New VPN gateway for VPC** will be displayed.
 1. Set **VPN gateway name** to **vpns2s-gateway**
-1. Select the **Virtual Private Cloud** from the drop down created or specified earlier
-1. Select the same resource group
+1. Select the **Virtual Private Cloud** from the drop down created (vpns2s) or referenced earlier
+1. Select the same **Resource group**
 1. Select **vpns2s-cloud-subnet** as the subnet.
 1. Select **Policy-based** as the **Mode**
 1. Leave **New VPN connection for VPC** activated. 
@@ -278,6 +278,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 
 
 - Wait for the VPN gateway to become available (you may need to refresh the screen).
+- Click the VPN gateway created to open the details page
 - Note the assigned VPN gateway **IP address** it will be referenced as **$GW_CLOUD_IP** below.
 
 ### Create the on-premises Virtual Private Network gateway
@@ -330,7 +331,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **$VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
+5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **$VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **$GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
    $VSI_ONPREM_IP $GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
@@ -351,7 +352,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    conn tutorial-site2site-onprem-to-cloud
       authby=secret
       left=%defaultroute
-      leftid=VSI_$ONPREM_IP
+      leftid=$VSI_ONPREM_IP
       leftsubnet=$ONPREM_CIDR
       right=$GW_CLOUD_IP
       rightsubnet=$CLOUD_CIDR,166.8.0.0/14,161.26.0.0/16
@@ -444,6 +445,9 @@ You can test the working VPN connection by accessing a microservice on the cloud
 2. The app is only run on the cloud VSI but some of the configuration information is also needed on the on premesis VSI so copy the directory to both computers.  The command uses the bastion as jump host to the cloud VSI.
    ```sh
    scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
+   ```
+   {:pre}
+   ```sh
    scp -r nodejs-graphql root@$VSI_ONPREM_IP:nodejs-graphql
    ```
    {:pre}
@@ -540,6 +544,10 @@ With the microservice app set up and running, test the scenario by accessing the
 2. Issue the following curl commands to query the API server running on the cloud VSI. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
 
    ```sh
+   VSI_CLOUD_IP=$VSI_CLOUD_IP
+   ```
+   {:pre}
+   ```sh
    curl \
    -X POST \
    -H "Content-Type: application/json" \
@@ -621,14 +629,23 @@ In some situations, it might be desirable to interact directly from an on-premis
    BASENAME=vpns2s ./onprem-vsi-remove.sh
    ```
    {:codeblock}
-7. Delete the instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+7. Delete the instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).  Delete the key:
    ```sh
-   ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage standard global
+   ibmcloud resource service-key-delete vpns2s-cos-key
    ```
    {: codeblock}
-8. Deletre the instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql).
+   delete the resource
    ```sh
-   ibmcloud resource service-instance-create vpns2s-pg databases-for-postgresql databases-for-postgresql-standard <region_name> --service-endpoints private
+   ibmcloud resource service-instance-delete vpns2s-cos
+   ```
+   {: codeblock}
+8. Delete the instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql).
+   ```sh
+   ibmcloud resource service-key-delete vpns2s-pg-key
+   ```
+   {: codeblock}
+   ```sh
+   ibmcloud resource service-instance-delete vpns2s-pg
    ```
    {: codeblock}
 
