@@ -36,10 +36,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in different regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in two different regions with subnets and virtual server instances (VSIs). You will create VSIs in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer to provide high availability between regions and reduce network latency for users in different geographies.
 {:shortdesc}
 
-For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
+For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, you will use the {{site.data.keyword.cloudcerts_long_notm}} service.
 
 ## Objectives
 {: #vpc-multi-region-objectives}
@@ -84,7 +84,8 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select a **Resource group**.
    * Select a location and zone 1 for example: **Dallas** and **Dallas 1**.
-   * Leave the defaults for the IP range selection
+   * Leave the defaults for the IP range selection.
+   * Leave the public gateway to **Detached**.
 8. Click **Create virtual private cloud** to provision the instance.
 
 To confirm the creation of subnet, click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
@@ -128,12 +129,15 @@ To allow traffic to the application you will deploy on virtual server instances,
 1. Click **Create virtual server instance**.
 1. **REPEAT** the above steps to provision a **vpc-region1-zone2-vsi** VSI in **zone 2** of **region 1**.
 
-Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region 2** by following the same naming conventions as above.
+## And then to another location
+{: #vpc-multi-region-20}
+{: step}
+
+Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Franfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
 
 ## Install and configure web server on the VSIs
 {: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
-
 
 Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
 {:tip}
@@ -160,8 +164,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
    {:codeblock}
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. `curl localhost` again to notice the changes
-
-**REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+7. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Distribute traffic between zones with load balancers
 {: #vpc-multi-region-distribute-traffic-with-load-balancers}
@@ -199,8 +202,7 @@ In this section, you will create two load balancers. One in each region to distr
    - **Back-end pool**: region1-pool
    - **Maxconnections**: Leave it empty and click **Save**.
 7. Click **Create load balancer** to provision a load balancer.
-
-**REPEAT** the steps 1-7 above in **region 2**.
+8. **REPEAT** the steps 1-7 above in **region 2**.
 
 ### Test the load balancers
 {: #vpc-multi-region-9}
@@ -260,9 +262,9 @@ A health check helps gain insight into the availability of pools so that traffic
 ### Define Origin Pools
 {: #vpc-multi-region-12}
 
-A pool is a group of origin VSIs that traffic is intelligently routed to when attached to a GLB. With VSIs in two regions, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest VSIs based on the geographical location of the user requests.
+A pool is a group of origin VSIs or load balancers that traffic is intelligently routed to when attached to a GLB. With VPC load balancers in two regions, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest VPC load balancer based on the geographical location of the user requests.
 
-#### One pool for the VSIs in region 1
+#### One pool for the VPC load balancers in region 1
 {: #vpc-multi-region-13}
 1. Click **Create**.
 2. Set **Name** to **region-1-pool**
@@ -272,7 +274,7 @@ A pool is a group of origin VSIs that traffic is intelligently routed to when at
 6. Set **Origin Address** to hostname of **region1** VPC Load balancer, see the overview page of the VPC load balancer.
 7. Click **Save**.
 
-#### One pool for the VSIs in region 2
+#### One pool for the VPC load balancers in region 2
 {: #vpc-multi-region-18}
 1. Click **Create**.
 2. Set **Name** to **region-2-pool**
@@ -291,9 +293,9 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://lb.mydomain.com`), regardless of the location.
 1. Under **Default origin pools**, click **Add pool** and add the pool named **region-1-pool** and **region-2-pool**.
 1. Expand the section of **Geo routes**, you can distribute traffic based on the origin region, pick a GLB region that is close to the VPC region 1. 
-   1. Click **Add route**, select a GLB region and select the pool desired and click **Add**.
+   1. You can add additional routes if desired based on geographies and direct traffic to the closest pool.  Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
 
-With this configuration, a request does not match any of the defined route, it will be redirected to the **Default origin pools**, users in the region you have define will be directed to the closest VSIs.
+With this configuration, a request does not match any of the defined route, it will be redirected to the **Default origin pools**, users in the GLB region you have define will be directed to the closest Load Balancers/VSIs.
 
 1. Click **Save**.
 
@@ -347,9 +349,9 @@ This first alternative creates a wildcard certificate for **mydomain.com** and t
 1. In the {{site.data.keyword.cis_short_notm}} configure the Global Load Balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**
    - Locate the Global Load Balancer created earlier and turn on Proxy
-1. In a browser open https://**lb.mydomain.com** to verify success
+1. In a browser open **https://lb.mydomain.com** to verify success
 
-Next configure https from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
+Next configure HTTPS from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
 
 Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
