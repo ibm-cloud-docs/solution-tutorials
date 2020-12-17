@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-10-21"
-lasttested: "2020-10-06"
+lastupdated: "2020-12-17"
+lasttested: "2020-12-17"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -32,18 +32,15 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to push your code to a private Git repository, deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster and then automate the build and deploy process. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
 With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.5/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
-For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
-
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
 
-* Scaffold a starter application.
-* Deploy the application to the {{site.data.keyword.openshiftlong_notm}} cluster.
+* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.
 <!--##istutorial#-->
 * Bind a custom domain.
 <!--#/istutorial#-->
@@ -56,12 +53,11 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
   ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 </p>
 
-1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
-2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix_notm}}
-3. A Docker container image is build from the code.
-4. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
-5. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
-6. Users access the application.
+1. The developer pushes code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
+2. A Docker container image is build from the code.
+3. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
+4. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
+5. Users access the application.
 
 ## Before you begin
 {: #scalable-webapp-openshift-prereqs}
@@ -173,36 +169,32 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 -->
 <!--#/isworkshop#-->
 
-## Generate a starter kit
-{: #scalable-webapp-openshift-generate_starter_kit}
+## Setup a private Git repository
+{: #scalable-webapp-openshift-setup-private-repo}
 {: step}
 
-The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+In this section, you clone web application code, push it to a private Git repository and create a deploy token to restrict access to the repo.
 
-### Using ibmcloud dev plugin
-{: #scalable-webapp-openshift-7}
+### Clone a starter application
+{: #scalable-webapp-openshift-clone-web-app-code}
 
-1. On a terminal, start the `ibmcloud dev` wizard by running the below command
+1. On a terminal, run the below command to clone the [GitHub repository](https://github.ibm.com/portfolio-solutions/openshift-node-app/) to your machine:
    ```sh
-   ibmcloud dev create
+   git clone https://github.ibm.com/portfolio-solutions/openshift-node-app/
    ```
    {: pre}
+2. Change to the application directory
+   ```sh
+   cd openshift-node-app
+   ```
+   {:pre}
 
-   You may be asked to target a Cloud Foundry organization and a space. The organization and space would be used in case you decide to deploy the application to Cloud Foundry. This will not be used in this tutorial but the command requires them to be configured in any case.
-   {:tip}
-2. Select `Backend Service / Web App` then `Node` and select `Node.js Express App` to create a Node starter.
-3. Enter a **unique name** for your application such as `<your-initials>-openshiftapp`.
-4. Select the **resource group** where your cluster has been created.
-5. Do not add additional services.
-6. Do not add a DevOps toolchain, select **manual deployment**.
-7. Select **Helm-based** deployment target.
-
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
+If you check the contents of the folder, it's a simple [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints. Along with the starter code, the directory provides an `openshift.template.yaml` file with placeholders. Later in the tutorial, you will run a shell script to update the placeholders and then apply the generated `openshift.yaml` file to build and deploy the application to the {{site.data.keyword.openshiftshort}} cluster.
 
 ### Push the code to a Private IBM Cloud Git repo
-{: #scalable-webapp-openshift-8}
+{: #scalable-webapp-openshift-private-git-repo}
 
-In this step, you will create a private IBM Cloud Git repository and push the generated code.
+In this step, you will create a private IBM Cloud Git repository and push the starter application code.
 
    You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
    {: important}
@@ -213,11 +205,11 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
-5. Once you push the code to the private repository, you should see the scaffolded code in the project.
+4. Follow the instructions under *Git global setup* and *Push an existing Git repository* sections to setup Git and to push the starter application code.
+5. Once you push the code to the private repository, you should see the starter code in the project.
 
 ### Create a Git deploy token
-{: #scalable-webapp-openshift-9}
+{: #scalable-webapp-openshift-git-deploy-token}
 
 In this section, you will create a Git deploy token to allow **read-only** access to your repository.
 
@@ -227,41 +219,35 @@ To generate a deploy token:
    1. Provide **foropenshift** as the **Name** then check **read_repository** checkbox and click **create deploy token**.
    2. **Save** the generated **username** and **password** for future reference.
 2. On the left pane, click on **Project overview** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
+3. Define environment variables for the username, password and private Git repo URL to be used with the YAML file later in the tutorial
+   ```sh
+   export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
+   export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
+   export REPO_URL_WITHOUT_HTTPS=<PRIVATE_GIT_REPO_URL>
+   ```
+   {:pre}
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #scalable-webapp-openshift-create_openshift_app}
 {: step}
 
-In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
+In this section, you will update an existing YAML file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 
-### Generate a build configuration yaml file
+### Create an {{site.data.keyword.openshiftshort}} project
 {: #scalable-webapp-openshift-11}
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
 
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+1. Define an environment variable named `MYPROJECT` and set the application name by replacing `<your-initials>` with your own initials :
    ```sh
    export MYPROJECT=<your-initials>-openshiftapp
    ```
    {:pre}
-2. If you are not on the directory of generated code, change to the directory.
-   ```sh
-   cd $MYPROJECT
-   ```
-   {: pre}
-3. Create a new OpenShift project
+2. Create a new OpenShift project
    ```sh
    oc new-project $MYPROJECT
    ```
    {:pre}
-4. Generate a YAML file `openshift.yaml` in the same folder as your starter kit code by replacing the placeholders and running the below command. Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository HTTPS URL without `https://`.
-   ```sh
-   oc new-app https://<GIT_TOKEN_USERNAME>:<GIT_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=$MYPROJECT --strategy=docker --as-deployment-config -o yaml > openshift.yaml
-   ```
-   {:pre}
-
-   The `--as-deployment-config` flag generates the YAML file with a deployment config, which allows for hooks and custom strategies.
-   {:tip}
 
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-12}
@@ -305,10 +291,15 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-13}
 
-In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+In this step, you will update the BuildConfig section of `openshift.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
-1. Edit the generated **openshift.yaml**.
-1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<$MYREGISTRY>`,`<$MYNAMESPACE>`, and `<$MYPROJECT>`  with the actual values identified in the previous steps:
+1. Run the below script to update the `openshift.template.yaml` file and generate **openshift.yaml** file.
+   ```sh
+   ./deploy.sh
+   ```
+   {:pre}
+2. Check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check.
+3. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -323,7 +314,7 @@ In this step, you will update the generated BuildConfig section of the generated
        app.kubernetes.io/instance: $MYPROJECT
      name: $MYPROJECT
    spec:
-     dockerImageRepository: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>
+     dockerImageRepository: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT
      lookupPolicy:
        local: false
    status:
@@ -331,30 +322,30 @@ In this step, you will update the generated BuildConfig section of the generated
    ```
    {:codeblock}
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
-4. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage`, replacing the placeholders under `name` and adding a `pushSecret`
+4. Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
    ```yaml
    spec:
      nodeSelector: null
      output:
        to:
          kind: DockerImage
-         name: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
+         name: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest
        pushSecret:
          name: push-secret
    ```
    {:codeblock}
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
-5. Search for `containers` and update the image with
+5. Search for `containers`, check the `image` and `name`
    ```yaml
    containers:
-   - image: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest
+   - image: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest
      name: $MYPROJECT
    ```
    {:codeblock}
-6. Save the YAML file.
+6. If updated, **save** the YAML file.
 
 ## Deploy the application to cluster
-{: #scalable-webapp-openshift-deploy_app_to_cluster}
+{: #scalable-webapp-openshift-deploy-app-to-cluster}
 {: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
