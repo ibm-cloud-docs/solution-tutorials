@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-11-24"
-lasttested: "2020-01-20"
+lastupdated: "2020-12-17"
+lasttested: "2020-12-17"
 
 ---
 
@@ -405,14 +405,14 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #getting-started-ubuntu_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/.
 
    Replace `4.5` in the URL with the version number you wish to install
    {:tip}
 
-1. Extract `oc.tar.gz`:
+1. Extract `openshift-client-linux.tar.gz`:
    ```sh
-   tar zxvf oc.tar.gz
+   tar zxvf openshift-client-linux.tar.gz
    ```
    {:pre}
 1. Move the `oc` binary to your PATH.
@@ -458,25 +458,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {:pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider.
-
-1. Download the latest version of the {{site.data.keyword.cloud_notm}} Provider binary file from https://github.com/IBM-Cloud/terraform-provider-ibm/releases.
-1. Uncompress the downloaded archive.
-1. Create a hidden folder for your plug-in.
-   ```sh
-   mkdir $HOME/.terraform.d/plugins
-   ```
-   {:pre}
-1. Move the {{site.data.keyword.cloud_notm}} Provider plug-in into your hidden folder.
-   ```sh
-   mv terraform-provider-ibm* $HOME/.terraform.d/plugins/
-   ```
-   {:pre}
-1. Navigate into your hidden directory and verify that the installation is complete.
-   ```sh
-   cd $HOME/.terraform.d/plugins && ./terraform-provider-ibm_*
-   ```
-   {:pre}
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/terraform?topic=terraform-setup_cli#install_cli) to configure the `required_providers` in your Terraform templates.
 
 ### jq
 {: #getting-started-ubuntu_jq}
@@ -551,9 +533,13 @@ To verify the configuration:
 1. Update the README file.
 1. Commit and push the changes.
 
-### Update oc on {{site.data.keyword.cloud-shell_short}}
-{: #getting-started-common_shell}
+## Cloud Shell
+{: #getting-started-cloud-shell}
 
+### oc
+{: #getting-started-cloud-shell_oc}
+
+Follow these steps if you need to use another version of the OpenShift CLI than the one pre-installed:
 1. Download the latest 4.x OpenShift CLI (`oc`)
    ```sh
    curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/linux/oc.tar.gz --output oc.tar.gz
