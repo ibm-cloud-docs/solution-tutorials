@@ -50,8 +50,8 @@ Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
 * **jq** - a lightweight and flexible command-line JSON processor.
 * **Git** - a free and open source distributed version control system.
 
-   To avoid the installation of these tools, you can also use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-   {:tip}
+To avoid the installation of these tools, you can also use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 
 ## Microsoft Windows
 {: #getting-started-windows}
