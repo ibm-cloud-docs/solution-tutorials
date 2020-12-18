@@ -493,7 +493,7 @@ To verify the configuration:
 Follow these steps if you need to use another version of the OpenShift CLI than the one pre-installed:
 1. Download the latest 4.x OpenShift CLI (`oc`)
    ```sh
-   curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.5/linux/oc.tar.gz --output oc.tar.gz
+   curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-client-linux.tar.gz --output oc.tar.gz
    ```
    {:pre}
 
