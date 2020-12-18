@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-10-24"
-lasttested: "2019-10-24"
+lastupdated: "2020-12-18"
+lasttested: "2020-12-18"
 
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -88,7 +88,6 @@ In addition:
 - create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
    - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
    - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
-- and obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
 ## Deploy a dynamic web application to be accelerated
 {: #dynamic-content-cdn-2}
@@ -111,11 +110,21 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    cd cdn-with-cda-todolist
    ```
    {: pre}
-1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Notice how **myname-** is used to create a unique namespace name within the registry.  Feel free to use an exising namespace.
-1. Create a namespace to store the container image.
+1. Identify the cluster, {{site.data.keyword.registryshort_notm}} and cluster namespace.
+   - `ibmcloud cr info` will return the name of the container registry.
+   - `ibmcloud ks cluster ls` will return cluster names.
    ```bash
-   MYCONTAINERREGISTRY=us.icr.io
-   MYNAMESPACE=myname-cdn-with-cda
+   ibmcloud cr info
+   ibmcloud ks cluster ls
+   ```
+   {: pre}
+   ```bash
+   MYCLUSTER=<cluster_name>
+   MYCONTAINERREGISTRY=<us.icr.io_like_value_returned_from_ibmcloud_cr_info>
+   MYNAMESPACE=<my_container_registry_namespace>
+   ```
+1. Create a namespace to store the container image.  Feel free to skip this step and use an exising namespace.
+   ```bash
    ibmcloud cr namespace-add $MYNAMESPACE
    ```
    {: pre}
@@ -140,12 +149,12 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 
 1. Run the command below to target the cluster where to deploy the application.
    ```bash
-   ibmcloud ks cluster config --cluster mycluster
+   ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: pre}
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
-   ibmcloud ks cluster get --cluster mycluster
+   ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:
@@ -172,21 +181,16 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
    1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
    1. Leave **Host header** and **Path** empty.
    1. Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
-   1. Check HTTP port.
+   1. Uncheck HTTP port.
    1. Check HTTPS port and select **Wildcard** SSL certificate.
 
       With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
       {: note}
 1. Accept the **Master Service Agreement** and click **Create**.
-1. In the DNS service provider for your custom domain, create a new CNAME record mapping the CDN domain to the Custom CNAME. If using [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
-   1. Click the name of your domain.
-   1. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
-   1. Click **Add Record**.
-      ![](images/solution52-cdn-dca/dns_record.png)
 
 After you have successfully created the CDN mapping:
    * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-   * You application is now accessible through the CNAME only: `https://<CNAME>`.  Note that the application is not available via todo.exampledomain.net - this will take a little additional configuration and associated delay.
+   * You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
 {: #dynamic-content-cdn-6}
@@ -227,7 +231,6 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 * Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster).
 * Delete the image from the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry).
 * Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/classic/network/cdn).
-* Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones) if you were using the service.
 
 ## Related content
 {: #dynamic-content-cdn-10}
