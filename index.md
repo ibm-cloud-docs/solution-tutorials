@@ -217,9 +217,9 @@ The following sections assume you are running macOS High Sierra or later under a
    Replace `4.5` in the URL with the version number you wish to install
    {:tip}
 
-2. Extract `oc.tar.gz`:
+2. Extract `openshift-client-mac.tar.gz`:
    ```sh
-   tar zxvf oc.tar.gz
+   tar zxvf openshift-client-mac.tar.gz
    ```
    {:pre}
 3. Move the `oc` binary to your PATH.
