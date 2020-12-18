@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019
-lastupdated: "2019-10-18"
-lasttested: "2019-08-05"
+  years: 2019, 2020
+lastupdated: "2020-12-16"
+lasttested: "2020-12-16"
 
 content-type: tutorial
 services: vpc
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {:shortdesc}
 
-After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
+After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives), you will [prepare your environment](#vpc-app-deploy-before-you-begin) for the tutorial and review the [basics of software installation](#vpc-app-deploy-basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#vpc-app-deploy-cli), [Terraform](#vpc-app-deploy-terraform) or [Ansible](#vpc-app-deploy-ansible).
 
 ## Objectives
 {: #vpc-app-deploy-objectives}
@@ -123,7 +123,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ```
       {:pre}
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
-   * `TF_VAR_generation` specifies which generation of compute you want to use. It defaults to 2.
+
 6. Load the variables into the environment:
    ```sh
    source export
@@ -178,7 +178,7 @@ This tutorial uses a shell script named [install.sh](https://github.com/IBM-Clou
 
    # Demonstrate the availability of internet repositories.  If www.python.org is availble then other software internet software like
    # npm, pip, docker, ...  if isolated only the software from the ibm mirrors can be accessed
-   if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
+   if curl -o /tmp/x -m 3 https://www.python.org/downloads/release/python-373/; then
        echo INTERNET > $indexhtml
    else
        echo ISOLATED > $indexhtml
@@ -226,11 +226,6 @@ This section uses a shell script found in the [Public frontend and private backe
 1. Set the current resource group:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name
-   ```
-   {:pre}
-1. Set the generation of compute to use:
-   ```sh
-   ibmcloud is target --gen $TF_VAR_generation
    ```
    {:pre}
 2. Run the provisioning script:
@@ -521,7 +516,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 This section uses both Terraform and Ansible.
 
 1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
-1. Follow [these instructions](https://{DomainName}/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
+1. Follow [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to install Ansible.
 
 ### Ansible Playbook
 {: #vpc-app-deploy-21}

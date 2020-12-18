@@ -50,7 +50,7 @@ This tutorial and the associated automation scripts will provide an easy way to 
 {: #hpc-lsf-on-vpc-prereqs}
 
 You need the following to complete this tutorial:
-* A workstation or cloud instance to serve as the orchestrator for this deployment.  it must be capable of running the following tools
+* A workstation or cloud instance to serve as the orchestrator for this deployment.  It must be capable of running the following tools
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 * {{site.data.keyword.cloud_notm}} CLI
