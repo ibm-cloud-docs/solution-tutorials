@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-12-17"
-lasttested: "2020-12-17"
+lastupdated: "2020-12-18"
+lasttested: "2020-12-18"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -53,7 +53,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
   ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 </p>
 
-1. The developer pushes code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
+1. The developer pushes web application code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
 2. A Docker container image is build from the code.
 3. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 4. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
@@ -178,18 +178,20 @@ In this section, you clone web application code, push it to a private Git reposi
 ### Clone a starter application
 {: #scalable-webapp-openshift-clone-web-app-code}
 
+In this section, you will clone a GitHub repo with a simple [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
+
 1. On a terminal, run the below command to clone the [GitHub repository](https://github.ibm.com/portfolio-solutions/openshift-node-app/) to your machine:
    ```sh
    git clone https://github.ibm.com/portfolio-solutions/openshift-node-app/
    ```
    {: pre}
-2. Change to the application directory
+2. Change to the application directory,
    ```sh
    cd openshift-node-app
    ```
    {:pre}
 
-If you check the contents of the folder, it's a simple [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints. Along with the starter code, the directory provides an `openshift.template.yaml` file with placeholders. Later in the tutorial, you will run a shell script to update the placeholders and then apply the generated `openshift.yaml` file to build and deploy the application to the {{site.data.keyword.openshiftshort}} cluster.
+ Along with the starter code, the directory provides an `openshift.template.yaml` file with placeholders. Later in the tutorial, you will run a shell script to update the placeholders and then apply the generated `openshift.yaml` file to build and deploy the application to the {{site.data.keyword.openshiftshort}} cluster.
 
 ### Push the code to a Private IBM Cloud Git repo
 {: #scalable-webapp-openshift-private-git-repo}
@@ -293,13 +295,13 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
 
 In this step, you will update the BuildConfig section of `openshift.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
-1. Run the below script to update the `openshift.template.yaml` file and generate **openshift.yaml** file.
+1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift.yaml** file.
    ```sh
    ./deploy.sh
    ```
    {:pre}
-2. Check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check.
-3. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
+2. Optionally, check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
+   1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -322,7 +324,8 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
    ```
    {:codeblock}
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
-4. Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
+
+   2. Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
    ```yaml
    spec:
      nodeSelector: null
@@ -335,14 +338,15 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
    ```
    {:codeblock}
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
-5. Search for `containers`, check the `image` and `name`
+
+   3. Search for `containers`, check the `image` and `name`
    ```yaml
    containers:
    - image: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest
      name: $MYPROJECT
    ```
    {:codeblock}
-6. If updated, **save** the YAML file.
+3. If updated, **save** the YAML file.
 
 ## Deploy the application to cluster
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
@@ -430,7 +434,7 @@ In this step, you will automate the build and deploy process. So that whenever y
      oc get bc/$MYPROJECT -o yaml | grep -A 3 "\- gitlab"
      ```
      {:pre}
-   - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
+   - **Replace** `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
 3. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Webhooks**.
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
