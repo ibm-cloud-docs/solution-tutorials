@@ -102,38 +102,6 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 
 <!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #scalable-webapp-kubernetes-3}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
-
-## Configure the access to your cluster
-{: #scalable-webapp-kubernetes-access-cluster}
-{: step}
-
-In this step, you'll configure `kubectl` to point to the cluster assigned to you.
-
-1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
-1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
-1. Run the below command to see all the namespaces in your cluster:
-   ```sh
-   kubectl get namespaces
-   ```
-   {:pre}
-1. Initialize the environment variable with the cluster name, and initialize the kubectl environment from the cluster
-   ```sh
-   ibmcloud ks cluster ls
-   MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud ks cluster config --cluster $MYCLUSTER
-   ```
-   {:pre}
--->
-<!--#/isworkshop#-->
-
 ## Create a starter application
 {: #scalable-webapp-kubernetes-create_application}
 {: step}
@@ -173,7 +141,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud cr region
    ```
    {:pre}
-1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
+1. Define an variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
    MYREGISTRY=us.icr.io
    ```
@@ -183,21 +151,21 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud cr namespaces
    ```
    {:pre}
-   To create a new namespace:
-   ```sh
-   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
-   ```
-   {:pre}
-1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
+   Define an variable named `MYNAMESPACE` for the registry namespace:
    ```sh
    MYNAMESPACE=<REGISTRY_NAMESPACE>
+   ```
+   Create it if required:
+   {:pre}
+   ```sh
+   ibmcloud cr namespace-add $MYNAMESPACE
    ```
    {:pre}
 
 ### Build the container image
 {: #scalable-webapp-kubernetes-8}
 
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+1. Define an variable named `MYPROJECT` set with the name of the application you generated in the previous section:
    ```sh
    MYPROJECT=<your-initials>kubeapp
    ```
@@ -220,20 +188,28 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 ### Deploy the application
 {: #scalable-webapp-kubernetes-9}
-<!--##istutorial#-->
 
-1. Gain access to your cluster as described on the Access tab of your cluster.
+1. Identify your cluster:
 
-  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
-   {:tip}
-
-1. Initialize the environment variable with the cluster name
+   ```bash
+   ibmcloud ks cluster ls
+   ```
+   {:pre}
+1. Initialize the variable with the cluster name
 
    ```bash
    MYCLUSTER=<CLUSTER_NAME>
    ```
    {:pre}
-<!--#/istutorial#-->
+1. Initialize the `kubectl` cli environment
+
+   ```bash
+   ibmcloud ks cluster config --cluster $MYCLUSTER
+   ```
+   {:pre}
+  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   {:tip}
+
 
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
@@ -277,13 +253,17 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 1. Locate the service linked to your application. It is named after your project.
    If your project name contains hyphens, they may have been removed by the chart, e.g `my-project` would become `myproject`.
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
-1. For VPC the IP addresses of the clusters are private to the VPC. These will not be accessable from your desktop but can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
 1. Identify a public IP of a worker node with the command below:
    ```sh
    ibmcloud ks workers --cluster ${MYCLUSTER}
    ```
    {: pre}
-1. Access the application at `http://worker-ip-address:portnumber/`.
+1. For VPC the IP addresses of the clusters are private to the VPC. These will not be accessable from your desktop but can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
+1. Access the application at `http://worker-ip-address:portnumber/`:
+   ```sh
+   curl http://<worker-ip-address>:<portnumber>
+   ```
+   {: pre}
 
 ## Use the IBM-provided domain for your cluster
 {: #scalable-webapp-kubernetes-ibm_domain}
@@ -337,14 +317,14 @@ Use Ingress to set up the cluster inbound connection to the service.
    kubectl apply -f ingress-ibmdomain.yml
    ```
    {: pre}
-4. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
+4. Open your application in a browser at `https://<nameofproject>.<ingress-sub-domain>/`
 
 <!--##istutorial#-->
 ## Use your own custom subdomain
 {: #scalable-webapp-kubernetes-custom_domain}
 {: step}
 
-This section requires you to own a custom domain and to be able to create a custom subdomain DNS record. You will need to create a `CNAME` subdomain record pointing to the IBM-provided domain.  If you domain is `example.com` then the subdomain will be `$MYPROJECT.example.com` or something like `abckubeapp.example.com` 
+This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM <ingress-sub-domain> for the cluster.  If you domain is `example.com` then the subdomain will be `$MYPROJECT.example.com` or something like `abckubeapp.example.com` The 
 
 ### with HTTP
 {: #scalable-webapp-kubernetes-15}
@@ -381,13 +361,21 @@ This section requires you to own a custom domain and to be able to create a cust
 If you were to try to access your application with HTTPS at this time `https://<my-custom-subdomain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers?topic=containers-ingress-types#manage_certs) for more information.  The basic steps are:
-1. Navigate to the [resource list](https://{DomainName}/resources) and then open the {{site.data.keyword.cloudcerts_short}} created for the cluster.
-1. Import the certificate for the domain that you own.  If you are already managing your certificate with the {{site.data.keyword.cloudcerts_short}} service you can download the certificate zip file, unzip it, then import into the cluster's {{site.data.keyword.cloudcerts_short}} instance.
-1. Open the imported certificate and copy the crn and create a TLS secret to store the cert and the key, name the secret, <secret-name>, the same as the certificate name just imported.
+1. Navigate to the [resource list](https://{DomainName}/resources) and then open the {{site.data.keyword.cloudcerts_short}} created for the cluster.  The cluster ID displayed in the get command is in the name of the service instance:
+
+   ```sh
+   ibmcloud ks cluster get --cluster $MYCLUSTER
+   ```
+   {: pre}
+1. Import the certificate for the $MYPROJECT subdomain and give it the bame $MYPROJECT, (.e.g abckubeapp.example.com) and certificate manager certificate name `abckubeapp`.  If you are already managing your certificate with the {{site.data.keyword.cloudcerts_short}} service you can download the certificate zip file, unzip it, then import into the cluster's {{site.data.keyword.cloudcerts_short}} instance.
+1. Open the imported certificate in the cloud console and copy the Cerfificate CRN.  Create a TLS secret for the cert and the key, name the secret, <secret-name>, the same as the certificate name just imported (.e.g abckubeapp).
    ```sh
    SECRET_NAME=<certificate-name>
    CERT_CRN=<crn-of-the-certificate>
    DNS=<my-custom-subdomain.com>
+   ```
+   {: pre}
+   ```sh
    ibmcloud ks ingress secret create --cluster $MYCLUSTER --name $SECRET_NAME --namespace default --cert-crn $CERT_CRN
    ```
    {: pre}
@@ -397,6 +385,8 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
    kind: Ingress
    metadata:
      name: ingress-customdomain-https
+     annotations:
+       kubernetes.io/ingress.class: "public-iks-k8s-nginx"
    spec:
      tls:
      - hosts:
@@ -427,8 +417,8 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
 1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on your cluster.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
 3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
-4. To review the application logs from the container, select **Pods**, **pod-name**,logs are in the upper left
-5. To exec into the container select the pod and choose **exec** from the action menu
+4. To review the application logs from the container, select **Pods**, **pod-name**, click **View logs** in the action menu in the upper right
+5. To exec into the container select **Exec into** in the action menu
 
 ## Scale Kubernetes pods
 {: #scalable-webapp-kubernetes-scale_cluster}
@@ -467,7 +457,7 @@ Once the autoscaler is successfully created, you should see
    {:pre}
 * Delete the Kubernetes secret:
    ```sh
-   ibmcloud ks ingress secret delete --cluster $MYCLUSTER --name $SECRET_NAME
+   ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $SECRET_NAME --namespace default
    ```
    {:pre}
 * Delete the Kubernetes artifacts created for this application:
