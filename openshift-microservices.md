@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-12-21"
-lasttested: "2020-12-21"
+lastupdated: "2020-12-22"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -1015,10 +1015,9 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    {:note}
 
    ![](images/solution55-openshift-microservices/sysdig-select-app.png)
-3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Default Dashboards > Hosts & Containers) from the Top dropdown
+3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Troubleshooting Views > Hosts & Containers) from the Top dropdown
    ![](images/solution55-openshift-microservices/sysdig-explore-node.png)
-4. Under **DASHBOARD** on the left pane, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
-5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
+4. Under **DASHBOARD** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
 1. From the **EXPLORE** tab, select **Deployments**.
 2. Search for `example-health` namespace.
 3. Select the `patient-health-frontend` to select all pods for the frontend.
@@ -1027,32 +1026,30 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the cluster and the node capacity
 {: #openshift-microservices-44}
 
-4. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** check out the two dashboards:
-   * **Overview by Host**
-   * **Overview by Container**
-5. Select **DASHBOARD** > **Default Dashboards** > **Kubernetes > Kubernetes Cluster and Node Capacity**.
-   - Check the **Total CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
-   - Check the **Total Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
-   - Check the **Total Pod CPU limit**. It should be less than the allocatable CPU of the node or cluster
-   - Check the **Total Pod CPU Requested**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
-   - Check the **Total Pod CPU Usage**. It is the total amount of CPU that is used by all Pods on the node or cluster
+5. Select **DASHBOARD**, check out the two dashboard templates:
+   * **Containers > Container Resource Usage**
+   * **Host Infrastructure > Host Resource Usage**
+5. Select the **Kubernetes > Kubernetes Cluster and Node Capacity** template:
+   - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
+   - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
+   - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster
+   - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
+   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster
 
 ### Explore the Network
 {: #openshift-microservices-45}
 
-1. Select **DASHBOARD** > **Default Dashboards** > **Network > Overview**.
+1. Select **DASHBOARD** and the template **Host Infrastructure > Network Traffic & Bandwidth**.
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
    ![](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.
-   - In the action menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
-   - Click **Copy and Open**
-   - In Yourname Network Overview in the upper right choose **Edit Scope**
-   - Change Everywhere to `kubernetes.namespace.name`
-   - Change in to `is`
-   - Change Value to `ibm-observe`
+   - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network Traffic & Bandwidth`
+   - Click **Create and Open**
+   - Edit the dashboard scope
+   - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`
    ![](images/solution55-openshift-microservices/explore-img-10.png)
    - Click Save
 
