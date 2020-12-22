@@ -720,17 +720,18 @@ This section of the tutorial goes deep into the IBM logging service.  You can st
 {: #openshift-microservices-28}
 
 Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in a **Running** status.
-   ```
-   oc get pods -n ibm-observe
-   ```
-   {:pre}
-   The deployment is successful when you see one or more {{site.data.keyword.la_short}} pods:
-   ```
-   someone@cloudshell:~$ oc get pods -n ibm-observe
-   NAME                 READY     STATUS    RESTARTS   AGE
-   logdna-agent-mdgdz   1/1       Running   0          86s
-   logdna-agent-qlqwc   1/1       Running   0          86s
-   ```
+```sh
+oc get pods -n ibm-observe
+```
+{:pre}
+
+The deployment is successful when you see one or more {{site.data.keyword.la_short}} pods:
+```
+someone@cloudshell:~$ oc get pods -n ibm-observe
+NAME                 READY     STATUS    RESTARTS   AGE
+logdna-agent-mdgdz   1/1       Running   0          86s
+logdna-agent-qlqwc   1/1       Running   0          86s
+```
 
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
    * All pods must be in a `Running` state
@@ -963,17 +964,17 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
 Verify that the `sysdig-agent` pods on each node have a **Running** status.
 
 Run the following command:
-   ```sh
-   oc get pods -n ibm-observe
-   ```
-   {:pre}
+```sh
+oc get pods -n ibm-observe
+```
+{:pre}
 
 Example output:
-   ```
-   NAME                 READY     STATUS    RESTARTS   AGE
-   sysdig-agent-qrbcq   1/1       Running   0          1m
-   sysdig-agent-rhrgz   1/1       Running   0          1m
-   ```
+```
+NAME                 READY     STATUS    RESTARTS   AGE
+sysdig-agent-qrbcq   1/1       Running   0          1m
+sysdig-agent-rhrgz   1/1       Running   0          1m
+```
 
 ## Monitor your Cluster with SysDig
 {: #openshift-microservices-use-sysdig}
