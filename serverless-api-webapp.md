@@ -262,8 +262,8 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. Download a zip file by clicking **Code** then **Download ZIP**.
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
 1. Edit **guestbook.js** - replace the value of **apiUrl** with the route you made a note of earlier when creating the API.
-1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket
-1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab
+1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
+1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab.
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
