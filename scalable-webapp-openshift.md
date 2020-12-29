@@ -65,9 +65,8 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `dev` plugin,
-* a Docker engine,
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
+* Docker engine,
 * `oc` to interact with OpenShift,
 * `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
@@ -207,7 +206,7 @@ In this step, you will create a private IBM Cloud Git repository and push the st
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under *Git global setup* and *Push an existing Git repository* sections to setup Git and to push the starter application code.
+4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
 5. Once you push the code to the private repository, you should see the starter code in the project.
 
 ### Create a Git deploy token
@@ -301,7 +300,7 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
    ```
    {:pre}
 2. Optionally, check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
-   1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
+3. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -325,7 +324,7 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
    {:codeblock}
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
 
-   2. Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
+4. **Optional** Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
    ```yaml
    spec:
      nodeSelector: null
@@ -339,14 +338,14 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
    {:codeblock}
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
 
-   3. Search for `containers`, check the `image` and `name`
+5. **Optional** Search for `containers`, check the `image` and `name`
    ```yaml
    containers:
    - image: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest
      name: $MYPROJECT
    ```
    {:codeblock}
-3. If updated, **save** the YAML file.
+6. If updated, **save** the YAML file.
 
 ## Deploy the application to cluster
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
