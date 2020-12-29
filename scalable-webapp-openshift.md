@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-12-18"
-lasttested: "2020-12-18"
+lastupdated: "2020-12-29"
+lasttested: "2020-12-29"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -180,9 +180,9 @@ In this section, you clone web application code, push it to a private Git reposi
 
 In this section, you will clone a GitHub repo with a simple [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
 
-1. On a terminal, run the below command to clone the [GitHub repository](https://github.ibm.com/portfolio-solutions/openshift-node-app/) to your machine:
+1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/) to your machine:
    ```sh
-   git clone https://github.ibm.com/portfolio-solutions/openshift-node-app/
+   git clone https://github.com/IBM-Cloud/openshift-node-app
    ```
    {: pre}
 2. Change to the application directory,
@@ -297,7 +297,7 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
 
 1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift.yaml** file.
    ```sh
-   ./deploy.sh
+   ./generate_yaml.sh
    ```
    {:pre}
 2. Optionally, check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
