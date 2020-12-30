@@ -548,7 +548,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 
 1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment configuration or replication controller
    ```sh
-    oc scale dc/$MYPROJECT --replicas=2
+   oc scale dc/$MYPROJECT --replicas=2
    ```
    {:pre}
 2. You can see a new pod being provisioned by running `oc get pods` command.
