@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-12-28"
+lastupdated: "2020-12-30"
 lasttested: "2020-12-28"
 
 content-type: tutorial
@@ -242,13 +242,13 @@ For every location:
 1. Select the Health check created before.
 1. Click on **Create**.
 
-### Create a global load balancer
+### Create a global load balancer(GLB)
 {: #multi-region-serverless-12}
 
-1. Create a load balancer.
-1. Set **Balancer hostname** to **api.mydomain.com**.
-1. Add the regional origin pools.
-1. Click on **Create**.
+1. Click **Create** under **Load balancers**.
+2. Set **Name** to **api.mydomain.com**.
+3. Click on **Add route** to add the regional origin pools.
+4. Once the origin pools are added, click on **Create**.
 
 After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
@@ -260,7 +260,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
 1. Select the first location configured in the GLB.
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
-1. Save.
+1. Click **Save**.
 1. Wait for the health check to run for this origin pool.
 1. Get `https://api.mydomain.com/api/do?name=John&place=Earth` again, it should now redirect to the other healthy origin.
 1. Revert the code changes to get back to a healthy origin.
