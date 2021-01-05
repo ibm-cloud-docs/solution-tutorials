@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-12"
-lasttested: "2020-10-12"
+lastupdated: "2020-12-21"
+lasttested: "2020-12-21"
 
 content-type: tutorial
 services: vpc
@@ -50,7 +50,7 @@ This tutorial and the associated automation scripts will provide an easy way to 
 {: #hpc-lsf-on-vpc-prereqs}
 
 You need the following to complete this tutorial:
-* A workstation or cloud instance to serve as the orchestrator for this deployment.  it must be capable of running the following tools
+* A workstation or cloud instance to serve as the orchestrator for this deployment.  It must be capable of running the following tools
 * Red Hat&reg; Ansible&reg; version 2.7 or higher
 * [Terraform CLI and the IBM Cloud Provider plug-in](/docs/terraform?topic=terraform-getting-started)
 * {{site.data.keyword.cloud_notm}} CLI
@@ -333,4 +333,4 @@ If the cleanup process times out before it completes, Terraform prints out a lis
 ## Related content
 {: #hpc-lsf-on-vpc-related}
 
-Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html) for information on additional commands and tasks.
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV_10.1.0/lsf_welcome/lsf_welcome.html) documentation for information on additional commands and tasks.

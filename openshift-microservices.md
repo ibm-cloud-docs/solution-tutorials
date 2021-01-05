@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-21"
-lasttested: "2020-10-20"
+lastupdated: "2020-12-22"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 {: shortdesc}
 
 ## Objectives
@@ -86,7 +86,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
+      - [Opening required ports in the default security group](https://{DomainName}/docs/openshift?topic=openshift-vpc-network-policy#security_groups)
   - Select the desired VPC
   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
@@ -665,10 +665,10 @@ The `patient-health-frontend` application has an environment variable for the ba
 
 1. Set the **API_URL** environment variable to **default** in the frontend **Deployment Config**. Navigate to the deployment config for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **DC**:
 
-2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
+2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template / Containers / Port` output of this command:
 
    ```
-   oc describe deploymentconfig/patient-health-frontend
+   oc describe deployment/patient-health-backend
    ```
    {:pre}
 
@@ -720,17 +720,18 @@ This section of the tutorial goes deep into the IBM logging service.  You can st
 {: #openshift-microservices-28}
 
 Verify that the `{{site.data.keyword.la_short}}-agent` pods on each node are in a **Running** status.
-   ```
-   oc get pods -n ibm-observe
-   ```
-   {:pre}
-   The deployment is successful when you see one or more {{site.data.keyword.la_short}} pods:
-   ```
-   someone@cloudshell:~$ oc get pods -n ibm-observe
-   NAME                 READY     STATUS    RESTARTS   AGE
-   logdna-agent-mdgdz   1/1       Running   0          86s
-   logdna-agent-qlqwc   1/1       Running   0          86s
-   ```
+```sh
+oc get pods -n ibm-observe
+```
+{:pre}
+
+The deployment is successful when you see one or more {{site.data.keyword.la_short}} pods:
+```
+someone@cloudshell:~$ oc get pods -n ibm-observe
+NAME                 READY     STATUS    RESTARTS   AGE
+logdna-agent-mdgdz   1/1       Running   0          86s
+logdna-agent-qlqwc   1/1       Running   0          86s
+```
 
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
    * All pods must be in a `Running` state
@@ -963,17 +964,17 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
 Verify that the `sysdig-agent` pods on each node have a **Running** status.
 
 Run the following command:
-   ```sh
-   oc get pods -n ibm-observe
-   ```
-   {:pre}
+```sh
+oc get pods -n ibm-observe
+```
+{:pre}
 
 Example output:
-   ```
-   NAME                 READY     STATUS    RESTARTS   AGE
-   sysdig-agent-qrbcq   1/1       Running   0          1m
-   sysdig-agent-rhrgz   1/1       Running   0          1m
-   ```
+```
+NAME                 READY     STATUS    RESTARTS   AGE
+sysdig-agent-qrbcq   1/1       Running   0          1m
+sysdig-agent-rhrgz   1/1       Running   0          1m
+```
 
 ## Monitor your Cluster with SysDig
 {: #openshift-microservices-use-sysdig}
@@ -1015,10 +1016,9 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    {:note}
 
    ![](images/solution55-openshift-microservices/sysdig-select-app.png)
-3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Default Dashboards > Hosts & Containers) from the Top dropdown
+3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Troubleshooting Views > Hosts & Containers) from the Top dropdown
    ![](images/solution55-openshift-microservices/sysdig-explore-node.png)
-4. Under **DASHBOARD** on the left pane, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
-5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
+4. Under **DASHBOARD** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
 1. From the **EXPLORE** tab, select **Deployments**.
 2. Search for `example-health` namespace.
 3. Select the `patient-health-frontend` to select all pods for the frontend.
@@ -1027,32 +1027,30 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the cluster and the node capacity
 {: #openshift-microservices-44}
 
-4. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** check out the two dashboards:
-   * **Overview by Host**
-   * **Overview by Container**
-5. Select **DASHBOARD** > **Default Dashboards** > **Kubernetes > Kubernetes Cluster and Node Capacity**.
-   - Check the **Total CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
-   - Check the **Total Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
-   - Check the **Total Pod CPU limit**. It should be less than the allocatable CPU of the node or cluster
-   - Check the **Total Pod CPU Requested**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
-   - Check the **Total Pod CPU Usage**. It is the total amount of CPU that is used by all Pods on the node or cluster
+5. Select **DASHBOARD**, check out the two dashboard templates:
+   * **Containers > Container Resource Usage**
+   * **Host Infrastructure > Host Resource Usage**
+5. Select the **Kubernetes > Kubernetes Cluster and Node Capacity** template:
+   - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
+   - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
+   - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster
+   - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
+   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster
 
 ### Explore the Network
 {: #openshift-microservices-45}
 
-1. Select **DASHBOARD** > **Default Dashboards** > **Network > Overview**.
+1. Select **DASHBOARD** and the template **Host Infrastructure > Network Traffic & Bandwidth**.
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
    ![](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.
-   - In the action menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
-   - Click **Copy and Open**
-   - In Yourname Network Overview in the upper right choose **Edit Scope**
-   - Change Everywhere to `kubernetes.namespace.name`
-   - Change in to `is`
-   - Change Value to `ibm-observe`
+   - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network Traffic & Bandwidth`
+   - Click **Create and Open**
+   - Edit the dashboard scope
+   - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`
    ![](images/solution55-openshift-microservices/explore-img-10.png)
    - Click Save
 
