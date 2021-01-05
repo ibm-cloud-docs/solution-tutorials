@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-10-12"
-lasttested: "2020-10-12"
+lastupdated: "2020-12-21"
+lasttested: "2020-12-21"
 
 content-type: tutorial
 services: vpc
@@ -333,4 +333,4 @@ If the cleanup process times out before it completes, Terraform prints out a lis
 ## Related content
 {: #hpc-lsf-on-vpc-related}
 
-Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV/product_welcome_spectrum_lsf.html) for information on additional commands and tasks.
+Refer to the [IBM Spectrum LSF](https://www.ibm.com/support/knowledgecenter/SSWRJV_10.1.0/lsf_welcome/lsf_welcome.html) documentation for information on additional commands and tasks.

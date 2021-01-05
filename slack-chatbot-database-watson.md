@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2020
-lastupdated: "2020-09-03"
-lasttested: "2020-06-12"
+lastupdated: "2021-01-05"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: cloud-foundry-public, assistant, openwhisk, Db2onCloud
@@ -123,7 +123,7 @@ In this section, you are going to set up the needed services and prepare the env
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. On the left navigation select **Skills**, then click **Create skill**, continue with **Next** and the preselected **Dialog skill**, finally click on **Import skill**.
+3. On the left navigation select **Skills**, then click **Create skill**, select **Dialog skill** and continue with **Next**, finally click on **Import skill**.
 4. In the dialog, after clicking **Choose JSON file**, select the file **skill-TutorialSlackbot.json** from the local directory. Click **Import**. This creates a new skill named **TutorialSlackbot**.
 5. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 

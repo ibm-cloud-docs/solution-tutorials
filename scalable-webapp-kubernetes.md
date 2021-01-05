@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2020-12-17"
+lastupdated: "2021-01-05"
 lasttested: "2020-12-17"
 
 content-type: tutorial
@@ -101,6 +101,18 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 
 
 <!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #scalable-webapp-kubernetes-3}
+{: step}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
+-->
+<!--#/isworkshop#-->
 
 ## Create a starter application
 {: #scalable-webapp-kubernetes-create_application}

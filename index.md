@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2018, 2019, 2020
-lastupdated: "2020-12-17"
+  years: 2017, 2018, 2019, 2020, 2021
+lastupdated: "2021-01-04"
 lasttested: "2020-12-17"
 
 ---
@@ -56,7 +56,7 @@ To avoid the installation of these tools, you can also use the [{{site.data.keyw
 ## Microsoft Windows
 {: #getting-started-windows}
 
-The following sections assume you are running Microsoft Windows 10 64-bit under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running Microsoft Windows 10 64-bit under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #getting-started-windows_cli}
@@ -160,12 +160,12 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    ```
    {:pre}
 
-Proceed to the configuration [common to all operating systems](#common).
+Proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ## Apple macOS
 {: #getting-started-macos}
 
-The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #getting-started-macos_cli}
@@ -301,12 +301,12 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    macOS may prompt you to install the developer tools. These tools include the `git` command line.
    {:tip}
 
-Proceed to the configuration [common to all operating systems](#common).
+Proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ## Ubuntu Linux
 {: #getting-started-ubuntu}
 
-The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #getting-started-ubuntu_cli}
@@ -439,7 +439,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    ```
    {:pre}
 
-Proceed to the configuration [common to all operating systems](#common).
+Proceed to the configuration [common to all operating systems](#getting-started-common).
 
 ## Common to all operating systems
 {: #getting-started-common}

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-10-05"
-lasttested: "2020-10-01"
+lastupdated: "2020-12-28"
+lasttested: "2020-12-28"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics
@@ -173,6 +173,8 @@ In this section, you will begin configuring a Streams flow that receives log mes
        * Select the **Lite** plan
        * Provide the **Service name** as `log-analysis-sa` and click **Create**.
 4. Select `log-analysis-sa` from the list and click **Associate service**.
+   You may have to refresh the page and to wait for the service instance to be provisioned before it appears in the list.
+   {: tip}
 5. Type the streams flow **Name** as `webserver-flow`.
 6. Select **Wizard** and click **Create**.
 7. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile. _If you see a connection error, create [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio) service with **Lite** plan in the same region._
@@ -191,15 +193,15 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 
 1. Download and unzip the [Kafka 2.6.x client](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.6.0/kafka_2.13-2.6.0.tgz).
 2. Change directory to `bin` and create a text file named `event-streams.config` with the following contents.
-    ```
-    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
-    security.protocol=SASL_SSL
-    sasl.mechanism=PLAIN
-    ssl.protocol=TLSv1.2
-    ssl.enabled.protocols=TLSv1.2
-    ssl.endpoint.identification.algorithm=HTTPS
-    ```
-    {: codeblock}
+   ```
+   sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
+   security.protocol=SASL_SSL
+   sasl.mechanism=PLAIN
+   ssl.protocol=TLSv1.2
+   ssl.enabled.protocols=TLSv1.2
+   ssl.endpoint.identification.algorithm=HTTPS
+   ```
+   {: codeblock}
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
@@ -256,10 +258,10 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
    * From the **Nodes** palette, drag and drop the **Filter** node from **Processing and Analytics** to the canvas.
    * Click on the **Filter** node your just dropped to see a pane on the right side. Hover on to the word `Filter`, click the **Edit** icon and enter `OK`.
    * Enter the following statement in the **Condition Expression** text area.
-      ```sh
-      responseCode == 200
-      ```
-      {: codeblock}
+     ```sh
+     responseCode == 200
+     ```
+     {: codeblock}
    * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
    * From the **Nodes** palette, drag the **Debug** node found under **Targets** to the canvas.
    * Connect the **Debug** node to the **OK** node by drawing a line between the two.
@@ -281,37 +283,37 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
 
 1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
 2. Clone the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator) and Change to the simulator's directory
-    ```sh
-    git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
-    cd kafka-log-simulator
-    ```
-    {: pre}
+   ```sh
+   git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
+   cd kafka-log-simulator
+   ```
+   {: pre}
 3. Run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials** used earlier. An example is provided.
-    ```sh
-    npm install
-    ```
-    {: pre}
-    ```sh
-    npm run build
-    ```
-    {: pre}
-    ```sh
-    node dist/index.js --file <LOGFILE> --parser httpd --broker-list <BROKERLIST> \
+   ```sh
+   npm install
+   ```
+   {: pre}
+   ```sh
+   npm run build
+   ```
+   {: pre}
+   ```sh
+   node dist/index.js --file <LOGFILE> --parser httpd --broker-list <BROKERLIST> \
     --api-key <APIKEY> --topic webserver --rate 100
-    ```
-    {: pre}
-    ```sh
-    node dist/index.js --file /Users/VMac/Downloads/NASA_access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-    "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-    "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-    "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-    "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-    "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" \
-    --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzjj --topic webserver --rate 100
-    ```
+   ```
+   {: pre}
+   ```sh
+   node dist/index.js --file /Users/VMac/Downloads/NASA_access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" \
+   --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzjj --topic webserver --rate 100
+   ```
 
-    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
-    {:tip}
+   If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
+   {:tip}
 
 4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
@@ -333,81 +335,81 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
 
 1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Click **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
 2. Enter the following SQL into the **Type SQL here ...** text area.
-    ```sql
-    -- What are the top 10 web pages on NASA from July 1995?
-    -- Which mission might be significant?
-    SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://ap-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    WHERE REQUEST LIKE '%.htm%'
-    GROUP BY REQUEST
-    ORDER BY 2 DESC
-    LIMIT 10
-    ```
-    {: codeblock}
+   ```sql
+   -- What are the top 10 web pages on NASA from July 1995?
+   -- Which mission might be significant?
+   SELECT REQUEST, COUNT(REQUEST)
+   FROM cos://ap-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   WHERE REQUEST LIKE '%.htm%'
+   GROUP BY REQUEST
+   ORDER BY 2 DESC
+   LIMIT 10
+   ```
+   {: codeblock}
 3. Retrieve the Object SQL URL from the logs file.
-    * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
-    * Select the bucket you created previously.
-    * On the `http-logs_<TIME>.csv` file, click the action menu
-    * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
+   * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
+   * Select the bucket you created previously.
+   * On the `http-logs_<TIME>.csv` file, click the action menu
+   * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
 5. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
-    ```sql
-    -- Who are the top 5 viewers?
-    SELECT HOST, COUNT(*)
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    GROUP BY HOST
-    ORDER BY 2 DESC
-    LIMIT 5
-    ```
-    {: codeblock}
+   ```sql
+   -- Who are the top 5 viewers?
+   SELECT HOST, COUNT(*)
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   GROUP BY HOST
+   ORDER BY 2 DESC
+   LIMIT 5
+   ```
+   {: codeblock}
 
-    ```sql
-    -- Which viewer has suspicious activity based on application failures?
-    SELECT HOST, COUNT(*)
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    WHERE `responseCode` == 500
-    GROUP BY HOST
-    ORDER BY 2 DESC
-    ```
-    {: codeblock}
+   ```sql
+   -- Which viewer has suspicious activity based on application failures?
+   SELECT HOST, COUNT(*)
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   WHERE `responseCode` == 500
+   GROUP BY HOST
+   ORDER BY 2 DESC
+   ```
+   {: codeblock}
 
-    ```sql
-    -- Which requests showed a page not found error to the user?
-    SELECT DISTINCT REQUEST
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    WHERE `responseCode` == 404
-    ```
-    {: codeblock}
+   ```sql
+   -- Which requests showed a page not found error to the user?
+   SELECT DISTINCT REQUEST
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   WHERE `responseCode` == 404
+   ```
+   {: codeblock}
 
-    ```sql
-    -- What are the top 10 largest files?
-    SELECT DISTINCT REQUEST, BYTES
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    WHERE BYTES > 0
-    ORDER BY CAST(BYTES as Integer) DESC
-    LIMIT 10
-    ```
-    {: codeblock}
+   ```sql
+   -- What are the top 10 largest files?
+   SELECT DISTINCT REQUEST, BYTES
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   WHERE BYTES > 0
+   ORDER BY CAST(BYTES as Integer) DESC
+   LIMIT 10
+   ```
+   {: codeblock}
 
-    ```sql
-    -- What is the distribution of total traffic by hour?
-    SELECT SUBSTRING(TIMESTAMP, 13, 2), COUNT(*)
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    GROUP BY 1
-    ORDER BY 1 ASC
-    ```
-    {: codeblock}
+   ```sql
+   -- What is the distribution of total traffic by hour?
+   SELECT SUBSTRING(TIME_STAMP, 13, 2), COUNT(*)
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   GROUP BY 1
+   ORDER BY 1 ASC
+   ```
+   {: codeblock}
 
-    ```sql
-    -- Why did the previous result return an empty hour?
-    -- Hint, find the malformed hostname.
-    SELECT HOST, REQUEST
-    FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
-    WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
-    ```
-    {: codeblock}
+   ```sql
+   -- Why did the previous result return an empty hour?
+   -- Hint, find the malformed hostname.
+   SELECT HOST, REQUEST
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   WHERE SUBSTRING(TIME_STAMP, 13, 2) == ''
+   ```
+   {: codeblock}
 
 FROM clauses are not limited to a single file. Use `cos://us-geo/<YOUR_BUCKET_NAME>/logs/` to run SQL queries on all files in the bucket.
 {: tip}

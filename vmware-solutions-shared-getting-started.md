@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-22"
-lasttested: "2020-05-22"
+lastupdated: "2020-12-23"
+lasttested: "2020-12-23"
 
 content-type: tutorial
 services: vmwaresolutions, schematics
@@ -103,8 +103,8 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 2. Click on the newly created instance `vmware-tutorial`.
 3. Click on **Set Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
-5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
-6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
+5. Select the virtual data center and in the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
+6. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
 | Name | Description | Default |
 |----------|---------|---------|
@@ -324,7 +324,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
 
-### 	{{site.data.keyword.bplong_notm}}
+### {{site.data.keyword.bplong_notm}}
 {: #vmware-solutions-shared-getting-started-create-schematics}
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
@@ -333,7 +333,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
    - Click **Create** to create your workspace. Your workspace is created with a Draft state and the workspace Settings page opens.
 3. Connect your workspace to the GitHub source repository where our Terraform template for this tutorial is stored.
    - On the workspace Settings page, enter the link to our GitHub repository, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
-   - Select `terraform_v0.12` as the **Terraform version**.
+   - Select `terraform_v0.13` as the **Terraform version**.
    - Click **Save template information**. 
 4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
   

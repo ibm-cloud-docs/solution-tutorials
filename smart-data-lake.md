@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-11-27"
-lasttested: "2019-11-27"
+  years: 2018-2021
+lastupdated: "2021-01-05"
+lasttested: "2021-01-05"
 
 content-type: tutorial
 services: cloud-object-storage, cognos-dashboard-embedded, sql-query
@@ -92,23 +92,24 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud target -g <your-default-resource-group>
     ```
     {: pre}
-3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
+3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
     {: pre}
+    Create the alias:
     ```sh
     ibmcloud resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
     ```
     {: pre}
-4. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
+4. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query). Replace **us-south** by your region, if needed.
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
 5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
-    ibmcloud cf create-service data-science-experience free-v1 data-lake-studio
+    ibmcloud resource service-instance-create data-lake-studio data-science-experience free-v1 us-south
     ```
     {: pre}
 6. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
@@ -152,12 +153,12 @@ This section uses the command line to create service instances. Alternatively, y
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
-2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources).
+2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the storage section.
 3. Create a new bucket to store data.
     - Click **Create a bucket**.
     - Select **Custom bucket**.
     - Select **Regional** from the **Resiliency** drop down.
-    - Select **us-south** from the **Location**. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the `us-south` location at this time. Alternatively, choose another location and use the **Standard** transfer type in the next section.
+    - Select a **Location**.
     - Provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with an unique bucket name.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
     - From your bucket, click **Upload** > **Files**.
@@ -172,9 +173,9 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
 
-You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
+You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
-1. Access the **data-lake-sql** SQL Query service instance from your [Resource List](https://{DomainName}/resources).
+1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from your [Resource List](https://{DomainName}/resources).
 2. Click **Launch SQL Query UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
@@ -204,28 +205,26 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 {: #smart-data-lake-5}
 {: step}
 
-In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
+In this section, you will use the {{site.data.keyword.sqlquery_short}} client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
-    - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.cloud.ibm.com/home2?context=cpdaas&apps=data_science_experience&nocache=true).
-    - Click **Create a Project** tile followed by **Create an empty project**.
-    - Provide a **Project name**.
-    - Ensure **Storage** is set to **data-lake-cos**.
+    - Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from your [Resource List](https://{DomainName}/resources).
+    - Click **Projects** under **Quick navigation**, then **New project +** followed by **Create an empty project**.
+    - Use **Data lake project** as **Name**.
+    - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
-    - From the **Blank** tab, enter a **Notebook name**.
-    - Leave the **Language** and **Runtime** to defaults > click **Create notebook**.
+    - From the **Blank** tab, enter a **Data lake notebook** as **Name**.
+    - Leave the **Language** and **Runtime** to defaults and click **Create notebook**.
 2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
-    !conda install pyarrow
-    !conda install sqlparse
-    !pip install --user ibmcloudsql
+    !pip install --user pixiedust
     import ibmcloudsql
     from pixiedust.display import *
     ```
     {: codeblock}
-1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
-    - Add the following in the next `In [ ]:` prompt and then **Run**.
+1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow {{site.data.keyword.sqlquery_short}} results to be stored in {{site.data.keyword.cos_short}}.
+    - Add the following in the next cell, the `In [ ]:` prompt, and then **Run**.
         ```python
         import getpass
         cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
@@ -239,8 +238,8 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-1. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
-    - In the next `In [ ]:` prompt, assign the CRN to a variable in your Notebook.
+1. Add the {{site.data.keyword.sqlquery_short}} instance's CRN (Cloud Resource Name) to the Notebook.
+    - In the next cell, assign the CRN to a variable in your Notebook. Copy the following into it, but do not run it yet.
         ```python
         sql_crn = '<SQL_QUERY_CRN>'
         ```
@@ -250,13 +249,13 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         ibmcloud resource service-instance data-lake-sql
         ```
         {: pre}
-    - Paste the CRN between the single quotes and then **Run**.
+    - Paste the CRN between the single quotes, replacing **<SQL_QUERY_CRN>** and then **Run**.
 1. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
-1. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
+1. Enter the following commands in another cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
@@ -286,7 +285,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 
 In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
 
-1. Create a common table expression to convert the `location` column to separate `latitude` and `longitude` columns. **Run** the following from the Notebook's prompt.
+1. Create a common table expression to convert the `location` column to separate `latitude` and `longitude` columns. **Run** the following from another Notebook cell.
     ```python
     query = """
     WITH location AS (
@@ -326,7 +325,7 @@ In this section, you will visualize the previous result set using PixieDust and 
     traffic_location.head()
     ```
     {: codeblock}
-2. In the next `In [ ]:` prompt **Run** the `display` command to view the result using PixieDust.
+2. In the next cell **Run** the `display` command to view the result using PixieDust.
     ```python
     display(traffic_location)
     ```
@@ -341,7 +340,7 @@ In this section, you will visualize the previous result set using PixieDust and 
 {: #smart-data-lake-7}
 {: step}
 
-Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to SQL Query, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
+Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
 
 1. Access the public URL of the dashboard application you pushed to {{site.data.keyword.Bluemix_notm}} previously.
 2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
@@ -379,7 +378,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
-- Experiment with additional datasets using SQL Query
+- Experiment with additional datasets using {{site.data.keyword.sqlquery_short}}
 - Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
@@ -423,7 +422,7 @@ ibmcloud resource service-instance-delete data-lake-sql
 ```
 {: pre}
 ```sh
-ibmcloud cf delete-service data-lake-studio
+ibmcloud resource service-instance-delete data-lake-studio
 ```
 {: pre}
 ```sh
@@ -436,5 +435,4 @@ ibmcloud cf delete dashboard-nodejs
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)
-- [Mapbox](https://{DomainName}/catalog/services/mapbox-maps)
-- [PixieDust](https://www.ibm.com/cloud/pixiedust)
+- [PixieDust](https://pixiedust.github.io/pixiedust/index.html)

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-08-12"
-lasttested: "2020-08-12"
+lastupdated: "2020-12-22"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig
@@ -31,10 +31,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
+This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 {:shortdesc}
 
-Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
+Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 
 ## Objectives
 {: #application-log-analysis-objectives}
@@ -281,7 +281,7 @@ Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/
 You can access the application specific log in the LogDNA UI using the filters.
 
 1. On the top bar, click on **All Apps**.
-1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels.
+1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels. You can also type `app:app-log-analysis` in the *Search...* field.
 1. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error, info, warning etc.,
 
 ## Search and filter logs
@@ -405,7 +405,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
    - From the Explore tab, select `Deployments`.
    - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
    - Click the arrow next to `net.http.request.time`.
-   - Select `Default Dashboards` > `Kubernetes`.
+   - Select `Troubleshooting Views` > `Kubernetes`.
    - Select `Kubernetes Namespace Overview`.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
@@ -416,34 +416,37 @@ This sample application includes code to generate **custom metrics**. These cust
 2. To monitor the calls to a given api endpoint of the application,
    - From the Explore tab, select `Deployments`.
    - Select `Metrics` > `Prometheus` > `wolam_api_counter_total` in the `Metrics and Dashboards` dropdown.
-   - Select Time: **Rate**, Group: **Sum**, Segment: **endpoint**
+   - Select Time: **Average**, Group: **Sum**, Segment: **endpoint**
 3. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 4. To monitor the calls to a given api endpoint of the application by region,
-   - Select Time: **Rate**, Group: **Sum**, Segment: **region**
+   - Select Time: **Average**, Group: **Sum**, Segment: **region**
 
 ### Create a custom dashboard
 {: #application-log-analysis-20}
 
 Along with the pre-defined dashboards, you can create your own custom dashboard to display the most useful/relevant views and metrics for the containers running your app in a single location. Each dashboard is comprised of a series of panels configured to display specific data in a number of different formats.
 
-To create a dashboard:
+To create a dashboard with a first panel:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** by clicking the `edit` icon next to Blank Dashboard.
-1. Select **Top List** as your new panel and name the panel as **Request time per container** by clicking the `edit` icon next to **My Panel**.
-   - Under **Metrics**, Type **net.http.request.time**.
-   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_ e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`
-   - Segment by **container.id** and you should see the net request time of each container.
-   - Click **save**.
-1. To add a new panel, Click on the **plus** icon and select **Number(#)** as the panel type
-   - Under **Metrics**, Type **net.http.request.count** > Click on **RATE** > Change the time aggregation from **Average(Avg)** to **Sum**.
-   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
-   - Compare to **1 hour** ago and you should see the net request count of each container.
-   - Click **save**.
+1. In the New Panel, set the **Metrics** to **net.http.request.time**.
+2. Set **Segmentation** to **container.id**.
+1. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+2. Save the dashboard.
+
+To add another panel:
+1. Use the **Add Panel** button in the dashboard.
+2. Change the panel type from **Timechart** to **Number**
+3. Set the **Metric** to **net.http.request.count**.
+4. Set the **Time Aggregation** to **Rate**.
+5. Set the **Group Rollup** to **Sum**.
+6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+7. Enable **Compare To** and set the value to **1 Hour ago**.
+8. Save the dashboard.
+
+To focus the dashboard on your cluster:
 1. To edit the scope of this dashboard,
-   - Click **Edit Scope** in the title panel.
-   - Select/Type **Kubernetes.cluster.name** in the dropdown
-   - Leave display name empty and select **is**.
-   - Select your cluster name as the value and click **Save**.
+1. Set the filter to **kubernetes.cluster.name**, **is**, and your cluster name.
+2. Click **Save**.
 
 ## Remove resources
 {: #application-log-analysis-remove_resource}
