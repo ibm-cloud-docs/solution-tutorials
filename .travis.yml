@@ -2,6 +2,12 @@ language: node_js
 node_js:
   - "8"
 
+notifications:
+  slack:
+    secure: FTabv7vZxbU1Ixi+4flvkAK439VqIiJI1uGXyYq98cAKsKHJmB9fTKqmxVOJ+1+dRUO+8PDAkiRmZGb4GhX1cF+EFtA6YgkUfN5x0O9RviwJzOZPnFfyU3ie9iGnJxbyKTXBJf1MVhKB9UT7agKlrg3kEx3qgOsZPfRltDt89hPfxbt0H7KFOLc2nniWeSoUEx/CN/0u2LXdbIk3S4soaJM7jXKfc1sFvHa2RHDvp3jKYAt8k4ngo/XFAVgiXIQvDqIyUrDMgSL3Owj8kd8YP0Df2fVjiw0JOcpcyf1tWkHX+mWKSY/nwO7HXHWvbvtTxRKngVGzLFFnh4YCyfwJvbtb6XKQ8Ovp9uTjOJPWgVpxuxZP6/GlJO1ihG7shDIhMOTxXgFBbdSQ0yvIoEYHhVkdN+HcVFqneT4mok4auoNdfKXisIjsBHoildRVKu6106tREcMAjHfeSczTkv9tJF74qy2zQNoQG+ghx21GmNVZW1dxHUQY4ggq3+is8G1MTRrq9vqvteT3lW9qwoBacp6yarVMWRu3gbIKk5sDPFt4hf1s1NA2/ZRg0KeJSuu2iPi02c61Smkfr53MrzOjaF1GOtoLDaRDtu1qa4IKcPaZno7V2PbqBCcHVlGFmPbzM3B7wUSKuG8uCu6kvYfwteFwC9Ltjv0as1SSqfQghOI=
+    on_success: change
+    on_failure: always
+
 branches:
   only:
   - master
