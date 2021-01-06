@@ -205,36 +205,19 @@ Next comes the resource group.
 The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
    ```sh
-  # a cluster
-  resource "ibm_container_cluster" "cluster" {
-  	name              = "${var.environment_name}-cluster"
-  	datacenter        = "${var.cluster_datacenter}"
-  	org_guid          = "${data.terraform_remote_state.global.org_guid}"
-  	space_guid        = "${ibm_space.space.id}"
-  	account_guid      = "${data.terraform_remote_state.global.account_guid}"
-  	hardware          = "${var.cluster_hardware}"
-  	machine_type      = "${var.cluster_machine_type}"
-  	public_vlan_id    = "${var.cluster_public_vlan_id}"
-  	private_vlan_id   = "${var.cluster_private_vlan_id}"
-  	resource_group_id = "${ibm_resource_group.group.id}"
-}
+# a cluster
+resource "ibm_container_vpc_cluster" "cluster" {
+  name              = "${var.environment_name}-cluster"
+  vpc_id            = ibm_is_vpc.vpc1.id
+  kube_version      = "1.19"
+  flavor            = var.cluster_machine_type
+  worker_count      = var.worker_num
+  resource_group_id = ibm_resource_group.group.id
 
-resource "ibm_container_worker_pool" "cluster_workerpool" {
-  worker_pool_name  = "${var.environment_name}-pool"
-  machine_type      = "${var.cluster_machine_type}"
-  cluster           = "${ibm_container_cluster.cluster.id}"
-  size_per_zone     = "${var.worker_num}"
-  hardware          = "${var.cluster_hardware}"
-  resource_group_id = "${ibm_resource_group.group.id}"
-}
-
-resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
-  cluster           = "${ibm_container_cluster.cluster.id}"
-  worker_pool       =  "${element(split("/",ibm_container_worker_pool.cluster_workerpool.id),1)}"
-  zone              = "${var.cluster_datacenter}"
-  public_vlan_id    = "${var.cluster_public_vlan_id}"
-  private_vlan_id   = "${var.cluster_private_vlan_id}"
-  resource_group_id = "${ibm_resource_group.group.id}"
+  zones {
+    subnet_id = ibm_is_subnet.subnet11.id
+    name      = var.cluster_datacenter
+  }
 }
    ```
 
@@ -457,7 +440,6 @@ This section will focus on the `development` environment. The steps will be the 
    ```
    Plan: NN to add, 0 to change, 0 to destroy.
    ```
-   {: codeblock}
 5. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
@@ -545,45 +527,52 @@ For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
 resource "ibm_iam_access_group" "developer_role" {
-  name        = "${var.access_group_name_developer_role}"
-  description = "${var.access_group_description}"
+  name        = var.access_group_name_developer_role
+  description = var.access_group_description
 }
+
 resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  access_group_id = ibm_iam_access_group.developer_role.id
   roles           = ["Viewer"]
 
-  resources = [{
+  resources {
     resource_type = "resource-group"
-    resource      = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
-  }]
+    resource      = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+  }
 }
 
 resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles        = ["Viewer"]
+  access_group_id = ibm_iam_access_group.developer_role.id
+  roles           = ["Viewer"]
 
-  resources = [{
-    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
-  }]
+  resources {
+    resource_group_id = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+  }
 }
 
 resource "ibm_iam_access_group_policy" "developer_logging_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles           = ["Writer"]
+  access_group_id = ibm_iam_access_group.developer_role.id
+  roles           = ["Administrator"]
 
-  resources = [{
-    service           = "logdna"
-    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.logdna_instance_id}"
-  }]
+  resources {
+    service              = "logdna"
+    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.logdna_instance_id
+  }
 }
+
 resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  access_group_id = ibm_iam_access_group.developer_role.id
   roles           = ["Writer"]
 
-  resources = [{
-    service           = "sysdig-monitor"
-    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.sysdig_instance_id}"
-  }]
+  resources {
+    service              = "sysdig-monitor"
+    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.sysdig_instance_id
+  }
+}
+
+resource "ibm_iam_access_group_members" "developers" {
+  access_group_id = ibm_iam_access_group.developer_role.id
+  ibm_ids         = var.iam_access_members_developers
 }
 
    ```
@@ -596,6 +585,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    ```sh
    cp development.tfvars.tmpl development.tfvars
    ```
+   {: codeblock}
 3. Edit `development.tfvars`
 
    - Set **iam_access_members_developers** to the list of developers to whom you would like to grant the access.
@@ -627,19 +617,15 @@ You can repeat the steps for `testing` and `production`.
 {: #plan-create-update-deployments-17}
 {: step}
 
-1. Navigate to the `development` folder under `roles`
-   ```sh
-   cd terraform/roles/development
-   ```
-   {: codeblock}
+1. Change to the `terraform/roles/development` directory
 1. Destroy the access groups and access policies
    ```sh
    terraform destroy -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+1. Change to the `terraform/per-environment` folder of the checkout
 1. Activate the `development` workspace
    ```sh
-   cd terraform/per-environment
    terraform workspace select development
    ```
    {: codeblock}
@@ -652,9 +638,8 @@ You can repeat the steps for `testing` and `production`.
     `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
     {:tip}
 1. Repeat the steps for the `testing` and `production` workspaces
-1. If you created it, destroy the organization
+1. If you created it, destroy the organization.  Change to the `terraform/global` directory.
    ```sh
-   cd terraform/global
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
    {: codeblock}
