@@ -276,7 +276,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 {: step}
 
 ## Create a local working environment
-{: #vpc-tg-dns-iam-create}
+{: #plan-create-update-deployments-create}
 {: step}
 
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
