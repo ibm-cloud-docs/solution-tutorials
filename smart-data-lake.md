@@ -52,14 +52,14 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 {: #smart-data-lake-1}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
+* {{site.data.keyword.cloud_notm}} CLI.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 Optionally:
-- [install Aspera Connect](http://downloads.asperasoft.com/connect2/).
+- [Install Aspera Connect](http://downloads.asperasoft.com/connect2/) for high-speed data upload to {{site.data.keyword.cos_short}}.
 
 ## Create services
 {: #smart-data-lake-2}
