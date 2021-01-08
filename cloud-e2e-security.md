@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-12-11"
+  years: 2018-2021
+lastupdated: "2021-01-07"
 lasttested: "2020-12-07"
 
 content-type: tutorial
@@ -172,7 +172,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
-1. Go to [Identity & Access > Authorizations](https://{DomainName}/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
+1. Go to [Manage > Access (IAM) > Authorizations](https://{DomainName}/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. In the **Source service instance** menu, select the {{site.data.keyword.cos_short}} service instance previously created.

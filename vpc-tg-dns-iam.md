@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
-lastupdated: "2020-09-01"
-lasttested: "2020-09-01"
+lastupdated: "2020-12-28"
+lasttested: "2020-12-28"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -188,7 +188,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ### A Note about becoming a team member
 {: #vpc-tg-dns-iam-iam_become}
 
-It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using the api key for the team.  The service ID names are ${basename}-x where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using the api key for the team.  The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
@@ -568,7 +568,7 @@ The Admin team has provided them just the right amount of permissions to create 
    }
 
    output user_data_centos {
-     value = "${replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)}"
+     value = replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)
    }
    ```
    Detailed explanation:
@@ -616,7 +616,7 @@ The Admin team has provided them just the right amount of permissions to create 
     In our case the REMOTE_IP will be `shared.widget.com` because of the following in common/user_data_app/main.tf:
    ```
    output user_data_centos {
-     value = "${replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)}"
+     value = replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)
    }
    ```
 

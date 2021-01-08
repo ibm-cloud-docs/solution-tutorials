@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-07-27"
-lasttested: "2020-07-27"
+lastupdated: "2020-12-22"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: cloud-foundry-public, databases-for-mongodb
@@ -72,7 +72,7 @@ In addition, make sure you [install Node.js](https://nodejs.org/).
 
 {: #createdatabase}
 
-In this section, you will create a {{site.data.keyword.databases-for-mongodb}} database in the cloud. {{site.data.keyword.databases-for-mongodb}} is database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://{DomainName}/catalog/?category=data). To create {{site.data.keyword.databases-for-mongodb}} follow the steps below.
+In this section, you will create a {{site.data.keyword.databases-for-mongodb}} database in the cloud. {{site.data.keyword.databases-for-mongodb}} is database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://{DomainName}/catalog?category=databases#services). To create {{site.data.keyword.databases-for-mongodb}} follow the steps below.
 
 {: shortdesc}
 
@@ -165,10 +165,11 @@ If your service needs additional storage, or you want to reduce the amount of st
 {: shortdesc}
 
 1. Using the console **dashboard**, locate the **MongoDB** service instance and click until you are in the **Service Details**.
-2. In the **Manage** menu, click on the  **Settings** panel.
+2. Click on the **Resources** panel.
   ![](images/solution7/MongoDB_ScaleResources.png)
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the  rescaling is in progress.
+5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.
 
 ## Remove resources
 {: #mean-stack-6}
@@ -177,8 +178,8 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 To remove resource, follow these steps:
 1. Visit the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources). Locate your app.
-2. Click on the menu icon for the app and choose **Delete**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.databases-for-mongodb}} service.
-3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
+2. Delete the {{site.data.keyword.databases-for-mongodb}} service and its Cloud Foundry alias.
+3. Delete the app.
 
 ## Related Content
 {: #mean-stack-7}

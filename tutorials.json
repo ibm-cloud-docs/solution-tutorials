@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-11-24"
+          "lastUpdated": "2021-01-04"
         }
       ]
     },
@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-11-22"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -72,7 +72,7 @@
             "Watson"
           ],
           "guide": true,
-          "lastUpdated": "2020-12-07"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -88,7 +88,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2020-12-03"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -102,7 +102,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-10-21"
+          "lastUpdated": "2020-12-29"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -115,7 +115,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2020-10-21"
+          "lastUpdated": "2020-12-21"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-10-21"
+          "lastUpdated": "2020-12-22"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -140,7 +140,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-11-04"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -153,7 +153,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2019-10-24"
+          "lastUpdated": "2020-12-18"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -167,7 +167,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-05-08"
+          "lastUpdated": "2020-12-16"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -180,7 +180,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2020-09-03"
+          "lastUpdated": "2021-01-06"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -194,7 +194,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2020-04-08"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -206,7 +206,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2020-07-27"
+          "lastUpdated": "2020-12-22"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -218,7 +218,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-08-27"
+          "lastUpdated": "2020-12-17"
         },
         {
           "name": "Serverless web application and API",
@@ -230,7 +230,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2020-07-21"
+          "lastUpdated": "2020-12-22"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -242,7 +242,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2020-06-02"
+          "lastUpdated": "2020-12-30"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -255,7 +255,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-08-12"
+          "lastUpdated": "2020-12-22"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2020-12-11"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -287,7 +287,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2020-09-03"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -319,7 +319,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2020-11-23"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -331,7 +331,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2020-12-09"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -343,7 +343,7 @@
             "Node.js",
             "API Connect"
           ],
-          "lastUpdated": "2019-05-21"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -359,7 +359,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2020-12-11"
+          "lastUpdated": "2021-01-06"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -415,7 +415,7 @@
             "Streaming Analytics",
             "Analytics Engine"
           ],
-          "lastUpdated": "2020-10-05"
+          "lastUpdated": "2020-12-28"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -427,7 +427,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-11-27"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -440,7 +440,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-11-21"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -454,7 +454,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -475,7 +475,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-08-26"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -496,7 +496,7 @@
             "DevOps"
           ],
           "guide": true,
-          "lastUpdated": "2020-11-19"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -531,7 +531,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-01-22"
+          "lastUpdated": "2020-12-16"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -545,7 +545,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -558,7 +558,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -588,7 +588,7 @@
             "PHP",
             "WordPress"
           ],
-          "lastUpdated": "2020-07-23"
+          "lastUpdated": "2020-12-21"
         },
         {
           "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
@@ -605,7 +605,7 @@
             "Network",
             "Linux"
           ],
-          "lastUpdated": "2020-09-01"
+          "lastUpdated": "2020-12-28"
         }
       ]
     },
@@ -625,7 +625,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -639,7 +639,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -652,7 +652,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-11-19"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "VPN into a secure private network",
@@ -666,7 +666,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Linking secure private networks over the IBM network",
@@ -681,7 +681,7 @@
             "VLAN Spanning",
             "Virtual Servers"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Hosting web applications from a secure private network",
@@ -696,7 +696,7 @@
             "Virtual Router Appliance VPN",
             "Virtual Servers"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -712,7 +712,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2020-05-22"
+          "lastUpdated": "2020-12-23"
         }
       ]
     },
@@ -730,7 +730,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-07-20"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
@@ -742,7 +742,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-10-12"
+          "lastUpdated": "2020-12-21"
         }
       ]
     }

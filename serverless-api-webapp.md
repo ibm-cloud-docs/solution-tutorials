@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-07-21"
-lasttested: "2020-06-03"
+lastupdated: "2020-12-22"
+lasttested: "2020-12-22"
 
 content-type: tutorial
 services: openwhisk, api-gateway, Cloudant, cloud-object-storage
@@ -68,12 +68,12 @@ The application shown in this tutorial is a simple guestbook website where users
 
 Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
 
-1. In the [Catalog](https://{DomainName}/catalog/), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
+1. In the [Catalog](https://{DomainName}/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.
-   1. Under **Configure Cloudant instance** pick a **unique* name for the service, such as `<yourinitials>-guestbook-db`.
+   1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a resource group.
    2. Select **IAM and legacy credentials** as authentication method.
-   3. Make sure the **Lite** plan is selected. If you already have a Lite plan, select another service plan.
+   3. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
    4. Click **Create**.
 2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
@@ -247,7 +247,7 @@ Create a {{site.data.keyword.cos_short}} instance:
 Create a bucket configured for static website hosting:
 1. Click **Create a bucket**
 1. Click Custom bucket
-1. Enter a bucket name that is unique is across all ibm accounts.  Try `<yourinitials>-guestbook`.
+1. Enter a bucket name that is unique is across all IBM accounts.  Try `<yourinitials>-guestbook`.
 1. Select Resiliency **Regional**
 1. Select a Location, choose a region consistent with the {{site.data.keyword.cloudant_short_notm}} instance
 1. Keep the Storage class default
@@ -257,13 +257,13 @@ Create a bucket configured for static website hosting:
 1. Click **Save**
 1. Scroll to the bottom and click **Create bucket**
 
-Copy the files in the docs/ of https://github.com/IBM-Cloud/serverless-guestbook into the bucket:
-1. Open https://github.com/IBM-Cloud/serverless-guestbook in a new tab
-1. Download a zip file by clicking **Code** then **Download ZIP**
-1. Unzip the file and navigate to the docs/ directory of the unzipped in the file explorer
+Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverless-guestbook into the bucket:
+1. Open https://github.com/IBM-Cloud/serverless-guestbook in a new tab.
+1. Download a zip file by clicking **Code** then **Download ZIP**.
+1. Unzip the file and navigate to the `docs` directory of the unzipped file.
 1. Edit **guestbook.js** - replace the value of **apiUrl** with the route you made a note of earlier when creating the API.
-1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket
-1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab
+1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
+1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab.
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
@@ -303,7 +303,8 @@ To delete the API and actions from {{site.data.keyword.openwhisk_short}},
 
 ## Related content
 {: #serverless-api-webapp-13}
-[Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
+
+* [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
 * [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=openwhisk-getting-started)

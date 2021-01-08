@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2020
-lastupdated: "2020-08-27"
-lasttested: "2020-04-15"
+lastupdated: "2020-12-17"
+lasttested: "2020-12-17"
 
 content-type: tutorial
 services: cloud-foundry-public, Db2whc
@@ -66,13 +66,13 @@ You will find instructions to download and install these tools for your operatin
 ## Provision the SQL Database
 {: #sql-database-2}
 {: step}
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse)** service.
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
-2. Click on **Analytics** on the left pane and select **{{site.data.keyword.dashdbshort_notm}}**.
+2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
 3. Pick the **Flex One** plan and change the suggested service name to **sqldatabase** (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
 4. Click on **Create**. The provisioning starts.
-5. In the **Resource List**, locate the new instance under **Cloud Foundry services** and wait for it to be available. Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
+5. In the **Resource List**, locate the new instance under **Cloud Foundry services** and wait for it to be available (sometimes you may need to refresh the page). Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
 6. Click on **Open Console** to launch the database console.
 
 ## Create a table
@@ -80,7 +80,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 {: step}
 You need a table to hold the sample data. Create it using the console.
 
-1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **RUN SQL** in the navigation bar and start **From file**.
+1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar and start **From file**.
 2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) and open it.
 3. Click on **Run all** to execute the statement. It should show a success message.
 
@@ -89,7 +89,7 @@ You need a table to hold the sample data. Create it using the console.
 {: step}
 Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, e.g. from your local machine or from cloud object storage (COS) or Amazon S3 interface. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
 
-1. In the top navigation click on **Load** and **Load data**. Then, after clicking **My Computer**, under **File selection**, click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
+1. In the top navigation click on **Data** and **Load Data**. Then, after clicking **My Computer**, under **File selection**, click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
 2. Click **Next** to get to the schema overview. Choose the schema starting with **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
 
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
@@ -104,7 +104,7 @@ Now that the table "cities" has been created, you are going to load data into it
 {: step}
 The data has been loaded into the relational database. There were no errors, but you should run some quick tests anyway. Use the built-in SQL editor to type in and execute some SQL statements.
 
-1. In the top navigation click on **RUN SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Blank** to create a new editor tab.
+1. In the top navigation click on **Run SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Create new** to create a new editor tab.
 
    Instead of the built-in SQL editor you can use cloud-based and traditional SQL tools on your desktop or server machine with {{site.data.keyword.dashdbshort_notm}}. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
     {:tip }
@@ -167,7 +167,6 @@ Want to extend this app? Here are some ideas:
 ## Related Content
 {: #sql-database-11}
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort_notm}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Frequently asked questions about {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.dashdblong_notm}}](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
-* [IBM Data Server Manager](https://www.ibm.com/us-en/marketplace/data-server-manager)
+* [Db2 Data Management Console](https://www.ibm.com/products/db2-data-management-console)
