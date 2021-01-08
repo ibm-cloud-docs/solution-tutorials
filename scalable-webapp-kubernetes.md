@@ -128,7 +128,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
    You may be asked to target an organization and a space, follow the instructions on the CLI
    {:tip}
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Liberty App` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Express App` )
+1. Select `Backend Service / Web App` > `Node`> `Node.js Express App` to create a Node.js starter.
 1. Enter a **unique name** for your application such as `<your-initials>kubeapp`.
 4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
