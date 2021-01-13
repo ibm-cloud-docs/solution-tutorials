@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2021-01-05"
-lasttested: "2020-04-08"
+lastupdated: "2021-01-13"
+lasttested: "2021-01-13"
 
 content-type: tutorial
 services: virtual-servers, cis, loadbalancer-service, FileStorage
@@ -98,16 +98,14 @@ In this section, you configure one server to act as the master database.
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
-   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
    - Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
+   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
-   - Review the other configuration options and click **Provision** to provision the server.
-
-      ![Configure virtual server](images/solution14/db-server.png)
+   - Review the other configuration options and click **Create** to provision the server.
 
    Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
    {: tip}
@@ -150,9 +148,14 @@ The server does not come with a database. In this section, you install MySQL on 
 ### Create a database for the application
 {: #highly-available-and-scalable-web-application-7}
 
-1. Login to MySQL and create a database called `wordpress`:
+1. Login to MySQL :
    ```sh
    mysql -u root -p
+   ```
+   {:pre}
+
+   and create a database called `wordpress`
+   ```sh
    CREATE DATABASE wordpress;
    ```
    {:pre}
@@ -227,8 +230,8 @@ There are many ways in which backups can be done and stored when it comes to MyS
    - Select the same **Location** as the one where you created the database server.
    - Select a billing method.
    - Set **Size** to **20GB**.
+   - Set **Snapshot space** to **0GB**.   
    - Under **Endurance**, select **2 IOPS/GB**.
-   - Set **Snapshot space** to **0GB**.
 4. **Create** the volume.
 
 ### Authorize the database server to use the file storage
@@ -363,8 +366,8 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
    - Select the same **Location** as the one where you created the application servers.
    - Select a billing method.
    - Set **Size** to **20GB**.
+   - Set **Snapshot space** to **20GB**.   
    - Under **Endurance**, select **2 IOPS/GB**.
-   - Set **Snapshot space** to **20GB**.
    - Click continue to create the service.
 
 ### Configure regular snapshots
@@ -469,6 +472,11 @@ Repeat the following steps on each application server:
           index index.php;
 
           server_name _;
+
+          location /nginx-health {
+                  access_log off;
+                  return 200 "healthy\n";
+          }
 
           location = /favicon.ico {
                   log_not_found off;
@@ -622,8 +630,9 @@ At this point, we have two application servers with separate IP addresses. They 
 1. Select the **IBM system pool** for **Public IPs**.
 1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
-5. In **Server Instances**, add *app1* and *app2* servers.
-6. Review and **Create** to complete the wizard.
+1. In **Health Checks**, set the **Path** to `/nginx-health`.
+1. In **Servers**, add *app1* and *app2* servers.
+1. Review and **Create** to complete the wizard.
 
 ### Change Wordpress configuration to use the load balancer URL
 {: #highly-available-and-scalable-web-application-24}
@@ -634,7 +643,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
    You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
    {: tip}
-2. Log as administrator in the Wordpress blog via *app1* or *app2* URL
+2. Log as administrator in the Wordpress blog via *app1* or *app2* URL (`http://YourAppServerIPAddress/wp-login.php`)
 3. In Settings / General, set both the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
 4. Save the settings. Wordpress should redirect to the Load Balancer address
    It may take some time before the Load Balancer address becomes active due to DNS propagation.
