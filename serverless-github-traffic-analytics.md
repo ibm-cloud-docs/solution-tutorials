@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-11-21"
+lastupdated: "2021-01-13"
+lasttested: "2021-01-13"
 
 content-type: tutorial
 services: openwhisk, cognos-dashboard-embedded, Db2whc, appid
@@ -72,18 +72,11 @@ In this section, you set up the needed services and prepare the environment. All
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/Db2whc?topic=Db2whc-deploy_with_cli).
    ```sh
-   ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
+   ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "us-south:dallas", "oracle_compatible":"no"}'
    ```
    {: pre}
-   Wait for the service to be ready. You can use the command `ibmcloud cf service ghstatsdb` to check the progress.
-
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:
-   ```sh
-   ibmcloud cf create-service-key ghstatsDB ghstatskey
-   ```
-   {: pre}
-
-5. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
+   
+4. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
    ```sh
    ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier us-south
    ```
@@ -94,7 +87,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {: pre}
 
-6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
+5. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
    ```sh
    ibmcloud resource service-instance-create ghstatsDDE dynamic-dashboard-embedded lite us-south
    ```
@@ -104,6 +97,12 @@ In this section, you set up the needed services and prepare the environment. All
    ibmcloud resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
    ```
    {: pre}
+6. Use the command `ibmcloud cf service ghstatsDB` to check the progress and wait until it is ready. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:
+   ```sh
+   ibmcloud cf create-service-key ghstatsDB ghstatskey
+   ```
+   {: pre}
+
 7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
    ```sh
    ibmcloud cf push
