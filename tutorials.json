@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-08"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -194,7 +194,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-13"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -334,18 +334,6 @@
           "lastUpdated": "2021-01-05"
         },
         {
-          "name": "Create, secure and manage REST APIs",
-          "url": "create-manage-secure-apis.html",
-          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-          "imgSrc": "images/solution13/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "API Connect"
-          ],
-          "lastUpdated": "2021-01-05"
-        },
-        {
           "name": "Apply end to end security to a cloud application",
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
@@ -359,7 +347,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-01-06"
+          "lastUpdated": "2021-01-07"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -427,7 +415,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-07"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -440,7 +428,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-13"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -518,7 +506,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-08"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -571,7 +559,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-11-30"
+          "lastUpdated": "2021-01-08"
         },
         {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
