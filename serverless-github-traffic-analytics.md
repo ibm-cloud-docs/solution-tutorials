@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-13"
+  years: 2018, 2019, 2021
+lastupdated: "2021-01-21"
 lasttested: "2021-01-13"
 
 content-type: tutorial
@@ -33,7 +33,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless action to retrieve the traffic data and store it in a SQL database. Moreover, a Cloud Foundry app is used to manage repositories and provide access to the statistics for data analytics. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution with the initial set of features supporting single-tenant mode.
 {: shortdesc}
 
-![](images/solution24-github-traffic-analytics/Architecture.png)
+![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png)
 
 ## Objectives
 {: #serverless-github-traffic-analytics-0}
@@ -131,7 +131,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
-   ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
+   ![GitHub Access Token](images/solution24-github-traffic-analytics/GithubAccessToken.png)
 
 
 ## Configure and test Python app
@@ -140,15 +140,15 @@ The following steps are all performed using your Internet browser. First, you co
 After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](http://flask.pocoo.org/) microframework. Repositories can be added to and removed from statistics collection. The traffic data can be accessed in a tabular view.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
-   ![](images/solution24-github-traffic-analytics/WelcomeScreen.png)
+   ![Welcome Screen](images/solution24-github-traffic-analytics/WelcomeScreen.png)
 
 2. In the browser, add `/admin/initialize-app` to the URI and access the page. It is used to initialize the application and its data. Click on the button **Start initialization**. This will take you to a password-protected configuration page. The email address you log in with is taken as identification for the system administrator. Use the email address and password that you configured earlier.
 
 3. In the configuration page, enter a name (it is used for greetings), your GitHub user name and the access token that you generated before. Click on **Initialize**. This creates the database tables and inserts some configuration values. Finally, it creates database records for the system administrator and a tenant.
-   ![](images/solution24-github-traffic-analytics/InitializeApp.png)
+   ![First Step](images/solution24-github-traffic-analytics/InitializeApp.png)
 
 4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the GitHub account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
-![](images/solution24-github-traffic-analytics/RepositoryList.png)
+![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
 {: #serverless-github-traffic-analytics-5}
@@ -213,7 +213,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    {: pre}
 
 8. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
-   ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
+   ![Repository Traffic](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
 {: #serverless-github-traffic-analytics-6}
@@ -221,7 +221,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
 In this tutorial, you deployed a serverless action and a related trigger and rule. They allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Cloud Foundry app to manage users, repositories and to present the traffic statistics in the app portal. Users can see the traffic statistics in searchable tables or visualized in an embedded dashboard ({{site.data.keyword.dynamdashbemb_short}} service, see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
 The Cloud Foundry app manages access through an OpenID Connect client connecting to {{site.data.keyword.appid_short}}.
-![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
+![Dashboard](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
 
 ## Security: Rotate service credentials
 {: #serverless-github-traffic-analytics-7}

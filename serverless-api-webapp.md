@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2020-12-22"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -267,7 +267,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
-![](images/solution8/Guestbook.png)
+![Guestbook Screenshot](images/solution8/Guestbook.png)
 
 <!--##istutorial#-->
 ## Optionally configure a custom domain

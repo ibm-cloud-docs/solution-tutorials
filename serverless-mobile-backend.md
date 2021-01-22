@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2020-12-07"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-12-07"
 
 content-type: tutorial
@@ -59,7 +59,7 @@ This tutorial is configurable based on your target platform. You are currently v
 The application shown in this tutorial is a feedback app that smartly analyses the tone of the feedback text and appropriately acknowledges the customer through a {{site.data.keyword.mobilepushshort}}.
 
 <p style="text-align: center;">
-![](images/solution11/Architecture.png)
+![Architecture Diagram](images/solution11/Architecture.png)
 </p>
 
 1. The user authenticates against [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID). {{site.data.keyword.appid_short}} provides access and identification tokens.

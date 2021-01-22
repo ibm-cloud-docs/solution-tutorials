@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2021-01-08"
+  years: 2017, 2019, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-12-17"
 
 content-type: tutorial
@@ -137,7 +137,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
 
-![](images/solution2/Contents.png)
+![Generated Files](images/solution2/Contents.png)
 
 ## Deploy application to cluster using helm chart
 {: #scalable-webapp-kubernetes-deploy}

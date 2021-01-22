@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2020
+  years: 2020, 2021
 lastupdated: "2020-12-21"
 lasttested: "2020-12-21"
 
@@ -47,7 +47,7 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-![](images/solution57-openshift-service-mesh/Architecture.png)
+![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png)
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
@@ -215,7 +215,7 @@ There are 3 versions of the reviews microservice:
 
 The end-to-end architecture of the application is shown below.
 
-![](images/solution57-openshift-service-mesh/withistio.svg)
+![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg)
 
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 

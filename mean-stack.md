@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2020-12-22"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -166,7 +166,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 1. Using the console **dashboard**, locate the **MongoDB** service instance and click until you are in the **Service Details**.
 2. Click on the **Resources** panel.
-  ![](images/solution7/MongoDB_ScaleResources.png)
+  ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the  rescaling is in progress.
 5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.
