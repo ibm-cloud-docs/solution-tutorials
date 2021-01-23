@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2021-01-05"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2019-12-07"
 
 ---
@@ -84,14 +84,14 @@ Using three data centers provides greater resiliency and availability than two. 
 #### Active-active-active (3-active) configuration
 {: #strategies-for-resilient-applications-5}
 
-![](images/solution39/Active-active-active.png)
+![Active-active-active Diagram](images/solution39/Active-active-active.png)
 
 Requests are served by the application running in any of the three active data centers. A case study on IBM.com website indicates that 3-active requires only 50% of the compute, memory, and network capacity per cluster, but 2-active requires 100% per cluster. The data layer is where the cost difference stands out. For further details, read [*Always On: Assess, Design, Implement, and Manage Continuous Availability*](http://www.redbooks.ibm.com/redpapers/pdfs/redp5109.pdf).
 
 #### Active-active-passive configuration
 {: #strategies-for-resilient-applications-6}
 
-![](images/solution39/Active-active-passive.png)
+![Active-active-passive Diagram](images/solution39/Active-active-passive.png)
 
 In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The disaster recovery procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
 

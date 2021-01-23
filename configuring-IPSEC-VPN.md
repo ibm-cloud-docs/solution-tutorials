@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
+  years: 2018, 2019, 2021
+lastupdated: "2021-01-21"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -93,7 +93,7 @@ Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP 
 
 <p style="text-align: center;">
 
-  ![](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
+  ![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
 </p>
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team.

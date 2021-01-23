@@ -42,7 +42,6 @@ Solution Tutorials
         Security
             multi-region-webapp.md
             multi-region-k8s-cis.md
-            create-manage-secure-apis.md
             cloud-e2e-security.md
             extended-app-security.md
 
@@ -127,7 +126,6 @@ Solution Tutorials
             sql-database.md
             slack-chatbot-database-watson.md
             multi-region-webapp.md
-            create-manage-secure-apis.md
             gather-visualize-analyze-iot-data.md
 
         {: .topicgroup}

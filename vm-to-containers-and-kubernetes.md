@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2020-12-11"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-01-19"
 lasttested: "2020-12-08"
 
 ---
@@ -356,3 +356,4 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - Set up [continuous integration and delivery pipeline](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
 - Deploy the production cluster [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 - Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) for high availability.
+- Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://konveyor.io/move2kube/).

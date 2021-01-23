@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-01-19"
 lasttested: "2019-09-03"
 
 content-type: tutorial
@@ -593,9 +593,9 @@ With the microservice app set up and running, test the scenario by accessing the
 
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
-1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the
-**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.connection.cli.composed to be used later if you jave the jq command handy this script will pull it out of the file: `jq '.[]|.credentials.connection.cli.composed' pg_credentials.json`.
-
+1. Edit the file located under the
+**sampleapps/nodejs-graphql/config/pg_credentials.json** subdirectory in your local system to obtain your {{site.data.keyword.databases-for-postgresql}} credentials.
+1. Copy the command found under `credentials.connection.cli.composed` to be used later. You can use `jq` to extract the value: `jq '.[]|.credentials.connection.cli.composed' pg_credentials.json`.
 2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
 
    ```sh

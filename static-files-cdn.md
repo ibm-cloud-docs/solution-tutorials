@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2021-01-05"
+  years: 2017, 2019, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-11-04"
 
 content-type: tutorial
@@ -152,7 +152,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
   ```
   {: pre}
 5. View your files from your dashboard.
-   ![](images/solution3/Buckets.png)
+   ![Bucket Content](images/solution3/Buckets.png)
 6. Access the files through your browser or by using curl:
   ```sh
    curl http://$BUCKET_NAME.$PUBLIC_ENDPOINT/index.html

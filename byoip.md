@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
+  years: 2018, 2019, 2021
+lastupdated: "2021-01-21"
 lasttested: "2019-04-23"
 
 ---
@@ -79,7 +79,7 @@ The decision tree here can be used to determine the appropriate implement patter
 
 <p style="text-align: center;">
 
-  ![](images/solution37-byoip/byoipdecision.png)
+  ![Pattern decision tree](images/solution37-byoip/byoipdecision.png)
 </p>
 
 The following notes provide further guidance:

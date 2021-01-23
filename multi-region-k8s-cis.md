@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-01-19"
 lasttested: "2020-12-09"
 
 content-type: tutorial
@@ -214,42 +214,39 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 
 It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.your-domain.com `<glb_name> = hello-world-service` and `<your_domain_name> = your-domain.com`
 
-Create the file glb-ingress.yaml.  making the subsitutions indicates in `<x>`
-```
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
- name: <glb-name>
- annotations:
-   kubernetes.io/ingress.class: "public-iks-k8s-nginx"
-spec:
- rules:
- - host: <glb-name>.<your_domain_name>
-   http:
-     paths:
-     - path: /
-       backend:
-         serviceName: hello-world-service
-         servicePort: 80
-```
+1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
+   ```
+   apiVersion: networking.k8s.io/v1beta1
+   kind: Ingress
+   metadata:
+    name: <glb-name>
+    annotations:
+      kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+   spec:
+    rules:
+    - host: <glb-name>.<your_domain_name>
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: hello-world-service
+            servicePort: 80
+   ```
+1. Add the ingress instance:
+   ```bash
+   kubectl apply -f glb-ingress.yaml
+   ```
 
-Add the ingress instance:
-```bash
-kubectl apply -f glb-ingress.yaml
-```
+   It can take a few minutes before ingress becomes available as indicated by a value in the ADDRESS column in the command:
+   ```bash
+   kubectl get ingress
+   ```
+1. Now test by configuring the curl **Host** http header with your DNS subdomain name to override the default of `<IngressSubdomain>`:
+   ```bash
+   curl --header 'Host: <glb_name>.<your_domain_name>' <IngressSubdomain>
+   ```
 
-It can take a few minutes before ingress becomes available as indicated by a value in the ADDRESS column in the command:
-```bash
-kubectl get ingress
-```
-
-Now test by configuring the curl **Host** http header with your DNS subdomain name to override the default of `<IngressSubdomain>`:
-
-```bash
-curl --header 'Host: <glb_name>.<your_domain_name>' <IngressSubdomain>
-```
-
-The curl command would look something like this: `curl --header 'Host: hello-world-service.ibmom.com' my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
+   The curl command would look something like this: `curl --header 'Host: hello-world-service.ibmom.com' my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
 
 ## And then to another location
 {: #multi-region-k8s-cis-0}

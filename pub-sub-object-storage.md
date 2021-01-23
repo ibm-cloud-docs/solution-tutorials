@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-12-16"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2020-12-16"
 
 content-type: tutorial
@@ -50,7 +50,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 
 <p style="text-align: center;">
 
-   ![](images/solution25/Architecture.png)
+   ![Architecture Diagram](images/solution25/Architecture.png)
 </p>
 
 1. The user uploads file using the UI application
@@ -177,7 +177,7 @@ The UI application is a simple Node.js Express web application which allows the 
    {:pre}
 4. Visit the application with the URL mentioned in the output of the command above and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
-   ![](images/solution25/files_uploaded.png)
+   ![Files Uploaded](images/solution25/files_uploaded.png)
 
 ## Deploy the worker application to the cluster
 {: #pub-sub-object-storage-6}
@@ -199,7 +199,7 @@ The worker application is a Java application which listens to the {{site.data.ke
    {:pre}
 
 4. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
-![](images/solution25/files_processed.png)
+![Files Processed](images/solution25/files_processed.png)
 
 In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=openwhisk-use_cases). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
 

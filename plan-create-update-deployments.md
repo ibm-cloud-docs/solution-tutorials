@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-06"
+lastupdated: "2021-01-21"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -53,7 +53,7 @@ Multiple environments are pretty common in a project to support the different ph
 
 <p style="text-align: center;">
 
-![](./images/solution26-plan-create-update-deployments/architecture.png)
+![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.png)
 </p>
 
 1. A set of Terraform files are created to describe the target infrastructure as code.
@@ -109,7 +109,7 @@ The *Development*, *Testing* and *Production* environments pretty much look the 
 
 They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
-![](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
+![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
 
 ### Global Configuration
 {: #plan-create-update-deployments-4}

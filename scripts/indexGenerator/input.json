@@ -474,22 +474,6 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Create, secure and manage REST APIs",
-          "url": "create-manage-secure-apis.html",
-          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-          "imgSrc": "images/solution13/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "API Connect"
-          ],
-          "requirements": [
-            "api_connect",
-            "api_designer"
-          ],
-          "supportsCloudShell": false
-        },
-        {
           "name": "Apply end to end security to a cloud application",
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",

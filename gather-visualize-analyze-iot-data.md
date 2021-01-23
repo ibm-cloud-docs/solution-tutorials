@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2021-01-05"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2019-12-04"
 
 content-type: tutorial
@@ -48,7 +48,7 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 
 <p style="text-align: center;">
 
-   ![](images/solution16/Architecture.png)
+   ![Architecture Diagram](images/solution16/Architecture.png)
 </p>
 
 1. User moves the mobile device to generate and send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol.
@@ -256,7 +256,7 @@ By using the Python SDK, you can set up a Cloudant NoSQL DB binding in just a fe
 
 Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}. Reconnect the browser app to generate new data. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
-![](images/solution16/cloudant.png)
+![Cloudant Dashboard](images/solution16/cloudant.png)
 
 ## Detect Anomalies using Machine Learning
 {: #gather-visualize-analyze-iot-data-detect_anomalies}
@@ -325,7 +325,7 @@ In {{site.data.keyword.DSX}},:
 1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
-   * Click ![](images/solution16/data_icon.png)
+   * Click ![Data icon](images/solution16/data_icon.png)
    * Select the **Connections** tab.
    * Click **Insert to code** > Insert Credentials. A dictionary called _credentials_1_ is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as _credentials_1_, rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
 4. In the cell with the database name (`dbName`) enter the name of the {{site.data.keyword.cloudant_short_notm}} database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
@@ -342,7 +342,7 @@ In {{site.data.keyword.DSX}},:
     * Correlation between two sensors through Correlation matrix.
     * A box plot for each devices sensor, produced with the Pandas plot function.
     * Density Plots through Kernel density estimation (KDE).
-    ![](images/solution16/density_plots_sensor_data.png)
+    ![Density Plots](images/solution16/density_plots_sensor_data.png)
 
 ## Remove resources
 {: #gather-visualize-analyze-iot-data-removeresources}
