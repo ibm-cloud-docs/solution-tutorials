@@ -57,10 +57,6 @@ Solution Tutorials
             create-deploy-retrain-machine-learning-model.md
 
         {: .topicgroup}
-        Internet of Things
-            gather-visualize-analyze-iot-data.md
-
-        {: .topicgroup}
         Identity and Access Management
             users-teams-applications.md
 
@@ -126,7 +122,6 @@ Solution Tutorials
             sql-database.md
             slack-chatbot-database-watson.md
             multi-region-webapp.md
-            gather-visualize-analyze-iot-data.md
 
         {: .topicgroup}
         Cloud Functions

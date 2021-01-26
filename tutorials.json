@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-01-08"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -53,7 +53,7 @@
             "Java"
           ],
           "guide": true,
-          "lastUpdated": "2020-12-11"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Strategies for resilient applications",
@@ -72,7 +72,7 @@
             "Watson"
           ],
           "guide": true,
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -115,7 +115,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2020-12-21"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-12-22"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -140,7 +140,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -153,7 +153,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2020-12-18"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -167,7 +167,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-12-16"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -180,7 +180,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-01-06"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -206,7 +206,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2020-12-22"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -230,7 +230,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2020-12-22"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         }
       ]
     },
@@ -331,7 +331,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -363,7 +363,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2020-12-03"
+          "lastUpdated": "2021-01-19"
         }
       ]
     },
@@ -383,7 +383,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2020-12-07"
+          "lastUpdated": "2021-01-21"
         }
       ]
     },
@@ -428,7 +428,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2021-01-13"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -442,28 +442,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2021-01-05"
-        }
-      ]
-    },
-    {
-      "name": "Internet of Things",
-      "anchor": "iot",
-      "solutions": [
-        {
-          "name": "Gather, visualize and analyze IoT data",
-          "url": "gather-visualize-analyze-iot-data.html",
-          "description": "Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.",
-          "imgSrc": "images/solution16/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Internet of Things Platform",
-            "Cloudant",
-            "Watson Studio",
-            "Apache Spark",
-            "Cloud Object Storage"
-          ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         }
       ]
     },
@@ -533,7 +512,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -613,7 +592,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -640,7 +619,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "VPN into a secure private network",
@@ -654,7 +633,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Linking secure private networks over the IBM network",
@@ -700,7 +679,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2020-12-23"
+          "lastUpdated": "2021-01-21"
         }
       ]
     },

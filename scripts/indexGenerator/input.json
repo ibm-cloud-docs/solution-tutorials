@@ -639,35 +639,6 @@
       ]
     },
     {
-      "name": "Internet of Things",
-      "anchor": "iot",
-      "solutions": [
-        {
-          "name": "Gather, visualize and analyze IoT data",
-          "url": "gather-visualize-analyze-iot-data.html",
-          "description": "Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.",
-          "imgSrc": "images/solution16/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Internet of Things Platform",
-            "Cloudant",
-            "Watson Studio",
-            "Apache Spark",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine",
-            "cloudant",
-            "iot_platform",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "yes_with_modifications"
-        }
-      ]
-    },
-    {
       "name": "Identity and Access Management",
       "anchor": "iam",
       "solutions": [
