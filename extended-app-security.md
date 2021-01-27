@@ -128,7 +128,7 @@ A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](h
 ### Example: Watson services
 {: #extended-app-security-9}
 
-Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security, by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type to access the crypto service, the following additional option is offered when creating an instance with Premium plan.
+Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type, e.g., {{site.data.keyword.conversationshort}}, to access {{site.data.keyword.keymanagementserviceshort}}, the following additional option is offered when creating an instance with Premium plan.
 
 <p style="text-align: center;">
   ![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png)
