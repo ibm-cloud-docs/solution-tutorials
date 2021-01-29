@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-01-07"
+lastupdated: "2021-01-29"
 lasttested: "2021-01-07"
 
 content-type: tutorial
@@ -175,7 +175,8 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     - Leave the **Language** and **Runtime** to defaults and click **Create notebook**.
 2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
-    !pip install --user pixiedust
+    !pip install --user --upgrade pixiedust
+    !pip install --user --upgrade ibmcloudsql
     import ibmcloudsql
     from pixiedust.display import *
     ```
