@@ -287,7 +287,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2021-01-28"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -300,7 +300,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2020-12-08"
+          "lastUpdated": "2021-01-28"
         }
       ]
     },
@@ -363,7 +363,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-01-19"
+          "lastUpdated": "2021-01-27"
         }
       ]
     },
@@ -383,7 +383,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-02-10"
         }
       ]
     },
@@ -415,7 +415,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2021-01-07"
+          "lastUpdated": "2021-01-29"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -442,7 +442,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-01-26"
         }
       ]
     },
@@ -555,7 +555,7 @@
             "PHP",
             "WordPress"
           ],
-          "lastUpdated": "2020-12-21"
+          "lastUpdated": "2021-01-26"
         },
         {
           "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
@@ -709,7 +709,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-12-21"
+          "lastUpdated": "2021-01-26"
         }
       ]
     }
