@@ -12,10 +12,8 @@ completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: data-hd-operatingsystem="ios"}
-{:android: data-hd-operatingsystem="android"}
+{:java: .ph data-hd-programlang='java'}
+{:swift: .ph data-hd-programlang='swift'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -41,12 +39,6 @@ Not all mobile developers have experience managing server-side logic, or a serve
 
 {{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the tab at the top of this documentation to select the **Android / Java** version of this tutorial.
-{: swift}
-
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **Android / Java** version of this tutorial. Use the tab at the top of this documentation to select the **iOS / Swift** version of this tutorial.
-{: java}
-
 ## Objectives
 {: #serverless-mobile-backend-objectives}
 
@@ -54,7 +46,6 @@ This tutorial is configurable based on your target platform. You are currently v
 * Add user authentication to a mobile app with {{site.data.keyword.appid_short}}.
 * Analyze user feedback with {{site.data.keyword.toneanalyzershort}}.
 * Send notifications with {{site.data.keyword.mobilepushshort}}.
-
 
 The application shown in this tutorial is a feedback app that smartly analyses the tone of the feedback text and appropriately acknowledges the customer through a {{site.data.keyword.mobilepushshort}}.
 
@@ -82,26 +73,19 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
-Additionally you will need the following software and accounts:
-
-   1. Java 8
-   2. Android Studio
-   3. Google Developer account to configure Firebase Cloud Messaging
-   4. Bash shell, cURL
-   {: java}
-
-
-   1. Xcode
-   2. Apple Developer account to configure Apple Push Notification Service
-   3. Bash shell, cURL
-   {: swift}
+Additionally, based on the target mobile platform, you will need the following software and accounts:
+   * For Android:
+      1. Java 8
+      2. Android Studio
+      3. Google Developer account to configure Firebase Cloud Messaging
+      4. Bash shell, cURL
+   * For iOS:
+      1. Xcode
+      2. Apple Developer account to configure Apple Push Notification Service
+      3. Bash shell, cURL
 
 In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} steps for either [Android](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_android) or [iOS](https:///docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_ios) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
-
-For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
-{: tip}
-{: java}
 
 ## Get the application code
 {: #serverless-mobile-backend-2}
@@ -122,6 +106,10 @@ The repository contains both the mobile application and the {{site.data.keyword.
    ```
    {: pre}
    {: swift}
+
+   For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
+   {: tip}
+   {: java}
 
 2. Review the code structure
 
