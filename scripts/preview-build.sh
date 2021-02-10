@@ -62,7 +62,7 @@ npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
 
 # revert the "?topic" links to plain html files
-sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
+sed -i 's/"\/docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
 # check that there is no "{{"" not replaced in the output, ignoring binaries
 if grep -rI "{{" --exclude=conref.html --exclude vscodesnippets.json builddocs/output
