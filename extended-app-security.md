@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019,2020
-lastupdated: "2021-01-19"
+  years: 2019-2021
+lastupdated: "2021-01-27"
 lasttested: "2020-12-03"
 
 ---
@@ -54,6 +54,8 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 * to log all kind of events, regularly analyze logs and keep them for audits or incident forensics,
 * to organize devops activities and the related teams with more fine-grained privileges
 * and much more.
+
+To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [getting started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
 
 ## Isolate runtime environments, networks traffic and data
 {: #extended-app-security-isolate_environments}
@@ -122,6 +124,16 @@ One of the most often used services is {{site.data.keyword.cos_short}}. After yo
 </p>
 
 A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
+
+### Example: Watson services
+{: #extended-app-security-9}
+
+Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type, e.g., {{site.data.keyword.conversationshort}}, to access {{site.data.keyword.keymanagementserviceshort}}, the following additional option is offered when creating an instance with Premium plan.
+
+<p style="text-align: center;">
+  ![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png)
+</p>
+
 
 ## Conclusions
 {: #extended-app-security-5}

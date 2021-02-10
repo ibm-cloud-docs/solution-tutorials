@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-12-08"
+  years: 2018-2021
+lastupdated: "2021-01-28"
 lasttested: "2020-12-08"
 
 content-type: tutorial
@@ -106,7 +106,7 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch {{site.data.keyword.conversationshort}}** to see the {{site.data.keyword.conversationshort}} dashboard.
 1. On the left navigation pane, Click on **Skills**.
 1. Click **Create skill**, select **Dialog skill** and **Next**.
-1. Under **Import skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Import**.
+1. Under **Upload skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Upload**.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
 ### Define an intent
