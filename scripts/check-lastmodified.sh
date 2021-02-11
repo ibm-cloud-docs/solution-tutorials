@@ -10,7 +10,7 @@ for source in *.md; do
   fi
 
   # get last modified from git
-  gitDate=$(git log -1 --format="%ad" --date=format:'%Y-%m-%d' -- $source)
+  gitDate=$(git log -1 --format="%cd" --date=format:'%Y-%m-%d' -- $source)
 
   # get last modified from the md
   mdDate=$(grep lastupdated $source | awk '{print $2}' | tr -d \")
