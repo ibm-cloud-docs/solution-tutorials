@@ -1,6 +1,10 @@
 #!/bin/bash
 errorCode=0
 
+# travis does pull only with depth=50
+# we need to ensure we have the latest and greatest otherwise we can't accurately check date
+git pull --unshallow
+
 echo "Checking if lastupdated was updated..."
 
 for source in *.md; do
@@ -10,7 +14,7 @@ for source in *.md; do
   fi
 
   # get last modified from git
-  gitDate=$(git log -1 --format="%cd" --date=format:'%Y-%m-%d' -- $source)
+  gitDate=$(git log -1 --format="%ad" --date=format:'%Y-%m-%d' -- $source)
 
   # get last modified from the md
   mdDate=$(grep lastupdated $source | awk '{print $2}' | tr -d \")
