@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019-2021
-lastupdated: "2021-01-27"
-lasttested: "2020-12-03"
+lastupdated: "2021-02-16"
+lasttested: "2020-02-16"
 
 ---
 
@@ -57,6 +57,8 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 
 To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [getting started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
 
+You
+
 ## Isolate runtime environments, networks traffic and data
 {: #extended-app-security-isolate_environments}
 
@@ -93,12 +95,6 @@ Events related to {{site.data.keyword.cloud_notm}} account activities, such as l
 
 By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
 
-The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs/security-advisor?topic=security-advisor-about) enables centralized security management through a unified dashboard. It alerts security admins to issues and guides them to understand, prioritize, manage, and resolve security issues that are related to their cloud applications and workloads. [Access the advisor portal](https://{DomainName}/security-advisor#/dashboard) and explore the offered security services, add plugins to your {{site.data.keyword.containershort_notm}} clusters to gain additional security insights.
-
-<p style="text-align: center;">
-  ![Security Advisor](images/solution51-extended-app-security/Sol51_SecurityAdvisor.png)
-</p>
-
 ## Control encryption keys
 {: #extended-app-security-control_encryption}
 
@@ -112,7 +108,7 @@ More and more data services support the integration with either {{site.data.keyw
 - [integrated services for {{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-integrate-services) and the
 - [integrated services for {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-integrate-services).
 
-Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more.
+Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more. The [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) allows to create, manage and lease secrets for both cloud services in apps. The secrets can be guarded (encrypted) by your root key.
 
 ### Example: Cloud Object Storage
 {: #extended-app-security-8}
