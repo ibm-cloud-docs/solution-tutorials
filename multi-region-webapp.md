@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2021-01-05"
+  years: 2017-2021
+lastupdated: "2021-02-16"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -50,6 +50,11 @@ This tutorial involves an active/active scenario where two copies of the applica
 
    ![Architecture](./images/solution1/Architecture.png)
 </p>
+
+## Before you begin
+{: #multi-region-webapp-prereqs}
+
+A custom domain and {{site.data.keyword.cis_full_notm}} are required for load balancing the application across multiple regions. The custom domain is needed so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
 
 ## Create a Node.js application
 {: #multi-region-webapp-create}
