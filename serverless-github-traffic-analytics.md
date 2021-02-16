@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2021
-lastupdated: "2021-02-15"
+lastupdated: "2021-02-16"
 lasttested: "2021-02-12"
 
 content-type: tutorial
@@ -60,7 +60,7 @@ You will find instructions to download and install these tools for your operatin
 {: step}
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment (terminal).
 
-1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
+1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command.
 2. Create an {{site.data.keyword.cloud_notm}} IAM API key and save it to the file **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud iam api-key-create ghstatsAPIKEY -d "API key for tutorial" --file ghstatsAPIKEY.json --output json
@@ -79,7 +79,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {: pre}
  
-5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}:
+5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images.
    ```sh
    ibmcloud cr namespace-add ghstats
    ```
@@ -90,14 +90,14 @@ In this section, you set up the needed services and prepare the environment. All
 {: #serverless-github-traffic-analytics-2}
 {: step}
 
-With the services provisioned and the general setup done, next is to create the {{site.data.keyword.codeengineshort}} project, create a Docker image for the app and to deploy it.
+With the services provisioned and the general setup done, next is to create the {{site.data.keyword.codeengineshort}} project, create a container image for the app and to deploy it.
 
 1. Create a {{site.data.keyword.codeengineshort}} project named **ghstats**. The command automatically sets it as the current {{site.data.keyword.codeengineshort}} context.
    ```sh
    ibmcloud ce project create --name ghstats
    ```
    {: pre}
-2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull Docker images. When prompted, enter the API key that was previously stored in **ghstatsAPIKEY.json**.
+2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. When prompted, enter the API key that was previously stored in **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud ce registry create --name usicr
    ```
@@ -179,7 +179,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 
 4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the GitHub account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
 ![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png)
-5. For testing, click on **Administration**, then **>Collect statistics**. It retrieves the traffic data on demand. Thereafter, click on **Repositories** and **Daily Traffic**. It should display collected data.
+5. For testing, click on **Administration**, then **Collect statistics**. It retrieves the traffic data on demand. Thereafter, click on **Repositories** and **Daily Traffic**. It should display collected data.
 ![Traffic data](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 
@@ -203,7 +203,7 @@ With the app in place and configured, the last part is to initiate daily retriev
 ## Conclusions
 {: #serverless-github-traffic-analytics-7}
 {: step}
-In this tutorial, you deployed a serverless app in {{site.data.keyword.codeenginefull_notm}}. The app source is taken from a GitHub repository. You instructed {{site.data.keyword.codeengineshort}} to build the Docker image and store it in the {{site.data.keyword.registrylong}}. Next, it was pulled from there and deployed as container. The app is bound to {{site.data.keyword.cloud_notm}} services.
+In this tutorial, you deployed a serverless app in {{site.data.keyword.codeenginefull_notm}}. The app source is taken from a GitHub repository. You instructed {{site.data.keyword.codeengineshort}} to build the container image and store it in the {{site.data.keyword.registrylong}}. Next, it was pulled from there and deployed as container. The app is bound to {{site.data.keyword.cloud_notm}} services.
 
 The app and the associated eventing allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Python app to manage users, repositories and to present the traffic statistics. Users can see the traffic statistics in searchable tables or visualized in a simple line chart (see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
