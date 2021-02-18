@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2018, 2019, 2020, 2021
-lastupdated: "2021-01-04"
+lastupdated: "2021-02-18"
 lasttested: "2020-12-17"
 
 ---
@@ -100,9 +100,9 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### oc
 {: #getting-started-windows_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
 
-   Replace `4.5` in the URL with the version number you wish to install
+   Replace `4.6` in the URL with the version number you wish to install
    {:tip}
 
 1. Move `oc.exe` binary to your PATH.
@@ -212,9 +212,9 @@ The following sections assume you are running macOS High Sierra or later under a
 ### oc
 {: #getting-started-macos_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
 
-   Replace `4.5` in the URL with the version number you wish to install
+   Replace `4.6` in the URL with the version number you wish to install
    {:tip}
 
 2. Extract `openshift-client-mac.tar.gz`:
@@ -356,9 +356,9 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #getting-started-ubuntu_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/.
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
 
-   Replace `4.5` in the URL with the version number you wish to install
+   Replace `4.6` in the URL with the version number you wish to install
    {:tip}
 
 1. Extract `openshift-client-linux.tar.gz`:
@@ -493,11 +493,11 @@ To verify the configuration:
 Follow these steps if you need to use another version of the OpenShift CLI than the one pre-installed:
 1. Download the latest 4.x OpenShift CLI (`oc`)
    ```sh
-   curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-client-linux.tar.gz --output oc.tar.gz
+   curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/openshift-client-linux.tar.gz --output oc.tar.gz
    ```
    {:pre}
 
-   Replace `4.5` in the URL with the version number you wish to update to
+   Replace `4.6` in the URL with the version number you wish to update to
    {:tip}
 
 2. Extract `oc.tar.gz`:
