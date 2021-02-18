@@ -61,6 +61,18 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tut
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
 
+# move the index to getting started
+mv builddocs/output/index.html builddocs/output/getting-started.html
+
+# and make a dummy index.html with all files
+cat scripts/header.txt > builddocs/output/index.html
+cat >> builddocs/output/index.html << EOF
+  <ul>
+EOF
+for file in $(cd builddocs/output && ls *.html | sort); do
+  echo "<li><a href=\"$file\">$file</a></li>" >> builddocs/output/index.html
+done
+
 # revert the "?topic" links to plain html files
 sed -i 's/"\/cloud-docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
