@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-26"
+lastupdated: "2021-02-23"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -330,4 +330,4 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 - [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
 - [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
 - [Machine learning & AI](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/wml-ai.html?context=analytics)
-- [{{site.data.keyword.aios_short}} documentation](https://{DomainName}/docs/ai-openscale)
+- [{{site.data.keyword.aios_short}} documentation](https://dataplatform.{DomainName}/docs/content/wsj/model/getting-started.html?context=analytics)
