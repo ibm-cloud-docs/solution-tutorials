@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2021
-lastupdated: "2021-02-16"
+lastupdated: "2021-03-01"
 lasttested: "2021-02-12"
 
 content-type: tutorial
@@ -50,6 +50,8 @@ This tutorial requires:
    * {{site.data.keyword.codeenginefull_notm}} plugin,
    * {{site.data.keyword.registrylong}} plugin,
 * a GitHub account.
+
+You can run the sections requiring a shell in the [{{site.data.keyword.cloud-shell_full}}](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-getting-started).
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -139,6 +141,12 @@ Once the build is ready, you can use the container image to deploy the app, ther
 
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {:tip}
+
+3. Make the hostname known to the app. Replace the value for **YOUR-APP-URL** with the app URL shown in the output the **create** command (step 1).
+   ```sh
+   ibmcloud ce app update --name ghstats-app --env FULL_HOSTNAME=YOUR-APP-URL
+   ```
+   {: pre}
 
 When the app has been deployed, the CLI output shows the URI. Remember that URI for the next steps.
 
