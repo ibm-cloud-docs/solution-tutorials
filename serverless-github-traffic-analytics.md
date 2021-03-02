@@ -81,7 +81,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {: pre}
  
-5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. The namespace needs to unique across the registry.
+5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. The namespace needs to be unique across the registry.
    ```sh
    ibmcloud cr namespace-add ghstats
    ```
