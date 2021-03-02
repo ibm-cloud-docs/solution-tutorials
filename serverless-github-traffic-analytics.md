@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2021
-lastupdated: "2021-03-01"
+  years: 2018-2021
+lastupdated: "2021-03-02"
 lasttested: "2021-02-12"
 
 content-type: tutorial
@@ -154,8 +154,6 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ```
    {: pre}
 
-When the app has been deployed, the CLI output shows the URI. Remember that URI for the next steps.
-
 
 ## App ID and GitHub configuration (browser)
 {: #serverless-github-traffic-analytics-4}
@@ -170,7 +168,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 3. Click on the **Authentication Settings** tab in the same dialog. In **Add web redirect URLs** enter the **url** of your application + `/redirect_uri`, for example `https://ghstats-app.56ab78cd90ef.us-south.codeengine.appdomain.cloud/redirect_uri`.
 
-   For testing the app locally, the redirect URL is `http://127.0.0.1:5000/redirect_uri`. You can configure multiple redirect URLs.
+   For testing the app locally, the redirect URL is `http://127.0.0.1:5000/redirect_uri`. You can configure multiple redirect URLs. In order to test the app locally, copy **.env.local.template** to **.env**, adapt it and start the app using `python3 ghstats.py`.
    {:tip}
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
@@ -209,7 +207,7 @@ With the app in place and configured, the last part is to initiate daily retriev
    {: pre}
 2. To make the secret token know to the app, [update the app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-update). Replace **SECRET_TOKEN_AS_IDENTIFIER** with the value you picked at the previous step.
    ```sh
-   ibmcloud ce app update --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr --env token=SECRET_TOKEN_AS_IDENTIFIER
+   ibmcloud ce app update --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
    ```
    {: pre}
    This creates a new app revision. You can check that the events were received and processed by the app when navigating in the app to **Administration**, then **System log**.
