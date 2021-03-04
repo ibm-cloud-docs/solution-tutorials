@@ -106,7 +106,7 @@ With the services provisioned and the general setup done, next is to create the 
    {: pre}
 3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats) and stores the image in the registry in the previously created  namespace using the registered user information.
    ```sh
-   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit ce --image us.icr.io/ghstats/codeengine-ghstats --registry-secret usicr
+   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/ghstats/codeengine-ghstats --registry-secret usicr
    ```
    {: pre}
 4. Next, run the actual build process.
