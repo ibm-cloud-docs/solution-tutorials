@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-03-02"
+lastupdated: "2021-03-04"
 lasttested: "2021-02-12"
 
 content-type: tutorial
@@ -130,7 +130,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ibmcloud ce app create --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr
    ```
    {: pre}
-   Once the app has deployed, you can check that it is available at the URL shown in the output. The app is not configured and hence not usable yet.
+   Once the app has deployed, you can check that it is available at the URL shown in the output. The app is not configured and hence not usable yet. You can check the deployment status using `ibmcloud ce app list` or for details by executing `ibmcloud ce app get --name ghstats-app`.
 
    By default, the minimum scaling is zero (0). It means that {{site.data.keyword.codeengineshort}} reduces the running instances to zero if there is no workload on the app. This saves costs, but requires a short app restart when scaling up from zero again. You can avoid this by using the paramater `--min 1` when creating or updating the app.
    {: tip}
