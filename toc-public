@@ -130,11 +130,11 @@ Solution Tutorials
             multi-region-serverless.md
             slack-chatbot-database-watson.md
             serverless-mobile-backend.md
-            serverless-github-traffic-analytics.md
 
         {: .topicgroup}
         Code Engine
             text-analysis-code-engine.md
+            serverless-github-traffic-analytics.md
 
         {: .topicgroup}
         Virtual Servers

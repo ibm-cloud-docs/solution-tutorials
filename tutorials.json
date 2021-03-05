@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-03-04"
         }
       ]
     },
@@ -418,17 +418,17 @@
           "lastUpdated": "2021-01-29"
         },
         {
-          "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
+          "name": "Serverless web app and eventing for data retrieval and analytics",
           "url": "serverless-github-traffic-analytics.html",
           "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
           "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
           "tags": [
-            "Db2 Warehouse",
+            "Db2",
             "App ID",
-            "Cloud Functions",
+            "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-03-04"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -442,7 +442,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2021-01-26"
+          "lastUpdated": "2021-02-23"
         }
       ]
     },
@@ -572,7 +572,7 @@
             "Network",
             "Linux"
           ],
-          "lastUpdated": "2020-12-28"
+          "lastUpdated": "2021-03-03"
         }
       ]
     },
