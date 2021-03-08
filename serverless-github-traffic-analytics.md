@@ -265,7 +265,6 @@ Want to add to or change this tutorial? Here are some ideas:
 * Use social identity providers.
 * Add a date picker to the statistics page to filter displayed data.
 * Use a custom login page for {{site.data.keyword.appid_short}}.
-* Explore the social coding relationships between developers using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
 ## Related Content
 {: #serverless-github-traffic-analytics-11}
