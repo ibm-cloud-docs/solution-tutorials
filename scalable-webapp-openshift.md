@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019, 2020
-lastupdated: "2021-02-18"
-lasttested: "2021-02-18"
+  years: 2019, 2020, 2021
+lastupdated: "2021-03-08"
+lasttested: "2021-03-08"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -530,7 +530,7 @@ In this section, you will learn how to manually and automatically scale your app
    ```
    {:pre}
 2. You can see a new pod being provisioned by running `oc get pods` command.
-3. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
+3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
 
 ### Autoscaling
 {: #scalable-webapp-openshift-24}
@@ -552,7 +552,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    ```
    {:pre}
 3. You can see new pods being provisioned by running `oc get pods --watch` command.
-4. Rerun the [Monitoring](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
+4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
 5. Remove the auto scaler:
    ```
    oc delete hpa/$MYPROJECT
