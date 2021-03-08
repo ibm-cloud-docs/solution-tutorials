@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-03-04"
+lastupdated: "2021-03-08"
 lasttested: "2021-02-12"
 
 content-type: tutorial
@@ -200,17 +200,21 @@ After the preparation, you configure and test the app. The app is written in Pyt
 {: step}
 With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a ping subscription](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-subscription-ping-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron), the app subscribes to events on the specified schedule (eventing). 
 
-1. Create the ping subscription **ghstats-daily** with a daily schedule at 6 am with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
+1. Create the ping subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
    ```sh
    ibmcloud ce subscription ping create --name ghstats-daily --destination ghstats-app --path /collectStats --schedule '0 6 * * *' --data '{"token":"SECRET_TOKEN_AS_IDENTIFIER"}'
    ```
    {: pre}
+
 2. To make the secret token know to the app, [update the app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-update). Replace **SECRET_TOKEN_AS_IDENTIFIER** with the value you picked at the previous step.
    ```sh
    ibmcloud ce app update --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
    ```
    {: pre}
    This creates a new app revision. You can check that the events were received and processed by the app when navigating in the app to **Administration**, then **System log**.
+
+   The command above creates a schedule for 6 am UTC daily. To directly check that the eventing works, choose a time few minutes after your current time, converted to UTC.
+   {:tip}
 
 ## Conclusions
 {: #serverless-github-traffic-analytics-7}
