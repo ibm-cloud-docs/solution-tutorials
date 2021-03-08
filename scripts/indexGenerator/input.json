@@ -595,23 +595,21 @@
           "supportsCloudShell": "yes_with_modifications"
         },
         {
-          "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
+          "name": "Serverless web app and eventing for data retrieval and analytics",
           "url": "serverless-github-traffic-analytics.html",
           "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
           "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
           "tags": [
-            "Db2 Warehouse",
+            "Db2",
             "App ID",
-            "Cloud Functions",
+            "Code Engine",
             "GitHub"
           ],
           "requirements": [
-            "cognos_dashboard",
             "ibmcloud_cli",
-            "db2_warehouse",
-            "cloud_functions",
-            "app_id",
-            "cloud_foundry"
+            "db2_on_cloud",
+            "code_engine",
+            "app_id"
           ],
           "supportsCloudShell": "yes_with_modifications"
         },
