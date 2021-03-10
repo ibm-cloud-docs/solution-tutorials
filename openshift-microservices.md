@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-02-18"
-lasttested: "2021-02-18"
+lastupdated: "2021-03-10"
+lasttested: "2021-03-10"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -129,13 +129,14 @@ The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.o
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**.
+
    ![Cloud Shell icon](images/solution55-openshift-microservices/cloudshell-icon.png)
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
    ```
    {:pre}
-2. Initialize the `oc` command environment by passing the cluster name:
+2. Initialize the `oc` command environment by replacing the placeholder <your-cluster-name>:
    ```sh
    ibmcloud oc clusters
    ibmcloud oc cluster config -c <your-cluster-name> --admin
@@ -327,7 +328,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    ```
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
-   {:pre}
+   {:codeblock}
 4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    <p style="width: 50%;">
 
@@ -427,7 +428,7 @@ If you're not running the script to simulate load, the number of pods should sta
 2. Start simulating load (see previous section to simulate load on the application).
    <p style="width: 50%;">
 
-   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp45-hpa-after.png)
+   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp-hpa-after.png)
    </p>
 
    It can take a few minutes for the autoscaler to make adjustments.
