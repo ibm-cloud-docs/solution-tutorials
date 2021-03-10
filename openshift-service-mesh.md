@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-02-18"
-lasttested: "2021-02-18"
+lastupdated: "2021-03-10"
+lasttested: "2021-03-10"
 
 content-type: tutorial
 services: openshift, containers
@@ -152,7 +152,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 
 1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
-3. Search for **Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
+3. Search for **OpenShift Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
 4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
@@ -168,7 +168,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
-6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create ServiceMeshControlPlane**.
+6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -177,9 +177,9 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
 1. Navigate to **Operators** → **Installed Operators** again.
-2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
-3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create ServiceMeshMemberRoll** and then select **YAML View**
-4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits it will look something like this:
+2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
+3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** and then select **YAML View**
+4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits, the YAML should look something like this:
    ```
    apiVersion: maistra.io/v1
    kind: ServiceMeshMemberRoll
@@ -324,11 +324,11 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
 1. From the **{{site.data.keyword.openshiftshort}} web console**,
    1. On the left pane, Under **Networking** and then click **Routes**
    2. select **istio-system** as your project from the top bar
-   3. Select the URL(Location) next to **kiali**
+   3. Click the URL(Location) next to **kiali** and if prompted, click **Login with OpenShift**
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
-3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
+3. To see the request rates, click **Display** and choose **Requests Per second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section to generate load.
-5. Now, check the Kiali Graph.
+5. Now, check the Kiali Graph to see the requests per second.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
 
@@ -457,7 +457,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
    4. Check `Secure Route`
    5. TLS Termination: `Edge`
    6. Insecure Traffic: `None`
-4. Click **Create**
+4. Click **Create**.
 5. Visit the new HTTPS URL under **Location** section of **istio-ingressgateway-secure** route. Remember to add `/productpage` at the end of the URL!
 
 ## Remove resources
@@ -495,7 +495,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 
 1. Navigate to the **Operators** → **Installed Operators** page of the web console.
 2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **Red Hat OpenShift Service Mesh** Operator.
-3. Click **Remove**.
+3. Click **Uninstall** on the prompt.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
 <!--##istutorial#-->
