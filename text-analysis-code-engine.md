@@ -81,6 +81,15 @@ You will find instructions to download and install these tools for your operatin
 {:tip}
 <!--#/istutorial#-->
 
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #text-analysis-code-engine-shell}
+{: step}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
+-->
+<!--#/isworkshop#-->
 
 ## Create an {{site.data.keyword.codeenginefull_notm}} project
 {: #text-analysis-code-engine-create_code_engine_project}
@@ -90,6 +99,7 @@ In this section, you will create a {{site.data.keyword.codeengineshort}} project
 
 Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](https://{DomainName}/docs/codeengine?topic=codeengine-manage-project)
 
+<!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
    - Select a location
@@ -101,7 +111,7 @@ Putting entities into a single project enables you to manage access control more
    ibmcloud login
    ```
    {:pre}
-4. You will also need to target the resource group where you created your project.
+4. Target the resource group where you created your project.
    ```
    ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
    ```
@@ -111,6 +121,20 @@ Putting entities into a single project enables you to manage access control more
    ibmcloud code-engine project select --name <PROJECT_NAME>
    ```
    {:pre}
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+1. Target the resource group where to create the project:
+   ```
+   ibmcloud target -g <ASSIGNED_RESOURCE_GROUP_NAME>
+   ```
+   {:pre}
+1. Create a new project with a unique name like `<your-initials>-ceproject`:
+   ```
+   ibmcloud code-engine project create --name <PROJECT_NAME>
+   ```
+   {:pre}
+<!--#/isworkshop#-->
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
 {: #text-analysis-code-engine-deploy_app}
@@ -226,7 +250,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **code-engine-cos** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
@@ -240,7 +264,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Lite** plan.
-   2. Set **Service name** to **code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 7. Under **Service credentials**, click on **New credential**
    1. Give it a name - `nlu-for-code-engine` and select **Writer** as the role.
@@ -253,7 +277,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store files in COS._Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
    ```sh
-   ibmcloud code-engine application bind --name backend --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS
+   ibmcloud code-engine application bind --name backend --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
    {:pre}
 
@@ -311,12 +335,12 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs to read the uploaded files and to store the results,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
    {:pre}
 2. Similarly, let's bind {{site.data.keyword.nlushort}} service with a prefix `NLU_JOB` to analyze the uploaded text files,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
    ```
    {:pre}
 3. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
