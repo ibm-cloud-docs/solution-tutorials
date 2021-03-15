@@ -278,7 +278,7 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store files in COS._Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
    ```sh
-   ibmcloud code-engine application bind --name backend --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS
+   ibmcloud code-engine application bind --name backend --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
    {:pre}
 
@@ -336,12 +336,12 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 
 1. Let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs to read the uploaded files and to store the results,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
    {:pre}
 2. Similarly, let's bind {{site.data.keyword.nlushort}} service with a prefix `NLU_JOB` to analyze the uploaded text files,
    ```sh
-   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
+   ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
    ```
    {:pre}
 3. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
