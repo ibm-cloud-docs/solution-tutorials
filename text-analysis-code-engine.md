@@ -81,6 +81,7 @@ You will find instructions to download and install these tools for your operatin
 {:tip}
 <!--#/istutorial#-->
 
+<!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #text-analysis-code-engine-shell}
