@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-02-18"
-lasttested: "2021-02-18"
+lastupdated: "2021-03-15"
+lasttested: "2021-03-15"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -129,13 +129,14 @@ The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.o
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**.
+
    ![Cloud Shell icon](images/solution55-openshift-microservices/cloudshell-icon.png)
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
    ```
    {:pre}
-2. Initialize the `oc` command environment by passing the cluster name:
+2. Initialize the `oc` command environment by replacing the placeholder <your-cluster-name>:
    ```sh
    ibmcloud oc clusters
    ibmcloud oc cluster config -c <your-cluster-name> --admin
@@ -327,7 +328,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    ```
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
-   {:pre}
+   {:codeblock}
 4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    <p style="width: 50%;">
 
@@ -427,7 +428,7 @@ If you're not running the script to simulate load, the number of pods should sta
 2. Start simulating load (see previous section to simulate load on the application).
    <p style="width: 50%;">
 
-   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp45-hpa-after.png)
+   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp-hpa-after.png)
    </p>
 
    It can take a few minutes for the autoscaler to make adjustments.
@@ -643,7 +644,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    {:pre}
 1. The following new-app commmand will make a build configuration and Deployment Configuration.  The following demonstrates the CLI invocation of the add application (remember using the GUI console for the frontend):
    ```sh
-   oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
+   oc new-app --name=patient-health-backend --as-deployment-config centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {:pre}
 3. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **patient-health-backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
@@ -671,7 +672,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template / Containers / Port` output of this command:
 
    ```
-   oc describe deployment/patient-health-backend
+   oc describe dc/patient-health-backend
    ```
    {:pre}
 
@@ -808,7 +809,7 @@ You can select the events that are displayed through a view by applying a search
 4. Click **Unsaved view**. Select **Save view**.
    ![Save View](images/solution55-openshift-microservices/views-img-6.png)
    1. Enter the name of the view. Use the following format: `<Enter your user name> patientUI`. For example, `yourname patientui`.
-   1. Enter a category. Use the following format: `<Enter your user name>`. For example, `yourname` Then click **Add new category**.
+   1. Enter a category. Use the following format: `<Enter your user name>`. For example, `yourname` Then click **Add this as a new view category**.
    1. Click **Save view**.
 5. A new view appears on the left navigation panel.
 
@@ -877,7 +878,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-microservices/boards.png).
 1. Select **NEW BOARD** to create a new dashboard.
 1. Click **Add Graph**.
-1. Select the Field **All lines**.
+1. Select the Field **All lines** under Graph a field.
 1. Select the Filter **app:patient-health-frontend**.
 
    ![New Board](images/solution55-openshift-microservices/board-img-4.png)
@@ -895,7 +896,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    ![Show subplots](images/solution55-openshift-microservices/board-img-8.png)
 
    1. Click **Show subplots**.
-   2. Select **Histogram** and **level**.
+   2. Select **Histogram** and **level**.Click **Add Breakdown**.
 
    ![Histogram](images/solution55-openshift-microservices/board-img-11.png)
 

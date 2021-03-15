@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019,2020
-lastupdated: "2020-12-28"
+  years: 2019,2020,2021
+lastupdated: "2021-03-03"
 lasttested: "2020-12-28"
 
 content-type: tutorial
@@ -543,17 +543,13 @@ The Admin team has provided them just the right amount of permissions to create 
    {:pre}
    The application1 team resources are very similar to the *shared* team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
 
-1. Optionally investigate the source code that initializes the Centos instance.  It is has been captured in a terraform module shared by all the teams during this exploratory stage.
+1. Optionally investigate the source code that initializes the CentOS instance.  It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
    **../common/user_data_app/main.tf**:
    ```
    locals {
      shared_app_user_data_centos = <<EOS
    #!/bin/sh
-   cat > /etc/dhcp/dhclient.conf <<EOF
-   supersede domain-name-servers 161.26.0.7, 161.26.0.8;
-   EOF
-   dhclient -v -r eth0; dhclient -v eth0
    curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
    yum install nodejs -y
    cat > /app.js << 'EOF'
@@ -572,7 +568,6 @@ The Admin team has provided them just the right amount of permissions to create 
    }
    ```
    Detailed explanation:
-     - [Updating the DNS resolver for your VSI](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-updating-dns-resolver) for centos is accomplished by adding a line to /etc/dhcp/dhclient.conf and executing `dhclient`
      - Nodejs is installed with the `curl` and `yum` commands
      - The nodejs application is put into /app.js.
      - A systemctl service is created for app.js

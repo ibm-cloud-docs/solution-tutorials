@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-03-09"
 lasttested: "2019-12-07"
 
 ---
@@ -298,7 +298,7 @@ Refer to [this documentation](https://{DomainName}/docs/cloud-object-storage/bas
 
 {{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based file storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. {{site.data.keyword.filestorage_short}} shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/FileStorage?topic=FileStorage-about) for a full list of features.
+Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/FileStorage?topic=FileStorage-getting-started) for a full list of features.
 
 Once attached to your servers, a {{site.data.keyword.filestorage_short}} service can be used easily to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region.
 

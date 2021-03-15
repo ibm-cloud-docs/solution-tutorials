@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-03-04"
 lasttested: "2020-12-01"
 
 content-type: tutorial
@@ -130,7 +130,7 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {:pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.
    {:tip}
@@ -146,7 +146,7 @@ We've already built images for the two applications and pushed them to the publi
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
    {:pre}
-   You should see `backend URL: undefined` and App listening on port 8080. Later on in the tutorial, you will connect this frontend application to our backend application
+   If the application is running, you should see `backend URL: undefined` and App listening on port 8080. Later on in the tutorial, you will connect this frontend application to our backend application
 
 Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
@@ -173,7 +173,7 @@ Most of these values have a default set if nothing is provided as an option when
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {:pre}
-5. Once load generation is stopped, wait for few minutes to see the instances terminating, eventually scaling down to zero instances.
+5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
 6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:

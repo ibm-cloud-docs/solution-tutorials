@@ -571,6 +571,19 @@
 		],
     "description": "IBM&reg; AltaDB for IBM Cloud"
 	},
+	"alb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Application Load Balancer for VPC",
+			"ibm.Application Load Balancer for VPC",
+			"site.Application Load Balancer for VPC",
+      "{{site.data.keyword.alb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.alb_full}}"
+		],
+    "description": "Application Load Balancer for VPC"
+	},
 	"hadoopst": {
 	  "scope": "markdown",
 		"prefix": [
@@ -792,6 +805,45 @@
 		],
     "description": "IBM&reg; API Management for IBM Cloud"
 	},
+	"appconfig_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; App Configuration",
+			"ibm.IBM Cloud&trade; App Configuration",
+			"site.IBM Cloud&trade; App Configuration",
+      "{{site.data.keyword.appconfig_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_full}}"
+		],
+    "description": "IBM Cloud&trade; App Configuration"
+	},
+	"appconfig_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud App Configuration",
+			"ibm.IBM Cloud App Configuration",
+			"site.IBM Cloud App Configuration",
+      "{{site.data.keyword.appconfig_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_notm}}"
+		],
+    "description": "IBM Cloud App Configuration"
+	},
+	"appconfig_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"App Configuration",
+			"ibm.App Configuration",
+			"site.App Configuration",
+      "{{site.data.keyword.appconfig_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_short}}"
+		],
+    "description": "App Configuration"
+	},
 	"appconserviceshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -817,6 +869,19 @@
 			"{{site.data.keyword.appconservicefull}}"
 		],
     "description": "IBM&reg; App Connect in IBM Cloud"
+	},
+	"appconnect_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"App Connect",
+			"ibm.App Connect",
+			"site.App Connect",
+      "{{site.data.keyword.appconnect_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconnect_notm}}"
+		],
+    "description": "App Connect"
 	},
 	"Appdomainname": {
 	  "scope": "markdown",
@@ -2001,6 +2066,45 @@
 		],
     "description": "CIS"
 	},
+	"cognosanalytics_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Cognos Analytics",
+			"ibm.Cognos Analytics",
+			"site.Cognos Analytics",
+      "{{site.data.keyword.cognosanalytics_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_short}}"
+		],
+    "description": "Cognos Analytics"
+	},
+	"cognosanalytics_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cognos Analytics for IBM Cloud&reg;",
+			"ibm.IBM Cognos Analytics for IBM Cloud&reg;",
+			"site.IBM Cognos Analytics for IBM Cloud&reg;",
+      "{{site.data.keyword.cognosanalytics_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_full}}"
+		],
+    "description": "IBM Cognos Analytics for IBM Cloud&reg;"
+	},
+	"cognosanalytics_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cognos Analytics for IBM Cloud",
+			"ibm.IBM Cognos Analytics for IBM Cloud",
+			"site.IBM Cognos Analytics for IBM Cloud",
+      "{{site.data.keyword.cognosanalytics_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_full_notm}}"
+		],
+    "description": "IBM Cognos Analytics for IBM Cloud"
+	},
 	"dns_notm": {
 	  "scope": "markdown",
 		"prefix": [
@@ -2832,6 +2936,45 @@
 			"{{site.data.keyword.icp4i_full_notm}}"
 		],
     "description": "IBM Cloud Pak for Integration"
+	},
+	"cp4waiops_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Pak&reg; for Watson AIOps",
+			"ibm.IBM Cloud Pak&reg; for Watson AIOps",
+			"site.IBM Cloud Pak&reg; for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_full}}"
+		],
+    "description": "IBM Cloud Pak&reg; for Watson AIOps"
+	},
+	"cp4waiops_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Pak for Watson AIOps",
+			"ibm.IBM Cloud Pak for Watson AIOps",
+			"site.IBM Cloud Pak for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_full_notm}}"
+		],
+    "description": "IBM Cloud Pak for Watson AIOps"
+	},
+	"cp4waiops_short_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"Cloud Pak for Watson AIOps",
+			"ibm.Cloud Pak for Watson AIOps",
+			"site.Cloud Pak for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_short_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_short_notm}}"
+		],
+    "description": "Cloud Pak for Watson AIOps"
 	},
 	"compliance_full": {
 	  "scope": "markdown",
@@ -5173,6 +5316,19 @@
 		],
     "description": "IBM&reg; Cloud Private for Data"
 	},
+	"ibm_cloud_sap": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud for SAP",
+			"ibm.IBM Cloud for SAP",
+			"site.IBM Cloud for SAP",
+      "{{site.data.keyword.ibm_cloud_sap}}"
+		],
+		"body": [
+			"{{site.data.keyword.ibm_cloud_sap}}"
+		],
+    "description": "IBM Cloud for SAP"
+	},
 	"mf-starter-image": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6733,6 +6889,45 @@
 		],
     "description": "IBM&reg; MQ Light for IBM Cloud"
 	},
+	"mcko_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Multicloud Key Orchestrator",
+			"ibm.IBM&reg; Multicloud Key Orchestrator",
+			"site.IBM&reg; Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_full}}"
+		],
+    "description": "IBM&reg; Multicloud Key Orchestrator"
+	},
+	"mcko_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Multicloud Key Orchestrator",
+			"ibm.IBM Multicloud Key Orchestrator",
+			"site.IBM Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_full_notm}}"
+		],
+    "description": "IBM Multicloud Key Orchestrator"
+	},
+	"mcko_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Multicloud Key Orchestrator",
+			"ibm.Multicloud Key Orchestrator",
+			"site.Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_short}}"
+		],
+    "description": "Multicloud Key Orchestrator"
+	},
 	"mysql": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6784,6 +6979,19 @@
 			"{{site.data.keyword.nlushort}}"
 		],
     "description": "Natural Language Understanding"
+	},
+	"nlb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Network Load Balancer for VPC",
+			"ibm.Network Load Balancer for VPC",
+			"site.Network Load Balancer for VPC",
+      "{{site.data.keyword.nlb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.nlb_full}}"
+		],
+    "description": "Network Load Balancer for VPC"
 	},
 	"networksecuritygroups_short": {
 	  "scope": "markdown",
@@ -7084,44 +7292,44 @@
 		],
     "description": "Personality Insights"
 	},
-	"policy-framework-fs_full": {
+	"framework-fs_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; Policy Framework for Financial Services",
-			"ibm.IBM Cloud&reg; Policy Framework for Financial Services",
-			"site.IBM Cloud&reg; Policy Framework for Financial Services",
-      "{{site.data.keyword.policy-framework-fs_full}}"
+			"IBM Cloud Framework for Financial Services&trade;",
+			"ibm.IBM Cloud Framework for Financial Services&trade;",
+			"site.IBM Cloud Framework for Financial Services&trade;",
+      "{{site.data.keyword.framework-fs_full}}"
 		],
 		"body": [
-			"{{site.data.keyword.policy-framework-fs_full}}"
+			"{{site.data.keyword.framework-fs_full}}"
 		],
-    "description": "IBM Cloud&reg; Policy Framework for Financial Services"
+    "description": "IBM Cloud Framework for Financial Services&trade;"
 	},
-	"policy-framework-fs_notm": {
+	"framework-fs_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Policy Framework for Financial Services",
-			"ibm.IBM Cloud Policy Framework for Financial Services",
-			"site.IBM Cloud Policy Framework for Financial Services",
-      "{{site.data.keyword.policy-framework-fs_notm}}"
+			"IBM Cloud Framework for Financial Services",
+			"ibm.IBM Cloud Framework for Financial Services",
+			"site.IBM Cloud Framework for Financial Services",
+      "{{site.data.keyword.framework-fs_notm}}"
 		],
 		"body": [
-			"{{site.data.keyword.policy-framework-fs_notm}}"
+			"{{site.data.keyword.framework-fs_notm}}"
 		],
-    "description": "IBM Cloud Policy Framework for Financial Services"
+    "description": "IBM Cloud Framework for Financial Services"
 	},
-	"policy-framework-fs_short": {
+	"framework-fs_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Policy Framework",
-			"ibm.Policy Framework",
-			"site.Policy Framework",
-      "{{site.data.keyword.policy-framework-fs_short}}"
+			"Framework",
+			"ibm.Framework",
+			"site.Framework",
+      "{{site.data.keyword.framework-fs_short}}"
 		],
 		"body": [
-			"{{site.data.keyword.policy-framework-fs_short}}"
+			"{{site.data.keyword.framework-fs_short}}"
 		],
-    "description": "Policy Framework"
+    "description": "Framework"
 	},
 	"portfolio_optimization_short": {
 	  "scope": "markdown",
@@ -7152,15 +7360,15 @@
 	"powerSysFull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
-			"ibm.IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
-			"site.IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
+			"IBM&reg; Power Systems&trade; Virtual Server",
+			"ibm.IBM&reg; Power Systems&trade; Virtual Server",
+			"site.IBM&reg; Power Systems&trade; Virtual Server",
       "{{site.data.keyword.powerSysFull}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysFull}}"
 		],
-    "description": "IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud"
+    "description": "IBM&reg; Power Systems&trade; Virtual Server"
 	},
 	"powerSysShort": {
 	  "scope": "markdown",
@@ -8527,6 +8735,32 @@
 		],
     "description": "Transformation Advisor"
 	},
+	"terraform-provider_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Provider Plug-in for Terraform",
+			"ibm.IBM Cloud&reg; Provider Plug-in for Terraform",
+			"site.IBM Cloud&reg; Provider Plug-in for Terraform",
+      "{{site.data.keyword.terraform-provider_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.terraform-provider_full}}"
+		],
+    "description": "IBM Cloud&reg; Provider Plug-in for Terraform"
+	},
+	"terraform-provider_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Provider Plug-in for Terraform",
+			"ibm.IBM Cloud Provider Plug-in for Terraform",
+			"site.IBM Cloud Provider Plug-in for Terraform",
+      "{{site.data.keyword.terraform-provider_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.terraform-provider_full_notm}}"
+		],
+    "description": "IBM Cloud Provider Plug-in for Terraform"
+	},
 	"texttospeechshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -8699,15 +8933,41 @@
 	"vpn_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Virtual Private Network",
-			"ibm.IBM Cloud&trade; Virtual Private Network",
-			"site.IBM Cloud&trade; Virtual Private Network",
+			"Virtual Private Network (VPN) for VPC",
+			"ibm.Virtual Private Network (VPN) for VPC",
+			"site.Virtual Private Network (VPN) for VPC",
       "{{site.data.keyword.vpn_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.vpn_full}}"
 		],
-    "description": "IBM Cloud&trade; Virtual Private Network"
+    "description": "Virtual Private Network (VPN) for VPC"
+	},
+	"vpn_vpc_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Virtual Private Network (VPN) for VPC",
+			"ibm.Virtual Private Network (VPN) for VPC",
+			"site.Virtual Private Network (VPN) for VPC",
+      "{{site.data.keyword.vpn_vpc_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpn_vpc_full}}"
+		],
+    "description": "Virtual Private Network (VPN) for VPC"
+	},
+	"vpn_vpc_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"VPN for VPC",
+			"ibm.VPN for VPC",
+			"site.VPN for VPC",
+      "{{site.data.keyword.vpn_vpc_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpn_vpc_short}}"
+		],
+    "description": "VPN for VPC"
 	},
 	"virtualmachinesshort": {
 	  "scope": "markdown",
@@ -10216,6 +10476,45 @@
 			"{{site.data.keyword.appserver_notm}}"
 		],
     "description": "IBM WebSphere Application Server for IBM Cloud"
+	},
+	"was4vsi": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; WebSphere&reg; Application Server for VSI",
+			"ibm.IBM&reg; WebSphere&reg; Application Server for VSI",
+			"site.IBM&reg; WebSphere&reg; Application Server for VSI",
+      "{{site.data.keyword.was4vsi}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi}}"
+		],
+    "description": "IBM&reg; WebSphere&reg; Application Server for VSI"
+	},
+	"was4vsi_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM WebSphere Application Server for VSI",
+			"ibm.IBM WebSphere Application Server for VSI",
+			"site.IBM WebSphere Application Server for VSI",
+      "{{site.data.keyword.was4vsi_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi_notm}}"
+		],
+    "description": "IBM WebSphere Application Server for VSI"
+	},
+	"was4vsi_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"WebSphere Application Server for VSI",
+			"ibm.WebSphere Application Server for VSI",
+			"site.WebSphere Application Server for VSI",
+      "{{site.data.keyword.was4vsi_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi_short}}"
+		],
+    "description": "WebSphere Application Server for VSI"
 	},
 	"workflowfull": {
 	  "scope": "markdown",
