@@ -251,7 +251,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos** and select a resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
