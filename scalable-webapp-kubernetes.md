@@ -465,7 +465,7 @@ Once the autoscaler is successfully created, you should see
    {:pre}
 * Delete the Kubernetes artifacts created for this application:
    ```sh
-   helm delete ${MYPROJECT}
+   helm delete $MYPROJECT
    ```
    {:pre}
 <!--##istutorial#-->
