@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2021
-lastupdated: "2021-01-21"
-lasttested: "2020-12-17"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-03-18"
+lasttested: "2021-03-18"
 
 content-type: tutorial
 services: containers, Registry, certificate-manager
@@ -70,7 +70,7 @@ This tutorial requires:
    * `dev` plugin,
 * a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
-* `helm` to deploy charts.
+* `Helm 3` to deploy charts.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -94,7 +94,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-- Create the Kubernetes cluster:
+- Create the Kubernetes **version 1.19+** cluster:
   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
@@ -198,8 +198,10 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```
    {: pre}
 
-### Deploy the application
+### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
+
+In this section you will deploy the starter application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 1. Identify your cluster:
 
@@ -219,38 +221,18 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {:pre}
-  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   
+   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
    {:tip}
 
-
-[Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
-
-#### With Helm 3
-{: #scalable-webapp-kubernetes-11}
-
-1. Change to the chart directory:
+1. Change to the chart directory under your starter application directory:
    ```sh
    cd chart/$MYPROJECT
    ```
    {:pre}
-1. Install the chart:
+1. Install the Helm chart:
    ```sh
-   helm install ${MYPROJECT} . --set image.repository=${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}
-   ```
-   {:pre}
-
-#### With Helm 2
-{: #scalable-webapp-kubernetes-10}
-
-1. Install Helm into your cluster [by following steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
-1. Change to the chart directory:
-   ```sh
-   cd chart/$MYPROJECT
-   ```
-   {:pre}
-1. Install the chart:
-   ```sh
-   helm install . --name ${MYPROJECT} --set image.repository=${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}
+   helm install $MYPROJECT . --set image.repository=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT
    ```
    {:pre}
 
@@ -267,7 +249,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
-   ibmcloud ks workers --cluster ${MYCLUSTER}
+   ibmcloud ks workers --cluster $MYCLUSTER
    ```
    {: pre}
 1. For VPC the IP addresses of the clusters are private to the VPC. These will not be accessable from your desktop but can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
@@ -291,7 +273,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```sh
-   ibmcloud ks cluster get --cluster ${MYCLUSTER}
+   ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
    to find
@@ -303,7 +285,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
 
    ```yaml
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    kind: Ingress
    metadata:
      name: ingress-for-ibmdomain-http-and-https
@@ -319,9 +301,12 @@ Use Ingress to set up the cluster inbound connection to the service.
        http:
          paths:
          - path: /
+           pathType: Prefix
            backend:
-             serviceName: <service-name>
-             servicePort: 3000
+             service:
+               name: $MYPROJECT
+               port:
+                number: 3000
    ```
    {: codeblock}
 3. Deploy the Ingress
@@ -343,7 +328,7 @@ This section requires you to own a custom domain. You will need to create a `CNA
 
 1. Create an Ingress file `ingress-customdomain-http.yml` pointing to your domain:
    ```yaml
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    kind: Ingress
    metadata:
      name: ingress-for-customdomain-http
@@ -355,9 +340,12 @@ This section requires you to own a custom domain. You will need to create a `CNA
        http:
          paths:
          - path: /
+           pathType: Prefix
            backend:
-             serviceName: <service-name>
-             servicePort: 3000
+             service:
+               name: $MYPROJECT
+               port:
+                number: 3000
    ```
    {: codeblock}
 2. Deploy the Ingress
@@ -393,7 +381,7 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
    {: pre}
 4. Create an Ingress file `ingress-customdomain-https.yml` pointing to your domain:
    ```yaml
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    kind: Ingress
    metadata:
      name: ingress-customdomain-https
@@ -409,9 +397,12 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
        http:
          paths:
          - path: /
+           pathType: Prefix
            backend:
-             serviceName: <service-name>
-             servicePort: 3000
+             service:
+               name: $MYPROJECT
+               port:
+                number: 3000
    ```
    {: codeblock}
 5. Deploy the Ingress:
@@ -474,7 +465,7 @@ Once the autoscaler is successfully created, you should see
    {:pre}
 * Delete the Kubernetes artifacts created for this application:
    ```sh
-   helm delete ${MYPROJECT}
+   helm delete $MYPROJECT
    ```
    {:pre}
 <!--##istutorial#-->
