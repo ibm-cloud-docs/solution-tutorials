@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-03-18"
-lasttested: "2021-03-18"
+lastupdated: "2021-03-22"
+lasttested: "2021-03-22"
 
 content-type: tutorial
 services: containers, Registry, certificate-manager
@@ -54,7 +54,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
   ![Architecture](images/solution2/Architecture.png)
 </p>
 
-1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
+1. A developer downloads a starter web application.
 1. Building the application produces a Docker container image.
 1. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
@@ -67,7 +67,6 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `dev` plugin,
 * a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
 * `Helm 3` to deploy charts.
@@ -114,28 +113,24 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 -->
 <!--#/isworkshop#-->
 
-## Create a starter application
-{: #scalable-webapp-kubernetes-create_application}
+## Clone a starter application
+{: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
-The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
 
-1. Start the `ibmcloud dev` wizard to create a new directory in the current working directory.
-   ```
-   ibmcloud dev create
+1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/) to your machine:
+   ```sh
+   git clone https://github.com/IBM-Cloud/kubernetes-node-app
    ```
    {: pre}
+2. Change to the application directory,
+   ```sh
+   cd kubernetes-node-app
+   ```
+   {:pre}
 
-   You may be asked to target an organization and a space, follow the instructions on the CLI
-   {:tip}
-1. Select `Backend Service / Web App` > `Node`> `Node.js Express App` to create a Node.js starter.
-1. Enter a **unique name** for your application such as `<your-initials>kubeapp`.
-4. Select the **resource group** where your cluster has been created.
-1. Do not add additional services.
-1. Do not add a DevOps toolchain, select **manual deployment**.
-1. Select **Helm-based** deployment target.
-
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
+This starter application code contains all the necessary configuration files for local development and deployment to Kubernetes.
 
 ![Generated Files](images/solution2/Contents.png)
 
@@ -194,7 +189,9 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
    ```sh
-   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
+   docker build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
+   
+   docker push $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0
    ```
    {: pre}
 
