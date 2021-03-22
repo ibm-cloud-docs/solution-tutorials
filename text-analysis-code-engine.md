@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-03-15"
+lastupdated: "2021-03-22"
 lasttested: "2020-12-01"
 
 content-type: tutorial
@@ -125,6 +125,7 @@ Putting entities into a single project enables you to manage access control more
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
+<!--
 1. Target the resource group where to create the project:
    ```
    ibmcloud target -g <ASSIGNED_RESOURCE_GROUP_NAME>
@@ -135,6 +136,7 @@ Putting entities into a single project enables you to manage access control more
    ibmcloud code-engine project create --name <PROJECT_NAME>
    ```
    {:pre}
+-->
 <!--#/isworkshop#-->
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
@@ -271,6 +273,40 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    1. Give it a name - `nlu-for-code-engine` and select **Writer** as the role.
    2. Click **Add**.
 
+<!--##isworkshop#-->
+<!--
+### Create a Service ID
+
+To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](https://{DomainName}/iam/serviceids) and configure it with the right access policies.
+
+1. Go the page to manage [Service IDs](https://{DomainName}/iam/serviceids).
+1. **Create** a new service ID with a unique name, e.g `<PROJECT-NAME>-serviceId`.
+1. Click **Details** and make note of the `ID` of the Service ID. You will need it later.
+1. Select the **Access policies** tab.
+1. Click **Assign access**
+1. Add one access policy for the {{site.data.keyword.cos_short}} service:
+   1. Select **IAM services**.
+   2. Select **Cloud Object Storage** from the list.
+   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
+   4. Check **Operator** and **Writer** as roles.
+   5. Add the policy.
+1. Add another policy for the {{site.data.keyword.nlushort}} service:
+   1. Select **IAM services**.
+   2. Select **{{site.data.keyword.nlushort}}** from the list.
+   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
+   4. Check **Operator** and **Writer** as roles.
+   5. Add the policy.
+1. Click **Assign**.
+
+Now that you have configured the service ID, you need to update the {{site.data.keyword.codeengineshort}} project so that this service ID will be used when binding services.
+
+1. In the command, update the project:
+   ```
+   ibmcloud code-engine project update --binding-service-id <ID-of-the-Service-ID-retrieved-from-Details-panel>
+   ```
+-->
+<!--#/isworkshop#-->
+
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #text-analysis-code-engine-9}
 
@@ -392,6 +428,11 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 3. Delete the services you created:
  * {{site.data.keyword.cos_full}}
  * {{site.data.keyword.nlufull}}
+<!--##isworkshop#-->
+<!--
+1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project
+-->
+<!--#/isworkshop#-->
 
 ## Related resources
 {: #text-analysis-code-engine-related_resources}
