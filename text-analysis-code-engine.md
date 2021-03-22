@@ -300,7 +300,7 @@ To give your {{site.data.keyword.codeengineshort}} project access to the service
 
 Now that you have configured the service ID, you need to update the {{site.data.keyword.codeengineshort}} project so that this service ID will be used when binding services.
 
-1. In the command, update the project:
+1. From the command line, update the project:
    ```
    ibmcloud code-engine project update --binding-service-id <ID-of-the-Service-ID-retrieved-from-Details-panel>
    ```
