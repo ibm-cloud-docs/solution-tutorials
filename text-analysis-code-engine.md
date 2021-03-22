@@ -276,6 +276,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 <!--##isworkshop#-->
 <!--
 ### Create a Service ID
+{: #text-analysis-code-engine-create_service_id}
 
 To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](https://{DomainName}/iam/serviceids) and configure it with the right access policies.
 
