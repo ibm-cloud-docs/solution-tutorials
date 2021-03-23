@@ -21,7 +21,7 @@ completion-time: 30m
 {:note: .note}
 
 # Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC
-{: #hpc-lsf-on-vpc-auto-scale}
+{: #hpc-lsf-vpc-auto-scale}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
 {: toc-completion-time="30m"}
@@ -38,17 +38,19 @@ completion-time: 30m
  Regardless of how you begin your VPC-based LSF cluster, the process of adding auto scaling to the cluster is the same.
 
  ## Objectives
- {: #hpc-lsf-on-vpc-auto-scale-objectives}
+ {: #hpc-lsf-vpc-auto-scale-objectives}
 
  * Enable the LSF resource connector
  * Configure the resource connector 
  * Demonstrate the resource connector by adding demand to create new dynamic nodes
 
  ## Architecture
- {: #hpc-lsf-on-vpc-auto-scale-architecture}
+ {: #hpc-lsf-vpc-auto-scale-architecture}
+ 
+ ![Architecture diagram](images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg)
 
  ## Before you begin
-{: #hpc-lsf-on-vpc-auto-scale-prereqs}
+{: #hpc-lsf-vpc-auto-scale-prereqs}
 
 You need the following to complete this tutorial:
 
