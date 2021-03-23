@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-10-18"
+lastupdated: "2021-01-19"
 lasttested: "2019-09-03"
 
 content-type: tutorial
 services: vpc, cloud-object-storage, databases-for-postgresql
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -36,13 +36,13 @@ IBM offers a number of ways to securely extend an on-premises computer network w
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instances (VSIs).
 The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
+{:shortdesc}
 
 To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cloud_notm}} services, representing a line of business application.
 The services have direct or private endpoints that can be used for secure no cost ingress/egress when all access is within the same region of the {{site.data.keyword.cloud_notm}}. An on-premises computer will access the microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
-{:shortdesc}
 In short, using a VPC you can
 
 - connect your on-premises systems to services and workloads running in {{site.data.keyword.cloud_notm}},
@@ -50,7 +50,7 @@ In short, using a VPC you can
 - connect your cloud-based systems to services and workloads running on-premises.
 
 ## Objectives
-{: #objectives}
+{: #vpc-site2site-vpn-objectives}
 
 * Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud.
 * Securely reach cloud services using private service endpoints.
@@ -64,10 +64,10 @@ The following diagram shows the virtual private cloud containing an app server. 
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
 4. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
-5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
+5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc?topic=vpc-build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
-{: #prereqs}
+{: #vpc-site2site-vpn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -76,22 +76,22 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition:
-- check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
-- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
+- check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started#prereqs).
+- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
 ## Deploy a virtual app server in a virtual private cloud
-{: #deploy}
+{: #vpc-site2site-vpn-deploy}
 {: step}
 
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Then, you will provision the services and set up the baseline VPC and simulated on-prem resources.
 
 ### Get the code
-{: #setup}
+{: #vpc-site2site-vpn-setup}
 The tutorial uses scripts to deploy a baseline of infrastructure resources before you create the VPN gateways. These scripts and the code for the microservice is available in a GitHub repository.
 
 1. Get the application's code:
@@ -108,10 +108,10 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
 
 
 ### Create services
-{: #create-services}
+{: #vpc-site2site-vpn-create-services}
 
 #### {{site.data.keyword.cos_short}}
-{: #create-cos}
+{: #vpc-site2site-vpn-create-cos}
 
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
@@ -138,7 +138,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    {: codeblock}
 
 #### {{site.data.keyword.databases-for-postgresql}}
-{: #create-postgresql}
+{: #vpc-site2site-vpn-create-postgresql}
 
 In this section, you will create the database service.
 
@@ -201,7 +201,7 @@ In this section, you will create the database service.
    ```
 
 ### Create Virtual Private Cloud baseline resources
-{: #create-vpc}
+{: #vpc-site2site-vpn-create-vpc}
 The tutorial provides a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
@@ -214,12 +214,8 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
-3. Make sure that your CLI environment is set up to the target generation you want to use, VPC resources. Run:
+3. Make sure that your CLI environment is set up to the target generation 2. Run:
    ```sh
-   ibmcloud is target --gen 1
-   
-   or
-
    ibmcloud is target --gen 2
    ```
    {: codeblock}
@@ -243,10 +239,10 @@ In the following, create these resources by configuring and then running a setup
    - 3 security groups with ingress and egress rules
    - 2 VSIs: vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
 
-   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
+   Note the values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create an on-premises virtual server
-{: #create-onprem}
+{: #vpc-site2site-vpn-create-onprem}
 
 To simulate the on-premises environment, you create a virtual server (VSI) with classic infrastructure. In the same directory as for the previous section, follow these steps:
 1. Edit the file **config.sh** and adapt the settings to your environment. Change the value of **SSHKEYNAME_CLASSIC** to the name or comma-separated list of names of SSH keys for classic infrastructure (see "Before you begin"). Modify **DATACENTER_ONPREM** to a different value if needed. You can obtain the list of supported data centers using `ibmcloud sl vs options`.
@@ -257,23 +253,36 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
    ```
    {: codeblock}
 
-3. Note down the returned values for **VSI_ONPREM_IP** and **ONPREM_CIDR**.
+3. Note down the returned values for **VSI_ONPREM_IP** and **ONPREM_CIDR**.  These values have also been added to the file **network_config.sh**
 
 
 ### Create the Virtual Private Network gateway and connection
-{: #create-vpn}
+{: #vpc-site2site-vpn-create-vpn}
 
-In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
+In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.  Values that come from the **network_config.sh** file created earlier are referenced with a **$x** like **$VSI_ONPREM_IP**
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
-2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
-3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (**VSI_ONPREM_IP**). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
-4. For **Local subnets** use the information provided for **CLOUD_CIDR** and add the CIDR for the IBM Cloud service endpoints: 166.8.0.0/14, 161.26.0.0/16. For **Peer subnets** the one for **ONPREM_CIDR**.
-5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
-6. Wait for the VPN gateway to become available (you may need to refresh the screen).
-7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
+1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPN gateways** in the navigation tab and insure the **VPN Gateway** tab is selected and click **Create**.  The form **New VPN gateway for VPC** will be displayed.
+1. Set **VPN gateway name** to **vpns2s-gateway**
+1. Select the **Virtual Private Cloud** from the drop down created (vpns2s) or referenced earlier
+1. Select the same **Resource group**
+1. Select **vpns2s-cloud-subnet** as the subnet.
+1. Select **Policy-based** as the **Mode**
+1. Leave **New VPN connection for VPC** activated. 
+1. Set **VPN connection name** to **vpns2s-gateway-conn**.
+1. Set **Peer gateway address** to **$VSI_ONPREM_IP** (the floating IP address of **vpns2s-onprem-vsi**).
+1. Set **Preshared key** to **20_PRESHARED_KEY_KEEP_SECRET_19**
+1. Set **Local subnets** to **$CLOUD_CIDR**
+1. Set **Peer subnets** to **$ONPREM_CIDR**.
+1. Leave the defaults for **Dead peer detection**, IKE policy - Auto (IKEv2) and IPsec Policy - Auto
+1. Click **Create VPN gateway**
+
+
+- Wait for the VPN gateway to become available (you may need to refresh the screen).
+- Click the VPN gateway created to open the details page
+- Note the assigned VPN gateway **IP address** it will be referenced as **$GW_CLOUD_IP** below.
 
 ### Create the on-premises Virtual Private Network gateway
+{: #vpc-site2site-vpn-10}
 {: create-on-prem}
 
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
@@ -301,7 +310,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    {:pre}
 
    ```sh
-   apt-get install strongswan
+   apt-get install strongswan -y
    ```
    {:pre}
 
@@ -322,14 +331,14 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
+5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **$VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **$GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
-   VSI_ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   $VSI_ONPREM_IP $GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:codeblock}
 
-6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **$ONPREM_IP**, **$ONPREM_CIDR**, **$GW_CLOUD_IP**, and **$CLOUD_CIDR** with the respective known values.
 
    ```sh
    # basic configuration
@@ -343,10 +352,10 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    conn tutorial-site2site-onprem-to-cloud
       authby=secret
       left=%defaultroute
-      leftid=VSI_ONPREM_IP
-      leftsubnet=ONPREM_CIDR
-      right=GW_CLOUD_IP
-      rightsubnet=CLOUD_CIDR,166.8.0.0/14,161.26.0.0/16
+      leftid=$VSI_ONPREM_IP
+      leftsubnet=$ONPREM_CIDR
+      right=$GW_CLOUD_IP
+      rightsubnet=$CLOUD_CIDR,166.8.0.0/14,161.26.0.0/16
       ike=aes256-sha2_256-modp1024!
       esp=aes256-sha2_256!
       keyingtries=0
@@ -373,13 +382,13 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ## Test the connectivity
-{: #test-connectivity}
+{: #vpc-site2site-vpn-test-connectivity}
 {: step}
 
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
-{: #test-with-ssh}
+{: #vpc-site2site-vpn-test-with-ssh}
 
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server.
 
@@ -417,7 +426,7 @@ To test that the VPN connection has been successfully established, use the simul
 
 
 ### Set up a microservice for testing
-{: #setup-microservice}
+{: #vpc-site2site-vpn-setup-microservice}
 
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
@@ -433,9 +442,13 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: codeblock}
 
-2. Now copy over the code for the app and the credentials from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI.
+2. The app is only run on the cloud VSI but some of the configuration information is also needed on the on premesis VSI so copy the directory to both computers.  The command uses the bastion as jump host to the cloud VSI.
    ```sh
-   scp -r  -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
+   scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
+   ```
+   {:pre}
+   ```sh
+   scp -r nodejs-graphql root@$VSI_ONPREM_IP:nodejs-graphql
    ```
    {:pre}
 2. Connect to the cloud VSI, again using the bastion as jump host.
@@ -452,7 +465,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 
 4. Install Node.js and the Node package manager (NPM).
    ```sh
-   apt-get update; apt-get install nodejs npm
+   apt-get update; apt-get install nodejs npm -y
    ```
    {:pre}
 
@@ -513,7 +526,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 
 ### Test using a microservice
-{: #test-with-microservice}
+{: #vpc-site2site-vpn-test-with-microservice}
 
 With the microservice app set up and running, test the scenario by accessing the cloud resources from the on-prem machine.
 
@@ -530,6 +543,10 @@ With the microservice app set up and running, test the scenario by accessing the
 
 2. Issue the following curl commands to query the API server running on the cloud VSI. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
 
+   ```sh
+   VSI_CLOUD_IP=$VSI_CLOUD_IP
+   ```
+   {:pre}
    ```sh
    curl \
    -X POST \
@@ -572,18 +589,19 @@ With the microservice app set up and running, test the scenario by accessing the
 6. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it.
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
-{: #test-service-endpoint}
+{: #vpc-site2site-vpn-test-service-endpoint}
 
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
-1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the
-**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later.
-
+1. Edit the file located under the
+**sampleapps/nodejs-graphql/config/pg_credentials.json** subdirectory in your local system to obtain your {{site.data.keyword.databases-for-postgresql}} credentials.
+1. Copy the command found under `credentials.connection.cli.composed` to be used later. You can use `jq` to extract the value: `jq '.[]|.credentials.connection.cli.composed' pg_credentials.json`.
 2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
 
    ```sh
-   apt-get install postgresql-client
+   apt-get install postgresql-client -y
    ```
+   {:pre}
 
 3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint.
 
@@ -592,12 +610,13 @@ In some situations, it might be desirable to interact directly from an on-premis
    ```sql
    select * from accounts;
    ```
+   {:pre}
 
    You should get a listing of all records previously created via the curl command in the previous section. This demonstrate that you are able to access the {{site.data.keyword.databases-for-postgresql}} database over the private endpoint from an on-premises server.
 
 
 ## Remove resources
-{: #remove-resources}
+{: #vpc-site2site-vpn-remove-resources}
 {: step}
 
 1. In the VPC management console, click on **VPNs**. In the action menu on the VPN gateway select **Delete** to remove gateway.
@@ -610,22 +629,41 @@ In some situations, it might be desirable to interact directly from an on-premis
    BASENAME=vpns2s ./onprem-vsi-remove.sh
    ```
    {:codeblock}
+7. Delete the instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).  Delete the key:
+   ```sh
+   ibmcloud resource service-key-delete vpns2s-cos-key
+   ```
+   {: codeblock}
+   delete the resource
+   ```sh
+   ibmcloud resource service-instance-delete vpns2s-cos
+   ```
+   {: codeblock}
+8. Delete the instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql).
+   ```sh
+   ibmcloud resource service-key-delete vpns2s-pg-key
+   ```
+   {: codeblock}
+   ```sh
+   ibmcloud resource service-instance-delete vpns2s-pg
+   ```
+   {: codeblock}
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
 
 ## Expand the tutorial
-{: #expand-tutorial}
+{: #vpc-site2site-vpn-expand-tutorial}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
+- Add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic across multiple instances.
 - Deploy the [application on a public server, your data and services on a private host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
 ## Related content
-{: #related}
+{: #vpc-site2site-vpn-related}
 
-- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
-- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc?topic=vpc-infrastructure-cli-plugin-vpc-reference)
+- [VPC using the REST APIs](/docs/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis)
 - Solution tutorial: [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)

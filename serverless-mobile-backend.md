@@ -1,21 +1,19 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-10-07"
-lasttested: "2019-06-04"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-02-10"
+lasttested: "2020-12-07"
 
 content-type: tutorial
 services: openwhisk, mobilepush, appid, Cloudant, tone-analyzer
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: data-hd-operatingsystem="ios"}
-{:android: data-hd-operatingsystem="android"}
+{:java: .ph data-hd-programlang='java'}
+{:swift: .ph data-hd-programlang='swift'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -41,25 +39,18 @@ Not all mobile developers have experience managing server-side logic, or a serve
 
 {{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the tab at the top of this documentation to select the **Android / Java** version of this tutorial.
-{: swift}
-
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **Android / Java** version of this tutorial. Use the tab at the top of this documentation to select the **iOS / Swift** version of this tutorial.
-{: java}
-
 ## Objectives
-{: #objectives}
+{: #serverless-mobile-backend-objectives}
 
 * Deploy a serverless mobile backend with {{site.data.keyword.openwhisk_short}}.
 * Add user authentication to a mobile app with {{site.data.keyword.appid_short}}.
 * Analyze user feedback with {{site.data.keyword.toneanalyzershort}}.
 * Send notifications with {{site.data.keyword.mobilepushshort}}.
 
-
 The application shown in this tutorial is a feedback app that smartly analyses the tone of the feedback text and appropriately acknowledges the customer through a {{site.data.keyword.mobilepushshort}}.
 
 <p style="text-align: center;">
-![](images/solution11/Architecture.png)
+![Architecture Diagram](images/solution11/Architecture.png)
 </p>
 
 1. The user authenticates against [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID). {{site.data.keyword.appid_short}} provides access and identification tokens.
@@ -71,7 +62,7 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 7. The user receives the notification on the device.
 
 ## Before you begin
-{: #prereqs}
+{: #serverless-mobile-backend-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -79,31 +70,25 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
-Additionally you will need the following software and accounts:
+Additionally, based on the target mobile platform, you will need the following software and accounts:
+   * For Android:
+      1. Java 8
+      2. Android Studio
+      3. Google Developer account to configure Firebase Cloud Messaging
+      4. Bash shell, cURL
+   * For iOS:
+      1. Xcode
+      2. Apple Developer account to configure Apple Push Notification Service
+      3. Bash shell, cURL
 
-   1. Java 8
-   2. Android Studio 2.3.3
-   3. Google Developer account to configure Firebase Cloud Messaging
-   4. Bash shell, cURL
-   {: java}
-
-
-   1. Xcode
-   2. Apple Developer account to configure Apple Push Notification Service
-   3. Bash shell, cURL
-   {: swift}
-
-In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} tutorial for either [Android](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-android-mobile-push-analytics#android-mobile-push-analytics) or [iOS](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
+In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} steps for either [Android](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_android) or [iOS](https:///docs/mobilepush?topic=mobilepush-push_step_1#push_step_1_ios) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
 
-For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
-{: tip}
-{: java}
-
 ## Get the application code
+{: #serverless-mobile-backend-2}
 {: step}
 
 The repository contains both the mobile application and the {{site.data.keyword.openwhisk_short}} actions code.
@@ -122,6 +107,10 @@ The repository contains both the mobile application and the {{site.data.keyword.
    {: pre}
    {: swift}
 
+   For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
+   {: tip}
+   {: java}
+
 2. Review the code structure
 
 | File                                     | Description                              |
@@ -139,7 +128,7 @@ The repository contains both the mobile application and the {{site.data.keyword.
 {: swift}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
-{: #provision_services}
+{: #serverless-mobile-backend-provision_services}
 {: step}
 
 In this section, you will provision the services used by the application. You can choose to provision the services from the {{site.data.keyword.Bluemix_notm}} catalog or using the `ibmcloud` command line.
@@ -147,14 +136,16 @@ In this section, you will provision the services used by the application. You ca
 It is recommended that you create a new space to provision the services and deploy the serverless backend. This helps to keep all the resources together.
 
 ### Provision services from the {{site.data.keyword.Bluemix_notm}} catalog
+{: #serverless-mobile-backend-4}
 
-1. Go to the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/)
-2. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
-3. Create a [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
-4. Create an [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
-5. Create a [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
+
+1. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Select a region, Set the name to **serverlessfollowup-db** and select a resource group.
+2. Create a [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer) service with the **Lite** plan. Select a region same as the above service, Set the name to **serverlessfollowup-tone** and and select a resource group same as above.
+3. Create an [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID) service with the **Lite** plan. Set the name to **serverlessfollowup-appid**.
+4. Create a [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
 
 ### Provision services from the command line
+{: #serverless-mobile-backend-5}
 
 With the command line, run the following commands to provision the services and retrieve their credentials:
 
@@ -176,7 +167,7 @@ Set the location where services should be created:
    {: pre}
 
    ```sh
-   ibmcloud resource service-instance-create serverlessfollowup-tone tone-analyzer lite $REGION 
+   ibmcloud resource service-instance-create serverlessfollowup-tone tone-analyzer lite $REGION
    ```
    {: pre}
 
@@ -207,12 +198,13 @@ Set the location where services should be created:
    {: pre}
 
 ## Configure {{site.data.keyword.mobilepushshort}}
-{: #push_notifications}
+{: #serverless-mobile-backend-push_notifications}
 {: step}
 
 When a user submits a new feedback, the application will analyze this feedback and send back a notification to the user. The user may have moved to another task, or may not have the mobile app started so using push notifications is a good way to communicate with the user. The {{site.data.keyword.mobilepushshort}} service makes it possible to send notifications to iOS or Android users via one unified API. In this section, you will configure the {{site.data.keyword.mobilepushshort}} service for your target platform.
 
 ### Configure Firebase Cloud Messaging (FCM)
+{: #serverless-mobile-backend-7}
 {: java}
 
    1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
@@ -221,21 +213,22 @@ When a user submits a new feedback, the application will analyze this feedback a
       1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
       2. and one with the package name set to: **serverlessfollowup.app**
    4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
-   5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
-   6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
+   5. Find the Sender ID and Server Key under the **Cloud Messaging** tab.
+   6. Navigate to the **Push Notifications** service page and under **Configure service**, click **Configure** on the **Android** tile and set the value of the Sender ID and Server Key.
    {: java}
 
 ### Configure Apple Push Notifications Service (APNs)
+{: #serverless-mobile-backend-8}
 {: swift}
 
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/mobilepush?topic=mobilepush-push_step_2#enable-push-ios-notifications) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend
-{: #serverless_backend}
+{: #serverless-mobile-backend-serverless_backend}
 {: step}
 
 With all the services configured, you can now deploy the serverless backend. The following {{site.data.keyword.openwhisk_short}} artifacts will be created in this section:
@@ -257,6 +250,7 @@ With all the services configured, you can now deploy the serverless backend. The
 | `feedback-analyze-rule`       | Rule                           | Links the trigger `feedback-analyze-trigger` with the sequence `feedback-analyze-sequence` |
 
 ### Compile the code
+{: #serverless-mobile-backend-10}
 {: java}
 1. From the root of the checkout directory, compile the actions code
 {: java}
@@ -268,16 +262,20 @@ With all the services configured, you can now deploy the serverless backend. The
    {: java}
 
 ### Configure and deploy the actions
+{: #serverless-mobile-backend-11}
 {: java}
 
-2. Copy template.local.env to local.env
+1. Copy template.local.env to local.env
 
    ```sh
    cp template.local.env local.env
    ```
-3. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
- and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
-4. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
+   {: pre}
+2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}} serviceand {{site.data.keyword.appid_short}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources) (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   You can find the credentials for each of the service under **Service credentials** tab. If you don't see an auto-generated credential, click **New credential** to create one.
+   {:tip}
+
+3. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
    ```sh
    ./deploy.sh --install
    ```
@@ -286,15 +284,21 @@ With all the services configured, you can now deploy the serverless backend. The
    You can use `./deploy.sh --uninstall` to remove the {{site.data.keyword.openwhisk_short}} artifacts once you have completed the tutorial.
    {: tip}
 
+4. Copy and **save** the `namespace` from the output of the `install` command above for future reference.
+
 ### Configure and deploy the actions
+{: #serverless-mobile-backend-12}
 {: swift}
 
 1. Copy template.local.env to local.env
    ```sh
    cp template.local.env local.env
    ```
-2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
-   and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   {:pre}
+2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}} service and {{site.data.keyword.appid_short}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources) (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+   You can find the credentials for each of the service under **Service credentials** tab. If you don't see an auto-generated credential, click **New credential** to create one.
+   {:tip}
+
 3. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
 
    ```sh
@@ -304,15 +308,16 @@ With all the services configured, you can now deploy the serverless backend. The
 
    You can use `./deploy.sh --uninstall` to remove the {{site.data.keyword.openwhisk_short}} artifacts once you have completed the tutorial.
    {: tip}
+4. Copy and **save** the `namespace` from the output of the `install` command above for future reference.
 
 ## Configure and run a native mobile application to collect user feedback
-{: #mobile_app}
+{: #serverless-mobile-backend-mobile_app}
 {: step}
 
 Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
-1. With Android Studio, open the project located in the `android` folder of your checkout directory.
-2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the organization and space names where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch command prompt or terminal and run the command
+1. Launch **Android Studio**, open the project located in the `android` folder of your checkout directory.
+2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and `namespace` where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch command prompt or terminal and run the command
    ```sh
    ibmcloud fn property get --apihost
    ```
@@ -331,14 +336,15 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 {: java}
 
 
-1. Push client SDK and other SDKs are available on CocoaPods and Carthage. For this solution, let's use CocoaPods.
-2. Open Terminal and `cd ` into `followupapp` folder. Run the below command to install the required dependencies.
+1. Push client SDK and other SDKs are available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
+2. Launch terminal on your machine. Run the below command to move into `followupapp` folder and install the required dependencies.
    ```sh
+   cd followupapp
    pod install
    ```
    {: pre}
 3. Open the file with  `.xcworkspace` extension located under the `followupapp` folder of your checkout directory to launch your code in Xcode.
-4. Edit `BMSCredentials.plist file` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the organization and space names where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch terminal and run the command
+4. Edit `BMSCredentials.plist` file and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the `namespace` where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch terminal and run the command
 
    ```sh
    ibmcloud fn property get --apihost
@@ -356,6 +362,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 {: swift}
 
 ## Remove resources
+{: #serverless-mobile-backend-0}
 {: step}
 
 1. Use `deploy.sh` to remove the {{site.data.keyword.openwhisk_short}} artifacts:
@@ -365,8 +372,9 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
    ```
    {: pre}
 
-2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the {{site.data.keyword.Bluemix_notm}} console.
+2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the [{{site.data.keyword.Bluemix_notm}} resources](https://{DomainName}/resources).
 
 ## Related content
+{: #serverless-mobile-backend-15}
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/services/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/services/appid?topic=appid-login-widget#login-widget).
+* {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/appid?topic=appid-login-widget#login-widget).

@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019,2020
-lastupdated: "2020-06-25"
-lasttested: "2020-06-25"
+  years: 2019-2021
+lastupdated: "2021-02-18"
+lasttested: "2020-02-16"
 
 ---
 
@@ -24,10 +24,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
-{: #objectives}
+{: #extended-app-security-objectives}
 
 * Learn about enhanced data encryption options.
 * Isolate your application runtime for extended security.
@@ -43,7 +43,7 @@ An existing solution with the application and connected (micro-) services is ext
 </p>
 
 ## Assess your application
-{: #app_properties}
+{: #extended-app-security-app_properties}
 
 You developed a solution and successfully deployed it to {{site.data.keyword.cloud_notm}}. Now you want to look into how to harden the app environment. This can be part of the regular activities of (agile) development and the next steps towards a fully secure app or by increasing requirements for an app already in production. 
 
@@ -55,63 +55,61 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 * to organize devops activities and the related teams with more fine-grained privileges
 * and much more.
 
+To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [getting started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
+
 ## Isolate runtime environments, networks traffic and data
-{: #isolate_environments}
+{: #extended-app-security-isolate_environments}
 
 One of the fundamental principles of Cloud Computing is the sharing of resources. This could be from the sharing of a machine (i.e., the sharing of applications by many users who are running on the same computer) to just sharing the data center and parts of the infrastructure. In the following, you learn how you can isolate runtime environments, network traffic and stored data to increase application security.
 
 ### Use dedicated resources and virtual private clouds
-{: #isolate_runtimes}
+{: #extended-app-security-isolate_runtimes}
 
 To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some of the compute options.
 
-Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc) to benefit from isolation of compute and network resources.
+Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc-ext) to benefit from isolation of compute and network resources.
 
   Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
   {: #tip}
 
-* Evaluate the use of [{{site.data.keyword.hpvs}}](https://{DomainName}/docs/services/hp-virtual-servers?topic=hp-virtual-servers-overview) to run workloads in secure service containers.
+* Evaluate the use of [{{site.data.keyword.hpvs}}](https://{DomainName}/docs/hp-virtual-servers?topic=hp-virtual-servers-overview) to run workloads in secure service containers.
 * As another option to secure workloads, consider [{{site.data.keyword.datashield_short}}](https://{DomainName}/docs/data-shield?topic=data-shield-about) for guarding applications running in containers.
 
-When working with database systems, consider using service plans with dedicated resources or services with enhanced security. Examples are [dedicated hardware plans for {{site.data.keyword.cloudant}}](https://{DomainName}/docs/services/Cloudant?topic=cloudant-ibm-cloud-public#dedicated-hardware-plan) that offers HIPAA compliance or services like [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-postgresql) and [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/docs/services/hyper-protect-dbaas-for-mongodb) which offer highly secure database environments for sensitive data.
+When working with database systems, consider using service plans with dedicated resources or services with enhanced security. Examples are [dedicated hardware plans for {{site.data.keyword.cloudant}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloud-public#dedicated-hardware-plan) that offers HIPAA compliance or services like [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/docs/hyper-protect-dbaas-for-postgresql) and [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/docs/hyper-protect-dbaas-for-mongodb) which offer highly secure database environments for sensitive data.
 
 ### Secure network traffic
-{: #isolate_networks}
+{: #extended-app-security-isolate_networks}
 
-In most cases an application consists of the app itself and one or many services. These services are reachable over the public internet, but can also accessed on so-called [private service endpoints](https://{DomainName}/docs/resources?topic=resources-service-endpoints). To increase security by isolating network traffic, follow the [instructions to enable virtual routing and forwarding (VRF)](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint). In the documentation, you can also find a [list of services that support private endpoints](https://{DomainName}/docs/resources?topic=resources-private-network-endpoints).
+In most cases an application consists of the app itself and one or many services. These services are reachable over the public internet, but can also accessed on so-called [service endpoints](https://{DomainName}/docs/account?topic=account-service-endpoints-overview). To increase security by isolating network traffic, follow the [instructions to enable virtual routing and forwarding (VRF)](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint). In the documentation, you can also find a [list of services that support private endpoints](https://{DomainName}/docs/account?topic=account-vrf-service-endpoint#use-service-endpoint).
 
-When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=label%3Aibm%20vpn). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
+When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=vpn%20label%3Aibm_created#search_results). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
 
-It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
+It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
 
 ## Evaluate and monitor app security
-{: #evaluate_security}
+{: #extended-app-security-evaluate_security}
 
-Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/services/appid?topic=appid-at-monitor-runtime) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-about). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-cloud_services).
+Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/appid?topic=appid-at-events#at-monitor-runtime-activity) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-getting-started). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-cloud_services).
 
-By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
-
-The [{{site.data.keyword.security-advisor_full_notm}}](https://{DomainName}/docs/services/security-advisor?topic=security-advisor-about) enables centralized security management through a unified dashboard. It alerts security admins to issues and guides them to understand, prioritize, manage, and resolve security issues that are related to their cloud applications and workloads. [Access the advisor portal](https://{DomainName}/security-advisor#/overview) and explore the offered security services, add plugins to your {{site.data.keyword.containershort_notm}} clusters to gain additional security insights.
-
-<p style="text-align: center;">
-  ![Security Advisor](images/solution51-extended-app-security/Sol51_SecurityAdvisor.png)
-</p>
+By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
 
 ## Control encryption keys
-{: #control_encryption}
+{: #extended-app-security-control_encryption}
 
 Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key).
 
 ### Integrated services
+{: #extended-app-security-7}
 
 More and more data services support the integration with either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}}. To see if they can be used with the services in your deployed solution, check out the list of:
 
-- [integrated services for {{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/services/key-protect?topic=key-protect-integrate-services) and the
-- [integrated services for {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-integrate-services).
+- [integrated services for {{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-integrate-services) and the
+- [integrated services for {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-integrate-services).
 
-Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more.
+Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.block_storage_is_short}}, {{site.data.keyword.cloudant}}, {{site.data.keyword.Db2_on_Cloud_long_notm}}, {{site.data.keyword.containershort_notm}}, {{site.data.keyword.vsi_is_full}} and more. The [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) allows to create, manage and lease secrets for both cloud services in apps. The secrets can be guarded (encrypted) by your root key.
 
 ### Example: Cloud Object Storage
+{: #extended-app-security-8}
 
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key with optionally making use of BYOK or KYOK, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
@@ -121,12 +119,23 @@ One of the most often used services is {{site.data.keyword.cos_short}}. After yo
 
 A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
 
+### Example: Watson services
+{: #extended-app-security-9}
+
+Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type, e.g., {{site.data.keyword.conversationshort}}, to access {{site.data.keyword.keymanagementserviceshort}}, the following additional option is offered when creating an instance with Premium plan.
+
+<p style="text-align: center;">
+  ![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png)
+</p>
+
+
 ## Conclusions
+{: #extended-app-security-5}
 
 In this tutorial, you learned how to increase application security by moving from standard to advanced capabilities. The journey included the isolation of compute, network and data resources, and also included asserting greater control over encryption keys. Security by design is not a hollow phrase, it means to assess security requirements early on and take them into account when designing a solution. As you have seen, {{site.data.keyword.cloud_notm}} provides the building blocks for different security requirements and types of applications. Now you are recommended to combine the blocks for your secure cloud application. And don't forget to check out the next section with links to further security-related resources.
 
 ## Related content
-{: #related}
+{: #extended-app-security-related}
 
 * Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)

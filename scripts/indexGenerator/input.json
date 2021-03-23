@@ -4,7 +4,8 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Infrastructure"
+    "Code Engine",
+    "Virtual Servers"
   ],
   "categories": [
     {
@@ -14,7 +15,7 @@
       "solutions": [
         {
           "name": "Getting Started",
-          "url": "getting-started.html",
+          "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg"
         }
@@ -30,27 +31,6 @@
           "url": "solution-template.html",
           "description": "Solution Template",
           "imgSrc": ""
-        },
-        {
-          "name": "Image Classification with Code Engine",
-          "url": "image-classification-code-engine.hidden.html",
-          "description": "Create a Code Engine project and deploy an image classification application",
-          "imgSrc": "images/solution54-code-engine-hidden/architecture_diagram.png",
-          "tags": [
-            "Code Engine",
-            "Knative",
-            "Kubernetes"
-          ]
-        },
-        {
-          "name": "VPC interconnectivity using Transit Gateway and DNS with Team based isolation",
-          "url": "vpc-tg-dns-iam.hidden.html",
-          "description": "Connect VPCs and connect with Transit Gateway.  Use DNS name resolution for microservices.  Work in isolated teams, one per VPC",
-          "imgSrc": "images/solution59-vpc-tg-dns-iam-hidden/architecture.png",
-          "tags": [
-            "VPC",
-            "Linux"
-          ]
         }
       ]
     },
@@ -110,6 +90,7 @@
             "Cloud Foundry",
             "Cloud Functions",
             "Infrastructure",
+            "Virtual Servers",
             "Bare Metal",
             "Databases",
             "File Storage",
@@ -193,7 +174,7 @@
           "name": "Deploy microservices with OpenShift",
           "url": "openshift-microservices.html",
           "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "imgSrc": "images/solution55-openshift-microservices/Architecture.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
@@ -270,41 +251,6 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Web application on LAMP stack",
-          "url": "lamp-stack.html",
-          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
-          "imgSrc": "images/solution4/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "PHP",
-            "WordPress",
-            "Vulnerability Scanner"
-          ],
-          "requirements": [
-            "virtual_servers"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "lastUpdated": "2019-05-20"
-        },
-        {
-          "name": "Deploy a LAMP stack using Terraform",
-          "url": "infrastructure-as-code-terraform.html",
-          "description": "Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.",
-          "imgSrc": "images/solution10/architecture-2.png",
-          "tags": [
-            "Terraform",
-            "Infrastructure",
-            "PHP",
-            "Object Storage"
-          ],
-          "requirements": [
-            "virtual_servers",
-            "cloud_object_storage",
-            "terraform"
-          ],
-          "supportsCloudShell": "yes_with_modifications"
-        },
-        {
           "name": "Plan, create and update deployment environments",
           "url": "plan-create-update-deployments.html",
           "description": "Automate the creation and maintenance of multiple deployment environments with IBM Cloud CLI and Terraform.",
@@ -330,6 +276,7 @@
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -413,7 +360,7 @@
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
           "url": "application-log-analysis.html",
-          "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
+          "description": "Use IBM Log Analysis to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
             "Kubernetes",
@@ -429,6 +376,16 @@
             "sysdig"
           ],
           "supportsCloudShell": false
+        },
+        {
+          "name": "Text Analysis with Code Engine",
+          "url": "text-analysis-code-engine.html",
+          "description": "Create a Code Engine project and deploy a text analysis application.",
+          "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative"
+          ]
         }
       ]
     },
@@ -517,22 +474,6 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Create, secure and manage REST APIs",
-          "url": "create-manage-secure-apis.html",
-          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-          "imgSrc": "images/solution13/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "API Connect"
-          ],
-          "requirements": [
-            "api_connect",
-            "api_designer"
-          ],
-          "supportsCloudShell": false
-        },
-        {
           "name": "Apply end to end security to a cloud application",
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
@@ -585,37 +526,6 @@
       "name": "Mobile",
       "anchor": "mobile",
       "solutions": [
-        {
-          "name": "iOS mobile app with Push Notifications",
-          "url": "ios-mobile-push-analytics.html",
-          "description": "Create an iOS Swift application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution6/Architecture.png",
-          "tags": [
-            "iOS",
-            "Swift",
-            "Push Notifications"
-          ],
-          "requirements": [
-            "xcode",
-            "app_id"
-          ],
-          "supportsCloudShell": "not_applicable"
-        },
-        {
-          "name": "Android native mobile app with Push Notifications",
-          "url": "android-mobile-push-analytics.html",
-          "description": "Write an Android native application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution9/Architecture.png",
-          "tags": [
-            "Android",
-            "Java",
-            "Push Notifications"
-          ],
-          "requirements": [
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable"
-        },
         {
           "name": "Mobile application with a serverless backend",
           "url": "serverless-mobile-backend.html",
@@ -685,23 +595,21 @@
           "supportsCloudShell": "yes_with_modifications"
         },
         {
-          "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
+          "name": "Serverless web app and eventing for data retrieval and analytics",
           "url": "serverless-github-traffic-analytics.html",
           "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
           "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
           "tags": [
-            "Db2 Warehouse",
+            "Db2",
             "App ID",
-            "Cloud Functions",
+            "Code Engine",
             "GitHub"
           ],
           "requirements": [
-            "cognos_dashboard",
             "ibmcloud_cli",
-            "db2_warehouse",
-            "cloud_functions",
-            "app_id",
-            "cloud_foundry"
+            "db2_on_cloud",
+            "code_engine",
+            "app_id"
           ],
           "supportsCloudShell": "yes_with_modifications"
         },
@@ -725,52 +633,6 @@
             "db2_warehouse"
           ],
           "supportsCloudShell": "not_applicable"
-        },
-        {
-          "name": "Analyze and visualize open data with Apache Spark",
-          "url": "big-data-analytics-spark.html",
-          "description": "Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.",
-          "imgSrc": "images/solution23/Architecture.png",
-          "tags": [
-            "Apache Spark",
-            "Watson Studio",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine"
-          ],
-          "supportsCloudShell": "not_applicable"
-        }
-      ]
-    },
-    {
-      "name": "Internet of Things",
-      "anchor": "iot",
-      "solutions": [
-        {
-          "name": "Gather, visualize and analyze IoT data",
-          "url": "gather-visualize-analyze-iot-data.html",
-          "description": "Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.",
-          "imgSrc": "images/solution16/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Internet of Things Platform",
-            "Cloudant",
-            "Watson Studio",
-            "Apache Spark",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine",
-            "cloudant",
-            "iot_platform",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "yes_with_modifications"
         }
       ]
     },
@@ -810,6 +672,7 @@
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -825,6 +688,7 @@
           "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -845,6 +709,7 @@
           "featuredPosition": 1,
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -866,6 +731,7 @@
           "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -882,6 +748,7 @@
           "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
@@ -916,6 +783,22 @@
             "Virtual Private Cloud",
             "Kubernetes"
           ]
+        },
+        {
+          "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
+          "url": "vpc-tg-dns-iam.html",
+          "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam/architecture.png",
+          "tags": [
+            "Virtual Private Cloud",
+            "Identity and Access Management",
+            "Transit Gateway",
+            "DNS",
+            "Infrastructure",
+            "Virtual Servers",
+            "Network",
+            "Linux"
+          ]
         }
       ]
     },
@@ -930,6 +813,7 @@
           "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -947,6 +831,7 @@
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -980,6 +865,7 @@
           "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
@@ -997,7 +883,8 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "VLAN Spanning"
+            "VLAN Spanning",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
@@ -1015,7 +902,8 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Router Appliance VPN"
+            "Virtual Router Appliance VPN",
+            "Virtual Servers"
           ],
           "requirements": [
             "virtual_router_appliance",
@@ -1053,6 +941,17 @@
           "url": "hpc-eda.html",
           "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
           "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
+          "url": "hpc-lsf-on-vpc.html",
+          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
+          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
           "tags": [
             "Storage",
             "HPC",

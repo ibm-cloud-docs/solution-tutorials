@@ -4,7 +4,8 @@
     "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Infrastructure"
+    "Code Engine",
+    "Virtual Servers"
   ],
   "categories": [
     {
@@ -14,10 +15,10 @@
       "solutions": [
         {
           "name": "Getting Started",
-          "url": "getting-started.html",
+          "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-01-20"
+          "lastUpdated": "2021-02-18"
         }
       ]
     },
@@ -37,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-11-22"
+          "lastUpdated": "2021-03-18"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -52,7 +53,7 @@
             "Java"
           ],
           "guide": true,
-          "lastUpdated": "2019-12-12"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Strategies for resilient applications",
@@ -64,13 +65,14 @@
             "Cloud Foundry",
             "Cloud Functions",
             "Infrastructure",
+            "Virtual Servers",
             "Bare Metal",
             "Databases",
             "File Storage",
             "Watson"
           ],
           "guide": true,
-          "lastUpdated": "2020-01-23"
+          "lastUpdated": "2021-03-09"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -86,7 +88,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2020-01-31"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -100,7 +102,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-07-31"
+          "lastUpdated": "2021-03-08"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -113,19 +115,19 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2020-07-31"
+          "lastUpdated": "2021-03-10"
         },
         {
           "name": "Deploy microservices with OpenShift",
           "url": "openshift-microservices.html",
           "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "imgSrc": "images/solution55-openshift-microservices/Architecture.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-08-03"
+          "lastUpdated": "2021-03-15"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -138,7 +140,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-05-17"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -151,7 +153,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2019-10-24"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -165,33 +167,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2020-05-08"
-        },
-        {
-          "name": "Web application on LAMP stack",
-          "url": "lamp-stack.html",
-          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
-          "imgSrc": "images/solution4/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "PHP",
-            "WordPress",
-            "Vulnerability Scanner"
-          ],
-          "lastUpdated": "2019-05-20"
-        },
-        {
-          "name": "Deploy a LAMP stack using Terraform",
-          "url": "infrastructure-as-code-terraform.html",
-          "description": "Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.",
-          "imgSrc": "images/solution10/architecture-2.png",
-          "tags": [
-            "Terraform",
-            "Infrastructure",
-            "PHP",
-            "Object Storage"
-          ],
-          "lastUpdated": "2019-06-25"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -204,7 +180,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2020-01-10"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -213,11 +189,12 @@
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Load Balancer",
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2020-04-08"
+          "lastUpdated": "2021-01-13"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -229,7 +206,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2020-07-27"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -241,7 +218,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-15"
+          "lastUpdated": "2020-12-17"
         },
         {
           "name": "Serverless web application and API",
@@ -253,7 +230,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2020-07-21"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -265,12 +242,12 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2020-06-02"
+          "lastUpdated": "2020-12-30"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
           "url": "application-log-analysis.html",
-          "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
+          "description": "Use IBM Log Analysis to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
             "Kubernetes",
@@ -278,7 +255,18 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2020-02-12"
+          "lastUpdated": "2020-12-22"
+        },
+        {
+          "name": "Text Analysis with Code Engine",
+          "url": "text-analysis-code-engine.html",
+          "description": "Create a Code Engine project and deploy a text analysis application.",
+          "imgSrc": "images/solution54-code-engine/architecture_diagram.png",
+          "tags": [
+            "Code Engine",
+            "Knative"
+          ],
+          "lastUpdated": "2021-03-22"
         }
       ]
     },
@@ -299,7 +287,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2021-01-28"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -312,7 +300,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2020-03-17"
+          "lastUpdated": "2021-01-28"
         }
       ]
     },
@@ -331,7 +319,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-11-18"
+          "lastUpdated": "2021-02-16"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -343,19 +331,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-08-12"
-        },
-        {
-          "name": "Create, secure and manage REST APIs",
-          "url": "create-manage-secure-apis.html",
-          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-          "imgSrc": "images/solution13/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "API Connect"
-          ],
-          "lastUpdated": "2019-05-21"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -371,7 +347,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2021-01-07"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -387,7 +363,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2020-06-25"
+          "lastUpdated": "2021-02-18"
         }
       ]
     },
@@ -395,30 +371,6 @@
       "name": "Mobile",
       "anchor": "mobile",
       "solutions": [
-        {
-          "name": "iOS mobile app with Push Notifications",
-          "url": "ios-mobile-push-analytics.html",
-          "description": "Create an iOS Swift application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution6/Architecture.png",
-          "tags": [
-            "iOS",
-            "Swift",
-            "Push Notifications"
-          ],
-          "lastUpdated": "2020-01-31"
-        },
-        {
-          "name": "Android native mobile app with Push Notifications",
-          "url": "android-mobile-push-analytics.html",
-          "description": "Write an Android native application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution9/Architecture.png",
-          "tags": [
-            "Android",
-            "Java",
-            "Push Notifications"
-          ],
-          "lastUpdated": "2020-01-31"
-        },
         {
           "name": "Mobile application with a serverless backend",
           "url": "serverless-mobile-backend.html",
@@ -431,7 +383,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-10-07"
+          "lastUpdated": "2021-02-10"
         }
       ]
     },
@@ -451,7 +403,7 @@
             "Streaming Analytics",
             "Analytics Engine"
           ],
-          "lastUpdated": "2019-10-31"
+          "lastUpdated": "2020-12-28"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -463,20 +415,20 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-11-27"
+          "lastUpdated": "2021-01-29"
         },
         {
-          "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
+          "name": "Serverless web app and eventing for data retrieval and analytics",
           "url": "serverless-github-traffic-analytics.html",
           "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
           "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
           "tags": [
-            "Db2 Warehouse",
+            "Db2",
             "App ID",
-            "Cloud Functions",
+            "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2019-11-21"
+          "lastUpdated": "2021-03-08"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -490,40 +442,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-05-27"
-        },
-        {
-          "name": "Analyze and visualize open data with Apache Spark",
-          "url": "big-data-analytics-spark.html",
-          "description": "Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.",
-          "imgSrc": "images/solution23/Architecture.png",
-          "tags": [
-            "Apache Spark",
-            "Watson Studio",
-            "Cloud Object Storage"
-          ],
-          "lastUpdated": "2019-05-22"
-        }
-      ]
-    },
-    {
-      "name": "Internet of Things",
-      "anchor": "iot",
-      "solutions": [
-        {
-          "name": "Gather, visualize and analyze IoT data",
-          "url": "gather-visualize-analyze-iot-data.html",
-          "description": "Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.",
-          "imgSrc": "images/solution16/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Internet of Things Platform",
-            "Cloudant",
-            "Watson Studio",
-            "Apache Spark",
-            "Cloud Object Storage"
-          ],
-          "lastUpdated": "2020-02-26"
+          "lastUpdated": "2021-02-23"
         }
       ]
     },
@@ -544,7 +463,7 @@
             "DevOps"
           ],
           "guide": true,
-          "lastUpdated": "2020-03-18"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -562,10 +481,11 @@
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2021-01-08"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -574,10 +494,11 @@
           "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-01-22"
+          "lastUpdated": "2020-12-16"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -587,10 +508,11 @@
           "featuredPosition": 1,
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2021-01-19"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -599,10 +521,11 @@
           "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -611,10 +534,11 @@
           "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2020-06-18"
+          "lastUpdated": "2021-01-08"
         },
         {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
@@ -631,7 +555,24 @@
             "PHP",
             "WordPress"
           ],
-          "lastUpdated": "2020-07-23"
+          "lastUpdated": "2021-01-26"
+        },
+        {
+          "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
+          "url": "vpc-tg-dns-iam.html",
+          "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
+          "imgSrc": "images/solution59-vpc-tg-dns-iam/architecture.png",
+          "tags": [
+            "Virtual Private Cloud",
+            "Identity and Access Management",
+            "Transit Gateway",
+            "DNS",
+            "Infrastructure",
+            "Virtual Servers",
+            "Network",
+            "Linux"
+          ],
+          "lastUpdated": "2021-03-03"
         }
       ]
     },
@@ -646,11 +587,12 @@
           "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2020-02-03"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -659,11 +601,12 @@
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -676,7 +619,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "VPN into a secure private network",
@@ -685,11 +628,12 @@
           "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
           "tags": [
             "Infrastructure",
+            "Virtual Servers",
             "Vyatta",
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2021-01-21"
         },
         {
           "name": "Linking secure private networks over the IBM network",
@@ -701,9 +645,10 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "VLAN Spanning"
+            "VLAN Spanning",
+            "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2021-01-05"
         },
         {
           "name": "Hosting web applications from a secure private network",
@@ -715,9 +660,10 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Router Appliance VPN"
+            "Virtual Router Appliance VPN",
+            "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2021-01-05"
         }
       ]
     },
@@ -733,7 +679,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2020-05-22"
+          "lastUpdated": "2021-01-21"
         }
       ]
     },
@@ -751,7 +697,19 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-07-20"
+          "lastUpdated": "2021-01-05"
+        },
+        {
+          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
+          "url": "hpc-lsf-on-vpc.html",
+          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
+          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2021-01-26"
         }
       ]
     }

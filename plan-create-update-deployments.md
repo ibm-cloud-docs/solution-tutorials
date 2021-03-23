@@ -1,13 +1,13 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-01-10"
-lasttested: "2019-06-18"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-01-21"
+lasttested: "2020-11-30"
 
 content-type: tutorial
 services: containers, cloud-foundry-public, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, Monitoring-with-Sysdig
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -44,7 +44,7 @@ Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a
 Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Objectives
-{: #objectives}
+{: #plan-create-update-deployments-objectives}
 
 * Define a set of environments to deploy
 * Write scripts using the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the deployment of these environments
@@ -53,7 +53,7 @@ Multiple environments are pretty common in a project to support the different ph
 
 <p style="text-align: center;">
 
-![](./images/solution26-plan-create-update-deployments/architecture.png)
+![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.png)
 </p>
 
 1. A set of Terraform files are created to describe the target infrastructure as code.
@@ -63,20 +63,24 @@ Multiple environments are pretty common in a project to support the different ph
 5. The environments are fully configured, ready to be used.
 
 ## Overview of the available tools
-{: #tools}
+{: #plan-create-update-deployments-tools}
 {: step}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-Another tool introduced in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+
+With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+
+Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.  It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
 To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.Bluemix_notm}} has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of {{site.data.keyword.Bluemix_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.Bluemix_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS ({{site.data.keyword.openwhisk_short}}) resources.
 
 ## Write scripts to automate the deployment
-{: #scripts}
+{: #plan-create-update-deployments-scripts}
 {: step}
 
-As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, adding a continuous integration pipeline to automatically deploy infrastructure changes.
+As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes and continuous integration to automatically deploy infrastructure changes.
 
 [This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to setup the environments defined earlier. You can clone the repository to follow the next sections detailing the content of the files.
 
@@ -95,6 +99,7 @@ The repository is structured as follow:
 | [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
 
 ### Heavy lifting with Terraform
+{: #plan-create-update-deployments-3}
 
 The *Development*, *Testing* and *Production* environments pretty much look the same.
 
@@ -104,9 +109,10 @@ The *Development*, *Testing* and *Production* environments pretty much look the 
 
 They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
-![](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
+![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
 
 ### Global Configuration
+{: #plan-create-update-deployments-4}
 
 All environments share a common Cloud Foundry organization and each environment has its own space.
 
@@ -141,6 +147,7 @@ EOF
    ```
 
 ### Individual Environments
+{: #plan-create-update-deployments-5}
 
 There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html) you could put together common configuration as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository so that you can reference a specific version of a module in your environment files.
 
@@ -149,6 +156,7 @@ Given the environments are rather simple and similar, you are going to use anoth
 Each environment requires:
 * a dedicated Cloud Foundry space
 * a dedicated resource group
+* a vpc and subnet
 * a Kubernetes cluster
 * a database
 * a file storage
@@ -197,36 +205,19 @@ Next comes the resource group.
 The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
    ```sh
-  # a cluster
-  resource "ibm_container_cluster" "cluster" {
-  	name              = "${var.environment_name}-cluster"
-  	datacenter        = "${var.cluster_datacenter}"
-  	org_guid          = "${data.terraform_remote_state.global.org_guid}"
-  	space_guid        = "${ibm_space.space.id}"
-  	account_guid      = "${data.terraform_remote_state.global.account_guid}"
-  	hardware          = "${var.cluster_hardware}"
-  	machine_type      = "${var.cluster_machine_type}"
-  	public_vlan_id    = "${var.cluster_public_vlan_id}"
-  	private_vlan_id   = "${var.cluster_private_vlan_id}"
-  	resource_group_id = "${ibm_resource_group.group.id}"
-}
+# a cluster
+resource "ibm_container_vpc_cluster" "cluster" {
+  name              = "${var.environment_name}-cluster"
+  vpc_id            = ibm_is_vpc.vpc1.id
+  kube_version      = "1.19"
+  flavor            = var.cluster_machine_type
+  worker_count      = var.worker_num
+  resource_group_id = ibm_resource_group.group.id
 
-resource "ibm_container_worker_pool" "cluster_workerpool" {
-  worker_pool_name  = "${var.environment_name}-pool"
-  machine_type      = "${var.cluster_machine_type}"
-  cluster           = "${ibm_container_cluster.cluster.id}"
-  size_per_zone     = "${var.worker_num}"
-  hardware          = "${var.cluster_hardware}"
-  resource_group_id = "${ibm_resource_group.group.id}"
-}
-
-resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
-  cluster           = "${ibm_container_cluster.cluster.id}"
-  worker_pool       =  "${element(split("/",ibm_container_worker_pool.cluster_workerpool.id),1)}"
-  zone              = "${var.cluster_datacenter}"
-  public_vlan_id    = "${var.cluster_public_vlan_id}"
-  private_vlan_id   = "${var.cluster_private_vlan_id}"
-  resource_group_id = "${ibm_resource_group.group.id}"
+  zones {
+    subnet_id = ibm_is_subnet.subnet11.id
+    name      = var.cluster_datacenter
+  }
 }
    ```
 
@@ -281,33 +272,20 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```
 
 ## Deploy this environment in your account
+{: #plan-create-update-deployments-0}
 {: step}
 
-### Install {{site.data.keyword.Bluemix_notm}} CLI
+## Create a local working environment
+{: #plan-create-update-deployments-create}
+{: step}
 
-1. Follow [these instructions](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to install the CLI
-1. Validate the installation by running:
-   ```sh
-   ibmcloud
-   ```
-   {: codeblock}
+All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
-
-1. [Download and install Terraform for your system.](https://learn.hashicorp.com/terraform/getting-started/install.html)
-1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/terraform?topic=terraform-getting-started#install)
-   {:tip}
-1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
-   ```sh
-   # ~/.terraformrc
-   providers {
-     ibm = "/opt/provider/terraform-provider-ibm_VERSION"
-   }
-   ```
-   {: codeblock}
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 
 ### Get the code
+{: #plan-create-update-deployments-9}
 
 If you have not done it yet, clone the tutorial repository:
 
@@ -317,6 +295,7 @@ If you have not done it yet, clone the tutorial repository:
    {: codeblock}
 
 ### Set Platform API key
+{: #plan-create-update-deployments-10}
 
 1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
 
@@ -329,10 +308,12 @@ If you have not done it yet, clone the tutorial repository:
 1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
 ### Create or reuse a Cloud Foundry organization
+{: #plan-create-update-deployments-11}
 
 You can choose either to create a new organization or to reuse (import) an existing one. To create the parent organization of the three deployment environments, **you need to be the account owner**.
 
 #### To create a new organization
+{: #plan-create-update-deployments-12}
 
 1. Change to the `terraform/global` directory
 1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
@@ -375,6 +356,7 @@ Once Terraform completes, it will have created:
 > This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
 
 #### To reuse an organization you are managing
+{: #plan-create-update-deployments-13}
 
 If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform. Make sure to be in the region where the Cloud Foundry org exists.
 
@@ -407,6 +389,7 @@ If you are not the account owner but you manage an organization in the account, 
    {: codeblock}
 
 ### Create per-environment space, cluster and services
+{: #plan-create-update-deployments-14}
 
 This section will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
 
@@ -421,14 +404,9 @@ This section will focus on the `development` environment. The steps will be the 
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
-   2. Set **cluster_datacenter** to the zone where you want to create the cluster. Find the available zones with:
+   1. Set **cluster_datacenter** to the zone where you want to create the cluster. Find the available zones with:
       ```sh
-      ibmcloud ks zones
-      ```
-      {: codeblock}
-   3. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the zone with:
-      ```sh
-      ibmcloud ks vlans --zone <zone>
+      ibmcloud ks locations --provider vpc-gen2
       ```
       {: codeblock}
    4. Set the **cluster_machine_type**. Find the available flavors and characteristics for the zone with:
@@ -436,12 +414,8 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud ks flavors --zone <zone>
       ```
       {: codeblock}
+   1. See the comments in the tfvars file for help initializing the rest of the values
 
-   5. Set the **resource_quota**. Find the available resource quota definitions with:
-      ```sh
-      ibmcloud resource quotas
-      ```
-      {: codeblock}
 2. Initialize Terraform
    ```sh
    terraform init
@@ -466,7 +440,6 @@ This section will focus on the `development` environment. The steps will be the 
    ```
    Plan: NN to add, 0 to change, 0 to destroy.
    ```
-   {: codeblock}
 5. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
@@ -476,11 +449,12 @@ This section will focus on the `development` environment. The steps will be the 
 Once Terraform completes, it will have created:
 * a resource group
 * a Cloud Foundry space
-* a Kubernetes cluster with a worker pool and a zone attached to it
+* a vpc and a subnet
+* a Kubernetes cluster with a worker pool
 * a database
 * a Kubernetes secret with the database credentials
-* a storage
-* a Kubernetes secret with the storage credentials
+* a Cloud Object Storage instance
+* a Kubernetes secret with the Cloud Object Storage credentials
 * a logging(LogDNA) instance
 * a monitoring(Sysdig) instance
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
@@ -489,6 +463,7 @@ Once Terraform completes, it will have created:
 You can repeat the steps for `testing` and `production`.
 
 ### To reuse an existing resource group
+{: #plan-create-update-deployments-15}
 Instead of creating a new resource group, you can import an existing resource group into Terraform
 
 1. Retrieve the resource group ID
@@ -533,6 +508,7 @@ Instead of creating a new resource group, you can import an existing resource gr
 You can repeat the steps for `testing` and `production`.
 
 ### Assign user policies
+{: #plan-create-update-deployments-16}
 
 In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 
@@ -540,56 +516,63 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 
 |           | IAM Access policies |
 | --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Administrator*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam?topic=iam-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
 For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
 resource "ibm_iam_access_group" "developer_role" {
-  name        = "${var.access_group_name_developer_role}"
-  description = "${var.access_group_description}"
+  name        = var.access_group_name_developer_role
+  description = var.access_group_description
 }
+
 resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  access_group_id = ibm_iam_access_group.developer_role.id
   roles           = ["Viewer"]
 
-  resources = [{
+  resources {
     resource_type = "resource-group"
-    resource      = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
-  }]
+    resource      = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+  }
 }
 
 resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles        = ["Viewer"]
+  access_group_id = ibm_iam_access_group.developer_role.id
+  roles           = ["Viewer"]
 
-  resources = [{
-    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
-  }]
+  resources {
+    resource_group_id = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+  }
 }
 
 resource "ibm_iam_access_group_policy" "developer_logging_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles           = ["Writer"]
+  access_group_id = ibm_iam_access_group.developer_role.id
+  roles           = ["Administrator"]
 
-  resources = [{
-    service           = "logdna"
-    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.logdna_instance_id}"
-  }]
+  resources {
+    service              = "logdna"
+    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.logdna_instance_id
+  }
 }
+
 resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  access_group_id = ibm_iam_access_group.developer_role.id
   roles           = ["Writer"]
 
-  resources = [{
-    service           = "sysdig-monitor"
-    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.sysdig_instance_id}"
-  }]
+  resources {
+    service              = "sysdig-monitor"
+    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.sysdig_instance_id
+  }
+}
+
+resource "ibm_iam_access_group_members" "developers" {
+  access_group_id = ibm_iam_access_group.developer_role.id
+  ibm_ids         = var.iam_access_members_developers
 }
 
    ```
@@ -602,6 +585,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    ```sh
    cp development.tfvars.tmpl development.tfvars
    ```
+   {: codeblock}
 3. Edit `development.tfvars`
 
    - Set **iam_access_members_developers** to the list of developers to whom you would like to grant the access.
@@ -619,31 +603,29 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    {: codeblock}
    It should report:
    ```
-   Plan: 14 to add, 0 to change, 0 to destroy.
+   Plan: 15 to add, 0 to change, 0 to destroy.
    ```
    {: codeblock}
 6. Apply the changes
    ```sh
    terraform apply -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
+   {: codeblock}
 You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
+{: #plan-create-update-deployments-17}
 {: step}
 
-1. Navigate to the `development` folder under `roles`
-   ```sh
-   cd terraform/roles/development
-   ```
-   {: codeblock}
+1. Change to the `terraform/roles/development` directory
 1. Destroy the access groups and access policies
    ```sh
    terraform destroy -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+1. Change to the `terraform/per-environment` folder of the checkout
 1. Activate the `development` workspace
    ```sh
-   cd terraform/per-environment
    terraform workspace select development
    ```
    {: codeblock}
@@ -656,15 +638,15 @@ You can repeat the steps for `testing` and `production`.
     `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
     {:tip}
 1. Repeat the steps for the `testing` and `production` workspaces
-1. If you created it, destroy the organization
+1. If you created it, destroy the organization.  Change to the `terraform/global` directory.
    ```sh
-   cd terraform/global
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
    {: codeblock}
 
 ## Related content
+{: #plan-create-update-deployments-18}
 
-* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
+* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 * [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)

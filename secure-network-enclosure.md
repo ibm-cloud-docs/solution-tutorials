@@ -1,13 +1,13 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-02-03"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-01-21"
 lasttested: "2019-04-23"
 
 content-type: tutorial
 services: virtual-router-appliance
-account-plan:
+account-plan: paid
 completion-time:
 ---
 
@@ -22,12 +22,16 @@ completion-time:
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # Isolating workloads with a secure private network
 {: #secure-network-enclosure}
 {: toc-content-type="tutorial"}
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
+
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](https://{DomainName}/docs/vpc?topic=vpc-vsi_best_practices), [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [VPN](https://{DomainName}/docs/vpc?topic=vpc-using-vpn) and [flow logs](https://{DomainName}/docs/vpc?topic=vpc-flow-logs)
+{: note}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -36,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.
 
-This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.
+This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.
 {:shortdesc}
 
 This tutorial is a starting point for classic networking on the {{site.data.keyword.Bluemix_notm}} and should not be considered a production capability as is. Additional capabilities that might be considered are:
@@ -47,14 +51,14 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Logging and auditing of security events.
 
 ## Objectives
-{: #objectives}
+{: #secure-network-enclosure-objectives}
 
 * Deploy a Virtual Router Appliance (VRA)
 * Define VLANs and IP subnets to deploy virtual machines and bare-metal servers
 * Secure the VRA and enclosure with firewall rules
 
 
-![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png) 
+![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png)
 
 1. Configure VPN
 2. Deploy VRA
@@ -65,23 +69,25 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 7. Define INSIDE zone
 
 ## Before you begin
-{: #prereqs}
+{: #secure-network-enclosure-prereqs}
 
 ### Configure the VPN access
+{: #secure-network-enclosure-2}
 
 In this tutorial, the network enclosure created is not visible on the public internet. The VRA and any servers will only be accessible through the private network, and you will use your VPN for connectivity.
 
-1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
+1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact a master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
    For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access), such as vpn.ams01.softlayer.com as the gateway address.
    {:tip}
 
 ### Check account permissions
+{: #secure-network-enclosure-3}
 
 Contact your infrastructure master user to get the following permissions:
 - **Quick Permissions** - Basic User
@@ -89,21 +95,24 @@ Contact your infrastructure master user to get the following permissions:
 - **Services** manage SSH Keys
 
 ### Upload SSH keys
+{: #secure-network-enclosure-4}
 
 Using the portal [Upload the SSH public key](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-getting-started-tutorial#getting-started-tutorial) that will be used to access and administer the VRA and private network.
 
 ### Target data center
+{: #secure-network-enclosure-5}
 
 Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network.
 
 ### Order VLANs
+{: #secure-network-enclosure-6}
 
-To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, select **Pod** under **Location** and make sure to request the VLAN in the same data center and pod as you plan to create the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
+To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, select **Pod** under **Location** and make sure to request the VLAN in the same data center and pod as you plan to create the VRA. If a VRA is ordered before you order a virtual server instance, you must purchase a VLAN for the virtual server instance to ensure the virtual server instance resides in the correct pod. Additional VLANs to support a multi-tier application topology are chargeable.
 
-To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans#order-vlans).
+To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans).
 
 ## Provision Virtual Router Appliance
-{: #VRA}
+{: #secure-network-enclosure-VRA}
 {: step}
 
 The first step is to deploy a Virtual Router Appliance (VRA) that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}}-provided public facing transit VLAN, a gateway and, optionally, a hardware firewall to create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial, a VRA provides this gateway and firewall for the perimeter.
@@ -126,13 +135,14 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 {:tip}
 
 ### Review deployed VRA
+{: #secure-network-enclosure-8}
 
 1. Inspect the new VRA. On the [Infrastructure Dashboard](https://{DomainName}/classic) Select **Network** in the left pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page. Click on the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page.
 
 2. Make a note of the `Private` and `Public` IP addresses of the VRA for future use.
 
 ## Initial VRA setup
-{: #initial_VRA_setup}
+{: #secure-network-enclosure-initial_VRA_setup}
 {: step}
 
 1. From your workstation, use the SSL VPN to log in to the VRA using the default **vyatta** account, accepting the SSH security prompts.
@@ -145,9 +155,8 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    {:tip}
 
    Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` command. When in `edit` mode the prompt changes from `$` to `#`. After a successful VRA configuration change you can view your changes with the `compare` command and check your changes with the `validate` command. By committing a change with the `commit` command it will be applied to the running configuration, and automatically saved to the startup configuration.
-
-
    {:tip}
+
 2. Enhance security by only allowing SSH login. Now that SSH login is successful using the private network, disable access via userid/password authentication.
    ```
    configure
@@ -156,6 +165,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    exit
    ```
    {: codeblock}
+
    From this point in this tutorial, it is assumed that all VRA commands are entered at the `edit` prompt after using the `configure` command.
 3. Review the initial configuration.
    ```
@@ -194,7 +204,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    {: codeblock}
 
 ## Order the first virtual server
-{: #order_virtualserver}
+{: #secure-network-enclosure-order_virtualserver}
 {: step}
 
 A virtual server is created at this point to aid in diagnosis of VRA configuration errors. Successful access to the VSI is validated over the {{site.data.keyword.Bluemix_notm}} private network before access to it is routed via the VRA in a later step.
@@ -208,7 +218,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    - Set **Profile** to **C1.1x1**
    - Add the **SSH Key** you specified earlier.
    - Set **Operating System** to **CentOS 7.x - Minimal**
-   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.
+   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet.
    - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier.
 3. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
 4. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email.
@@ -221,13 +231,13 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    {: codeblock}
 
 ## Route VLAN access through the VRA
-{: #routing_vlan_via_vra}
+{: #secure-network-enclosure-routing_vlan_via_vra}
 {: step}
 
 The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as *Route Around*. Click on the **Manage VLANs** button.
-   
+
    The *Associate VLAN* link is enabled allowing you to add other provisioned VLANs. If no VLANs are available on the same router as the VRA, the link is grayed out. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
    {:tip}
 
@@ -235,7 +245,7 @@ The private VLAN(s) for the virtual server are associated by the {{site.data.key
 
 3. Click on the VLAN number to view the VLAN details. Under Devices, the provisioned VSI can be seen. Under Subnets, the Primary Subnet which is to be used with the VRA is seen. Make a note of the Private VLAN Number &lt;nnnn&gt; as this will be used in a later step.
 
-   For proper identification of a VLAN, check [VLAN identification](/docs/infrastructure/vlans?topic=vlans-about-vlans#vlan-identification)
+   For proper identification of a VLAN, check [VLAN identification](/docs/vlans?topic=vlans-about-vlans#vlan-identification)
    {:tip}
 
 4. Click on the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet network, gateway addresses and CIDR (/26) as these are required for further VRA configuration.
@@ -249,14 +259,15 @@ The private VLAN(s) for the virtual server are associated by the {{site.data.key
 This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} console. The additional work to configure the enclosure and IP routing is now performed directly on the VRA via SSH.
 
 ## Configure IP routing and secure enclosure
-{: #vra_setup}
+{: #secure-network-enclosure-vra_setup}
 {: step}
 
 When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
-If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`. 
+If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`.
 
 ### Configure VRA IP routing
+{: #secure-network-enclosure-13}
 
 Configure the VRA virtual network interface to route to the new subnet from the {{site.data.keyword.Bluemix_notm}} private network.
 
@@ -284,7 +295,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
 
-   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
+   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
    {: tip}
 
 
@@ -295,7 +306,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    {: codeblock}
 
    This is an example interface configuration showing vif `1199` and the subnet gateway address.
-   ![](images/solution33-secure-network-enclosure/show_interfaces.png)
+   ![Interfaces](images/solution33-secure-network-enclosure/show_interfaces.png)
 4. Validate the VSI is once again accessible via the management network from your workstation.
    ```bash
    ping <VSI Private IP Address>
@@ -311,8 +322,9 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 This completes the IP routing configuration.
 
 ### Configure secure enclosure
+{: #secure-network-enclosure-14}
 
-The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls#manage-firewalls) before proceeding.
+The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls) before proceeding.
 
 Two zones are defined:
    - INSIDE:  The IBM private network and the IBM management network
@@ -342,9 +354,8 @@ Two zones are defined:
      ```
      {: codeblock}
 
-   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL01, DAL10, WDC04, and your target data center. The example here is DAL01, DAL10, WDC04 (two addresses), and LON06.
+   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL10, WDC04, and your target data center. The example here is DAL10, WDC04 (two addresses), and LON06.
      ```
-     set resources group address-group ibmprivate address 10.0.64.0/19
      set resources group address-group ibmprivate address 10.200.80.0/20
      set resources group address-group ibmprivate address 10.3.160.0/20
      set resources group address-group ibmprivate address 10.201.0.0/20
@@ -433,6 +444,7 @@ Two zones are defined:
    {: codeblock}
 
 ### Debugging firewall rules
+{: #secure-network-enclosure-15}
 
 The firewall logs can be viewed from the VRA operational command prompt. In this configuration, only dropped traffic for each zone is logged to aid in diagnosis of firewall misconfiguration.
 
@@ -449,7 +461,7 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
    ```
 
 ## Secure the VRA
-{: #securing_the_vra}
+{: #secure-network-enclosure-securing_the_vra}
 {: step}
 
 1. Apply VRA security policy. By default, policy-based firewall zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration:
@@ -479,21 +491,22 @@ This creates a new firewall rule set named `CPP`. View the additional rules and 
 This completes the setup of the secure private network enclosure protecting a single firewall zone containing a VLAN and subnet. Additional firewall zones, rules, virtual and bare-metal servers, VLANs and subnets can be added following the same instructions.
 
 ## Remove resources
-{: #removeresources}
+{: #secure-network-enclosure-removeresources}
 {: step}
 
 In this step, you will clean up the resources to remove what you created.
 
 - Cancel any virtual servers or bare-metal servers
+- Disassociate and [Cancel any VLANs](/docs/vlans?topic=vlans-cancel-vlan)
 - Cancel the VRA
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances/) page.
 {:tip}
 
 ## Related content
-{: #related}
+{: #secure-network-enclosure-related}
 
-- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#vra-basics)
+- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips#about-subnets-and-ips)
 - [IBM QRadar Security Intelligence Platform](http://www.ibm.com/support/knowledgecenter/SS42VS)
 - [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)

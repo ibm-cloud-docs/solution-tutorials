@@ -6,7 +6,6 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
-    getting-started.md
     {: .navgroup-end}
 
     {: .navgroup id="tutorial"}
@@ -16,8 +15,6 @@ Solution Tutorials
         {: .topicgroup}
         Work In Progress
             solution-template.md
-            image-classification-code-engine.hidden.md
-            vpc-tg-dns-iam.hidden.md
 
         {: .topicgroup}
         Websites and Web Apps
@@ -31,8 +28,6 @@ Solution Tutorials
             static-files-cdn.md
             dynamic-content-cdn.md
             pub-sub-object-storage.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             plan-create-update-deployments.md
             highly-available-and-scalable-web-application.md
             mean-stack.md
@@ -40,6 +35,7 @@ Solution Tutorials
             serverless-api-webapp.md
             multi-region-serverless.md
             application-log-analysis.md
+            text-analysis-code-engine.md
 
         {: .topicgroup}
         Chatbots
@@ -50,14 +46,11 @@ Solution Tutorials
         Security
             multi-region-webapp.md
             multi-region-k8s-cis.md
-            create-manage-secure-apis.md
             cloud-e2e-security.md
             extended-app-security.md
 
         {: .topicgroup}
         Mobile
-            ios-mobile-push-analytics.md
-            android-mobile-push-analytics.md
             serverless-mobile-backend.md
 
         {: .topicgroup}
@@ -66,11 +59,6 @@ Solution Tutorials
             smart-data-lake.md
             serverless-github-traffic-analytics.md
             create-deploy-retrain-machine-learning-model.md
-            big-data-analytics-spark.md
-
-        {: .topicgroup}
-        Internet of Things
-            gather-visualize-analyze-iot-data.md
 
         {: .topicgroup}
         Identity and Access Management
@@ -85,6 +73,7 @@ Solution Tutorials
             vpc-secure-management-bastion-server.md
             lamp-stack-on-vpc.md
             /containers/containers-vpc_ks_tutorial
+            vpc-tg-dns-iam.md
 
         {: .topicgroup}
         Classic Infrastructure
@@ -102,13 +91,13 @@ Solution Tutorials
         {: .topicgroup}
         High Performance Computing
             hpc-eda.md
+            hpc-lsf-on-vpc.md
 
     {: .topicgroup}
     By Compute Options
 
         {: .topicgroup}
         Kubernetes
-            image-classification-code-engine.hidden.md
             scalable-webapp-kubernetes.md
             vm-to-containers-and-kubernetes.md
             strategies-for-resilient-applications.md
@@ -137,8 +126,6 @@ Solution Tutorials
             sql-database.md
             slack-chatbot-database-watson.md
             multi-region-webapp.md
-            create-manage-secure-apis.md
-            gather-visualize-analyze-iot-data.md
 
         {: .topicgroup}
         Cloud Functions
@@ -147,22 +134,24 @@ Solution Tutorials
             multi-region-serverless.md
             slack-chatbot-database-watson.md
             serverless-mobile-backend.md
+
+        {: .topicgroup}
+        Code Engine
+            text-analysis-code-engine.md
             serverless-github-traffic-analytics.md
 
         {: .topicgroup}
-        Infrastructure
+        Virtual Servers
             strategies-for-resilient-applications.md
-            lamp-stack.md
-            infrastructure-as-code-terraform.md
             highly-available-and-scalable-web-application.md
             vpc-public-app-private-backend.md
             vpc-multi-region.md
             vpc-site2site-vpn.md
             vpc-app-deploy.md
             vpc-secure-management-bastion-server.md
+            vpc-tg-dns-iam.md
             secure-network-enclosure.md
             nat-config-private.md
-            byoip.md
             configuring-IPSEC-VPN.md
             linking-secure-network-enclosures.md
             web-app-private-network.md

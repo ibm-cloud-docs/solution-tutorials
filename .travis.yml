@@ -13,5 +13,12 @@ script:
     ./scripts/sync.sh;
     fi
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "draft" ]; then
-    ./scripts/preview-build.sh && ./scripts/preview-push.sh;
+    ./scripts/check-a11y.sh && ./scripts/check-lastmodified.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
     fi
+
+notifications:
+  slack:
+    rooms:
+      - secure: IJWxonXnrQAwqIYeRkPsXbvYAy6Ui4RXS0Ttdp+2WdK2um1ig1EqfwsKr2PqysY3gQ9A0iohBflK3PaF9DyoLP82L0VwZrKdLjZ3I0CkJnh/HYm+sXi+ZT+JuGKt21uKJdnCE+Rszj1MJxOXsG8YY7hbrkLNymLA9Ni9IBU5LK61zuvE/wMP3xXDuFmF2o8ekF3aQq+364IcP9mW3OJcT/TM7CP0yMlgbTvbVgQNV72FXG50AZ1ul526doXLD/IhnMHNn++B5yluLVZHX/n1Q+s+h72UZu/uwU/tHiCR4C0/4Kj4tuFoVes60ExBIDN0gsIcvd2HfTt7nEpzFbda2TMG3zasw2cRMmfyi/xPpuiJhBYE1C0KzYjdJe/9wkIwlO8SdwzXOCgPZHwsFz0j7qwUCP2n4bFOTychYhMEjkQAZMQx7BkxHX9IIhjOGSsAopdqt+i1uHa+csYZx7IyvI3yMnywMO4ejfnrCEAldOoCYZCHNW0zjBhLmS5PcyrSC9lybZ5gIx4HPFMjAenWyzse7BhY1q4KJHr5K3MObg9Erf75g/UuPY1dhK3PPdVvnJn6oUL812ABg4ymwoBViD0iaiisUgBREFQc7oiRZeHzuQZrivnTLIz1k5M/5Xdoo95ew5SAJJ6AhZFKN5HnoOAjx7RJMi49R3YrFUN7a5Q=
+    on_success: change
+    on_failure: always

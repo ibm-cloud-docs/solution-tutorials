@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-03-18"
-lasttested: "2019-04-19"
+lastupdated: "2021-01-05"
+lasttested: "2020-11-19"
 
 ---
 
@@ -34,13 +34,14 @@ When building an application, it is very common to define multiple environments 
 Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 ## Objectives
-{: #objectives}
+{: #users-teams-applications-objectives}
 
 * Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
 ## Define a project
+{: #users-teams-applications-1}
 
 Let's consider a sample project with the following components:
 * several microservices deployed in {{site.data.keyword.containershort_notm}},
@@ -54,7 +55,7 @@ In this project, we define three environments:
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline,  we introduce **a [Service ID](https://{DomainName}/docs/iam?topic=iam-serviceids)**. A service ID identifies a service or application similar to how a user ID identifies a user. Policies can be assigned to a service ID, providing it access to resources. This service ID is used in the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The service ID will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://{DomainName}/iam/serviceids) for this service ID. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the service ID.
+To support the execution of the build pipeline,  we introduce **a [Service ID](https://{DomainName}/docs/account?topic=account-serviceids)**. A service ID identifies a service or application similar to how a user ID identifies a user. Policies can be assigned to a service ID, providing it access to resources. This service ID is used in the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The service ID will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://{DomainName}/iam/serviceids) for this service ID. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the service ID.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
@@ -66,7 +67,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | Pipeline Service ID  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
-{: #first_objective}
+{: #users-teams-applications-first_objective}
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
@@ -79,13 +80,14 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
   <img src="./images/solution20-users-teams-applications/iam-model.png" style="width: 70%;" alt="Diagram of IAM model" />
 </p>
 
-At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
+Most services in the {{site.data.keyword.cloud_notm}} catalog are managed by using IAM. A few continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.  If you do not have requirements for Cloud Foundry applications and are using resources that support IAM then ignore the Organization and Space text below.
 
 <p style="text-align: center;">
   <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" style="width: 70%;" alt="Diagram of Cloud Foundry model" />
 </p>
 
 ## Create the resources for one environment
+{: #users-teams-applications-3}
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
@@ -95,15 +97,16 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an {{site.data.keyword.cloud_notm}} location](https://{DomainName}) where to deploy the environment.
+1. Most cloud service instances are regional.  Keep this in mind and choose the same region for all resources in this tutorial.
+1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. For Cloud Foundry services and apps:
    1. [Create an organization for the project](https://{DomainName}/docs/account?topic=account-orgsspacesusers#createorg).
    1. [Create a Cloud Foundry space for the environment](https://{DomainName}/docs/account?topic=account-orgsspacesusers#spaceinfo).
    1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
-1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, and {{site.data.keyword.cloudant_short_notm}} in this group.
+1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
 1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
-1. Configure {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} to send logs and to monitor the cluster.
+1. From the Kubernetes cluster connect to the {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} service instances to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
 
@@ -112,16 +115,17 @@ The following diagram shows where the project resources are created under the ac
 </p>
 
 ## Assign roles within the environment
+{: #users-teams-applications-4}
 
 1. Invite users to the account
-1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/iam?topic=iam-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
-1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/iam?topic=iam-cfaccess#cfaccess) to assign the right roles based on the environment.
+1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
+1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/account?topic=account-cfaccess#cfaccess) to assign the right roles based on the environment.
 
-Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam).
+Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
-Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/iam?topic=iam-userlistview). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
+Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
 {: tip}
 
 A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
@@ -135,13 +139,18 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
-The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
+The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
+1. Select or create an access group.
+1. Select the **Access policies** tab
+1. Click **Assign access** button to assign policies as shown below
+1. Click the **Users** tab of the **Access group** to add users to the group
 
 <p style="text-align: center;">
   <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" alt="Configuration of permissions for the developer role" />
 </p>
 
 ## Replicate for multiple environments
+{: #users-teams-applications-5}
 
 From there, you can replicate similar steps to build the other environments.
 
@@ -154,7 +163,7 @@ From there, you can replicate similar steps to build the other environments.
   <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" alt="Diagram showing separate clusters to isolate environments" />
 </p>
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 Separate Kubernetes clusters for the environments come with good properties:
 * no matter the environment, all clusters will tend to look the same;
@@ -172,6 +181,7 @@ In the `Search` input box of LogDNA UI, use the field `namespace: ` to filter lo
 {: tip}
 
 ## Setup delivery pipeline
+{: #users-teams-applications-6}
 
 When it comes to deploying to the different environments, your continuous integration / continuous delivery pipeline can be setup to drive the full process:
 * continuously update the `Development` environment with the latest and greatest code from the `development` branch, running unit tests and integration tests on the dedicated cluster;
@@ -186,23 +196,24 @@ When configuring the DevOps pipeline, make sure to use the API key of a service 
 
 During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
-As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
+As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Expand the tutorial
+{: #users-teams-applications-7}
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
-* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 * Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
+* Investigate [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
 
 ## Related information
+{: #users-teams-applications-8}
 
-* [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/iam?topic=iam-getstarted#getstarted)
-* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
+* [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
+* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/account?topic=account-account_setup)
 * [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
-* [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam)
-* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam)
+* [Grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam)
+* [Grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam)

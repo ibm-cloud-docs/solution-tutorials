@@ -2,28 +2,28 @@
 	"Bluemix": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade;",
-			"ibm.IBM Cloud&trade;",
-			"site.IBM Cloud&trade;",
+			"IBM Cloud&reg;",
+			"ibm.IBM Cloud&reg;",
+			"site.IBM Cloud&reg;",
       "{{site.data.keyword.Bluemix}}"
 		],
 		"body": [
 			"{{site.data.keyword.Bluemix}}"
 		],
-    "description": "IBM Cloud&trade;"
+    "description": "IBM Cloud&reg;"
 	},
 	"Bluemix_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade;",
-			"ibm.IBM Cloud&trade;",
-			"site.IBM Cloud&trade;",
+			"IBM Cloud&reg;",
+			"ibm.IBM Cloud&reg;",
+			"site.IBM Cloud&reg;",
       "{{site.data.keyword.Bluemix_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.Bluemix_short}}"
 		],
-    "description": "IBM Cloud&trade;"
+    "description": "IBM Cloud&reg;"
 	},
 	"Bluemix_notm": {
 	  "scope": "markdown",
@@ -67,15 +67,15 @@
 	"cloud": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade;",
-			"ibm.IBM Cloud&trade;",
-			"site.IBM Cloud&trade;",
+			"IBM Cloud&reg;",
+			"ibm.IBM Cloud&reg;",
+			"site.IBM Cloud&reg;",
       "{{site.data.keyword.cloud}}"
 		],
 		"body": [
 			"{{site.data.keyword.cloud}}"
 		],
-    "description": "IBM Cloud&trade;"
+    "description": "IBM Cloud&reg;"
 	},
 	"cloud_notm": {
 	  "scope": "markdown",
@@ -93,28 +93,28 @@
 	"BluSoftlayer_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade;",
-			"ibm.IBM Cloud&trade;",
-			"site.IBM Cloud&trade;",
+			"IBM Cloud&reg;",
+			"ibm.IBM Cloud&reg;",
+			"site.IBM Cloud&reg;",
       "{{site.data.keyword.BluSoftlayer_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.BluSoftlayer_full}}"
 		],
-    "description": "IBM Cloud&trade;"
+    "description": "IBM Cloud&reg;"
 	},
 	"BluSoftlayer": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade;",
-			"ibm.IBM Cloud&trade;",
-			"site.IBM Cloud&trade;",
+			"IBM Cloud&reg;",
+			"ibm.IBM Cloud&reg;",
+			"site.IBM Cloud&reg;",
       "{{site.data.keyword.BluSoftlayer}}"
 		],
 		"body": [
 			"{{site.data.keyword.BluSoftlayer}}"
 		],
-    "description": "IBM Cloud&trade;"
+    "description": "IBM Cloud&reg;"
 	},
 	"BluSoftlayer_notm": {
 	  "scope": "markdown",
@@ -210,41 +210,41 @@
 	"at_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Activity Tracker with LogDNA",
-			"ibm.IBM Cloud&trade; Activity Tracker with LogDNA",
-			"site.IBM Cloud&trade; Activity Tracker with LogDNA",
+			"IBM Cloud&trade; Activity Tracker",
+			"ibm.IBM Cloud&trade; Activity Tracker",
+			"site.IBM Cloud&trade; Activity Tracker",
       "{{site.data.keyword.at_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.at_full}}"
 		],
-    "description": "IBM Cloud&trade; Activity Tracker with LogDNA"
+    "description": "IBM Cloud&trade; Activity Tracker"
 	},
 	"at_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Activity Tracker with LogDNA",
-			"ibm.IBM Cloud Activity Tracker with LogDNA",
-			"site.IBM Cloud Activity Tracker with LogDNA",
+			"IBM Cloud Activity Tracker",
+			"ibm.IBM Cloud Activity Tracker",
+			"site.IBM Cloud Activity Tracker",
       "{{site.data.keyword.at_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.at_full_notm}}"
 		],
-    "description": "IBM Cloud Activity Tracker with LogDNA"
+    "description": "IBM Cloud Activity Tracker"
 	},
 	"at_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Activity Tracker with LogDNA",
-			"ibm.Activity Tracker with LogDNA",
-			"site.Activity Tracker with LogDNA",
+			"Activity Tracker",
+			"ibm.Activity Tracker",
+			"site.Activity Tracker",
       "{{site.data.keyword.at_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.at_short}}"
 		],
-    "description": "Activity Tracker with LogDNA"
+    "description": "Activity Tracker"
 	},
 	"activedeployshort": {
 	  "scope": "markdown",
@@ -571,6 +571,19 @@
 		],
     "description": "IBM&reg; AltaDB for IBM Cloud"
 	},
+	"alb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Application Load Balancer for VPC",
+			"ibm.Application Load Balancer for VPC",
+			"site.Application Load Balancer for VPC",
+      "{{site.data.keyword.alb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.alb_full}}"
+		],
+    "description": "Application Load Balancer for VPC"
+	},
 	"hadoopst": {
 	  "scope": "markdown",
 		"prefix": [
@@ -792,6 +805,45 @@
 		],
     "description": "IBM&reg; API Management for IBM Cloud"
 	},
+	"appconfig_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; App Configuration",
+			"ibm.IBM Cloud&trade; App Configuration",
+			"site.IBM Cloud&trade; App Configuration",
+      "{{site.data.keyword.appconfig_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_full}}"
+		],
+    "description": "IBM Cloud&trade; App Configuration"
+	},
+	"appconfig_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud App Configuration",
+			"ibm.IBM Cloud App Configuration",
+			"site.IBM Cloud App Configuration",
+      "{{site.data.keyword.appconfig_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_notm}}"
+		],
+    "description": "IBM Cloud App Configuration"
+	},
+	"appconfig_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"App Configuration",
+			"ibm.App Configuration",
+			"site.App Configuration",
+      "{{site.data.keyword.appconfig_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconfig_short}}"
+		],
+    "description": "App Configuration"
+	},
 	"appconserviceshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -817,6 +869,19 @@
 			"{{site.data.keyword.appconservicefull}}"
 		],
     "description": "IBM&reg; App Connect in IBM Cloud"
+	},
+	"appconnect_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"App Connect",
+			"ibm.App Connect",
+			"site.App Connect",
+      "{{site.data.keyword.appconnect_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.appconnect_notm}}"
+		],
+    "description": "App Connect"
 	},
 	"Appdomainname": {
 	  "scope": "markdown",
@@ -1559,6 +1624,45 @@
 		],
     "description": "Cast Iron&reg; Live"
 	},
+	"cvad_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Citrix Virtual Apps and Desktops for IBM Cloud&trade;",
+			"ibm.Citrix Virtual Apps and Desktops for IBM Cloud&trade;",
+			"site.Citrix Virtual Apps and Desktops for IBM Cloud&trade;",
+      "{{site.data.keyword.cvad_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cvad_full}}"
+		],
+    "description": "Citrix Virtual Apps and Desktops for IBM Cloud&trade;"
+	},
+	"cvad_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"Citrix Virtual Apps and Desktops for IBM Cloud",
+			"ibm.Citrix Virtual Apps and Desktops for IBM Cloud",
+			"site.Citrix Virtual Apps and Desktops for IBM Cloud",
+      "{{site.data.keyword.cvad_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cvad_full_notm}}"
+		],
+    "description": "Citrix Virtual Apps and Desktops for IBM Cloud"
+	},
+	"cvad_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Citrix Virtual Apps and Desktops",
+			"ibm.Citrix Virtual Apps and Desktops",
+			"site.Citrix Virtual Apps and Desktops",
+      "{{site.data.keyword.cvad_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.cvad_short}}"
+		],
+    "description": "Citrix Virtual Apps and Desktops"
+	},
 	"castironlivefull": {
 	  "scope": "markdown",
 		"prefix": [
@@ -1623,6 +1727,71 @@
 			"{{site.data.keyword.clmtp_full}}"
 		],
     "description": "IBM&reg; CLM Track and Plan for IBM Cloud"
+	},
+	"ibmcf_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Foundry",
+			"ibm.IBM&reg; Cloud Foundry",
+			"site.IBM&reg; Cloud Foundry",
+      "{{site.data.keyword.ibmcf_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.ibmcf_full}}"
+		],
+    "description": "IBM&reg; Cloud Foundry"
+	},
+	"ibmcf_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Foundry",
+			"ibm.IBM Cloud Foundry",
+			"site.IBM Cloud Foundry",
+      "{{site.data.keyword.ibmcf_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.ibmcf_notm}}"
+		],
+    "description": "IBM Cloud Foundry"
+	},
+	"codeenginefull": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; Code Engine",
+			"ibm.IBM Cloud&trade; Code Engine",
+			"site.IBM Cloud&trade; Code Engine",
+      "{{site.data.keyword.codeenginefull}}"
+		],
+		"body": [
+			"{{site.data.keyword.codeenginefull}}"
+		],
+    "description": "IBM Cloud&trade; Code Engine"
+	},
+	"codeenginefull_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Code Engine",
+			"ibm.IBM Cloud Code Engine",
+			"site.IBM Cloud Code Engine",
+      "{{site.data.keyword.codeenginefull_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.codeenginefull_notm}}"
+		],
+    "description": "IBM Cloud Code Engine"
+	},
+	"codeengineshort": {
+	  "scope": "markdown",
+		"prefix": [
+			"Code Engine",
+			"ibm.Code Engine",
+			"site.Code Engine",
+      "{{site.data.keyword.codeengineshort}}"
+		],
+		"body": [
+			"{{site.data.keyword.codeengineshort}}"
+		],
+    "description": "Code Engine"
 	},
 	"contentminer": {
 	  "scope": "markdown",
@@ -1848,15 +2017,15 @@
 	"cis_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Internet Services",
-			"ibm.IBM Cloud&trade; Internet Services",
-			"site.IBM Cloud&trade; Internet Services",
+			"IBM Cloud&reg; Internet Services",
+			"ibm.IBM Cloud&reg; Internet Services",
+			"site.IBM Cloud&reg; Internet Services",
       "{{site.data.keyword.cis_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.cis_full}}"
 		],
-    "description": "IBM Cloud&trade; Internet Services"
+    "description": "IBM Cloud&reg; Internet Services"
 	},
 	"cis_full_notm": {
 	  "scope": "markdown",
@@ -1874,15 +2043,15 @@
 	"cis_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Internet Services (CIS)",
-			"ibm.Internet Services (CIS)",
-			"site.Internet Services (CIS)",
+			"Cloud Internet Services (CIS)",
+			"ibm.Cloud Internet Services (CIS)",
+			"site.Cloud Internet Services (CIS)",
       "{{site.data.keyword.cis_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.cis_short}}"
 		],
-    "description": "Internet Services (CIS)"
+    "description": "Cloud Internet Services (CIS)"
 	},
 	"cis_short_notm": {
 	  "scope": "markdown",
@@ -1896,6 +2065,45 @@
 			"{{site.data.keyword.cis_short_notm}}"
 		],
     "description": "CIS"
+	},
+	"cognosanalytics_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Cognos Analytics",
+			"ibm.Cognos Analytics",
+			"site.Cognos Analytics",
+      "{{site.data.keyword.cognosanalytics_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_short}}"
+		],
+    "description": "Cognos Analytics"
+	},
+	"cognosanalytics_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cognos Analytics for IBM Cloud&reg;",
+			"ibm.IBM Cognos Analytics for IBM Cloud&reg;",
+			"site.IBM Cognos Analytics for IBM Cloud&reg;",
+      "{{site.data.keyword.cognosanalytics_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_full}}"
+		],
+    "description": "IBM Cognos Analytics for IBM Cloud&reg;"
+	},
+	"cognosanalytics_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cognos Analytics for IBM Cloud",
+			"ibm.IBM Cognos Analytics for IBM Cloud",
+			"site.IBM Cognos Analytics for IBM Cloud",
+      "{{site.data.keyword.cognosanalytics_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cognosanalytics_full_notm}}"
+		],
+    "description": "IBM Cognos Analytics for IBM Cloud"
 	},
 	"dns_notm": {
 	  "scope": "markdown",
@@ -1939,15 +2147,15 @@
 	"iamlong": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Cloud Identity and Access Management",
-			"ibm.IBM&reg; Cloud Identity and Access Management",
-			"site.IBM&reg; Cloud Identity and Access Management",
+			"IBM Cloud&reg; Identity and Access Management",
+			"ibm.IBM Cloud&reg; Identity and Access Management",
+			"site.IBM Cloud&reg; Identity and Access Management",
       "{{site.data.keyword.iamlong}}"
 		],
 		"body": [
 			"{{site.data.keyword.iamlong}}"
 		],
-    "description": "IBM&reg; Cloud Identity and Access Management"
+    "description": "IBM Cloud&reg; Identity and Access Management"
 	},
 	"loganalysisshort": {
 	  "scope": "markdown",
@@ -2069,41 +2277,41 @@
 	"la_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Log Analysis with LogDNA",
-			"ibm.IBM&reg; Log Analysis with LogDNA",
-			"site.IBM&reg; Log Analysis with LogDNA",
+			"IBM&reg; Log Analysis",
+			"ibm.IBM&reg; Log Analysis",
+			"site.IBM&reg; Log Analysis",
       "{{site.data.keyword.la_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.la_full}}"
 		],
-    "description": "IBM&reg; Log Analysis with LogDNA"
+    "description": "IBM&reg; Log Analysis"
 	},
 	"la_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Log Analysis with LogDNA",
-			"ibm.IBM Log Analysis with LogDNA",
-			"site.IBM Log Analysis with LogDNA",
+			"IBM Log Analysis",
+			"ibm.IBM Log Analysis",
+			"site.IBM Log Analysis",
       "{{site.data.keyword.la_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.la_full_notm}}"
 		],
-    "description": "IBM Log Analysis with LogDNA"
+    "description": "IBM Log Analysis"
 	},
 	"la_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Log Analysis with LogDNA",
-			"ibm.Log Analysis with LogDNA",
-			"site.Log Analysis with LogDNA",
+			"Log Analysis",
+			"ibm.Log Analysis",
+			"site.Log Analysis",
       "{{site.data.keyword.la_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.la_short}}"
 		],
-    "description": "Log Analysis with LogDNA"
+    "description": "Log Analysis"
 	},
 	"cosdimshort": {
 	  "scope": "markdown",
@@ -2729,31 +2937,109 @@
 		],
     "description": "IBM Cloud Pak for Integration"
 	},
+	"cp4waiops_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Pak&reg; for Watson AIOps",
+			"ibm.IBM Cloud Pak&reg; for Watson AIOps",
+			"site.IBM Cloud Pak&reg; for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_full}}"
+		],
+    "description": "IBM Cloud Pak&reg; for Watson AIOps"
+	},
+	"cp4waiops_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Pak for Watson AIOps",
+			"ibm.IBM Cloud Pak for Watson AIOps",
+			"site.IBM Cloud Pak for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_full_notm}}"
+		],
+    "description": "IBM Cloud Pak for Watson AIOps"
+	},
+	"cp4waiops_short_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"Cloud Pak for Watson AIOps",
+			"ibm.Cloud Pak for Watson AIOps",
+			"site.Cloud Pak for Watson AIOps",
+      "{{site.data.keyword.cp4waiops_short_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cp4waiops_short_notm}}"
+		],
+    "description": "Cloud Pak for Watson AIOps"
+	},
+	"compliance_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Security and Compliance Center",
+			"ibm.IBM Cloud&reg; Security and Compliance Center",
+			"site.IBM Cloud&reg; Security and Compliance Center",
+      "{{site.data.keyword.compliance_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.compliance_full}}"
+		],
+    "description": "IBM Cloud&reg; Security and Compliance Center"
+	},
+	"compliance_long": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Security and Compliance Center",
+			"ibm.IBM Cloud Security and Compliance Center",
+			"site.IBM Cloud Security and Compliance Center",
+      "{{site.data.keyword.compliance_long}}"
+		],
+		"body": [
+			"{{site.data.keyword.compliance_long}}"
+		],
+    "description": "IBM Cloud Security and Compliance Center"
+	},
+	"compliance_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Security and Compliance Center",
+			"ibm.Security and Compliance Center",
+			"site.Security and Compliance Center",
+      "{{site.data.keyword.compliance_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.compliance_short}}"
+		],
+    "description": "Security and Compliance Center"
+	},
 	"registryshort": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Container Registry",
-			"ibm.IBM Cloud&trade; Container Registry",
-			"site.IBM Cloud&trade; Container Registry",
+			"Container Registry",
+			"ibm.Container Registry",
+			"site.Container Registry",
       "{{site.data.keyword.registryshort}}"
 		],
 		"body": [
 			"{{site.data.keyword.registryshort}}"
 		],
-    "description": "IBM Cloud&trade; Container Registry"
+    "description": "Container Registry"
 	},
 	"registryshort_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Container Registry",
-			"ibm.IBM Cloud Container Registry",
-			"site.IBM Cloud Container Registry",
+			"Container Registry",
+			"ibm.Container Registry",
+			"site.Container Registry",
       "{{site.data.keyword.registryshort_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.registryshort_notm}}"
 		],
-    "description": "IBM Cloud Container Registry"
+    "description": "Container Registry"
 	},
 	"registrylong": {
 	  "scope": "markdown",
@@ -3002,6 +3288,45 @@
 		],
     "description": "Customized Image Classifier"
 	},
+	"cloud-shell_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Shell",
+			"ibm.IBM&reg; Cloud Shell",
+			"site.IBM&reg; Cloud Shell",
+      "{{site.data.keyword.cloud-shell_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cloud-shell_full}}"
+		],
+    "description": "IBM&reg; Cloud Shell"
+	},
+	"cloud-shell_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Shell",
+			"ibm.IBM Cloud Shell",
+			"site.IBM Cloud Shell",
+      "{{site.data.keyword.cloud-shell_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cloud-shell_notm}}"
+		],
+    "description": "IBM Cloud Shell"
+	},
+	"cloud-shell_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Cloud Shell",
+			"ibm.Cloud Shell",
+			"site.Cloud Shell",
+      "{{site.data.keyword.cloud-shell_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.cloud-shell_short}}"
+		],
+    "description": "Cloud Shell"
+	},
 	"dashdbshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -3054,6 +3379,45 @@
 		],
     "description": "IBM Db2 Warehouse on Cloud"
 	},
+	"databases-for-cassandra": {
+	  "scope": "markdown",
+		"prefix": [
+			"Databases for DataStax",
+			"ibm.Databases for DataStax",
+			"site.Databases for DataStax",
+      "{{site.data.keyword.databases-for-cassandra}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-cassandra}}"
+		],
+    "description": "Databases for DataStax"
+	},
+	"databases-for-cassandra_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Databases for DataStax",
+			"ibm.IBM&reg; Cloud Databases for DataStax",
+			"site.IBM&reg; Cloud Databases for DataStax",
+      "{{site.data.keyword.databases-for-cassandra_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-cassandra_full}}"
+		],
+    "description": "IBM&reg; Cloud Databases for DataStax"
+	},
+	"databases-for-cassandra_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Databases for DataStax",
+			"ibm.IBM Cloud Databases for DataStax",
+			"site.IBM Cloud Databases for DataStax",
+      "{{site.data.keyword.databases-for-cassandra_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-cassandra_full_notm}}"
+		],
+    "description": "IBM Cloud Databases for DataStax"
+	},
 	"databases-for-elasticsearch": {
 	  "scope": "markdown",
 		"prefix": [
@@ -3092,6 +3456,45 @@
 			"{{site.data.keyword.databases-for-elasticsearch_full_notm}}"
 		],
     "description": "IBM Cloud Databases for Elasticsearch"
+	},
+	"databases-for-enterprisedb": {
+	  "scope": "markdown",
+		"prefix": [
+			"Databases for EnterpriseDB",
+			"ibm.Databases for EnterpriseDB",
+			"site.Databases for EnterpriseDB",
+      "{{site.data.keyword.databases-for-enterprisedb}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-enterprisedb}}"
+		],
+    "description": "Databases for EnterpriseDB"
+	},
+	"databases-for-enterprisedb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Databases for EnterpriseDB",
+			"ibm.IBM&reg; Cloud Databases for EnterpriseDB",
+			"site.IBM&reg; Cloud Databases for EnterpriseDB",
+      "{{site.data.keyword.databases-for-enterprisedb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-enterprisedb_full}}"
+		],
+    "description": "IBM&reg; Cloud Databases for EnterpriseDB"
+	},
+	"databases-for-enterprisedb_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Databases for EnterpriseDB",
+			"ibm.IBM Cloud Databases for EnterpriseDB",
+			"site.IBM Cloud Databases for EnterpriseDB",
+      "{{site.data.keyword.databases-for-enterprisedb_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-enterprisedb_full_notm}}"
+		],
+    "description": "IBM Cloud Databases for EnterpriseDB"
 	},
 	"databases-for-etcd": {
 	  "scope": "markdown",
@@ -3356,15 +3759,28 @@
 	"datastagefull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; DataStage&reg; on Cloud",
-			"ibm.IBM&reg; DataStage&reg; on Cloud",
-			"site.IBM&reg; DataStage&reg; on Cloud",
+			"IBM&reg; DataStage",
+			"ibm.IBM&reg; DataStage",
+			"site.IBM&reg; DataStage",
       "{{site.data.keyword.datastagefull}}"
 		],
 		"body": [
 			"{{site.data.keyword.datastagefull}}"
 		],
-    "description": "IBM&reg; DataStage&reg; on Cloud"
+    "description": "IBM&reg; DataStage"
+	},
+	"datastageshort": {
+	  "scope": "markdown",
+		"prefix": [
+			"DataStage",
+			"ibm.DataStage",
+			"site.DataStage",
+      "{{site.data.keyword.datastageshort}}"
+		],
+		"body": [
+			"{{site.data.keyword.datastageshort}}"
+		],
+    "description": "DataStage"
 	},
 	"Db2_on_Cloud_short": {
 	  "scope": "markdown",
@@ -3638,6 +4054,84 @@
 			"{{site.data.keyword.dev_cli_short}}"
 		],
     "description": "Developer Tools"
+	},
+	"dl_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; Direct Link",
+			"ibm.IBM Cloud&trade; Direct Link",
+			"site.IBM Cloud&trade; Direct Link",
+      "{{site.data.keyword.dl_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.dl_full}}"
+		],
+    "description": "IBM Cloud&trade; Direct Link"
+	},
+	"dl_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Direct Link",
+			"ibm.IBM Cloud Direct Link",
+			"site.IBM Cloud Direct Link",
+      "{{site.data.keyword.dl_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.dl_full_notm}}"
+		],
+    "description": "IBM Cloud Direct Link"
+	},
+	"dl_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Direct Link",
+			"ibm.Direct Link",
+			"site.Direct Link",
+      "{{site.data.keyword.dl_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.dl_short}}"
+		],
+    "description": "Direct Link"
+	},
+	"dlc_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; Direct Link on Classic",
+			"ibm.IBM Cloud&trade; Direct Link on Classic",
+			"site.IBM Cloud&trade; Direct Link on Classic",
+      "{{site.data.keyword.dlc_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.dlc_full}}"
+		],
+    "description": "IBM Cloud&trade; Direct Link on Classic"
+	},
+	"dlc_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Direct Link on Classic",
+			"ibm.IBM Cloud Direct Link on Classic",
+			"site.IBM Cloud Direct Link on Classic",
+      "{{site.data.keyword.dlc_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.dlc_full_notm}}"
+		],
+    "description": "IBM Cloud Direct Link on Classic"
+	},
+	"dlc_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Direct Link on Classic",
+			"ibm.Direct Link on Classic",
+			"site.Direct Link on Classic",
+      "{{site.data.keyword.dlc_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.dlc_short}}"
+		],
+    "description": "Direct Link on Classic"
 	},
 	"dns_full": {
 	  "scope": "markdown",
@@ -4253,54 +4747,54 @@
 	"fsa1_full_reg": {
 	  "scope": "markdown",
 		"prefix": [
-			"Fortigate&reg; Security Appliance 1Gbps",
-			"ibm.Fortigate&reg; Security Appliance 1Gbps",
-			"site.Fortigate&reg; Security Appliance 1Gbps",
+			"Fortigate&reg; Security Appliance 1 Gbps",
+			"ibm.Fortigate&reg; Security Appliance 1 Gbps",
+			"site.Fortigate&reg; Security Appliance 1 Gbps",
       "{{site.data.keyword.fsa1_full_reg}}"
 		],
 		"body": [
 			"{{site.data.keyword.fsa1_full_reg}}"
 		],
-    "description": "Fortigate&reg; Security Appliance 1Gbps"
+    "description": "Fortigate&reg; Security Appliance 1 Gbps"
 	},
 	"fsa1_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"Fortigate Security Appliance 1Gbps",
-			"ibm.Fortigate Security Appliance 1Gbps",
-			"site.Fortigate Security Appliance 1Gbps",
+			"Fortigate Security Appliance 1 Gbps",
+			"ibm.Fortigate Security Appliance 1 Gbps",
+			"site.Fortigate Security Appliance 1 Gbps",
       "{{site.data.keyword.fsa1_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.fsa1_full}}"
 		],
-    "description": "Fortigate Security Appliance 1Gbps"
+    "description": "Fortigate Security Appliance 1 Gbps"
 	},
 	"fsa10_full_reg": {
 	  "scope": "markdown",
 		"prefix": [
-			"Fortigate&reg; Security Appliance 10Gbps",
-			"ibm.Fortigate&reg; Security Appliance 10Gbps",
-			"site.Fortigate&reg; Security Appliance 10Gbps",
+			"Fortigate&reg; Security Appliance 10 Gbps",
+			"ibm.Fortigate&reg; Security Appliance 10 Gbps",
+			"site.Fortigate&reg; Security Appliance 10 Gbps",
       "{{site.data.keyword.fsa10_full_reg}}"
 		],
 		"body": [
 			"{{site.data.keyword.fsa10_full_reg}}"
 		],
-    "description": "Fortigate&reg; Security Appliance 10Gbps"
+    "description": "Fortigate&reg; Security Appliance 10 Gbps"
 	},
 	"fsa10_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"Fortigate Security Appliance 10Gbps",
-			"ibm.Fortigate Security Appliance 10Gbps",
-			"site.Fortigate Security Appliance 10Gbps",
+			"Fortigate Security Appliance 10 Gbps",
+			"ibm.Fortigate Security Appliance 10 Gbps",
+			"site.Fortigate Security Appliance 10 Gbps",
       "{{site.data.keyword.fsa10_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.fsa10_full}}"
 		],
-    "description": "Fortigate Security Appliance 10Gbps"
+    "description": "Fortigate Security Appliance 10 Gbps"
 	},
 	"fsa": {
 	  "scope": "markdown",
@@ -4682,15 +5176,15 @@
 	"hpvs": {
 	  "scope": "markdown",
 		"prefix": [
-			"Hyper Protect Virtual Server",
-			"ibm.Hyper Protect Virtual Server",
-			"site.Hyper Protect Virtual Server",
+			"Hyper Protect Virtual Servers",
+			"ibm.Hyper Protect Virtual Servers",
+			"site.Hyper Protect Virtual Servers",
       "{{site.data.keyword.hpvs}}"
 		],
 		"body": [
 			"{{site.data.keyword.hpvs}}"
 		],
-    "description": "Hyper Protect Virtual Server"
+    "description": "Hyper Protect Virtual Servers"
 	},
 	"hpc-cluster_short": {
 	  "scope": "markdown",
@@ -4760,15 +5254,15 @@
 	"icpa_rm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Cloud Pak for Applications",
-			"ibm.IBM&reg; Cloud Pak for Applications",
-			"site.IBM&reg; Cloud Pak for Applications",
+			"IBM&reg; Cloud Pak&reg; for Applications",
+			"ibm.IBM&reg; Cloud Pak&reg; for Applications",
+			"site.IBM&reg; Cloud Pak&reg; for Applications",
       "{{site.data.keyword.icpa_rm}}"
 		],
 		"body": [
 			"{{site.data.keyword.icpa_rm}}"
 		],
-    "description": "IBM&reg; Cloud Pak for Applications"
+    "description": "IBM&reg; Cloud Pak&reg; for Applications"
 	},
 	"icpa_short": {
 	  "scope": "markdown",
@@ -4834,6 +5328,19 @@
 			"{{site.data.keyword.icpvt4d}}"
 		],
     "description": "IBM&reg; Cloud Private for Data"
+	},
+	"ibm_cloud_sap": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud for SAP",
+			"ibm.IBM Cloud for SAP",
+			"site.IBM Cloud for SAP",
+      "{{site.data.keyword.ibm_cloud_sap}}"
+		],
+		"body": [
+			"{{site.data.keyword.ibm_cloud_sap}}"
+		],
+    "description": "IBM Cloud for SAP"
 	},
 	"mf-starter-image": {
 	  "scope": "markdown",
@@ -5111,28 +5618,28 @@
 	"ke": {
 	  "scope": "markdown",
 		"prefix": [
-			"Kabanero&trade; Enterprise",
-			"ibm.Kabanero&trade; Enterprise",
-			"site.Kabanero&trade; Enterprise",
+			"Accelerators for Teams",
+			"ibm.Accelerators for Teams",
+			"site.Accelerators for Teams",
       "{{site.data.keyword.ke}}"
 		],
 		"body": [
 			"{{site.data.keyword.ke}}"
 		],
-    "description": "Kabanero&trade; Enterprise"
+    "description": "Accelerators for Teams"
 	},
 	"ke_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"Kabanero Enterprise",
-			"ibm.Kabanero Enterprise",
-			"site.Kabanero Enterprise",
+			"Accelerators for Teams",
+			"ibm.Accelerators for Teams",
+			"site.Accelerators for Teams",
       "{{site.data.keyword.ke_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.ke_notm}}"
 		],
-    "description": "Kabanero Enterprise"
+    "description": "Accelerators for Teams"
 	},
 	"keymanagementserviceshort": {
 	  "scope": "markdown",
@@ -5267,15 +5774,15 @@
 	"loadbalancer_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Load Balancer",
-			"ibm.IBM Cloud&trade; Load Balancer",
-			"site.IBM Cloud&trade; Load Balancer",
+			"IBM Cloud&reg; Load Balancer",
+			"ibm.IBM Cloud&reg; Load Balancer",
+			"site.IBM Cloud&reg; Load Balancer",
       "{{site.data.keyword.loadbalancer_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.loadbalancer_full}}"
 		],
-    "description": "IBM Cloud&trade; Load Balancer"
+    "description": "IBM Cloud&reg; Load Balancer"
 	},
 	"BluLocSys": {
 	  "scope": "markdown",
@@ -5423,28 +5930,28 @@
 	"mdm-oc_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Master Data Connect",
-			"ibm.IBM&reg; Master Data Connect",
-			"site.IBM&reg; Master Data Connect",
+			"Master Data Management",
+			"ibm.Master Data Management",
+			"site.Master Data Management",
       "{{site.data.keyword.mdm-oc_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.mdm-oc_full}}"
 		],
-    "description": "IBM&reg; Master Data Connect"
+    "description": "Master Data Management"
 	},
 	"mdm-oc_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Master Data Connect",
-			"ibm.IBM Master Data Connect",
-			"site.IBM Master Data Connect",
+			"Master Data Management",
+			"ibm.Master Data Management",
+			"site.Master Data Management",
       "{{site.data.keyword.mdm-oc_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.mdm-oc_full_notm}}"
 		],
-    "description": "IBM Master Data Connect"
+    "description": "Master Data Management"
 	},
 	"mdmcloudfull": {
 	  "scope": "markdown",
@@ -6242,41 +6749,41 @@
 	"mon_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Monitoring with Sysdig",
-			"ibm.IBM Cloud&trade; Monitoring with Sysdig",
-			"site.IBM Cloud&trade; Monitoring with Sysdig",
+			"IBM Cloud&trade; Monitoring",
+			"ibm.IBM Cloud&trade; Monitoring",
+			"site.IBM Cloud&trade; Monitoring",
       "{{site.data.keyword.mon_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.mon_full}}"
 		],
-    "description": "IBM Cloud&trade; Monitoring with Sysdig"
+    "description": "IBM Cloud&trade; Monitoring"
 	},
 	"mon_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Monitoring with Sysdig",
-			"ibm.IBM Cloud Monitoring with Sysdig",
-			"site.IBM Cloud Monitoring with Sysdig",
+			"IBM Cloud Monitoring",
+			"ibm.IBM Cloud Monitoring",
+			"site.IBM Cloud Monitoring",
       "{{site.data.keyword.mon_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.mon_full_notm}}"
 		],
-    "description": "IBM Cloud Monitoring with Sysdig"
+    "description": "IBM Cloud Monitoring"
 	},
 	"mon_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Monitoring with Sysdig",
-			"ibm.Monitoring with Sysdig",
-			"site.Monitoring with Sysdig",
+			"Monitoring",
+			"ibm.Monitoring",
+			"site.Monitoring",
       "{{site.data.keyword.mon_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.mon_short}}"
 		],
-    "description": "Monitoring with Sysdig"
+    "description": "Monitoring"
 	},
 	"mqa": {
 	  "scope": "markdown",
@@ -6395,6 +6902,45 @@
 		],
     "description": "IBM&reg; MQ Light for IBM Cloud"
 	},
+	"mcko_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Multicloud Key Orchestrator",
+			"ibm.IBM&reg; Multicloud Key Orchestrator",
+			"site.IBM&reg; Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_full}}"
+		],
+    "description": "IBM&reg; Multicloud Key Orchestrator"
+	},
+	"mcko_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Multicloud Key Orchestrator",
+			"ibm.IBM Multicloud Key Orchestrator",
+			"site.IBM Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_full_notm}}"
+		],
+    "description": "IBM Multicloud Key Orchestrator"
+	},
+	"mcko_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Multicloud Key Orchestrator",
+			"ibm.Multicloud Key Orchestrator",
+			"site.Multicloud Key Orchestrator",
+      "{{site.data.keyword.mcko_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.mcko_short}}"
+		],
+    "description": "Multicloud Key Orchestrator"
+	},
 	"mysql": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6446,6 +6992,19 @@
 			"{{site.data.keyword.nlushort}}"
 		],
     "description": "Natural Language Understanding"
+	},
+	"nlb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Network Load Balancer for VPC",
+			"ibm.Network Load Balancer for VPC",
+			"site.Network Load Balancer for VPC",
+      "{{site.data.keyword.nlb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.nlb_full}}"
+		],
+    "description": "Network Load Balancer for VPC"
 	},
 	"networksecuritygroups_short": {
 	  "scope": "markdown",
@@ -6746,6 +7305,45 @@
 		],
     "description": "Personality Insights"
 	},
+	"framework-fs_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Framework for Financial Services&trade;",
+			"ibm.IBM Cloud Framework for Financial Services&trade;",
+			"site.IBM Cloud Framework for Financial Services&trade;",
+      "{{site.data.keyword.framework-fs_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.framework-fs_full}}"
+		],
+    "description": "IBM Cloud Framework for Financial Services&trade;"
+	},
+	"framework-fs_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Framework for Financial Services",
+			"ibm.IBM Cloud Framework for Financial Services",
+			"site.IBM Cloud Framework for Financial Services",
+      "{{site.data.keyword.framework-fs_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.framework-fs_notm}}"
+		],
+    "description": "IBM Cloud Framework for Financial Services"
+	},
+	"framework-fs_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Framework",
+			"ibm.Framework",
+			"site.Framework",
+      "{{site.data.keyword.framework-fs_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.framework-fs_short}}"
+		],
+    "description": "Framework"
+	},
 	"portfolio_optimization_short": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6775,15 +7373,15 @@
 	"powerSysFull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
-			"ibm.IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
-			"site.IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud",
+			"IBM&reg; Power Systems&trade; Virtual Server",
+			"ibm.IBM&reg; Power Systems&trade; Virtual Server",
+			"site.IBM&reg; Power Systems&trade; Virtual Server",
       "{{site.data.keyword.powerSysFull}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysFull}}"
 		],
-    "description": "IBM&reg; Power Systems&trade; Virtual Server on IBM Cloud"
+    "description": "IBM&reg; Power Systems&trade; Virtual Server"
 	},
 	"powerSysShort": {
 	  "scope": "markdown",
@@ -7175,6 +7773,32 @@
 		],
     "description": "Redis"
 	},
+	"redhat_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Red Hat&reg;",
+			"ibm.Red Hat&reg;",
+			"site.Red Hat&reg;",
+      "{{site.data.keyword.redhat_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.redhat_full}}"
+		],
+    "description": "Red Hat&reg;"
+	},
+	"redhat_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"Red Hat",
+			"ibm.Red Hat",
+			"site.Red Hat",
+      "{{site.data.keyword.redhat_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.redhat_notm}}"
+		],
+    "description": "Red Hat"
+	},
 	"relationshipextractionshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -7435,6 +8059,45 @@
 		],
     "description": "IBM Cloud Schematics"
 	},
+	"satellitelong": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&trade; Satellite",
+			"ibm.IBM Cloud&trade; Satellite",
+			"site.IBM Cloud&trade; Satellite",
+      "{{site.data.keyword.satellitelong}}"
+		],
+		"body": [
+			"{{site.data.keyword.satellitelong}}"
+		],
+    "description": "IBM Cloud&trade; Satellite"
+	},
+	"satellitelong_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Satellite",
+			"ibm.IBM Cloud Satellite",
+			"site.IBM Cloud Satellite",
+      "{{site.data.keyword.satellitelong_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.satellitelong_notm}}"
+		],
+    "description": "IBM Cloud Satellite"
+	},
+	"satelliteshort": {
+	  "scope": "markdown",
+		"prefix": [
+			"Satellite",
+			"ibm.Satellite",
+			"site.Satellite",
+      "{{site.data.keyword.satelliteshort}}"
+		],
+		"body": [
+			"{{site.data.keyword.satelliteshort}}"
+		],
+    "description": "Satellite"
+	},
 	"searchshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -7447,6 +8110,45 @@
 			"{{site.data.keyword.searchshort}}"
 		],
     "description": "Search"
+	},
+	"secrets-manager_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Secrets Manager",
+			"ibm.IBM Cloud&reg; Secrets Manager",
+			"site.IBM Cloud&reg; Secrets Manager",
+      "{{site.data.keyword.secrets-manager_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.secrets-manager_full}}"
+		],
+    "description": "IBM Cloud&reg; Secrets Manager"
+	},
+	"secrets-manager_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Secrets Manager",
+			"ibm.IBM Cloud Secrets Manager",
+			"site.IBM Cloud Secrets Manager",
+      "{{site.data.keyword.secrets-manager_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.secrets-manager_full_notm}}"
+		],
+    "description": "IBM Cloud Secrets Manager"
+	},
+	"secrets-manager_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Secrets Manager",
+			"ibm.Secrets Manager",
+			"site.Secrets Manager",
+      "{{site.data.keyword.secrets-manager_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.secrets-manager_short}}"
+		],
+    "description": "Secrets Manager"
 	},
 	"SecureGateway": {
 	  "scope": "markdown",
@@ -7841,15 +8543,15 @@
 	"speechtotextfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Speech to Text",
-			"ibm.IBM&reg; Speech to Text",
-			"site.IBM&reg; Speech to Text",
+			"IBM Watson&trade; Speech to Text",
+			"ibm.IBM Watson&trade; Speech to Text",
+			"site.IBM Watson&trade; Speech to Text",
       "{{site.data.keyword.speechtotextfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.speechtotextfull}}"
 		],
-    "description": "IBM&reg; Speech to Text"
+    "description": "IBM Watson&trade; Speech to Text"
 	},
 	"speechtotextdatafull": {
 	  "scope": "markdown",
@@ -8046,6 +8748,32 @@
 		],
     "description": "Transformation Advisor"
 	},
+	"terraform-provider_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Provider Plug-in for Terraform",
+			"ibm.IBM Cloud&reg; Provider Plug-in for Terraform",
+			"site.IBM Cloud&reg; Provider Plug-in for Terraform",
+      "{{site.data.keyword.terraform-provider_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.terraform-provider_full}}"
+		],
+    "description": "IBM Cloud&reg; Provider Plug-in for Terraform"
+	},
+	"terraform-provider_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Provider Plug-in for Terraform",
+			"ibm.IBM Cloud Provider Plug-in for Terraform",
+			"site.IBM Cloud Provider Plug-in for Terraform",
+      "{{site.data.keyword.terraform-provider_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.terraform-provider_full_notm}}"
+		],
+    "description": "IBM Cloud Provider Plug-in for Terraform"
+	},
 	"texttospeechshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -8062,15 +8790,54 @@
 	"texttospeechfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Text to Speech",
-			"ibm.IBM&reg; Text to Speech",
-			"site.IBM&reg; Text to Speech",
+			"IBM Watson&trade; Text to Speech",
+			"ibm.IBM Watson&trade; Text to Speech",
+			"site.IBM Watson&trade; Text to Speech",
       "{{site.data.keyword.texttospeechfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.texttospeechfull}}"
 		],
-    "description": "IBM&reg; Text to Speech"
+    "description": "IBM Watson&trade; Text to Speech"
+	},
+	"tg_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Transit Gateway",
+			"ibm.IBM Cloud&reg; Transit Gateway",
+			"site.IBM Cloud&reg; Transit Gateway",
+      "{{site.data.keyword.tg_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.tg_full}}"
+		],
+    "description": "IBM Cloud&reg; Transit Gateway"
+	},
+	"tg_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Transit Gateway",
+			"ibm.IBM Cloud Transit Gateway",
+			"site.IBM Cloud Transit Gateway",
+      "{{site.data.keyword.tg_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.tg_full_notm}}"
+		],
+    "description": "IBM Cloud Transit Gateway"
+	},
+	"tg_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Transit Gateway",
+			"ibm.Transit Gateway",
+			"site.Transit Gateway",
+      "{{site.data.keyword.tg_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.tg_short}}"
+		],
+    "description": "Transit Gateway"
 	},
 	"times": {
 	  "scope": "markdown",
@@ -8179,15 +8946,41 @@
 	"vpn_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Virtual Private Network",
-			"ibm.IBM Cloud&trade; Virtual Private Network",
-			"site.IBM Cloud&trade; Virtual Private Network",
+			"Virtual Private Network (VPN) for VPC",
+			"ibm.Virtual Private Network (VPN) for VPC",
+			"site.Virtual Private Network (VPN) for VPC",
       "{{site.data.keyword.vpn_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.vpn_full}}"
 		],
-    "description": "IBM Cloud&trade; Virtual Private Network"
+    "description": "Virtual Private Network (VPN) for VPC"
+	},
+	"vpn_vpc_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Virtual Private Network (VPN) for VPC",
+			"ibm.Virtual Private Network (VPN) for VPC",
+			"site.Virtual Private Network (VPN) for VPC",
+      "{{site.data.keyword.vpn_vpc_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpn_vpc_full}}"
+		],
+    "description": "Virtual Private Network (VPN) for VPC"
+	},
+	"vpn_vpc_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"VPN for VPC",
+			"ibm.VPN for VPC",
+			"site.VPN for VPC",
+      "{{site.data.keyword.vpn_vpc_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpn_vpc_short}}"
+		],
+    "description": "VPN for VPC"
 	},
 	"virtualmachinesshort": {
 	  "scope": "markdown",
@@ -8448,6 +9241,45 @@
 			"{{site.data.keyword.BluVPN}}"
 		],
     "description": "IBM Cloud&trade; VPN"
+	},
+	"vpe_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Virtual Private Endpoint (VPE) for VPC",
+			"ibm.Virtual Private Endpoint (VPE) for VPC",
+			"site.Virtual Private Endpoint (VPE) for VPC",
+      "{{site.data.keyword.vpe_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpe_full}}"
+		],
+    "description": "Virtual Private Endpoint (VPE) for VPC"
+	},
+	"vpe_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"VPE for VPC",
+			"ibm.VPE for VPC",
+			"site.VPE for VPC",
+      "{{site.data.keyword.vpe_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpe_short}}"
+		],
+    "description": "VPE for VPC"
+	},
+	"fl_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Flow Logs for VPC",
+			"ibm.Flow Logs for VPC",
+			"site.Flow Logs for VPC",
+      "{{site.data.keyword.fl_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.fl_full}}"
+		],
+    "description": "Flow Logs for VPC"
 	},
 	"ibmwatson": {
 	  "scope": "markdown",
@@ -9424,6 +10256,19 @@
 		],
     "description": "IBM Watson&trade; Visualization Rendering"
 	},
+	"vpc-plus-migration": {
+	  "scope": "markdown",
+		"prefix": [
+			"VPC+ Cloud Migration",
+			"ibm.VPC+ Cloud Migration",
+			"site.VPC+ Cloud Migration",
+      "{{site.data.keyword.vpc-plus-migration}}"
+		],
+		"body": [
+			"{{site.data.keyword.vpc-plus-migration}}"
+		],
+    "description": "VPC+ Cloud Migration"
+	},
 	"vra": {
 	  "scope": "markdown",
 		"prefix": [
@@ -9475,6 +10320,19 @@
 			"{{site.data.keyword.vsrx_full}}"
 		],
     "description": "IBM Cloud&trade; Juniper vSRX"
+	},
+	"wanclouds": {
+	  "scope": "markdown",
+		"prefix": [
+			"VPC+ by Wanclouds",
+			"ibm.VPC+ by Wanclouds",
+			"site.VPC+ by Wanclouds",
+      "{{site.data.keyword.wanclouds}}"
+		],
+		"body": [
+			"{{site.data.keyword.wanclouds}}"
+		],
+    "description": "VPC+ by Wanclouds"
 	},
 	"wearablefitness": {
 	  "scope": "markdown",
@@ -9670,6 +10528,45 @@
 			"{{site.data.keyword.appserver_notm}}"
 		],
     "description": "IBM WebSphere Application Server for IBM Cloud"
+	},
+	"was4vsi": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; WebSphere&reg; Application Server for VSI",
+			"ibm.IBM&reg; WebSphere&reg; Application Server for VSI",
+			"site.IBM&reg; WebSphere&reg; Application Server for VSI",
+      "{{site.data.keyword.was4vsi}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi}}"
+		],
+    "description": "IBM&reg; WebSphere&reg; Application Server for VSI"
+	},
+	"was4vsi_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM WebSphere Application Server for VSI",
+			"ibm.IBM WebSphere Application Server for VSI",
+			"site.IBM WebSphere Application Server for VSI",
+      "{{site.data.keyword.was4vsi_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi_notm}}"
+		],
+    "description": "IBM WebSphere Application Server for VSI"
+	},
+	"was4vsi_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"WebSphere Application Server for VSI",
+			"ibm.WebSphere Application Server for VSI",
+			"site.WebSphere Application Server for VSI",
+      "{{site.data.keyword.was4vsi_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.was4vsi_short}}"
+		],
+    "description": "WebSphere Application Server for VSI"
 	},
 	"workflowfull": {
 	  "scope": "markdown",

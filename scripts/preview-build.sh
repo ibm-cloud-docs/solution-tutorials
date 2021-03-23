@@ -5,6 +5,7 @@ mkdir -p builddocs/input
 DOMAIN_NAME_RULES=( \
   "console.bluemix.net" \
   "/cloud.ibm.com" \
+  "/test.cloud.ibm.com" \
   "console.cloud.ibm.com" \
 )
 for rule in "${DOMAIN_NAME_RULES[@]}"
@@ -53,15 +54,30 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tut
 # generate a list of all solutions, suitable to use in github issues
 (cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
 
+# check that all section IDs are unique
+(cd scripts/add-section-titles && npm install && node add-section-titles.js)
+
 # generate the new files
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
 
+# move the index to getting started
+mv builddocs/output/index.html builddocs/output/getting-started.html
+
+# and make a dummy index.html with all files
+cat scripts/header.txt > builddocs/output/index.html
+cat >> builddocs/output/index.html << EOF
+  <ul>
+EOF
+for file in $(cd builddocs/output && ls *.html | sort); do
+  echo "<li><a href=\"$file\">$file</a></li>" >> builddocs/output/index.html
+done
+
 # revert the "?topic" links to plain html files
-sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
+sed -i 's/"\/cloud-docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
 # check that there is no "{{"" not replaced in the output, ignoring binaries
-if grep -rI "{{" --exclude=conref.html --exclude vscodesnippets.json builddocs/output
+if grep -rI "{{" --exclude=conref.html --exclude=index.html --exclude vscodesnippets.json builddocs/output
 then
   echo "Found incorrect references"
   exit 1

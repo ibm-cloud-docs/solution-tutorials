@@ -1,13 +1,13 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2020
-lastupdated: "2020-07-23"
-lasttested: "2020-07-23"
+  years: 2020, 2021
+lastupdated: "2021-01-26"
+lasttested: "2020-12-21"
 
 content-type: tutorial
 services: vpc
-account-plan:
+account-plan: paid
 completion-time: 2h
 ---
 
@@ -31,8 +31,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
+{: shortdesc}
 
 ## Objectives
+{: #lamp-stack-on-vpc-0}
 
 * Provision a virtual server instance (VSI) in a VPC.
 * Install the latest Apache, MySQL and PHP software.
@@ -46,6 +48,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 2. The VSI is configured to use data from an encrypted Block Storage volume (optional).
 
 ## Before you begin
+{: #lamp-stack-on-vpc-1}
 
 {: #prereqs}
 This tutorial requires:
@@ -57,11 +60,12 @@ This tutorial requires:
 * `git` to clone source code repository,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
 <!--#/istutorial#-->
 
 ## Create services
+{: #lamp-stack-on-vpc-2}
 {: step}
 
 In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](https://{DomainName}/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
@@ -82,6 +86,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create SSH Key(s)
+{: #lamp-stack-on-vpc-3}
 1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
@@ -100,6 +105,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create VPC, Subnet(s) and Security Group(s)
+{: #lamp-stack-on-vpc-4}
 1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
@@ -121,7 +127,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {:pre}
 
-   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 22 --port-max 22 --json`
+   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote <your-ip-address> --port-min 22 --port-max 22 --json`
    {:tip}
 1. Add a rule to limit inbound to HTTP port 80.
    ```sh
@@ -129,7 +135,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {:pre}
 
-   You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote 97.134.171.20 --port-min 80 --port-max 80 --json`
+   You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote <your-ip-address> --port-min 80 --port-max 80 --json`
    {:tip}
 1. Add a rule to allow outbound to all, this is required to install software, it can be disabled or removed later on.
    ```sh
@@ -138,6 +144,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    {:pre}
 
 ### Create Virtual Server Instance
+{: #lamp-stack-on-vpc-5}
 
 1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 18.x by running the following command.  
    ```sh
@@ -165,6 +172,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
   {:tip}
 
 ## Install Apache, MySQL, and PHP
+{: #lamp-stack-on-vpc-6}
 {: step}
 
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
@@ -199,6 +207,7 @@ When the server is spun up for the first time, it is possible that it is already
    {: pre}
   
 ## Verify the installation and configuration
+{: #lamp-stack-on-vpc-7}
 {: step}
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
@@ -233,6 +242,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 ![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
 
 ## Install and configure WordPress
+{: #lamp-stack-on-vpc-8}
 {: step}
 
 Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page).
@@ -287,20 +297,24 @@ Experience your LAMP stack by installing an application. The following steps ins
    ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
 ## Configure domain
+{: #lamp-stack-on-vpc-9}
 {: step}
 
 To use an existing domain name with your LAMP server, update the A record to point to the VSI's floating IP address.
 
 ## Server monitoring and log management
+{: #lamp-stack-on-vpc-monitoring_log}
 {: step}
 
 To ensure server availability and the best user experience, monitoring should be enabled on every production server. Several options are available to monitor your VSI and capture logs in a central location for analysis.
 
 ### Server monitoring
+{: #lamp-stack-on-vpc-11}
 
 You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-ubuntu) documentation. 
 
 ### Server logging
+{: #lamp-stack-on-vpc-12}
 
 You can use {{site.data.keyword.la_full_notm}} to manage system and application logs in the IBM Cloud.
 
@@ -310,7 +324,7 @@ If you would like to configure the logging service follow the steps outlined in 
 
 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
-{: #configure_data_volume}
+{: #lamp-stack-on-vpc-configure_data_volume}
 {: step}
 The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted and attached to a new VSI.  You can also encrypt the volume with your own key. If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
 
@@ -354,6 +368,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}   
 
 ### Configure Apache to use the new /data file system
+{: #lamp-stack-on-vpc-14}
 
 1. Stop the Apache service
    ```sh
@@ -377,6 +392,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}   
 
 ### Configure MySQL to use the new /data file system
+{: #lamp-stack-on-vpc-15}
 
 1. Stop the MySQL service
    ```sh
@@ -411,7 +427,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}
 
 ## Remove resources
-{: #remove-resources}
+{: #lamp-stack-on-vpc-remove-resources}
 {: step}
 
 1. In the VPC [console](https://{DomainName}/vpc-ext), click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
@@ -422,7 +438,3 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
-
-## Related content
-
-* [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)

@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-04-08"
-lasttested: "2020-04-08"
+lastupdated: "2021-01-13"
+lasttested: "2021-01-13"
 
 content-type: tutorial
 services: virtual-servers, cis, loadbalancer-service, FileStorage
-account-plan:
+account-plan: paid
 completion-time:
 ---
 
@@ -31,6 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
+{: shortdesc}
 
 This tutorial walks you through a scenario with the creation of:
 
@@ -41,7 +42,7 @@ This tutorial walks you through a scenario with the creation of:
 - Configure the second location with the same configurations as the first location, then add {{site.data.keyword.cis_full_notm}} to point traffic to the healthy location if one copy fails.
 
 ## Objectives
-{: #objectives}
+{: #highly-available-and-scalable-web-application-objectives}
 
 * Create {{site.data.keyword.virtualmachinesshort}} to install PHP and MySQL
 * Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
@@ -63,29 +64,31 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 5. At a regular interval, the database content is backed up. A stand-by database server is available in case the master fails.
 
 ## Before you begin
-{: #prereqs}
+{: #highly-available-and-scalable-web-application-prereqs}
 
 ### Configure the VPN access
+{: #highly-available-and-scalable-web-application-2}
 
 In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your VPN connection to work on the servers.
 
-1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
+1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
 
 ### Check account permissions
+{: #highly-available-and-scalable-web-application-3}
 
 Contact your Infrastructure master user to get the following permissions:
 - **Network** so that you can create {{site.data.keyword.virtualmachinesshort}} with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
 
 ## Provision one server for the database
-{: #database_server}
+{: #highly-available-and-scalable-web-application-database_server}
 {: step}
 
 In this section, you configure one server to act as the master database.
@@ -95,27 +98,26 @@ In this section, you configure one server to act as the master database.
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
-   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
    - Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
+   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
-   - Review the other configuration options and click **Provision** to provision the server.
-
-      ![Configure virtual server](images/solution14/db-server.png)
+   - Review the other configuration options and click **Create** to provision the server.
 
    Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
    {: tip}
 
 ## Install and configure MySQL
-{: #mysql}
+{: #highly-available-and-scalable-web-application-mysql}
 {: step}
 
 The server does not come with a database. In this section, you install MySQL on the server.
 
 ### Install MySQL
+{: #highly-available-and-scalable-web-application-6}
 
 1. Connect to the server by using SSH:
    ```sh
@@ -144,10 +146,16 @@ The server does not come with a database. In this section, you install MySQL on 
    {:tip}
 
 ### Create a database for the application
+{: #highly-available-and-scalable-web-application-7}
 
-1. Login to MySQL and create a database called `wordpress`:
+1. Login to MySQL :
    ```sh
    mysql -u root -p
+   ```
+   {:pre}
+
+   and create a database called `wordpress`
+   ```sh
    CREATE DATABASE wordpress;
    ```
    {:pre}
@@ -181,6 +189,7 @@ The server does not come with a database. In this section, you install MySQL on 
 5. Make note of the database name, user and password. You will need them when configuring the application servers.
 
 ### Make the MySQL server visible to other servers on the network
+{: #highly-available-and-scalable-web-application-8}
 
 By default MySQL only listens on the local interface. The application servers will need to connect to the database so the MySQL configuration needs to be changed to listen on the private network interfaces.
 
@@ -207,13 +216,13 @@ By default MySQL only listens on the local interface. The application servers wi
    {:pre}
 
 ## Create a file storage for database backups
-{: #database_backup}
+{: #highly-available-and-scalable-web-application-database_backup}
 {: step}
 
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
 ### Create the file storage
-{: #create_for_backup}
+{: #highly-available-and-scalable-web-application-create_for_backup}
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog , and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
@@ -221,11 +230,12 @@ There are many ways in which backups can be done and stored when it comes to MyS
    - Select the same **Location** as the one where you created the database server.
    - Select a billing method.
    - Set **Size** to **20GB**.
+   - Set **Snapshot space** to **0GB**.   
    - Under **Endurance**, select **2 IOPS/GB**.
-   - Set **Snapshot space** to **0GB**.
 4. **Create** the volume.
 
 ### Authorize the database server to use the file storage
+{: #highly-available-and-scalable-web-application-11}
 
 Before a virtual server can mount a file storage, it needs to be authorized.
 
@@ -233,6 +243,7 @@ Before a virtual server can mount a file storage, it needs to be authorized.
 2. Under **Authorized Hosts**, click **Authorize Host** and select the virtual(database) server (Choose **Devices** > Virtual Server as Device Type > Type the name of the server).
 
 ### Mount the file storage for database backups
+{: #highly-available-and-scalable-web-application-12}
 
 The file storage can be mounted as an NFS drive into the virtual server.
 
@@ -295,6 +306,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {: tip}
 
 ### Setup a backup at regular interval
+{: #highly-available-and-scalable-web-application-13}
 
 1. Create `/root/dbbackup.sh` shell script (use `touch` and `nano`) with the following commands by replacing `CHANGE_ME` with the database password you specified earlier:
    ```sh
@@ -319,7 +331,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {:codeblock}
 
 ## Provision two servers for the PHP application
-{: #app_servers}
+{: #highly-available-and-scalable-web-application-app_servers}
 {: step}
 
 In this section, you will create two web application servers.
@@ -339,13 +351,14 @@ In this section, you will create two web application servers.
 1. Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
+{: #highly-available-and-scalable-web-application-0}
 {: shared_storage}
 {: step}
 
 This file storage is used to share the application files between **app1** and **app2** servers.
 
 ### Create the file storage
-{: #create_for_sharing}
+{: #highly-available-and-scalable-web-application-create_for_sharing}
 
 In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
@@ -353,13 +366,14 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
    - Select the same **Location** as the one where you created the application servers.
    - Select a billing method.
    - Set **Size** to **20GB**.
+   - Set **Snapshot space** to **20GB**.   
    - Under **Endurance**, select **2 IOPS/GB**.
-   - Set **Snapshot space** to **20GB**.
    - Click continue to create the service.
 
 ### Configure regular snapshots
+{: #highly-available-and-scalable-web-application-17}
 
-[Snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
+[Snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
 1. Select the file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
 2. Under **Snapshots**, edit the **snapshot schedule**. The schedule could be defined as follow:
@@ -368,10 +382,12 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.key
    3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save.
 
 ### Authorize the application servers to use the file storage
+{: #highly-available-and-scalable-web-application-18}
 
 1. Under **Authorized Hosts**, click **Authorize Host** to authorize the application servers(app1 and app2) to use this file storage.
 
 ### Mount file storage
+{: #highly-available-and-scalable-web-application-19}
 
 Repeat the following steps on each application server(app1 and app2):
 
@@ -414,16 +430,17 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/vsi?topic=virtual-servers-managing-a-provisioning-script#managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/infrastructure/image-templates?topic=image-templates-getting-started#creating-an-image-template).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/image-templates?topic=image-templates-getting-started-with-image-templates#creating-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
-{: #php_application}
+{: #highly-available-and-scalable-web-application-php_application}
 {: step}
 
 This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
 
 ### Install nginx and PHP
+{: #highly-available-and-scalable-web-application-21}
 
 Repeat the following steps on each application server:
 
@@ -455,6 +472,11 @@ Repeat the following steps on each application server:
           index index.php;
 
           server_name _;
+
+          location /nginx-health {
+                  access_log off;
+                  return 200 "healthy\n";
+          }
 
           location = /favicon.ico {
                   log_not_found off;
@@ -498,6 +520,7 @@ Repeat the following steps on each application server:
    {:pre}
 
 ### Install and configure WordPress
+{: #highly-available-and-scalable-web-application-22}
 
 As Wordpress will be installed on the File Storage mount, you only need to do the following steps on one of the servers. Let's pick **app1**.
 
@@ -594,7 +617,7 @@ If you configured the application servers with only a private network link, you 
 {: tip}
 
 ## Provision one load balancer server in front of the application servers
-{: #load_balancer}
+{: #highly-available-and-scalable-web-application-load_balancer}
 {: step}
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
@@ -605,12 +628,14 @@ At this point, we have two application servers with separate IP addresses. They 
 1. Select the same datacenter as *app1* and *app2* servers.
 1. Select the same subnet as the one where *app1* and *app2* where provisioned.
 1. Select the **IBM system pool** for **Public IPs**.
-1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
+1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
-5. In **Server Instances**, add *app1* and *app2* servers.
-6. Review and **Create** to complete the wizard.
+1. In **Health Checks**, set the **Path** to `/nginx-health`.
+1. In **Servers**, add *app1* and *app2* servers.
+1. Review and **Create** to complete the wizard.
 
 ### Change Wordpress configuration to use the load balancer URL
+{: #highly-available-and-scalable-web-application-24}
 
 The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to [the blog URL and injects this location in the pages](https://codex.wordpress.org/Settings_General_Screen). If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
 
@@ -618,13 +643,14 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
    You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
    {: tip}
-2. Log as administrator in the Wordpress blog via *app1* or *app2* URL
+2. Log as administrator in the Wordpress blog via *app1* or *app2* URL (`http://YourAppServerIPAddress/wp-login.php`)
 3. In Settings / General, set both the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
 4. Save the settings. Wordpress should redirect to the Load Balancer address
    It may take some time before the Load Balancer address becomes active due to DNS propagation.
    {: tip}
 
 ### Test the Load Balancer behavior
+{: #highly-available-and-scalable-web-application-25}
 
 The load balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
 
@@ -659,7 +685,7 @@ The load balancer is configured to check the health of the servers and to redire
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Extend the solution with a 2nd location (optional)
-{: #secondregion}
+{: #highly-available-and-scalable-web-application-secondregion}
 {: step}
 
 To increase resiliency and availability, you can extend the infrastructure setup with a second location and have your application running in two locations.
@@ -684,7 +710,7 @@ To implement this architecture, you would need to do the following in location t
 - Configure {{site.data.keyword.cis_full_notm}} to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
 
 ## Remove resources
-{: #removeresources}
+{: #highly-available-and-scalable-web-application-removeresources}
 {: step}
 
 1. Delete the Load Balancer
@@ -693,9 +719,9 @@ To implement this architecture, you would need to do the following in location t
 4. If a second location is configured, then delete all the resources and the {{site.data.keyword.cis_full_notm}} instance.
 
 ## Related content
-{: #related}
+{: #highly-available-and-scalable-web-application-related}
 
-- To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
+- To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://www.youtube.com/watch?v=Dk9mVkOkCg0){: new_window}
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
-- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
-- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.
+- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/virtual-servers?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/FileStorage?topic=FileStorage-managingSnapshots) of the content and [replication](https://{DomainName}/docs/FileStorage?topic=FileStorage-replication) to another data center.
