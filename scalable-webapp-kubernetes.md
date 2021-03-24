@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-03-23"
+lastupdated: "2021-03-24"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -170,7 +170,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 1. Define an environment variable named `MYPROJECT` and set the name of the application:
    ```sh
-   MYPROJECT=kubernetesnodeapp
+   MYPROJECT=<your-initials>kube-node-app
    ```
    {: pre}
 
@@ -181,9 +181,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
    ```sh
-   docker build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
-
-   docker push $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0
+    ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
    ```
    {: pre}
 
@@ -227,7 +225,7 @@ In this section you will deploy the starter application using [Helm](https://hel
     {: pre}
 1. Change to the chart directory under your starter application directory:
    ```sh
-   cd chart/$MYPROJECT
+   cd chart/kubernetesnodeapp
    ```
    {: pre}
 1. Install the Helm chart:
@@ -245,7 +243,7 @@ In this section you will deploy the starter application using [Helm](https://hel
    ```
    {: pre}
 1. Locate the service linked to your application. It is named after your project.
-   If your project name contains hyphens, they may have been removed by the chart, e.g `kubernetes-node-app` would become `kubernetesnodeapp`.
+   If your project name contains hyphens, they may have been removed by the chart, e.g `kube-node-app` would become `kubenodeapp`.
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
@@ -312,7 +310,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 {: #scalable-webapp-kubernetes-custom_domain}
 {: step}
 
-This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM <ingress-sub-domain> for the cluster.  If your domain is `example.com` then the subdomain will be `kubernetesnodeapp.example.com` or something like `abckubeapp.example.com`
+This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM <ingress-sub-domain> for the cluster.  If your domain is `example.com` then the subdomain will be `kubenodeapp.example.com` or something like `abckubeapp.example.com`
  
 ### with HTTP
 {: #scalable-webapp-kubernetes-15}
@@ -410,12 +408,20 @@ Once the autoscaler is successfully created, you should see
 {: step}
 
 * Delete the resources applied:
+   <!--##istutorial#-->  
    ```sh
    kubectl delete -f ingress-customdomain-https.yaml
    kubectl delete -f ingress-customdomain-http.yaml
    kubectl delete -f ingress-ibmdomain.yaml
    ```
    {: pre}
+   <!--#/istutorial#-->
+   <!--##isworkshop#-->
+   ```sh
+   kubectl delete -f ingress-ibmdomain.yaml
+   ```
+   {: pre}
+   <!--##isworkshop#-->
 * Delete the Kubernetes secret:
    ```sh
    ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $SECRET_NAME --namespace default

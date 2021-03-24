@@ -41,7 +41,7 @@
         {
           "name": "Scalable web app on Kubernetes",
           "url": "scalable-webapp-kubernetes.html",
-          "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+          "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
             "Docker",
