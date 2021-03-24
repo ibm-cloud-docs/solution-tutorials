@@ -213,12 +213,12 @@ In this section you will deploy the starter application using [Helm](https://hel
    {:tip}
 
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 
-    1. If you wish to use the `default` Kubernetes namespace, run the below command to set an environment variable
+   1. If you wish to use the `default` Kubernetes namespace, run the below command to set an environment variable
     ```sh
     export KUBERNETES_NAMESPACE=default
     ```
     {: pre}
-    1. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
+   2. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
     ```sh
     export KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
     ```
