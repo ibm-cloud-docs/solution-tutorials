@@ -170,7 +170,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 1. Define an environment variable named `MYPROJECT` and set the name of the application by replacing the placeholder with your initials:
    ```sh
-   MYPROJECT=<your-initials>kubenodeapp
+   export MYPROJECT=<your-initials>kubenodeapp
    ```
    {: pre}
 
@@ -181,7 +181,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
    ```sh
-    ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
+   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
    ```
    {: pre}
 
@@ -215,12 +215,12 @@ In this section you will deploy the starter application using [Helm](https://hel
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 
     1. If you wish to use the `default` Kubernetes namespace, run the below command to set an environment variable
     ```sh
-    KUBERNETES_NAMESPACE=default
+    export KUBERNETES_NAMESPACE=default
     ```
     {: pre}
     1. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
     ```sh
-    KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
+    export KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
     ```
     {: pre}
 1. Change to the chart directory under your starter application directory:
@@ -282,8 +282,8 @@ Use Ingress to set up the cluster inbound connection to the service.
    {: screen}
 2. Define environment variables `INGRESS_SUBDOMAIN` and `INGRESS_SECRET` to hold the values 
    ```sh
-   INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN_FROM_ABOVE_STEP>
-   INGRESS_SECRET=<INGRESS_SECRET>
+   export INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN_FROM_ABOVE_STEP>
+   export INGRESS_SECRET=<INGRESS_SECRET>
    ```
    {: pre}
 3. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS. 
@@ -311,13 +311,13 @@ Use Ingress to set up the cluster inbound connection to the service.
 {: step}
 
 This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM <ingress-sub-domain> for the cluster.  If your domain is `example.com` then the subdomain will be `kubenodeapp.example.com` or something like `abckubeapp.example.com`
- 
+
 ### with HTTP
 {: #scalable-webapp-kubernetes-15}
 
 1. Create an environment variable pointing to your custom subdomain:
    ```sh
-   CUSTOM_SUBDOMAIN=<my-custom-subdomain.com>
+   export CUSTOM_SUBDOMAIN=<my-custom-subdomain.com>
    ```
    {: pre}
 1. Create an Ingress file `ingress-customdomain-http.yaml` pointing to your domain from the template file `ingress-customdomain-http-template.yaml`:
