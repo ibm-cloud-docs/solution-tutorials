@@ -158,6 +158,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```sh
    MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
+   {: pre}
    Create it if required:
    {: pre}
    ```sh
