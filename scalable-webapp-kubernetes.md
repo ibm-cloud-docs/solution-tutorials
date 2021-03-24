@@ -168,9 +168,9 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 ### Build the container image
 {: #scalable-webapp-kubernetes-8}
 
-1. Define an environment variable named `MYPROJECT` and set the name of the application:
+1. Define an environment variable named `MYPROJECT` and set the name of the application by replacing the placeholder with your initials:
    ```sh
-   MYPROJECT=<your-initials>kube-node-app
+   MYPROJECT=<your-initials>kubenodeapp
    ```
    {: pre}
 
@@ -220,7 +220,7 @@ In this section you will deploy the starter application using [Helm](https://hel
     {: pre}
     1. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
     ```sh
-    KUBERNETES_NAMESPACE=<NAMESPACE_NAME_CREATED>
+    KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
     ```
     {: pre}
 1. Change to the chart directory under your starter application directory:
@@ -417,11 +417,13 @@ Once the autoscaler is successfully created, you should see
    {: pre}
    <!--#/istutorial#-->
    <!--##isworkshop#-->
-   ```sh
+   <!--
+    ```sh
    kubectl delete -f ingress-ibmdomain.yaml
    ```
    {: pre}
-   <!--##isworkshop#-->
+   -->
+   <!--#/isworkshop#-->
 * Delete the Kubernetes secret:
    ```sh
    ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $SECRET_NAME --namespace default
