@@ -957,6 +957,18 @@
             "HPC",
             "Virtual Private Cloud"
           ]
+        },
+        {
+          "hidden": true,
+          "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
+          "url": "hpc-lsf-vpc-auto-scale.html",
+          "description": "Enabling and configure the LSF resource connector on an existing VPC-based LSF cluster",
+          "imgSrc": "images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ]
         }
       ]
     }
