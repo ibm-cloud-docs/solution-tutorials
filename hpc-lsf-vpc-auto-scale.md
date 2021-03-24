@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-03-23"
+lastupdated: "2021-03-24"
 
 content-type: tutorial
 services: vpc
@@ -26,30 +26,30 @@ completion-time: 30m
 {: toc-services="vpc"}
 {: toc-completion-time="30m"}
 
- When demand exceeds available compute resources, IBM Spectrum LSF clusters that are hosted in the {{site.data.keyword.cloud}} can autonomously grow to meet demand. Later, when demand recedes, the cluster can quickly and automatically shed compute capacity to reduce cost. This feature, commonly known as auto scaling, is provided by the LSF resource connector working closely with the {{site.data.keyword.vpc_short}}.
+When demand exceeds available compute resources, IBM Spectrum LSF clusters that are hosted in the {{site.data.keyword.cloud}} can autonomously grow to meet demand. Later, when demand recedes, the cluster can quickly and automatically shed compute capacity to reduce cost. This feature, commonly known as auto scaling, is provided by the LSF resource connector working closely with the {{site.data.keyword.vpc_short}}.
 
- This tutorial takes you through the process of enabling and configuring the LSF resource connector on an existing {{site.data.keyword.cloud_notm}} VPC-based LSF cluster. 
- {: shortdesc}
+This tutorial takes you through the process of enabling and configuring the LSF resource connector on an existing {{site.data.keyword.cloud_notm}} VPC-based LSF cluster. 
+{: shortdesc}
 
- If you are not starting with an existing cluster, there are two automated paths available to get you started with an LSF cluster in VPC:
- 1. If you want to start with an LSF cluster hosted in an on-premises data center and extend it to the cloud to create a multi-cluster, see [Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}](/docs/solution-tutorials?topic=solution-tutorials-hpc-eda).
- 2. If you want to start with a purely cloud-based LSF cluster, see [Provision an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_short}}](/docs/solution-tutorials?topic=solution-tutorials-hpc-lsf-on-vpc).
+If you are not starting with an existing cluster, there are two automated paths available to get you started with an LSF cluster in VPC:
+1. If you want to start with an LSF cluster hosted in an on-premises data center and extend it to the cloud to create a multi-cluster, see [Extend an existing IBM Spectrum LSF cluster to the {{site.data.keyword.vpc_short}}](/docs/solution-tutorials?topic=solution-tutorials-hpc-eda).
+2. If you want to start with a purely cloud-based LSF cluster, see [Provision an IBM Spectrum LSF cluster on the {{site.data.keyword.vpc_short}}](/docs/solution-tutorials?topic=solution-tutorials-hpc-lsf-on-vpc).
 
- Regardless of how you begin your VPC-based LSF cluster, the process of adding auto scaling to the cluster is the same.
+Regardless of how you begin your VPC-based LSF cluster, the process of adding auto scaling to the cluster is the same.
 
- ## Objectives
- {: #hpc-lsf-vpc-auto-scale-objectives}
+## Objectives
+{: #hpc-lsf-vpc-auto-scale-objectives}
 
- * Enable the LSF resource connector
- * Configure the resource connector 
- * Demonstrate the resource connector by adding demand to create new dynamic nodes
+* Enable the LSF resource connector
+* Configure the resource connector 
+* Demonstrate the resource connector by adding demand to create new dynamic nodes
 
- ## Architecture
- {: #hpc-lsf-vpc-auto-scale-architecture}
+## Architecture
+{: #hpc-lsf-vpc-auto-scale-architecture}
  
- ![Architecture diagram](images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg)
+![Architecture diagram](images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg)
 
- ## Before you begin
+## Before you begin
 {: #hpc-lsf-vpc-auto-scale-prereqs}
 
 You need the following to complete this tutorial:
@@ -72,7 +72,7 @@ You need the following to complete this tutorial:
 {: #hpc-lsf-auto-scale-choose-deployer}
 {: step}
 
-The term "deployer" is applied to the machine that you use to set up the cluster. The machine needs SSH access to the cluster's master node. A Linux instance in the cloud is preferred, but you can use any machine that can host the {{site.data.cloud_notm}} CLI and run Ansible scripts. 
+The term "deployer" is applied to the machine that you use to set up the cluster. The machine needs SSH access to the cluster's master node. A Linux instance in the cloud is preferred, but you can use any machine that can host the {{site.data.keyword.cloud_notm}} CLI and run Ansible scripts. 
 
 ## Set up the IBM Cloud CLI
 {: #hpc-lsf-auto-scale-set-up-cli}
@@ -134,10 +134,10 @@ Install Ansible on your deployer machine. For instructions on installing Ansible
 
 Change to a directory on your deployer where you would like the setup scripts to live and run the following command:
 
-    ```
-    git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git 
-    ```
-    {: pre}
+  ```
+  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git 
+  ```
+  {: pre}
 
 You need to install Git if it's not already present on your deployer. Once the scripts are on your deployer, switch to the new `lsf-rescon-automation` directory then to the playbook directory. File locations in this tutorial assume that you know the location of the playbook directory.
 {: note}
@@ -166,9 +166,7 @@ The API key is the credential that you provide to the cloud API, which allows it
 {: #hpc-lsf-auto-scale-prepare-inventory-for-cluster}
 {: step}
 
-1. Locate an existing inventory file or create a new one for the LSF cluster where you want to enable the resource connector.
-
-If you originally created your cluster by using one of the existing sets of automation scripts and documentation from the LSF GitHub repository, you should already have an inventory file, `tf_inventory.yml`, located in the directory specified with the `$GEN_FILES_DIR` (for details, see the documentation that you used to create the cluster). If you don't have one, use the following format to create an inventory file:  
+1. Locate an existing inventory file or create a new one for the LSF cluster where you want to enable the resource connector. If you originally created your cluster by using one of the existing sets of automation scripts and documentation from the LSF GitHub repository, you should already have an inventory file, `tf_inventory.yml`, located in the directory specified with the `$GEN_FILES_DIR` (for details, see the documentation that you used to create the cluster). If you don't have one, use the following format to create an inventory file:  
 
   ```
   [local]
@@ -183,8 +181,8 @@ If you originally created your cluster by using one of the existing sets of auto
   ```
   {: screen}
 
-The listed machines have to be accessible by password-less SSH from your deployer machine by the exact hostname or specified IP. The host in the [local] group is where the playbooks are going to run (for example, the "deployer"). 
-{: important}
+  The listed machines have to be accessible by password-less SSH from your deployer machine by the exact hostname or specified IP. The host in the [local] group is where the playbooks are going to run (for example, the "deployer"). 
+  {: important}
 
 2. You can choose the name and location of the inventory, but you need to note the name and path and specify them on every invocation of Ansible playbooks. The commands listed in this tutorial assume the filename to be `inventory-file` and that it is located in the playbook directory. If you use that convention, you can copy and paste the Ansible playbook commands from this tutorial. If you are using one in `GEN_FILES_DIR`, substitute `$GEN_FILES_DIR/tf_inventory.yml` for `inventory-file`. 
 
@@ -270,19 +268,19 @@ The advantage of running the scripts separately is that you can quickly spot and
 
 1. Install tools
 
-The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
+  The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
 
   ```
   ansible-playbook -I inventory-file step1-install-tools.yml
   ```
   {: pre}
 
-Replace `inventory-file` with the name and path of the inventory file that you created in Step 6.
-{: note}
+  Replace `inventory-file` with the name and path of the inventory file that you created in Step 6.
+  {: note}
 
 2. Prepare files
 
-The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
+  The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
 
   ```
   ansible-playbook -I inventory-file step2-prepare-files.yml
@@ -291,7 +289,7 @@ The resource connector requires a number of configuration files to be in place o
 
 3. Deploy the resource connector
 
-Copy the configuration, template, and credentials files into place on the master node:
+  Copy the configuration, template, and credentials files into place on the master node:
 
   ```
   ansible-playbook -I inventory-file step3-deploy-rc.yml
@@ -300,14 +298,14 @@ Copy the configuration, template, and credentials files into place on the master
 
 4. Configure LSF
 
-This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
+  This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
 
   ```
   ansible-playbook -I inventory-file step4-config-lsf-rc.yml
   ```
   {: pre}
 
-The resource connector should now be configured and ready to go to work.
+  The resource connector should now be configured and ready to go to work.
 
 ## Test the resource connector
 {: #hpc-lsf-auto-scale-test-resource-connector}
@@ -336,7 +334,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
   ```
   {: screen}
 
-In this case, `bhosts` shows that there are three hosts in this small cluster: a master and two worker nodes. The "MAX" colum shows how many jobs each node can run simultaneously. To trigger the resource connector to add a node to the cluster, you can simply create more work than the current cluster has slots to run concurrently. 
+  In this case, `bhosts` shows that there are three hosts in this small cluster: a master and two worker nodes. The "MAX" colum shows how many jobs each node can run simultaneously. To trigger the resource connector to add a node to the cluster, you can simply create more work than the current cluster has slots to run concurrently. 
 
 3. Start by creating one job to see the effect. The `sleep` command will work for the purpose of this demonstration.
 
@@ -357,7 +355,7 @@ In this case, `bhosts` shows that there are three hosts in this small cluster: a
   ```
   {: screen}
 
-You can now see that one of the worker nodes "NJOBS" is 1, and the node is closed for more work. 
+  You can now see that one of the worker nodes "NJOBS" is 1, and the node is closed for more work. 
 
 5. Now you can create enough jobs to fill the slots on the cluster plus one extra to create more jobs than the cluster can run concurrently.
 
@@ -381,7 +379,7 @@ You can now see that one of the worker nodes "NJOBS" is 1, and the node is close
   ```
   {: screen}
 
-As you can see, all of the hosts are running max jobs and are closed for new work.
+  As you can see, all of the hosts are running max jobs and are closed for new work.
 
 6. If you look at the jobs that are currently queued, you can see that there is one job marked "PEND", because there is not a slot in the current cluster for it to run at this time.
 
@@ -398,19 +396,23 @@ As you can see, all of the hosts are running max jobs and are closed for new wor
   ```
  {: screen}
 
-The pending job should have triggered the resource connector to add a node. 
+  The pending job should have triggered the resource connector to add a node. 
 
 7. To verify if a new node was added, take a look at the {{site.data.keyword.cloud_notm}} CLI view of the instance in VPC. The following example output shows that there is a new node with the string `dyn` in the name, and it's using a custom image. That node did not exist did not exist prior to submitting the four jobs, which means it was provisioned by the resource connector.
 
   Example output: 
 
   ```
-  #ibmcloud is instances (command output is abridged with some columns removed to fit)Name                        Status    Address      Profile            Image     
-  lsf-rc-scripts-dyn-15974-0  starting  10.240.0.13  lsf-spk11-centos7  lsf-rc-scripts-vpc  lsf-rc-scripts-master-0     running   10.240.0.6   ibm-centos-amd64-2 lsf-rc-scripts-vpc    lsf-rc-scripts-worker-0     running   10.240.0.7   ibm-centos-amd64-2 lsf-rc-scripts-vpc    lsf-rc-scripts-worker-1     running   10.240.0.5   ibm-centos-amd64-2 lsf-rc-scripts-vpc 
+  #ibmcloud is instances (command output is abridged with some columns removed to fit)
+  Name                        Status    Address      Profile            Image     
+  lsf-rc-scripts-dyn-15974-0  starting  10.240.0.13  lsf-spk11-centos7  lsf-rc-scripts-vpc  
+  lsf-rc-scripts-master-0     running   10.240.0.6   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
+  lsf-rc-scripts-worker-0     running   10.240.0.7   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
+  lsf-rc-scripts-worker-1     running   10.240.0.5   ibm-centos-amd64-2 lsf-rc-scripts-vpc 
   ```
   {: screen}
 
-Wait a minute or so for the node to finish booting and show its status as "running".
+  Wait a minute or so for the node to finish booting and show its status as "running".
 
 8. Now that the new node is running, revisit the jobs and cluster status.
 
@@ -427,7 +429,7 @@ Wait a minute or so for the node to finish booting and show its status as "runni
   ```
   {: screen}
 
-Note that all five jobs are now running.
+  Note that all five jobs are now running.
 
 9. Take a look at the cluster and note the addition of the new `dyn` node and that it is running a job. 
 
