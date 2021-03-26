@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-03-25"
+lastupdated: "2021-03-26"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -240,11 +240,10 @@ In this section you will deploy the starter application using [Helm](https://hel
 
 1. List the Kubernetes services in the namespace:
    ```sh
-   kubectl get services
+   kubectl get services -n $KUBERNETES_NAMESPACE
    ```
    {: pre}
-1. Locate the service linked to your application. It is named after your project.
-   If your project name contains hyphens, they may have been removed by the chart, e.g `kube-node-app` would become `kubenodeapp`.
+1. Locate the service `kubernetesnodeapp` linked to your application.
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
