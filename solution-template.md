@@ -145,6 +145,12 @@ Introductory statement that overviews the section
    ```
    {: pre}
 
+   ```
+   the output of the script
+   is shown in a different format
+   ```
+   {: screen}
+
 This paragraph only appears in the iOS documentation
 {: ios}
 
