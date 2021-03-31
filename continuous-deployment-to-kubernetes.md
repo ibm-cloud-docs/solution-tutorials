@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2021-01-05"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-03-30"
 lasttested: "2020-12-03"
 
 content-type: tutorial
@@ -207,7 +207,7 @@ In this step, you will clean up the resources to remove what you created above.
 
 Do you want to learn more? Here are some ideas of what you can do next:
 
-- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+- [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Add a 3rd environment dedicated to testing.
 - Deploy the production app [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 
@@ -217,6 +217,6 @@ Do you want to learn more? Here are some ideas of what you can do next:
 * End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
 * [Security](https://{DomainName}/docs/containers?topic=containers-security) for {{site.data.keyword.containerlong_notm}}.
 * Toolchain [integrations](https://{DomainName}/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
-* Analyze logs and monitor application health with [LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+* Analyze logs and monitor [application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 
 
