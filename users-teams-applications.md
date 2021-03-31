@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2020
-lastupdated: "2021-01-05"
+  years: 2020, 2021
+lastupdated: "2021-03-30"
 lasttested: "2020-11-19"
 
 ---
@@ -177,7 +177,7 @@ Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/co
   <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" alt="Diagram showing separate namespaces to isolate environments" />
 </p>
 
-In the `Search` input box of LogDNA UI, use the field `namespace: ` to filter logs based 0n the namespace.
+In the `Search` input box of UI, use the field `namespace: ` to filter logs based 0n the namespace.
 {: tip}
 
 ## Setup delivery pipeline
@@ -211,9 +211,9 @@ Congratulations, your application can now safely be deployed from dev to product
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
 * [Best practices for organizing resources in a resource group](https://{DomainName}/docs/account?topic=account-account_setup)
-* [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
+* [Analyze logs and monitor health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
-* [Grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam)
-* [Grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam)
+* [Grant permissions to a user to view logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam)
+* [Grant permissions to a user to view metrics](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam)

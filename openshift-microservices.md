@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-03-15"
+lastupdated: "2021-03-30"
 lasttested: "2021-03-15"
 
 content-type: tutorial
@@ -980,7 +980,7 @@ sysdig-agent-qrbcq   1/1       Running   0          1m
 sysdig-agent-rhrgz   1/1       Running   0          1m
 ```
 
-## Monitor your Cluster with SysDig
+## Monitor your Cluster
 {: #openshift-microservices-use-sysdig}
 {: step}
 
@@ -988,7 +988,7 @@ sysdig-agent-rhrgz   1/1       Running   0          1m
 
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
 
-### View SysDig pre-defined views and dashboards
+### View pre-defined monitoring views and dashboards
 {: #openshift-microservices-42}
 
 Use views and dashboards to monitor your infrastructure, applications, and services. You can use pre-defined dashboards. You can also create custom dashboards through the Web UI or programmatically. You can backup and restore dashboards by using Python scripts.
@@ -1102,5 +1102,5 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
+- [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.6/nodes/pods/nodes-pods-autoscaling.html)
