@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-03-26"
+lastupdated: "2021-03-30"
 
 content-type: tutorial
 services: vpc
@@ -259,7 +259,7 @@ After you fill out the information for the configuration files, automation can t
 The set up and configuration is broken out into four steps, but you can also choose to run the following playbook, which calls the four steps in order for you: 
 
   ```
-  ansible-playbook -I inventory-file step-all-setup-rc.yml
+  ansible-playbook -i inventory-file step-all-setup-rc.yml
   ```
   {: pre}
 
@@ -271,7 +271,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
 
   ```
-  ansible-playbook -I inventory-file step1-install-tools.yml
+  ansible-playbook -i inventory-file step1-install-tools.yml
   ```
   {: pre}
 
@@ -283,7 +283,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
 
   ```
-  ansible-playbook -I inventory-file step2-prepare-files.yml
+  ansible-playbook -i inventory-file step2-prepare-files.yml
   ```
   {: pre}
 
@@ -292,7 +292,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   Copy the configuration, template, and credentials files into place on the master node:
 
   ```
-  ansible-playbook -I inventory-file step3-deploy-rc.yml
+  ansible-playbook -i inventory-file step3-deploy-rc.yml
   ```
   {: pre}
 
@@ -301,7 +301,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
 
   ```
-  ansible-playbook -I inventory-file step4-config-lsf-rc.yml
+  ansible-playbook -i inventory-file step4-config-lsf-rc.yml
   ```
   {: pre}
 
@@ -316,7 +316,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 1. Log in to the master node of your LSF cluster. If you logged in as `root`, switch to a user with `lsfadmin` permission.
 
   ```
-  [root@lsf-rc-scripts-master-0 ~]# su lsfadmin 
+  [root@lsf-rc-scripts-master-0 ~]# su - lsfadmin 
   bash-4.2$
   ```
   {: screen}
