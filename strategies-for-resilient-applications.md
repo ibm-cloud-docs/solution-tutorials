@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-03-09"
+lastupdated: "2021-04-01"
 lasttested: "2019-12-07"
 
 ---
@@ -136,10 +136,10 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
 
-### Kubernetes
+### Kubernetes or {{site.data.keyword.openshift_short}}
 {: #strategies-for-resilient-applications-11}
 
-With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. {{site.data.keyword.containershort_notm}} can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics), VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
+With Kubernetes or {{site.data.keyword.openshift_short}} clusters, you can achieve a multi-zones within regions architecture as an active/active use case. When implementing a solution with {{site.data.keyword.containerlong_notm}} or {{site.data.keyword.openshiftlong_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. Kubernetes and  {{site.data.keyword.openshift_short}} clusters can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics), which gives you the security of a private cloud environment with the dynamic scalability of a public cloud, or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
 
 The Kubernetes multi-region architecture looks like this.
 
@@ -319,7 +319,7 @@ Many of the services provide stateless APIs and offer high-availability through 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
 | Cloud Foundry | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li></ul> |
-| {{site.data.keyword.containerlong_notm}} | <ul><li>Resiliency by design with support for multi-zone clusters</li><li>Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
+| {{site.data.keyword.containerlong_notm}}, {{site.data.keyword.openshiftlong_notm}} | <ul><li>Resiliency by design with support for multi-zone clusters</li><li>Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
 | {{site.data.keyword.openwhisk_short}} | <ul><li>Available in multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Functions API to deploy actions in multiple locations</li></ul> |
 | {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | <ul><li>Provision servers in multiple locations</li><li>Attach servers in the same location to a local load balancer</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
 | {{site.data.keyword.cloudant}} | <ul><li>One-shot and Continuous replication between databases</li><li>Automatic data redundancy within a region</li></ul> |
