@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-03-30"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -455,8 +455,8 @@ Once Terraform completes, it will have created:
 * a Kubernetes secret with the database credentials
 * a Cloud Object Storage instance
 * a Kubernetes secret with the Cloud Object Storage credentials
-* a logging(LogDNA) instance
-* a monitoring(Sysdig) instance
+* a logging instance
+* a monitoring instance
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
 

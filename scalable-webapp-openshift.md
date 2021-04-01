@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-03-08"
+lastupdated: "2021-03-30"
 lasttested: "2021-03-08"
 
 content-type: tutorial
@@ -512,7 +512,7 @@ In this section, you will learn to monitor the health and performance of your ap
 6. Check the CPU and memory usage.
 7. For logging, you can use the in-built `oc logs` command.
 
-  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup LogDNA and Sysdig add-ons to monitor cluster health.
+  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
   {:tip}
 
 ## Scale the app

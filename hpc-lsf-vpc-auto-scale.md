@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-03-24"
+lastupdated: "2021-03-30"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
-completion-time: 30m
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -24,7 +24,7 @@ completion-time: 30m
 {: #hpc-lsf-vpc-auto-scale}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
-{: toc-completion-time="30m"}
+{: toc-completion-time="1h"}
 
 When demand exceeds available compute resources, IBM Spectrum LSF clusters that are hosted in the {{site.data.keyword.cloud}} can autonomously grow to meet demand. Later, when demand recedes, the cluster can quickly and automatically shed compute capacity to reduce cost. This feature, commonly known as auto scaling, is provided by the LSF resource connector working closely with the {{site.data.keyword.vpc_short}}.
 
@@ -259,7 +259,7 @@ After you fill out the information for the configuration files, automation can t
 The set up and configuration is broken out into four steps, but you can also choose to run the following playbook, which calls the four steps in order for you: 
 
   ```
-  ansible-playbook -I inventory-file step-all-setup-rc.yml
+  ansible-playbook -i inventory-file step-all-setup-rc.yml
   ```
   {: pre}
 
@@ -271,7 +271,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
 
   ```
-  ansible-playbook -I inventory-file step1-install-tools.yml
+  ansible-playbook -i inventory-file step1-install-tools.yml
   ```
   {: pre}
 
@@ -283,7 +283,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
 
   ```
-  ansible-playbook -I inventory-file step2-prepare-files.yml
+  ansible-playbook -i inventory-file step2-prepare-files.yml
   ```
   {: pre}
 
@@ -292,7 +292,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   Copy the configuration, template, and credentials files into place on the master node:
 
   ```
-  ansible-playbook -I inventory-file step3-deploy-rc.yml
+  ansible-playbook -i inventory-file step3-deploy-rc.yml
   ```
   {: pre}
 
@@ -301,7 +301,7 @@ The advantage of running the scripts separately is that you can quickly spot and
   This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
 
   ```
-  ansible-playbook -I inventory-file step4-config-lsf-rc.yml
+  ansible-playbook -i inventory-file step4-config-lsf-rc.yml
   ```
   {: pre}
 
@@ -316,7 +316,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 1. Log in to the master node of your LSF cluster. If you logged in as `root`, switch to a user with `lsfadmin` permission.
 
   ```
-  [root@lsf-rc-scripts-master-0 ~]# su lsfadmin 
+  [root@lsf-rc-scripts-master-0 ~]# su - lsfadmin 
   bash-4.2$
   ```
   {: screen}
@@ -445,4 +445,59 @@ This step is an example of how you can create demand on an LSF cluster to trigge
   ```
   {: screen}
 
-10. When the jobs is done, the new node is removed from the cluster and returned to the cloud for deletion. 
+10. When the jobs is done, the new node is removed from the cluster and returned to the cloud for deletion.
+
+## Manage the resource connector
+{: #hpc-lsf-auto-scale-manage-resource-connector}
+{: step}
+
+After you enable and demonstrate the resource connector, make sure that you can manage it to control your cluster size and limit your costs. 
+
+### Disable the resource connector
+{: #hpc-disable-resource-connector}
+
+You can disable the resource connector so that it doesn't allow demand to trigger provisioning and adding new cloud hosts to your cluster. To disable the resource connector, complete the following steps:
+
+1. Run the following command:
+
+  ```
+  cd $LSF_TOP/conf
+  ```
+  {: pre}
+
+2. Open `lsf.conf` in an editor and find the option `LSB_RC_EXTERNAL_HOST_FLAG=icgen2host`. 
+3. Comment that line by adding a "#" character: `# LSB_RC_EXTERNAL_HOST_FLAG=icgen2host`.
+4. Restart the daemons to pick up the change:
+  
+  ```
+  lsadmin reconfig
+  ```
+  {: pre}
+  
+  ```
+  badmin mbdrestart
+  ```
+  {: pre}
+
+5. When you are ready to re-enable the resource connector, remove the comment ("#") from the line and restart the daemons.
+
+### Manage number of hosts
+{: #hpc-manage-hosts}
+
+You can manage the number of hosts that the resource connector is allowed to provision by completing the following steps:
+
+1. Run the following command:
+
+  ```
+  cd $LSF_TOP/conf/resource_connector/ibmcloudgen2/conf/
+  ```
+  {: pre}
+  
+2. Open the file `ibmcloudgen2_templates.json` in an editor.
+3. Locate the parameter "maxNumber". 
+4. Set the parameter to the maximum number of hosts that you want to allow the resource connector to provision.
+
+## Related content
+{: #hpc-lsf-auto-scale-related-content}
+
+IBM Spectrum LSF provides many configuration options that allow you to tune and control your resource connector. For the complete resource connector documentation, see [Using the IBM Spectrum LSF Resource Connector](https://www.ibm.com/support/knowledgecenter/SSWRJV_10.1.0/lsf_welcome/lsf_kc_resource_connector.html){: external}.
