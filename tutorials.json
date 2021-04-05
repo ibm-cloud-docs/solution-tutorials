@@ -29,7 +29,7 @@
         {
           "name": "Scalable web app on Kubernetes",
           "url": "scalable-webapp-kubernetes.html",
-          "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+          "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
             "Docker",
@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-03-26"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -72,7 +72,7 @@
             "Watson"
           ],
           "guide": true,
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-03-09"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -102,7 +102,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-02-18"
+          "lastUpdated": "2021-03-08"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -115,7 +115,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-02-18"
+          "lastUpdated": "2021-03-10"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-02-18"
+          "lastUpdated": "2021-03-15"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -247,7 +247,7 @@
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
           "url": "application-log-analysis.html",
-          "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
+          "description": "Use IBM Log Analysis to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
             "Kubernetes",
@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-03-04"
+          "lastUpdated": "2021-03-22"
         }
       ]
     },
@@ -428,7 +428,7 @@
             "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2021-03-04"
+          "lastUpdated": "2021-03-08"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",

@@ -41,7 +41,7 @@
         {
           "name": "Scalable web app on Kubernetes",
           "url": "scalable-webapp-kubernetes.html",
-          "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+          "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
             "Docker",
@@ -360,7 +360,7 @@
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
           "url": "application-log-analysis.html",
-          "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
+          "description": "Use IBM Log Analysis to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
             "Kubernetes",
@@ -952,6 +952,18 @@
           "url": "hpc-lsf-on-vpc.html",
           "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
           "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
+          "tags": [
+            "Storage",
+            "HPC",
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "hidden": true,
+          "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
+          "url": "hpc-lsf-vpc-auto-scale.html",
+          "description": "Enabling and configure the LSF resource connector on an existing VPC-based LSF cluster",
+          "imgSrc": "images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg",
           "tags": [
             "Storage",
             "HPC",

@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020
-lastupdated: "2020-12-22"
+  years: 2017, 2019, 2020, 2021
+lastupdated: "2021-03-30"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -20,7 +20,7 @@ completion-time: 2h
 {:tip: .tip}
 {:pre: .pre}
 
-# Analyze logs and monitor application health with LogDNA and Sysdig
+# Analyze logs and monitor application health 
 {: #application-log-analysis}
 {: toc-content-type="tutorial"}
 {: toc-services="containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig"}
@@ -31,10 +31,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
+This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 {:shortdesc}
 
-Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
+Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure monitoring agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 
 ## Objectives
 {: #application-log-analysis-objectives}
@@ -70,8 +70,8 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 <!--##istutorial#-->
 In addition, make sure you:
-- [grant permissions to a user to view logs in LogDNA](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam#user_logdna)
-* and [grant permissions to a user to view metrics in Sysdig](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam_users)
+- [grant permissions to a user to view logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam#user_logdna)
+* and [grant permissions to a user to view monitoring metrics](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam_users)
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -240,9 +240,9 @@ To provision and connect a {{site.data.keyword.la_short}} service,
    4. Create a unique **Service name** such as `<your-initials>-logging`.
    5. Use the resource group associated with your cluster and click **Create**.
 
-   The service provides a centralized log management system where log data is hosted on IBM Cloud. Connect simplifies the installation of *logdna-agent* pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+   The service provides a centralized log management system where log data is hosted on IBM Cloud. Connect simplifies the installation of *logdna-agent* pod on each node of your cluster. The logging agent reads log files from the pod where it is installed, and forwards the log data to your logging instance.
 
-3. Launch the LogDNA UI by clicking **Launch** (*the connect button should have changed to Launch*). It may take a few minutes before you start seeing logs.
+3. Launch the {{site.data.keyword.la_short}} UI by clicking **Launch** (*the connect button should have changed to Launch*). It may take a few minutes before you start seeing logs.
 4. To check whether the `logdna-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
    ```sh
    kubectl get pods --namespace ibm-observe
@@ -263,7 +263,7 @@ To provision and connect a {{site.data.keyword.la_short}} service,
 {: generate_application_logs}
 {: step}
 
-In this section, you will generate application logs and review them in LogDNA.
+In this section, you will generate application logs and review them in {{site.data.keyword.la_short}}.
 
 ### Generate application logs
 {: #application-log-analysis-11}
@@ -278,7 +278,7 @@ Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/
 ### Access application logs
 {: #application-log-analysis-access}
 
-You can access the application specific log in the LogDNA UI using the filters.
+You can access the application specific log in the {{site.data.keyword.la_short}} UI using the filters.
 
 1. On the top bar, click on **All Apps**.
 1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels. You can also type `app:app-log-analysis` in the *Search...* field.
@@ -294,7 +294,7 @@ In this section, you will modify what and how much is displayed and save this as
 ### Search logs
 {: #application-log-analysis-14}
 
-1. In the **Search** input box located at the bottom of the page in the LogDNA UI,
+1. In the **Search** input box located at the bottom of the page in the {{site.data.keyword.la_short}} UI,
    - you can search for lines that contain a specific text like **"This is my first log entry"** or **500 internal server error**.
    - or a specific log level by entering `level:info` where level is a field that accepts string value.
 
@@ -355,7 +355,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
    4. Create a unique **Service name** such as `<your-initials>-monitoring`.
    5. Use the resource group associated with your cluster.
    6. Leave IBM platform metrics to `Disable` and click **Create**.
-3. Click **Launch** and you should see the Sysdig monitor UI. It may take few minutes for the monitoring information to appear.
+3. Click **Launch** and you should see the monitoring UI. It may take few minutes for the monitoring information to appear.
 4. To check whether the `sysdig-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
    ```sh
    kubectl get pods --namespace ibm-observe
@@ -369,7 +369,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
    sysdig-agent-q2s55   1/1     Running   0          73s
    ```
 
-Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
+Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
   ```yaml
   spec:
     template:
@@ -378,7 +378,7 @@ Note: The Sysdig agent installation as provided by the IBM Cloud script includes
           prometheus.io/scrape: "true"
           prometheus.io/port: "8002"
   ```
-Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Sysdig Blog](https://sysdig.com/blog/prometheus-metrics/) for details.
+Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
 
 ### Monitor your cluster
@@ -386,12 +386,12 @@ Finally, the application includes a Prometheus library `prometheus_client`, whic
 
 To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
 
-Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
+Note: Change the interval to **1 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
-1. Back to the Sysdig UI, under `Explore` choose `Deployments` for `My Groupings`
-    ![Sysdig dashboard showing deployments](images/solution12/sysdig_groupings.png)
+1. Back to the UI, under `Explore` choose `Deployments` for `My Groupings`
+    ![Dashboard showing deployments](images/solution12/sysdig_groupings.png)
 2. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 3. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
 4. To monitor the latency of the application,
@@ -410,7 +410,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
-![Sysdig dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png)
+![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png)
 
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 2. To monitor the calls to a given api endpoint of the application,
@@ -452,7 +452,7 @@ To focus the dashboard on your cluster:
 {: #application-log-analysis-remove_resource}
 {: step}
 
-- Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
+- Remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
@@ -474,5 +474,5 @@ To focus the dashboard on your cluster:
 {:related}
 - [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-kube_reset#kube_reset)
 - [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-archiving#archiving)
-- [Configuring alerts in Sysdig](https://docs.sysdig.com/en/alerts.html)
-- [Working with notification channels in Sysdig UI](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-notifications#notifications)
+- [Working with monitoring alerts](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-alerts)
+- [Working with monitoring notification channels](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-notifications#notifications)
