@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-04-01"
+lastupdated: "2021-04-06"
 lasttested: "2019-12-07"
 
 ---
@@ -136,10 +136,10 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
 
-### Kubernetes or {{site.data.keyword.openshift_short}}
+### Kubernetes or {{site.data.keyword.openshiftshort}}
 {: #strategies-for-resilient-applications-11}
 
-With Kubernetes or {{site.data.keyword.openshift_short}} clusters, you can achieve a multi-zones within regions architecture as an active/active use case. When implementing a solution with {{site.data.keyword.containerlong_notm}} or {{site.data.keyword.openshiftlong_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. Kubernetes and  {{site.data.keyword.openshift_short}} clusters can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics), which gives you the security of a private cloud environment with the dynamic scalability of a public cloud, or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
+With Kubernetes or {{site.data.keyword.openshiftshort}} clusters, you can achieve a multi-zones within regions architecture as an active/active use case. When implementing a solution with {{site.data.keyword.containerlong_notm}} or {{site.data.keyword.openshiftlong_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. Kubernetes and {{site.data.keyword.openshiftshort}} clusters can be deployed in a [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics), which gives you the security of a private cloud environment with the dynamic scalability of a public cloud, or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics).
 
 The Kubernetes multi-region architecture looks like this.
 
