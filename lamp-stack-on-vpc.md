@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
 lastupdated: "2021-04-08"
-lasttested: "2020-12-21"
+lasttested: "2020-04-08"
 
 content-type: tutorial
 services: vpc
@@ -40,6 +40,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Install the latest Apache, MySQL and PHP software.
 * Host a website or blog by installing and configuring WordPress.
 * Configure logging and monitoring to detect outages and monitor for slow performance (optional).
+* Resize the VSI (optional).
 
 ![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png)
 </p>
@@ -177,7 +178,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
 
-When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the above commands, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
+When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the commands below, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
 {:tip}
 
 1. Disable interactive mode during updates 
@@ -351,7 +352,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ssh root@$FLOATING_IP
    ```
    {: pre}
-1. Configure the newly created data volume on the VSI.  
+1. Configure the newly created data volume on the VSI, run each line below one at a time.  
 
    ```sh
    new_bsv=$(echo $(parted -l 2>&1) | awk 'NR==1{print $2}' | sed 's/:$//')
@@ -451,10 +452,10 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
    {:tip}
 1. Start the instance.
    ```sh
-   ibmcloud is instance-stop $VSI_ID
+   ibmcloud is instance-start $VSI_ID
    ```
    {:pre}
-1.  Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. You should be able to access your WordPress page just as you had it before the resizing.
+1.  You may need to wait a couple of minutes as the VSI is placed on an appropriate host and started. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. You should be able to access your WordPress page just as you had it before the resizing.
 
 ## Remove resources
 {: #lamp-stack-on-vpc-remove-resources}
