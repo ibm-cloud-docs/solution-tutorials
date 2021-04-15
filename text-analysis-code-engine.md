@@ -156,7 +156,7 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
-   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.
+   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.  If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private)
    {:tip}
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
@@ -436,8 +436,10 @@ After you create access to your private code repository, you can pull code from 
 1. You can decide between two kinds of SSH keys to connect to your source repository - [Choose an SSH key](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#choose-ssh-key).
 2. Create a Git repository access secret by following the [instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#create-code-repo-console).
 3. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli). Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image.
+
    For private repository, use the `--source` option to provide the URL with the SSH protocol and use the `--git-repo-secret` option with the name of the repository access secret that you created.
    {:tip}
+
 4. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
 
 ## Remove resources
