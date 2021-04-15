@@ -143,7 +143,7 @@ Change to a directory on your deployer where you would like the setup scripts to
 You need to install Git if it's not already present on your deployer. Once the scripts are on your deployer, switch to the new `lsf-rescon-automation` directory then to the playbook directory. File locations in this tutorial assume that you know the location of the playbook directory.
 {: note}
 
-The repository contains files that can be used to create several types of LSF clusters in the {{site.data.keyword.cloud_notm}}, but for the purposes of this tutorial, you only need the files in the `resource_connector` directory. Navigate to the `resource_connector` directory for further navigation details.
+The repository contains files that can be used to create several types of LSF clusters in the {{site.data.keyword.cloud_notm}}, but for the purposes of this tutorial, you only need the files in the `LSF_On_IBM_Cloud/resource_connector` directory. Navigate to this directory now. The directories and files referenced in the tutorial are all relative to the `resource_connector` directory.
 
 ## Prepare your IBM Cloud API key
 {: #hpc-lsf-auto-scale-prepare-api-key}
