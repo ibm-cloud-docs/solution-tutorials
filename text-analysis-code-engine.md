@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-04-01"
+lastupdated: "2021-04-15"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -142,7 +142,7 @@ Putting entities into a single project enables you to manage access control more
 
 {{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to {{site.data.keyword.codeengineshort}} under the targeted project. This frontend web application will allow users to upload text files, while the backend application will write the file to {{site.data.keyword.cos_full_notm}}.
 
-We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications. You can create applications from the console or CLI.
+We've already built images for the two applications and pushed them to the public {{site.data.keyword.registryshort_notm}}. You will use these pre-built container images to deploy the respective applications. You can create applications from the console or CLI.
 
 ### Deploy a frontend application
 {: #text-analysis-code-engine-4}
@@ -412,6 +412,33 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun
    ```
    {:pre}
+
+## Optional: Use a private Git repository and a private {{site.data.keyword.registryshort_notm}} 
+{: #text-analysis-code-engine-private}
+{: step}
+
+Follow the instructions in this section to build a container image from source code of a private Git repository and push the container image to a private {{site.data.keyword.registryshort_notm}} like {{site.data.keyword.registrylong_notm}}, 
+
+### Adding private registry access 
+{: #text-analysis-code-engine-private-registry}
+
+Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add [access to a {{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry#add-registry-access-ce-cli).
+
+A container image registry, or registry, is a repository for your container images. For example, Docker Hub and {{site.data.keyword.registrylong_notm}} are container image registries. With {{site.data.keyword.codeengineshort}}, you can add access to your private container image registries.
+
+### Create a container image by pulling source code from a private Git repository
+{: #text-analysis-code-engine-private-repository}
+
+A code repository, such as GitHub or GitLab, stores source code. With {{site.data.keyword.codeengineshort}}, you can add access to a private code repository and then reference that repository from your build. A build, or image build, is a mechanism that you can use to create a container image from your source code. {{site.data.keyword.codeengineshort}} supports building from a Dockerfile and Cloud Native Buildpacks.
+
+After you create access to your private code repository, you can pull code from repo, build it, and deploy an app or job with {{site.data.keyword.codeengineshort}}.
+
+1. You can decide between two kinds of SSH keys to connect to your source repository - [Choose an SSH key](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#choose-ssh-key).
+2. Create a Git repository access secret by following the [instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#create-code-repo-console).
+3. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli). Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image.
+   For private repository, use the `--source` option to provide the URL with the SSH protocol and use the `--git-repo-secret` option with the name of the repository access secret that you created.
+   {:tip}
+4. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
 
 ## Remove resources
 {: #text-analysis-code-engine-cleanup}
