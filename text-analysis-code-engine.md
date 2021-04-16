@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-04-15"
+lastupdated: "2021-04-16"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -70,6 +70,7 @@ The platform is designed to address the needs of developers who just want their 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
    * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
+   * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -156,7 +157,7 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
-   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.  If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private)
+   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.  If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {:tip}
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
@@ -413,34 +414,47 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```
    {:pre}
 
-## Optional: Use a private Git repository and a private {{site.data.keyword.registryshort_notm}} 
-{: #text-analysis-code-engine-private}
+## Optional: Build and push the container images to {{site.data.keyword.registrylong_notm}}
+{: #text-analysis-code-engine-private-registry}
 {: step}
 
-Follow the instructions in this section to build a container image from source code of a private Git repository and push the container image to a private {{site.data.keyword.registryshort_notm}} like {{site.data.keyword.registrylong_notm}}, 
-
-### Adding private registry access 
-{: #text-analysis-code-engine-private-registry}
-
-Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add [access to a {{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry#add-registry-access-ce-cli).
+Follow the instructions in this section, you can set up your own secured image repository in {{site.data.keyword.registrylong_notm}} where you can safely store and share images between users.
 
 A container image registry, or registry, is a repository for your container images. For example, Docker Hub and {{site.data.keyword.registrylong_notm}} are container image registries. With {{site.data.keyword.codeengineshort}}, you can add access to your private container image registries.
 
-### Create a container image by pulling source code from a private Git repository
-{: #text-analysis-code-engine-private-repository}
+1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key._For <CONTAINER_REGISTRY>, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io_
+   ```sh
+   export CONTAINER_REGISTRY=<CONTAINER_REGISTRY>
 
-A code repository, such as GitHub or GitLab, stores source code. With {{site.data.keyword.codeengineshort}}, you can add access to a private code repository and then reference that repository from your build. A build, or image build, is a mechanism that you can use to create a container image from your source code. {{site.data.keyword.codeengineshort}} supports building from a Dockerfile and Cloud Native Buildpacks.
+   ibmcloud ce registry create --name myregistry --server $CONTAINER_REGISTRY --username iamapikey --password <API_KEY>
+   ``` 
+   {:pre}
 
-After you create access to your private code repository, you can pull code from repo, build it, and deploy an app or job with {{site.data.keyword.codeengineshort}}.
-
-1. You can decide between two kinds of SSH keys to connect to your source repository - [Choose an SSH key](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#choose-ssh-key).
-2. Create a Git repository access secret by following the [instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-code-repositories#create-code-repo-console).
-3. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli). Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image.
-
-   For private repository, use the `--source` option to provide the URL with the SSH protocol and use the `--git-repo-secret` option with the name of the repository access secret that you created.
+   Check [adding access to a private container registry](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry) for more information.
    {:tip}
 
-4. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
+2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. _For <REGISTRY_NAMESPACE>, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)_
+   ```sh
+   export REGISTRY_NAMESPACE=<REGISTRY_NAMESPACE>
+
+   ibmcloud ce build create --name frontend-build --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry --source https://github.com/IBM-Cloud/code-engine-text-analysis --commit master --context-dir /frontend --strategy dockerfile --size medium
+   ```
+   {:pre}
+
+   Remember to replace `frontend` in the above command with `backend` or `backend-job` based on the container image you are planning to build and push to the {{site.data.keyword.registrylong_notm}}.
+   {:tip}
+
+3. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
+   ```sh
+   ibmcloud ce buildrun submit --build frontend-build --name frontend-build-run
+   ```
+   {:pre}
+
+4. Create an application by replacing the placeholders with appropriate values
+   ```sh
+   ibmcloud ce app create --name frontend --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry
+   ```
+   {:pre}
 
 ## Remove resources
 {: #text-analysis-code-engine-cleanup}
@@ -465,3 +479,4 @@ After you create access to your private code repository, you can pull code from 
 {: #text-analysis-code-engine-related_resources}
 
 - [{{site.data.keyword.codeenginefull_notm}} Documentation](https://{DomainName}/docs/codeengine)
+- [Building applications by using buildpacks](https://{DomainName}/docs/codeengine?topic=codeengine-build-app-tutorial)
