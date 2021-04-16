@@ -88,6 +88,7 @@ Solution Tutorials
         High Performance Computing
             hpc-eda.md
             hpc-lsf-on-vpc.md
+            hpc-lsf-vpc-auto-scale.md
 
     {: .topicgroup}
     By Compute Options
