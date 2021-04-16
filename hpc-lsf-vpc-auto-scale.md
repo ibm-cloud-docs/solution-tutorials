@@ -24,7 +24,7 @@ completion-time: 2h
 {: #hpc-lsf-vpc-auto-scale}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
-{: toc-completion-time="1h"}
+{: toc-completion-time="2h"}
 
 When demand exceeds available compute resources, IBM Spectrum LSF clusters that are hosted in the {{site.data.keyword.cloud}} can autonomously grow to meet demand. Later, when demand recedes, the cluster can quickly and automatically shed compute capacity to reduce cost. This feature, commonly known as auto scaling, is provided by the LSF resource connector working closely with the {{site.data.keyword.vpc_short}}.
 
