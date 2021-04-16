@@ -422,7 +422,7 @@ Follow the instructions in this section, you can set up your own secured image r
 
 A container image registry, or registry, is a repository for your container images. For example, Docker Hub and {{site.data.keyword.registrylong_notm}} are container image registries. With {{site.data.keyword.codeengineshort}}, you can add access to your private container image registries.
 
-1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key._For <CONTAINER_REGISTRY>, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io_
+1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key.*For <CONTAINER_REGISTRY>, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io*
    ```sh
    export CONTAINER_REGISTRY=<CONTAINER_REGISTRY>
 
@@ -433,7 +433,7 @@ A container image registry, or registry, is a repository for your container imag
    Check [adding access to a private container registry](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry) for more information.
    {:tip}
 
-2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. _For <REGISTRY_NAMESPACE>, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)_
+2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. *For <REGISTRY_NAMESPACE>, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)*
    ```sh
    export REGISTRY_NAMESPACE=<REGISTRY_NAMESPACE>
 
