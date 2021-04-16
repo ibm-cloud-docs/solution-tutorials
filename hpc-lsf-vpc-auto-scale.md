@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-04-15"
+lastupdated: "2021-04-16"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
-completion-time: 1h
+completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
