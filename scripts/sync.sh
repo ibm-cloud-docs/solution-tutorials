@@ -22,8 +22,6 @@ tar cf - \
   --exclude="*.course.json" \
   --exclude=scripts \
   --exclude=diagrams \
-  --exclude="hpc-lsf-vpc-auto-scale.md" \
-  --exclude="images/solution-hpc-lsf-vpc-auto-scale*" \
   --exclude="*.hidden.*" \
   --exclude="images/*hidden*" \
   --exclude=.vscode \

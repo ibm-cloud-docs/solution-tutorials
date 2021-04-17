@@ -157,8 +157,10 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
-   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.  If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
+<!--##istutorial#-->
+   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {:tip}
+<!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![Frontend is running](images/solution54-code-engine/frontend-501.png)
@@ -414,6 +416,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```
    {:pre}
 
+<!--##istutorial#-->
 ## Optional: Build and push the container images to {{site.data.keyword.registrylong_notm}}
 {: #text-analysis-code-engine-private-registry}
 {: step}
@@ -455,6 +458,7 @@ A container image registry, or registry, is a repository for your container imag
    ibmcloud ce app create --name frontend --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry
    ```
    {:pre}
+<!--#/istutorial#-->
 
 ## Remove resources
 {: #text-analysis-code-engine-cleanup}
