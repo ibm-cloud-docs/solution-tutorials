@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-04-16"
+lastupdated: "2021-04-21"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -416,6 +416,23 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```
    {:pre}
 
+### Automate the job run
+{: #text-analysis-code-engine-automate}
+
+Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a subscription to a bucket, your job receives a separate event for each successful change to that bucket. 
+
+1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify_mgr) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
+2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
+   ```sh
+   ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket <your-initials>-bucket-code-engine --prefix files --event-type write
+   ```
+   {:pre}
+
+   You can subscribe to different events such as `write` events, `delete` events, or the default `all` events. You can create at most 100 {{site.data.keyword.cos_short}} subscriptions per {{site.data.keyword.codeengineshort}} project.
+   {:tip}
+
+3. Now, just upload new files and hit the **refresh** button to see the results. Going forward, you don't have to resubmit the **jobrun** as it is taken care by the subscription.
+
 <!--##istutorial#-->
 ## Optional: Build and push the container images to {{site.data.keyword.registrylong_notm}}
 {: #text-analysis-code-engine-private-registry}
@@ -425,7 +442,7 @@ Follow the instructions in this section, you can set up your own secured image r
 
 A container image registry, or registry, is a repository for your container images. For example, Docker Hub and {{site.data.keyword.registrylong_notm}} are container image registries. With {{site.data.keyword.codeengineshort}}, you can add access to your private container image registries.
 
-1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key.*For <CONTAINER_REGISTRY>, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io*
+1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key. *For &lt;CONTAINER_REGISTRY&gt;, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io*
    ```sh
    export CONTAINER_REGISTRY=<CONTAINER_REGISTRY>
 
@@ -436,7 +453,7 @@ A container image registry, or registry, is a repository for your container imag
    Check [adding access to a private container registry](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry) for more information.
    {:tip}
 
-2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. *For <REGISTRY_NAMESPACE>, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)*
+2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. *For &lt;REGISTRY_NAMESPACE&gt;, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)*
    ```sh
    export REGISTRY_NAMESPACE=<REGISTRY_NAMESPACE>
 
@@ -484,3 +501,4 @@ A container image registry, or registry, is a repository for your container imag
 
 - [{{site.data.keyword.codeenginefull_notm}} Documentation](https://{DomainName}/docs/codeengine)
 - [Building applications by using buildpacks](https://{DomainName}/docs/codeengine?topic=codeengine-build-app-tutorial)
+- [Getting started with subscriptions](https://{DomainName}/docs/codeengine?topic=codeengine-subscribing-events)
