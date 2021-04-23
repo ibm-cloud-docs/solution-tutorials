@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions, or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
+Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions, Code Engine or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
 
 - What should I consider when preparing a solution to be globally available?
 - How available compute options help you deliver multi-region applications?
@@ -79,7 +79,7 @@ Requests are served from the active site. In the event of an outage or applicati
 
 In today's era of "Always On" services with zero tolerance for downtime, customers expect every business service to remain accessible around the clock anywhere in the world. A cost-effective strategy for enterprises involves architecting your infrastructure for continuous availability rather than building disaster recovery infrastructures.
 
-Using three data centers provides greater resiliency and availability than two. It can also offer better performance by spreading the load more evenly across data centers. If the enterprise has only two data centers, a variant of this is to deploy two applications in one data center and deploy the third application in the second data center. Alternatively, you can deploy business logic and presentation layers in the 3-active topology and deploy the data layer in the 2-active topology.
+Using three data centers provides greater resiliency and availability than two. It can also offer better performance by spreading the load more evenly across data centers. 
 
 #### Active-active-active (3-active) configuration
 {: #strategies-for-resilient-applications-5}
