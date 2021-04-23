@@ -334,7 +334,7 @@ Many of the services provide stateless APIs and offer high availability through 
 | {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | <ul><li>Provision servers in multiple locations</li><li>Attach servers in the same location to a local load balancer</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
 | {{site.data.keyword.cloudant}} | <ul><li>One-shot and Continuous replication between databases</li><li>Automatic data redundancy within a region</li></ul> |
 | {{site.data.keyword.Db2_on_Cloud_short}} | <ul><li>Provision a geo-replicated disaster recovery node for real-time data synchronization</li><li>Daily backup with paid plans</li></ul> |
-| {{site.data.keyword.databases-for-postgresql}}, {{site.data.keyword.databases-for-enterprisedb}}, {{site.data.keyword.databases-for-cassandra}}, {{site.data.keyword.databases-for-redis}}, {{site.data.keyword.databases-for-elasticsearch}}, {{site.data.keyword.databases-for-etcd}}, {{site.data.keyword.databases-for-mongodb}}, {{site.data.keyword.messages-for-rabbitmq}} | <ul><li>Built on multi-zone Kubernetes clusters</li><li>Cross-region read replicas</li><li>Daily and on-demand backups</li></ul> |
+| Cloud Databases | <ul><li>Built on multi-zone Kubernetes clusters</li><li>Cross-region read replicas</li><li>Daily and on-demand backups</li></ul> |
 | {{site.data.keyword.cos_short}} | <ul><li>Single Data Center, Regional and Cross-Regional resiliency</li><li>Use API to synchronize contents across storage buckets</li></ul> |
 | {{site.data.keyword.filestorage_short}} | <ul><li>Use snapshots to automatically capture content to a destination in a remote data center</li></ul> |
 
