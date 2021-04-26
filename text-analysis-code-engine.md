@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-04-01"
+lastupdated: "2021-04-21"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -70,6 +70,7 @@ The platform is designed to address the needs of developers who just want their 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
    * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
+   * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -142,7 +143,7 @@ Putting entities into a single project enables you to manage access control more
 
 {{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to {{site.data.keyword.codeengineshort}} under the targeted project. This frontend web application will allow users to upload text files, while the backend application will write the file to {{site.data.keyword.cos_full_notm}}.
 
-We've already built images for the two applications and pushed them to the public container registry. You will use these pre-built container images to deploy the respective applications. You can create applications from the console or CLI.
+We've already built images for the two applications and pushed them to the public {{site.data.keyword.registryshort_notm}}. You will use these pre-built container images to deploy the respective applications. You can create applications from the console or CLI.
 
 ### Deploy a frontend application
 {: #text-analysis-code-engine-4}
@@ -156,8 +157,10 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
-   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference.
+<!--##istutorial#-->
+   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {:tip}
+<!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![Frontend is running](images/solution54-code-engine/frontend-501.png)
@@ -413,6 +416,67 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```
    {:pre}
 
+### Automate the job run
+{: #text-analysis-code-engine-automate}
+
+Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a subscription to a bucket, your job receives a separate event for each successful change to that bucket. 
+
+1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify_mgr) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
+2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
+   ```sh
+   ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket <your-initials>-bucket-code-engine --prefix files --event-type write
+   ```
+   {:pre}
+
+   You can subscribe to different events such as `write` events, `delete` events, or the default `all` events. You can create at most 100 {{site.data.keyword.cos_short}} subscriptions per {{site.data.keyword.codeengineshort}} project.
+   {:tip}
+
+3. Now, just upload new files and hit the **refresh** button to see the results. Going forward, you don't have to resubmit the **jobrun** as it is taken care by the subscription.
+
+<!--##istutorial#-->
+## Optional: Build and push the container images to {{site.data.keyword.registrylong_notm}}
+{: #text-analysis-code-engine-private-registry}
+{: step}
+
+Follow the instructions in this section, you can set up your own secured image repository in {{site.data.keyword.registrylong_notm}} where you can safely store and share images between users.
+
+A container image registry, or registry, is a repository for your container images. For example, Docker Hub and {{site.data.keyword.registrylong_notm}} are container image registries. With {{site.data.keyword.codeengineshort}}, you can add access to your private container image registries.
+
+1. Before you can push or pull images in a private {{site.data.keyword.registryshort_notm}}, you must add access to a {{site.data.keyword.registryshort_notm}}. Run the below command by replacing the placeholder with your IAM API key. *For &lt;CONTAINER_REGISTRY&gt;, run `ibmcloud cr info` command and look for `Container Registry` value in the output e.g., us.icr.io*
+   ```sh
+   export CONTAINER_REGISTRY=<CONTAINER_REGISTRY>
+
+   ibmcloud ce registry create --name myregistry --server $CONTAINER_REGISTRY --username iamapikey --password <API_KEY>
+   ``` 
+   {:pre}
+
+   Check [adding access to a private container registry](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry) for more information.
+   {:tip}
+
+2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. *For &lt;REGISTRY_NAMESPACE&gt;, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)*
+   ```sh
+   export REGISTRY_NAMESPACE=<REGISTRY_NAMESPACE>
+
+   ibmcloud ce build create --name frontend-build --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry --source https://github.com/IBM-Cloud/code-engine-text-analysis --commit master --context-dir /frontend --strategy dockerfile --size medium
+   ```
+   {:pre}
+
+   Remember to replace `frontend` in the above command with `backend` or `backend-job` based on the container image you are planning to build and push to the {{site.data.keyword.registrylong_notm}}.
+   {:tip}
+
+3. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
+   ```sh
+   ibmcloud ce buildrun submit --build frontend-build --name frontend-build-run
+   ```
+   {:pre}
+
+4. Create an application by replacing the placeholders with appropriate values
+   ```sh
+   ibmcloud ce app create --name frontend --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry
+   ```
+   {:pre}
+<!--#/istutorial#-->
+
 ## Remove resources
 {: #text-analysis-code-engine-cleanup}
 {: step}
@@ -436,3 +500,5 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 {: #text-analysis-code-engine-related_resources}
 
 - [{{site.data.keyword.codeenginefull_notm}} Documentation](https://{DomainName}/docs/codeengine)
+- [Building applications by using buildpacks](https://{DomainName}/docs/codeengine?topic=codeengine-build-app-tutorial)
+- [Getting started with subscriptions](https://{DomainName}/docs/codeengine?topic=codeengine-subscribing-events)

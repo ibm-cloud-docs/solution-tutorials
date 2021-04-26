@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-03-30"
+lastupdated: "2021-04-16"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
-completion-time: 1h
+completion-time: 2h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -24,7 +24,7 @@ completion-time: 1h
 {: #hpc-lsf-vpc-auto-scale}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
-{: toc-completion-time="1h"}
+{: toc-completion-time="2h"}
 
 When demand exceeds available compute resources, IBM Spectrum LSF clusters that are hosted in the {{site.data.keyword.cloud}} can autonomously grow to meet demand. Later, when demand recedes, the cluster can quickly and automatically shed compute capacity to reduce cost. This feature, commonly known as auto scaling, is provided by the LSF resource connector working closely with the {{site.data.keyword.vpc_short}}.
 
@@ -56,12 +56,13 @@ You need the following to complete this tutorial:
 
 1. A cloud-based LSF cluster with the following attributes:
     * Installed with the 10.1.0.11 or newer version of LSF (or the HPC Suite version 10.2.0.11)
+    * Install the latest updates from LSF. For details on downloading and installing updates, see these [GitHub instructions](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud/tree/master/LSF_On_IBM_Cloud/resource_connector/README.md){: external}.
     * Root access to the LSF master host
     * An RSA SSH key pair on the master host
     * SSH access (no password required) from the master to all of the hosts in the cluster
     * Ability to restart the LSF cluster daemons
     * IBM VPC DNS service with DNS records for all existing static nodes
-2. An IBM VPC deployable LSF image from the {{site.data.keyword.cloud_notm}} catalog or a custom image with LSF 10.1.0.11 installed and configured
+2. An IBM VPC deployable LSF image with LSF 10.1.0.11 installed and configured. For instructions on creating a custom deployable LSF image for VPC, see these [GitHub instructions](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud/tree/master/LSF_On_IBM_Cloud/resource_connector/README.md){: external}.
 3. A deployer instance installed with the following software (see Step 1 for suggestions on choosing a deployer):
     * Red Hat&reg; Ansible&reg: version 2.9 or later
     * {{site.data.keyword.cloud_notm}} CLI with plugins for Cloud DNS and VPC infrastructure
@@ -141,6 +142,8 @@ Change to a directory on your deployer where you would like the setup scripts to
 
 You need to install Git if it's not already present on your deployer. Once the scripts are on your deployer, switch to the new `lsf-rescon-automation` directory then to the playbook directory. File locations in this tutorial assume that you know the location of the playbook directory.
 {: note}
+
+The repository contains files that can be used to create several types of LSF clusters in the {{site.data.keyword.cloud_notm}}, but for the purposes of this tutorial, you only need the files in the `LSF_On_IBM_Cloud/resource_connector` directory. Navigate to this directory now. The directories and files referenced in the tutorial are all relative to the `resource_connector` directory.
 
 ## Prepare your IBM Cloud API key
 {: #hpc-lsf-auto-scale-prepare-api-key}
