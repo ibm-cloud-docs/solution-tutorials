@@ -523,33 +523,6 @@
       ]
     },
     {
-      "name": "Mobile",
-      "anchor": "mobile",
-      "solutions": [
-        {
-          "name": "Mobile application with a serverless backend",
-          "url": "serverless-mobile-backend.html",
-          "description": "Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.",
-          "imgSrc": "images/solution11/Architecture.png",
-          "tags": [
-            "Cloud Functions",
-            "App ID",
-            "Cloudant NoSQL DB",
-            "Watson Tone Analyzer",
-            "Push Notifications"
-          ],
-          "requirements": [
-            "app_id",
-            "cloud_functions",
-            "cloudant",
-            "tone_analyzer",
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable"
-        }
-      ]
-    },
-    {
       "name": "Machine Learning and Analytics",
       "anchor": "ml",
       "solutions": [
