@@ -50,10 +50,6 @@ Solution Tutorials
             extended-app-security.md
 
         {: .topicgroup}
-        Mobile
-            serverless-mobile-backend.md
-
-        {: .topicgroup}
         Machine Learning and Analytics
             big-data-log-analytics.md
             smart-data-lake.md
@@ -134,7 +130,6 @@ Solution Tutorials
             serverless-api-webapp.md
             multi-region-serverless.md
             slack-chatbot-database-watson.md
-            serverless-mobile-backend.md
 
         {: .topicgroup}
         Code Engine

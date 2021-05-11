@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-03-26"
+lastupdated: "2021-05-11"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -225,7 +225,7 @@ In this section you will deploy the starter application using [Helm](https://hel
    {: pre}
 1. Install the Helm chart:
    ```sh
-   helm install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT
+   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT
    ```
    {: pre}
 
@@ -425,7 +425,7 @@ Once the autoscaler is successfully created, you should see
    {: pre}
 * Delete the Kubernetes artifacts created for this application:
    ```sh
-   helm uninstall $MYPROJECT --namespace $KUBERNETES_NAMESPACE
+   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> uninstall $MYPROJECT --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
 <!--##istutorial#-->

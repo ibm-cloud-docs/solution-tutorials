@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-03-26"
+          "lastUpdated": "2021-05-07"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -72,7 +72,7 @@
             "Watson"
           ],
           "guide": true,
-          "lastUpdated": "2021-04-06"
+          "lastUpdated": "2021-04-23"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -127,7 +127,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-04-26"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -180,7 +180,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-04-26"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -255,7 +255,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-04-26"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -266,7 +266,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-04-16"
+          "lastUpdated": "2021-04-21"
         }
       ]
     },
@@ -347,7 +347,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-03-31"
+          "lastUpdated": "2021-04-27"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -363,27 +363,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-02-18"
-        }
-      ]
-    },
-    {
-      "name": "Mobile",
-      "anchor": "mobile",
-      "solutions": [
-        {
-          "name": "Mobile application with a serverless backend",
-          "url": "serverless-mobile-backend.html",
-          "description": "Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.",
-          "imgSrc": "images/solution11/Architecture.png",
-          "tags": [
-            "Cloud Functions",
-            "App ID",
-            "Cloudant NoSQL DB",
-            "Watson Tone Analyzer",
-            "Push Notifications"
-          ],
-          "lastUpdated": "2021-02-10"
+          "lastUpdated": "2021-04-27"
         }
       ]
     },
@@ -463,7 +443,7 @@
             "DevOps"
           ],
           "guide": true,
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-04-27"
         }
       ]
     },
