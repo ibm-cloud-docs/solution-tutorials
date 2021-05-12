@@ -442,7 +442,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: codeblock}
 
-2. The app is only run on the cloud VSI but some of the configuration information is also needed on the on premesis VSI so copy the directory to both computers.  The command uses the bastion as jump host to the cloud VSI.
+2. The app is only run on the cloud VSI, but some of the configuration information is also needed on the on-premises VSI, so you will need to copy the directory to both computers.  The command uses the bastion as a jump host to the cloud VSI.
    ```sh
    scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
    ```
@@ -463,9 +463,14 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-4. Install Node.js and the Node package manager (NPM).
+4. Install Node.js 12.x and the Node package manager (NPM).
    ```sh
-   apt-get update; apt-get install nodejs npm -y
+   curl -sL https://deb.nodesource.com/setup_12.x | bash -
+   ```
+   {:pre}
+
+   ```sh
+   apt-get update; apt-get install nodejs -y
    ```
    {:pre}
 
