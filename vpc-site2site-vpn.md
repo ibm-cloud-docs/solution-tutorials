@@ -280,6 +280,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 - Wait for the VPN gateway to become available (you may need to refresh the screen).
 - Click the VPN gateway created to open the details page
 - Note the assigned VPN gateway **IP address** it will be referenced as **$GW_CLOUD_IP** below.
+- The VPN connection status will be **down** until the peer on-premises Virtual Private Network gateway is created.
 
 ### Create the on-premises Virtual Private Network gateway
 {: #vpc-site2site-vpn-10}
