@@ -116,20 +116,20 @@ In this section, you will create the cloud services required for the application
 
 
 ## Remove resources
-{: #solution-template-removeresources}
+{: #vpc-scaling-dedicated-compute-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial
 
 ## Related content
-{: #solution-template-related}
+{: #vpc-scaling-dedicated-compute-related}
 
 * [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
 * [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
 
 
 #### Terraform
-{: #solution-template-19}
+{: #vpc-scaling-dedicated-compute-terraform}
 
 ```terraform
 resource "ibm_is_vpc" "myvpc" {
