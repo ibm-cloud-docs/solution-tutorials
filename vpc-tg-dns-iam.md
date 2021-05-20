@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020,2021
-lastupdated: "2021-05-20"
+lastupdated: "2021-03-03"
 lasttested: "2020-12-28"
 
 content-type: tutorial
@@ -130,13 +130,15 @@ IS: VPC, Subnet, Security Group|Editor|Operator|Operator
 
 The *shared* team and the *network* team are now nicely separated.  But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
-This is where resource groups can help out.  A resource group is a simple object, basically just a name.  Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group. 
+This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group. 
+
+Resource Group diagram:
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png)
 
-Each micro-service team needs access to the resources in a single VPC. Each micro-service team will be allowed the access described above in the corresponding resource group.  The *network* team will have access to all of these resource groups.
+Each micro-service team will be allowed the access in the corresponding resource group.  The **network** team will have access to all of these resource groups.
 
-The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service in the resource group to add DNS records for the shared services provided by the team
+The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services that the team manages.
 
 Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console.  It is possible to filter on resource group.
 
