@@ -129,7 +129,7 @@ In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with 
     - an instance template and an instance group for provisioning and scaling the instances.
       - two VSIs (one frontend instance and one backend) with respective security groups attached.
 
-    ![](images/solution62-vpc-scaling-dedicated-hidden/create_vpc.png)
+    ![Create VPC for autoscale](images/solution62-vpc-scaling-dedicated-hidden/create_vpc.png)
 4. **Copy** the public load balancer URL from the log output and paste it in a browser to see the frontend application.
     
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
