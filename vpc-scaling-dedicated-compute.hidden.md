@@ -145,7 +145,7 @@ In this section, you will start scaling the instances with scaling method alread
 2. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
    ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/scale_instances.png)
 
-3. To enable **dynamic** scaling method, set the `is_dynamic` variable to **true** and **Save** the setting. 
+3. To enable **dynamic** scaling method, set the `is_dynamic` variable to **true**, **Save** the setting and Apply the plan.
 
    This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
    {:tip}
