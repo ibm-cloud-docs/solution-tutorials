@@ -126,8 +126,8 @@ In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with 
     - two subnets (one in each zone) 
     - a public load balancer with a security group driving traffic to the frontend application.
     - a private load balancer with a security group driving requests from frontend to the backend.
-    - two VSIs (one frontend instance and one backend)
-    - an instance template and an instance group for scaling the instances.
+    - an instance template and an instance group for provisioning and scaling the instances.
+      - two VSIs (one frontend instance and one backend) with respective security groups attached.
 
     ![](images/solution62-vpc-scaling-dedicated-hidden/create_vpc.png)
 4. **Copy** the public load balancer URL from the log output and paste it in a browser to see the frontend application.
@@ -149,27 +149,37 @@ In this section, you will start scaling the instances with scaling method alread
    {:tip}
 4. To check the autoscaling capabilities, we can use a load generator to generate a load against our application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
 5. Click on **Generate load** a couple of times to generate more traffic.
-6. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned.
+6. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+
+   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
+   {:tip}
+
+## Set up a dedicated host and provision a VSI with data volume
+{: #vpc-scaling-dedicated-compute-dedicated}
+{: step}
+
+In this section, you will created a dedicated host in a group and provision an instance with encrypted data volume. 
+
+1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `step3_create_dedicated` variable to **true** and **Save** the setting.
+2. Either **Generate a plan** to see what resources will be provisioned or **Apply the plan** to provision the following resources,
+   - a dedicated host group
+   - a dedicated host 
+   - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
+
+## Resize the VSI and data volume on the dedicated host
+{: #vpc-scaling-dedicated-compute-dedicated-resize}
+{: step}
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
 {: step}
 
-Steps to take to remove the resources created in this tutorial
+1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Destroy**.
+2. Enter your `workspace name` and click **Destroy**.
 
 ## Related content
 {: #vpc-scaling-dedicated-compute-related}
 
-* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
-
-
-#### Terraform
-{: #vpc-scaling-dedicated-compute-terraform}
-
-```terraform
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using terraform"
-}
-```
-{: codeblock}
+* [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+* [Accessing virtual server instances by using VNC or serial consoles](https://{DomainName}/docs/vpc?topic=vpc-vsi_is_connecting_console)
+* [Getting started with IBM Cloud Hyper Protect Crypto Services](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started)
