@@ -135,7 +135,7 @@ In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with 
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
 
-## Scale the instances
+## Scale the frontend and backend instances
 {: #vpc-scaling-dedicated-compute-autoscale}
 {: step}
 
@@ -143,6 +143,8 @@ In this section, you will start scaling the instances with scaling method alread
 
 1. Let's start with **static** scaling method. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `instance_count` variable to **2** and **Save** the setting.
 2. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
+   ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/scale_instances.png)
+
 3. To enable **dynamic** scaling method, set the `is_dynamic` variable to **true** and **Save** the setting. 
 
    This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
@@ -165,6 +167,8 @@ In this section, you will created a dedicated host in a group and provision an i
    - a dedicated host group
    - a dedicated host 
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
+
+   ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.png)
 
 ## Resize the VSI and data volume on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
