@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-05-18"
-lasttested: "2021-05-18"
+lastupdated: "2021-05-20"
+lasttested: "2021-05-20"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial

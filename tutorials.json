@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-05-07"
+          "lastUpdated": "2021-05-11"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -492,7 +492,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-01-19"
+          "lastUpdated": "2021-05-21"
         },
         {
           "name": "Install software on virtual server instances in VPC",
