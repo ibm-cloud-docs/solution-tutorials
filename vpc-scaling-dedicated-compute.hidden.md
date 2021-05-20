@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can autoscale according to your requirements in multiple zones within one region to ensure the high availability of the application. You will configure a global load balancer to provide high availability between zones and reduce network latency for users.
 
-You will learn about the use of dedicated hosts by provisioning VSIs in a dedicated host. You will provision all of these services and resources using{{site.data.keyword.bpshort}}. 
+You will learn about the use of dedicated hosts by provisioning VSIs in a dedicated host. You will provision all of these services and resources using {{site.data.keyword.bpfull_notm}} . 
 {:shortdesc}
 
 A {{site.data.keyword.bpfull_notm}} template is a set of files that define the IBM Cloud resources that you want to create, update, or delete. You create a{{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the IBM Cloud provider plug-in for Terraform to provision your IBM Cloud resources.
@@ -50,7 +50,7 @@ A {{site.data.keyword.bpfull_notm}} template is a set of files that define the I
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
 
-* Learn how to setup a multi-zone VPC with instance autoscaling
+* Learn how to set up a multi-zone VPC with instance autoscaling
 * Understand the concepts of public and private load balancing
 * Learn the use of dedicated hosts
 
@@ -79,11 +79,12 @@ This tutorial requires:
    * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
 * `terraform` to use Infrastructure as Code to provision resources
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
-
+<!--#/istutorial#-->
 
 ## Create services
 {: #vpc-scaling-dedicated-compute-services}
@@ -104,16 +105,51 @@ In this section, you will create the cloud services required for the application
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**.
 4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.
-5. Similarly, set a `basename` for all of the resources.
+5. Similarly, set a `basename` for all of the resources and change the other variables based on your requirement.
 6. Scroll to the top of the page and click **Generate plan**. This is same as `terraform plan` command.
 7. Click on **View log** to see the details.
 8. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
 
+You should see the cloud services required for this tutorial provisioned in the resource group you mentioned. All the services and the data are encrypted with {{site.data.keyword.keymanagementservicefull_notm}}.
 
-## Create VPC for autoscaling
+
+## Create a VPC for autoscaling
+{: #vpc-scaling-dedicated-compute-vpc-setup}
+{: step}
+In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short zones) in region/location you opted.
+
+1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
+2. Click on **Generate plan** to view the resources to be provisioned or simply click on **Apply plan** to provision the VPC resources.
+3. Follow the status logs by clicking on **View log**.
+   You just provisioned 
+    - a VPC 
+    - two subnets (one in each zone) 
+    - a public load balancer with a security group driving traffic to the frontend application.
+    - a private load balancer with a security group driving requests from frontend to the backend.
+    - two VSIs (one frontend instance and one backend)
+    - an instance template and an instance group for scaling the instances.
+
+    ![](images/solution62-vpc-scaling-dedicated-hidden/create_vpc.png)
+4. **Copy** the public load balancer URL from the log output and paste it in a browser to see the frontend application.
+    
+    To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
+    {:tip}
+
+## Scale the instances
 {: #vpc-scaling-dedicated-compute-autoscale}
 {: step}
 
+In this section, you will start scaling the instances with scaling method already set to **static** and then move to scaling the instances with scaling method set to **dynamic** by setting up an instance manager and an instance group manager policy. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
+
+1. Let's start with **static** scaling method. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `instance_count` variable to **2** and **Save** the setting.
+2. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
+3. To enable **dynamic** scaling method, set the `is_dynamic` variable to **true** and **Save** the setting. 
+
+   This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
+   {:tip}
+4. To check the autoscaling capabilities, we can use a load generator to generate a load against our application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
+5. Click on **Generate load** a couple of times to generate more traffic.
+6. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned.
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
