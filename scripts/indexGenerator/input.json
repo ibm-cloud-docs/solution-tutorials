@@ -31,6 +31,12 @@
           "url": "solution-template.html",
           "description": "Solution Template",
           "imgSrc": ""
+        },
+        {
+          "name": "VPC scaling and dedicated compute",
+          "url": "vpc-scaling-dedicated-compute.hidden.html",
+          "description": "Set up isolated workloads by provisioning a VPC with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can autoscale. Also, explore dedicated hosts for isolation.",
+          "imgSrc": "images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png"
         }
       ]
     },
