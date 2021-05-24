@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-05-20"
-lasttested: "2021-05-20"
+lastupdated: "2021-05-24"
+lasttested: "2021-05-24"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can autoscale according to your requirements in multiple zones within one region to ensure the high availability of the application. You will configure a global load balancer to provide high availability between zones and reduce network latency for users.
 
-You will learn about the use of dedicated hosts by provisioning VSIs in a dedicated host. You will provision all of these services and resources using {{site.data.keyword.bpfull_notm}} . 
+You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will provision all of these services and resources using {{site.data.keyword.bpfull_notm}} . 
 {:shortdesc}
 
 A {{site.data.keyword.bpfull_notm}} template is a set of files that define the IBM Cloud resources that you want to create, update, or delete. You create a{{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the IBM Cloud provider plug-in for Terraform to provision your IBM Cloud resources.
@@ -86,7 +86,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {:tip}
 <!--#/istutorial#-->
 
-## Create services
+## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
 
@@ -113,7 +113,7 @@ In this section, you will create the cloud services required for the application
 You should see the cloud services required for this tutorial provisioned in the resource group you mentioned. All the services and the data are encrypted with {{site.data.keyword.keymanagementservicefull_notm}}.
 
 
-## Create a VPC for autoscaling
+## Set up a multizone Virtual Private Cloud
 {: #vpc-scaling-dedicated-compute-vpc-setup}
 {: step}
 In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short zones) in region/location you opted.
@@ -135,7 +135,7 @@ In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with 
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
 
-## Scale the frontend and backend instances
+## Increase load on your instances to check scaling
 {: #vpc-scaling-dedicated-compute-autoscale}
 {: step}
 
@@ -156,7 +156,7 @@ In this section, you will start scaling the instances with scaling method alread
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
    {:tip}
 
-## Set up a dedicated host and provision a VSI with data volume
+## Set up a dedicated host and provision a VSI with encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
 
@@ -173,6 +173,17 @@ In this section, you will created a dedicated host in a group and provision an i
 ## Resize the VSI and data volume on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
 {: step}
+
+If you have observed the profile of the instance provisioned on the dedicated host is set to `cx2-2x4` where `c` stands for **Compute** family(category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
+
+
+1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `resize_dedicated_instance` variable to **true** and **Save** the setting.
+
+   Dedicated virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
+   {:tip}
+
+2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
+3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), selecting the `region` and running `ibmcloud is instances` command.
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
