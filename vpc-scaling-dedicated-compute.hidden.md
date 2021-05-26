@@ -138,7 +138,7 @@ In this section, you will start scaling the instances with scaling method alread
 {: #vpc-scaling-dedicated-compute-manual-scale}
 
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace.
-2. Update the `instance_count` variable to **2** and **Save** the setting.
+2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
    ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/scale_instances.png)
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
