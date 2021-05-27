@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-05-26"
-lasttested: "2021-05-26"
+lastupdated: "2021-05-27"
+lasttested: "2021-05-27"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -109,7 +109,23 @@ You should see the cloud services required for this tutorial provisioned in the 
 
 In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend and backend applications. 
 
-You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones and reduce network latency for users. With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, end-to-end encryption etc.,
+You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones and reduce network latency for users.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, end-to-end encryption etc., For more info, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+
+You will also create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
+
+### Progression
+{: #vpc-scaling-dedicated-compute-vpc-progress}
+
+- As you apply the infrastructure script later in this section, the script starts by provisioning two VSIs (one frontend and one backend) in one of the subnets spanning across two zones in the VPC.
+   ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.png)
+- As the load increases, you may need more instances to serve the traffic. The script configures a load balancer (one for the frontend app and one for the backend app) to balance incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
+   ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
+
+- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
+   ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
+
+### Provision the resources
+{: #vpc-scaling-dedicated-compute-vpc-provision}
 
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Generate plan** to view the resources to be provisioned or simply click on **Apply plan** to provision the VPC resources.
@@ -121,12 +137,12 @@ You will also configure a public load balancer for your frontend and a private l
     - a private load balancer with a security group driving requests from frontend to the backend.
     - an instance template and an instance group for provisioning and scaling the instances.
       - two VSIs (one frontend instance and one backend) with respective security groups attached.
-
-    ![Create VPC for autoscale](images/solution62-vpc-scaling-dedicated-hidden/create_vpc.png)
 4. **Copy** the public load balancer URL from the log output and paste it in a browser to see the frontend application.
     
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
+
+In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.
 
 ## Increase load on your instances to check scaling
 {: #vpc-scaling-dedicated-compute-scale}
@@ -140,7 +156,6 @@ In this section, you will start scaling the instances with scaling method alread
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace.
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
-   ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/scale_instances.png)
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
 ### Automatic scaling
@@ -152,6 +167,7 @@ In this section, you will start scaling the instances with scaling method alread
    {:tip}
 
 2. To check the autoscaling capabilities, you can use a load generator to generate a load against our application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
+    ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
