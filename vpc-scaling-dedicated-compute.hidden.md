@@ -137,7 +137,7 @@ You will also create an instance template that is used to provision instances in
     - a private load balancer with a security group driving requests from frontend to the backend.
     - an instance template and an instance group for provisioning and scaling the instances.
       - two VSIs (one frontend instance and one backend) with respective security groups attached.
-4. **Copy** the public load balancer URL from the log output and paste it in a browser to see the frontend application.
+4. **Copy** the public load balancer URL from the log output and paste it in a browser by prefixing `http://` to see the frontend application.
     
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
@@ -157,6 +157,7 @@ In this section, you will start scaling the instances with scaling method alread
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
 
 ### Automatic scaling
 {: #vpc-scaling-dedicated-compute-auto-scale}
@@ -177,6 +178,11 @@ In this section, you will start scaling the instances with scaling method alread
 ## Set up a dedicated host and provision a VSI with encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
 
 In this section, you will created a dedicated host in a group and provision an instance with encrypted data volume. 
 
