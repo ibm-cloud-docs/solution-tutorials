@@ -159,6 +159,8 @@ In this section, you will start scaling the instances with scaling method alread
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
 
+To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
+
 ### Automatic scaling
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
@@ -171,8 +173,9 @@ In this section, you will start scaling the instances with scaling method alread
     ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
 
-   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
+   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
    {:tip}
 
 ## Set up a dedicated host and provision a VSI with encrypted data volume
