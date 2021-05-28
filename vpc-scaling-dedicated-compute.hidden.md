@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-05-27"
-lasttested: "2021-05-27"
+lastupdated: "2021-05-28"
+lasttested: "2021-05-28"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -42,10 +42,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements in multiple zones within one region to ensure the high availability of the application. You will configure load balancers to provide high availability between zones and reduce network latency for users.
 
-You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will provision all of these services and resources using {{site.data.keyword.bpfull_notm}} . 
+You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. 
 {:shortdesc}
 
-A {{site.data.keyword.bpfull_notm}} template is a set of files that define the IBM Cloud resources that you want to create, update, or delete. You create a{{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the IBM Cloud provider plug-in for Terraform to provision your IBM Cloud resources.
+A {{site.data.keyword.bpfull_notm}} template is a set of files that define the {{site.data.keyword.Bluemix_notm}} resources that you want to create, update, or delete. You create a{{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
@@ -81,7 +81,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
 
-In this section, you will create the cloud services required for the application using {{site.data.keyword.bpfull_notm}}
+In this section, you will create the cloud services required for the application using {{site.data.keyword.bpfull_notm}}. 
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace** 
    1. Provide a workspace name - **vpc-scaling-workspace**
@@ -91,8 +91,8 @@ In this section, you will create the cloud services required for the application
    1. Provide `https://github.ibm.com/portfolio-solutions/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL.
    2. Select `terraform_v0.14` as the Terraform version
    3. Click on **Save template information**
-3. Under **Variables**, provide the `IBM Cloud API key` by clicking the action menu (three vertical dots) in the row,       
-   1. Enter your IBM Cloud API key,
+3. Under **Variables**, provide the `{{site.data.keyword.Bluemix_notm}} API key` by clicking the action menu (three vertical dots) in the row,       
+   1. Enter your {{site.data.keyword.Bluemix_notm}} API key,
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**.
 4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.Change the other variables based on your requirement.
@@ -209,6 +209,38 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
 3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), selecting the `region` and running `ibmcloud is instances` command.
 
+## View logs and monitor the load Balancer for VPC metrics
+{: #vpc-scaling-dedicated-compute-observe}
+{: step}
+
+In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
+
+### Check the logs
+{: #vpc-scaling-dedicated-compute-logs}
+
+VPC services generate platform logs in the same region where they are available. You can view, monitor, and manage VPC logs through the {{site.data.keyword.loganalysislong_notm}} instance that is marked as platform logs in the region.
+
+Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs).
+
+1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
+2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
+3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
+4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
+    1. Clicking on the load balancer name for which you wish to check the logs.
+    2. Under `Overview` tab, click on **Launch logging** under the `Data logging` panel of the load balancer. 
+
+For checking the logs of other VPC resources, refer [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging)
+
+### Monitoring Load Balancer for VPC metrics
+{: #vpc-scaling-dedicated-compute-monitor}
+
+Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
+
+1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane.
+2. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
+3. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard. 
+4. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. The default dashboard is not editable.
+
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
 {: step}
@@ -221,4 +253,4 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 
 * [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
 * [Accessing virtual server instances by using VNC or serial consoles](https://{DomainName}/docs/vpc?topic=vpc-vsi_is_connecting_console)
-* [Getting started with IBM Cloud Hyper Protect Crypto Services](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started)
+* [Getting started with {{site.data.keyword.Bluemix_notm}} Hyper Protect Crypto Services](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started)
