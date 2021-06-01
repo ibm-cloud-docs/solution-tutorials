@@ -122,10 +122,10 @@ You will also create an instance template that is used to provision instances in
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
 - An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
-   ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
-
    VPC uses Cloud-init technology to configure virtual server instances. The `User Data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
+   
+   ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
 
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
