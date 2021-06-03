@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-01"
-lasttested: "2021-05-28"
+lastupdated: "2021-06-03"
+lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -121,10 +121,11 @@ You will also create an instance template that is used to provision instances in
 - As the load increases, you may need more instances to serve the traffic. The script configures a load balancer (one for the frontend app and one for the backend app) to balance incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
-- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
-   VPC uses Cloud-init technology to configure virtual server instances. The `User Data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
+- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run initialization scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
+
+   VPC uses Cloud-init technology to configure virtual server instances. The `user data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
-   
+
    ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
 
 ### Provision the resources
@@ -247,6 +248,7 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 3. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard. 
 4. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. The default dashboard is not editable.
 
+
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
 {: step}
@@ -260,3 +262,4 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 * [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
 * [Accessing virtual server instances by using VNC or serial consoles](https://{DomainName}/docs/vpc?topic=vpc-vsi_is_connecting_console)
 * [Getting started with {{site.data.keyword.Bluemix_notm}} Hyper Protect Crypto Services](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started)
+* [VPC virtual server instances metrics definitions for Monitoring](https://{DomainName}/docs/vpc?topic=vpc-vpc-monitoring-metrics)
