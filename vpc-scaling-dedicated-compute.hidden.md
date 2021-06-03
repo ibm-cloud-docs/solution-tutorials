@@ -61,6 +61,7 @@ A {{site.data.keyword.bpfull_notm}} template is a set of files that define the {
 3. You will then add an autoscaler to dynamically add or remove VSIs based on the metrics like CPU, RAM etc.,
 4. As the scope expands, you require dedicated compute to isolate and perform heavy computation on the data.
 5. Additionally, to handle seasonal load you can bring in scheduled actions to schedule VSIs at a certain point of time.
+
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
 
@@ -220,6 +221,9 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 {: #vpc-scaling-dedicated-compute-observe}
 {: step}
 
+You must configure a logging in a region to monitor the VPC logs. For more information, see [Configuring IBM Cloud platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs). Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location. For more info, see [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+{:tip}
+
 In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
 
 ### Check the logs
@@ -262,4 +266,3 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 * [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
 * [Accessing virtual server instances by using VNC or serial consoles](https://{DomainName}/docs/vpc?topic=vpc-vsi_is_connecting_console)
 * [Getting started with {{site.data.keyword.Bluemix_notm}} Hyper Protect Crypto Services](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started)
-* [VPC virtual server instances metrics definitions for Monitoring](https://{DomainName}/docs/vpc?topic=vpc-vpc-monitoring-metrics)
