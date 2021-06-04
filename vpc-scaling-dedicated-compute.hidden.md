@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-03"
+lastupdated: "2021-06-04"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -221,8 +221,8 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 {: #vpc-scaling-dedicated-compute-observe}
 {: step}
 
-You must configure a logging in a region to monitor the VPC logs. For more information, see [Configuring IBM Cloud platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs). Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location. For more info, see [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
-{:tip}
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.cloud-shell_short}} location. For more information, see [Configuring {{site.data.keyword.cloud-shell_short}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs). Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location. For more info, see [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+{:important}
 
 In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
 
