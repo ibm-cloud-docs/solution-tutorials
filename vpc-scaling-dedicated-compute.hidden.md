@@ -165,7 +165,7 @@ In this section, you will start scaling the instances with scaling method alread
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace.
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
-4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
 5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
 
 To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
@@ -182,10 +182,25 @@ To monitor the load balancers and to check the logs, follow the steps mentioned 
     ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+
+   You should see upto 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
+   {:tip}
+
 5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
 
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
    {:tip}
+
+### Scheduled actions
+{: #vpc-scaling-dedicated-compute-scheduled-scale}
+
+In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
+
+1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
+
+2. Check the status of your scheduled action under the `scheduled actions` tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the Membership tab of the instance group.
+3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
+   
 
 ## Set up a dedicated host and provision a VSI with encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
