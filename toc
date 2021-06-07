@@ -16,6 +16,7 @@ Solution Tutorials
         Work In Progress
             solution-template.md
             vpc-scaling-dedicated-compute.hidden.md
+            satellite-tour.hidden.md
 
         {: .topicgroup}
         Websites and Web Apps
