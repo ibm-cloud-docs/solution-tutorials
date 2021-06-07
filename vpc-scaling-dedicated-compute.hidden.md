@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-04"
+lastupdated: "2021-06-07"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -96,7 +96,7 @@ In this section, you will create the cloud services required for the application
    1. Enter your {{site.data.keyword.Bluemix_notm}} API key,
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**.
-4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.Change the other variables based on your requirement.
+4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**. Change the other variables based on your requirement.
 5. Scroll to the top of the page and click **Generate plan**. This is same as `terraform plan` command.
 6. Click on **View log** to see the details.
 7. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
@@ -141,7 +141,11 @@ You will also create an instance template that is used to provision instances in
     - a public load balancer with a security group driving traffic to the frontend application.
     - a private load balancer with a security group driving requests from frontend to the backend.
     - an instance template and an instance group for provisioning and scaling the instances.
-      - two VSIs (one frontend instance and one backend) with respective security groups attached.
+      - two VSIs (one frontend instance and one backend instance) with respective security groups attached.
+
+        The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
+        {:tip}
+
 4. **Copy** the public load balancer URL from the log output and paste it in a browser by prefixing `http://` to see the frontend application.
     
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
@@ -201,6 +205,7 @@ In this section, you will created a dedicated host in a group and provision an i
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
    ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.png)
+3. From the log output, **copy** the dedicated instance IP address and open it in a browser to see a response from the Nginx server similar to `I'm a new server created on ...`.
 
 ## Resize the VSI and data volume on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
@@ -208,14 +213,13 @@ In this section, you will created a dedicated host in a group and provision an i
 
 If you have observed the profile of the instance provisioned on the dedicated host is set to `cx2-2x4` where `c` stands for **Compute** family(category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
 
-
 1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
    Dedicated virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
    {:tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
-3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), selecting the `region` and running `ibmcloud is instances` command.
+3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the `Location` and running `ibmcloud is instances` command.
 
 ## View logs and monitor the load Balancer for VPC metrics
 {: #vpc-scaling-dedicated-compute-observe}
