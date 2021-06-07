@@ -44,7 +44,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 {:shortdesc}
 
 ## Objectives
-{: #solution-template-objectives}
+{: #satellite-tour-objectives}
 
 * Review the underlying infrastructure of an existing {{site.data.keyword.satelliteshort}} location.
 * Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the {{site.data.keyword.satelliteshort}} location.
@@ -57,7 +57,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram -->
 
 ## Before you begin
-{: #solution-template-prereqs}
+{: #satellite-tour-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
@@ -92,7 +92,7 @@ In addition, make sure you have:
 <!--##isworkshop#-->
 <!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #solution-template-2}
+{: #satellite-tour-shell}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
 1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
@@ -134,7 +134,7 @@ deploy an app directly to your cluster
   * just a simple namespace and a configmap as example
 
 ## Remove resources
-{: #solution-template-removeresources}
+{: #satellite-tour-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial
