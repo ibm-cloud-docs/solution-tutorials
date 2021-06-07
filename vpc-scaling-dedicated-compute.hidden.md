@@ -40,27 +40,27 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements in multiple zones within one region to ensure the high availability of the application. You will also configure load balancers to provide high availability between zones and reduce network latency for users.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements in multiple zones within one region to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones and reduce network latency for users.
 
 You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. 
 {:shortdesc}
 
-A {{site.data.keyword.bpfull_notm}} template is a set of files that define the {{site.data.keyword.Bluemix_notm}} resources that you want to create, update, or delete. You create a{{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
+An {{site.data.keyword.bpfull_notm}} template is a set of files that define the {{site.data.keyword.Bluemix_notm}} resources that you want to create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
 
 * Learn how to set up a multi-zone VPC with instance autoscaling
 * Understand the concepts of public and private load balancing
-* Learn the use of dedicated hosts
+* Learn the use of dedicated instances
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
 1. You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC and cloud services.
 2. As the load(traffic) increases, you will add more VSIs manually thus you need a public load balancer for your frontend and a load balancer for your backend application to distribute the load.
-3. You will then add an autoscaler to dynamically add or remove VSIs based on the metrics like CPU, RAM etc.,
-4. As the scope expands, you require dedicated compute to isolate and perform heavy computation on the data.
-5. Additionally, to handle seasonal load you can bring in scheduled actions to schedule VSIs at a certain point of time.
+3. You will then enable Auto Scale for VPC to dynamically add or remove VSIs based on the metrics like CPU, RAM etc.,
+4. As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
+5. You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
