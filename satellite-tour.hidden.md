@@ -108,17 +108,17 @@ walk attendees through the architecture of the location, using the CLI, using th
 
 * view all locations
   * CLI ibmcloud sat location ls
-  * UI https://cloud.ibm.com/satellite/locations
+  * UI https://{DomainName}/satellite/locations
 * view location
   * CLI ibmcloud sat location get --location c2j5j8jw0ofnre8vt5fg
-  * UI https://cloud.ibm.com/satellite/locations/c2j5j8jw0ofnre8vt5fg/overview
+  * UI https://{DomainName}/satellite/locations/c2j5j8jw0ofnre8vt5fg/overview
 * view hosts
   * see where they are used (control plane vs cluster)
   * CLI ibmcloud sat host ls --location c2j5j8jw0ofnre8vt5fg
-  * UI https://cloud.ibm.com/satellite/locations/c2j5j8jw0ofnre8vt5fg/hosts
+  * UI https://{DomainName}/satellite/locations/c2j5j8jw0ofnre8vt5fg/hosts
 * view the clusters
   * CLI ibmcloud ks clusters (ibmcloud sat cluster ls does not work with the restricted permissions)
-  * UI https://cloud.ibm.com/kubernetes/clusters (https://cloud.ibm.com/satellite/clusters does not work with the restricted permissions)
+  * UI https://{DomainName}/kubernetes/clusters (https://{DomainName}/satellite/clusters does not work with the restricted permissions)
 * log in into one cluster
 * follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
   * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
@@ -130,7 +130,7 @@ walk attendees through the architecture of the location, using the CLI, using th
 ### for the location
 
 * use Platform Logging and Platform Metrics instances
-* available metrics https://cloud.ibm.com/docs/satellite?topic=satellite-monitor#available-metrics
+* available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
 
 ### for a cluster
 
