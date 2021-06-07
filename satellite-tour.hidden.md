@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# How to write a tutorial
+# Satellite Tour
 {: #satellite-tour}
 {: toc-content-type="tutorial"}
 {: toc-services="satellite"}
@@ -104,14 +104,37 @@ In addition, make sure you have:
 {: #satellite-tour-review-architecture}
 {: step}
 
-walk attendees through the architecture of the location:
+walk attendees through the architecture of the location, using the CLI, using the user interface:
 
-* using the CLI, using the user interface
+* view all locations
+  * CLI ibmcloud sat location ls
+  * UI https://cloud.ibm.com/satellite/locations
+* view location
+  * CLI ibmcloud sat location get --location c2j5j8jw0ofnre8vt5fg
+  * UI https://cloud.ibm.com/satellite/locations/c2j5j8jw0ofnre8vt5fg/overview
+* view hosts
+  * see where they are used (control plane vs cluster)
+  * CLI ibmcloud sat host ls --location c2j5j8jw0ofnre8vt5fg
+  * UI https://cloud.ibm.com/satellite/locations/c2j5j8jw0ofnre8vt5fg/hosts
 * view the clusters
+  * CLI ibmcloud ks clusters (ibmcloud sat cluster ls does not work with the restricted permissions)
+  * UI https://cloud.ibm.com/kubernetes/clusters (https://cloud.ibm.com/satellite/clusters does not work with the restricted permissions)
 * log in into one cluster
+* follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
+  * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
   * use oc commands as if it was a regular cluster
-* logging, monitoring
-  * access configured logdna/sysdig and look at location/cluster stats
+
+## Logging and Monitoring
+{: #satellite-tour-observe}
+
+### for the location
+
+* use Platform Logging and Platform Metrics instances
+* available metrics https://cloud.ibm.com/docs/satellite?topic=satellite-monitor#available-metrics
+
+### for a cluster
+
+* can be configured to forward logs/metrics to anything including our logdna/sysdig
 
 ## Deploy an app
 {: #satellite-tour-deploy}
