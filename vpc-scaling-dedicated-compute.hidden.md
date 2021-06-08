@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-07"
+lastupdated: "2021-06-08"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -52,15 +52,16 @@ An {{site.data.keyword.bpfull_notm}} template is a set of files that define the 
 
 * Learn how to set up a multi-zone VPC with instance autoscaling
 * Understand the concepts of public and private load balancing
+* Learn how to scale instances dynamically or periodically
 * Learn the use of dedicated instances
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
 1. You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC and cloud services.
 2. As the load(traffic) increases, you will add more VSIs manually thus you need a public load balancer for your frontend and a load balancer for your backend application to distribute the load.
-3. You will then enable Auto Scale for VPC to dynamically add or remove VSIs based on the metrics like CPU, RAM etc.,
+3. You will then enable scaling for VPC to dynamically add or remove VSIs based on the metrics like CPU, RAM etc., or through scheduled scaling.
 4. As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
-5. You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes
+5. Additionally, You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
@@ -197,7 +198,6 @@ To monitor the load balancers and to check the logs, follow the steps mentioned 
 In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
 
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
-
 2. Check the status of your scheduled action under the `scheduled actions` tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the Membership tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
    
