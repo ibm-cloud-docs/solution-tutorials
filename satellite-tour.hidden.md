@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-07"
+lastupdated: "2021-06-08"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -126,6 +126,7 @@ walk attendees through the architecture of the location, using the CLI, using th
 
 ## Logging and Monitoring
 {: #satellite-tour-observe}
+{: step}
 
 ### for the location
 {: #satellite-tour-observe-location}
@@ -142,13 +143,24 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-deploy}
 {: step}
 
-deploy an app directly to your cluster
-* provision a cloudant database
-* make the database available as a link endpoint to the cluster
+### a simple app
+{: #satellite-tour-simple-app}
+
 * create a new oc project
+   ```
+   oc new-project <your-initial>-tour
+   ```
+* deploy an app directly to your cluster (using source to image)
+  * an app like https://github.com/lionelmace/mytodo works
+
+### add a service and link
+{: #satellite-tour-add-link}
+
+* provision a cloudant database
+  * create credentials
+* make the database available as a link endpoint to the cluster
 * create a secret
-* deploy the app
-  * use a pre-built image? or build an image from source?
+* update the app
 * access the app
 
 ## Configure a group of clusters
