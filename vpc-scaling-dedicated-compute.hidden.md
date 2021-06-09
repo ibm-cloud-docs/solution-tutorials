@@ -240,7 +240,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 {: #vpc-scaling-dedicated-compute-observe}
 {: step}
 
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs). Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location. For more info, see [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
 {:important}
 
 In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
@@ -248,13 +248,16 @@ In this section, you will learn how to check the logs of your VPC resources and 
 ### Create services and enable platform metrics
 {: #vpc-scaling-dedicated-compute-metrics}
 
-If you don't have any log analysis/monitoring services created in the region, follow the steps below. Otherwise skip to the next sub-section to check the logs.
+If you don't have any log analysis/monitoring services provisioned or platform metrics enabled, follow the steps below. Otherwise skip to the next sub-section to check the logs.
 
 1. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
 2. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
    1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
 3. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
+
+   For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+   {:tip}
 
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
