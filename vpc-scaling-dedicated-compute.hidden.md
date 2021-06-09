@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-08"
+lastupdated: "2021-06-09"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -244,6 +244,17 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {:important}
 
 In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
+
+### Create services and enable platform metrics
+{: #vpc-scaling-dedicated-compute-metrics}
+
+If you don't have any log analysis/monitoring services created in the region, follow the steps below. Otherwise skip to the next sub-section to check the logs.
+
+1. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
+2. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
+   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
+   2. Select the log analysis service instance from the dropdown menu and click **Select**.
+3. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
