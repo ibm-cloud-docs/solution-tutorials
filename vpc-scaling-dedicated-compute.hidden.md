@@ -174,7 +174,7 @@ In this section, you will start scaling the instances with scaling method alread
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
-5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
+5. Refresh the application multiple times to see the details of the VSIs serving the request.
 
 To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
 
@@ -191,10 +191,10 @@ To monitor the load balancers and to check the logs, follow the steps mentioned 
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
-   You should see upto 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
+   You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {:tip}
 
-5. Refresh the load balancer URL multiple times to see the details of the VSI serving the request.
+5. Refresh the application multiple times to see the details of the VSI serving the request.
 
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
    {:tip}
