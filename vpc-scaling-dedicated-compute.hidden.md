@@ -40,12 +40,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements in multiple zones within one region to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones and reduce network latency for users.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones within one region.
 
 You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. 
 {:shortdesc}
 
-An {{site.data.keyword.bpfull_notm}} template is a set of files that define the {{site.data.keyword.Bluemix_notm}} resources that you want to create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to your template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
+{{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities, you will use a Terraform template that define the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
@@ -83,7 +83,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
 
-In this section, you will create the cloud services required for the application using {{site.data.keyword.bpfull_notm}}. 
+In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}, . 
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace** 
    1. Provide a workspace name - **vpc-scaling-workspace**
@@ -98,11 +98,18 @@ In this section, you will create the cloud services required for the application
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**.
 4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**. Change the other variables based on your requirement.
-5. Scroll to the top of the page and click **Generate plan**. This is same as `terraform plan` command.
-6. Click on **View log** to see the details.
-7. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
+5. Set `ssh_keyname` to the name of your VPC SSH Key. 
+  > Note: When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-You should see the cloud services required for this tutorial provisioned in the resource group you mentioned. All the services and the data are encrypted with {{site.data.keyword.keymanagementservicefull_notm}}.
+    1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+    1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
+
+6. Set any additional values you would like to override, most popular ones are `region`, `resource_group_name`.
+7. Scroll to the top of the page and click **Generate plan**. This is same as `terraform plan` command.
+8. Click on **View log** to see the details.
+9. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
+
+Navigate to https://{DomainName}/resources where you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you sepcified. All the data stored with these services are encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
 
 ## Set up a multizone Virtual Private Cloud
@@ -111,7 +118,7 @@ You should see the cloud services required for this tutorial provisioned in the 
 
 In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend and backend applications. 
 
-You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones and reduce network latency for users.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, end-to-end encryption etc., For more info, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, end-to-end encryption etc., For more info, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
 You will also create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
 
