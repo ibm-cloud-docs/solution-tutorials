@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-08"
+lastupdated: "2021-06-10"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -148,7 +148,7 @@ walk attendees through the architecture of the location, using the CLI, using th
 
 * create a new oc project
    ```
-   oc new-project <your-initial>-tour
+   oc new-project <your-initials>-tour
    ```
 * deploy an app directly to your cluster (using source to image)
   * an app like https://github.com/lionelmace/mytodo works
@@ -160,7 +160,7 @@ walk attendees through the architecture of the location, using the CLI, using th
   * create credentials
 * make the database available as a link endpoint to the cluster
 * create a secret
-* update the app
+* update the app, referencing secret values
 * access the app
 
 ## Configure a group of clusters
@@ -169,6 +169,43 @@ walk attendees through the architecture of the location, using the CLI, using th
 
 * use satconf to deploy the same resources to all clusters
   * just a simple namespace and a configmap as example
+
+* create a cluster group `<your-initials>-group` under https://{DomainName}/satellite/groups
+* add the clusters to the group
+* create a configuration `<your-initials>-config`
+* create a version
+  * name V1
+  * yaml
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: example
+      namespace: <your-initials>-tour
+    data:
+      example.property.1: hello
+      example.property.2: world
+    ```
+* create a subscription
+  * name: latest_version
+  * version: V1
+  * cluster-groups: the one create above
+* go in configmaps in the OpenShift console, under your project to see the one created by SatConfig
+* create a new version, changing the data values
+  * name V2
+  * yaml
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: example
+      namespace: <your-initials>-tour
+    data:
+      example.property.1: bonjour
+      example.property.2: monde
+    ```
+* edit the subscription latest_version, point to V2
+* check the ConfigMap for updates in the OpenShift console
 
 ## Remove resources
 {: #satellite-tour-removeresources}
