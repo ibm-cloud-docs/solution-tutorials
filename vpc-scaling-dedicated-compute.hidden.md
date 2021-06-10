@@ -227,7 +227,41 @@ In this section, you will created a dedicated host in a group and provision an i
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
    ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.png)
-3. From the log output, **copy** the dedicated instance IP address and open it in a browser to see a response from the Nginx server similar to `I'm a new server created on ...`.
+3. From the log output, **copy** the dedicated instance IP address. 
+2. Issue the following curl commands to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
+
+   ```sh
+   VSI_CLOUD_IP=$DEDICATED_INSTANCE_IP
+   ```
+   {:pre}
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
+   http://$DEDICATED_INSTANCE_IP/api/bank
+   ```
+   {:pre}
+
+3. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format . The data stored in COS is available only available to the application running from the dedicated host.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_items { read_items { key size modified } }" }' \
+   http://$DEDICATED_INSTANCE_IP/api/bank
+   ```
+   {:pre}
+
+4. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
+   http://$DEDICATED_INSTANCE_IP/api/bank
+   ```
+   {:pre}
 
 ## Resize the VSI and data volume on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
