@@ -109,7 +109,7 @@ In this section, you will create the following cloud services required for the a
 8. Click on **View log** to see the details.
 9. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
 
-Navigate to https://{DomainName}/resources where you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you sepcified. All the data stored with these services are encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
+Navigate to the [resource list](https://{DomainName}/resources) where you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services are encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
 
 ## Set up a multizone Virtual Private Cloud
