@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-10"
+lastupdated: "2021-06-11"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -227,8 +227,14 @@ In this section, you will created a dedicated host in a group and provision an i
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
    ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.png)
-3. From the log output, **copy** the dedicated instance IP address. 
-2. Issue the following curl commands to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
+3. From the log output, **copy** the dedicated instance IP address and launch [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) to run the below command by replacing the placeholder `<IP_ADDRESS`> with the dedicated instance IP address
+
+   ```sh
+   export DEDICATED_INSTANCE_IP=<IP_ADDRESS>
+   ```
+   {:pre}
+
+4. Issue the following curl commands to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
    ```sh
    curl \
@@ -237,16 +243,9 @@ In this section, you will created a dedicated host in a group and provision an i
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
    http://$DEDICATED_INSTANCE_IP/api/bank
    ```
-   {:pre}
+   {:pre}   
 
-  curl \
-   -X POST \
-   -H "Content-Type: application/json" \
-   --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
-   http://163.68.89.190/api/bank
-   
-
-3. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format . The data stored in COS is available only available to the application running from the dedicated host.
+5. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format . The data stored in COS is available only available to the application running from the dedicated host.
    ```sh
    curl \
    -X POST \
@@ -256,7 +255,7 @@ In this section, you will created a dedicated host in a group and provision an i
    ```
    {:pre}
 
-4. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+6. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
    -X POST \
@@ -266,7 +265,7 @@ In this section, you will created a dedicated host in a group and provision an i
    ```
    {:pre}
 
-## Resize the VSI and data volume on the dedicated host
+## Resize the VSI on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
 {: step}
 
