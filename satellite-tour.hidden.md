@@ -89,21 +89,43 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #satellite-tour-architecture}
 {: step}
 
+In this section, you will discover the components making a {{site.data.keyword.satelliteshort}} location.
+
+### using {{site.data.keyword.cloud_notm}} console
+{: #satellite-tour-architecture-ui}
+
+1. Navigate to [the list of locations](https://{DomainName}/satellite/locations). It lists the location you have been provided access to.
+2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington or London.
+3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
+   * a set of hosts has been assigned to the location **Control plane**.
+   * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **OpenShift clusters**.
+   * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 walk attendees through the architecture of the location, using the CLI, using the user interface:
 
-* view all locations
-  * CLI ibmcloud sat location ls
-  * UI https://{DomainName}/satellite/locations
-* view location
-  * CLI ibmcloud sat location get --location c2j5j8jw0ofnre8vt5fg
-  * UI https://{DomainName}/satellite/locations/c2j5j8jw0ofnre8vt5fg/overview
-* view hosts
-  * see where they are used (control plane vs cluster)
-  * CLI ibmcloud sat host ls --location c2j5j8jw0ofnre8vt5fg
-  * UI https://{DomainName}/satellite/locations/c2j5j8jw0ofnre8vt5fg/hosts
-* view the clusters
-  * CLI ibmcloud ks clusters (ibmcloud sat cluster ls does not work with the restricted permissions)
-  * UI https://{DomainName}/kubernetes/clusters (https://{DomainName}/satellite/clusters does not work with the restricted permissions)
+### using {{site.data.keyword.cloud_notm}} CLI
+{: #satellite-tour-architecture-cli}
+
+1. From the CLI (in {{site.data.keyword.cloud-shell_short}} as example), list all locations:
+   ```sh
+   ibmcloud sat location ls
+   ```
+   {: pre}
+1. To view the details of a location, use:
+   ```sh
+   ibmcloud sat location get --location <name-or-id>
+   ```
+   {: pre}
+1. Retrieve all hosts attached to a location with:
+   ```sh
+   ibmcloud sat host ls --location <name-or-id>
+   ```
+   {: pre}
+   It also reports whether hosts are part of the control plane (`infrastructure`), or a part of cluster, or unassigned.
+* To list all {{site.data.keyword.satelliteshort}} clusters, use:
+   ```sh
+   ibmcloud sat cluster ls
+   ```
+   {: pre}
 
 ## Review the logging and monitoring dashboards
 {: #satellite-tour-observe}
