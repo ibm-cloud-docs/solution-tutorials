@@ -115,7 +115,7 @@ walk attendees through the architecture of the location, using the CLI, using th
 * use Platform Logging and Platform Metrics instances
 * available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
 
-### For the {{site.data.keyword.satelliteshort} cluster
+### For the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-observe-cluster}
 
 * can be configured to forward logs/metrics to anything including our logdna/sysdig
