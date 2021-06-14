@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-11"
+lastupdated: "2021-06-14"
 lasttested: "2021-06-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones within one region.
 
-You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. 
+You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
 {:shortdesc}
 
 {{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities, you will use a Terraform template that define the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
@@ -57,11 +57,12 @@ You will learn how to isolate your instances by provisioning them on a dedicated
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
-1. You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC and cloud services.
+1. You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC and cloud services with private endpoints.
 2. As the load(traffic) increases, you will add more VSIs manually thus you need a public load balancer for your frontend and a load balancer for your backend application to distribute the load.
 3. You will then enable scaling for VPC to dynamically add or remove VSIs based on the metrics like CPU, RAM etc., or through scheduled scaling.
 4. As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
-5. Additionally, You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes
+5. Additionally, You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes.
+6. VSIs on both VPC-scale and VPC-dedicated communicate with cloud services via private endpoints provided by VPE.
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
@@ -83,7 +84,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
 
-In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}, . 
+In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}. 
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace** 
    1. Provide a workspace name - **vpc-scaling-workspace**
@@ -208,7 +209,6 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 2. Check the status of your scheduled action under the `scheduled actions` tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the Membership tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
    
-
 ## Set up a dedicated host and provision a VSI with encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
