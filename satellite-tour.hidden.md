@@ -177,14 +177,20 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-config}
 {: step}
 
-With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters by defining cluster groups.
+With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You define cluster cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
+
+### Create a cluster group
+{: #satellite-tour-cluster-group}
 
 1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) page.
 1. Create a new cluster group with a unique name such as `<your-initials>-cluster-group`.
 1. Select the group.
 1. Under **Clusters**, click **Add clusters** and check the cluster where you previously deployed your app.
 
-The next step is to create a {{site.data.keyword.satelliteshort}} configuration and a subscription to target the group with a specific version to deploy.
+### Create a configuration and a first version
+{: #satellite-tour-configuration}
+
+The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 
 * Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
 * Create a new configuration:
@@ -205,11 +211,22 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration 
       example.property.2: world
     ```
     Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
-* Back to the **Overview** page for the configuration, create a Subscription.
+    {: important}
+
+### Subscribe clusters to the version
+{: #satellite-tour-version}
+
+Finally you will map the version to a set of clusters.
+
+* Go back to the **Overview** page for the configuration.
+* Create a Subscription.
   * Set **Subscription name** to **latest version**.
   * Set **Version** to **V1**.
   * Select the cluster group previously created.
-  * Click **Create**.
+* Click **Create**.
+
+### Check the deployed resources
+{: #satellite-tour-deployed}
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
 
@@ -227,6 +244,8 @@ To deploy an update to the resources, you can create a new version.
 * **Add** the version.
 * Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
 * In the OpenShift console, watch for updates to the existing Config Map.
+
+In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config.
 
 ## Remove resources
 {: #satellite-tour-removeresources}
