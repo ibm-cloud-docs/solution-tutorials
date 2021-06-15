@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-14"
+lastupdated: "2021-06-15"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -45,7 +45,7 @@ This tutorial guides you through the architecture and components of a {{site.dat
 
 With {{site.data.keyword.satellitelong_notm}}, you use your own compute infrastructure that is in your on-premises data center, other cloud providers, or edge networks to create a {{site.data.keyword.satelliteshort}} location. Then, you use the capabilities of {{site.data.keyword.satelliteshort}} to run {{site.data.keyword.cloud_notm}} services on your infrastructure, and consistently deploy, manage, and control your app workloads.
 
-Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.data.keyword.satelliteshort}} Link and {{site.data.keyword.satelliteshort}} config to provide additional capabilities for securing and auditing network connections in your location and consistently deploying, managing, and controlling your apps and policies across clusters in the location.
+Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.data.keyword.satelliteshort}} Link and {{site.data.keyword.satelliteshort}} Config to provide additional capabilities for securing and auditing network connections in your location and consistently deploying, managing, and controlling your apps and policies across clusters in the location.
 
 ## Objectives
 {: #satellite-tour-objectives}
@@ -177,14 +177,23 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-config}
 {: step}
 
-* use satconf to deploy the same resources to all clusters
-* just a simple namespace and a configmap as example
-* create a cluster group `<your-initials>-group` under https://{DomainName}/satellite/groups
-* add the clusters to the group
-* create a configuration `<your-initials>-config`
-* create a version
-  * name V1
-  * yaml
+With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters by defining cluster groups.
+
+1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) page.
+1. Create a new cluster group with a unique name such as `<your-initials>-cluster-group`.
+1. Select the group.
+1. Under **Clusters**, click **Add clusters** and check the cluster where you previously deployed your app.
+
+The next step is to create a {{site.data.keyword.satelliteshort}} configuration and a subscription to target the group with a specific version to deploy.
+
+* Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
+* Create a new configuration:
+  * Set **Configuration name** to a unique name such as `<your-initials>-config`.
+  * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location.
+* Select the configuration.
+* Under **Versions**, add a version.
+  * Set **Version name** to **V1**
+  * Set the YAML content to
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -195,26 +204,29 @@ walk attendees through the architecture of the location, using the CLI, using th
       example.property.1: hello
       example.property.2: world
     ```
-* create a subscription
-  * name: latest_version
-  * version: V1
-  * cluster-groups: the one create above
-* go in configmaps in the OpenShift console, under your project to see the one created by SatConfig
-* create a new version, changing the data values
-  * name V2
-  * yaml
-    ```yaml
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: example
-      namespace: <your-initials>-tour
-    data:
-      example.property.1: bonjour
-      example.property.2: monde
-    ```
-* edit the subscription latest_version, point to V2
-* check the ConfigMap for updates in the OpenShift console
+    Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
+* Back to the **Overview** page for the configuration, create a Subscription.
+  * Set **Subscription name** to **latest version**.
+  * Set **Version** to **V1**.
+  * Select the cluster group previously created.
+  * Click **Create**.
+
+{{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
+
+* After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
+* Switch to the **Developer** view
+* Select **Config Maps** and make sure your project is selected
+* Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
+
+To deploy an update to the resources, you can create a new version.
+
+* From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
+* Create a new version by duplicating **V1**.
+  * Set **Version name** to **V2**.
+  * Change `example.property.2` to `you` in the YAML.
+* **Add** the version.
+* Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
+* In the OpenShift console, watch for updates to the existing Config Map.
 
 ## Remove resources
 {: #satellite-tour-removeresources}
