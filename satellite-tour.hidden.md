@@ -121,7 +121,7 @@ walk attendees through the architecture of the location, using the CLI, using th
    ```
    {: pre}
    It also reports whether hosts are part of the control plane (`infrastructure`), or a part of cluster, or unassigned.
-* To list all {{site.data.keyword.satelliteshort}} clusters, use:
+1. To list all {{site.data.keyword.satelliteshort}} clusters, use:
    ```sh
    ibmcloud sat cluster ls
    ```
@@ -134,8 +134,8 @@ walk attendees through the architecture of the location, using the CLI, using th
 ### For the {{site.data.keyword.satelliteshort}} location
 {: #satellite-tour-observe-location}
 
-* use Platform Logging and Platform Metrics instances
-* available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
+1. use Platform Logging and Platform Metrics instances
+1. available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
 
 ### For the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-observe-cluster}
@@ -146,32 +146,33 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-project}
 {: step}
 
-* log in into one cluster
-* follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
-  * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
-* use oc commands as if it was a regular cluster
-* create a new oc project
-   ```
+1. Log in into one cluster
+1. Follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
+   * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
+   * use oc commands as if it was a regular cluster
+1. Create a new oc project
+   ```sh
    oc new-project <your-initials>-tour
    ```
+   {: pre}
 
 ## Use {{site.data.keyword.satelliteshort}} link to expose {{site.data.keyword.cloud_notm}} services
 {: #satellite-tour-link}
 {: step}
 
-* provision a cloudant database
-  * create credentials
-* make the database available as a link endpoint to the cluster
-* create a secret in the project
+1. Provision a {{site.data.keyword.cloudant}} service instance.
+1. Create service credentials.
+1. Make the database available as a link endpoint to the cluster.
+1. Create a secret in the project with the credentials using the host and port from the link endpoint.
 
 ## Deploy an application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
 
-* deploy an app directly to your cluster (using source to image)
-  * an app like https://github.com/lionelmace/mytodo works
-* update the app configuration, referencing secret values
-* access the app
+1. Deploy an app directly to your cluster (using source to image)
+   * an app like https://github.com/lionelmace/mytodo works
+1. Update the app configuration, referencing secret values
+1. Access the app
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
@@ -192,25 +193,25 @@ With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/
 
 The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 
-* Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
-* Create a new configuration:
-  * Set **Configuration name** to a unique name such as `<your-initials>-config`.
-  * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location.
-* Select the configuration.
-* Under **Versions**, add a version.
-  * Set **Version name** to **V1**
-  * Set the YAML content to
-    ```yaml
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: example
-      namespace: <your-initials>-tour
-    data:
-      example.property.1: hello
-      example.property.2: world
-    ```
-    Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
+1. Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
+1. Create a new configuration:
+   * Set **Configuration name** to a unique name such as `<your-initials>-config`.
+   * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location.
+1. Select the configuration.
+1. Under **Versions**, add a version.
+   * Set **Version name** to **V1**
+   * Set the YAML content to
+     ```yaml
+     apiVersion: v1
+     kind: ConfigMap
+     metadata:
+       name: example
+       namespace: <your-initials>-tour
+     data:
+       example.property.1: hello
+       example.property.2: world
+     ```
+     Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
     {: important}
 
 ### Subscribe clusters to the version
@@ -218,32 +219,32 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 
 Finally you will map the version to a set of clusters.
 
-* Go back to the **Overview** page for the configuration.
-* Create a Subscription.
-  * Set **Subscription name** to **latest version**.
-  * Set **Version** to **V1**.
-  * Select the cluster group previously created.
-* Click **Create**.
+1. Go back to the **Overview** page for the configuration.
+1. Create a Subscription.
+   * Set **Subscription name** to **latest version**.
+   * Set **Version** to **V1**.
+   * Select the cluster group previously created.
+1. Click **Create**.
 
 ### Check the deployed resources
 {: #satellite-tour-deployed}
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
 
-* After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
-* Switch to the **Developer** view
-* Select **Config Maps** and make sure your project is selected
-* Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
+1. After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
+1. Switch to the **Developer** view
+1. Select **Config Maps** and make sure your project is selected
+1. Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
 
 To deploy an update to the resources, you can create a new version.
 
-* From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
-* Create a new version by duplicating **V1**.
-  * Set **Version name** to **V2**.
-  * Change `example.property.2` to `you` in the YAML.
-* **Add** the version.
-* Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
-* In the OpenShift console, watch for updates to the existing Config Map.
+1. From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
+1. Create a new version by duplicating **V1**.
+   * Set **Version name** to **V2**.
+   * Change `example.property.2` to `you` in the YAML.
+1. **Add** the version.
+1. Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
+1. In the OpenShift console, watch for updates to the existing Config Map.
 
 In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config.
 
