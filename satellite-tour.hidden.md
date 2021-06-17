@@ -150,6 +150,7 @@ walk attendees through the architecture of the location, using the CLI, using th
 1. Follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
    * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
    * use oc commands as if it was a regular cluster
+   * or https://cloud.ibm.com/docs/openshift?topic=openshift-access_cluster#access_oc_cli to log in with API key or one-time code
 1. Create a new oc project
    ```sh
    oc new-project <your-initials>-tour
