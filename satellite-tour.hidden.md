@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-15"
+lastupdated: "2021-06-16"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -160,19 +160,57 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-link}
 {: step}
 
+### Provision a service
+{: #satellite-tour-link-service}
+
 1. Provision a {{site.data.keyword.cloudant}} service instance.
 1. Create service credentials.
-1. Make the database available as a link endpoint to the cluster.
-1. Create a secret in the project with the credentials using the host and port from the link endpoint.
+
+### Expose the service to the {{site.data.keyword.satelliteshort}} location
+{: #satellite-tour-link-location}
+
+1. Select the {{site.data.keyword.satelliteshort}} location.
+1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
+1. In the **Destination resource** step:
+   * Select **Cloud** as destination.
+   * Click **Next**.
+1. In the **Resource details** step:
+   * Set **Endpoint name** to something unique such as **<your-initial>-database**.
+   * Set **Destination FQDN or IP** to the **host** of the database, taken from the credentials.
+   * Set **Destination port** to **443**.
+   * Click **Next**.
+1. In the **Protocol** step:
+   * Set the **Source protocol** as **HTTPS**
+   * Click **Next**.
+1. Click **Create endpoint**.
+1. Select the created endpoint.
+1. After few seconds, the **Endpoint address** is ready to be used.
 
 ## Deploy an application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
 
-1. Deploy an app directly to your cluster (using source to image)
-   * an app like https://github.com/lionelmace/mytodo works
-1. Update the app configuration, referencing secret values
-1. Access the app
+### Create an application
+{: #satellite-tour-deploy-create-app}
+
+1. In the OpenShift console, switch the **Developer** perspective.
+1. Select the project you created.
+1. Click **+Add** and select the option named **From Git**.
+1. Set **Git Repo URL** to **https://github.com/l2fprod/mytodo.git**.
+1. Click **Create**.
+1. Wait for the **Build** to complete and the application to come online.
+
+At that stage the application is running but not using the database yet.
+
+### Bind the database
+{: #satellite-tour-deploy-bind-database}
+
+1. Select the Deployment **mytodo-git**.
+1. Under **Environment**, define two **Single values (env)**:
+   * One with **Name** set to **CLOUDANT_APIKEY** and **Value** to the **apikey** value of the database credentials.
+   * Another one with **Name** set to **CLOUDANT_URL** and with **Value** set to **https://<endpoint address and port>** created in the previous step.
+1. Save the environment.
+1. A new pod will be created and the database initialized.
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
