@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-16"
+lastupdated: "2021-06-17"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -120,7 +120,7 @@ walk attendees through the architecture of the location, using the CLI, using th
    ibmcloud sat host ls --location <name-or-id>
    ```
    {: pre}
-   It also reports whether hosts are part of the control plane (`infrastructure`), or a part of cluster, or unassigned.
+   It also reports whether hosts are part of the control plane (`infrastructure`), or a part of a cluster, or unassigned.
 1. To list all {{site.data.keyword.satelliteshort}} clusters, use:
    ```sh
    ibmcloud sat cluster ls
@@ -175,7 +175,7 @@ walk attendees through the architecture of the location, using the CLI, using th
    * Select **Cloud** as destination.
    * Click **Next**.
 1. In the **Resource details** step:
-   * Set **Endpoint name** to something unique such as **<your-initial>-database**.
+   * Set **Endpoint name** to something unique such as `<your-initials>-database`.
    * Set **Destination FQDN or IP** to the **host** of the database, taken from the credentials.
    * Set **Destination port** to **443**.
    * Click **Next**.
@@ -202,8 +202,8 @@ walk attendees through the architecture of the location, using the CLI, using th
 
 At that stage the application is running but not using the database yet.
 
-### Bind the database
-{: #satellite-tour-deploy-bind-database}
+### Bind the service
+{: #satellite-tour-deploy-bind-service}
 
 1. Select the Deployment **mytodo-git**.
 1. Under **Environment**, define two **Single values (env)**:
@@ -270,7 +270,7 @@ Finally you will map the version to a set of clusters.
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
 
 1. After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
-1. Switch to the **Developer** view
+1. Switch to the **Developer** view.
 1. Select **Config Maps** and make sure your project is selected
 1. Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
 
@@ -284,13 +284,19 @@ To deploy an update to the resources, you can create a new version.
 1. Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
 1. In the OpenShift console, watch for updates to the existing Config Map.
 
-In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config.
+In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
 
 ## Remove resources
 {: #satellite-tour-removeresources}
 {: step}
 
-Steps to take to remove the resources created in this tutorial
+* In the {{site.data.keyword.openshiftshort}} console, delete the project.
+* Select the [{{site.data.keyword.satelliteshort}} configuration](https://{DomainName}/satellite/configuration) your created.
+* Delete the subscription.
+* Delete the {{site.data.keyword.satelliteshort}} configuration.
+* Delete the [cluster group](https://{DomainName}/satellite/groups).
+* On the {{site.data.keyword.satelliteshort}} location, delete the Link Endpoint exposing the service you provisioned.
+* Delete the service from the [Resources list](https://{DomainName}/resources).
 
 ## Related content
 {: #satellite-tour-related}
