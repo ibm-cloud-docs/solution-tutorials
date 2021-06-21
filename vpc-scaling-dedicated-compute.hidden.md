@@ -86,54 +86,53 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}. 
 
-1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace** 
-   1. Provide a workspace name - **vpc-scaling-workspace**
-   2. Choosing a resource group and location
+1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
+   1. Provide a workspace name : **vpc-scaling-workspace**
+   2. Choose a `Resource Group` and a `Location`
    3. Click on **Create**
-2. Under Settings, scroll to the **Import your Terraform template** section,
-   1. Provide `https://github.ibm.com/portfolio-solutions/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL.
+2. Under Settings, move to the **Import your Terraform template** section.
+   1. Provide `https://github.ibm.com/portfolio-solutions/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL
    2. Select `terraform_v0.14` as the Terraform version
    3. Click on **Save template information**
-3. Under **Variables**, provide the `{{site.data.keyword.Bluemix_notm}} API key` by clicking the action menu (three vertical dots) in the row,       
-   1. Enter your {{site.data.keyword.Bluemix_notm}} API key,
+3. Under **Variables**, provide the `{{site.data.keyword.Bluemix_notm}} API key` by clicking the action menu (three vertical dots) in the row. 
+   1. Enter your {{site.data.keyword.Bluemix_notm}} API key
    2. Uncheck **Use default** and check **Sensitive** 
-   3. Click on **Save**.
-4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**. Change the other variables based on your requirement.
-5. Set `ssh_keyname` to the name of your VPC SSH Key. 
-  > Note: When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
+   3. Click on **Save**
+4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.
+5. Set `ssh_keyname` to the name of your VPC SSH Key. To check your existing SSH keys or to create a new one, refer [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available) 
 
-    1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
-    1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
+   When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
+   {:tip}
 
-6. Set any additional values you would like to override, most popular ones are `region`, `resource_group_name`.
-7. Scroll to the top of the page and click **Generate plan**. This is same as `terraform plan` command.
-8. Click on **View log** to see the details.
-9. On the workspace page, click on **Apply plan** and check the logs to see the status of the services provisioned.
+6. Set any additional variables you would like to override, most typical ones are `region`, `resource_group_name`.
+7. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
+8. Click on **View log** to check the resources to be provisioned.
+9. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services provisioned.
 
-Navigate to the [resource list](https://{DomainName}/resources) where you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services are encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
+Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
 
 ## Set up a multizone Virtual Private Cloud
 {: #vpc-scaling-dedicated-compute-vpc-setup}
 {: step}
 
-In this section, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend and backend applications. 
+In this section, you will provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend app and backend app. 
 
-You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, end-to-end encryption etc., For more info, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
 You will also create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
 
 ### Progression
 {: #vpc-scaling-dedicated-compute-vpc-progress}
 
-- As you apply the infrastructure script later in this section, the script starts by provisioning two VSIs (one frontend and one backend) in one of the subnets spanning across two zones in the VPC.
+- As you apply the infrastructure script later in this section, the script starts by provisioning a frontend VSI and a backend VSI in one of the subnets spanning across two zones in the VPC.
    ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.png)
-- As the load increases, you may need more instances to serve the traffic. The script configures a load balancer (one for the frontend app and one for the backend app) to balance incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
+- As the load increases, you may need more instances to serve the traffic. The script configures a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
 - An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run initialization scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
 
-   VPC uses Cloud-init technology to configure virtual server instances. The `user data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
+   VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
 
    ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
@@ -142,15 +141,15 @@ You will also create an instance template that is used to provision instances in
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
-2. Click on **Generate plan** to view the resources to be provisioned or simply click on **Apply plan** to provision the VPC resources.
+2. Click on **Apply plan** to provision the VPC resources.
 3. Follow the status logs by clicking on **View log**.
    You just provisioned 
     - a VPC 
     - two subnets (one in each zone) 
-    - a public load balancer with a security group driving traffic to the frontend application.
-    - a private load balancer with a security group driving requests from frontend to the backend.
-    - an instance template and an instance group for provisioning and scaling the instances.
-      - two VSIs (one frontend instance and one backend instance) with respective security groups attached.
+    - a public load balancer with a security group driving traffic to the frontend application
+    - a private load balancer with a security group driving requests from frontend to the backend
+    - an instance template and an instance group for provisioning and scaling the instances
+      - two VSIs (one frontend instance and one backend instance) with respective security groups attached
 
         The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
         {:tip}
