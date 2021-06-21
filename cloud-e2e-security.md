@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-04-27"
-lasttested: "2020-12-07"
+lastupdated: "2021-06-21"
+lasttested: "2021-06-21"
 
 content-type: tutorial
 services: containers, cloud-object-storage, Activity-Tracker-with-LogDNA, Registry, certificate-manager, appid, Cloudant, key-protect, Log-Analysis-with-LogDNA
@@ -141,13 +141,15 @@ While the cluster is being provisioned, you will create the other services requi
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    * Set the name to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-kp**.
    * Select the resource group where to create the service instance.
-2. Under **Manage**, click the **Add Key** button to create a new root key. It will be used to encrypt the storage bucket content.
+2. Under **Keys**, click the **Add** button to create a new root key. It will be used to encrypt the storage bucket content.
    * Set the name to **secure-file-storage-root-enckey**.
    * Set the key type to **Root key**.
-   * Then **Create key**.
+   * Then **Add key**.
 
+<!--##istutorial#-->
 Bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
+<!--#/istutorial#-->
 
 ### Setup storage for user files
 {: #cloud-e2e-security-8}
@@ -166,18 +168,19 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Under **Advanced options**, check **Include HMAC Credential**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials. You will need them in a later step.
-3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location:
-   * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
-   * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
+3. Click **Endpoint** from the menu:
+   * Set **Resiliency** to **Regional** and set the **Location** to the target location:
+   * For Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+   * For VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
 1. Go to [Manage > Access (IAM) > Authorizations](https://{DomainName}/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
-4. In the **Source service instance** menu, select the {{site.data.keyword.cos_short}} service instance previously created.
+4. Switch to **Resources based on selected attributes**, check **Source service instance** and select the {{site.data.keyword.cos_short}} service instance previously created.
 5. In the **Target service** menu, select **Key Protect**.
-6. In the **Target service instance** menu, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
+6. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
 
@@ -189,10 +192,10 @@ Finally create the bucket.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the {{site.data.keyword.keymanagementserviceshort}} service instance.
    4. Set **Storage class** to **Standard**
-3. Under **Key Management Services**, select the checkbox **Key Protect**.
+3. Under **Service integrations (optional) / Encryption**, enable **Key management**
    1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
    2. Select **secure-file-storage-root-enckey** as the key.
-4. Enable {{site.data.keyword.at_short}} events to be recorded under **Additional Services**.
+4. Under **Service integrations (optional) / Monitoring & auditing**, enable **Auditing** to have events recording in {{site.data.keyword.cloudaccesstrailshort}}.
    1. After clicking the checkmark the service information for the previously created {{site.data.keyword.at_short}} instance should be shown.
    2. Now, enable **Track Data events** and select **read & write** as **Data Events**.
 5. Click **Create bucket**.
@@ -231,7 +234,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -251,9 +254,9 @@ All services have been configured. In this section you will deploy the tutorial 
    git clone https://github.com/IBM-Cloud/secure-file-storage
    ```
    {: codeblock}
-2. Go to the **secure-file-storage** directory:
+2. Go to the **secure-file-storage/app** directory:
    ```sh
-   cd secure-file-storage
+   cd secure-file-storage/app
    ```
    {: codeblock}
 
@@ -308,7 +311,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$BASENAME` | *secure-file-storage* | The prefix used to identify resources. |
+| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
 {: tip}
@@ -317,7 +320,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 {: #cloud-e2e-security-16}
 
 <!--##istutorial#-->
-1. Gain access to your cluster as described on the **Access** tab of your cluster.
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -357,7 +360,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
 <!--##isworkshop#-->
 <!--
-1. Gain access to your cluster as described on the **Access** tab of your cluster.
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -370,7 +373,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    {: codeblock}
 3. Create the secret used by the application to obtain service credentials:
    ```sh
-   kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
+   kubectl create secret generic <your-initials>-secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
@@ -378,7 +381,6 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
    ```
    {: codeblock}
-5. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
 6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
@@ -469,14 +471,17 @@ In this tutorial, services are utilized for different purposes, from storing fil
 - replacing the access data in existing Kubernetes secrets and applying the changes,
 - and, after verification, deactivating the old credentials by deleting the old service keys.
 
-
+<!--##istutorial#-->
 ## Expand the tutorial
 {: #cloud-e2e-security-21}
 
 Security is never done. Try the below suggestions to enhance the security of your application.
 
 * Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
-  
+text
+<!--#/istutorial#-->
+
+<!--##istutorial#-->
 ## Share resources
 {: #cloud-e2e-security-22}
 
@@ -493,6 +498,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-managing-service-access-roles)
 
 To get started, check out the [best practices for access management and how to define access groups](https://{DomainName}/docs/account?topic=account-account_setup#resource-group-strategy).
+<!--#/istutorial#-->
 
 ## Remove resources
 {: #cloud-e2e-security-23}
@@ -510,7 +516,7 @@ If you share an account with other users, always make sure to delete only your o
    {: codeblock}
 2. Delete the secrets for the deployment:
    ```sh
-   kubectl delete secret secure-file-storage-credentials
+   kubectl delete secret <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-credentials
    ```
    {: codeblock}
 3. Remove the container image from the container registry:
