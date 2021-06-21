@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-16"
+lastupdated: "2021-06-21"
 lasttested: "2021-06-16"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -40,12 +40,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones within one region.
+This tutorial walks you through the steps of setting up isolated workloads in a public (multi-tenant) environment and in a dedicated (single-tenant) environment. In a public environment, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones within one region.
 
-You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance.You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
+You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance. You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
 {:shortdesc}
 
-{{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities, you will use a Terraform template that define the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
+{{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities. You will use a Terraform template that defines the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
@@ -57,12 +57,12 @@ You will learn how to isolate your instances by provisioning them on a dedicated
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
-1. You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC and cloud services with private endpoints.
-2. As the load(traffic) increases, you will add more VSIs manually thus you need a public load balancer for your frontend and a load balancer for your backend application to distribute the load.
-3. You will then enable scaling for VPC to dynamically add or remove VSIs based on the metrics like CPU, RAM etc., or through scheduled scaling.
-4. As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
-5. Additionally, You will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes.
-6. VSIs on both VPC-scale and VPC-dedicated communicate with cloud services via private endpoints provided by VPE.
+* You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC, then cloud services with private endpoints.
+* To address increasing traffic, manually add more VSIs. To distribute load, you need to add a public load balancer on the frontend and a private load balancer on the backend.
+* You will then enable scaling for VPC to dynamically add or remove VSIs based on metrics like CPU, RAM etc., or through scheduled scaling.
+* As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
+* Additionally, you will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes.
+* As shown in the architecture diagram, VSIs on both VPC-SCALE and VPC-DEDICATED communicate with cloud services via the private endpoints provided by VPE.
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
@@ -70,13 +70,13 @@ You will learn how to isolate your instances by provisioning them on a dedicated
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-* `terraform` to use Infrastructure as Code to provision resources
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
+* `terraform` to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
 <!--#/istutorial#-->
 
