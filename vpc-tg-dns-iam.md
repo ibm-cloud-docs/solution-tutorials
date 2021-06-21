@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020,2021
-lastupdated: "2021-03-03"
+lastupdated: "2021-06-03"
 lasttested: "2020-12-28"
 
 content-type: tutorial
@@ -130,15 +130,17 @@ IS: VPC, Subnet, Security Group|Editor|Operator|Operator
 
 The *shared* team and the *network* team are now nicely separated.  But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
-This is where resource groups can help out.  A resource group is a simple object, basically just a name.  Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group.  Each micro-service team needs access to the resources in a single VPC. Each team will be allowed the access described above but only to the resources in it's own resource group.
+This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group. 
 
-In this example there will be three resource groups used for VPC Infrastructure Service (IS) resources: "shared", "application1" and "application2".  The *network* team will have IS access to all of the resource groups.  The micro-service teams will only have IS access to resources in the corresponding resource group.
+Resource Group diagram:
 
-The shared resource group will also contain the DNS service.
+![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png)
 
-A forth resource group, network, will contain {{site.data.keyword.tg_short}}.
+Each micro-service team will be allowed the access in the corresponding resource group.  The **network** team will have access to all of these resource groups.
 
-The admin team will create the resource groups. To isolate each team from each other, a team will only be provided Viewer access to its dedicated resource group.
+The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services that the team manages.
+
+Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console.  It is possible to filter on resource group.
 
 ## Create a local working environment
 {: #vpc-tg-dns-iam-create}
@@ -778,6 +780,8 @@ The Admin team has provided them just the right amount of permissions to create 
 ## Insert a {{site.data.keyword.loadbalancer_short}} and replace the DNS record
 {: #vpc-tg-dns-iam-shared_lb}
 {: step}
+
+![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-lb.png)
 
 1. Change directory and become a member of the shared access group (use the existing API key):
 
