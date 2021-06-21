@@ -234,7 +234,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -328,7 +328,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    {: codeblock}
    You can check for existing add-ons with this command:
    ```sh
-      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ibmcloud ks cluster addon ls --cluster <your-cluster-name>
    ```
    {: codeblock}
 3. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
@@ -368,7 +368,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    {: codeblock}
    You can check for existing add-ons with this command:
    ```sh
-      ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ibmcloud ks cluster addon ls --cluster <your-cluster-name>
    ```
    {: codeblock}
 3. Create the secret used by the application to obtain service credentials:
@@ -516,7 +516,7 @@ If you share an account with other users, always make sure to delete only your o
    {: codeblock}
 2. Delete the secrets for the deployment:
    ```sh
-   kubectl delete secret <!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-credentials
+   kubectl delete secret <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-credentials
    ```
    {: codeblock}
 3. Remove the container image from the container registry:
