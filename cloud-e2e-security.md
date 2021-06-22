@@ -320,7 +320,6 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 {: #cloud-e2e-security-16}
 
 <!--##istutorial#-->
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -341,6 +340,11 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud ks ingress secret create -c <your-cluster-name> -n <your-namespace> --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
    {: codeblock}   
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+   ```sh
+   ibmcloud ks cluster config --cluster <your-cluster-name>
+   ```
+   {: codeblock}
 4. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
@@ -360,7 +364,6 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
 <!--##isworkshop#-->
 <!--
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -369,6 +372,11 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    You can check for existing add-ons with this command:
    ```sh
    ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+   ```sh
+   ibmcloud ks cluster config --cluster <your-cluster-name>
    ```
    {: codeblock}
 3. Create the secret used by the application to obtain service credentials:
