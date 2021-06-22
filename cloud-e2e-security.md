@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-06-21"
+lastupdated: "2021-06-22"
 lasttested: "2021-06-21"
 
 content-type: tutorial
@@ -196,7 +196,7 @@ Finally create the bucket.
    1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
    2. Select **secure-file-storage-root-enckey** as the key.
 4. Under **Service integrations (optional) / Monitoring & auditing**, enable **Auditing** to have events recording in {{site.data.keyword.cloudaccesstrailshort}}.
-   1. After clicking the checkmark the service information for the previously created {{site.data.keyword.at_short}} instance should be shown.
+   1. After clicking the checkmark the service information for the {{site.data.keyword.at_short}} instance in the region should be shown.
    2. Now, enable **Track Data events** and select **read & write** as **Data Events**.
 5. Click **Create bucket**.
 
@@ -233,8 +233,12 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Select the **Graduated tier** as plan.
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
-2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`. For example:
+   * with the ingress subdomain: `mycluster-1234-d123456789.us-south.containers.appdomain.cloud`
+   * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`.
+
+   {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+   {: tip}
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -297,6 +301,9 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 2. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
    * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+
+   When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
+   {: tip}
 3. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
    ```sh
    cp secure-file-storage.template.yaml secure-file-storage.yaml
@@ -320,7 +327,6 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 {: #cloud-e2e-security-16}
 
 <!--##istutorial#-->
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -341,6 +347,11 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud ks ingress secret create -c <your-cluster-name> -n <your-namespace> --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
    {: codeblock}   
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+   ```sh
+   ibmcloud ks cluster config --cluster <your-cluster-name>
+   ```
+   {: codeblock}
 4. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
@@ -360,7 +371,6 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
 <!--##isworkshop#-->
 <!--
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
@@ -369,6 +379,11 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    You can check for existing add-ons with this command:
    ```sh
    ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ```
+   {: codeblock}
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+   ```sh
+   ibmcloud ks cluster config --cluster <your-cluster-name>
    ```
    {: codeblock}
 3. Create the secret used by the application to obtain service credentials:
