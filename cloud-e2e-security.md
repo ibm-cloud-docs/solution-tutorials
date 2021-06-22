@@ -297,6 +297,9 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 2. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
    * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+
+   When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
+   {: tip}
 3. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
    ```sh
    cp secure-file-storage.template.yaml secure-file-storage.yaml
