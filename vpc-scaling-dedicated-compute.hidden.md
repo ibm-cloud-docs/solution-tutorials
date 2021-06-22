@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-21"
-lasttested: "2021-06-16"
+lastupdated: "2021-06-22"
+lasttested: "2021-06-22"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -67,11 +67,11 @@ You will learn how to isolate your instances by provisioning them on a dedicated
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
 
-This tutorial requires:
+The tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* {{site.data.keyword.cloud_notm}} CLI,
+* [optional] {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
-* `terraform` to use Infrastructure as Code to provision resources.
+* [optional] `terraform` to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -99,15 +99,10 @@ In this section, you will create the following cloud services required for the a
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**
 4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.
-5. Set `ssh_keyname` to the name of your VPC SSH Key. To check your existing SSH keys or to create a new one, refer [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available) 
-
-   When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
-   {:tip}
-
-6. Set any additional variables you would like to override, most typical ones are `region`, `resource_group_name`.
-7. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
-8. Click on **View log** to check the resources to be provisioned.
-9. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services provisioned.
+5. Set any additional variables you would like to override, most typical ones are `region`, `resource_group_name`.
+6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
+7. Click on **View log** to check the resources to be provisioned.
+8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services provisioned.
 
 Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
@@ -140,6 +135,11 @@ You will also create an instance template that is used to provision instances in
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
+Before provisioning the VPC resources, set `ssh_keyname` to the name of your VPC SSH Key. Too create a new one under the resource group created in the above step, refer [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available) 
+
+   When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers for troubleshooting.
+   {:tip}
+
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
 3. Follow the status logs by clicking on **View log**.
@@ -165,38 +165,34 @@ In the next section, you will choose a scaling method (static or dynamic) and cr
 {: #vpc-scaling-dedicated-compute-scale}
 {: step}
 
-In this section, you will start scaling the instances with scaling method already set to **static** and then move to scaling the instances with scaling method set to **dynamic** by setting up an instance manager and an instance group manager policy. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
+In this section, you will start scaling the instances with the scaling method initially set to **static**. Then, you move to scaling the instances with **dynamic** scaling by setting up an instance manager and an instance group manager policy.. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
 
 ### Manual scaling 
 {: #vpc-scaling-dedicated-compute-manual-scale}
 
-1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace.
+1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace to see that the `step3_is_dynamic` variable is set to `false`.
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
-5. Refresh the application multiple times to see the details of the VSIs serving the request.
+5. Navigate to the browser and refresh the frontend application multiple times to see the details of the VSIs serving the request.
 
-To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
+To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
 
 ### Automatic scaling
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
-1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan.
-
-   This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
-   {:tip}
-
+1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
+ ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 2. To check the autoscaling capabilities, you can use a load generator to generate a load against our application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
-    ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {:tip}
 
-5. Refresh the application multiple times to see the details of the VSI serving the request.
+5. Refresh the frontend application multiple times to see the details of the VSI serving the request.
 
-   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.To monitor the load balancers and to check the logs, follow the steps mentioned in [this section of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
+   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`. To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
    {:tip}
 
 ### Scheduled actions
@@ -205,7 +201,7 @@ To monitor the load balancers and to check the logs, follow the steps mentioned 
 In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
 
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
-2. Check the status of your scheduled action under the `scheduled actions` tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the Membership tab of the instance group.
+2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the **Memberships** tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
    
 ## Set up a dedicated host and provision a VSI with encrypted data volume
@@ -213,7 +209,7 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 {: step}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+Provisioning dedicated instances may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
 
