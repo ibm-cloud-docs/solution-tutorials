@@ -196,7 +196,7 @@ Finally create the bucket.
    1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
    2. Select **secure-file-storage-root-enckey** as the key.
 4. Under **Service integrations (optional) / Monitoring & auditing**, enable **Auditing** to have events recording in {{site.data.keyword.cloudaccesstrailshort}}.
-   1. After clicking the checkmark the service information for the previously created {{site.data.keyword.at_short}} instance should be shown.
+   1. After clicking the checkmark the service information for the {{site.data.keyword.at_short}} instance in the region should be shown.
    2. Now, enable **Track Data events** and select **read & write** as **Data Events**.
 5. Click **Create bucket**.
 
