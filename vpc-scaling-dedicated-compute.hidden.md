@@ -210,10 +210,10 @@ Provisioning dedicated instances may incur costs. Use the [Cost Estimator](https
 {: tip}
 <!--#/istutorial#-->
 
-In this section, you will created a dedicated host in a group and provision an instance with encrypted data volume. 
+In this section, you will create a dedicated host in a group and provision an instance with encrypted data volume. 
 
 1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `step4_create_dedicated` variable to **true** and **Save** the setting.
-2. Either **Generate a plan** to see what resources will be provisioned or **Apply the plan** to provision the following resources,
+2. Click on **Apply the plan** to provision the following resources,
    - a dedicated host group
    - a dedicated host 
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
@@ -237,7 +237,7 @@ In this section, you will created a dedicated host in a group and provision an i
    ```
    {:pre}   
 
-5. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format . The data stored in COS is available only available to the application running from the dedicated host.
+5. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the dedicated host.
    ```sh
    curl \
    -X POST \
@@ -261,7 +261,7 @@ In this section, you will created a dedicated host in a group and provision an i
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
 {: step}
 
-If you have observed the profile of the instance provisioned on the dedicated host is set to `cx2-2x4` where `c` stands for **Compute** family(category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
+If you have observed the profile of the instance provisioned on the dedicated host, it is set to `cx2-2x4` where `c` stands for **Compute** family(category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
 
 1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
