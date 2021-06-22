@@ -135,10 +135,7 @@ You will also create an instance template that is used to provision instances in
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
-Before provisioning the VPC resources, set `ssh_keyname` to the name of your VPC SSH Key. Too create a new one under the resource group created in the above step, refer [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available) 
-
-   When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers for troubleshooting.
-   {:tip}
+An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available). However, none is required by this tutorial, you can optionally set `ssh_keyname` to the name of your existing VPC SSH Key.
 
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
