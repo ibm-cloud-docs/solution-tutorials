@@ -143,7 +143,7 @@ An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](ht
    After the apply is succesful, you should see the following resources provisioned 
     - a VPC 
     - two subnets (one in each zone) 
-    - a public load balancer with a security group driving traffic to the frontend application
+    - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
     - a private load balancer with a security group driving requests from frontend to the backend
     - an instance template and an instance group for provisioning and scaling the instances
       - two VSIs (one frontend instance and one backend instance) with respective security groups attached
@@ -285,7 +285,7 @@ In this section, you will learn how to check the logs of your VPC resources and 
 ### Create services and enable platform metrics
 {: #vpc-scaling-dedicated-compute-metrics}
 
-1. Navigate to the [Observability]((https://{DomainName}/observe)) page and look for any existing log analysis/monitoring services with `platform metrics` enabled. If you find an existing service with platform metrics enabled, skip [to check the logs sub-section](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-logs). To create new services and/or to configure an existing service tu support platform metrics, follow the steps below.
+1. Navigate to the [Observability](https://{DomainName}/observe) page and look for any existing log analysis/monitoring services with `platform metrics` enabled. If you find an existing service with platform metrics enabled, skip [to check the logs sub-section](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-logs). To create new services and/or to configure an existing service tu support platform metrics, follow the steps below.
 2. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
 3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
    1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
