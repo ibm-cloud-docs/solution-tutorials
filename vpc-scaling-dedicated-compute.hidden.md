@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-22"
+lastupdated: "2021-06-24"
 lasttested: "2021-06-22"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -140,7 +140,7 @@ An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](ht
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
 3. Follow the status logs by clicking on **View log**.
-   You just provisioned 
+   After the apply is succesful, you should see the following resources provisioned 
     - a VPC 
     - two subnets (one in each zone) 
     - a public load balancer with a security group driving traffic to the frontend application
@@ -151,8 +151,10 @@ An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](ht
         The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
         {:tip}
 
-4. **Copy** the public load balancer URL from the log output and paste it in a browser by prefixing `http://` to see the frontend application.
-    
+4. **Copy** the public load balancer URL from the log output and paste the URL in a browser to see the frontend application. As shown in the diagram below, enter the balance and click **Submit** to see the details of the VSIs serving the request.
+
+    ![application](images/solution62-vpc-scaling-dedicated-hidden/application.png)
+
     To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
 
@@ -170,8 +172,8 @@ In this section, you will start scaling the instances with the scaling method in
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace to see that the `step3_is_dynamic` variable is set to `false`.
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
-4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
-5. Navigate to the browser and refresh the frontend application multiple times to see the details of the VSIs serving the request.
+4. Under **Memberships** tab of your frontend [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
+5. Navigate to the browser showing the frontend app and **submit**  balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see one of the two VSIs serving your request.
 
 To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
 
@@ -180,14 +182,14 @@ To monitor the load balancers and to check the logs, follow the steps mentioned 
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
  ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
-2. To check the autoscaling capabilities, you can use a load generator to generate a load against our application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
+2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
 3. Click on **Generate load** a couple of times to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {:tip}
 
-5. Refresh the frontend application multiple times to see the details of the VSI serving the request.
+5. Navigate to the browser showing the frontend app and **submit**  balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
 
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`. To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
    {:tip}
@@ -261,7 +263,7 @@ In this section, you will create a dedicated host in a group and provision an in
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
 {: step}
 
-If you have observed the profile of the instance provisioned on the dedicated host, it is set to `cx2-2x4` where `c` stands for **Compute** family(category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
+If you have observed the profile of the instance provisioned on the dedicated host, it is set to `cx2-2x4` where `c` stands for **Compute** family (category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
 
 1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
@@ -269,7 +271,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
    {:tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
-3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the `Location` and running `ibmcloud is instances` command.
+3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command.
 
 ## View logs and monitor the load Balancer for VPC metrics
 {: #vpc-scaling-dedicated-compute-observe}
@@ -278,18 +280,17 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
 {:important}
 
-In this section, you will learn how to check the logs of your VPC resources and monitor the load balancer for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
+In this section, you will learn how to check the logs of your VPC resources and monitor the load balancers for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
 
 ### Create services and enable platform metrics
 {: #vpc-scaling-dedicated-compute-metrics}
 
-If you don't have any log analysis/monitoring services provisioned or platform metrics enabled, follow the steps below. Otherwise skip to the next sub-section to check the logs.
-
-1. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
-2. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
+1. Navigate to the [Observability]((https://{DomainName}/observe)) page and look for any existing log analysis/monitoring services with `platform metrics` enabled. If you find an existing service with platform metrics enabled, skip [to check the logs sub-section](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-logs). To create new services and/or to configure an existing service tu support platform metrics, follow the steps below.
+2. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
+3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
    1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
-3. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
+4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
    For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
    {:tip}
@@ -307,8 +308,9 @@ Platform logs are logs that are exposed by logging-enabled services and the plat
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
     1. Clicking on the load balancer name for which you wish to check the logs.
     2. Under `Overview` tab, click on **Launch logging** under the `Data logging` panel of the load balancer. 
+    3. Remember to generate load against your application to see the logs.
 
-For checking the logs of other VPC resources, refer [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging)
+For checking the logs of other VPC resources, refer to [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging).
 
 ### Monitoring Load Balancer for VPC metrics
 {: #vpc-scaling-dedicated-compute-monitor}
@@ -326,7 +328,7 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 {: step}
 
 1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Destroy**.
-2. Enter your `workspace name` and click **Destroy**.
+2. Enter the phrase as shown, typically your workspace name and click **Destroy**.
 
 ## Related content
 {: #vpc-scaling-dedicated-compute-related}
