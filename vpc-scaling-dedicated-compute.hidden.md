@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-24"
-lasttested: "2021-06-22"
+lastupdated: "2021-06-25"
+lasttested: "2021-06-24"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -40,9 +40,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads in a public (multi-tenant) environment and in a dedicated (single-tenant) environment. In a public environment, you will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. You will also configure load balancers to provide high availability between zones within one region.
+This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and in a dedicated (single-tenant) environment. You will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Also, configure load balancers to provide high availability between zones within one region.
 
-You will learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. You will also attach an encrypted volume to your instance. You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
+Learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. Also, attach an encrypted volume to your instance. You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
 {:shortdesc}
 
 {{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities. You will use a Terraform template that defines the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
@@ -68,10 +68,8 @@ You will learn how to isolate your instances by provisioning them on a dedicated
 {: #vpc-scaling-dedicated-compute-prereqs}
 
 The tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* [optional] {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
-* [optional] `terraform` to use Infrastructure as Code to provision resources.
+* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)
+* cURL
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
