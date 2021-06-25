@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-17"
+lastupdated: "2021-06-25"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -134,8 +134,18 @@ walk attendees through the architecture of the location, using the CLI, using th
 ### For the {{site.data.keyword.satelliteshort}} location
 {: #satellite-tour-observe-location}
 
-1. use Platform Logging and Platform Metrics instances
-1. available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
+Under [Logging](https://{DomainName}/observe/logging):
+1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click **Open dashboard**.
+1. Set the search to `host:satellite` to view only logs from {{site.data.keyword.satelliteshort}}. You can filter even more by setting the `logSourceCRN` attribute to the {{site.data.keyword.satelliteshort}} location CRN or using the **Sources** and **Apps** filters at the top of the window.
+1. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
+
+The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
+1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click **Open dashboard**.
+1. In the **Dashboards** list, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
+1. Change the time horizon to view past data.
+1. Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics.
 
 ### For the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-observe-cluster}
