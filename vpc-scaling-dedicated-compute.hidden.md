@@ -57,26 +57,17 @@ Learn how to isolate your instances by provisioning them on a dedicated host and
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
-* You will start by provisioning two VSIs (one frontend VSI and one backend VSI) on a VPC, then cloud services with private endpoints.
-* To address increasing traffic, manually add more VSIs. To distribute load, you need to add a public load balancer on the frontend and a private load balancer on the backend.
-* You will then enable scaling for VPC to dynamically add or remove VSIs based on metrics like CPU, RAM etc., or through scheduled scaling.
-* As the scope expands, you may require dedicated compute to isolate and perform heavy computation on the data.
-* Additionally, you will resize the dedicated instance allowing you to vertically instances to any supported profile size in minutes.
-* As shown in the architecture diagram, VSIs on both VPC-SCALE and VPC-DEDICATED communicate with cloud services via the private endpoints provided by VPE.
+1. The frontend app deployed to a VSI talks to the backend app via the private load balancer.
+2. The backend app securely communicates with the cloud services via a virtual private endpoint(VPE).
+3. As the traffic increases, scaling for VPC is enabled to dynamically add or remove VSIs based on metrics like CPU, RAM etc., or through scheduled scaling.
+4. As the scope expands, dedicated compute is provisioned to isolate and perform heavy computation on the data. Resize the dedicated instance by updating the profile based on your requirement.
+5. The dedicated instance communicates with cloud services via the private endpoints provided by VPE.
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
 
 The tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)
-* cURL
-
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
-<!--#/istutorial#-->
 
 ## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
@@ -111,16 +102,13 @@ Navigate to the [resource list](https://{DomainName}/resources). Here, you can f
 
 In this section, you will provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend app and backend app. 
 
-You will also configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
-You will also create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
+Create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
 
-### Progression
-{: #vpc-scaling-dedicated-compute-vpc-progress}
-
-- As you apply the infrastructure script later in this section, the script starts by provisioning a frontend VSI and a backend VSI in one of the subnets spanning across two zones in the VPC.
+- Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances as shown.
    ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.png)
-- As the load increases, you may need more instances to serve the traffic. The script configures a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
+- As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
 - An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run initialization scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
@@ -133,7 +121,7 @@ You will also create an instance template that is used to provision instances in
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
-An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](https://{DomainName}/docs/vpc?topic=vpc-managing-ssh-keys#prereq-ssh-key-available). However, none is required by this tutorial, you can optionally set `ssh_keyname` to the name of your existing VPC SSH Key.
+If you want to access the VSI directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
 
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
@@ -144,16 +132,16 @@ An SSH key is required to connect to a VSI in VPC, refer to [Manage SSH keys](ht
     - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
     - a private load balancer with a security group driving requests from frontend to the backend
     - an instance template and an instance group for provisioning and scaling the instances
-      - two VSIs (one frontend instance and one backend instance) with respective security groups attached
+   - two VSIs (one frontend instance and one backend instance) with respective security groups attached
 
-        The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
-        {:tip}
+      The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
+      {:tip}
 
-4. **Copy** the public load balancer URL from the log output and paste the URL in a browser to see the frontend application. As shown in the diagram below, enter the balance and click **Submit** to see the details of the VSIs serving the request.
+4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance and click **Submit** to see the details of the VSIs serving the request.
 
     ![application](images/solution62-vpc-scaling-dedicated-hidden/application.png)
 
-    To check the provisioned VPC resources, you can either use the [VPC layout](https://{DomainName}/vpc-ext/vpcLayout) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
+    To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
     {:tip}
 
 In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.
@@ -173,15 +161,15 @@ In this section, you will start scaling the instances with the scaling method in
 4. Under **Memberships** tab of your frontend [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
 5. Navigate to the browser showing the frontend app and **submit**  balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see one of the two VSIs serving your request.
 
-To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
+You can check the logs and monitor your load balancers later in the tutorial.
 
 ### Automatic scaling
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
  ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
-2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above.
-3. Click on **Generate load** a couple of times to generate more traffic.
+2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above. This load generator will simulate about 300 clients hitting the URL for 30 seconds. 
+3. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
@@ -211,6 +199,8 @@ Provisioning dedicated instances may incur costs. Use the [Cost Estimator](https
 <!--#/istutorial#-->
 
 In this section, you will create a dedicated host in a group and provision an instance with encrypted data volume. 
+
+The reason you create a dedicated host is to carve out a single-tenant compute node, free from users outside of your organization. Within that dedicated space, you can create virtual server instances according to your needs. Additionally, you can create dedicated host groups that contain dedicated hosts for a specific purpose. Because a dedicated host is a single-tenant space, only users within your account that have the required permissions can create instances on the host.
 
 1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `step4_create_dedicated` variable to **true** and **Save** the setting.
 2. Click on **Apply the plan** to provision the following resources,
@@ -269,7 +259,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
    {:tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
-3. You can check the profile by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command.
+3. You can check the profile of the dedicated instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ## View logs and monitor the load Balancer for VPC metrics
 {: #vpc-scaling-dedicated-compute-observe}
