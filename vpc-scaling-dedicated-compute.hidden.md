@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-25"
-lasttested: "2021-06-24"
+lastupdated: "2021-06-28"
+lasttested: "2021-06-28"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -95,6 +95,22 @@ In this section, you will create the following cloud services required for the a
 
 Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
+### Enable platform metrics
+{: #vpc-scaling-dedicated-compute-metrics}
+
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
+{:important}
+
+1. Navigate to the [Observability](https://{DomainName}/observe) page and look for any existing log analysis/monitoring services with `platform metrics` enabled. If you find an existing service with platform metrics enabled, skip [to check the logs sub-section](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-logs). To create new services and/or to configure an existing service tu support platform metrics, follow the steps below.
+2. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you wish to enable monitoring.
+3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
+   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
+   2. Select the log analysis service instance from the dropdown menu and click **Select**.
+4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
+
+   For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+   {:tip}
+
 
 ## Set up a multizone Virtual Private Cloud
 {: #vpc-scaling-dedicated-compute-vpc-setup}
@@ -132,7 +148,7 @@ If you want to access the VSI directly later, you can optionally [create an SSH 
     - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
     - a private load balancer with a security group driving requests from frontend to the backend
     - an instance template and an instance group for provisioning and scaling the instances
-   - two VSIs (one frontend instance and one backend instance) with respective security groups attached
+    - Initially, two VSIs (one frontend instance and one backend instance) with respective security groups attached
 
       The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
       {:tip}
@@ -175,9 +191,9 @@ You can check the logs and monitor your load balancers later in the tutorial.
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {:tip}
 
-5. Navigate to the browser showing the frontend app and **submit**  balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
+5. Navigate to the browser showing the frontend app and **submit** balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
 
-   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`. To monitor the load balancers and to check the logs, follow the steps mentioned in [step 6 of the tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-observe) 
+   Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
    {:tip}
 
 ### Scheduled actions
@@ -188,6 +204,35 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
 2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the **Memberships** tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
+
+### Monitoring Load Balancer for VPC metrics
+{: #vpc-scaling-dedicated-compute-monitor}
+
+Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
+
+1. You can monitor your load balancers from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
+   1. Clicking on the name of the load balancer
+   2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**
+   3. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard
+   4. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_
+2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane and then click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
+  
+### Check the logs
+{: #vpc-scaling-dedicated-compute-logs}
+
+VPC services generate platform logs in the same region where they are available. You can view, monitor, and manage VPC logs through the {{site.data.keyword.loganalysislong_notm}} instance that is marked as platform logs in the region.
+
+Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs).
+
+1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
+2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
+3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
+4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
+    1. Clicking on the load balancer name for which you wish to check the logs.
+    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**. 
+    3. Remember to generate load against your application to see the logs.
+
+For checking the logs of other VPC resources, refer to [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging).
    
 ## Set up a dedicated host and provision a VSI with encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
@@ -260,56 +305,6 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
 3. You can check the profile of the dedicated instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
-
-## View logs and monitor the load Balancer for VPC metrics
-{: #vpc-scaling-dedicated-compute-observe}
-{: step}
-
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
-{:important}
-
-In this section, you will learn how to check the logs of your VPC resources and monitor the load balancers for VPC metrics. The {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}} services are enabled to receive platform metrics while provisioning. 
-
-### Create services and enable platform metrics
-{: #vpc-scaling-dedicated-compute-metrics}
-
-1. Navigate to the [Observability](https://{DomainName}/observe) page and look for any existing log analysis/monitoring services with `platform metrics` enabled. If you find an existing service with platform metrics enabled, skip [to check the logs sub-section](/docs/solution-tutorials?topic=solution-tutorials-vpc-scaling-dedicated-compute#vpc-scaling-dedicated-compute-logs). To create new services and/or to configure an existing service tu support platform metrics, follow the steps below.
-2. To create a {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step6_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step6_create_monitoring` variable if you wish to enable monitoring.
-3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
-   2. Select the log analysis service instance from the dropdown menu and click **Select**.
-4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
-
-   For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
-   {:tip}
-
-### Check the logs
-{: #vpc-scaling-dedicated-compute-logs}
-
-VPC services generate platform logs in the same region where they are available. You can view, monitor, and manage VPC logs through the {{site.data.keyword.loganalysislong_notm}} instance that is marked as platform logs in the region.
-
-Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs).
-
-1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
-3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
-4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-    1. Clicking on the load balancer name for which you wish to check the logs.
-    2. Under `Overview` tab, click on **Launch logging** under the `Data logging` panel of the load balancer. 
-    3. Remember to generate load against your application to see the logs.
-
-For checking the logs of other VPC resources, refer to [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging).
-
-### Monitoring Load Balancer for VPC metrics
-{: #vpc-scaling-dedicated-compute-monitor}
-
-Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
-
-1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane.
-2. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
-3. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard. 
-4. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. The default dashboard is not editable.
-
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
