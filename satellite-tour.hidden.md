@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-25"
+lastupdated: "2021-06-28"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -64,7 +64,6 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-* a Docker engine,
 * `oc` to interact with OpenShift,
 
 <!--##istutorial#-->
@@ -89,7 +88,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #satellite-tour-architecture}
 {: step}
 
-In this section, you will discover the components making a {{site.data.keyword.satelliteshort}} location.
+In this section, you will walk through the components making a {{site.data.keyword.satelliteshort}} location. A location represents a data center that you fill with your own infrastructure resources.
 
 ### using {{site.data.keyword.cloud_notm}} console
 {: #satellite-tour-architecture-ui}
@@ -100,12 +99,11 @@ In this section, you will discover the components making a {{site.data.keyword.s
    * a set of hosts has been assigned to the location **Control plane**.
    * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **OpenShift clusters**.
    * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
-walk attendees through the architecture of the location, using the CLI, using the user interface:
 
 ### using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
 
-1. From the CLI (in {{site.data.keyword.cloud-shell_short}} as example), list all locations:
+1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), list all locations:
    ```sh
    ibmcloud sat location ls
    ```
@@ -127,12 +125,11 @@ walk attendees through the architecture of the location, using the CLI, using th
    ```
    {: pre}
 
-## Review the logging and monitoring dashboards
-{: #satellite-tour-observe}
+## Review the logging and monitoring dashboards for the location
+{: #satellite-tour-observe-location}
 {: step}
 
-### For the {{site.data.keyword.satelliteshort}} location
-{: #satellite-tour-observe-location}
+A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
 
 Under [Logging](https://{DomainName}/observe/logging):
 1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
@@ -147,20 +144,23 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 1. Change the time horizon to view past data.
 1. Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics.
 
-### For the {{site.data.keyword.satelliteshort}} cluster
-{: #satellite-tour-observe-cluster}
-
-* can be configured to forward logs/metrics to anything including our logdna/sysdig
+{{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
 
 ## Create a new project in the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-project}
 {: step}
 
-1. Log in into one cluster
-1. Follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
-   * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
-   * use oc commands as if it was a regular cluster
-   * or https://{DomainName}/docs/openshift?topic=openshift-access_cluster#access_oc_cli to log in with API key or one-time code
+In the following section, you will deploy an application to a {{site.data.keyword.satelliteshort}} cluster and configure this application to access through {{site.data.keyword.satelliteshort}} Link a service running in {{site.data.keyword.cloud_notm}}.
+
+1. Go to [the list of {{site.data.keyword.satelliteshort}} clusters](https://{DomainName}/satellite/clusters).
+1. Select a cluster from your location.
+1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
+   You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+   {:tip}
+1. To log in the cluster, click the **OpenShift web console** button.
+1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
+1. In the window that opens, click **Display token**.
+1. Copy and paste the **Log in with this token** command in your shell window.
 1. Create a new oc project
    ```sh
    oc new-project <your-initials>-tour
@@ -170,6 +170,8 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 ## Use {{site.data.keyword.satelliteshort}} link to expose {{site.data.keyword.cloud_notm}} services
 {: #satellite-tour-link}
 {: step}
+
+With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
 
 ### Provision a service
 {: #satellite-tour-link-service}
