@@ -95,7 +95,7 @@ In this section, you will create the following cloud services required for the a
 
 Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
-### Enable platform metrics
+### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
 
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
@@ -211,11 +211,12 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
 
 1. You can monitor your load balancers from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-   1. Clicking on the name of the load balancer
+   1. Clicking on the **name** of the load balancer
    2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**
-   3. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard
-   4. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_
-2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane and then click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
+2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane 
+   1. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`
+   2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard
+   3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_
   
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
@@ -228,9 +229,9 @@ Platform logs are logs that are exposed by logging-enabled services and the plat
 2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
 3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-    1. Clicking on the load balancer name for which you wish to check the logs.
-    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**. 
-    3. Remember to generate load against your application to see the logs.
+    1. Clicking on the load balancer name for which you wish to check the logs
+    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**
+    3. Remember to generate load against your application to see the logs
 
 For checking the logs of other VPC resources, refer to [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging).
    
@@ -260,6 +261,9 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    export DEDICATED_INSTANCE_IP=<IP_ADDRESS>
    ```
    {:pre}
+
+   Typically, you won't set a public IP (floating IP) for a dedicated instance. In this case, a floating IP is set only to simply the use of the app deployed to the dedicated instance.
+   {:tip} 
 
 4. Issue the following curl commands to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
