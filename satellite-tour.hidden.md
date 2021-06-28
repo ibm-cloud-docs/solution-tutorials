@@ -176,8 +176,15 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 ### Provision a service
 {: #satellite-tour-link-service}
 
-1. Provision a {{site.data.keyword.cloudant}} service instance.
-1. Create service credentials.
+1. Provision a {{site.data.keyword.databases-for-postgresql}} service instance or use an existing one.
+   Because {{site.data.keyword.satelliteshort}} link makes {{site.data.keyword.cloud_notm}} resources available to your location, you can choose to provision your instance with **Private** service endpoints only.
+1. Create service credentials or reuse existing credentials.
+1. In the credentials, make note of the values for the following keys:
+   * connection / postgress / hosts / hostname
+   * connection / postgress / hosts / port
+   * connection / postgress / authentication / username
+   * connection / postgress / authentication / password
+   * connection / postgress / database
 
 ### Expose the service to the {{site.data.keyword.satelliteshort}} location
 {: #satellite-tour-link-location}
@@ -189,41 +196,44 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    * Click **Next**.
 1. In the **Resource details** step:
    * Set **Endpoint name** to something unique such as `<your-initials>-database`.
-   * Set **Destination FQDN or IP** to the **host** of the database, taken from the credentials.
-   * Set **Destination port** to **443**.
+   * Set **Destination FQDN or IP** to the **hostname** of the database, taken from the credentials.
+   * Set **Destination port** to the **port** of the database.
    * Click **Next**.
 1. In the **Protocol** step:
-   * Set the **Source protocol** as **HTTPS**
+   * Set the **Source protocol** as **TCP**
    * Click **Next**.
 1. Click **Create endpoint**.
 1. Select the created endpoint.
-1. After few seconds, the **Endpoint address** is ready to be used.
+1. After few seconds, the **Endpoint address** (`host:port`) is ready to be used.
 
-## Deploy an application to a {{site.data.keyword.satelliteshort}} cluster
+## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
-
-### Create an application
-{: #satellite-tour-deploy-create-app}
 
 1. In the OpenShift console, switch the **Developer** perspective.
 1. Select the project you created.
 1. Click **+Add** and select the option named **From Git**.
-1. Set **Git Repo URL** to **https://github.com/l2fprod/mytodo.git**.
+1. Set **Git Repo URL** to **https://github.com/IBM/satellite-link-example.git**.
+1. Click **Show Advanced Git Options**.
+1. Set **Context Dir** to **/ExampleApp**.
+1. Select **Python** as builder.
 1. Click **Create**.
 1. Wait for the **Build** to complete and the application to come online.
 
-At that stage the application is running but not using the database yet.
-
-### Bind the service
-{: #satellite-tour-deploy-bind-service}
-
-1. Select the Deployment **mytodo-git**.
-1. Under **Environment**, define two **Single values (env)**:
-   * One with **Name** set to **CLOUDANT_APIKEY** and **Value** to the **apikey** value of the database credentials.
-   * Another one with **Name** set to **CLOUDANT_URL** and with **Value** set to **https://<endpoint address and port>** created in the previous step.
-1. Save the environment.
-1. A new pod will be created and the database initialized.
+Once the build is complete and the application is running:
+1. Go to the **Topology** view in th {{site.data.keyword.openshiftshort}} web console.
+1. Open the application URL.
+1. Set the values for `host`, `port`, `username`, `password` and `database` from the credentials in the previous section.
+1. Click `Login`.
+1. Try out some SQL commands to verify the connection with the database:
+   ```sql
+   CREATE TABLE EMPLOYEE( FIRST_NAME CHAR(20) NOT NULL, LAST_NAME CHAR(20), AGE INT, SEX CHAR(1), INCOME FLOAT )
+   INSERT INTO EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Win', 30, 'M', 9000)
+   SELECT * FROM EMPLOYEE
+   DROP TABLE EMPLOYEE
+   ```
+   To avoid conflicts with other users of the database, replace `EMPLOYEES` with a unique table name like `<your-initials>_EMPLOYEES`.
+   {: tip}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
