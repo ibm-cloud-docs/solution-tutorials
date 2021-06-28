@@ -196,14 +196,16 @@ You can check the logs and monitor your load balancers later in the tutorial.
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
    {:tip}
 
+6. Wait for the instances to scale to `1` before moving to the next step.
+
 ### Scheduled actions
 {: #vpc-scaling-dedicated-compute-scheduled-scale}
 
 In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
 
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
-2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `10` instances. You should see `2` instances under the **Memberships** tab of the instance group.
-3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `10`.
+2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `5` instances. You should see `2` instances under the **Memberships** tab of the instance group.
+3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `5`.
 
 ### Monitoring Load Balancer for VPC metrics
 {: #vpc-scaling-dedicated-compute-monitor}
