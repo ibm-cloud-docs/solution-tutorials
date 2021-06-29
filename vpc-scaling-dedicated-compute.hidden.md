@@ -175,7 +175,7 @@ In this section, you will start scaling the instances with the scaling method in
 2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your frontend [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
-5. Navigate to the browser showing the frontend app and **submit**  balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see one of the two VSIs serving your request.
+5. Navigate to the browser showing the frontend app and either click on the **Refresh** button or **submit**  a new balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see two of the four VSIs serving your request.
 
 You can check the logs and monitor your load balancers later in the tutorial.
 
@@ -184,7 +184,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
  ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
-2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above. This load generator will simulate about 300 clients hitting the URL for 30 seconds. 
+2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above and add the endpoint to the frontend API, i.e. `http://<load-balancer>/v1/controller/balance.php`. This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
 3. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
 4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
