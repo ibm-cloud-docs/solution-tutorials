@@ -116,18 +116,18 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {: #vpc-scaling-dedicated-compute-vpc-setup}
 {: step}
 
-In this section, you will provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). You will provision VSIs in multiple zones within one region to ensure the high availability of your frontend app and backend app. 
+In this section, you will:
+   - Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). You will create multiple VSIs across these zones to ensure the high availability of your frontend app and backend app. 
+   - Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
 
-Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.  With load balancers in place, you can always configure SSL termination, sticky sessions, health checks, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+Create an instance template used to provision instances in your instance group.
 
-Create an instance template that is used to provision instances in your instance group and create an instance group in a single region that is made up of like virtual server instances.
-
-- Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances as shown.
+- Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
    ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.png)
-- As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer you can configure specific health checks for the pool members that are associated with instances.
+- As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
-- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run initialization scripts required for the frontend and backend respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no-scaling policies defined yet.
+- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run initialization scripts required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
@@ -311,6 +311,11 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
 3. You can check the profile of the dedicated instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
+
+## What's next?
+Learn more about what you can do.
+
+   - Configure SSL termination, sticky sessions, and end-to-end encryption.  For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
