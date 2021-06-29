@@ -313,6 +313,9 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 3. You can check the profile of the dedicated instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ## What's next?
+{: #vpc-scaling-dedicated-compute-dedicated-next}
+{: step}
+
 Learn more about what you can do.
 
    - Configure SSL termination, sticky sessions, and end-to-end encryption.  For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
