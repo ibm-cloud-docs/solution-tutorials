@@ -57,11 +57,11 @@ You will provision all of these services and VPC resources using {{site.data.key
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
-1. The frontend app deployed to a VSI talks to the backend app via the private load balancer.
-2. The backend app securely communicates with the cloud services via a virtual private endpoint(VPE).
-3. As the traffic increases, scaling for VPC is enabled to dynamically add or remove VSIs based on metrics like CPU, RAM etc., or through scheduled scaling.
-4. As the scope expands, dedicated compute is provisioned to isolate and perform heavy computation on the data. Resize the dedicated instance by updating the profile based on your requirement.
-5. The dedicated instance communicates with cloud services via the private endpoints provided by VPE.
+1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
+2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
+3. As the traffic increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
+4. As the scope expands, dedicated compute isolates and performs heavy computation on the data. Resize the dedicated instance by updating the profile based on your requirement.
+5. The dedicated instance communicates with cloud services via a virtual private endpoint (VPE).
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
