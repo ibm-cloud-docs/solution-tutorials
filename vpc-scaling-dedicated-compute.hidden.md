@@ -117,19 +117,19 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {: step}
 
 In this section, you will:
-   - Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). You will create multiple VSIs across these zones to ensure the high availability of your frontend app and backend app. 
+   - Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
    - Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
+   - Create an instance template used to provision instances in your instance group.
 
-Create an instance template used to provision instances in your instance group.
-
-- Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
+Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
    ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.png)
-- As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
+
+As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.png)
 
-- An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
+An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
-   VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the New virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
+   VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
 
    ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.png)
@@ -137,7 +137,7 @@ Create an instance template used to provision instances in your instance group.
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
-If you want to access the VSI directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
+If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
 
 1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the [step2_create_vpc](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf) to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
@@ -153,7 +153,7 @@ If you want to access the VSI directly later, you can optionally [create an SSH 
       The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
       {:tip}
 
-4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance and click **Submit** to see the details of the VSIs serving the request.
+4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance, e.g.,10 and click **Submit** to see the details of the VSIs serving the request.
 
     ![application](images/solution62-vpc-scaling-dedicated-hidden/application.png)
 
