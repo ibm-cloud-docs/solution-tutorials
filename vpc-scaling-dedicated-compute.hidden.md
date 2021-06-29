@@ -87,13 +87,13 @@ In this section, you will create the following cloud services required for the a
    1. Enter your {{site.data.keyword.Bluemix_notm}} API key
    2. Uncheck **Use default** and check **Sensitive** 
    3. Click on **Save**
-4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown and click on **Save**.
-5. Set any additional variables you would like to override, most typical ones are `region`, `resource_group_name`.
+4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown, and click on **Save**.
+5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
 7. Click on **View log** to check the resources to be provisioned.
-8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services provisioned.
+8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services created.
 
-Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling** and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
+Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
 ### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
