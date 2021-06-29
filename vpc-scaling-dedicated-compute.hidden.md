@@ -80,7 +80,7 @@ In this section, you will create the following cloud services required for the a
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Create**.
 2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. You can check the [Git repo]((https://github.com/IBM-Cloud/vpc-scaling-dedicated-host)) with the Terraform scripts.
+   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. For the Terraform scripts used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
    2. Select `terraform_v0.14` as the Terraform version.
    3. Click on **Save template information**.
 3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row. 
@@ -146,7 +146,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
    {:tip}
 
 3. Follow the status logs by clicking on **View log**.
-   After the apply is succesful, you should see the following resources provisioned 
+   After the apply is succesful, you should see the following resources provisioned:
     - a VPC
     - two subnets (one in each zone) 
     - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
