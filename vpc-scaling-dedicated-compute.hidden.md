@@ -271,7 +271,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    Typically, you won't set a public IP (floating IP) for a dedicated instance. In this case, a floating IP is set only to simply the use of the app deployed to the dedicated instance.
    {:tip} 
 
-4. Issue the following curl commands to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
+4. Issue the following curl command to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
    ```sh
    curl \
@@ -282,7 +282,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```
    {:pre}   
 
-5. Issue the following curl commands to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the dedicated host.
+5. Issue the following curl command to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the dedicated host.
    ```sh
    curl \
    -X POST \
@@ -292,7 +292,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```
    {:pre}
 
-6. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+6.  Issue the following curl command to query the database and COS bucket at once. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
    -X POST \
