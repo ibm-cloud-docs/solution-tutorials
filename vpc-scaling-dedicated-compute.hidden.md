@@ -80,14 +80,14 @@ In this section, you will create the following cloud services required for the a
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Create**.
 2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide https://github.com/IBM-Cloud/vpc-scaling-dedicated-host under GitHub or GitLab repository URL.
+   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. You can check the [Git repo]((https://github.com/IBM-Cloud/vpc-scaling-dedicated-host)) with the Terraform scripts.
    2. Select `terraform_v0.14` as the Terraform version.
    3. Click on **Save template information**.
 3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row. 
    1. Enter your {{site.data.keyword.Bluemix_notm}} API key.
    2. Uncheck **Use default** and check **Sensitive**.
    3. Click on **Save**.
-4. Set [step1_create_services](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf) to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown, and click on **Save**.
+4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown, and click on **Save**.
 5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
 7. Click on **View log** to check the resources to be provisioned.
@@ -102,7 +102,7 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {:important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
-2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update [step1_create_logging](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf#L2) variable to **true** and **Save** the setting. **Repeat** the same with [step1_create_monitoring](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf#L20) variable if you wish to enable monitoring.
+2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you wish to enable monitoring.
 3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
    1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources.
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
@@ -139,8 +139,12 @@ An instance template is required before you can create an instance group for aut
 
 If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
 
-1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the [step2_create_vpc](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf) to **true** and **Save** the setting.
+1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
+
+   There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf) file.
+   {:tip}
+
 3. Follow the status logs by clicking on **View log**.
    After the apply is succesful, you should see the following resources provisioned 
     - a VPC
@@ -172,7 +176,7 @@ In this section, you will start scaling the instances with the scaling method in
 {: #vpc-scaling-dedicated-compute-manual-scale}
 
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace to see that the `step3_is_dynamic` variable is set to `false`.
-2. Update the [step3_instance_count](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/autoscale/main.tf#L25) variable to **2** and **Save** the setting.
+2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your frontend [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should now see `2` instances.
 5. Navigate to the browser showing the frontend app and either click on the **Refresh** button or **submit**  a new balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see two of the four VSIs serving your request.
@@ -182,7 +186,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 ### Automatic scaling
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
-1. To switch to **dynamic** scaling method, set the [step3_is_dynamic](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/autoscale/main.tf#L38) variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
+1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
  ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
 2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above and add the endpoint to the frontend API, i.e. `http://<load-balancer>/v1/controller/balance.php`. This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
 3. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
@@ -203,7 +207,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 
 In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
 
-1. To create a one-time scheduled action, set the [step3_is_scheduled](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/autoscale/main.tf#L67) variable to **true**, **Save** the setting and **Apply** the plan.
+1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
 2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `5` instances. You should see `2` instances under the **Memberships** tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `5`.
 
@@ -250,7 +254,7 @@ In this section, you will create a dedicated host in a group and provision an in
 
 The reason you create a dedicated host is to carve out a single-tenant compute node, free from users outside of your organization. Within that dedicated space, you can create virtual server instances according to your needs. Additionally, you can create dedicated host groups that contain dedicated hosts for a specific purpose. Because a dedicated host is a single-tenant space, only users within your account that have the required permissions can create instances on the host.
 
-1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the [step4_create_dedicated](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_dedicated/main.tf) variable to **true** and **Save** the setting.
+1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `step4_create_dedicated` variable to **true** and **Save** the setting.
 2. Click on **Apply the plan** to provision the following resources,
    - a dedicated host group
    - a dedicated host 
@@ -304,7 +308,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
 
 If you have observed the profile of the instance provisioned on the dedicated host, it is set to `cx2-2x4` where `c` stands for **Compute** family (category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
 
-1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update [step5_resize_dedicated_instance](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_dedicated/main.tf#L143) variable to **true** and **Save** the setting.
+1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
    Dedicated virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
    {:tip}
