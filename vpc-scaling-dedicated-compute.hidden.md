@@ -98,7 +98,7 @@ Navigate to the [resource list](https://{DomainName}/resources). Here, you can f
 ### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
 
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only one instance in a location (region) can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure one instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
 {:important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
@@ -139,7 +139,7 @@ An instance template is required before you can create an instance group for aut
 
 If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
 
-1. Under **Settings** tab of your {{site.data.keyword.bpshort}} workspace, set the `step2_create_vpc` to **true** and **Save** the setting.
+1. Go to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, click the action menu for `step2_create_vpc`, change the value to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
 
    There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf) file.
@@ -161,7 +161,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 
     ![application](images/solution62-vpc-scaling-dedicated-hidden/application.png)
 
-    To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with `ibmcloud is` commands.
+    To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with [ibmcloud is](https://{DomainName}/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
     {:tip}
 
 In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.
@@ -188,19 +188,22 @@ You can check the logs and monitor your load balancers later in the tutorial.
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
  ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.png)
-2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the public load balancer URL from the step above and add the endpoint to the frontend API, i.e. `http://<load-balancer>/v1/controller/balance.php`. This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
-3. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
-4. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. 
+   1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/).This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
+   2. **Paste** the public load balancer URL from the above step 
+   3. **Append** `/v1/controller/balance.php` which is the endpoint to the frontend API. The URL should look like `http://<load-balancer>/v1/controller/balance.php`. 
+   4. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
+3. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {:tip}
 
-5. Navigate to the browser showing the frontend app and **submit** balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
+4. Navigate to the browser showing the frontend app and **submit** balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
 
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
    {:tip}
 
-6. Wait for the instances to scale to `1` before moving to the next step.
+5. Wait for the instances to scale to `1` before moving to the next step.
 
 ### Scheduled actions
 {: #vpc-scaling-dedicated-compute-scheduled-scale}
@@ -223,6 +226,7 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
    1. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
    2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard.
    3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_.
+3. Remember to generate load against your application.
   
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
@@ -233,7 +237,7 @@ Platform logs are logs that are exposed by logging-enabled services and the plat
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
 2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
-3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
+3. Under **Apps** from the top menu, check the load balancer CRN for which you want to see the logs and click **Apply**. 
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
     1. Clicking on the load balancer name for which you wish to check the logs.
     2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**.
