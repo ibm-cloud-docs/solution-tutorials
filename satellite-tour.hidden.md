@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-28"
+lastupdated: "2021-06-29"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -210,20 +210,31 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 {: #satellite-tour-deploy}
 {: step}
 
-1. In the OpenShift console, switch the **Developer** perspective.
-1. Select the project you created.
-1. Click **+Add** and select the option named **From Git**.
-1. Set **Git Repo URL** to **https://github.com/IBM/satellite-link-example.git**.
-1. Click **Show Advanced Git Options**.
-1. Set **Context Dir** to **/ExampleApp**.
-1. Select **Python** as builder.
-1. Click **Create**.
-1. Wait for the **Build** to complete and the application to come online.
+1. From the command line, create a new application in the OpenShift project:
+   ```sh
+   oc new-app python~https://github.com/l2fprod/satellite-link-example.git --name link-example
+   ```
+   {: pre}
+1. Wait for the first build of the application to complete by monitoring the logs:
+   ```sh
+   oc logs -f bc/link-example
+   ```
+   {: pre}
+1. When the build is complete, create a secure route to access the application:
+   ```sh
+   oc create route edge link-example-https --service=link-example --port=8080
+   ```
+   {: pre}
+1. Retrieve the created route:
+   ```sh
+   oc get route link-example-https --output json | jq -r '"https://" + .spec.host'
+   ```
+   {: pre}
+1. Open the route URL to access the application.
 
-Once the build is complete and the application is running:
-1. Go to the **Topology** view in th {{site.data.keyword.openshiftshort}} web console.
-1. Open the application URL.
-1. Set the values for `host`, `port`, `username`, `password` and `database` from the credentials in the previous section.
+The application allows to query a {{site.data.keyword.postgresql}} database. The form prompts you for the database credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the database over {{site.data.keyword.satelliteshort}} link.
+
+1. Set the values for `hostname`, `port`, `username`, `password` and `database` from the credentials in the previous section.
 1. Click `Login`.
 1. Try out some SQL commands to verify the connection with the database:
    ```sql
@@ -232,7 +243,7 @@ Once the build is complete and the application is running:
    SELECT * FROM EMPLOYEE
    DROP TABLE EMPLOYEE
    ```
-   To avoid conflicts with other users of the database, replace `EMPLOYEES` with a unique table name like `<your-initials>_EMPLOYEES`.
+   To avoid conflicts with other users of the database, replace `EMPLOYEE` with a unique table name like `<your-initials>_EMPLOYEE`.
    {: tip}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
