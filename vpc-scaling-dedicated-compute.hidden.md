@@ -166,7 +166,7 @@ In the next section, you will choose a scaling method (static or dynamic) and cr
 {: #vpc-scaling-dedicated-compute-scale}
 {: step}
 
-In this section, you will start scaling the instances with the scaling method initially set to **static**. Then, you move to scaling the instances with **dynamic** scaling by setting up an instance manager and an instance group manager policy.. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
+In this section, you will start scaling the instances with the scaling method initially set to **static**. Then, you move to scaling the instances with **dynamic** scaling by setting up an instance manager and an instance group manager policy. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
 
 ### Manual scaling 
 {: #vpc-scaling-dedicated-compute-manual-scale}
