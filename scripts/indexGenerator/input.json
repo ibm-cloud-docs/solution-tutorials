@@ -39,7 +39,7 @@
           "imgSrc": "images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png"
         },
         {
-          "name": "Satellite Tour",
+          "name": "Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, endpoints and links",
           "url": "satellite-tour.hidden.html",
           "description": "Get familiar with Satellite architecture and capabilities.",
           "imgSrc": "images/solution-satellite-tour-hidden/architecture.png"

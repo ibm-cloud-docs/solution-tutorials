@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# Satellite Tour
+# Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, endpoints and links
 {: #satellite-tour}
 {: toc-content-type="tutorial"}
 {: toc-services="satellite"}
