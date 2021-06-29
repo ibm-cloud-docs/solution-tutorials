@@ -40,12 +40,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and in a dedicated (single-tenant) environment. You will provision a {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Also, configure load balancers to provide high availability between zones within one region.
+This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
-Learn how to isolate your instances by provisioning them on a dedicated host and also resize the instances after provisioning. Also, attach an encrypted volume to your instance. You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}. You will setup Virtual Private Endpoints (VPE) for your VPC providing connection points to cloud services on the IBM private network from your VPC network.
+Isolate workloads by provisioning a dedicated host, attaching encrypted data volume, and resizing VSIs after the fact. 
 {:shortdesc}
 
-{{site.data.keyword.bpfull_notm}} provides Terraform-as-a-Service capabilities. You will use a Terraform template that defines the {{site.data.keyword.Bluemix_notm}} resources that you will create, update, or delete. You create a {{site.data.keyword.bpshort}} workspace that points to a Terraform template and use the built-in capabilities of the {{site.data.keyword.Bluemix_notm}} provider plug-in for Terraform to provision your {{site.data.keyword.Bluemix_notm}} resources.
+You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. You will use a Terraform template that defines the {{site.data.keyword.Bluemix_notm}} resources to create, update, or delete.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
