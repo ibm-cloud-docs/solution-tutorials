@@ -98,7 +98,7 @@ Navigate to the [resource list](https://{DomainName}/resources). Here, you can f
 ### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
 
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive logs from [enabled services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
 {:important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and look for any existing log analysis/monitoring services with `platform metrics` enabled.
