@@ -42,24 +42,24 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
-Isolate workloads by provisioning a dedicated host, attaching encrypted data volume, and resizing VSIs after the fact. 
+Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to the dedicated VSI, and resizing VSIs after the fact. 
 {:shortdesc}
 
-You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. You will use a Terraform template that defines the {{site.data.keyword.Bluemix_notm}} resources to create, update, or delete.
+You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. The Terraform template defines the {{site.data.keyword.Bluemix_notm}} resources to be created, updated, or deleted.
 
 ## Objectives
 {: #vpc-scaling-dedicated-compute-objectives}
 
-* Learn how to set up a multi-zone VPC with instance autoscaling
-* Understand the concepts of public and private load balancing
-* Learn how to scale instances dynamically or periodically
-* Learn the use of dedicated instances
+* Learn how to set up a multi-zone VPC with instance autoscaling.
+* Understand the concepts of public and private load balancing.
+* Learn how to scale instances dynamically or periodically.
+* Learn the use of dedicated instances.
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png)
 
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
-3. As the traffic increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
+3. As the load on the application increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
 4. As the scope expands, dedicated compute isolates and performs heavy computation on the data. Resize the dedicated instance by updating the profile based on your requirement.
 5. The dedicated instance communicates with cloud services via a virtual private endpoint (VPE).
 
@@ -67,7 +67,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 {: #vpc-scaling-dedicated-compute-prereqs}
 
 The tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)
+* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts).
 
 ## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
@@ -76,24 +76,24 @@ The tutorial requires:
 In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}. 
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
-   1. Provide a workspace name : **vpc-scaling-workspace**
-   2. Choose a `Resource Group` and a `Location`
-   3. Click on **Create**
+   1. Provide a workspace name : **vpc-scaling-workspace**.
+   2. Choose a `Resource Group` and a `Location`.
+   3. Click on **Create**.
 2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide https://github.com/IBM-Cloud/vpc-scaling-dedicated-host under GitHub or GitLab repository URL
-   2. Select `terraform_v0.14` as the Terraform version
-   3. Click on **Save template information**
-3. Under **Variables**, provide the `{{site.data.keyword.Bluemix_notm}} API key` by clicking the action menu (three vertical dots) in the row. 
-   1. Enter your {{site.data.keyword.Bluemix_notm}} API key
-   2. Uncheck **Use default** and check **Sensitive** 
-   3. Click on **Save**
+   1. Provide https://github.com/IBM-Cloud/vpc-scaling-dedicated-host under GitHub or GitLab repository URL.
+   2. Select `terraform_v0.14` as the Terraform version.
+   3. Click on **Save template information**.
+3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row. 
+   1. Enter your {{site.data.keyword.Bluemix_notm}} API key.
+   2. Uncheck **Use default** and check **Sensitive**.
+   3. Click on **Save**.
 4. Set [step1_create_services](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf) to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown, and click on **Save**.
 5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
 7. Click on **View log** to check the resources to be provisioned.
 8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services created.
 
-Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e. **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
+Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e., **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
 ### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
@@ -101,10 +101,10 @@ Navigate to the [resource list](https://{DomainName}/resources). Here, you can f
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only 1 instance in a location (region) can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure 1 instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
 {:important}
 
-1. Navigate to the [Observability](https://{DomainName}/observe) page and look for any existing log analysis/monitoring services with `platform metrics` enabled.
+1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
 2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update [step1_create_logging](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf#L2) variable to **true** and **Save** the setting. **Repeat** the same with [step1_create_monitoring](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_services/main.tf#L20) variable if you wish to enable monitoring.
 3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources
+   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources.
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
 4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
@@ -143,7 +143,7 @@ If you want to access the VSI directly later, you can optionally [create an SSH 
 2. Click on **Apply plan** to provision the VPC resources.
 3. Follow the status logs by clicking on **View log**.
    After the apply is succesful, you should see the following resources provisioned 
-    - a VPC 
+    - a VPC
     - two subnets (one in each zone) 
     - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
     - a private load balancer with a security group driving requests from frontend to the backend
@@ -213,12 +213,12 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
 
 1. You can monitor your load balancers from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-   1. Clicking on the **name** of the load balancer
-   2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**
+   1. Clicking on the **name** of the load balancer.
+   2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**.
 2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane 
-   1. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`
-   2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard
-   3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_
+   1. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
+   2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard.
+   3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_.
   
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
@@ -231,13 +231,13 @@ Platform logs are logs that are exposed by logging-enabled services and the plat
 2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
 3. Under **Apps** from the top menu, check the load balancer CRN you want to see the logs and click **Apply**. 
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-    1. Clicking on the load balancer name for which you wish to check the logs
-    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**
-    3. Remember to generate load against your application to see the logs
+    1. Clicking on the load balancer name for which you wish to check the logs.
+    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**.
+    3. Remember to generate load against your application to see the logs.
 
 For checking the logs of other VPC resources, refer to [VPC logging](https://{DomainName}/docs/vpc?topic=vpc-logging).
    
-## Set up a dedicated host and provision a VSI with encrypted data volume
+## Set up a dedicated host and provision a VSI with an encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
 
@@ -246,7 +246,7 @@ Provisioning dedicated instances may incur costs. Use the [Cost Estimator](https
 {: tip}
 <!--#/istutorial#-->
 
-In this section, you will create a dedicated host in a group and provision an instance with encrypted data volume. 
+In this section, you will create a dedicated host in a group and provision an instance with an encrypted data volume. 
 
 The reason you create a dedicated host is to carve out a single-tenant compute node, free from users outside of your organization. Within that dedicated space, you can create virtual server instances according to your needs. Additionally, you can create dedicated host groups that contain dedicated hosts for a specific purpose. Because a dedicated host is a single-tenant space, only users within your account that have the required permissions can create instances on the host.
 
