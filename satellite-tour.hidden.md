@@ -170,7 +170,8 @@ In the following section, you will deploy an application to a {{site.data.keywor
 1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
 
    You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
-   {: tip}
+   {:tip}
+
 1. To log in the cluster, click the **OpenShift web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
 1. In the window that opens, click **Display token**.
@@ -194,6 +195,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
    Because {{site.data.keyword.satelliteshort}} link makes {{site.data.keyword.cloud_notm}} resources available to your location, you can choose to provision your instance with **Private** service endpoints only.
    {: tip}
+
 1. Once provisioned, retrieve the service credentials or create new credential.
 1. In the credentials, make note of the values for the following keys:
    * `connection` / `postgress` / `hosts` / `hostname`
