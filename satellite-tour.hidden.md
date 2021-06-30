@@ -306,7 +306,7 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 1. Select the configuration.
 1. Under **Versions**, add a version.
    * Set **Version name** to **V1**
-   * Set the YAML content to
+   * Set the YAML content to the following, making sure the `namespace` matches the name of the OpenShift project you created earlier:
      ```yaml
      apiVersion: v1
      kind: ConfigMap
@@ -318,9 +318,6 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
        example.property.2: world
      ```
      {: pre}
-
-     Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
-     {: important}
    * Click **Add**.
 
 ### Subscribe clusters to the version
