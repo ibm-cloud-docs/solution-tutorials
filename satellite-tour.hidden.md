@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-29"
+lastupdated: "2021-06-30"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, endpoints and links
+# Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, link and config
 {: #satellite-tour}
 {: toc-content-type="tutorial"}
 {: toc-services="satellite"}
@@ -55,6 +55,16 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 * Use {{site.data.keyword.satelliteshort}} configurations to specify what Kubernetes resources you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters.
 
 ![Architecture](./images/solution-satellite-tour-hidden/architecture.png)
+
+The {{site.data.keyword.satelliteshort}} architecture is comprised of:
+* the Control Plane Master, running in {{site.data.keyword.cloud_notm}},
+* cloud services supporting the location operations like {{site.data.keyword.loganalysisshort_notm}}, {{site.data.keyword.monitoringshort_notm}}, {{site.data.keyword.cos_short}},
+* {{site.data.keyword.satelliteshort}} Link to securely connect the location with {{site.data.keyword.cloud_notm}},
+* and hosts assigned to the location control plane, to clusters and services running in the location.
+
+![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png)
+
+The application you will deploy will be running in one cluster in the location will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} link.
 
 ## Before you begin
 {: #satellite-tour-prereqs}
@@ -212,7 +222,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
 1. From the command line, create a new application in the OpenShift project:
    ```sh
-   oc new-app python~https://github.com/l2fprod/satellite-link-example.git --name link-example
+   oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
    {: pre}
 1. Wait for the first build of the application to complete by monitoring the logs:
