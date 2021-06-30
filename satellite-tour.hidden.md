@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-17"
+lastupdated: "2021-06-30"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# Satellite Tour
+# Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, link and config
 {: #satellite-tour}
 {: toc-content-type="tutorial"}
 {: toc-services="satellite"}
@@ -56,15 +56,23 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 
 ![Architecture](./images/solution-satellite-tour-hidden/architecture.png)
 
+The {{site.data.keyword.satelliteshort}} architecture is comprised of:
+* the Control Plane Master, running in {{site.data.keyword.cloud_notm}},
+* cloud services supporting the location operations like {{site.data.keyword.loganalysisshort_notm}}, {{site.data.keyword.monitoringshort_notm}}, {{site.data.keyword.cos_short}},
+* {{site.data.keyword.satelliteshort}} Link to securely connect the location with {{site.data.keyword.cloud_notm}},
+* and hosts assigned to the location control plane, and to clusters and services running in the location.
+
+![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png)
+
+The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
+
 ## Before you begin
 {: #satellite-tour-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-* a Docker engine,
+   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
 * `oc` to interact with OpenShift,
 
 <!--##istutorial#-->
@@ -89,23 +97,22 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #satellite-tour-architecture}
 {: step}
 
-In this section, you will discover the components making a {{site.data.keyword.satelliteshort}} location.
+In this section, you will walk through the components making a {{site.data.keyword.satelliteshort}} location. A location represents a data center that you fill with your own infrastructure resources.
 
 ### using {{site.data.keyword.cloud_notm}} console
 {: #satellite-tour-architecture-ui}
 
 1. Navigate to [the list of locations](https://{DomainName}/satellite/locations). It lists the location you have been provided access to.
-2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington or London.
+2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington DC or London.
 3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
    * a set of hosts has been assigned to the location **Control plane**.
    * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **OpenShift clusters**.
    * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
-walk attendees through the architecture of the location, using the CLI, using the user interface:
 
 ### using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
 
-1. From the CLI (in {{site.data.keyword.cloud-shell_short}} as example), list all locations:
+1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), list all locations:
    ```sh
    ibmcloud sat location ls
    ```
@@ -127,31 +134,49 @@ walk attendees through the architecture of the location, using the CLI, using th
    ```
    {: pre}
 
-## Review the logging and monitoring dashboards
-{: #satellite-tour-observe}
+## Review the logging and monitoring dashboards for the location
+{: #satellite-tour-observe-location}
 {: step}
 
-### For the {{site.data.keyword.satelliteshort}} location
-{: #satellite-tour-observe-location}
+A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
 
-1. use Platform Logging and Platform Metrics instances
-1. available metrics https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics
+Under [Logging](https://{DomainName}/observe/logging):
+1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click **Open dashboard**.
+1. Set the search to `host:satellite` to view only logs from {{site.data.keyword.satelliteshort}}. You can filter even more by setting the `app` attribute to the {{site.data.keyword.satelliteshort}} location CRN or using the **Sources** and **Apps** filters at the top of the window.
+   ```
+   host:satellite app:crn:v1:bluemix:public:satellite:us-east:a/123456:c2k1k2jw0ofn1234::
+   ```
+   {: codeblock}
+1. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
 
-### For the {{site.data.keyword.satelliteshort}} cluster
-{: #satellite-tour-observe-cluster}
+The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
+1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click **Open dashboard**.
+1. In the **Dashboards** list, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
+1. Change the time horizon to view past data.
+1. Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics.
 
-* can be configured to forward logs/metrics to anything including our logdna/sysdig
+{{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
 
 ## Create a new project in the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-project}
 {: step}
 
-1. Log in into one cluster
-1. Follow the instructions under `Actions / Connect via CLI` to access the cluster from the CLI in cloud shell
-   * eventually a command like `oc login --token=XXX --server=https://123455.us-east.satellite.appdomain.cloud:30755`
-   * use oc commands as if it was a regular cluster
-   * or https://{DomainName}/docs/openshift?topic=openshift-access_cluster#access_oc_cli to log in with API key or one-time code
-1. Create a new oc project
+In the following section, you will deploy an application to a {{site.data.keyword.satelliteshort}} cluster and configure this application to access through {{site.data.keyword.satelliteshort}} Link a service running in {{site.data.keyword.cloud_notm}}.
+
+1. Go to [the list of {{site.data.keyword.satelliteshort}} clusters](https://{DomainName}/satellite/clusters).
+1. Select a cluster from your location.
+1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
+
+   You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+   {:tip}
+
+1. To log in the cluster, click the **OpenShift web console** button.
+1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
+1. In the window that opens, click **Display token**.
+1. Copy and paste the **Log in with this token** command in your shell window.
+1. Create a new {{site.data.keyword.openshiftshort}} project:
    ```sh
    oc new-project <your-initials>-tour
    ```
@@ -161,11 +186,23 @@ walk attendees through the architecture of the location, using the CLI, using th
 {: #satellite-tour-link}
 {: step}
 
+With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
+
 ### Provision a service
 {: #satellite-tour-link-service}
 
-1. Provision a {{site.data.keyword.cloudant}} service instance.
-1. Create service credentials.
+1. Locate an existing {{site.data.keyword.databases-for-postgresql}} service instance in the [Resource list](https://{DomainName}/resources) list or provision a new instance if needed.
+
+   Because {{site.data.keyword.satelliteshort}} link makes {{site.data.keyword.cloud_notm}} resources available to your location, you can choose to provision your instance with **Private** service endpoints only.
+   {: tip}
+
+1. Once provisioned, retrieve the service credentials or create new credential.
+1. In the credentials, make note of the values for the following keys:
+   * `connection` / `postgress` / `hosts` / `hostname`
+   * `connection` / `postgress` / `hosts` / `port`
+   * `connection` / `postgress` / `authentication` / `username`
+   * `connection` / `postgress` / `authentication` / `password`
+   * `connection` / `postgress` / `database`
 
 ### Expose the service to the {{site.data.keyword.satelliteshort}} location
 {: #satellite-tour-link-location}
@@ -177,41 +214,71 @@ walk attendees through the architecture of the location, using the CLI, using th
    * Click **Next**.
 1. In the **Resource details** step:
    * Set **Endpoint name** to something unique such as `<your-initials>-database`.
-   * Set **Destination FQDN or IP** to the **host** of the database, taken from the credentials.
-   * Set **Destination port** to **443**.
+   * Set **Destination FQDN or IP** to the **hostname** of the database, taken from the credentials.
+   * Set **Destination port** to the **port** of the database.
    * Click **Next**.
 1. In the **Protocol** step:
-   * Set the **Source protocol** as **HTTPS**
+   * Set the **Source protocol** as **TCP**
    * Click **Next**.
 1. Click **Create endpoint**.
 1. Select the created endpoint.
-1. After few seconds, the **Endpoint address** is ready to be used.
+1. After few seconds, the endpoint will be ready and the **Endpoint address** (`host:port`) filled. You may need to refresh the page for the endpoint address to become visible.
 
-## Deploy an application to a {{site.data.keyword.satelliteshort}} cluster
+## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
 
-### Create an application
-{: #satellite-tour-deploy-create-app}
+1. From the command line, create a new application in the OpenShift project:
+   ```sh
+   oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
+   ```
+   {: pre}
+1. Wait for the first build of the application to complete by monitoring the logs:
+   ```sh
+   oc logs -f bc/link-example
+   ```
+   {: pre}
+1. When the build is complete, create a secure route to access the application:
+   ```sh
+   oc create route edge link-example-https --service=link-example --port=8080
+   ```
+   {: pre}
+1. Retrieve the created route:
+   ```sh
+   oc get route link-example-https --output json | jq -r '"https://" + .spec.host'
+   ```
+   {: pre}
+1. Open the route URL to access the application.
 
-1. In the OpenShift console, switch the **Developer** perspective.
-1. Select the project you created.
-1. Click **+Add** and select the option named **From Git**.
-1. Set **Git Repo URL** to **https://github.com/l2fprod/mytodo.git**.
-1. Click **Create**.
-1. Wait for the **Build** to complete and the application to come online.
+The application allows to query a {{site.data.keyword.postgresql}} database. The form prompts you for the database credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the database over {{site.data.keyword.satelliteshort}} link.
 
-At that stage the application is running but not using the database yet.
+1. Use the Endpoint address to set the values for `hostname`, `port`.
+1. Fill `username`, `password` and `database` from the credentials in the previous section.
+1. Click `Login`.
+1. Try out some SQL commands to verify the connection with the database:
+1. Create a table:
+   ```sql
+   CREATE TABLE <your-initials>_EMPLOYEE( FIRST_NAME CHAR(20) NOT NULL, LAST_NAME CHAR(20), AGE INT, SEX CHAR(1), INCOME FLOAT )
+   ```
+   {: codeblock}
 
-### Bind the service
-{: #satellite-tour-deploy-bind-service}
-
-1. Select the Deployment **mytodo-git**.
-1. Under **Environment**, define two **Single values (env)**:
-   * One with **Name** set to **CLOUDANT_APIKEY** and **Value** to the **apikey** value of the database credentials.
-   * Another one with **Name** set to **CLOUDANT_URL** and with **Value** set to **https://<endpoint address and port>** created in the previous step.
-1. Save the environment.
-1. A new pod will be created and the database initialized.
+   To avoid conflicts with other users of the database, use a unique table name like `<your-initials>_EMPLOYEE`.
+   {: tip}
+1. Insert a row
+   ```sql
+   INSERT INTO <your-initials>_EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Win', 30, 'M', 9000)
+   ```
+   {: codeblock}
+1. List all rows
+   ```sql
+   SELECT * FROM <your-initials>_EMPLOYEE
+   ```
+   {: codeblock}
+1. Delete the table
+   ```sql
+   DROP TABLE <your-initials>_EMPLOYEE
+   ```
+   {: codeblock}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
@@ -225,7 +292,7 @@ With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/
 1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) page.
 1. Create a new cluster group with a unique name such as `<your-initials>-cluster-group`.
 1. Select the group.
-1. Under **Clusters**, click **Add clusters** and check the cluster where you previously deployed your app.
+1. Under **Clusters**, click **Add clusters** and check the cluster you previously deployed your app to.
 
 ### Create a configuration and a first version
 {: #satellite-tour-configuration}
@@ -250,8 +317,11 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
        example.property.1: hello
        example.property.2: world
      ```
+     {: pre}
+
      Make sure the `namespace` matches the name of the OpenShift project you created earlier. This YAML will create a new config map in this project.
-    {: important}
+     {: important}
+   * Click **Add**.
 
 ### Subscribe clusters to the version
 {: #satellite-tour-version}
@@ -272,8 +342,15 @@ Finally you will map the version to a set of clusters.
 
 1. After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
 1. Switch to the **Developer** view.
-1. Select **Config Maps** and make sure your project is selected
+1. Select **Config Maps**.
+1. Make sure your project is selected.
 1. Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
+1. You can also check from the shell:
+   ```sh
+   oc get configmaps
+   oc describe configmap example
+   ```
+   {: pre}
 
 To deploy an update to the resources, you can create a new version.
 
@@ -282,8 +359,8 @@ To deploy an update to the resources, you can create a new version.
    * Set **Version name** to **V2**.
    * Change `example.property.2` to `you` in the YAML.
 1. **Add** the version.
-1. Back to the **Overview** page for the configuration, select the existing subscription and change its **Version** to **V2**.
-1. In the OpenShift console, watch for updates to the existing Config Map.
+1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
+1. In the OpenShift console or from the shell, watch for updates to the existing Config Map.
 
 In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
 
@@ -291,7 +368,7 @@ In this example we deployed a simple ConfigMap but you could be deploying a full
 {: #satellite-tour-removeresources}
 {: step}
 
-* In the {{site.data.keyword.openshiftshort}} console, delete the project.
+* In the {{site.data.keyword.openshiftshort}} console, delete the project or use `oc delete project <your-initials>-tour`.
 * Select the [{{site.data.keyword.satelliteshort}} configuration](https://{DomainName}/satellite/configuration) your created.
 * Delete the subscription.
 * Delete the {{site.data.keyword.satelliteshort}} configuration.

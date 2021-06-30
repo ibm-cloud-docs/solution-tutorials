@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-01-28"
+lastupdated: "2021-06-30"
 lasttested: "2020-12-08"
 
 content-type: tutorial
@@ -71,9 +71,9 @@ In this section, you will create the services required by the tutorial starting 
    2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-assistant` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
    {:tip}
-
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
@@ -82,6 +82,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
    2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-stt` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
    {:tip}
 
@@ -92,6 +93,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
    2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-tts` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
    {:tip}
 
