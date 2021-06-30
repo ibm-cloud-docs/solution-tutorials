@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-29"
-lasttested: "2021-06-28"
+lastupdated: "2021-06-30"
+lasttested: "2021-06-29"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -80,7 +80,7 @@ In this section, you will create the following cloud services required for the a
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Create**.
 2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. For the Terraform scripts used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
+   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. For the Terraform scripts and modules used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
    2. Select `terraform_v0.14` as the Terraform version.
    3. Click on **Save template information**.
 3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row. 
@@ -223,7 +223,7 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
    1. Clicking on the **name** of the load balancer.
    2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**.
 2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane 
-   1. Click on **View {{site.data.keyword.monitoringlong_notm}}** next to the instance marked as `Platform metrics`.
+   1. Click on **Open dashboard** next to the instance marked as `Platform metrics`.
    2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard.
    3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_.
 3. Remember to generate load against your application.
@@ -236,7 +236,7 @@ VPC services generate platform logs in the same region where they are available.
 Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs).
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-2. Click on **View IBM Log Analysis** next to the instance marked as `Platform logs`.
+2. Click on **Open dashboard** next to the instance marked as `Platform logs`.
 3. Under **Apps** from the top menu, check the load balancer CRN for which you want to see the logs and click **Apply**. 
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
     1. Clicking on the load balancer name for which you wish to check the logs.
