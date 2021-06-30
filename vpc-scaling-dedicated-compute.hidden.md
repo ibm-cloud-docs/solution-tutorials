@@ -324,14 +324,13 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 {: #vpc-scaling-dedicated-compute-dedicated-next}
 {: step}
 
-Learn more about what you can do.
-
-   - Configure SSL termination, sticky sessions, and end-to-end encryption.  For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption.  For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
 {: step}
 
+To remove the Schematics workspace and its resources, follow these steps:
 1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Destroy**.
 2. Enter the phrase as shown, typically your workspace name and click **Destroy**.
 
