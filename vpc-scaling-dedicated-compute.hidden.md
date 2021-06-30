@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
-Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to the dedicated VSI, and resizing VSIs after the fact. 
+Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, and resizing the VSI after the fact. 
 {:shortdesc}
 
 You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. The Terraform template defines the {{site.data.keyword.Bluemix_notm}} resources to be created, updated, or deleted.
@@ -53,15 +53,16 @@ You will provision all of these services and VPC resources using {{site.data.key
 * Learn how to set up a multi-zone VPC with instance autoscaling.
 * Understand the concepts of public and private load balancing.
 * Learn how to scale instances dynamically or periodically.
-* Learn the use of dedicated instances.
+* Learn the use of dedicated hosts.
 
 ![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.svg)
 
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
 3. As the load on the application increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
-4. As the scope expands, dedicated compute isolates and performs heavy computation on the data. Resize the dedicated instance by updating the profile based on your requirement.
-5. The dedicated instance communicates with cloud services via a virtual private endpoint (VPE).
+4. As the scope expands, dedicated compute isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement.
+5. All instances communicate with IBM Cloud services over the private backbone using a virtual private endpoint (VPE). See the [About virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) topic for more details.
+
 
 ## Before you begin
 {: #vpc-scaling-dedicated-compute-prereqs}
@@ -250,7 +251,7 @@ For checking the logs of other VPC resources, refer to [VPC logging](https://{Do
 {: step}
 
 <!--##istutorial#-->
-Provisioning dedicated instances may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
 
@@ -265,44 +266,44 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
    ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.svg)
-3. From the log output, **copy** the dedicated instance IP address and launch [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) to run the below command by replacing the placeholder `<IP_ADDRESS`> with the dedicated instance IP address
+3. From the log output, **copy** the instance IP address and launch [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) to run the below command by replacing the placeholder `<IP_ADDRESS`> with the instance IP address
 
    ```sh
-   export DEDICATED_INSTANCE_IP=<IP_ADDRESS>
+   export INSTANCE_IP=<IP_ADDRESS>
    ```
    {:pre}
 
-   Typically, you won't set a public IP (floating IP) for a dedicated instance. In this case, a floating IP is set only to simply the use of the app deployed to the dedicated instance.
+   Typically, you won't set a public IP (floating IP) for an instance. In this case, a floating IP is set only to simply the use of the app deployed to the instance.
    {:tip} 
 
-4. Issue the following curl command to query the database. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
+4. Issue the following curl command to query the database. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
    ```sh
    curl \
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
-   http://$DEDICATED_INSTANCE_IP/api/bank
+   http://$INSTANCE_IP/api/bank
    ```
    {:pre}   
 
-5. Issue the following curl command to query the COS bucket. The application running on the dedicated instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the dedicated host.
+5. Issue the following curl command to query the COS bucket. The application running on the instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the instance on the dedicated host.
    ```sh
    curl \
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
-   http://$DEDICATED_INSTANCE_IP/api/bank
+   http://$INSTANCE_IP/api/bank
    ```
    {:pre}
 
-6.  Issue the following curl command to query the database and COS bucket at once. The application running on the dedicated instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+6.  Issue the following curl command to query the database and COS bucket at once. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
-   http://$DEDICATED_INSTANCE_IP/api/bank
+   http://$INSTANCE_IP/api/bank
    ```
    {:pre}
 
@@ -314,11 +315,11 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 
 1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
-   Dedicated virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
+    Virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
    {:tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
-3. You can check the profile of the dedicated instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
+3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the instance name.
 
 ## What's next?
 {: #vpc-scaling-dedicated-compute-dedicated-next}
