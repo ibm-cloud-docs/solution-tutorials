@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# VPC scaling and dedicated compute
+# VPC scaling and dedicated host
 {: #vpc-scaling-dedicated-compute}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, databases-for-postgresql, schematics, cloud-object-storage"}
@@ -60,7 +60,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
 3. As the load on the application increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
-4. As the scope expands, dedicated compute isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement.
+4. As the scope expands, dedicated host isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement.
 5. All instances communicate with IBM Cloud services over the private backbone using a virtual private endpoint (VPE). See the [About virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) topic for more details.
 
 
