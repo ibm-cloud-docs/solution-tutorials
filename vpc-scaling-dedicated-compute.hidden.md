@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-30"
-lasttested: "2021-06-29"
+lastupdated: "2021-07-01"
+lasttested: "2021-07-01"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -81,14 +81,14 @@ In this section, you will create the following cloud services required for the a
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Create**.
 2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. For the Terraform scripts and modules used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
+   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub, GitLab or Bitbucket repository URL. For the Terraform scripts and modules used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
    2. Select `terraform_v0.14` as the Terraform version.
    3. Click on **Save template information**.
-3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row. 
+3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row and then **Edit**.
    1. Enter your {{site.data.keyword.Bluemix_notm}} API key.
-   2. Uncheck **Use default** and check **Sensitive**.
+   2. Check **Sensitive**.
    3. Click on **Save**.
-4. Set `step1_create_services` to **true** by clicking the action menu, uncheck **Use default**, choose **true** from the dropdown, and click on **Save**.
+4. Set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
 5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
 7. Click on **View log** to check the resources to be provisioned.
@@ -128,7 +128,7 @@ Initially, you may not deploy all the infrastructure resources to make it scale,
 As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
    ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.svg)
 
-An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
+An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
@@ -140,10 +140,10 @@ An instance template is required before you can create an instance group for aut
 
 If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
 
-1. Go to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, click the action menu for `step2_create_vpc`, change the value to **true** and **Save** the setting.
+1. Go to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, click the action menu for `step2_create_vpc`,uncheck **Use default**, change the override value to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
 
-   There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/db1e4da686a7ff8abaeb53fcfc5ca3a5168a46e8/modules/create_vpc/main.tf) file.
+   There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf) file.
    {:tip}
 
 3. Follow the status logs by clicking on **View log**.
