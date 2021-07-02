@@ -188,26 +188,18 @@ In the following section, you will deploy an application to a {{site.data.keywor
 
 With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
 
-### Provision a service
-{: #satellite-tour-link-service}
-
-1. Locate an existing {{site.data.keyword.databases-for-postgresql}} service instance in the [Resource list](https://{DomainName}/resources) list or provision a new instance if needed.
-
-   Because {{site.data.keyword.satelliteshort}} link makes {{site.data.keyword.cloud_notm}} resources available to your location, you can choose to provision your instance with **Private** service endpoints only.
-   {: tip}
-
-1. Once provisioned, retrieve the service credentials or create new credential.
-1. In the credentials, make note of the values for the following keys:
+1. Locate the existing {{site.data.keyword.databases-for-postgresql}} service instance in the [Resource list](https://{DomainName}/resources) list.
+1. In the **Service credentials**, locate the credentials that have already been created for use with {{site.data.keyword.satelliteshort}}.
+1. Make note of the values for the following keys:
    * `connection` / `postgress` / `hosts` / `hostname`
    * `connection` / `postgress` / `hosts` / `port`
    * `connection` / `postgress` / `authentication` / `username`
    * `connection` / `postgress` / `authentication` / `password`
    * `connection` / `postgress` / `database`
 
-### Expose the service to the {{site.data.keyword.satelliteshort}} location
-{: #satellite-tour-link-location}
+Looking at the value for `hostname`, notice that this instance is using private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
-1. Select the {{site.data.keyword.satelliteshort}} location.
+1. Go to [the list of locations](https://{DomainName}/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
 1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
 1. In the **Destination resource** step:
    * Select **Cloud** as destination.
@@ -375,7 +367,6 @@ In this example we deployed a simple ConfigMap but you could be deploying a full
 * Delete the {{site.data.keyword.satelliteshort}} configuration.
 * Delete the [cluster group](https://{DomainName}/satellite/groups).
 * On the {{site.data.keyword.satelliteshort}} location, delete the Link Endpoint exposing the service you provisioned.
-* Delete the service from the [Resources list](https://{DomainName}/resources).
 
 ## Related content
 {: #satellite-tour-related}
