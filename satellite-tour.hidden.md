@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-06-30"
+lastupdated: "2021-07-02"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -66,6 +66,7 @@ The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 
 The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #satellite-tour-prereqs}
 
@@ -75,7 +76,6 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
 * `oc` to interact with OpenShift,
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.

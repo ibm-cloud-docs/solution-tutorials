@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-06-22"
+lastupdated: "2021-07-02"
 lasttested: "2021-06-21"
 
 content-type: tutorial
@@ -65,6 +65,7 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 6. File storage buckets leverage a user-provided key to encrypt data.
 7. Application management activities are logged by {{site.data.keyword.at_full_notm}}.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #cloud-e2e-security-prereqs}
 
@@ -75,7 +76,6 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
