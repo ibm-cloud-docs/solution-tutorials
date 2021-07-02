@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-04-27"
+lastupdated: "2021-07-02"
 lasttested: "2020-11-19"
 
 ---
@@ -124,6 +124,12 @@ The following diagram shows where the project resources are created under the ac
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
+
+Some services also provide IAM-based data access controls, i.e. IAM groups combined with the service own group filtering.  For example: 
+
+- [Using groups to control data access in IBM Log Analysis](https://{DomainName}/docs/log-analysis?topic=log-analysis-group_data_access)
+- [Using groups to control data access in IBM Cloud Activity Tracker](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-group_data_access)
+- [Monitoring RBAC, teams, and IAM integration](https://{DomainName}/docs/monitoring?topic=monitoring-iam_grant_team)
 
 Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
 {: tip}
