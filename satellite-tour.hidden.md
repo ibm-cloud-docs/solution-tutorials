@@ -191,11 +191,11 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 1. Locate the existing {{site.data.keyword.databases-for-postgresql}} service instance in the [Resource list](https://{DomainName}/resources) list.
 1. In the **Service credentials**, locate the credentials that have already been created for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys:
-   * `connection` / `postgress` / `hosts` / `hostname`
-   * `connection` / `postgress` / `hosts` / `port`
-   * `connection` / `postgress` / `authentication` / `username`
-   * `connection` / `postgress` / `authentication` / `password`
-   * `connection` / `postgress` / `database`
+   * `connection` / `postgres` / `hosts` / `hostname`
+   * `connection` / `postgres` / `hosts` / `port`
+   * `connection` / `postgres` / `authentication` / `username`
+   * `connection` / `postgres` / `authentication` / `password`
+   * `connection` / `postgres` / `database`
 
 Looking at the value for `hostname`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
