@@ -197,7 +197,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    * `connection` / `postgress` / `authentication` / `password`
    * `connection` / `postgress` / `database`
 
-Looking at the value for `hostname`, notice that this instance is using private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
+Looking at the value for `hostname`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
 1. Go to [the list of locations](https://{DomainName}/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
 1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
