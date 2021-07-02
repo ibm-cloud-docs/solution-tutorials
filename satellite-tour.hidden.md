@@ -319,7 +319,7 @@ Finally you will map the version to a set of clusters.
 
 1. Go back to the **Overview** page for the configuration.
 1. Create a Subscription.
-   * Set **Subscription name** to **latest version**.
+   * Set **Subscription name** to a unique name such as `<your-initials>-latest`.
    * Set **Version** to **V1**.
    * Select the cluster group previously created.
 1. Click **Create**.
