@@ -337,17 +337,21 @@ Finally you will map the version to a set of clusters.
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
 
-1. After a short while, open the {{site.data.keyword.openshiftshort}} console for the cluster.
-1. Switch to the **Developer** view.
-1. Select **Config Maps**.
-1. Make sure your project is selected.
-1. Locate the config map named **example**. It was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config.
-1. You can also check from the shell:
+1. After a short while, from the shell, list the config maps in your project. Repeat until you see the `example` config map in the list:
    ```sh
    oc get configmaps
+   ```
+1. The config map was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config. Retrieve its values:
+   ```sh
    oc describe configmap example
    ```
    {: pre}
+
+You can also use the {{site.data.keyword.openshiftshort}} console to view the config map:
+1. Switch to the **Developer** view.
+1. Select **Config Maps**.
+1. Make sure your project is selected.
+1. Locate the config map named **example**.
 
 To deploy an update to the resources, you can create a new version.
 
