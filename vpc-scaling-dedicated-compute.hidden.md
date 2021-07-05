@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-01"
+lastupdated: "2021-07-05"
 lasttested: "2021-07-01"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# VPC scaling and dedicated host
+# Scale workloads in shared and dedicated VPC environments
 {: #vpc-scaling-dedicated-compute}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, databases-for-postgresql, schematics, cloud-object-storage"}
