@@ -54,7 +54,7 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution34-cloud-e2e-security/Architecture_diagram.svg)
+  ![Architecture](images/solution34-cloud-e2e-security/architecture_diagram.svg)
 </p>
 
 1. User connects to the application.
