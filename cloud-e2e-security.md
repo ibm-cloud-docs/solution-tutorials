@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-06-22"
+lastupdated: "2021-07-07"
 lasttested: "2021-06-21"
 
 content-type: tutorial
@@ -54,7 +54,7 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution34-cloud-e2e-security/Architecture.png)
+  ![Architecture](images/solution34-cloud-e2e-security/Architecture_diagram.svg)
 </p>
 
 1. User connects to the application.
@@ -62,7 +62,7 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can also sign up.
 4. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. This image is automatically scanned for vulnerabilities.
 5. Uploaded files are stored in {{site.data.keyword.cos_short}} with accompanying metadata stored in {{site.data.keyword.cloudant_short_notm}}.
-6. File storage buckets leverage a user-provided key to encrypt data.
+6. Object storage buckets and {{site.data.keyword.appid_short}} leverage a user-provided key to encrypt data.
 7. Application management activities are logged by {{site.data.keyword.at_full_notm}}.
 
 ## Before you begin
@@ -205,11 +205,12 @@ Finally create the bucket.
 
 The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for all files uploaded from the application.
 
-1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB).
+1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service.
+   * Select **Cloudant** as the offering 
+   * Select a **Multitenant** environment and a **region** same as the previous services.
    * Set the **name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
-   * Set the location.
    * Use the same **resource group** as for the previous services.
-   * Set **Available authentication methods** to **Use only IAM**.
+   * Set **Authentication method** to **IAM**.
    * Click **Create**.
 2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned)
    * Under **Service credentials**, create **New credential**.
@@ -229,10 +230,23 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 
 With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} [integrates](https://{DomainName}/docs/containers?topic=containers-ingress_annotation#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
-1. Create an instance of [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID).
+Before creating the {{site.data.keyword.appid_short}} service, grant service access to {{site.data.keyword.keymanagementserviceshort}} service. You must be the account owner or an administrator for the instance of {{site.data.keyword.keymanagementserviceshort}} that you're working with. You must also have at least Viewer access for the {{site.data.keyword.appid_short}} service.
+
+1. Go to [Manage > Access IAM > Authorizations](https://{DomainName}/iam/authorizations) and click **Create**.
+2. Select the {{site.data.keyword.appid_short}} service as your source service.
+3. Select {{site.data.keyword.keymanagementserviceshort}} as your target service.
+4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
+5. Assign the **Reader** role under Service access.
+6. Click **Authorize** to confirm the delegated authorization.
+
+Now, Create an instance of the {{site.data.keyword.appid_short}} service.
+1. Navigate to the [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID) service creation page.
+   * Use the same **location** used for the previous services.
    * Select the **Graduated tier** as plan.
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
-   * Use the same **location** and **resource group** as for the previous services.
+   * Select a **resource group** same as the previous services.
+   * Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
+   * Click **Create**.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`. For example:
    * with the ingress subdomain: `mycluster-1234-d123456789.us-south.containers.appdomain.cloud`
    * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`.
