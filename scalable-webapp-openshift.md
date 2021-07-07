@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-06-30"
+lastupdated: "2021-07-02"
 lasttested: "2021-03-08"
 
 content-type: tutorial
@@ -59,6 +59,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 4. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
 5. Users access the application.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #scalable-webapp-openshift-prereqs}
 
@@ -71,17 +72,22 @@ This tutorial requires:
 * `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the OpenShift CLI matches your cluster version (`4.6.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
-<!--#/istutorial#-->
 
 In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
+<!--#/istutorial#-->
 
 <!--##isworkshop#-->
 <!--
+## Before you begin
+{: #scalable-webapp-openshift-prereqs-workshop}
+
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
+
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #scalable-webapp-openshift-2}
 {: step}

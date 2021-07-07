@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-05-11"
+lastupdated: "2021-07-02"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -58,6 +58,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #scalable-webapp-kubernetes-prereqs}
 
@@ -69,18 +70,15 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `Helm 3` to deploy charts.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
-<!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
-<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #scalable-webapp-kubernetes-create_kube_cluster}
 {: step}
@@ -95,8 +93,6 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
-
-
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
