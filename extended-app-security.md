@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019-2021
-lastupdated: "2021-04-27"
+lastupdated: "2021-07-02"
 lasttested: "2020-02-16"
 
 ---
@@ -92,6 +92,10 @@ It is important to note that network traffic, i.e., data in transit, is secured 
 Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/appid?topic=appid-at-events#at-monitor-runtime-activity) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-getting-started). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-cloud_services).
 
 By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
+
+Both Activity Tracker and Log Analysis support further restriction on the data captured using IAM-based groups.  You can have users access the same instances, but only see data that is relevant to the application or services they are responsible for, you can review:
+- [Using groups to control data access in IBM Log Analysis](https://{DomainName}/docs/log-analysis?topic=log-analysis-group_data_access)
+- [Using groups to control data access in IBM Cloud Activity Tracker](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-group_data_access)
 
 ## Control encryption keys
 {: #extended-app-security-control_encryption}
