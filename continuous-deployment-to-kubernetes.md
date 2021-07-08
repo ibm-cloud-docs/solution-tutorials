@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-03-30"
+lastupdated: "2021-07-02"
 lasttested: "2020-12-03"
 
 content-type: tutorial
@@ -55,6 +55,7 @@ This tutorial walks you through the process setting up a continuous integration 
 4. Once changes are validated, the app is deployed to the Production environment.
 5. Notifications are sent to Slack to track the deployment activities.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #continuous-deployment-to-kubernetes-prereq}
 
@@ -62,7 +63,6 @@ This tutorial requires:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
-<!--##istutorial#-->
 ## Create development Kubernetes cluster
 {: #continuous-deployment-to-kubernetes-create_kube_cluster}
 {: step}

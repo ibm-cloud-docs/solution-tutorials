@@ -39,9 +39,9 @@
           "imgSrc": "images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png"
         },
         {
-          "name": "Introduction to Satellite locations, clusters, link and config",
+          "name": "(Draft) Introduction to Satellite locations, clusters, link and config",
           "url": "satellite-tour.hidden.html",
-          "description": "Get familiar with Satellite architecture and capabilities.",
+          "description": "THIS IS A WORK IN PROGRESS - Get familiar with Satellite architecture and capabilities.",
           "imgSrc": "images/solution-satellite-tour-hidden/architecture.png"
         }
       ]
