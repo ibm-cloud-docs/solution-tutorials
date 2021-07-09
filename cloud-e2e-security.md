@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-07-08"
-lasttested: "2021-07-08"
+lastupdated: "2021-07-09"
+lasttested: "2021-07-09"
 
 content-type: tutorial
 services: containers, cloud-object-storage, Activity-Tracker-with-LogDNA, Registry, certificate-manager, appid, Cloudant, key-protect, Log-Analysis-with-LogDNA
