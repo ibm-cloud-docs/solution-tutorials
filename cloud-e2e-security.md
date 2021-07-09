@@ -290,7 +290,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud cr region
    ```
    {:pre}
-1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+2. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
@@ -300,7 +300,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ibmcloud cr namespace-add <your-namespace>
    ```
    {:pre}
-1. Build the image with a unique name such as **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage** :
+3. Build the image with a unique name such as **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage** :
    ```sh
    ibmcloud cr build -t <your-registry-url>/<your-namespace>/<your-image-name>:latest .
    ```
@@ -321,17 +321,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
    {: tip}
 
-3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
-
-| Variable | Value | Description |
-| -------- | ----- | ----------- |
-| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
-| `$IMAGE_REPOSITORY` | *us.icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
-| `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
-
+3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
    1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
       ```sh
       export MYCLUSTER=<YOUR_CLUSTER_NAME>
@@ -345,7 +335,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
       ```
       {:pre}
 
-   3. Set the image repository name:
+   3. Set the image repository name e.g., `us.icr.io/namespace/image-name`:
       ```sh
       export IMAGE_REPOSITORY=<REGISTRY_NAME>.<NAMESPACE>.<IMAGE_NAME>
       ```
@@ -361,11 +351,23 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
    {: tip}
 
-5. Run the below command to generate `secure-file-storage.yaml` by replacing the placeholders in the template file.
+4. Run the below command to generate `secure-file-storage.yaml` by replacing the placeholders in the template file.
    ```sh
    ./generate_yaml.sh
    ```
    {:pre}
+
+   As example, assuming the application is deployed to the _default_ Kubernetes namespace:
+
+| Variable | Value | Description |
+| -------- | ----- | ----------- |
+| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
+| `$IMAGE_REPOSITORY` | *us.icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
+| `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+
 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
