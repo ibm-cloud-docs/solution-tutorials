@@ -62,7 +62,7 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can also sign up.
 4. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. This image is automatically scanned for vulnerabilities.
 5. Uploaded files are stored in {{site.data.keyword.cos_short}} with accompanying metadata stored in {{site.data.keyword.cloudant_short_notm}}.
-6. Object storage buckets and {{site.data.keyword.appid_short}} leverage a user-provided key to encrypt data.
+6. Object storage buckets, {{site.data.keyword.appid_short}}, and {{site.data.keyword.cloudcerts_short}} services leverage a user-provided key to encrypt data.
 7. Application management activities are logged by {{site.data.keyword.at_full_notm}}.
 
 <!--##istutorial#-->
@@ -320,24 +320,52 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
    When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
    {: tip}
-3. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
-   ```sh
-   cp secure-file-storage.template.yaml secure-file-storage.yaml
-   ```
-   {: codeblock}
-4. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$IMAGE_REPOSITORY`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`, `$BASENAME`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
+
+3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
 | Variable | Value | Description |
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
 | `$IMAGE_REPOSITORY` | *us.icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
 
-`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
-{: tip}
+   1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
+      ```sh
+      export MYCLUSTER=<YOUR_CLUSTER_NAME>
+      ```
+      {:pre}
+
+   2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
+      ```sh
+      export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r '.ingress.hostname')
+      export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r '.ingress.secretName')
+      ```
+      {:pre}
+
+   3. Set the image repository name:
+      ```sh
+      export IMAGE_REPOSITORY=<REGISTRY_NAME>.<NAMESPACE>.<IMAGE_NAME>
+      ```
+      {:pre}
+
+   4. Set additional environment variables by replacing the default values:
+      ```sh
+      export BASENAME=<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage
+      export TARGET_NAMESPACE=default
+      ```
+      {:pre}
+
+   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
+   {: tip}
+
+5. Run the below command to generate `secure-file-storage.yaml` by replacing the placeholders in the template file.
+   ```sh
+   ./generate_yaml.sh
+   ```
+   {:pre}
 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
@@ -345,27 +373,27 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 <!--##istutorial#-->
 2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
-   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster <your-cluster-name>
+   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster $MYCLUSTER
    ```
    {: codeblock}
    You can check for existing add-ons with this command:
    ```sh
-   ibmcloud ks cluster addon ls --cluster <your-cluster-name>
+   ibmcloud ks cluster addon ls --cluster $MYCLUSTER
    ```
    {: codeblock}
 3. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
    ```sh
-   ibmcloud ks ingress secret ls -c <your-cluster-name>
+   ibmcloud ks ingress secret ls -c $MYCLUSTER
    ```
    {: codeblock}   
    Now use its name and CRN to create a secret in the namespace:
    ```sh
-   ibmcloud ks ingress secret create -c <your-cluster-name> -n <your-namespace> --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
+   ibmcloud ks ingress secret create -c $MYCLUSTER -n $TARGET_NAMESPACE --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
    {: codeblock}   
 1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
-   ibmcloud ks cluster config --cluster <your-cluster-name>
+   ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: codeblock}
 4. Create the secret used by the application to obtain service credentials:
@@ -375,7 +403,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    {: codeblock}
 5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
    ```sh
-   ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
 6. Deploy the app.
