@@ -330,8 +330,8 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
    2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
       ```sh
-      export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r '.ingress.hostname')
-      export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r '.ingress.secretName')
+      export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
+      export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
       ```
       {:pre}
 
