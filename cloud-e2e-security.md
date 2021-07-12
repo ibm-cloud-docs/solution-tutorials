@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-07-09"
+lastupdated: "2021-07-12"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -343,7 +343,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
 
    4. Set additional environment variables by replacing the default values:
       ```sh
-      export BASENAME=<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage
+      export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
       export TARGET_NAMESPACE=default
       ```
       {:pre}
