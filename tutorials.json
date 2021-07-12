@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-05-11"
+          "lastUpdated": "2021-07-02"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -50,7 +50,8 @@
             "Container Service",
             "File Storage",
             "MySQL",
-            "Java"
+            "Java",
+            "Virtual Servers"
           ],
           "guide": true,
           "lastUpdated": "2021-03-30"
@@ -88,7 +89,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-07-02"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -102,7 +103,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-07-02"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -255,7 +256,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-04-26"
+          "lastUpdated": "2021-07-02"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -266,7 +267,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-04-21"
+          "lastUpdated": "2021-07-02"
         }
       ]
     },
@@ -300,7 +301,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2021-01-28"
+          "lastUpdated": "2021-06-30"
         }
       ]
     },
@@ -317,7 +318,8 @@
             "Cloud Foundry",
             "Node.js",
             "Continuous Delivery",
-            "Cloud Internet Services"
+            "Cloud Internet Services",
+            "Security"
           ],
           "lastUpdated": "2021-02-16"
         },
@@ -329,7 +331,8 @@
           "tags": [
             "Kubernetes",
             "Container Registry",
-            "Cloud Internet Services"
+            "Cloud Internet Services",
+            "Security"
           ],
           "lastUpdated": "2021-01-19"
         },
@@ -347,7 +350,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-06-22"
+          "lastUpdated": "2021-07-09"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -363,7 +366,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-04-27"
+          "lastUpdated": "2021-07-02"
         }
       ]
     },
@@ -440,10 +443,11 @@
             "Kubernetes",
             "Container Service",
             "Container Registry",
-            "DevOps"
+            "DevOps",
+            "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-04-27"
+          "lastUpdated": "2021-07-02"
         }
       ]
     },
@@ -476,7 +480,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Virtual Private Cloud",
-            "Network"
+            "Network",
+            "Security"
           ],
           "lastUpdated": "2020-12-16"
         },
@@ -516,7 +521,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Virtual Private Cloud",
-            "Network"
+            "Network",
+            "Security"
           ],
           "lastUpdated": "2021-01-08"
         },
@@ -550,7 +556,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Network",
-            "Linux"
+            "Linux",
+            "Security"
           ],
           "lastUpdated": "2021-06-03"
         }

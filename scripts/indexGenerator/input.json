@@ -81,7 +81,8 @@
             "Container Service",
             "File Storage",
             "MySQL",
-            "Java"
+            "Java",
+            "Virtual Servers"
           ],
           "requirements": [
             "container_registry",
@@ -458,7 +459,8 @@
             "Cloud Foundry",
             "Node.js",
             "Continuous Delivery",
-            "Cloud Internet Services"
+            "Cloud Internet Services",
+            "Security"
           ],
           "requirements": [
             "cloud_internet_services",
@@ -475,7 +477,8 @@
           "tags": [
             "Kubernetes",
             "Container Registry",
-            "Cloud Internet Services"
+            "Cloud Internet Services",
+            "Security"
           ],
           "requirements": [
             "cloud_internet_services",
@@ -635,7 +638,8 @@
             "Kubernetes",
             "Container Service",
             "Container Registry",
-            "DevOps"
+            "DevOps",
+            "Security"
           ],
           "requirements": [],
           "guide": true,
@@ -675,7 +679,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Virtual Private Cloud",
-            "Network"
+            "Network",
+            "Security"
           ],
           "requirements": [
             "vpc",
@@ -735,7 +740,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Virtual Private Cloud",
-            "Network"
+            "Network",
+            "Security"
           ],
           "requirements": [
             "vpc"
@@ -782,7 +788,8 @@
             "Infrastructure",
             "Virtual Servers",
             "Network",
-            "Linux"
+            "Linux",
+            "Security"
           ]
         }
       ]

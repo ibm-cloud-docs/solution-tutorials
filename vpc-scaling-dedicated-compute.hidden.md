@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-05"
+lastupdated: "2021-07-12"
 lasttested: "2021-07-01"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -91,7 +91,7 @@ In this section, you will create the following cloud services required for the a
 4. Set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
 5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
-7. Click on **View log** to check the resources to be provisioned.
+7. Click on **Show more** to check the resources to be provisioned.
 8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services created.
 
 Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e., **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
@@ -146,7 +146,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
    There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf) file.
    {:tip}
 
-3. Follow the status logs by clicking on **View log**.
+3. Follow the status logs by clicking on **Show more**.
    After the apply is succesful, you should see the following resources provisioned:
     - a VPC
     - two subnets (one in each zone) 

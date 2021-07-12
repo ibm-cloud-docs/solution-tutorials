@@ -134,6 +134,7 @@ Solution Tutorials
 
         {: .topicgroup}
         Virtual Servers
+            vm-to-containers-and-kubernetes.md
             strategies-for-resilient-applications.md
             highly-available-and-scalable-web-application.md
             vpc-public-app-private-backend.md

@@ -1,4 +1,4 @@
-exports.htmlTomd = function(filename) {
+function htmlTomd(filename) {
   let string = filename.replace('.html', '.md');
 
   const slash = string.lastIndexOf('/');
@@ -10,17 +10,44 @@ exports.htmlTomd = function(filename) {
     string = string.substring(0, query);
   }
   return string;
-};
+}
+exports.htmlTomd = htmlTomd;
 
-exports.isExternalSolution = function(solution) {
+function isExternalSolution(solution) {
   return solution.url.indexOf('/') >= 0;
-};
+}
+exports.isExternalSolution = isExternalSolution;
 
-exports.htmlLink = function(solution) {
+function htmlLink(solution) {
   if (exports.isExternalSolution(solution)) {
     return solution.url;
   } else {
     const topic = solution.url.substring(0, solution.url.indexOf('.'));
     return `/docs/solution-tutorials?topic=solution-tutorials-${topic}#${topic}`;
   }
+}
+exports.htmlLink = htmlLink;
+
+exports.registerHelpers = function(Handlebars) {
+  Handlebars.registerHelper('replace', function( find, replace, options) {
+    const string = options.fn(this);
+    return string.replace( find, replace );
+  });
+
+  Handlebars.registerHelper('tocLink', function(solution, options) {
+    if (isExternalSolution(solution)) {
+      return solution.name ? `[${solution.name}](${solution.url})]` : solution.url;
+    } else {
+      return htmlTomd(solution.url);
+    }
+  });
+
+  Handlebars.registerHelper('htmlLink', function(solution, options) {
+    return htmlLink(solution);
+  });
+
+  Handlebars.registerHelper('hasTag', function( solution, tag, options) {
+    const string = options.fn(this);
+    return (solution.tags && solution.tags.indexOf(tag) >= 0) ? string : null;
+  });
 }
