@@ -5,28 +5,7 @@ const helper = require('./helper');
 
 // load handlebar helpers
 require('handlebars-helpers')();
-
-Handlebars.registerHelper('replace', function( find, replace, options) {
-  const string = options.fn(this);
-  return string.replace( find, replace );
-});
-
-Handlebars.registerHelper('tocLink', function(solution, options) {
-  if (helper.isExternalSolution(solution)) {
-    return solution.name ? `[${solution.name}](${solution.url})]` : solution.url;
-  } else {
-    return helper.htmlTomd(solution.url);
-  }
-});
-
-Handlebars.registerHelper('htmlLink', function(solution, options) {
-  return helper.htmlLink(solution);
-});
-
-Handlebars.registerHelper('hasTag', function( solution, tag, options) {
-  const string = options.fn(this);
-  return (solution.tags && solution.tags.indexOf(tag) >= 0) ? string : null;
-});
+helper.registerHelpers(Handlebars);
 
 const input = require('./input.json');
 const categories = input.categories;

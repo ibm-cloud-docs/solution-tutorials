@@ -62,6 +62,7 @@
 <a href="index.html">HOME</a> -
 <a href="conref.html">CONREF TABLE</a> -
 <a href="vscodesnippets.json">VS CODE SNIPPETS</a> -
-<a href="solution-table.html">SOLUTIONS TABLE</a>
+<a href="solution-table.html">SOLUTIONS TABLE</a> -
+<a href="salesplay.html">SALES PLAY</a>
 
 <article aria-labelledby="{{ document.title.id }}" role="article">

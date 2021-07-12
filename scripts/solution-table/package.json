@@ -9,7 +9,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "handlebars": "^4.0.11",
+    "handlebars": "4.0.11",
+    "handlebars-helpers": "0.10.0",
     "js-yaml": "^3.11.0"
   }
 }

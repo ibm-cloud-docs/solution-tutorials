@@ -1,10 +1,13 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const Handlebars = require('handlebars');
-
-const destination = process.argv[2] || './solution-table.md'
-
 const helper = require('../indexGenerator/helper');
+
+helper.registerHelpers(Handlebars);
+require('handlebars-helpers')();
+
+const destinationDir = process.argv[2] || '.'
+
 const input = require('../indexGenerator/input.json');
 const categories = input.categories;
 const solutions = categories.reduce((previousValue, currentValue) => {
@@ -15,10 +18,22 @@ solutions.forEach(solution => {
 });
 solutions.sort((s1, s2) => s1.mdUrl.localeCompare(s2.mdUrl));
 
-const templateSource = fs.readFileSync('./totable.md.tmpl');
-const template = Handlebars.compile(`${templateSource}`);
+{
+  const templateSource = fs.readFileSync('./totable.md.tmpl');
+  const template = Handlebars.compile(`${templateSource}`);
+  const destination = destinationDir + './solution-table.md';
+  console.log('Writing to', destination);
+  fs.writeFileSync(destination, template({
+    solutions,
+  }));
+}
 
-console.log('Writing to', destination);
-fs.writeFileSync(destination, template({
-  solutions,
-}));
+{
+  const templateSource = fs.readFileSync('./salesplay.md.tmpl');
+  const template = Handlebars.compile(`${templateSource}`);
+  const destination = destinationDir + './salesplay.md';
+  console.log('Writing to', destination);
+  fs.writeFileSync(destination, template({
+    categories,
+  }));
+}
