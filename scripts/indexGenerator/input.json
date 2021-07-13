@@ -33,12 +33,6 @@
           "imgSrc": ""
         },
         {
-          "name": "VPC scaling and dedicated compute",
-          "url": "vpc-scaling-dedicated-compute.hidden.html",
-          "description": "Set up isolated workloads by provisioning a VPC with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can autoscale. Also, explore dedicated hosts for isolation.",
-          "imgSrc": "images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.png"
-        },
-        {
           "name": "(Draft) Introduction to Satellite locations, clusters, link and config",
           "url": "satellite-tour.hidden.html",
           "description": "THIS IS A WORK IN PROGRESS - Get familiar with Satellite architecture and capabilities.",
@@ -791,6 +785,31 @@
             "Linux",
             "Security"
           ]
+        },
+        {
+          "name": "Scale workloads in shared and dedicated VPC environments",
+          "url": "vpc-scaling-dedicated-compute.html",
+          "description": "Set up isolated workloads by provisioning a VPC with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can autoscale. Also, explore dedicated hosts for isolation.",
+          "imgSrc": "images/solution62-vpc-scaling-dedicated/architecture_diagram.svg",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Virtual Servers",
+            "Network",
+            "Load Balancer",
+            "Auto scale",
+            "Dedicated",
+            "PHP",
+            "Node.js"
+          ],
+          "requirements": [
+            "vpc",
+            "cloud_object_storage",
+            "databases_for_postgresql",
+            "terraform",
+            "schematics"
+          ],
+          "supportsCloudShell": "yes"
         }
       ]
     },
