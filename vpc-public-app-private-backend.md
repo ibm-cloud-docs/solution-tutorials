@@ -92,13 +92,13 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-1. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
+1. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
    * Enter **vpc-pubpriv-backend-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-1. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
-   * Enter **vpc-pubpriv-backend-vsi** as your subnet's unique name.
+1. Under **Subnets** change the name of the Zone 3 subnet.  Click the pencil icon:
+   * Enter **vpc-pubpriv-frontend-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
