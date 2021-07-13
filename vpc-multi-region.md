@@ -86,7 +86,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1 with a subnet in 
    * Leave the defaults in the other values.
    * Click **Save**
 6. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
-   * Enter **vpc-region2-zone2-subnet** as your subnet's unique name.
+   * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
