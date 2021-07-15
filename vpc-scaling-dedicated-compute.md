@@ -332,7 +332,7 @@ Extend the scenario by configuring SSL termination, sticky sessions, and end-to-
 {: step}
 
 To remove the Schematics workspace and its resources, follow these steps:
-1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Destroy**.
+1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Delete workspace**.
 2. Enter the phrase as shown, typically your workspace name and click **Destroy**.
 
 ## Related content
