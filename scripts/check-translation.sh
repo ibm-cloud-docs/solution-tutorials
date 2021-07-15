@@ -6,7 +6,7 @@ echo "Checking files for translation..."
 for file in $(find images -name '*.svg'); do
   if grep -q '&#xa;' $file
   then
-    echo "$file contains invalid &#xa; character. Edit the file with a text editor to remove occurrences"
+    echo "$file contains invalid &#xa; character. Edit the file with a text editor to remove occurrences."
     errorCode=1
   fi
 done
@@ -15,4 +15,4 @@ if [ $errorCode == 0 ]; then
   echo "No issue detected"
 fi
 
-echo exit $errorCode
+exit $errorCode
