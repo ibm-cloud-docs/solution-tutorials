@@ -332,8 +332,9 @@ Extend the scenario by configuring SSL termination, sticky sessions, and end-to-
 {: step}
 
 To remove the Schematics workspace and its resources, follow these steps:
-1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Delete workspace**.
-2. Enter the phrase as shown, typically your workspace name and click **Destroy**.
+1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
+2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 
 ## Related content
 {: #vpc-scaling-dedicated-compute-related}

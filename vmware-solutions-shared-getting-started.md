@@ -368,9 +368,9 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 {: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
-2. Click on the action menu next to the `vmware-tutorial` workspace.
-3. Click on **Delete**, check all the Delete options, enter the name of the workspace, and click **Delete workspace** to clean up all the resources that were provisioned via Schematics.
+1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
+2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
 5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
 
