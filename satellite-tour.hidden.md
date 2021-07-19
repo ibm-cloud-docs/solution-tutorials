@@ -115,35 +115,12 @@ In this section, you will walk through the components that make up a {{site.data
 
 `ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components:
 
-```
-$ ibmcloud sat
-NAME:
-        ibmcloud sat - Manage IBM Cloud Satellite clusters.
-USAGE:
-        ibmcloud sat command [arguments...] [command options]
-
-COMMANDS:
-
-Informational Commands:
-    messages   View the current user messages.
-
-Other Commands:
-    cluster             View and manage Satellite clusters.
-    config              View and manage Satellite Configuration.
-    endpoint            View and manage Satellite endpoints.
-    group               View and manage Satellite cluster groups. Cluster groups are used to subscribe clusters to Satellite configurations of Kubernetes resources.
-    host                View and modify Satellite host settings.
-    location            Create, view, and modify Satellite locations.
-    resource            Search and view Kubernetes resources that are managed by Satellite.
-    service             View Satellite service clusters.
-    storage             View and manage Satellite storage resources.
-    subscription, sub   View and manage Satellite subscriptions to deploy Kubernetes configuration files to your clusters.
-
-Enter 'ibmcloud sat help [command]' for more information about a command.
-```
-{: screen}
-
-1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), list all locations:
+1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), view available commands:
+   ```sh
+   ibmcloud sat
+   ```
+   {: pre}
+1. List all locations:
    ```sh
    ibmcloud sat location ls
    ```
