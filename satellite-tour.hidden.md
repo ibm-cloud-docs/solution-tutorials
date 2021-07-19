@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-07-19"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial guides you through the architecture and components of a {{site.data.keyword.satellitelong_notm}} location.
 {:shortdesc}
 
-With {{site.data.keyword.satellitelong_notm}}, you use your own compute infrastructure that is in your on-premises data center, other cloud providers, or edge networks to create a {{site.data.keyword.satelliteshort}} location. Then, you use the capabilities of {{site.data.keyword.satelliteshort}} to run {{site.data.keyword.cloud_notm}} services on your infrastructure, and consistently deploy, manage, and control your app workloads.
+With {{site.data.keyword.satellitelong_notm}}, you use your own compute infrastructure that is in your on-premises data center, other cloud providers, or edge networks to create a {{site.data.keyword.satelliteshort}} location. Then, you use the capabilities of {{site.data.keyword.satelliteshort}} to run {{site.data.keyword.cloud_notm}} services on your infrastructure, and consistently deploy, manage, and control your app workloads through a single pane of glass.
 
 Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.data.keyword.satelliteshort}} Link and {{site.data.keyword.satelliteshort}} Config to provide additional capabilities for securing and auditing network connections in your location and consistently deploying, managing, and controlling your apps and policies across clusters in the location.
 
@@ -51,16 +51,17 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 {: #satellite-tour-objectives}
 
 * Review the underlying infrastructure of an existing {{site.data.keyword.satelliteshort}} location.
-* Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the {{site.data.keyword.satelliteshort}} location exposing services with {{site.data.keyword.satelliteshort}} Link.
+* Expose {{site.data.keyword.Bluemix_notm}} services to the location with {{site.data.keyword.satelliteshort}} Link.
+* Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the location.
 * Use {{site.data.keyword.satelliteshort}} configurations to specify what Kubernetes resources you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters.
 
 ![Architecture](./images/solution-satellite-tour-hidden/architecture.png)
 
 The {{site.data.keyword.satelliteshort}} architecture is comprised of:
-* the Control Plane Master, running in {{site.data.keyword.cloud_notm}},
-* cloud services supporting the location operations like {{site.data.keyword.loganalysisshort_notm}}, {{site.data.keyword.monitoringshort_notm}}, {{site.data.keyword.cos_short}},
-* {{site.data.keyword.satelliteshort}} Link to securely connect the location with {{site.data.keyword.cloud_notm}},
-* and hosts assigned to the location control plane, and to clusters and services running in the location.
+* The Control Plane Master, running in {{site.data.keyword.cloud_notm}},
+* Cloud services to support the {{site.data.keyword.satelliteshort}} location operations like {{site.data.keyword.loganalysisshort_notm}}, {{site.data.keyword.monitoringshort_notm}}, {{site.data.keyword.cos_short}},
+* {{site.data.keyword.satelliteshort}} Link to securely connect the {{site.data.keyword.satelliteshort}} location back to {{site.data.keyword.cloud_notm}},
+* Host infrastructure assigned to the {{site.data.keyword.satelliteshort}} control plane, and to clusters and services running in the {{site.data.keyword.satelliteshort}} location.
 
 ![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png)
 
@@ -97,7 +98,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #satellite-tour-architecture}
 {: step}
 
-In this section, you will walk through the components making a {{site.data.keyword.satelliteshort}} location. A location represents a data center that you fill with your own infrastructure resources.
+In this section, you will walk through the components that make up a {{site.data.keyword.satelliteshort}} location. A {{site.data.keyword.satelliteshort}} location is the location (on-premises, edge, or other cloud provider's infrastructure) to which {{site.data.keyword.Bluemix_notm}} Services will be extended.
 
 ### using {{site.data.keyword.cloud_notm}} console
 {: #satellite-tour-architecture-ui}
@@ -111,6 +112,36 @@ In this section, you will walk through the components making a {{site.data.keywo
 
 ### using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
+
+`ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components:
+
+```
+$ ibmcloud sat
+NAME:
+        ibmcloud sat - Manage IBM Cloud Satellite clusters.
+USAGE:
+        ibmcloud sat command [arguments...] [command options]
+
+COMMANDS:
+
+Informational Commands:
+    messages   View the current user messages.
+
+Other Commands:
+    cluster             View and manage Satellite clusters.
+    config              View and manage Satellite Configuration.
+    endpoint            View and manage Satellite endpoints.
+    group               View and manage Satellite cluster groups. Cluster groups are used to subscribe clusters to Satellite configurations of Kubernetes resources.
+    host                View and modify Satellite host settings.
+    location            Create, view, and modify Satellite locations.
+    resource            Search and view Kubernetes resources that are managed by Satellite.
+    service             View Satellite service clusters.
+    storage             View and manage Satellite storage resources.
+    subscription, sub   View and manage Satellite subscriptions to deploy Kubernetes configuration files to your clusters.
+
+Enter 'ibmcloud sat help [command]' for more information about a command.
+```
+{: screen}
 
 1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), list all locations:
    ```sh
@@ -276,7 +307,7 @@ The application allows to query a {{site.data.keyword.postgresql}} database. The
 {: #satellite-tour-config}
 {: step}
 
-With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You define cluster cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
+With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You define cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
 
 ### Create a cluster group
 {: #satellite-tour-cluster-group}
