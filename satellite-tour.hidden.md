@@ -113,7 +113,7 @@ In this section, you will walk through the components that make up a {{site.data
 ### using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
 
-`ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components:
+`ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components.
 
 1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), view available commands:
    ```sh
