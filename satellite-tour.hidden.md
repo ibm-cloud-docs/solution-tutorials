@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-19"
+lastupdated: "2021-07-20"
 lasttested: "2021-06-07"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -150,17 +150,17 @@ A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.clou
 
 Under [Logging](https://{DomainName}/observe/logging):
 1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
-1. Click **Open dashboard**.
+1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
 1. Set the search to `host:satellite` to view only logs from {{site.data.keyword.satelliteshort}}. You can filter even more by setting the `app` attribute to the {{site.data.keyword.satelliteshort}} location CRN or using the **Sources** and **Apps** filters at the top of the window.
    ```
    host:satellite app:crn:v1:bluemix:public:satellite:us-east:a/123456:c2k1k2jw0ofn1234::
    ```
    {: codeblock}
-1. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
+1. By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
 
 The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
-1. Click **Open dashboard**.
+1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
 1. In the **Dashboards** list, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
 1. Change the time horizon to view past data.
 1. Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics.
@@ -224,6 +224,8 @@ Looking at the value for `hostname`, notice that this instance is using a privat
 1. Select the created endpoint.
 1. After few seconds, the endpoint will be ready and the **Endpoint address** (`host:port`) filled. You may need to refresh the page for the endpoint address to become visible.
 
+With these steps you enabled, over a secured link, the connectivity between {{site.data.keyword.postgresql}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
+
 ## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
@@ -280,6 +282,8 @@ The application allows to query a {{site.data.keyword.postgresql}} database. The
    ```
    {: codeblock}
 
+This simple application demonstrated how you can make any service running in {{site.data.keyword.Bluemix_notm}} available to your {{site.data.keyword.satelliteshort}} location over a secured connection provided by {{site.data.keyword.satelliteshort}} Link.
+
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
 {: step}
@@ -293,6 +297,8 @@ With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/
 1. Create a new cluster group with a unique name such as `<your-initials>-cluster-group`.
 1. Select the group.
 1. Under **Clusters**, click **Add clusters** and check the cluster you previously deployed your app to.
+
+You have now defined a set of clusters you can consistency deploy Kubernetes resources to.
 
 ### Create a configuration and a first version
 {: #satellite-tour-configuration}
@@ -332,10 +338,10 @@ Finally you will map the version to a set of clusters.
    * Select the cluster group previously created.
 1. Click **Create**.
 
+{{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the clusters.
+
 ### Check the deployed resources
 {: #satellite-tour-deployed}
-
-{{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the cluster.
 
 1. After a short while, from the shell, list the config maps in your project. Repeat until you see the `example` config map in the list:
    ```sh
@@ -376,7 +382,3 @@ In this example we deployed a simple ConfigMap but you could be deploying a full
 * Delete the [cluster group](https://{DomainName}/satellite/groups).
 * On the {{site.data.keyword.satelliteshort}} location, delete the Link Endpoint exposing the service you provisioned.
 
-## Related content
-{: #satellite-tour-related}
-
-* [About {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-about)
