@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019-2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-07-20"
 lasttested: "2020-02-16"
 
 ---
@@ -100,12 +100,12 @@ Both Activity Tracker and Log Analysis support further restriction on the data c
 ## Control encryption keys
 {: #extended-app-security-control_encryption}
 
-Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key).
+Almost all services on {{site.data.keyword.cloud_notm}} that store data use encryption to protect the data against unauthorized access. When using database services or {{site.data.keyword.cos_short}}, by default the encryption key is system-generated. You can increase data protection by controlling the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} and {{site.data.keyword.hscrypto}} help you provision encrypted keys for storage services as well as apps. Both services are based on [Hardware Security Modules](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) to manage and safeguard the encryption keys. {{site.data.keyword.keymanagementservicelong_notm}} allows to bring your own key (BYOK), {{site.data.keyword.hscrypto}} even support KYOK (Keep Your Own Key). When importing your own keys, make sure to [utilize an import token for increased security](https://{DomainName}.ibm.com/docs/hs-crypto?topic=hs-crypto-tutorial-import-keys). Note that you can [organize your keys in key rings](https://{DomainName}.ibm.com/docs/key-protect?topic=key-protect-grouping-keys). By applying access policies based on key rings you achieve more fine granular access control and higher security.
 
 ### Integrated services
 {: #extended-app-security-7}
 
-More and more data services support the integration with either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}}. To see if they can be used with the services in your deployed solution, check out the list of:
+Many data services support the integration with either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}}. To see if they can be used with the services in your deployed solution, check out the list of:
 
 - [integrated services for {{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-integrate-services) and the
 - [integrated services for {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-integrate-services).
@@ -143,6 +143,7 @@ In this tutorial, you learned how to increase application security by moving fro
 
 * Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)
+* Blog: [Onboarding Cloud Projects: Security and Resource Considerations](https://www.ibm.com/cloud/blog/onboarding-cloud-projects-security-and-resource-considerations)
 * Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps)
 * Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2)
 * Blog: [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)

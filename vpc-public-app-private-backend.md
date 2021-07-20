@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020
-lastupdated: "2021-01-08"
+lastupdated: "2021-07-13"
 lasttested: "2020-11-26"
 
 content-type: tutorial
@@ -68,7 +68,7 @@ In short, using VPC you can:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
-## Create a Virtual Private Cloud
+## Create a Virtual Private Cloud and subnets
 {: #vpc-public-app-private-backend-create-vpc}
 {: step}
 
@@ -87,11 +87,21 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    2. Select a **Resource group**.
    3. Optionally, add **Tags** to organize your resources.
 1. Uncheck SSH and ping from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
-1. You will create your first subnet, under **New subnet for VPC**:
-   1. As a unique name enter **vpc-secure-bastion-subnet**.
-   2. Select a **Location**.
-   3. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
+1. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
+   * Enter **vpc-secure-bastion-subnet** as your subnet's unique name.
+   * Select the same **Resource group** as the VPC resource group.
+   * Leave the defaults in the other values.
+   * Click **Save**
+1. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
+   * Enter **vpc-pubpriv-backend-subnet** as your subnet's unique name.
+   * Select the same **Resource group** as the VPC resource group.
+   * Leave the defaults in the other values.
+   * Click **Save**
+1. Under **Subnets** change the name of the Zone 3 subnet.  Click the pencil icon:
+   * Enter **vpc-pubpriv-frontend-subnet** as your subnet's unique name.
+   * Select the same **Resource group** as the VPC resource group.
+   * Leave the defaults in the other values.
+   * Click **Save**
 1. Click **Create virtual private cloud**.
 
 To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
@@ -111,23 +121,11 @@ Follow the steps described in [this section of the bastion tutorial](https://{Do
 
 Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
-## Create a backend subnet, security group and VSI
+## Create a backend security group and VSI
 {: #vpc-public-app-private-backend-backend-subnet-vsi}
 {: step}
 
-In this section, you will create a subnet, a security group and a virtual server instance for the backend.
-
-### Create a subnet for the backend
-{: #vpc-public-app-private-backend-7}
-
-To create a new subnet for the backend,
-
-1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **Create**.
-   1. Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
-   2. Select a resource group same as your VPC.
-   3. Select a Location and zone.
-   4. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-2. Click **Create subnet** to provision it.
+In this section, you will create a security group and a virtual server instance for the backend.
 
 ### Create a backend security group
 {: #vpc-public-app-private-backend-8}
@@ -174,24 +172,11 @@ To create a virtual server instance in the newly created subnet:
    3. Click **Save**.
 1. Click **Create virtual server instance**.
 
-## Create a frontend subnet, security group and VSI
+## Create a frontend security group and VSI
 {: #vpc-public-app-private-backend-frontend-subnet-vsi}
 {: step}
 
-Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
-
-### Create a subnet for the frontend
-{: #vpc-public-app-private-backend-11}
-
-To create a new subnet for the frontend,
-
-1. Select [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) under **Network** and click **New subnet**.
-   1. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
-   2. Select a resource group same as your VPC.
-   3. Select a Location and zone.
-   4. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
-1. Click **Create subnet** to provision it.
+Similar to the backend, you will create a frontend virtual server instance and a security group.
 
 ### Create a frontend security group
 {: #vpc-public-app-private-backend-12}

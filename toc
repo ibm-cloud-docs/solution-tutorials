@@ -15,7 +15,6 @@ Solution Tutorials
         {: .topicgroup}
         Work In Progress
             solution-template.md
-            vpc-scaling-dedicated-compute.hidden.md
             satellite-tour.hidden.md
 
         {: .topicgroup}
@@ -72,6 +71,7 @@ Solution Tutorials
             lamp-stack-on-vpc.md
             /containers/containers-vpc_ks_tutorial
             vpc-tg-dns-iam.md
+            vpc-scaling-dedicated-compute.md
 
         {: .topicgroup}
         Classic Infrastructure
@@ -149,6 +149,7 @@ Solution Tutorials
             vpc-app-deploy.md
             vpc-secure-management-bastion-server.md
             vpc-tg-dns-iam.md
+            vpc-scaling-dedicated-compute.md
             secure-network-enclosure.md
             nat-config-private.md
             configuring-IPSEC-VPN.md

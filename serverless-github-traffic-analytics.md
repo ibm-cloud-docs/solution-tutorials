@@ -2,13 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-03-08"
-lasttested: "2021-02-12"
+lastupdated: "2021-07-19"
+lasttested: "2021-07-19"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -148,10 +148,6 @@ Once the build is ready, you can use the container image to deploy the app, ther
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {:tip}
 
-3. Make the hostname known to the app. Replace the value for **YOUR-APP-URL** with the app URL shown in the output the **create** command (step 1).
-   ```sh
-   ibmcloud ce app update --name ghstats-app --env FULL_HOSTNAME=YOUR-APP-URL
-   ```
    {: pre}
 
 

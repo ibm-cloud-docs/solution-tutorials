@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-07-19"
 lasttested: "2020-12-23"
 
 content-type: tutorial
@@ -343,10 +343,8 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     Set the Sensitive flag for the `vcd-password` variable to that the value is not displayed in the workspace and/or logs.
     {:tip}
 
-5. Click Save changes.
-6. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
-7. Click on **Apply plan**.
-8. Click on **View log** next to the current running plan to follow the logs. At the completion of the apply plan, confirm there are no errors and capture the information provided under the **Outputs** section. 
+5. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
+6. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
 {: #vmware-solutions-shared-getting-started-access-virtual-machine}
@@ -370,9 +368,9 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 {: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
-2. Click on the action menu next to the `vmware-tutorial` workspace.
-3. Click on **Delete**, check all the Delete options, enter the name of the workspace, and click **Delete** to clean up all the resources that were provisioned via Schematics.
+1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
+2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
 5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
 

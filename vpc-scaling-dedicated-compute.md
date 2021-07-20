@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-12"
+lastupdated: "2021-07-19"
 lasttested: "2021-07-01"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -55,7 +55,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 * Learn how to scale instances dynamically or periodically.
 * Learn the use of dedicated hosts.
 
-![Architecture](images/solution62-vpc-scaling-dedicated-hidden/architecture_diagram.svg)
+![Architecture](images/solution62-vpc-scaling-dedicated/architecture_diagram.svg)
 
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
@@ -123,17 +123,17 @@ In this section, you will:
    - Create an instance template used to provision instances in your instance group.
 
 Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
-   ![one vsi](images/solution62-vpc-scaling-dedicated-hidden/one_vsi.svg)
+   ![one vsi](images/solution62-vpc-scaling-dedicated/one_vsi.svg)
 
 As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
-   ![multiple vsi](images/solution62-vpc-scaling-dedicated-hidden/multiple_vsi.svg)
+   ![multiple vsi](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg)
 
 An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {:tip}
 
-   ![instance group](images/solution62-vpc-scaling-dedicated-hidden/instance_group.svg)
+   ![instance group](images/solution62-vpc-scaling-dedicated/instance_group.svg)
 
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
@@ -160,7 +160,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 
 4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance, e.g.,10 and click **Submit** to see the details of the VSIs serving the request.
 
-    ![application](images/solution62-vpc-scaling-dedicated-hidden/application.png)
+    ![application](images/solution62-vpc-scaling-dedicated/application.png)
 
     To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with [ibmcloud is](https://{DomainName}/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
     {:tip}
@@ -188,7 +188,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
- ![scale instances](images/solution62-vpc-scaling-dedicated-hidden/autoscale.svg)
+ ![scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg)
 2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. 
    1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/).This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
    2. **Paste** the public load balancer URL from the above step 
@@ -265,7 +265,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    - a dedicated host 
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
-   ![dedicated host](images/solution62-vpc-scaling-dedicated-hidden/dedicated_host.svg)
+   ![dedicated host](images/solution62-vpc-scaling-dedicated/dedicated_host.svg)
 3. From the log output, **copy** the instance IP address and launch [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) to run the below command by replacing the placeholder `<IP_ADDRESS`> with the instance IP address
 
    ```sh
@@ -332,8 +332,9 @@ Extend the scenario by configuring SSL termination, sticky sessions, and end-to-
 {: step}
 
 To remove the Schematics workspace and its resources, follow these steps:
-1. On your {{site.data.keyword.bpshort}} workspace page, click on **Actions** and select **Destroy**.
-2. Enter the phrase as shown, typically your workspace name and click **Destroy**.
+1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
+2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 
 ## Related content
 {: #vpc-scaling-dedicated-compute-related}

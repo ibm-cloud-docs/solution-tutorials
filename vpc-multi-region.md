@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-12-16"
+lastupdated: "2021-07-13"
 lasttested: "2020-12-16"
 
 content-type: tutorial
@@ -70,7 +70,7 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 
 In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by provisioning of VSIs.
 
-To create your own {{site.data.keyword.vpc_short}} in region 1,
+To create your own {{site.data.keyword.vpc_short}} in region 1 with a subnet in each zone,
 
 1. Navigate to [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**
 2. Under **New virtual private cloud** section:
@@ -80,23 +80,18 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 3. The default access control list (ACL) **(Allow all)** is appropriate for your VPC
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 4. Leave **Create a default prefix for each zone** checked.
-5. Under **New subnet for VPC**:
+5. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
-   * Select a **Resource group**.
-   * Select a location and zone 1 for example: **Dallas** and **Dallas 1**.
-   * Leave the defaults for the IP range selection.
-   * Leave the public gateway to **Detached**.
+   * Select the same **Resource group** as the VPC resource group.
+   * Leave the defaults in the other values.
+   * Click **Save**
+6. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
+   * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
+   * Select the same **Resource group** as the VPC resource group.
+   * Leave the defaults in the other values.
+   * Click **Save**
+7. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
 8. Click **Create virtual private cloud** to provision the instance.
-
-To confirm the creation of subnet, click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
-
-### Create subnet in a different zone
-{: #vpc-multi-region-3}
-
-1. Click on **Create**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet, select **vpc-region1** as the VPC, and select a **Resource group**.
-1. Select a location zone 2 for example: **Dallas 2**
-1. Leave the defaults for the IP range selection
-1. Leave the public gateway to **Detached** and click **Create subnet**.
 
 ### Create a security group to allow inbound traffic to your application
 {: #vpc-multi-region-4}
