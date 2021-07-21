@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-19"
+lastupdated: "2021-07-21"
 lasttested: "2021-07-01"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -105,7 +105,7 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
 2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you wish to enable monitoring.
 3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-   1. Click on **Configure platform logs** and **select** a region in which you have provisioned the VPC resources.
+   1. Click on **Options** > Edit platform and **select** a region in which you have provisioned the VPC resources.
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
 4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
