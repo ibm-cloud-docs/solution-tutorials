@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-07-23"
 lasttested: "2021-03-08"
 
 content-type: tutorial
@@ -507,11 +507,11 @@ In this section, you will learn to monitor the health and performance of your ap
    {:pre}
 2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
    ```sh
-    while sleep 1; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL>; done
+    while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
    ```
    {:pre}
 
-3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
+3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
 5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
    - datasource: **Prometheus**

@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019, 2020
-lastupdated: "2020-12-28"
-lasttested: "2020-12-28"
+  years: 2018, 2019, 2020, 2021
+lastupdated: "2021-07-23"
+lasttested: "2021-07-23"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, StreamingAnalytics
@@ -87,7 +87,7 @@ In this section, you will create the services required to perform analysis of lo
    3. Select a **Resource group** where you plan to create all the services required for this tutorial and click **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
-   2. Set Include HMAC Credential to **On** and click **Add**.
+   2. Expand the **Advanced options** then set Include HMAC Credential to **On** and click **Add**.
    3. Make note of the **access_key_id** and **secret_access_key** values.
 3. Under **Buckets**, create a **Custom bucket** named `<your-initial>-log-analysis` with **Cross Region** resiliency, a **Location** near to you and a **Smart Tier** storage class.
 4. Under **Endpoints**, find the **private** endpoint to access your bucket.
@@ -98,9 +98,9 @@ In this section, you will create the services required to perform analysis of lo
 1. Create an instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
    1. Select a region where you plan to create all the services required for this tutorial.
    2. Select the **Lite** plan.
-   3. Set the **Service name** to **log-analysis-hub**.
+   3. Set the **Service name** to **log-analysis-es**.
    4. Select a **Resource group** and click **Create**.
-2. Under **Manage**, Switch to **Topics** and click **Create topic**
+2. Under **Topics** and click **Create topic**
    1. Set the **Topic Name** to `webserver` and click **Next**.
    2. Select **1** partition and click **Next**.
    3. Set message retention to **1 Day** and click the **Create topic** button.
@@ -178,7 +178,7 @@ In this section, you will begin configuring a Streams flow that receives log mes
 5. Type the streams flow **Name** as `webserver-flow`.
 6. Select **Wizard** and click **Create**.
 7. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile. _If you see a connection error, create [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio) service with **Lite** plan in the same region._
-    * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
+    * Click **Add Connection** and select your `log-analysis-es` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
@@ -506,7 +506,7 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 From the [Resource List](https://{DomainName}/resources?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
 * log-analysis-sa
-* log-analysis-hub
+* log-analysis-es
 * log-analysis-sql
 * log-analysis-cos
 * log-analysis-iae
