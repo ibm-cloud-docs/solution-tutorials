@@ -49,12 +49,12 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution31/Architecture.png)
+  ![Architecture](images/solution31/Architecture.svg)
 </p>
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
-2. Log event is intercepted and analyzed by {{site.data.keyword.streaminganalyticsshort}}.
-3. Log event is appended to a CSV file located in {{site.data.keyword.cos_short}}.
+2. To persist the log events, they are stream landed into {{site.data.keyword.cos_short}} through {{site.data.keyword.sqlquery_short}}.
+3. The stream landing job executes in {{site.data.keyword.sqlquery_short}} by securely retrieving the service ID from the {{site.data.keyword.keymanagementserviceshort}} service.
 4. Auditor or support staff use {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_short}} to perform requests.
 5. Requests are executed against the data stored in {{site.data.keyword.cos_short}}.
 
@@ -233,7 +233,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    ![SQL Query console](images/solution31/sql_query_console.png)
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing. 
 
-   It is a SELECT statement from your {{site.data.keyword.messagehub}} instance and topic (identified via the unique CRN) and the selected data is emitted (EMIT) to your {{site.data.keyword.cos_short}} bucket AS PARQUET format. The operation is executed (EXECUTE) with the service ID's API key that is stored in the Key Protect instance.
+   It is a SELECT statement from your {{site.data.keyword.messagehub}} instance and topic (identified via the unique CRN) and the selected data is emitted (EMIT) to your {{site.data.keyword.cos_short}} bucket AS PARQUET format. The operation is executed (EXECUTE) with the service ID's API key that is stored in the {{site.data.keyword.keymanagementserviceshort}} instance.
    {:tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
@@ -251,7 +251,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 ### Increasing message load
 {: #big-data-log-analytics-streamsload}
 
-To view conditional handling in your Streams flow, you will increase the message volume sent to {{site.data.keyword.messagehub}}. The provided Node.js program simulates a realistic flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}} and {{site.data.keyword.streaminganalyticsshort}}, you will increase the throughput of log messages.
+To view conditional handling in your Streams flow, you will increase the message volume sent to {{site.data.keyword.messagehub}}. The provided Node.js program simulates a realistic flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
 
 This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). See the npmjs page for troubleshooting instructions if the simulator installation fails. If problems persist, you can skip to the next section and manually upload the data.
 
@@ -485,6 +485,7 @@ From the [Resource List](https://{DomainName}/resources?search=log-analysis), us
 * log-analysis-sql
 * log-analysis-cos
 * log-analysis-iae
+* log-analysis-kp
 
 ## Related content
 {: #big-data-log-analytics-8}
