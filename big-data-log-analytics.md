@@ -19,7 +19,7 @@ completion-time: 3h
 {:tip: .tip}
 {:pre: .pre}
 
-# Big data logs with streaming analytics and SQL
+# Big data logs with SQL
 {: #big-data-log-analytics}
 {: toc-content-type="tutorial"}
 {: toc-services="cloud-object-storage, EventStreams, AnalyticsEngine, sql-query"}
@@ -119,6 +119,7 @@ In this section, you will create the services required to perform analysis of lo
    4. Select a **Resource group** and click **Create**.
 
 ### {{site.data.keyword.keymanagementserviceshort}}
+{: #big-data-log-analytics-new-kp}
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    1. Select a **location**.
    2. Set the name to **log-analysis-kp**.
@@ -129,9 +130,10 @@ In this section, you will create the services required to perform analysis of lo
 
 1. Create an instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
    1. Select a region.
-   2. Select the **Lite** plan.
+   2. Select the **Standard-Hourly** plan.
    2. Set the **Service name** to **log-analysis-iae**.
-   3. Select a **Resource group** and click on **Configure**.
+   3. Select a **Resource group**.
+   4. 
 2. Set **Hardware configuration** to **Default**.
 3. Set **Number of compute nodes** to **1**.
 4. Select the **latest** version of **Spark and Hadoop** as the **Software package**.
@@ -152,7 +154,7 @@ In this section, you will create the services required to perform analysis of lo
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
       - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
       - `cosEndpoint` is a private endpoint to access the {{site.data.keyword.cos_short}} bucket.
-6. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
+6. Click **Create**. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
 7. Under **Service credentials**, create **New credential**.
    * Provide `iae-for-log-analysis` as the credential name.
    * Select **Writer** as the role and click **Add**.
@@ -239,9 +241,9 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    You see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
    {:tip}
 
-4. Return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above.
+4. Return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above. Wait for the job to change to `Completed`.
    
-   The query also saves the result to a `CSV` file under a different bucket. Check the `INTO` part of the query.
+   The query also saves the result to a `CSV` file under a different bucket with name `sql-<SQL_QUERY_GUID>`. Check the `INTO` part of the query.
    {:tip}
 
 5. Click on the **Results** tab to see the log messages in a tabular format.
@@ -275,22 +277,21 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    ```
    {: pre}
    ```sh
-   node dist/index.js --file /Users/VMac/Downloads/NASA_access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
+   node dist/index.js --file /Users/VMac/Downloads/access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
    "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
    "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
    "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
    "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
    "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" \
-   --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzjj --topic webserver --rate 100
+   --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzzz --topic webserver --rate 100
    ```
 
    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
    {:tip}
 
-4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
-5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
+4. Stop the simulator after a desired number of messages have been stream landed using `control+C`.
+5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to see the messaged feed under the `Results` tab of the batch job.
 6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
-   ![Flow load set to 10](images/solution31/flow_load_10.png)
 
 The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used. Setting `--rate 0` sends all events immediately with no delay between events.
 {: tip}
@@ -305,32 +306,34 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
 If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately. You can use the {{site.data.keyword.cos_short}} plugin for the {{site.data.keyword.cloud_notm}} CLI to upload the file to the bucket: `ibmcloud cos upload --bucket <YOUR_BUCKET_NAME> --key logs/http-logs_20191031_143106.csv.gz  --file http-logs_20191031_143106.csv.gz --region us-geo`.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Click **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
-2. Enter the following SQL into the **Type SQL here ...** text area.
+1. Retrieve the Object SQL URL from the logs file.
+   * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
+   * Select the bucket you created previously and click the `jobid-xxxx` folder under `logs-stream-landing/topic=webserver`.
+   * On one of the `part-00000-xxxxx-<TIME>-xxxx.snappy.parquet` file, click the action menu.
+   * Click **Access with SQL**.
+   * You should see the `Object SQL URL`. Copy the URL for future reference.
+   * Select the `log-analysis-sql` service and click **Open in SQL Query** to launch the query.
+   * **Run** the query to see the results.
+2. In the {{site.data.keyword.sqlquery_short}} UI, enter the following SQL in the **Type SQL here ...** text area. 
    ```sql
    -- What are the top 10 web pages on NASA from July 1995?
    -- Which mission might be significant?
    SELECT REQUEST, COUNT(REQUEST)
-   FROM cos://ap-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    WHERE REQUEST LIKE '%.htm%'
    GROUP BY REQUEST
    ORDER BY 2 DESC
    LIMIT 10
    ```
    {: codeblock}
-3. Retrieve the Object SQL URL from the logs file.
-   * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
-   * Select the bucket you created previously.
-   * On the `http-logs_<TIME>.csv` file, click the action menu
-   * Click **Object details** and then **Copy** the **Object SQL URL** to a clipboard.
-4. Update the `FROM` clause with your Object SQL URL and click **Run**.
-5. Click on the latest **Completed** job to see the result under the **Result** tab.
+3. Update the `FROM` clause with your Object SQL URL and click **Run**.
+4. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
    ```sql
    -- Who are the top 5 viewers?
    SELECT HOST, COUNT(*)
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    GROUP BY HOST
    ORDER BY 2 DESC
    LIMIT 5
@@ -340,7 +343,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
    ```sql
    -- Which viewer has suspicious activity based on application failures?
    SELECT HOST, COUNT(*)
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    WHERE `responseCode` == 500
    GROUP BY HOST
    ORDER BY 2 DESC
@@ -350,7 +353,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
    ```sql
    -- Which requests showed a page not found error to the user?
    SELECT DISTINCT REQUEST
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    WHERE `responseCode` == 404
    ```
    {: codeblock}
@@ -358,7 +361,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
    ```sql
    -- What are the top 10 largest files?
    SELECT DISTINCT REQUEST, BYTES
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    WHERE BYTES > 0
    ORDER BY CAST(BYTES as Integer) DESC
    LIMIT 10
@@ -368,7 +371,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
    ```sql
    -- What is the distribution of total traffic by hour?
    SELECT SUBSTRING(TIME_STAMP, 13, 2), COUNT(*)
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    GROUP BY 1
    ORDER BY 1 ASC
    ```
@@ -378,12 +381,12 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
    -- Why did the previous result return an empty hour?
    -- Hint, find the malformed hostname.
    SELECT HOST, REQUEST
-   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs/http-logs_<TIME>.csv
+   FROM cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet STORED AS PARQUET
    WHERE SUBSTRING(TIME_STAMP, 13, 2) == ''
    ```
    {: codeblock}
 
-FROM clauses are not limited to a single file. Use `cos://us-geo/<YOUR_BUCKET_NAME>/logs/` to run SQL queries on all files in the bucket.
+FROM clauses are not limited to a single file. Use `cos://us-geo/<YOUR_BUCKET_NAME>/logs-stream-landing/topic=webserver/jobid=<JOBID>` to run SQL queries on all files in the bucket.
 {: tip}
 
 ## Investigating data using {{site.data.keyword.iae_short}}
