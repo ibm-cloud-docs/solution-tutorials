@@ -30,7 +30,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
+In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 {:shortdesc}
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
@@ -131,9 +131,8 @@ In this section, you will create the services required to perform analysis of lo
 1. Create an instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
    1. Select a region.
    2. Select the **Standard-Hourly** plan.
-   2. Set the **Service name** to **log-analysis-iae**.
-   3. Select a **Resource group**.
-   4. 
+   3. Set the **Service name** to **log-analysis-iae**.
+   4. Select a **Resource group**.
 2. Set **Hardware configuration** to **Default**.
 3. Set **Number of compute nodes** to **1**.
 4. Select the **latest** version of **Spark and Hadoop** as the **Software package**.
@@ -303,8 +302,6 @@ The simulator will delay sending the next message based on the elapsed time in t
 
 Depending on how long you ran the simulator, the number of files on {{site.data.keyword.cos_short}} has certainly grown. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
-If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately. You can use the {{site.data.keyword.cos_short}} plugin for the {{site.data.keyword.cloud_notm}} CLI to upload the file to the bucket: `ibmcloud cos upload --bucket <YOUR_BUCKET_NAME> --key logs/http-logs_20191031_143106.csv.gz  --file http-logs_20191031_143106.csv.gz --region us-geo`.
-{: tip}
 
 1. Retrieve the Object SQL URL from the logs file.
    * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
@@ -398,28 +395,28 @@ FROM clauses are not limited to a single file. Use `cos://us-geo/<YOUR_BUCKET_NA
 
 Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also run SQL analytical commands from Apache Hive that is part of the {{site.data.keyword.iae_short}} service.
 
-1. First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
+1. First SSH into the {{site.data.keyword.iae_short}} cluster using the following command
    ```sh
-   ssh clsadmin@chs-xxxxx-mn003.<changeme>.<region>.ae.appdomain.cloud
+   ssh clsadmin@chs-xxxxx-mn003.<REGION>.ae.appdomain.cloud
    ```
    {: pre}
 
    You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier and an option to generate `password` under the **Manage** tab of the service.
    {:tip}
 
-2. Connect to the Hive server by using with Beeline client.
+2. Connect to the Hive server by using with Beeline client.The hive_jdbc service endpoint can be found under the **service credentials** tab of the `log-analysis-iae` service page.
    ```sh
-   beeline -u 'jdbc:hive2://chs-xxxxx-mn001.<change-me>.<region>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive' -n clsadmin -p <PASSWORD>
+   beeline -u 'jdbc:hive2://chs-xxxxx-mn001.<REGION>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive' -n clsadmin -p <PASSWORD>
    ```
    {: pre}
-   The hive_jdbc service endpoint can be found under the **service credentials** tab of the `log-analysis-iae` service page.
+   
 3. Create an external hive table with the following command.
    ```sql
-   CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifier>/logs/' tblproperties ("skip.header.line.count"="1");
+   CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) STORED AS PARQUET LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifier>/logs-stream-landing/topic=webserver/jobid=<JOBID>/';
    ```
    {: codeblock}
 
-   The value of `<identifier>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. **Note** that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
+   The value of `<identifier>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. **Note** that for Hive you need to point to a parent folder which contains the PARQUET file. In the example above, the data got written in the `jobid` folder under `logs-stream-landing/topic=webserver/`. For more information, refer [creating Hive tables in Parquet format](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-working-with-hive#creating-hive-tables-in-parquet-format)
 4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
    ```sql
    SELECT HOST, COUNT(*)
@@ -445,14 +442,14 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    pyspark
    ```
    {: pre}
-3. Create a Spark dataframe of a csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
+3. Create a Spark dataframe of a parquet file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
    ```sh
-   df = spark.read.csv('cos://<bucketname>.<identifier>/<objectname>')
+   df = spark.read.parquet('cos://<bucketname>.<identifier>/<objectname>')
    ```
    {: codeblock}
    For example, if the name of the bucket is `<your-initial>-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/:
    ```sh
-   df = spark.read.csv('cos://<your-initial>-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
+   df = spark.read.parquet('cos://<your-initial>-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.snappy.parquet')
    ```
    {: codeblock}
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
