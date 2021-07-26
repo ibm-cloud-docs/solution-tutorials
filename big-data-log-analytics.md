@@ -49,7 +49,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution31/Architecture.svg)
+  ![Architecture](images/solution31/Architecture.png)
 </p>
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
