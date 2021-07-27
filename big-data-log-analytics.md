@@ -234,7 +234,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
    ```
    {: codeblock}
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
-4. On a terminal, use `ibmcloud login` to log in to your {{site.data.keyword.cloud_notm}} interactively. Select the region and resource group where the services was provisioned.
+4. On a terminal, use `ibmcloud login` to log in to your {{site.data.keyword.cloud_notm}} account interactively. Select the region and resource group where the services was provisioned.
 5. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command. 
     ```sh
     ./kafka-console-producer.sh --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') --producer.config event-streams.config --topic webserver
