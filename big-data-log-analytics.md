@@ -233,19 +233,11 @@ The streaming job is currently idle and awaiting messages. In this section, you 
    ```
    {: codeblock}
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
-4. From the `bin` directory, run the following command. An example is provided.
+4. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command.
     ```sh
     ./kafka-console-producer.sh --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') --producer.config event-streams.config --topic webserver
     ```
     {: pre}
-    ```sh
-    ./kafka-console-producer.sh --broker-list  "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
-    "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
-    "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
-    "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
-    "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093", \
-    "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" --producer.config event-streams.config --topic webserver
-    ```
 5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
@@ -299,7 +291,7 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    cd kafka-log-simulator
    ```
    {: pre}
-3. Run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials** used earlier. An example is provided.
+3. Run the following commands to setup the simulator and produce log event messages. Replace `<LOGFILE>` with the file you downloaded e.g., `/Users/VMac/Downloads/access_log_Jul95`. The broker list and the API key will be retrieved with the `ibmcloud resource service-key` command.
    ```sh
    npm install
    ```
@@ -309,19 +301,10 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    ```
    {: pre}
    ```sh
-   node dist/index.js --file <LOGFILE> --parser httpd --broker-list <BROKERLIST> \
-    --api-key <APIKEY> --topic webserver --rate 100
+   node dist/index.js --file <LOGFILE> --parser httpd --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') \
+    --api-key $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.api_key') --topic webserver --rate 100
    ```
    {: pre}
-   ```sh
-   node dist/index.js --file /Users/VMac/Downloads/access_log_Jul95 --parser httpd --broker-list "broker-3-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-   "broker-4-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-   "broker-2-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-   "broker-5-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-   "broker-0-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093",\
-   "broker-1-nhmyd97mb59jxxxx.kafka.svc06.us-south.eventstreams.cloud.ibm.com:9093" \
-   --api-key E7U3BRm8qNhAZwsahdhsisksk-12kk-zzzz --topic webserver --rate 100
-   ```
 
    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
    {:tip}
