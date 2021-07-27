@@ -6,7 +6,7 @@ lastupdated: "2021-07-27"
 lasttested: "2021-07-27"
 
 content-type: tutorial
-services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query
+services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect
 account-plan: paid
 completion-time: 3h
 ---
@@ -22,7 +22,7 @@ completion-time: 3h
 # Process big data logs with SQL
 {: #big-data-log-analytics}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-object-storage, EventStreams, AnalyticsEngine, sql-query"}
+{: toc-services="cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect"}
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->
