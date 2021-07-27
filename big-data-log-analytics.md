@@ -54,7 +54,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
 2. To persist the log events, they are stream landed into {{site.data.keyword.cos_short}} through {{site.data.keyword.sqlquery_short}}.
-3. The stream landing job executes in {{site.data.keyword.sqlquery_short}} by securely retrieving the service ID from the {{site.data.keyword.keymanagementserviceshort}} service.
+3. The storage bucket and the SQL query jobs are encrypted with {{site.data.keyword.keymanagementserviceshort}} service. Also, the stream landing job executes in {{site.data.keyword.sqlquery_short}} by securely retrieving the service ID from {{site.data.keyword.keymanagementserviceshort}}. 
 4. Auditor or support staff use {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_short}} to perform requests.
 5. Requests are executed against the data stored in {{site.data.keyword.cos_short}}.
 
@@ -103,7 +103,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will b
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    1. Select a **location**.
    2. Set the name to **log-analysis-kp**.
-   3. Select the **resource group** where to create the service instance and click **Create**.
+   3. Select the **resource group** where you plan to create all the services required for this tutorial and click **Create**.
 2. Under **Keys**, click the **Add** button to create a new root key.
    1. Set the key type to **Root key**.
    2. Set the name to **log-analysis-root-enckey**.
@@ -115,7 +115,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will b
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
    1. Select the **Standard** plan.
    2. Set **Service name** to **log-analysis-cos**.
-   3. Select a **Resource group** where you plan to create all the services required for this tutorial and click **Create**.
+   3. Select the same **Resource group** as the above service and click **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
    2. Expand the **Advanced options** then set Include HMAC Credential to **On** and click **Add**.
@@ -147,7 +147,7 @@ Finally create the bucket.
    1. Select a region.
    2. Select the **Standard** plan.
    3. Set the **Service name** to **log-analysis-sql**.
-   4. Select a **Resource group**.
+   4. Select the same **Resource group** as the above service.
    5. Select **Encrypt with user-managed key** and then select the {{site.data.keyword.keymanagementserviceshort}} service `log-analysis-kp` with the root key.
    6. Click **Create**.
 
@@ -158,7 +158,7 @@ Finally create the bucket.
    1. Select a region.
    2. Select the **Standard-Hourly** plan.
    3. Set the **Service name** to **log-analysis-iae**.
-   4. Select a **Resource group**.
+   4. Select the same **Resource group** as the above service.
 2. Set **Hardware configuration** to **Default**.
 3. Set **Number of compute nodes** to **1**.
 4. Select the **latest** version of **Spark and Hadoop** as the **Software package**.
