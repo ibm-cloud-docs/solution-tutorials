@@ -62,6 +62,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 {: #big-data-log-analytics-prereqs}
 
 This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
@@ -179,7 +180,7 @@ Finally create the bucket.
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
       - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
       - `cosEndpoint` is a private endpoint to access the {{site.data.keyword.cos_short}} bucket.
-6. Click **Create**. _The service provisioning may take upto 5 minutes. You can continue with the other steps of the tutorial_.
+6. Click **Create**. _The service provisioning may take up to 5 minutes. You can continue with the other steps of the tutorial_.
 7. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
 8. Under **Service credentials**, create **New credential**.
    * Provide `iae-for-log-analysis` as the credential name.
@@ -196,7 +197,7 @@ Finally create the bucket.
 
 In this section, you will learn how to run a fully-managed stream data ingestion from {{site.data.keyword.messagehub}} into Parquet on {{site.data.keyword.cos_full_notm}}. {{site.data.keyword.sqlquery_notm}} is the key component in the Stream Landing approach. It is the service that connects to {{site.data.keyword.messagehub}} and copies the data to {{site.data.keyword.cos_full_notm}}.
 
-Parquet is an open source file format for Hadoop. Parquet stores nested data structures in a flat columnar format. Compared to the traditional approach where data is stored in rows, Parquet is more efficient in terms of storage and performance.
+[Parquet](https://parquet.apache.org/documentation/latest/) is an open source file format for Hadoop. Parquet stores nested data structures in a flat columnar format. Compared to the traditional approach where data is stored in rows, Parquet is more efficient in terms of storage and performance.
 
 1. In your browser, navigate to the [resource list](https://{DomainName}/resources) and under **Services and software**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
 2. Select **Topics** from the navigation pane on the left.
@@ -213,7 +214,7 @@ Parquet is an open source file format for Hadoop. Parquet stores nested data str
    5. Click **Start streaming data**.
    ![Stream landing configuration](images/solution31/stream_landing_configuration.png)
 
-You now see the status `Queued` for your topic. It may take upto 5 minutes until the streaming job is fully dispatched and up and running. You will see the status switch to `Running` at that point. In the context menu, you find a new option called `View stream landing configuration`.
+You now see the status `Queued` for your topic. It may take up to 5 minutes until the streaming job is fully dispatched and up and running. You will see the status switch to `Running` at that point. In the context menu, you find a new option called `View stream landing configuration`.
 
 
 ### Using Kafka console tools with {{site.data.keyword.messagehub}}
@@ -233,12 +234,13 @@ The streaming job is currently idle and awaiting messages. In this section, you 
    ```
    {: codeblock}
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
-4. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command.
+4. On a terminal, use `ibmcloud login` to log in to your {{site.data.keyword.cloud_notm}} interactively. Select the region and resource group where the services was provisioned.
+5. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command. 
     ```sh
     ./kafka-console-producer.sh --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') --producer.config event-streams.config --topic webserver
     ```
     {: pre}
-5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
+6. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
@@ -469,7 +471,7 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    {: codeblock}
    For example, if the name of the bucket is `<your-initial>-log-analysis`, service name is `log-analysis-cos` and the path to the file is logs-stream-landing/:
    ```sh
-   df = spark.read.parquet('cos://<your-initial>-log-analysis.log-analysis-cos/logs-stream-landing/topic=webserver/jobid=<JOBID>/part-00000-xxxxx-<TIME>.snappy.parquet')
+   df = spark.read.parquet('cos://<your-initial>-log-analysis.log-analysis-cos/logs-stream-landing/topic=webserver/jobid=<JOBID>/)
    ```
    {: codeblock}
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
@@ -499,8 +501,8 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
    * log-analysis-sql
    * log-analysis-cos
    * log-analysis-iae
-   * log-analysis-kp
-2. Navigate to [Manage > Access (IAM) > Service IDs](https://{DomainName}/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
+2. Before deleting the `log-analysis-kp` service, delete the root key.
+3. Navigate to [Manage > Access (IAM) > Service IDs](https://{DomainName}/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
 
 ## Related content
 {: #big-data-log-analytics-8}
