@@ -274,7 +274,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    {:tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
-   ![](images/solution31/cos_object_view.png)
+   ![COS object view](images/solution31/cos_object_view.png)
    
    In the COS UI, switch to `object view` by clicking on the icon next to `Upload`, You should see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
    {:tip} 
@@ -510,13 +510,14 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 {: #big-data-log-analytics-removal}
 {: step}
 
-From the [Resource List](https://{DomainName}/resources?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
+1. From the [Resource List](https://{DomainName}/resources?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
-* log-analysis-es
-* log-analysis-sql
-* log-analysis-cos
-* log-analysis-iae
-* log-analysis-kp
+   * log-analysis-es
+   * log-analysis-sql
+   * log-analysis-cos
+   * log-analysis-iae
+   * log-analysis-kp
+2. Navigate to [Manage > Access (IAM) > Service IDs](https://{DomainName}/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
 
 ## Related content
 {: #big-data-log-analytics-8}
