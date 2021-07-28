@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-07-23"
-lasttested: "2021-03-08"
+lastupdated: "2021-07-28"
+lasttested: "2021-07-28"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -109,26 +109,26 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.6.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
-4. Under **Infrastructure** choose Classic or VPC
+4. Under **Infrastructure** choose Classic or VPC,
   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
-      - One subnet that can be used for this tutorial, take note of the subnet's zone and name
-      - Public gateway is attached to the subnet
+      - One subnet that can be used for this tutorial, take note of the subnet's zone and name.
+      - Public gateway is attached to the subnet.
       - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
-  - Select the desired VPC
-  - Select an existing **Cloud Object Storage** service or create one if required and then select
-5. Under **Location**
+  - Select the desired VPC.
+  - Select an existing **Cloud Object Storage** service or create one if required and then select.
+5. Under **Location**,
   - For Openshift on VPC infrastructure
-      - Select a **Resource group**
-      - Uncheck the inapplicable zones
+      - Select a **Resource group**.
+      - Uncheck the inapplicable zones.
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
-      - Select a **Resource group**
-      - Select a **Geography**
-      - Select **Single zone** as **Availability**
-      - Choose a **Datacenter**
+  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
+      - Select a **Resource group**.
+      - Select a **Geography**.
+      - Select **Single zone** as **Availability**.
+      - Choose a **Datacenter**.
 6. Under **Worker pool**,
-   - Select **4 vCPUs 16GB Memory** as the flavor
-   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
+   - Select **4 vCPUs 16GB Memory** as the flavor.
+   - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**).
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
@@ -198,41 +198,6 @@ In this section, you will clone a GitHub repo with a simple [NodeJS](https://nod
 
  Along with the starter code, the directory provides an `openshift.template.yaml` file with placeholders. Later in the tutorial, you will run a shell script to update the placeholders and then apply the generated `openshift.yaml` file to build and deploy the application to the {{site.data.keyword.openshiftshort}} cluster.
 
-### Push the code to a Private IBM Cloud Git repo
-{: #scalable-webapp-openshift-private-git-repo}
-
-In this step, you will create a private IBM Cloud Git repository and push the starter application code.
-
-   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
-   {: important}
-
-1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
-
-   The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
-   {:tip}
-2. Click on **New project** and provide `openshiftapp` as the project name.
-3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
-5. Once you push the code to the private repository, you should see the starter code in the project.
-
-### Create a Git deploy token
-{: #scalable-webapp-openshift-git-deploy-token}
-
-In this section, you will create a Git deploy token to allow **read-only** access to your repository.
-
-To generate a deploy token:
-1. On the left pane of the Git repo page, click **Settings** > **Repository**.
-1. Click on **Expand** next to **Deploy Tokens**.
-   1. Provide **foropenshift** as the **Name** then check **read_repository** checkbox and click **create deploy token**.
-   2. **Save** the generated **username** and **password** for future reference.
-2. On the left pane, click on **Project overview** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
-3. Define environment variables for the username, password and private Git repo URL to be used with the YAML file later in the tutorial
-   ```sh
-   export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
-   export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
-   export REPO_URL_WITHOUT_HTTPS=<PRIVATE_GIT_REPO_URL>
-   ```
-   {:pre}
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #scalable-webapp-openshift-create_openshift_app}
@@ -255,8 +220,81 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-project $MYPROJECT
    ```
    {:pre}
+   
+## Monitor the app
+{: #scalable-webapp-openshift-monitor_application}
+{: step}
 
-### Prepare the access to {{site.data.keyword.registryshort_notm}}
+In this section, you will learn to monitor the health and performance of your application.
+{{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
+
+1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection. If prompted, click **Login with OpenShift** and authorize access by allowing selected permissions.
+   ```sh
+    oc get routes -n openshift-monitoring
+   ```
+   {:pre}
+2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
+   ```sh
+    while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
+   ```
+   {:pre}
+
+3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
+4. Open the **Grafana** web UI URL on a browser.
+5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
+   - datasource: **Prometheus**
+   - namespace: **`<MYPROJECT>`**
+6. Check the CPU and memory usage.
+7. For logging, you can use the in-built `oc logs` command.
+
+  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
+  {:tip}
+
+## Scale the app
+{: #scalable-webapp-openshift-scaling_app}
+{: step}
+
+In this section, you will learn how to manually and automatically scale your application.
+
+### Manual scaling
+{: #scalable-webapp-openshift-25}
+
+1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment configuration or replication controller
+   ```sh
+   oc scale dc/$MYPROJECT --replicas=2
+   ```
+   {:pre}
+2. You can see a new pod being provisioned by running `oc get pods` command.
+3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
+
+### Autoscaling
+{: #scalable-webapp-openshift-24}
+
+You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword.openshiftshort}} should automatically increase or decrease the scale of a deployment configuration(dc) or replication controller(rc), based on metrics collected from the pods that belong to that `dc` or `rc`.
+
+1. Before you can setup autoscaling for your pods, you first need to set resource limits on the pods running in the cluster. Limits allows you to choose the minimum and maximum CPU and memory usage for a pod. You can set the limits and requests on a container using `oc set resources` command.
+   ```sh
+   oc set resources dc/$MYPROJECT --limits=cpu=250m,memory=512Mi --requests=cpu=100m,memory=256Mi
+   ```
+   {:pre}
+   To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
+2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 5%.
+   ```sh
+   oc autoscale dc/$MYPROJECT \
+    --min=1 \
+    --max=5 \
+    --cpu-percent=5
+   ```
+   {:pre}
+3. You can see new pods being provisioned by running `oc get pods --watch` command.
+4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
+5. Remove the auto scaler:
+   ```
+   oc delete hpa/$MYPROJECT
+   ```
+   {:pre}
+
+## (Optional) Prepare the access to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-12}
 
 In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
@@ -461,8 +499,44 @@ In this step, you will automate the build and deploy process. So that whenever y
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
 
+## (Optional) Push the code to a Private IBM Cloud Git repo
+{: #scalable-webapp-openshift-private-git-repo}
+
+In this step, you will create a private IBM Cloud Git repository and push the starter application code.
+
+   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
+   {: important}
+
+1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
+
+   The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
+   {:tip}
+2. Click on **New project** and provide `openshiftapp` as the project name.
+3. Set the visibility level to **Private** and click **Create project**
+4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
+5. Once you push the code to the private repository, you should see the starter code in the project.
+
+### Create a Git deploy token
+{: #scalable-webapp-openshift-git-deploy-token}
+
+In this section, you will create a Git deploy token to allow **read-only** access to your repository.
+
+To generate a deploy token:
+1. On the left pane of the Git repo page, click **Settings** > **Repository**.
+1. Click on **Expand** next to **Deploy Tokens**.
+   1. Provide **foropenshift** as the **Name** then check **read_repository** checkbox and click **create deploy token**.
+   2. **Save** the generated **username** and **password** for future reference.
+2. On the left pane, click on **Project overview** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
+3. Define environment variables for the username, password and private Git repo URL to be used with the YAML file later in the tutorial
+   ```sh
+   export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
+   export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
+   export REPO_URL_WITHOUT_HTTPS=<PRIVATE_GIT_REPO_URL>
+   ```
+   {:pre}
+
 <!--##istutorial#-->
-## Use your own custom domain
+## (Optional) Use your own custom domain
 {: #scalable-webapp-openshift-custom_domain}
 {: step}
 
@@ -492,79 +566,6 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help` command)
    {:tip}
 <!--#/istutorial#-->
-
-## Monitor the app
-{: #scalable-webapp-openshift-monitor_application}
-{: step}
-
-In this section, you will learn to monitor the health and performance of your application.
-{{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
-
-1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection. If prompted, click **Login with OpenShift** and authorize access by allowing selected permissions.
-   ```sh
-    oc get routes -n openshift-monitoring
-   ```
-   {:pre}
-2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
-   ```sh
-    while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
-   ```
-   {:pre}
-
-3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
-4. Open the **Grafana** web UI URL on a browser.
-5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
-   - datasource: **Prometheus**
-   - namespace: **`<MYPROJECT>`**
-6. Check the CPU and memory usage.
-7. For logging, you can use the in-built `oc logs` command.
-
-  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
-  {:tip}
-
-## Scale the app
-{: #scalable-webapp-openshift-scaling_app}
-{: step}
-
-In this section, you will learn how to manually and automatically scale your application.
-
-### Manual scaling
-{: #scalable-webapp-openshift-25}
-
-1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment configuration or replication controller
-   ```sh
-   oc scale dc/$MYPROJECT --replicas=2
-   ```
-   {:pre}
-2. You can see a new pod being provisioned by running `oc get pods` command.
-3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
-
-### Autoscaling
-{: #scalable-webapp-openshift-24}
-
-You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword.openshiftshort}} should automatically increase or decrease the scale of a deployment configuration(dc) or replication controller(rc), based on metrics collected from the pods that belong to that `dc` or `rc`.
-
-1. Before you can setup autoscaling for your pods, you first need to set resource limits on the pods running in the cluster. Limits allows you to choose the minimum and maximum CPU and memory usage for a pod. You can set the limits and requests on a container using `oc set resources` command.
-   ```sh
-   oc set resources dc/$MYPROJECT --limits=cpu=250m,memory=512Mi --requests=cpu=100m,memory=256Mi
-   ```
-   {:pre}
-   To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
-2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 5%.
-   ```sh
-   oc autoscale dc/$MYPROJECT \
-    --min=1 \
-    --max=5 \
-    --cpu-percent=5
-   ```
-   {:pre}
-3. You can see new pods being provisioned by running `oc get pods --watch` command.
-4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
-5. Remove the auto scaler:
-   ```
-   oc delete hpa/$MYPROJECT
-   ```
-   {:pre}
 
 ## Remove resources
 {: #scalable-webapp-openshift-cleanup}
