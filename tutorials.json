@@ -103,7 +103,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-07-02"
+          "lastUpdated": "2021-07-23"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -366,7 +366,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-07-02"
+          "lastUpdated": "2021-07-20"
         }
       ]
     },
@@ -375,7 +375,7 @@
       "anchor": "ml",
       "solutions": [
         {
-          "name": "Big data logs with streaming analytics and SQL",
+          "name": "Process big data logs with SQL",
           "url": "big-data-log-analytics.html",
           "description": "Collect, store and analyze log records to support regulatory requirements and aid information discovery. Using publish-subscribe messaging, scale the solution to millions of records and then perform analysis on persisted logs with familiar SQL.",
           "imgSrc": "images/solution31/Architecture.png",
@@ -383,10 +383,10 @@
             "Cloud Object Storage",
             "Event Streams",
             "SQL Query",
-            "Streaming Analytics",
+            "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2020-12-28"
+          "lastUpdated": "2021-07-27"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -411,7 +411,7 @@
             "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2021-03-08"
+          "lastUpdated": "2021-07-19"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -469,7 +469,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-01-08"
+          "lastUpdated": "2021-07-13"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -483,7 +483,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2020-12-16"
+          "lastUpdated": "2021-07-13"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -577,7 +577,7 @@
             "PHP",
             "Node.js"
           ],
-          "lastUpdated": "2021-07-13"
+          "lastUpdated": "2021-07-23"
         }
       ]
     },
@@ -684,7 +684,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2021-07-19"
         }
       ]
     },
