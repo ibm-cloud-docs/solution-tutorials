@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-03-10"
-lasttested: "2021-03-10"
+lastupdated: "2021-07-29"
+lasttested: "2021-07-28"
 
 content-type: tutorial
 services: openshift, containers
@@ -55,6 +55,20 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
 5. The user securely(HTTPS) accesses the application via browser.
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
+
+## Before you begin
+{: #openshift-service-mesh-prereqs}
+
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+* `oc` to interact with OpenShift.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the OpenShift CLI matches your cluster version. If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+{: note}
+
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
@@ -168,7 +182,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
-6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance**.
+6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance** or **Create ServiceMeshControlPlane**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -178,7 +192,7 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
-3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** and then select **YAML View**
+3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** or **Create ServiceMeshMemberRoll** and then select **YAML View**
 4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits, the YAML should look something like this:
    ```
    apiVersion: maistra.io/v1
@@ -305,7 +319,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    2. Select Project: **istio-system** from the top bar
    3. Click the URL(Location) next to **grafana**
    4. Log into OpenShift and allow the requested permissions to see the Grafana dashboard.
-2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **Istio** and **Istio Service Dashboard**.
+2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **istio** and **Istio Service Dashboard**.
 1. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
 2. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
 
@@ -326,7 +340,7 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
    2. select **istio-system** as your project from the top bar
    3. Click the URL(Location) next to **kiali** and if prompted, click **Login with OpenShift**
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
-3. To see the request rates, click **Display** and choose **Requests Per second**.
+3. To see the request rates, click **Display** and choose **Requests Per Second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section to generate load.
 5. Now, check the Kiali Graph to see the requests per second.
 
@@ -463,6 +477,8 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 ## Remove resources
 {: #openshift-service-mesh-cleanup}
 {: step}
+
+You can either gradually remove individual resources or skip those steps and directly delete the entire cluster.
 
 ### Delete the application project
 {: #openshift-service-mesh-19}
