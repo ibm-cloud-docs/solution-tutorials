@@ -132,7 +132,7 @@ To avoid installing the command line tools, the recommended approach is to use t
 {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and many plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
 1. When the cluster is ready, on the cluster overview page click on **{{site.data.keyword.openshiftshort}} web console** to open the console. **_Make sure you don't close this window/tab_**
-2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
+2. On the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) to start a new session. Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**.
 1. Check the version of the OpenShift CLI:
