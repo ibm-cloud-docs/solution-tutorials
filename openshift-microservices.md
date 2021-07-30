@@ -1004,6 +1004,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 5. Drag the table to improve the presentation.  Verify the screen resembles the following:
     ![Another widget](images/solution55-openshift-microservices/screen-img-15.png)
 6. Save the screen. Select **Save Screen**.
+
    If you do not save the screen, you lose all your widgets.
    {:important}
 
