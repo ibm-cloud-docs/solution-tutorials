@@ -64,11 +64,12 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
 * `oc` to interact with OpenShift.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the OpenShift CLI matches your cluster version. If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
-
+<!--#/istutorial#-->
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
