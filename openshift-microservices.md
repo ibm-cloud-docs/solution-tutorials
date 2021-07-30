@@ -86,7 +86,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-      - [Opening required ports in the default security group](https://{DomainName}/docs/openshift?topic=openshift-vpc-network-policy#security_groups)
   - Select an existing **Cloud Object Storage** service or create one if required
 5. Under **Location**
   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
