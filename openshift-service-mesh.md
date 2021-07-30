@@ -87,7 +87,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-      - [Opening required ports in the default security group](https://{DomainName}/docs/openshift?topic=openshift-vpc-network-policy#security_groups)
   - Select the desired VPC
   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
