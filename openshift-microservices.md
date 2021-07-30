@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-29"
+lastupdated: "2021-07-30"
 lasttested: "2021-07-28"
 
 content-type: tutorial
@@ -256,7 +256,7 @@ Create a script to simulate load.
    ```
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info; done
+   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info >/dev/null; done
    ```
    {:pre}
 
@@ -785,7 +785,7 @@ In the {{site.data.keyword.la_short}} web UI notice the log entries are displaye
 ### Simulate Load on the Application
 {: #openshift-microservices-46}
 
-Create a script to simulate load.
+With the application now connected to a database for its data, to simulate load we will generate requests to the database using a patient id that we added to the database `ef5335dd-db17-491e-8150-20ce24712b06`.
 
 1. Make sure you're connected to the project where you deployed your app.
    ```sh
@@ -809,7 +809,7 @@ Create a script to simulate load.
    ```
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06; done
+   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06 >/dev/null; done
    ```
    {:pre}
 
@@ -1070,17 +1070,16 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the cluster and the node capacity
 {: #openshift-microservices-44}
 
-5. Select **Dasboards**, check out the two dashboard templates:
+1. Select **Dasboards**, check out the two dashboard templates:
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
-<!-- 
-The following dashboard is no longer available, there is a new "Cluster Capacity Planning" but it is listed a BETA and in my experience using it, it had zero data and was not useful.
-5. Select the **Kubernetes > Kubernetes Cluster and Node Capacity** template:
+
+2. Select the **Kubernetes > Kubernetes Cluster and Node Capacity** template:
    - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
    - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
    - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster
    - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
-   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster -->
+   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster 
 
 ### Explore the Network
 {: #openshift-microservices-45}
