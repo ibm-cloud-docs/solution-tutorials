@@ -576,9 +576,9 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    {:pre}
 
    ```sh	
-   ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json	
-   ```	
-   {:pre}	
+   ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
+   ```
+   {:pre}
 
    Output looks something like this:
    ```
