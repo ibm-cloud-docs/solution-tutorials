@@ -68,6 +68,20 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 
 There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts) that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend). If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
 
+<!--##istutorial#-->
+## Before you begin
+{: #openshift-microservices-prereqs}
+
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+* `oc` to interact with OpenShift.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: note}
+<!--#/istutorial#-->
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
@@ -575,7 +589,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-   ```sh	
+   ```sh
    ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
    ```
    {:pre}
@@ -1081,7 +1095,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
    - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster
    - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
-   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster 
+   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster
 
 ### Explore the Network
 {: #openshift-microservices-45}
