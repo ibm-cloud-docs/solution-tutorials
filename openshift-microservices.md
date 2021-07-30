@@ -1063,7 +1063,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    ![Hosts and Containers](images/solution55-openshift-microservices/sysdig-select-app.png)
 3. Under **Explore**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Troubleshooting Views > Hosts & Containers) from the Top dropdown
    ![Explore Nodes](images/solution55-openshift-microservices/sysdig-explore-node.png)
-4. Under **Dasboards** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
+4. Under **Dashboards** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
 1. From the **Explore** tab, select **Deployments**.
 2. Search for `example-health` namespace.
 3. Select the `patient-health-frontend` to select all pods for the frontend.
@@ -1072,7 +1072,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the cluster and the node capacity
 {: #openshift-microservices-44}
 
-1. Select **Dasboards**, check out the two dashboard templates:
+1. Select **Dashboards**, check out the two dashboard templates:
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
 
@@ -1086,7 +1086,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the Network
 {: #openshift-microservices-45}
 
-1. Select **Dasboards** and the template **Host Infrastructure > Network Traffic & Bandwidth**.
+1. Select **Dashboards** and the template **Host Infrastructure > Network Traffic & Bandwidth**.
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
