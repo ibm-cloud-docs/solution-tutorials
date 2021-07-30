@@ -609,36 +609,36 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
                        Message      Provisioning is complete
                        Updated At   2020-05-06 22:40:03.04469305 +0000 UTC
 
-   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json	
-   [	
-       {	
-           "guid": "01234560-902d-4078-9a7f-20446a639aeb",	
-           "id": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",	
-           "url": "/v2/resource_keys/01234560-902d-4078-9a7f-20446a639aeb",	
-           "created_at": "2020-05-06T23:03:43.484872077Z",	
-           "updated_at": "2020-05-06T23:03:43.484872077Z",	
-           "deleted_at": null,	
-           "name": "cloudant-binding",	
-           "account_id": "0123456789507a53135fe6793c37cc74",	
-           "resource_group_id": "01234567836d49029966ab5be7fe50b5",	
-           "source_crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",	
-           "state": "active",	
-           "credentials": {	
-               "apikey": "SECRET",	
-               "host": "SECRET",	
-               "iam_apikey_description": "Auto-generated for key SECRET",	
-               "iam_apikey_name": "cloudant-binding",	
-               "iam_role_crn": "SECRET",	
-               "iam_serviceid_crn": "SECRET",	
-               "password": "SECRET",	
-               "port": 443,	
-               "url": "https://01234SECRET",	
-               "username": "01234567-SECRET"	
-           },	
-           "iam_compatible": true,	
-           "resource_instance_url": "/v2/resource_instances/SECRET",	
-           "crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET"	
-       }	
+   youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name $YOURINITIALS-cloudant-service --output json
+   [
+       {
+           "guid": "01234560-902d-4078-9a7f-20446a639aeb",
+           "id": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",
+           "url": "/v2/resource_keys/01234560-902d-4078-9a7f-20446a639aeb",
+           "created_at": "2020-05-06T23:03:43.484872077Z",
+           "updated_at": "2020-05-06T23:03:43.484872077Z",
+           "deleted_at": null,
+           "name": "cloudant-binding",
+           "account_id": "0123456789507a53135fe6793c37cc74",
+           "resource_group_id": "01234567836d49029966ab5be7fe50b5",
+           "source_crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",
+           "state": "active",
+           "credentials": {
+               "apikey": "SECRET",
+               "host": "SECRET",
+               "iam_apikey_description": "Auto-generated for key SECRET",
+               "iam_apikey_name": "cloudant-binding",
+               "iam_role_crn": "SECRET",
+               "iam_serviceid_crn": "SECRET",
+               "password": "SECRET",
+               "port": 443,
+               "url": "https://01234SECRET",
+               "username": "01234567-SECRET"
+           },
+           "iam_compatible": true,
+           "resource_instance_url": "/v2/resource_instances/SECRET",
+           "crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET"
+       }
    ]
    ```
 
