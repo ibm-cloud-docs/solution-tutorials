@@ -139,6 +139,9 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc version
    ```
    {:pre}
+   
+   > The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+
 2. Validate your cluster is shown when listing all clusters:
    ```sh
    ibmcloud oc clusters
