@@ -56,6 +56,7 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 5. The user securely(HTTPS) accesses the application via browser.
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #openshift-service-mesh-prereqs}
 
@@ -64,7 +65,6 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
 * `oc` to interact with OpenShift.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the OpenShift CLI matches your cluster version. If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
