@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-07-28"
-lasttested: "2021-07-28"
+lastupdated: "2021-08-02"
+lasttested: "2021-08-02"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -324,22 +324,24 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    ```
    {:pre}
 
-## (Optional) Prepare the access to {{site.data.keyword.registryshort_notm}}
+## (Optional) Build and push the container image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-12}
 
-In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
+In this section, you will learn how to use a remote private {{site.data.keyword.registryshort_notm}} to store the created container images.
+
+{{site.data.keyword.registrylong_notm}} provides a multi-tenant, highly available, scalable, and encrypted private image registry that is hosted and managed by {{site.data.keyword.IBM_notm}}. You can use {{site.data.keyword.registrylong_notm}} by setting up your own image namespace and pushing container images to your namespace.
 
 1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
    ```sh
    ibmcloud cr region
    ```
    {:pre}
-1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
+2. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
    export MYREGISTRY=us.icr.io
    ```
    {:pre}
-1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+3. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
@@ -349,32 +351,48 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
    ```
    {:pre}
-1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
+4. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
    ```sh
    export MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {:pre}
-1. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
+5. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
 
    To create an API key, refer to this [link](https://{DomainName}/docs/Registry?topic=Registry-registry_access#registry_access_user_apikey_create).
    {:tip}
-1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
+6. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
+   ```
+   {:pre}
+
+### Clone a starter application
+{: #scalable-webapp-openshift-clone-web-app-code}
+
+In this section, you will clone a GitHub repo with `yaml` template files and a shell script to generate `yaml` file with updated environment variables. The generated file is used to build a container image, push the image to the private container registry and deploy a new app using the private container image.
+
+1. On a terminal, run the below command to clone the GitHub repository to your machine:
+   ```sh
+   git clone https://github.com/IBM-Cloud/openshift-node-app
+   ```
+   {: pre}
+2. Change to the application directory,
+   ```sh
+   cd openshift-node-app
    ```
    {:pre}
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-13}
 
-In this step, you will update the BuildConfig section of `openshift.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+In this step, you will update the BuildConfig section of `openshift_registry.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
-1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift.yaml** file.
+1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_registry.yaml** file.
    ```sh
-   ./generate_yaml.sh
+   ./generate_yaml.sh use_private_registry
    ```
    {:pre}
-2. Optionally, check the generated `openshift.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
+2. Optionally, check the generated `openshift_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
 3. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
@@ -426,7 +444,7 @@ In this step, you will update the BuildConfig section of `openshift.yaml` file t
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
 {: step}
 
-In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
+In this section, you will deploy the application to the cluster using the generated **openshift_registry.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
 ### Create the app using the updated yaml
 {: #scalable-webapp-openshift-15}
@@ -444,7 +462,7 @@ In this section, you will deploy the application to the cluster using the genera
    {:pre}
 3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
-   oc create -f openshift.yaml
+   oc create -f openshift_registry.yaml
    ```
    {:pre}
 
@@ -535,7 +553,7 @@ To generate a deploy token:
    ```sh
    export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
    export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
-   export REPO_URL_WITHOUT_HTTPS=<PRIVATE_GIT_REPO_URL>
+   export REPO_URL=<PRIVATE_GIT_REPO_URL>
    ```
    {:pre}
 
