@@ -392,8 +392,9 @@ In this step, you will update the BuildConfig section of `openshift_registry.yam
    ./generate_yaml.sh use_private_registry
    ```
    {:pre}
-2. Optionally, check the generated `openshift_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
-3. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
+2. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
+3. Optionally, check the generated `openshift_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
+4. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -417,7 +418,7 @@ In this step, you will update the BuildConfig section of `openshift_registry.yam
    {:codeblock}
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
 
-4. **Optional** Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
+5. **Optional** Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
    ```yaml
    spec:
      nodeSelector: null
@@ -431,23 +432,20 @@ In this step, you will update the BuildConfig section of `openshift_registry.yam
    {:codeblock}
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
 
-5. **Optional** Search for `containers`, check the `image` and `name`
+6. **Optional** Search for `containers`, check the `image` and `name`
    ```yaml
    containers:
    - image: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest
      name: $MYPROJECT
    ```
    {:codeblock}
-6. If updated, **save** the YAML file.
+7. If updated, **save** the YAML file.
 
-## Deploy the application to cluster
+### Deploy the application using the private registry
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
 {: step}
 
-In this section, you will deploy the application to the cluster using the generated **openshift_registry.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
-
-### Create the app using the updated yaml
-{: #scalable-webapp-openshift-15}
+In this section, you will deploy the application to the cluster using the generated **openshift_registry.yaml** file. Once deployed, you will access the application by creating a route. 
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project:
    ```sh
@@ -462,16 +460,37 @@ In this section, you will deploy the application to the cluster using the genera
    {:pre}
 3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
-   oc create -f openshift_registry.yaml
+   oc apply -f openshift_private_registry.yaml
    ```
    {:pre}
-
 4. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
    ```
    {:pre}
-5. Wait till the build is successful and the image is pushed. You can check the status of deployment and service using
+
+   In the logs, you should see the below message if the container image is pushed to the private container registry 
+   ```
+   Pushing image us.icr.io/mods15/vmac-openshift-app-registry:latest ...
+   Getting image source signatures
+   Copying blob sha256:9d038e1c7afbe92c29313557c02110e8fb796818ebb78441c68929381103a94b
+   Copying blob sha256:61c671f49591a059c9b6728a9f84c16f5b00126470112ee9c9f9e01dbbfcc3ea
+   Copying blob sha256:e2787650308235c87eff7d2b88c3ab217e84b74a3fa9696103bd46bb99068c7a
+   Copying blob sha256:dcef409117430ed9906a59ad0a3ea0752061fbf8a9e544f4edd77667a25d85ae
+   Copying blob sha256:a1f889dd610c6510c7fc091a51c247463f3cc9a7c67bdc397c9632168808f7d2
+   Copying blob sha256:bd278801acd18ada10f43b732113a6fffc163011862ea6cde729f8dc59e64222
+   Copying blob sha256:2d6c03ed5d15be86cdef7d9c0c9fea40a3f6b89662bca59680d037074f52bb38
+   Copying blob sha256:fa2ef7f80d6fc9543f6eb472846931ed1cec2b5f776d1b67bcb1b9942e1a947e
+   Copying blob sha256:ff5a4e4d3690ccc931900b63714d326cc53a58e644f8d0a4f06bf8c62f11c5c7
+   Copying config sha256:01aa1ebb7be74529867106100c4e699ca2ae87f8242460771527f772e6a3d174
+   Writing manifest to image destination
+   Storing signatures
+   Successfully pushed us.icr.io/mods15/vmac-openshift-app-registry@sha256:6847b889397704b9fb8c3122c84b505c3dc5f99a0669fb69f534d3504eec385d
+   Push successful
+   ```
+   {:codeblock}
+
+5. You can check the status of deployment and service using
    ```sh
    oc status
    ```
@@ -479,6 +498,72 @@ In this section, you will deploy the application to the cluster using the genera
 
    If the deployment is taking more time, manually import the latest image stream to ensure the deployment takes place as soon as possible with the command `oc import-image $MYPROJECT` .Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
+
+6. Before exposing the new service to create a route, delete the old route with `oc get routes` and `oc delete route <OLD route>` commands as both the services are exposed on the same port. 
+
+## (Optional) Push the code to a private IBM Cloud Git repository
+{: #scalable-webapp-openshift-private-git-repo}
+
+In this step, you will create a private IBM Cloud Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
+
+
+   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
+   {: important}
+
+1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
+
+   The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
+   {:tip}
+2. Click on **New project** and provide `openshiftapp` as the project name.
+3. Set the visibility level to **Private** and click **Create project**
+4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
+5. Once you push the code to the private repository, you should see the starter code in the project.
+
+### Create a Git deploy token
+{: #scalable-webapp-openshift-git-deploy-token}
+
+In this section, you will create a Git deploy token to allow **read-only** access to your repository.
+
+To generate a deploy token:
+1. On the left pane of the Git repo page, click **Settings** > **Repository**.
+2. Click on **Expand** next to **Deploy Tokens**.
+   1. Provide **foropenshift** as the **Name** then check **read_repository** checkbox and click **create deploy token**.
+   2. **Save** the generated **username** and **password** for future reference.
+3. On the left pane, click on **Project overview** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
+4. Define environment variables for the username, password and private Git repo URL to be used with the YAML file later in the tutorial
+   ```sh
+   export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
+   export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
+   export REPO_URL=<PRIVATE_GIT_REPO_URL>
+   ```
+   {:pre}
+
+### Deploy a new application using the private registry and the code from private repository
+{: #scalable-webapp-openshift-private-reg-repo}
+
+1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_registry.yaml** file.
+   ```sh
+   ./generate_yaml.sh use_private_repository
+   ```
+   {:pre}
+2. Additional to the private container registry placeholders, the script will also replace the `REPO_URL` under `BuildConfig` spec with the the environment variables you set in the above step,
+   ```yaml
+    source:
+      git:
+        uri: $REPO_URL
+      type: Git
+   ``` 
+3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+   ```sh
+   oc apply -f openshift_private_repository.yaml
+   ```
+   {:pre}
+4. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
+5. You can check the status of deployment and service using
+   ```sh
+   oc status
+   ```
+   {:pre}
 
 ### Update the app and redeploy
 {: #scalable-webapp-openshift-18}
@@ -505,7 +590,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
-   oc tag $MYREGISTRY/$MYNAMESPACE/${MYPROJECT}:latest ${MYPROJECT}:latest --scheduled=true
+   oc tag $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest $MYPROJECT:latest --scheduled=true
    ```
    {:pre}
 6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
@@ -521,41 +606,6 @@ In this step, you will automate the build and deploy process. So that whenever y
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
 
-## (Optional) Push the code to a Private IBM Cloud Git repo
-{: #scalable-webapp-openshift-private-git-repo}
-
-In this step, you will create a private IBM Cloud Git repository and push the starter application code.
-
-   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
-   {: important}
-
-1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
-
-   The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
-   {:tip}
-2. Click on **New project** and provide `openshiftapp` as the project name.
-3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
-5. Once you push the code to the private repository, you should see the starter code in the project.
-
-### Create a Git deploy token
-{: #scalable-webapp-openshift-git-deploy-token}
-
-In this section, you will create a Git deploy token to allow **read-only** access to your repository.
-
-To generate a deploy token:
-1. On the left pane of the Git repo page, click **Settings** > **Repository**.
-1. Click on **Expand** next to **Deploy Tokens**.
-   1. Provide **foropenshift** as the **Name** then check **read_repository** checkbox and click **create deploy token**.
-   2. **Save** the generated **username** and **password** for future reference.
-2. On the left pane, click on **Project overview** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
-3. Define environment variables for the username, password and private Git repo URL to be used with the YAML file later in the tutorial
-   ```sh
-   export GIT_TOKEN_USERNAME=<PRIVATE_GIT_DEPLOY_TOKEN_USERNAME>
-   export GIT_TOKEN_PASSWORD=<PRIVATE_GIT_DEPLOY_TOKEN_PASSWORD>
-   export REPO_URL=<PRIVATE_GIT_REPO_URL>
-   ```
-   {:pre}
 
 <!--##istutorial#-->
 ## (Optional) Use your own custom domain
