@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-02"
-lasttested: "2021-08-02"
+lastupdated: "2021-08-03"
+lasttested: "2021-08-03"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -231,7 +231,7 @@ To access the app, you need to create a route. A route announces your service to
 
 1. Create a route by running the below command in a terminal
    ```sh
-   oc expose service/$MYPROJECT --port=3000
+   oc expose service/$MYPROJECT
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
@@ -385,14 +385,14 @@ In this section, you will clone a GitHub repo with `yaml` template files and a s
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-13}
 
-In this step, you will update the BuildConfig section of `openshift_registry.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+In this step, you will update the BuildConfig section of `openshift_private_registry.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
-1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_registry.yaml** file.
+1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_private_registry.yaml** file.
    ```sh
    ./generate_yaml.sh use_private_registry
    ```
    {:pre}
-2. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
+2. Run the export command from the output to set the existing `MYPROJECT` environment variable with the new project name.
 3. Optionally, check the generated `openshift_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
 4. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
@@ -445,7 +445,7 @@ In this step, you will update the BuildConfig section of `openshift_registry.yam
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
 {: step}
 
-In this section, you will deploy the application to the cluster using the generated **openshift_registry.yaml** file. Once deployed, you will access the application by creating a route. 
+In this section, you will deploy the application to the cluster using the generated **openshift_private_registry.yaml** file. Once deployed, you will access the application by creating a route. 
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project:
    ```sh
@@ -496,10 +496,20 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-   If the deployment is taking more time, manually import the latest image stream to ensure the deployment takes place as soon as possible with the command `oc import-image $MYPROJECT` .Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+6. Manually import the latest image stream to ensure the deployment takes place as soon as possible with the command 
+   ```sh
+   oc import-image $MYPROJECT
+   ```
+   {:pre}
+   
+   You can also use the command if the deployment is taking more time, Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
 
-6. Before exposing the new service to create a route, delete the old route with `oc get routes` and `oc delete route <OLD route>` commands as both the services are exposed on the same port. 
+7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
+   ```sh
+   oc expose service/$MYPROJECT
+   ```
+   {:pre}
 
 ## (Optional) Push the code to a private IBM Cloud Git repository
 {: #scalable-webapp-openshift-private-git-repo}
@@ -514,7 +524,7 @@ In this step, you will create a private IBM Cloud Git repository and push the st
 
    The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
    {:tip}
-2. Click on **New project** and provide `openshiftapp` as the project name.
+2. Click on **New project**, click on **Create blank project**, and then provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
 4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
 5. Once you push the code to the private repository, you should see the starter code in the project.
@@ -541,7 +551,7 @@ To generate a deploy token:
 ### Deploy a new application using the private registry and the code from private repository
 {: #scalable-webapp-openshift-private-reg-repo}
 
-1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_registry.yaml** file.
+1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_private_repository.yaml** file.
    ```sh
    ./generate_yaml.sh use_private_repository
    ```
@@ -552,19 +562,30 @@ To generate a deploy token:
       git:
         uri: $REPO_URL
       type: Git
-   ``` 
+   ```
+   {:codeblock}
 3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc apply -f openshift_private_repository.yaml
    ```
    {:pre}
 4. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
-5. You can check the status of deployment and service using
+5. You can check the status of buildconfig, deployment and service using
    ```sh
+   oc logs -f bc/$MYPROJECT
    oc status
    ```
    {:pre}
-
+6. Manually import the latest image stream to ensure the deployment takes place as soon as possible with the command 
+   ```sh
+   oc import-image $MYPROJECT
+   ```
+   {:pre}
+7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get routes` command
+   ```sh
+   oc expose service/$MYPROJECT
+   ```
+   {:pre}   
 ### Update the app and redeploy
 {: #scalable-webapp-openshift-18}
 In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
