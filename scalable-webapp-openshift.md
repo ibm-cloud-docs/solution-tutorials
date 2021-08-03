@@ -32,10 +32,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster from a remote GitHub repository and then automate the build and deploy process. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster from a remote Git repository, expose the app on an {{site.data.keyword.openshiftshort}} route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to your application.
 {:shortdesc}
 
-With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.6/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.7/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
@@ -53,9 +53,9 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
   ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 </p>
 
-1. The developer pushes web application code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
+1. The developer deploys a web application using the code from a remote Git repository. Optionally, the dev can also push the code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
 2. A Docker container image is build from the code.
-3. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
+3. The image can pushed be pushed to a local container registry that comes with the cluster or to a namespace in {{site.data.keyword.registrylong_notm}}.
 4. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
 5. Users access the application.
 
@@ -66,15 +66,15 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
+   * (optional) {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 * Docker engine,
 * `oc` to interact with {{site.data.keyword.openshiftshort}},
 * `git` to clone source code repository,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
+* (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.6.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.7.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
 In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
@@ -138,7 +138,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Configure CLI
 {: #scalable-webapp-openshift-4}
 
-In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
 1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your terminal.
@@ -155,7 +155,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 {: #scalable-webapp-openshift-access-cluster}
 {: step}
 
-In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. Check the version of the {{site.data.keyword.openshiftshort}} CLI:
    ```sh
@@ -234,12 +234,12 @@ To access the app, you need to create a route. A route announces your service to
    oc expose service/$MYPROJECT
    ```
    {:pre}
-1. You can access the app through IBM provided domain. Run the below command for the URL
+2. You can access the app through IBM provided domain. Run the below command for the URL
    ```sh
-   oc get routes
+   oc get route/$MYPROJECT
    ```
    {:pre}
-1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
+3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
 
 ### Secure the default IBM provided domain route
 {: #scalable-webapp-openshift-secure_default_route}
@@ -249,7 +249,7 @@ To access the app, you need to create a route. A route announces your service to
    oc create route edge $MYPROJECT-https --service=$MYPROJECT --port=3000
    ```
    {:pre}
-1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *$MYPROJECT-https* in a browser.
+2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *$MYPROJECT-https* in a browser.
    
 ## Monitor the app
 {: #scalable-webapp-openshift-monitor_application}
@@ -385,15 +385,15 @@ In this section, you will clone a GitHub repo with `yaml` template files and a s
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-13}
 
-In this step, you will update the BuildConfig section of `openshift_private_registry.yaml` file to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+In this step, you will update the sections of `openshift.template.yaml` file to generate a new `yaml` file pointing to {{site.data.keyword.registryshort_notm}} namespace and push the generated container image to {{site.data.keyword.registryshort_notm}}.
 
 1. Run the below bash script to update the placeholders in the `openshift.template.yaml` file and to generate **openshift_private_registry.yaml** file.
    ```sh
    ./generate_yaml.sh use_private_registry
    ```
    {:pre}
-2. Run the export command from the output to set the existing `MYPROJECT` environment variable with the new project name.
-3. Optionally, check the generated `openshift_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
+2. Run the export command from the output to set the existing `MYPROJECT` environment variable with the new application name. Run `echo $MYPROJECT` to see the new application name.
+3. Optionally, check the generated `openshift_private_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
 4. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
@@ -441,7 +441,7 @@ In this step, you will update the BuildConfig section of `openshift_private_regi
    {:codeblock}
 7. If updated, **save** the YAML file.
 
-### Deploy the application using the private registry
+### Deploy the application using the {{site.data.keyword.registrylong_notm}}
 {: #scalable-webapp-openshift-deploy-app-to-cluster}
 {: step}
 
@@ -502,7 +502,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
    
-   You can also use the command if the deployment is taking more time, Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+   You can also use the command if the deployment is taking more time, Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
    {:tip}
 
 7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
@@ -511,19 +511,21 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-## (Optional) Push the code to a private IBM Cloud Git repository
+You should see the same application exposed on a different route and deployed using the container image stored in a private container registry.
+
+## (Optional) Push the code to a private {{site.data.keyword.cloud_notm}} Git repository
 {: #scalable-webapp-openshift-private-git-repo}
 
-In this step, you will create a private IBM Cloud Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
-
+In this step, you will create a private {{site.data.keyword.cloud_notm}} Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
 
    You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
    {: important}
 
-1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
+1. On a browser, open [{{site.data.keyword.cloud_notm}} Git](https://us-south.git.cloud.ibm.com)
 
    The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
    {:tip}
+
 2. Click on **New project**, click on **Create blank project**, and then provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
 4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
@@ -581,14 +583,17 @@ To generate a deploy token:
    oc import-image $MYPROJECT
    ```
    {:pre}
-7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get routes` command
+7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command
    ```sh
    oc expose service/$MYPROJECT
    ```
    {:pre}   
+
+A new application is deployed using the code from the private Git repo and the container image from the private registry namespace.
+
 ### Update the app and redeploy
 {: #scalable-webapp-openshift-18}
-In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
+In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
 
 1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the {{site.data.keyword.openshiftshort}} Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
    ```sh
@@ -611,7 +616,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
-   oc tag $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest $MYPROJECT:latest --scheduled=true
+   oc tag $MYREGISTRY/$MYNAMESPACE/${MYPROJECT}:latest ${MYPROJECT}:latest --scheduled=true
    ```
    {:pre}
 6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
@@ -624,7 +629,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    {:pre}
 8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
-   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.6/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
 
 
@@ -664,9 +669,9 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 {: #scalable-webapp-openshift-cleanup}
 {: step}
 
-* Delete all application resource objects:
+* Delete all resource objects specific to an application:
    ```sh
-   oc delete all --selector app=$MYPROJECT
+   oc delete all --selector app=<APPLICATION_NAME>
    ```
    {:pre}
 * Delete the project:
@@ -682,5 +687,5 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 {: #scalable-webapp-openshift-0}
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.6/nodes/pods/nodes-pods-autoscaling.html)
-* [Secured routes](https://docs.openshift.com/container-platform/4.6/networking/routes/secured-routes.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-autoscaling.html)
+* [Secured routes](https://docs.openshift.com/container-platform/4.7/networking/routes/secured-routes.html)
