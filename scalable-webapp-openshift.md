@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-03"
-lasttested: "2021-08-03"
+lastupdated: "2021-08-05"
+lasttested: "2021-08-05"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -203,7 +203,7 @@ With the `oc new-app` command you can create applications from source code in a 
 
 1. Create an application using the `docker` build strategy to build a container image from a Dockerfile in the repo.
    ```sh
-   oc new-app https://github.com/IBM-Cloud/openshift-node-app --name=$MYPROJECT --strategy=docker
+   oc new-app https://github.com/IBM-Cloud/openshift-node-app --name=$MYPROJECT --strategy=docker --as-deployment-config
    ```
    {pre}
 
