@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-05"
-lasttested: "2021-08-05"
+lastupdated: "2021-08-06"
+lasttested: "2021-08-06"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -110,18 +110,17 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC,
-  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name.
       - Public gateway is attached to the subnet.
-      - [Opening required ports in the default security group](https://{DomainName}/docs/containers?topic=containers-vpc-network-policy#security_groups)
   - Select the desired VPC.
   - Select an existing **Cloud Object Storage** service or create one if required and then select.
 5. Under **Location**,
-  - For Openshift on VPC infrastructure
+  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Select a **Resource group**.
       - Uncheck the inapplicable zones.
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
+  - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
       - Select a **Resource group**.
       - Select a **Geography**.
       - Select **Single zone** as **Availability**.
@@ -141,7 +140,8 @@ Take a note of the resource group selected above.  This same resource group will
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
-1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your terminal.
+2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
+3. **Copy** the text under Log in with this token.
 1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
@@ -263,7 +263,7 @@ In this section, you will learn to monitor the health and performance of your ap
     oc get routes -n openshift-monitoring
    ```
    {:pre}
-2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
+2. Run the following script by replacing the placeholder `<APPLICATION_ROUTE_URL>` with the route URL. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
    ```sh
     while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
    ```
@@ -275,7 +275,7 @@ In this section, you will learn to monitor the health and performance of your ap
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
 6. Check the CPU and memory usage.
-7. For logging, you can use the in-built `oc logs` command.
+7. Stop the above script using `control+C`. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.7/logging/viewing-resource-logs.html) to learn about the usage of `oc logs`.
 
   You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
   {:tip}
@@ -295,7 +295,7 @@ In this section, you will learn how to manually and automatically scale your app
    ```
    {:pre}
 2. You can see a new pod being provisioned by running `oc get pods` command.
-3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods.
+3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods using the `oc logs` command.
 
 ### Autoscaling
 {: #scalable-webapp-openshift-24}
@@ -363,6 +363,18 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
 6. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
+   ```
+   {:pre}
+
+7. Also, you need to copy and patch the image-pull secret from the `default` project to your project:
+   ```sh
+   oc get secret all-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
+   ```
+   {:pre}
+
+8. For the image pull secret to take effect, you need to add it in the `default` service account
+   ```sh
+   oc secrets link serviceaccount/default secrets/all-icr-io --for=pull
    ```
    {:pre}
 
@@ -447,23 +459,12 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
 
 In this section, you will deploy the application to the cluster using the generated **openshift_private_registry.yaml** file. Once deployed, you will access the application by creating a route. 
 
-1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project:
-   ```sh
-   oc get secret all-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
-   ```
-   {:pre}
-
-2. For the image pull secret to take effect, you need to add it in the `default` service account
-   ```sh
-   oc secrets link serviceaccount/default secrets/all-icr-io --for=pull
-   ```
-   {:pre}
-3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc apply -f openshift_private_registry.yaml
    ```
    {:pre}
-4. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
+2. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
    ```
@@ -490,13 +491,13 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:codeblock}
 
-5. You can check the status of deployment and service using
+3. You can check the status of deployment and service using
    ```sh
    oc status
    ```
    {:pre}
 
-6. Manually import the latest image stream to ensure the deployment takes place as soon as possible with the command 
+4. Manually import the latest image stream to ensure the deployment takes place as soon as possible with the command 
    ```sh
    oc import-image $MYPROJECT
    ```
@@ -505,7 +506,7 @@ In this section, you will deploy the application to the cluster using the genera
    You can also use the command if the deployment is taking more time, Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
    {:tip}
 
-7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
+5. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
    ```sh
    oc expose service/$MYPROJECT
    ```
