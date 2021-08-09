@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-06"
+lastupdated: "2021-08-09"
 lasttested: "2021-08-06"
 
 content-type: tutorial
@@ -70,8 +70,7 @@ This tutorial requires:
 * Docker engine,
 * `oc` to interact with {{site.data.keyword.openshiftshort}},
 * `git` to clone source code repository,
-* (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
-
+* (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**.Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.7.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
@@ -86,8 +85,7 @@ In addition, make sure you [set up a registry namespace](https://{DomainName}/do
 {: #scalable-webapp-openshift-prereqs-workshop}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Follow the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab)
-
+* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #scalable-webapp-openshift-2}
 {: step}
@@ -201,7 +199,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
 
 With the `oc new-app` command you can create applications from source code in a local or remote Git repository.
 
-1. Create an application using the `docker` build strategy to build a container image from a Dockerfile in the repo.
+1. Create an application using the `docker` build strategy to build a container image from a Dockerfile in the repo. _You are setting the application name to the project name for simplicity._
    ```sh
    oc new-app https://github.com/IBM-Cloud/openshift-node-app --name=$MYPROJECT --strategy=docker --as-deployment-config
    ```
@@ -519,7 +517,7 @@ You should see the same application exposed on a different route and deployed us
 
 In this step, you will create a private {{site.data.keyword.cloud_notm}} Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
 
-   You need to configure an SSH key for the push to be successful,check the instructions [here](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_gitlab).
+   You need to configure an SSH key for the push to be successful,check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
    {: important}
 
 1. On a browser, open [{{site.data.keyword.cloud_notm}} Git](https://us-south.git.cloud.ibm.com)
@@ -559,7 +557,8 @@ To generate a deploy token:
    ./generate_yaml.sh use_private_repository
    ```
    {:pre}
-2. Additional to the private container registry placeholders, the script will also replace the `REPO_URL` under `BuildConfig` spec with the the environment variables you set in the above step,
+2. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
+3. Additional to the private container registry placeholders, the script will also replace the `REPO_URL` under `BuildConfig` spec with the the environment variables you set in the above step,
    ```yaml
     source:
       git:
@@ -567,12 +566,11 @@ To generate a deploy token:
       type: Git
    ```
    {:codeblock}
-3. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+4. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc apply -f openshift_private_repository.yaml
    ```
    {:pre}
-4. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
 5. You can check the status of buildconfig, deployment and service using
    ```sh
    oc logs -f bc/$MYPROJECT
@@ -675,9 +673,13 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    oc delete all --selector app=<APPLICATION_NAME>
    ```
    {:pre}
-* Delete the project:
+
+   To list the application names in the project, run `oc get svc | awk '{print $1}'` 
+   {:tip}
+
+* Delete the project by replacing `<your-initials>`:
    ```sh
-   oc delete project $MYPROJECT
+   oc delete project <your-initials>-openshiftapp
    ```
    {:pre}
 <!--##istutorial#-->
