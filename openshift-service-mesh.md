@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-03-10"
-lasttested: "2021-03-10"
+lastupdated: "2021-08-09"
+lasttested: "2021-07-28"
 
 content-type: tutorial
 services: openshift, containers
@@ -57,6 +57,21 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
 <!--##istutorial#-->
+## Before you begin
+{: #openshift-service-mesh-prereqs}
+
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+* `oc` to interact with OpenShift.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: note}
+<!--#/istutorial#-->
+
+<!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-service-mesh-create_openshift_cluster}
@@ -73,7 +88,6 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-      - [Opening required ports in the default security group](https://{DomainName}/docs/openshift?topic=openshift-vpc-network-policy#security_groups)
   - Select the desired VPC
   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
@@ -108,25 +122,27 @@ Take a note of the resource group selected above.  This same resource group will
 -->
 <!--#/isworkshop#-->
 
-### Access the cluster using the {{site.data.keyword.Bluemix_notm}} Shell
+### Access the cluster using the {{site.data.keyword.cloud-shell_notm}}
 {: #openshift-service-mesh-3}
 
-In this step, you'll configure `oc` to point to your newly created cluster. To easily connect to the cluster, you need the {{site.data.keyword.openshiftshort}} CLI `oc` that exposes commands for managing your applications, as well as lower level tools to interact with each component of your system.
+The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
-To avoid installing the command line, the recommended approach is to use the {{site.data.keyword.Bluemix_notm}} Shell.
+To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
-{{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
+{{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and many plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
-1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**. **_Make sure you don't close this window/tab_**
-2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
+In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
+
+1. When the cluster is ready, on the cluster overview page click on **{{site.data.keyword.openshiftshort}} web console** to open the console. **_Make sure you don't close this window/tab_**
+2. On the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
-4. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**.
+4. In a new browser tab/window, open the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) to start a new session. Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**.
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
    ```
    {:pre}
-1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+1. The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 5. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
@@ -168,7 +184,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
-6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance**.
+6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance** or **Create ServiceMeshControlPlane**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -178,7 +194,7 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
-3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** and then select **YAML View**
+3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** or **Create ServiceMeshMemberRoll** and then select **YAML View**
 4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits, the YAML should look something like this:
    ```
    apiVersion: maistra.io/v1
@@ -219,7 +235,7 @@ The end-to-end architecture of the application is shown below.
 
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
-1.  From your **{{site.data.keyword.Bluemix_notm}} Shell**, create a project called "bookinfo" with `oc new-project` command
+1.  From your ****, create a project called "bookinfo" with `oc new-project` command
    ```sh
    oc new-project bookinfo
    ```
@@ -287,7 +303,7 @@ An Ingress Gateway resource can be created to allow external requests through th
    ```
    {:pre}
 
-   Visit the application by going to `http://$INGRESS_HOST/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
+   Visit the application by going to `http://$INGRESS_HOST/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars). **_Keep that browser tab open for later_**.
 
 ## Observe service telemetry: metrics and tracing
 {: #openshift-service-mesh-istio_telemetry}
@@ -305,9 +321,9 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    2. Select Project: **istio-system** from the top bar
    3. Click the URL(Location) next to **grafana**
    4. Log into OpenShift and allow the requested permissions to see the Grafana dashboard.
-2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **Istio** and **Istio Service Dashboard**.
+2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **istio** and **Istio Service Dashboard**.
 1. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
-2. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
+2. Go to your {{site.data.keyword.cloud-shell_notm}} tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
@@ -326,7 +342,7 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
    2. select **istio-system** as your project from the top bar
    3. Click the URL(Location) next to **kiali** and if prompted, click **Login with OpenShift**
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
-3. To see the request rates, click **Display** and choose **Requests Per second**.
+3. To see the request rates, click **Display** and choose **Requests Per Second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section to generate load.
 5. Now, check the Kiali Graph to see the requests per second.
 
@@ -357,7 +373,7 @@ A/B testing is a method of performing identical tests against two separate servi
    A [DestinationRule](https://istio.io/latest/docs/reference/config/networking/virtual-service/#Destination) defines policies that apply to traffic intended for a service after routing has occurred. These rules specify configuration for load balancing, connection pool size from the sidecar, and outlier detection settings to detect and evict unhealthy hosts from the load balancing pool. Any destination `host` and `subset` referenced in a `VirtualService` rule must be defined in a corresponding `DestinationRule`.
    {:tip}
 
-2. A VirtualService defines a set of traffic routing rules to apply when a host is addressed. Each routing rule defines matching criteria for traffic of a specific protocol. If the traffic is matched, then it is sent to a named destination service (or subset/version of it) defined in the registry. Run the below command to send all reviews traffic to v1
+2. A VirtualService defines a set of traffic routing rules to apply when a host is addressed. Each routing rule defines matching criteria for traffic of a specific protocol. If the traffic is matched, then it is sent to a named destination service (or subset/version of it) defined in the registry. Run the below command to send all reviews traffic to v1:
 
    ```sh
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-all-v1.yaml
@@ -367,15 +383,9 @@ A/B testing is a method of performing identical tests against two separate servi
    The `VirtualService` defines a rule that captures all HTTP traffic coming in to reviews service, and routes 100% of the traffic to pods of the service with label "version: v1". A subset or version of a route destination is identified with a reference to a named service subset which must be declared in a corresponding `DestinationRule`.
    {:tip}
 
-3. View the bookinfo application using the `$INGRESS_HOST` specified in the above section and enter it as a URL in Firefox or Chrome web browsers. You can use the echo command to get this value, if you don't remember it.
+3. View the bookinfo application in your browser tab. You should only get the v1 of the BookInfo application, i.e., no stars for ratings.
 
-   ```sh
-   echo $INGRESS_HOST
-   ```
-   {:pre}
-   Add `/productpage` to the end of the URL and you should only get the v1 of the BookInfo application - No stars for ratings
-
-4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2. You may change the `user-agent` to any other installed browser on your machine
+4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2. You may change the `user-agent` to any other installed browser on your machine:
 
    ```sh
    cat <<EOF | oc replace -f -
@@ -419,7 +429,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
    In the modified rule, the routed traffic is split between two different subsets of the reviews microservice. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
    {:tip}
 
-2. View the bookinfo application using the `$INGRESS_HOST` and enter it as a URL in Firefox or Chrome web browsers. **Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching.** You should notice that the bookinfo application should swap between V1 or V2 at about the weight you specified.
+2. View the bookinfo application again in your browser tab. Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching. You should notice that the bookinfo application should swap between V1 or V2 at about the weight you specified.
 3. To route all traffic to reviews v3,
    ```sh
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-reviews-v3.yaml
@@ -463,6 +473,8 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 ## Remove resources
 {: #openshift-service-mesh-cleanup}
 {: step}
+
+You can either gradually remove individual resources or skip those steps and directly delete the entire cluster.
 
 ### Delete the application project
 {: #openshift-service-mesh-19}
