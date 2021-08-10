@@ -33,7 +33,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like Slack notifications.
+This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages.
 {: shortdesc}
 
 ## Objectives
@@ -44,7 +44,6 @@ This tutorial walks you through the process setting up a continuous integration 
 <!--#/istutorial#-->
 * Create a starter application, run it locally and push it to a Git repository.
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
-* Explore and integrate the app to use Slack notifications.
 
 
 ![Architecture diagram](images/solution21/Architecture.png)
@@ -53,7 +52,6 @@ This tutorial walks you through the process setting up a continuous integration 
 2. The pipeline picks up changes in Git and builds container image.
 3. The container image is uploaded to registry. The app is deployed to the Development environment.
 4. Once changes are validated, the app is deployed to the Production environment.
-5. Notifications are sent to Slack to track the deployment activities.
 
 <!--##istutorial#-->
 ## Before you begin
@@ -187,17 +185,17 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 
 In this step, you will clean up the resources to remove what you created above.
 
-- Delete the Git repository.
+<!-- - Delete the Git repository.
   - Click on the configuration for the **BUILD** stage
   - Select the **Input** panel
   - Copy the Git URL and paste into a browser
   - In the git repository: select Settings on the right then General > Advanced > Remove Project
+  -->
 - Delete the toolchain.
 - Delete the images from the Kubernetes Registry
 <!--##istutorial#-->
 - Delete the cluster.
 <!--#/istutorial#-->
-- Delete the Slack channel.
 
 ## Expand the Tutorial
 {: #continuous-deployment-to-kubernetes-expandTutorial}
