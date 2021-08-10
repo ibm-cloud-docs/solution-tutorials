@@ -98,11 +98,35 @@ Create a cluster:
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications to generate all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.  The cloud console is used in this example but the ibmcloud cli, `ibmcloud dev create`, is also available.
 
+<!--##istutorial#-->
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
 2. Click **Starter Kits**
 3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
 4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
+<!--#/istutorial#-->
+<!--##isworkshop#-->
+<!--
+1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [ADevOps](https://{DomainName}/devops).
+2. Click **Create toolchain**
+3. Under the left hand column, select **Kubernetes** as a filter.
+4. Click on the **Develop a Kubernetes app with Helmm** tile.
+5. Enter a unique **name** for the toolchain such as `<your-initial>-mynodestarter-toolchain` and select a resource group. 
+6. Click on the **Delivery Pipeline** tab.
+7. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`.
+8. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
+9. Select a region and your cluster from the list.
+10. Make sure to set the cluster namespace to `default` and click **Create**.
 
+The toolchain will build your application and deploy it to the cluster.
+
+1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
+1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
+1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
+   ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
+-->
+<!--#/isworkshop#-->
+
+<!--##istutorial#-->
 ## Configure DevOps delivery pipeline
 {: #continuous-deployment-to-kubernetes-create_devops}
 {: step}
@@ -124,7 +148,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
-
+<!--#/istutorial#-->
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
