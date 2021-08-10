@@ -146,8 +146,8 @@ If you don't see your application updating, confirm all the steps passed and rev
 
 **Note:** If you prefer to work locally for making and viewing updates to the application, you can  clone the repository to your own environment for editing and use `ibmcloud dev build` and `ibmcloud dev run` to view the changes locally before pushing them back to the repository. Once your changes are pushed to the repository they will also trigger a build in the **Delivery Pipeline**.
 
-## Deploy to a production environment
-{: #continuous-deployment-to-kubernetes-deploytoproduction}
+## Deploy to a test environment
+{: #continuous-deployment-to-kubernetes-deploytotest}
 {: step}
 
 In this section, you will complete the deployment pipeline by deploying the application to development and testing environments respectively.
