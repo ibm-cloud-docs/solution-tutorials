@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-07-02"
-lasttested: "2020-12-03"
+lastupdated: "2021-08-09"
+lasttested: "2020-08-09"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
@@ -164,7 +164,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 
 You now have the full deployment setup. To deploy from dev to test, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
-## Setup Slack notifications
+<!-- ## Setup Slack notifications
 {: #continuous-deployment-to-kubernetes-setup_slack}
 {: step}
 
@@ -179,6 +179,7 @@ You now have the full deployment setup. To deploy from dev to test, you manually
     ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png)
 8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
     ![Slack app with notification](images/solution21/slack_channel.png)
+-->
 
 ## Remove resources
 {: #continuous-deployment-to-kubernetes-removeresources}
