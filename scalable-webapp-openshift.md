@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-09"
+lastupdated: "2021-08-11"
 lasttested: "2021-08-06"
 
 content-type: tutorial
@@ -195,7 +195,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    {:pre}
 
 ### Deploy an application to {{site.data.keyword.openshiftshort}}
-{: #scalable-webapp-openshift-create-project}
+{: #scalable-webapp-openshift-deploy-app}
 
 With the `oc new-app` command you can create applications from source code in a local or remote Git repository.
 
@@ -452,7 +452,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
 7. If updated, **save** the YAML file.
 
 ### Deploy the application using the {{site.data.keyword.registrylong_notm}}
-{: #scalable-webapp-openshift-deploy-app-to-cluster}
+{: #scalable-webapp-openshift-deploy-app-priv-reg}
 {: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift_private_registry.yaml** file. Once deployed, you will access the application by creating a route. 
