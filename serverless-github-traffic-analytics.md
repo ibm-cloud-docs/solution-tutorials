@@ -148,9 +148,6 @@ Once the build is ready, you can use the container image to deploy the app, ther
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {:tip}
 
-   {: pre}
-
-
 ## App ID and GitHub configuration (browser)
 {: #serverless-github-traffic-analytics-4}
 {: step}
@@ -264,7 +261,6 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related Content
 {: #serverless-github-traffic-analytics-11}
-{:related}
 Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) 
 
 Documentation:
