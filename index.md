@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2018, 2019, 2020, 2021
-lastupdated: "2021-02-18"
+lastupdated: "2021-08-02"
 lasttested: "2020-12-17"
 
 ---
@@ -476,7 +476,7 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
 {{site.data.keyword.cloud_notm}} provides you with hosted Git repositories built on GitLab Community Edition and accessible with the same credentials used to log in {{site.data.keyword.cloud_notm}}. It is recommended to configure your SSH public key to simplify the command line interactions with the Git repositories.
 
 1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
-1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys) to your Git settings in the region where you plan to host your Git repositories, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/profile/keys), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/profile/keys) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/profile/keys).
+1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/ssh/README.md#add-an-ssh-key-to-your-gitlab-account) to your Git settings in the region where you plan to host your Git repositories, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/profile/keys), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/profile/keys) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/profile/keys).
 
 To verify the configuration:
 1. Create a new private project in GitLab, select the option to initialize the repository with a README.
