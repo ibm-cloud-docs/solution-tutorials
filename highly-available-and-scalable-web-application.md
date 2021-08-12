@@ -52,10 +52,8 @@ This tutorial walks you through a scenario with the creation of:
 
 The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
-<p style="text-align: center;">
-   
-   ![Architecture diagram](images/solution14/Architecture.png)
-</p>
+![Architecture diagram](images/solution14/Architecture.png)
+
 
 1. The user connects to the application.
 2. The {{site.data.keyword.loadbalancer_short}} selects one of the healthy servers to handle the request.
@@ -314,16 +312,19 @@ The file storage can be mounted as an NFS drive into the virtual server.
    mysqldump -u root -p CHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
    ```
    {: codeblock}
+
 2. Make sure the file is executable
    ```sh
    chmod 700 /root/dbbackup.sh
    ```
    {: pre}
+
 3. Edit the crontab
    ```sh
    crontab -e
    ```
    {: pre}
+
 4. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
    ```
    0 23 * * * /root/dbbackup.sh
@@ -397,6 +398,7 @@ Repeat the following steps on each application server(app1 and app2):
    apt-get -y install nfs-common
    ```
    {: pre}
+
 2. Create a file using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content by replacing `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can find the mount points under [list of file storage volumes](https://{DomainName}/classic/storage/file)
    ```
    [Unit]
@@ -412,21 +414,25 @@ Repeat the following steps on each application server(app1 and app2):
    WantedBy = multi-user.target
    ```
    {: codeblock}
+
 3. Create the mount point
    ```sh
    mkdir /mnt/www
    ```
    {: pre}
+
 4. Mount the storage
    ```sh
    systemctl enable --now /etc/systemd/system/mnt-www.mount
    ```
    {: pre}
+
 5. Check if the mount was successfully done
    ```sh
    mount
    ```
    {: pre}
+
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
@@ -450,17 +456,20 @@ Repeat the following steps on each application server:
    apt-get -y install nginx
    ```
    {: pre}
+
 2. Install PHP and mysql client
    ```sh
    apt-get -y install php-fpm php-mysql
    ```
    {: pre}
+
 3. Stop PHP service and nginx
    ```sh
    systemctl stop php7.2-fpm
    systemctl stop nginx
    ```
    {: pre}
+
 4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
    ```sh
    server {
@@ -513,6 +522,7 @@ Repeat the following steps on each application server:
    }
    ```
    {: codeblock}
+   
 5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
    mkdir -p /mnt/www/html
@@ -541,6 +551,7 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    scp latest.tar.gz root@PRIVATE_IP_ADDRESS_OF_THE_SERVER:/tmp
    ```
    {: pre}
+
    Replace `latest` with the filename you downloaded from wordpress website.
    {: tip}
 
@@ -598,6 +609,7 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    define('DB_HOST', 'database-server-ip-address');
    ```
    {: codeblock}
+
    Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
 On both application servers, start the web server and the PHP runtime:
@@ -692,10 +704,7 @@ To increase resiliency and availability, you can extend the infrastructure setup
 
 With a second location deployment, the architecture will look like this.
 
-<p style="text-align: center;">
-
-  ![Architecture diagram](images/solution14/Architecture2.png)
-</p>
+![Architecture diagram](images/solution14/Architecture2.png)
 
 1. Users access the application through {{site.data.keyword.cis_short}}.
 2. {{site.data.keyword.cis_short_notm}} routes traffic to a healthy location.

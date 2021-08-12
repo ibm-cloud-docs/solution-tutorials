@@ -198,11 +198,13 @@ The following sections assume you are running macOS High Sierra or later under a
    chmod +x ./kubectl
    ```
    {: pre}
+
 1. Move the binary to your PATH.
    ```sh
    sudo mv ./kubectl /usr/local/bin/kubectl
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    kubectl version --client=true
@@ -222,11 +224,13 @@ The following sections assume you are running macOS High Sierra or later under a
    tar zxvf openshift-client-mac.tar.gz
    ```
    {: pre}
+
 3. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {: pre}
+
 4. Verify the installation with:
    ```sh
    oc version
@@ -246,6 +250,7 @@ The following sections assume you are running macOS High Sierra or later under a
    sudo mv ./darwin-amd64/helm /usr/local/bin/helm
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    helm version
@@ -265,6 +270,7 @@ The following sections assume you are running macOS High Sierra or later under a
    sudo mv ./terraform /usr/local/bin/terraform
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    terraform version
@@ -283,6 +289,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    sudo mv ./jq /usr/local/bin/jq
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    jq --version
@@ -342,11 +349,13 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    chmod +x ./kubectl
    ```
    {: pre}
+
 1. Move the binary to your PATH.
    ```sh
    sudo mv ./kubectl /usr/local/bin/kubectl
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    kubectl version --client=true
@@ -366,11 +375,13 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    tar zxvf openshift-client-linux.tar.gz
    ```
    {: pre}
+
 1. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    oc version
@@ -387,6 +398,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    sudo mv ./linux-amd64/helm /usr/local/bin/helm
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    helm version
@@ -403,6 +415,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    sudo mv ./terraform /usr/local/bin/terraform
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    terraform version
@@ -419,6 +432,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    sudo apt install jq
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    jq --version
@@ -433,6 +447,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    sudo apt install git
    ```
    {: pre}
+
 1. Verify the installation with:
    ```sh
    git --version
@@ -505,11 +520,13 @@ Follow these steps if you need to use another version of the OpenShift CLI than 
    tar zxvf oc.tar.gz
    ```
    {: pre}
+
 3. Add your current directory to `PATH`
    ```sh
    export PATH=$PWD:$PATH
    ```
    {: pre}
+   
 4. Verify the installation with:
    ```sh
    oc version
