@@ -54,10 +54,8 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 - Source Network Address Translation (SNAT) for application deployment
 
 
-<p style="text-align: center;">
+![Architecture](images/solution42-web-app-private-network/web-app-private.png)
 
-  ![Architecture](images/solution42-web-app-private-network/web-app-private.png)
-</p>
 
 1.	Configure Secure Private Network
 2.	Configure NAT access for application deployment
