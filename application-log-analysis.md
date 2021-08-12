@@ -111,6 +111,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
    kubectl get namespaces
    ```
    {: pre}
+   
 -->
 <!--#/isworkshop#-->
 
@@ -128,31 +129,37 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
     ```
    {: pre}
+
 1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
    ```sh
    ibmcloud cr region
    ```
    {: pre}
+
 1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
    MYREGISTRY=us.icr.io
    ```
    {: pre}
+
 1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
    {: pre}
+
    To create a new namespace:
    ```sh
    ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
    ```
    {: pre}
+
 1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
    ```sh
    MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {: pre}
+
 1. Define a **unique name** for the container image such as `<your-initials>-app-log-analysis`.
    ```sh
    MYIMAGE=<your-initials>-app-log-analysis
@@ -169,11 +176,13 @@ On a terminal:
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
+
 1. Change to the application directory
    ```sh
    cd application-log-analysis
    ```
    {: pre}
+
 5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
    ```sh
    ibmcloud cr build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYIMAGE}:latest
@@ -191,11 +200,14 @@ On a terminal:
    ```sh
    MYCLUSTER=mycluster
    ```
+   {: pre}
+
 3. Retrieve the cluster ingress subdomain:
    ```sh
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
+
 4. Define a variable pointing to the subdomain:
    ```sh
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
@@ -208,6 +220,7 @@ On a terminal:
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
+
 7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 
@@ -456,6 +469,7 @@ To focus the dashboard on your cluster:
    ibmcloud ks cluster rm --cluster $MYCLUSTER -f
    ```
    {: pre}
+
 <!--#/istutorial#-->
 
 ## Expand the tutorial

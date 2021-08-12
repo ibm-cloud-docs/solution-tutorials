@@ -118,6 +118,7 @@ With the services provisioned and the general setup done, next is to create the 
    ibmcloud ce buildrun submit --build ghstats-build
    ```
    {: pre}
+
    You can check the status of your buildruns:
    ```sh
    ibmcloud ce buildrun list
@@ -135,6 +136,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ibmcloud ce app create --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr
    ```
    {: pre}
+
    Once the app has deployed, you can check that it is available at the URL shown in the output. The app is not configured and hence not usable yet. You can check the deployment status using `ibmcloud ce app list` or for details by executing `ibmcloud ce app get --name ghstats-app`.
 
    By default, the minimum scaling is zero (0). It means that {{site.data.keyword.codeengineshort}} reduces the running instances to zero if there is no workload on the app. This saves costs, but requires a short app restart when scaling up from zero again. You can avoid this by using the paramater `--min 1` when creating or updating the app.
@@ -145,10 +147,12 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ibmcloud ce application bind --name ghstats-app --service-instance ghstatsDB
    ```
    {: pre}
+
    ```sh
    ibmcloud ce application bind --name ghstats-app --service-instance ghstatsAppID
    ```
    {: pre}
+
    Note that each bind causes a new service key to be created and a new revision of the app to be deployed.
 
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
@@ -213,6 +217,7 @@ With the app in place and configured, the last part is to initiate daily retriev
    ibmcloud ce app update --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
    ```
    {: pre}
+
    This creates a new app revision. You can check that the events were received and processed by the app when navigating in the app to **Administration**, then **System log**.
 
    The command above creates a schedule for 6 am UTC daily. To directly check that the eventing works, choose a time few minutes after your current time, converted to UTC.
@@ -255,6 +260,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ibmcloud resource service-instance-delete ghstatsDB
    ```
    {: pre}
+   
    ```sh
    ibmcloud resource service-instance-delete ghstatsAppID
    ```

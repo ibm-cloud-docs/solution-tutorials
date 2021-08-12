@@ -46,6 +46,7 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 <p style="text-align: center;">
 
   ![Architecture](images/solution19/SlackbotArchitecture.png)
+
 </p>
 
 ## Before you begin
@@ -111,6 +112,7 @@ In this section, you are going to set up the needed services and prepare the env
    {: pre}
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
+
 7.  Obtain the URI for the deployed **dispatch** action.
    ```sh
    ibmcloud fn action get slackdemo/dispatch --url
@@ -122,6 +124,7 @@ In this section, you are going to set up the needed services and prepare the env
 ## Load the skill / workspace
 {: #slack-chatbot-database-watson-3}
 {: step}
+
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
@@ -154,6 +157,7 @@ Now, you will create an assistant associated with the skill from before and inte
 ## Test the Slackbot and learn
 {: #slack-chatbot-database-watson-5}
 {: step}
+
 Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
 
 1. Type **help** into the messaging form. The bot should respond with some guidance.
