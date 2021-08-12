@@ -28,6 +28,11 @@ for source in *.md; do
     continue
   fi
 
+  # compare for special events, e.g. mass update for formatting
+  if [[ "$gitDate" == "2021-08-12" ]]; then
+    continue
+  fi
+
   # compare
   if [[ "$gitDate" != "$mdDate" ]]; then
     echo "$source lastupdated was not updated after its last commit (from git:$gitDate from md:$mdDate)"
