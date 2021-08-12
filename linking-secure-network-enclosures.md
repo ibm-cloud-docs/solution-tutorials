@@ -51,10 +51,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Configure routing between sites
 
 
-<p style="text-align: center;">
-
-  ![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png)
-</p>
+![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png)
 
 
 1. Deploy secure private networks
@@ -78,12 +75,12 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 | Item  | Datacenter1 | Datacenter2 |
 |:------ |:--- | :--- |
 | Data center |  |  |
-| VRA public IP address | <DC1 VRA Public IP Address> | <DC2 VRA Public IP Address> |
-| VRA private IP address | <DC1 VRA Private IP Address> | <DC2 VRA Private IP Address> |
+| VRA public IP address | &lt;DC1 VRA Public IP Address&gt; | &lt;DC2 VRA Public IP Address&gt; |
+| VRA private IP address | &lt;DC1 VRA Private IP Address&gt; | &lt;DC2 VRA Private IP Address&gt; |
 | VRA private subnet & CIDR |  |  |
 | Private VLAN ID | &lt;DC1 Private VLAN ID&gt;  | &lt;DC2 Private VLAN ID&gt; |
-| VSI private IP address | <DC1 VSI Private IP Address> | <DC2 VSI Private IP Address> |
-| APP zone subnet & CIDR | <DC1 APP zone subnet/CIDR> | <DC2 APP zone subnet/CIDR> |
+| VSI private IP address | &lt;DC1 VSI Private IP Address&gt; | &lt;DC2 VSI Private IP Address&gt; |
+| APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
 
 1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page.
 2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
@@ -138,6 +135,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    commit
    ```
    {: codeblock}
+
 2. Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
    ```
    ssh vyatta@<DC2 VRA Private IP Address>
@@ -146,6 +144,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    commit
    ```
    {: codeblock}
+
 2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
    ```
    show ip route
@@ -166,12 +165,14 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    commit
    ```
    {: codeblock}
+
 2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
    ```
    set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
    commit
    ```
    {: codeblock}
+
 3. Verify that the VSIs in both data centers can now communicate
    ```bash
    ping <Remote Subnet Gateway IP>

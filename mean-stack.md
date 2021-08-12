@@ -46,9 +46,7 @@ This tutorial walks you through the creation of a web application using the popu
 
 {: #architecture}
 
-<p style="text-align: center;">
-
-![Architecture diagram](images/solution7/Architecture.png)</p>
+![Architecture diagram](images/solution7/Architecture.png)
 
 1. The user accesses the application using a web browser.
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
@@ -118,27 +116,32 @@ In this section, you will clone a MEAN sample code and run the application local
   cd nodejs-MEAN-stack
   ```
   {: codeblock}
+
 1. Install the required packages.
   ```sh
   npm install
   ```
   {: codeblock}
+
 1. Copy .env.example file to .env.
   ```sh
    cp .env.example .env
   ```
   {: codeblock}
+
 1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command
   ```sh
    ibmcloud cf service-key mean-starter-mongodb "Service credentials-1"
   ```
   {: codeblock}
+
    You can find the URL under mongodb -> composed and certificate_base64 under mongodb -> certificate in the returned JSON output.
 1. Run node server.js to start your app
   ```sh
   node server.js
   ```
   {: codeblock}
+
 1. Access your application, create a new user and log in
 
 ## Deploy app to the cloud
@@ -155,6 +158,7 @@ In this section, you will deploy the node.js app to the {{site.data.keyword.clou
    ibmcloud cf push
    ```
    {: codeblock}
+   
 2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-random-name.mybluemix.net`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
 
 ## Scaling MongoDB database resources

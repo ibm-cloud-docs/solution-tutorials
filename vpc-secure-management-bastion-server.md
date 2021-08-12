@@ -158,14 +158,12 @@ With access to the bastion working, continue and create the security group for m
   |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
   |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
   |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
-  |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |
-  {: caption="Maintenance: Outbound rules" caption-side="bottom"}
+  |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |{: caption="Maintenance: Outbound rules" caption-side="bottom"}
 
 
   | Protocol | Source type | Source | Value   |
   |------------|---------------|----------|-----------  |
-  |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |
-  {: caption="Maintenance: Inbound rules" caption-side="bottom"}
+  |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |{: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 
 1. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
@@ -174,8 +172,7 @@ With access to the bastion working, continue and create the security group for m
 
   | Protocol | Destination type | Destination | Value   |
   |------------|---------------|----------|-----------  |
-  |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
-  {: caption="Bastion: Outbound rules" caption-side="bottom"}
+  |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |{: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 ## Use the bastion host to access other instances in the VPC
 {: #vpc-secure-management-bastion-server-bastion-host-access-instances}
@@ -266,7 +263,7 @@ Once connected, you can install software on the virtual server or perform mainte
    apt-get update
    ```
    {: pre}
-   
+
 2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
 
 When done, disconnect from the server with `exit` command.
