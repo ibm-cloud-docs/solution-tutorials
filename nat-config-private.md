@@ -49,11 +49,8 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
 
+![Architecture](images/solution35-nat-config-private/vra-nat.png)
 
-<p style="text-align: center;">
-
-  ![Architecture](images/solution35-nat-config-private/vra-nat.png)
-</p>
 
 1.	Document required Internet services.
 2.	Setup NAT.
@@ -90,6 +87,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    configure
    ```
    {: codeblock}
+
 2.	Create the SNAT rules on the VRA, specifying the same `<Subnet Gateway IP>/<CIDR>` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
    ```
    set service nat source rule 1000 description 'pass traffic to the Internet'
@@ -157,6 +155,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    set security zone-policy zone OUTSIDE description 'External Internet'
    ```
    {: codeblock}
+
 2.	Assign firewalls to control traffic to and from the Internet.
    ```
    set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
@@ -164,6 +163,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    commit
    ```
    {: codeblock}
+
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
    ```bash
    ssh root@<VSI Private IP>

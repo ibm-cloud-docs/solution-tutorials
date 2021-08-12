@@ -52,10 +52,8 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
 
-<p style="text-align: center;">
+![Architecture](images/solution55-openshift-microservices/Architecture.png)
 
-  ![Architecture](images/solution55-openshift-microservices/Architecture.png)
-</p>
 
 1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
 1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.openshiftshort}} registry for **DeploymentConfig** provisioning.
@@ -161,11 +159,13 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ibmcloud oc clusters
    ```
    {: pre}   
+
 3. Initialize the `oc` command environment by replacing the placeholder <your-cluster-name>:
    ```sh
    ibmcloud oc cluster config -c <your-cluster-name> --admin
    ```
    {: pre}
+
 4. Verify the `oc` command is working:
    ```sh
    oc get projects
@@ -245,11 +245,13 @@ Create a script to simulate load.
    oc project example-health
    ```
    {: pre}
+
 1. Retrieve the public route to access your application:
    ```
    oc get routes
    ```
    {: pre}
+
    Output looks similar to this, note your value for Host:
    ```
    NAME         HOST/PORT                                                                                                 PATH      SERVICES     PORT       TERMINATION   WILDCARD
@@ -260,11 +262,13 @@ Create a script to simulate load.
    HOST=$(oc get routes -o json | jq -r '.items[0].spec.host')
    ```
    {: pre}
+
 1. Verify access to the application. It outputs patient information:
    ```sh
    curl -s http://$HOST/info
    ```
    {: pre}
+
    Output should look like:
    ```
    $ curl http://$HOST/info
@@ -331,10 +335,8 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
    - If inline, select **Kubernetes / Compute Resources / Namespace (Pods)** from the dropdown and Namespace to **example-health**
    - If you have clicked **Grafana UI** link, You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
 3. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
-   <p style="width: 50%;">
-
    ![Grafana CPU view](images/solution55-openshift-microservices/ocp45-grafana-cpu.png)
-   </p>
+   
 
 ### Prometheus
 {: #openshift-microservices-15}
@@ -353,11 +355,10 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
    {: codeblock}
-4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
-   <p style="width: 50%;">
 
+4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp45.png)
-   </p>
+
 5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
@@ -388,6 +389,7 @@ Grafana earlier showed you that the load was consuming anywhere between ".002" t
                  memory: 40Mi
    ```
    {: codeblock}
+
    Here is a snippet after you have made the changes:
    ```yaml
           ports:
@@ -441,6 +443,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. Pods are 
              type: Utilization
    ```
    {: codeblock}
+
 2. Click **Create**.
 
 ### Test Autoscaler
@@ -450,11 +453,8 @@ If you're not running the script to simulate load, the number of pods should sta
 
 1. Check by opening the **Overview** page of the deployment config.  Click **Workloads** > **DeploymentConfigs** and click **patient-health-frontend** and make sure the **Details** panel is selected.
 2. Start simulating load (see previous section to simulate load on the application).
-   <p style="width: 50%;">
-
    ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp-hpa-after.png)
-   </p>
-
+   
    It can take a few minutes for the autoscaler to make adjustments.
    {: note}
 
@@ -470,21 +470,25 @@ You can also can delete and create resources like autoscalars with the command l
    oc project example-health
    ```
    {: pre}
+
 1. Get the autoscaler that was created earlier:
    ```
    oc get hpa
    ```
    {: pre}
+
 1. Delete the autoscaler made earlier:
    ```
    oc delete hpa/patient-hpa
    ```
    {: pre}
+
 1. Create a new autoscaler with a max of 9 pods:
    ```
    oc autoscale deploymentconfig/patient-health-frontend --name patient-hpa --min 1 --max 9 --cpu-percent=1
    ```
    {: pre}
+
 2. Revisit the **Workloads > Deployment Configs** Details page for `patient-health-frontend` deployment and watch it work.
 
 ## Using the IBM Cloud Operator to create a Cloudant DB
@@ -559,6 +563,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      plan: standard
    ```
    {: codeblock}
+
 6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
 7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
@@ -573,6 +578,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      serviceName: <your-initials>-cloudant-service
    ```
    {: codeblock}
+   
 9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
    ```sh
@@ -666,11 +672,13 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    oc project example-health
    ```
    {: pre}
+
 1. The following new-app commmand will make a build configuration and Deployment Configuration.  The following demonstrates the CLI invocation of the add application (remember using the GUI console for the frontend):
    ```sh
    oc new-app --name=patient-health-backend --as-deployment-config centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {: pre}
+
 3. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **patient-health-backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
    ```
    > node app.js
@@ -773,6 +781,7 @@ To check the logs that are generated by a {{site.data.keyword.la_short}} agent, 
    oc logs logdna-agent-<ID> -n ibm-observe
    ```
    {: pre}
+
    Where *ID* is the ID for a {{site.data.keyword.la_short}} agent pod.
 
 For example,
@@ -808,16 +817,19 @@ With the application now connected to a database for its data, to simulate load 
    oc project example-health
    ```
    {: pre}
+
 1. Define a variable with the host:
    ```sh
    HOST=$(oc get routes -o json | jq -r '.items[0].spec.host')
    ```
    {: pre}
+
 1. Verify access to the application. It outputs patient information:
    ```sh
    curl -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
    ```
    {: pre}
+
    Output should look like:
    ```
    $ curl http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
@@ -1132,11 +1144,13 @@ Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentat
    oc delete all --selector app=$MYPROJECT
    ```
    {: pre}
+
 * Delete the project:
    ```sh
    oc delete project $MYPROJECT
    ```
    {: pre}
+
 -->
 <!--#/isworkshop#-->
 <!--##istutorial#-->
