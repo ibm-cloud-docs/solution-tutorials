@@ -73,7 +73,7 @@ In this section, you will create the services required by the tutorial starting 
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
-   {:tip}
+   {: tip}
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
@@ -84,7 +84,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
-   {:tip}
+   {: tip}
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
@@ -95,7 +95,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 2. Click **Service credentials** on the left pane and expand the auto-generated credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
-   {:tip}
+   {: tip}
 
 ## Create a skill
 {: #android-watson-chatbot-create_workspace}
@@ -124,7 +124,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 1. Click on the newly created skill - **Ana**.
 
    Ana is an insurance bot for users to query their health benefits and file claims.
-   {:tip}
+   {: tip}
 2. Click on **Create intent** under Intents. Enter `cancel_policy` as your intent name and provide an optional description.
 3. Click **Create intent**.
 4. Add user examples when requested to cancel a policy
@@ -136,13 +136,13 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 5. Add user examples one after another and click **Add example**. Repeat this for all the other user examples.
 
    Remember to add at least 5 user examples to train your bot better.
-   {:tip}
+   {: tip}
 
 6. Click the **back** button to save the intent.
 7. Click on **Content Catalog** and select **General**. Click **Add to skill**.
 
    Content catalog helps you in getting started faster by adding existing intents (banking, customer care, insurance, telco, e-commerce and many more). These intents are trained on common questions that users may ask.
-   {:tip}
+   {: tip}
 
 ### Define an entity
 {: #android-watson-chatbot-define_entity}
@@ -155,7 +155,7 @@ The following are examples of entity names
  - `@product`
 
    System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.Click **System entities** under **Entities** to check the common entities created by {{site.data.keyword.IBM_notm}} that could be used across any use case.
-   {:tip}
+   {: tip}
 
 1. Click **Entities** on the left pane to see the existing entities.
 2. Click **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
@@ -181,7 +181,7 @@ A dialog is a branching conversation flow that defines how your application resp
 7. Click the **+** icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
 
    A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable. The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a subsequent node. The dialog does so by using context variables.
-   {:tip}
+   {: tip}
 
 8. Test the dialog flow using the **Try it** button.
 
@@ -209,12 +209,12 @@ The repository contains Android application code with required gradle dependenci
    ```sh
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-   {:pre}
+   {: pre}
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
 
    You can find the ASSISTANT URL in the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. The Assistant URL is NOT same as the workspace URL.
-   {:tip}
+   {: tip}
 
    ```xml
    <?xml version="1.0" encoding="UTF-8"?>
@@ -251,7 +251,7 @@ The repository contains Android application code with required gradle dependenci
    ![Phone showing another chat](images/solution28-watson-chatbot-android/android_chatbot.png)
 
    For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
-   {:tip}
+   {: tip}
 
 5. In the **Enter your query** space provided below, interact with your chatbot by typing `Hi` and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
@@ -260,7 +260,7 @@ The repository contains Android application code with required gradle dependenci
 
 ## Remove resources
 {: #android-watson-chatbot-6}
-{:removeresources}
+{: removeresources}
 {: step}
 
 1. Navigate to [Resource List,](https://{DomainName}/resources/)
@@ -271,7 +271,7 @@ The repository contains Android application code with required gradle dependenci
 
 ## Related content
 {: #android-watson-chatbot-7}
-{:related}
+{: related}
 
 - [Creating entities, Synonyms, System entities](https://{DomainName}/docs/assistant?topic=assistant-entities#entities-creating-task)
 - [Context Variables](https://{DomainName}/docs/assistant?topic=assistant-dialog-runtime#dialog-runtime-context-variables)

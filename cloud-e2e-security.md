@@ -32,7 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. An application that provides file sharing will put security concepts into practice.
-{:shortdesc}
+{: shortdesc}
 
 No application architecture is complete without a clear understanding of potential security risks and how to protect against such threats. Application data is a critical resource which can not be lost, compromised or stolen. Additionally, data should be protected at rest and in transit through encryption techniques. Encrypting data at rest protects information from disclosure even when it is lost or stolen. Encrypting data in transit (e.g. over the Internet) through methods such as HTTPS, SSL, and TLS prevents eavesdropping and so called man-in-the-middle attacks.
 
@@ -79,7 +79,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -289,17 +289,17 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ```sh
    ibmcloud cr region
    ```
-   {:pre}
+   {: pre}
 2. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
-   {:pre}
+   {: pre}
    To create a new namespace:
    ```sh
    ibmcloud cr namespace-add <your-namespace>
    ```
-   {:pre}
+   {: pre}
 3. Build the image with a unique name such as **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage** :
    ```sh
    ibmcloud cr build -t <your-registry-url>/<your-namespace>/<your-image-name>:latest .
@@ -326,27 +326,27 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
       ```sh
       export MYCLUSTER=<YOUR_CLUSTER_NAME>
       ```
-      {:pre}
+      {: pre}
 
    2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
       ```sh
       export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
       export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
       ```
-      {:pre}
+      {: pre}
 
    3. Set the image repository name e.g., `us.icr.io/namespace/image-name`:
       ```sh
       export IMAGE_REPOSITORY=<REGISTRY_NAME>.<NAMESPACE>.<IMAGE_NAME>
       ```
-      {:pre}
+      {: pre}
 
    4. Set additional environment variables by replacing the default values:
       ```sh
       export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
       export TARGET_NAMESPACE=default
       ```
-      {:pre}
+      {: pre}
 
    Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
    {: tip}
@@ -355,7 +355,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
    ```sh
    ./generate_yaml.sh
    ```
-   {:pre}
+   {: pre}
 
    As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
@@ -576,7 +576,7 @@ To get started, check out the [best practices for access management and how to d
 
 ## Remove resources
 {: #cloud-e2e-security-23}
-{:removeresources}
+{: removeresources}
 
 To remove the resource, delete the deployed container and then the provisioned services.
 
@@ -603,7 +603,7 @@ If you share an account with other users, always make sure to delete only your o
 
 ## Related content
 {: #cloud-e2e-security-12}
-{:related}
+{: related}
 
 * [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/security-advisor?topic=security-advisor-about#about)
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)

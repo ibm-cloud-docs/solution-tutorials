@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial guides you through the architecture and components of a {{site.data.keyword.satellitelong_notm}} location.
-{:shortdesc}
+{: shortdesc}
 
 With {{site.data.keyword.satellitelong_notm}}, you use your own compute infrastructure that is in your on-premises data center, other cloud providers, or edge networks to create a {{site.data.keyword.satelliteshort}} location. Then, you use the capabilities of {{site.data.keyword.satelliteshort}} to run {{site.data.keyword.cloud_notm}} services on your infrastructure, and consistently deploy, manage, and control your app workloads through a single pane of glass.
 
@@ -80,7 +80,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -178,7 +178,7 @@ In the following section, you will deploy an application to a {{site.data.keywor
 1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
 
    You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
-   {:tip}
+   {: tip}
 
 1. To log in the cluster, click the **OpenShift web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.

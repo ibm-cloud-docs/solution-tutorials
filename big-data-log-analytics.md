@@ -31,12 +31,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
-{:shortdesc}
+{: shortdesc}
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
 
 While this tutorial focuses on log analysis, it is applicable to other scenarios: storage-limited IoT devices can similarly stream messages to {{site.data.keyword.cos_short}} or marketing professionals can segment and analyze customer events across digital properties with SQL Query.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #big-data-log-analytics-objectives}
@@ -262,22 +262,22 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    STORED AS JSON EMIT cos://<REGION>/<BUCKET_NAME>/logs-stream-landing/topic=webserver 
    STORED AS PARQUET EXECUTE AS <KEY_PROTECT_CRN_WITH_KEY>
    ```
-   {:codeblock}
+   {: codeblock}
 
    It is a SELECT statement from your {{site.data.keyword.messagehub}} instance and topic (identified via the unique CRN) and the selected data is emitted (EMIT) to your {{site.data.keyword.cos_short}} bucket AS PARQUET format. The operation is executed (EXECUTE) with the service ID's API key that is stored in the {{site.data.keyword.keymanagementserviceshort}} instance.
-   {:tip}
+   {: tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
    ![COS object view](images/solution31/cos_object_view.png)
    
    In the COS UI, switch to `object view` by clicking on the icon next to `Upload`, You should see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
-   {:tip} 
+   {: tip} 
 
 5. Return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above. Wait for the job to change to `Completed`.
 6. Click on the **Results** tab to see the log messages in a tabular format.
    
    The query saves the result to a `CSV` file under a different bucket with name `sql-<SQL_QUERY_GUID>`. Check the `INTO` part of the query.
-   {:tip}
+   {: tip}
 
 ### Increasing message load
 {: #big-data-log-analytics-streamsload}
@@ -309,7 +309,7 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    {: pre}
 
    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
-   {:tip}
+   {: tip}
 
 4. Stop the simulator after a desired number of messages have been stream landed using `control+C`.
 5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to see the messaged feed under the `Results` tab of the batch job. 
@@ -424,7 +424,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    {: pre}
 
    You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier and an option to generate `password` under the **Manage** tab of the service.
-   {:tip}
+   {: tip}
 
 2. Connect to the Hive server by using with Beeline client.The hive_jdbc service endpoint can be found under the **service credentials** tab of the `log-analysis-iae` service page.
    ```sh
@@ -506,7 +506,7 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 
 ## Related content
 {: #big-data-log-analytics-8}
-{:related}
+{: related}
 
 * [Apache Kafka](https://kafka.apache.org/)
 * [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)

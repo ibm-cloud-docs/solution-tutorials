@@ -38,7 +38,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
-{:shortdesc}
+{: shortdesc}
 
 After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives), you will [prepare your environment](#vpc-app-deploy-before-you-begin) for the tutorial and review the [basics of software installation](#vpc-app-deploy-basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#vpc-app-deploy-cli), [Terraform](#vpc-app-deploy-terraform) or [Ansible](#vpc-app-deploy-ansible).
 
@@ -109,29 +109,29 @@ It will walk you through example steps on a terminal using the shell, `terraform
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy
    ```
-   {:pre}
+   {: pre}
 4. Copy the configuration file:
    ```sh
    cp export.template export
    ```
-   {:pre}
+   {: pre}
 5. Edit the `export` file and set the environment variable values:
    * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
    * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
       ibmcloud is keys
       ```
-      {:pre}
+      {: pre}
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
 
 6. Load the variables into the environment:
    ```sh
    source export
    ```
-   {:pre}
+   {: pre}
 
    **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
-   {:tip}
+   {: tip}
 
 ## Basics of software installation
 {: #vpc-app-deploy-basics}
@@ -222,17 +222,17 @@ This section uses a shell script found in the [Public frontend and private backe
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/
    ```
-   {:pre}
+   {: pre}
 1. Set the current resource group:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name
    ```
-   {:pre}
+   {: pre}
 2. Run the provisioning script:
    ```sh
    ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
    ```
-   {:pre}
+   {: pre}
 
    In the command above,
       - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
@@ -261,32 +261,32 @@ This section uses a shell script found in the [Public frontend and private backe
    ```sh
    source resources.sh
    ```
-   {:pre}
+   {: pre}
 5.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
    ```
-   {:pre}
+   {: pre}
 
    Then execute this script:
    ```sh
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
    ```
-   {:pre}
+   {: pre}
 
    It can take a few minutes for the ssh service on the server to be initialized and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
-   {:tip}
+   {: tip}
 
 1. Repeat the operation with the backend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
    ```
-   {:pre}
+   {: pre}
 
    ```sh
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
    ```
-   {:pre}
+   {: pre}
 
 ### Test the configuration of the virtual servers
 {: #vpc-app-deploy-cli-test}
@@ -297,12 +297,12 @@ This section uses a shell script found in the [Public frontend and private backe
    ```sh
    source resources.sh
    ```
-   {:pre}
+   {: pre}
 1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
    ```sh
    ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -315,7 +315,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ```sh
    ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -332,7 +332,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ```sh
    ../scripts/vpc-cleanup.sh tutorialvpc-pubpriv
    ```
-   {:pre}
+   {: pre}
 
 ## Provisioning infrastructure with Terraform
 {: #vpc-app-deploy-terraform}
@@ -356,35 +356,35 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/tfinstance
    ```
-   {:pre}
+   {: pre}
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
-   {:pre}
+   {: pre}
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
-   {:pre}
+   {: pre}
    The script creates a VPC, a VSI and enable SSH access.
 1. View the output generated by the plan:
    ```sh
    terraform output
    ```
-   {:pre}
+   {: pre}
 1. You could copy paste the output of the previous command or you can use `terraform output` as follow to SSH into the VSI
    ```sh
    $(terraform output sshcommand)
    ```
-   {:pre}
+   {: pre}
    Using outputs in Terraform can become quite handy when you want to reuse resource properties in other scripts after you have applied a Terraform plan.
-   {:tip}
+   {: tip}
 1. Remove the resources created by Terraform:
    ```sh
    terraform destroy
    ```
-   {:pre}
+   {: pre}
 
 ### Provision subnets and virtual server instances
 {: #vpc-app-deploy-terraform-provision}
@@ -444,22 +444,22 @@ To provision the resources:
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/tf
    ```
-   {:pre}
+   {: pre}
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
-   {:pre}
+   {: pre}
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
-   {:pre}
+   {: pre}
 1. View the output generated by the plan:
    ```sh
    terraform output
    ```
-   {:pre}
+   {: pre}
 
 ### Test the configuration of the virtual servers
 {: #vpc-app-deploy-terraform-test}
@@ -470,7 +470,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```sh
    ../test_provision.bash $(terraform output FRONT_IP_ADDRESS) INTERNET hi
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -483,7 +483,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```sh
    ../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -500,7 +500,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```sh
    terraform destroy
    ```
-   {:pre}
+   {: pre}
 
 ## Installing software with Ansible
 {: #vpc-app-deploy-ansible}
@@ -580,41 +580,41 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
    ```
-   {:pre}
+   {: pre}
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
-   {:pre}
+   {: pre}
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
-   {:pre}
+   {: pre}
 1. View the output generated by the plan:
    ```sh
    terraform output
    ```
-   {:pre}
+   {: pre}
 1. Generate the Ansible inventory:
    ```sh
    cd .. && ./inventory.bash > inventory
    ```
-   {:pre}
+   {: pre}
 1. Provision software on the frontend server:
    ```sh
    ansible-playbook -T 40 -l FRONT_NIC_IP -u root \
      --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
      -i inventory lamp.yaml
    ```
-   {:pre}
+   {: pre}
 1. Provision software on the backend server:
    ```sh
    ansible-playbook -T 40 -l BACK_NIC_IP -u root \
      --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
      -i inventory lamp.yaml
    ```
-   {:pre}
+   {: pre}
 
 ### Test the configuration of the virtual servers
 {: #vpc-app-deploy-ansible-test}
@@ -625,7 +625,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```sh
    ../test_provision.bash $(cd tf && terraform output FRONT_IP_ADDRESS) INTERNET hi
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -638,7 +638,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```sh
    ../test_provision.bash $(cd tf && terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output BASTION_IP_ADDRESS)"
    ```
-   {:pre}
+   {: pre}
 
    The command output should be:
    ```
@@ -655,14 +655,14 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
    ```
-   {:pre}
+   {: pre}
 
    and
 
    ```sh
    terraform destroy
    ```
-   {:pre}
+   {: pre}
 
 ## Related content
 {: #vpc-app-deploy-related}

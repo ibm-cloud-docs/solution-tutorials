@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
-{:shortdesc}
+{: shortdesc}
 
 To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
@@ -79,7 +79,7 @@ In this section, you will create and configure a bastion host along with a secur
 2. Switch the **Public gateway** to **Attached**.
 
    Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
-   {:tip}
+   {: tip}
 
 3. Click **Create subnet** to provision it.
 
@@ -92,7 +92,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 2.  Now, create the following inbound rules by clicking **Add** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
-    {:tip }
+    {: tip }
 3. Click **Create security group** to create it.
 
 
@@ -136,7 +136,7 @@ Once your bastion's floating IP address is active, try connecting to it using **
 ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 ```
 
-{:pre}
+{: pre}
 
 ## Configure a security group with maintenance access rules
 {: #vpc-secure-management-bastion-server-maintenance-security-group}
@@ -147,7 +147,7 @@ With access to the bastion working, continue and create the security group for m
 1. Navigate to **Security groups** and **create** a new security group called **vpc-secure-maintenance-sg** with the **outbound** rules show in the table below.
 
  DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
- {:tip }
+ {: tip }
 
 2. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
 3. Create the security group.
@@ -251,10 +251,10 @@ To SSH into an instance using its **private IP**, you will use the bastion host 
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
    ```
 
-   {:pre}
+   {: pre}
 
    `-J` flag is supported in OpenSSH version 7.3+. In older versions `-J` is not available. In this case the safest and most straightforward way is to use ssh's stdio forwarding (`-W`) mode to "bounce" the connection through a bastion host. e.g., `ssh -o ProxyCommand="ssh -W %h:%p root@<BASTION_FLOATING_IP_ADDRESS" root@<PRIVATE_IP_ADDRESS>`
-   {:tip }
+   {: tip }
 
 ### Install software and perform maintenance tasks
 {: #vpc-secure-management-bastion-server-14}
@@ -265,13 +265,13 @@ Once connected, you can install software on the virtual server or perform mainte
    ```sh
    apt-get update
    ```
-   {:pre}
+   {: pre}
 2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
 
 When done, disconnect from the server with `exit` command.
 
 To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI and open required ports (80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
-{:tip}
+{: tip}
 
 ### Disable the maintenance security group
 {: #vpc-secure-management-bastion-server-15}
@@ -292,7 +292,7 @@ Once you're done installing software or performing maintenance, you should remov
 3. After the subnets have been deleted, switch to the **VPCs** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
-{:tip}
+{: tip}
 
 ## Related content
 {: #vpc-secure-management-bastion-server-related}

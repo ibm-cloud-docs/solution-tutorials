@@ -179,7 +179,7 @@ If you want to work with others on resources of this solution tutorial, you can 
 
 ## Remove resources
 {: #slack-chatbot-database-watson-7}
-{:removeresources}
+{: removeresources}
 {: step}
 
 Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.Db2_on_Cloud_short}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
@@ -202,7 +202,7 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related content
 {: #slack-chatbot-database-watson-9}
-{:related}
+{: related}
 
 Here are links to additional information on the topics covered in this tutorial.
 

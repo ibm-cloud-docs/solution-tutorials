@@ -32,7 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
-{:shortdesc}
+{: shortdesc}
 
 Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure monitoring agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 
@@ -64,7 +64,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 
 In addition, make sure you:
 - [grant permissions to a user to view logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam#user_logdna)
@@ -110,7 +110,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
    ```sh
    kubectl get namespaces
    ```
-   {:pre}
+   {: pre}
 -->
 <!--#/isworkshop#-->
 
@@ -132,32 +132,32 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    ```sh
    ibmcloud cr region
    ```
-   {:pre}
+   {: pre}
 1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
    MYREGISTRY=us.icr.io
    ```
-   {:pre}
+   {: pre}
 1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
-   {:pre}
+   {: pre}
    To create a new namespace:
    ```sh
    ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
    ```
-   {:pre}
+   {: pre}
 1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
    ```sh
    MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
-   {:pre}
+   {: pre}
 1. Define a **unique name** for the container image such as `<your-initials>-app-log-analysis`.
    ```sh
    MYIMAGE=<your-initials>-app-log-analysis
    ```
-   {:pre}
+   {: pre}
 
 ### Build the application
 {: #application-log-analysis-build}
@@ -186,7 +186,7 @@ On a terminal:
 1. Gain access to your cluster as described under the **Access** section of your cluster.
 
    For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
-   {:tip}
+   {: tip}
 2. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
    MYCLUSTER=mycluster
@@ -195,7 +195,7 @@ On a terminal:
    ```sh
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
-   {:pre}
+   {: pre}
 4. Define a variable pointing to the subdomain:
    ```sh
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
@@ -244,7 +244,7 @@ To provision and connect a {{site.data.keyword.la_short}} service,
    ```sh
    kubectl get pods --namespace ibm-observe
    ```
-   {:pre}
+   {: pre}
 
    You should see an output similar to this
 
@@ -296,7 +296,7 @@ In this section, you will modify what and how much is displayed and save this as
    - or a specific log level by entering `level:info` where level is a field that accepts string value.
 
    For more search fields and help, click the syntax help icon next to the search input box
-   {:tip}
+   {: tip}
 1. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 1. To highlight the terms, click on **Toggle Viewer Tools** icon.
 1. Enter **error** as your highlight term in the first input box, **container** as your highlight term in the second input box and check the highlighted lines with the terms.
@@ -357,7 +357,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
    ```sh
    kubectl get pods --namespace ibm-observe
    ```
-   {:pre}
+   {: pre}
 
    You should see the `sysdig-agent` installed
    ```sh
@@ -455,7 +455,7 @@ To focus the dashboard on your cluster:
    ```sh
    ibmcloud ks cluster rm --cluster $MYCLUSTER -f
    ```
-   {:pre}
+   {: pre}
 <!--#/istutorial#-->
 
 ## Expand the tutorial
@@ -468,7 +468,7 @@ To focus the dashboard on your cluster:
 
 ## Related content
 {: #application-log-analysis-12}
-{:related}
+{: related}
 - [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-kube_reset#kube_reset)
 - [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-archiving#archiving)
 - [Working with monitoring alerts](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-alerts)

@@ -35,7 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
-{:shortdesc}
+{: shortdesc}
 
 Developers do not like to write the same thing twice. The [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle is one example of this. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Consequently shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and uninteresting tasks.
 
@@ -282,7 +282,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 
 ### Get the code
 {: #plan-create-update-deployments-9}
@@ -636,7 +636,7 @@ You can repeat the steps for `testing` and `production`.
    {: codeblock}
 
     `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
-    {:tip}
+    {: tip}
 1. Repeat the steps for the `testing` and `production` workspaces
 1. If you created it, destroy the organization.  Change to the `terraform/global` directory.
    ```sh

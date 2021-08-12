@@ -40,7 +40,7 @@ This tutorial walks you through the process of building a predictive machine lea
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
 
 In the terminology of machine learning, classification is considered an instance of supervised learning, i.e. learning where a training set of correctly identified observations is available.
-{:tip}
+{: tip}
 
 {{site.data.keyword.DSX}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
 
@@ -139,7 +139,7 @@ Once the model is created,
 6. The **AutoAI experiment** may take up to 5 minutes to select the right Algorithm for your model. Click on **Swap view** to see the Relationship map.
 
    Each model pipeline is scored for a variety of metrics and then ranked. The default ranking metric for binary classification models is the area under the ROC curve, for multi-class classification models is accuracy, and for for regression models is the root mean-squared error (RMSE). The highest-ranked pipelines are displayed in a leaderboard, so you can view more information about them. The leaderboard also provides the option to save select model pipelines after reviewing them.
-   {:tip}
+   {: tip}
 
 Once the experiment completes running, under the **Pipeline** leaderboard,
 1. Click on **Pipeline comparison** to view how the top pipelines compare.
@@ -147,7 +147,7 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 3. Click a pipeline to view more detail about the metrics and performance.
 
    Sorting by different metrics may not change the leaderboard rankings as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary
-   {:tip}
+   {: tip}
 
 4. Next to the model with *Rank 1* when sorted by Accuracy, click on **Save as** > **Model**.
 5. Check the details of the model and click **Create**.
@@ -185,7 +185,7 @@ In this section, you will deploy the saved model and test the deployed model,
       }]
     }
    ```
-   {:codeblock}
+   {: codeblock}
 2. Click **Predict** and you should see the **Predictions** JSON output under **Result**.
 3. You can change the input data and continue testing your model.
 
@@ -201,20 +201,20 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
    ```
-   {:pre}
+   {: pre}
 
    {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
-   {:tip}
+   {: tip}
 4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
    ```sh
    ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
    ```
-   {:pre}
+   {: pre}
 5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
    ```
-   {:pre}
+   {: pre}
 6. Run the below **cURL** code in the cloud shell to see the prediction results.
    ```sh
    curl -X POST \
@@ -224,10 +224,10 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length","petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
    $SCORING_ENDPOINT
    ```
-   {:pre}
+   {: pre}
 
    If you observe, the code is from the **cURL** tab of the deployment your created above. Thereafter, replacing the `[$ARRAY_OF_INPUT_FIELDS]` placeholder with  **["sepal_length", "sepal_width", "petal_length","petal_width"]**, `[$ARRAY_OF_VALUES_TO_BE_SCORED]` placeholder with **[5.1,3.5,1.4,0.2]** and `[$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED]` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
-   {:tip}
+   {: tip}
 
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {: #create-deploy-retrain-machine-learning-model-monitor_openscale}
@@ -282,7 +282,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
       ```sh
       ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
       ```
-      {:pre}
+      {: pre}
    4. Copy and paste the credentials without any trailing spaces and click **Connect**
    5. Select the Bucket that starts with `irisproject-donotdelete-`
    6. Select `iris_initial.csv` from the Data set dropdown and click **Next**
@@ -296,7 +296,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
     3. On the left pane, Click on **Go to model summary**
 
    The quality monitor (previously known as the accuracy monitor) reveals how well your model predicts outcomes.
-   {:tip}
+   {: tip}
 
 As the tutorial uses a small dataset, configuring Fairness and Drift won't have any impact.
 
@@ -312,11 +312,11 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
    To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
-   {:tip}
+   {: tip}
 
 ## Remove resources
 {: #create-deploy-retrain-machine-learning-model-0}
-{:removeresources}
+{: removeresources}
 {: step}
 
 1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
@@ -325,7 +325,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 
 ## Related content
 {: #create-deploy-retrain-machine-learning-model-8}
-{:related}
+{: related}
 
 - [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
 - [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
