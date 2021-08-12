@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in two different regions with subnets and virtual server instances (VSIs). You will create VSIs in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer to provide high availability between regions and reduce network latency for users in different geographies.
-{:shortdesc}
+{: shortdesc}
 
 For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, you will use the {{site.data.keyword.cloudcerts_long_notm}} service.
 
@@ -135,7 +135,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 {: step}
 
 Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
-{:tip}
+{: tip}
 
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
 
@@ -144,19 +144,19 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
    sudo apt-get update
    sudo apt-get install nginx
    ```
-   {:codeblock}
+   {: codeblock}
 2. Check the status of the Nginx service with the following command:
    ```
    sudo systemctl status nginx
    ```
-   {:codeblock}
+   {: codeblock}
    The output should show you that the Nginx service is **active** and running.
 4. Optionally verify that Nginx works as expected.  `curl localhost`.  You should see the default Nginx welcome page.
 5. To update the html page with the region and zone details, run the below command
    ```
    nano /var/www/html/index.nginx-debian.html
    ```
-   {:codeblock}
+   {: codeblock}
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. `curl localhost` again to notice the changes
 7. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
@@ -238,7 +238,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
-   {:tip}
+   {: tip}
 
 ### Configure Health Check for the Global Load Balancer
 {: #vpc-multi-region-11}
@@ -252,7 +252,7 @@ A health check helps gain insight into the availability of pools so that traffic
 1. Click **Save**.
 
    When building your own applications, you could define a dedicated health endpoint such as */health* where you would report the application state.
-   {:tip}
+   {: tip}
 
 ### Define Origin Pools
 {: #vpc-multi-region-12}
@@ -355,7 +355,7 @@ Add an HTTPS listener to the VPC load balancers:
 1. Select HTTPS, Port: 443. The SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt. Click on **Save**.
 
    If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**.
-   {:tip}
+   {: tip}
 1. Repeat for the **vpc-lb-region2** load balancer.
 
 The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-<region>.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
@@ -443,7 +443,7 @@ By now, you should have seen that most of the time you are hitting the servers i
 5. Now, when you refresh your domain url, you should always be hitting the servers in **region 2**.
 
    Don't forget to **start** the servers in zone 1 and zone 2 of region 1.
-   {:tip}
+   {: tip}
 
 ## Remove resources
 {: #vpc-multi-region-removeresources}

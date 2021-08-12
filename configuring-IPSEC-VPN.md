@@ -39,7 +39,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks.
-{:shortdesc}
+{: shortdesc}
 
 {{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection.
 
@@ -56,7 +56,7 @@ This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router 
 
 This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec
 VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #configuring-IPSEC-VPN-objectives}
@@ -320,13 +320,13 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 ## Remove resources
 {: #configuring-IPSEC-VPN-8}
-{:removeresources}
+{: removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
-{:tip}
+{: tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
@@ -334,7 +334,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Related content
 {: #configuring-IPSEC-VPN-9}
-{:related}
+{: related}
 - [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips)
 - [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)

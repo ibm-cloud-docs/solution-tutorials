@@ -39,10 +39,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
    - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
    - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
-{:shortdesc}
+{: shortdesc}
 
 VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Director, you may see references in the UI and/or related documentation of one or the other, they are the same product.
-{:tip}
+{: tip}
 
 ## Objectives
 {: #vmware-solutions-shared-getting-started-objectives}
@@ -74,7 +74,7 @@ This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 ## Create services
@@ -274,10 +274,10 @@ You can create rules to allow or deny traffic, this section creates a rule to al
   ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
 
   This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
-  {:tip}
+  {: tip}
 
   In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
-  {:tip}
+  {: tip}
 
   ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
@@ -338,10 +338,10 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
   
     Some values have defaults which are appropriate to keep for this tutorial.
-    {:tip}
+    {: tip}
 
     Set the Sensitive flag for the `vcd-password` variable to that the value is not displayed in the workspace and/or logs.
-    {:tip}
+    {: tip}
 
 5. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
 6. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 

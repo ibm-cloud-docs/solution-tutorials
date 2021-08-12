@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #solution-template-objectives}
@@ -82,7 +82,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In addition, make sure you have:
@@ -130,7 +130,7 @@ Introductory statement that overviews the section
 1. Step 1 Click **This** and enter your name.
 
   This is a tip.
-  {:tip}
+  {: tip}
 
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.

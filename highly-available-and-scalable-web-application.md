@@ -74,7 +74,7 @@ In this tutorial, the load balancer is the front door for the application users.
 1. [Ensure your VPN Access is enabled](/docs/iaas-vpn?topic=iaas-vpn-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
-     {:tip}
+     {: tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
@@ -123,27 +123,27 @@ The server does not come with a database. In this section, you install MySQL on 
    ```sh
    ssh root@<Private-OR-Public-IP-Address>
    ```
-   {:pre}
+   {: pre}
 
    Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
-   {:tip}
+   {: tip}
 2. Install MySQL:
    ```sh
    apt-get update
    apt-get -y install mysql-server
    ```
-   {:pre}
+   {: pre}
 
    You may be prompted for a password. Read through the instructions on the console shown.
-   {:tip}
+   {: tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
-   {:pre}
+   {: pre}
 
    You may be prompted with couple of options. Choose wisely based on your requirements.
-   {:tip}
+   {: tip}
 
 ### Create a database for the application
 {: #highly-available-and-scalable-web-application-7}
@@ -152,39 +152,39 @@ The server does not come with a database. In this section, you install MySQL on 
    ```sh
    mysql -u root -p
    ```
-   {:pre}
+   {: pre}
 
    and create a database called `wordpress`
    ```sh
    CREATE DATABASE wordpress;
    ```
-   {:pre}
+   {: pre}
 
 2. Define a username and a password to use for Wordpress (_wpuser_ and _wppassword_ as example). Grant access to the database to this user by replacing database-username and database-password with your choices.
 
    ```sql
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO database-username@'%' IDENTIFIED BY 'database-password';
    ```
-   {:codeblock}
+   {: codeblock}
 
    ```sql
    FLUSH PRIVILEGES;
    ```
-   {:codeblock}
+   {: codeblock}
 
 3. Check if database created by using:
 
    ```sql
    show databases;
    ```
-   {:codeblock}
+   {: codeblock}
 
 4. Exit from the database using:
 
    ```sql
    exit
    ```
-   {:codeblock}
+   {: codeblock}
 
 5. Make note of the database name, user and password. You will need them when configuring the application servers.
 
@@ -198,7 +198,7 @@ By default MySQL only listens on the local interface. The application servers wi
    [mysqld]
    bind-address    = 0.0.0.0
    ```
-   {:codeblock}
+   {: codeblock}
 
 2. Exit and save the file using Ctrl+X.
 
@@ -207,13 +207,13 @@ By default MySQL only listens on the local interface. The application servers wi
    ```sh
    systemctl restart mysql
    ```
-   {:pre}
+   {: pre}
 
 4. Confirm MySQL is listening on all interfaces by running the following command:
    ```sh
    netstat --listen --numeric-ports | grep 3306
    ```
-   {:pre}
+   {: pre}
 
 ## Create a file storage for database backups
 {: #highly-available-and-scalable-web-application-database_backup}
@@ -251,19 +251,19 @@ The file storage can be mounted as an NFS drive into the virtual server.
    ```sh
    apt-get -y install nfs-common
    ```
-   {:pre}
+   {: pre}
 
 2. Create a file called `/etc/systemd/system/mnt-database.mount` by running the following command
    ```bash
    touch /etc/systemd/system/mnt-database.mount
    ```
-   {:pre}
+   {: pre}
 
 3. Edit the mnt-database.mount by using:
    ```
    nano /etc/systemd/system/mnt-database.mount
    ```
-   {:pre}
+   {: pre}
 
 4. Add the content below to the mnt-database.mount file and replace `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** of the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created.
    ```
@@ -279,7 +279,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
-   {:codeblock}
+   {: codeblock}
 
    Use Ctrl+X to save and exit the `nano` window
    {: tip}
@@ -288,19 +288,19 @@ The file storage can be mounted as an NFS drive into the virtual server.
    ```sh
    mkdir /mnt/database
    ```
-   {:pre}
+   {: pre}
 
 6. Mount the storage
    ```sh
    systemctl enable --now /etc/systemd/system/mnt-database.mount
    ```
-   {:pre}
+   {: pre}
 
 7. Check if the mount was successfully done
    ```sh
    mount
    ```
-   {:pre}
+   {: pre}
 
    The last lines should list the file storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
@@ -313,22 +313,22 @@ The file storage can be mounted as an NFS drive into the virtual server.
    #!/bin/bash
    mysqldump -u root -p CHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
    ```
-   {:codeblock}
+   {: codeblock}
 2. Make sure the file is executable
    ```sh
    chmod 700 /root/dbbackup.sh
    ```
-   {:pre}
+   {: pre}
 3. Edit the crontab
    ```sh
    crontab -e
    ```
-   {:pre}
+   {: pre}
 4. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
    ```
    0 23 * * * /root/dbbackup.sh
    ```
-   {:codeblock}
+   {: codeblock}
 
 ## Provision two servers for the PHP application
 {: #highly-available-and-scalable-web-application-app_servers}
@@ -396,7 +396,7 @@ Repeat the following steps on each application server(app1 and app2):
    apt-get update
    apt-get -y install nfs-common
    ```
-   {:pre}
+   {: pre}
 2. Create a file using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content by replacing `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can find the mount points under [list of file storage volumes](https://{DomainName}/classic/storage/file)
    ```
    [Unit]
@@ -411,22 +411,22 @@ Repeat the following steps on each application server(app1 and app2):
    [Install]
    WantedBy = multi-user.target
    ```
-   {:codeblock}
+   {: codeblock}
 3. Create the mount point
    ```sh
    mkdir /mnt/www
    ```
-   {:pre}
+   {: pre}
 4. Mount the storage
    ```sh
    systemctl enable --now /etc/systemd/system/mnt-www.mount
    ```
-   {:pre}
+   {: pre}
 5. Check if the mount was successfully done
    ```sh
    mount
    ```
-   {:pre}
+   {: pre}
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
@@ -449,18 +449,18 @@ Repeat the following steps on each application server:
    apt-get update
    apt-get -y install nginx
    ```
-   {:pre}
+   {: pre}
 2. Install PHP and mysql client
    ```sh
    apt-get -y install php-fpm php-mysql
    ```
-   {:pre}
+   {: pre}
 3. Stop PHP service and nginx
    ```sh
    systemctl stop php7.2-fpm
    systemctl stop nginx
    ```
-   {:pre}
+   {: pre}
 4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
    ```sh
    server {
@@ -512,12 +512,12 @@ Repeat the following steps on each application server:
           }
    }
    ```
-   {:codeblock}
+   {: codeblock}
 5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
    mkdir -p /mnt/www/html
    ```
-   {:pre}
+   {: pre}
 
 ### Install and configure WordPress
 {: #highly-available-and-scalable-web-application-22}
@@ -533,14 +533,14 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    cd /tmp
    curl -O https://wordpress.org/latest.tar.gz
    ```
-   {:pre}
+   {: pre}
 
    If the virtual server has only a private network link, you will need to retrieve the installation files from another machine with Internet access and to copy them to the virtual server. Assuming you have retrieved the Wordpress installation files from https://wordpress.org/latest.tar.gz, you can copy it to the virtual server with `scp`:
 
    ```sh
    scp latest.tar.gz root@PRIVATE_IP_ADDRESS_OF_THE_SERVER:/tmp
    ```
-   {:pre}
+   {: pre}
    Replace `latest` with the filename you downloaded from wordpress website.
    {: tip}
 
@@ -549,27 +549,27 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    ```sh
    cd /tmp
    ```
-   {:pre}
+   {: pre}
 
 2. Extract the installation files
 
    ```sh
    tar xzvf latest.tar.gz
    ```
-   {:pre}
+   {: pre}
 
 3. Prepare the Wordpress files
    ```sh
    cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
    mkdir /tmp/wordpress/wp-content/upgrade
    ```
-   {:pre}
+   {: pre}
 
 4. Copy the files to the shared file storage
    ```sh
    rsync -av -P /tmp/wordpress/. /mnt/www/html
    ```
-   {:pre}
+   {: pre}
 
 5. Set permissions
    ```sh
@@ -579,13 +579,13 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    chmod -R g+w /mnt/www/html/wp-content/themes
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
-   {:pre}
+   {: pre}
 
 6. Call the following web service and inject the result into `/mnt/www/html/wp-config.php` using `nano`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
-   {:pre}
+   {: pre}
 
    If your virtual server has no public network link, you can simply open https://api.wordpress.org/secret-key/1.1/salt/ from your web browser.
 
@@ -597,7 +597,7 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    define('DB_PASSWORD', 'database-password');
    define('DB_HOST', 'database-server-ip-address');
    ```
-   {:codeblock}
+   {: codeblock}
    Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
 On both application servers, start the web server and the PHP runtime:
@@ -607,7 +607,7 @@ On both application servers, start the web server and the PHP runtime:
    systemctl start php7.2-fpm
    systemctl start nginx
    ```
-   {:pre}
+   {: pre}
 
 Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*. Complete the Wordpress installation wizard.
 
@@ -658,7 +658,7 @@ The load balancer is configured to check the health of the servers and to redire
    ```sh
    tail -f /var/log/nginx/*.log
    ```
-   {:pre}
+   {: pre}
 
    You should already see the regular pings from the Load Balancer to check the server health.
    {: tip}
@@ -668,7 +668,7 @@ The load balancer is configured to check the health of the servers and to redire
    ```sh
    systemctl stop nginx
    ```
-   {:pre}
+   {: pre}
 
 4. After a short while reload the Wordpress page, notice all hits are going to *app2*.
 
@@ -680,7 +680,7 @@ The load balancer is configured to check the health of the servers and to redire
    ```sh
    systemctl start nginx
    ```
-   {:pre}
+   {: pre}
 
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 

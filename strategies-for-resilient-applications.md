@@ -342,7 +342,7 @@ Many of the services provide stateless APIs and offer high availability through 
 ## Related content
 {: #strategies-for-resilient-applications-25}
 
-{:related}
+{: related}
 
 - [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)

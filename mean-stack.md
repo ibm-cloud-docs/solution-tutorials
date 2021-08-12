@@ -44,7 +44,7 @@ This tutorial walks you through the creation of a web application using the popu
 - Deploy the Node.js app to the cloud.
 - Scale MongoDB memory and disk resources.
 
-{:#architecture}
+{: #architecture}
 
 <p style="text-align: center;">
 
@@ -173,7 +173,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 ## Remove resources
 {: #mean-stack-6}
-{:removeresources}
+{: removeresources}
 {: step}
 
 To remove resource, follow these steps:

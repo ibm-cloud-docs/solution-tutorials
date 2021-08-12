@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
 Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, and resizing the VSI after the fact. 
-{:shortdesc}
+{: shortdesc}
 
 You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. The Terraform template defines the {{site.data.keyword.Bluemix_notm}} resources to be created, updated, or deleted.
 
@@ -100,7 +100,7 @@ Navigate to the [resource list](https://{DomainName}/resources). Here, you can f
 {: #vpc-scaling-dedicated-compute-metrics}
 
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only one instance in a location (region) can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure one instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
-{:important}
+{: important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
 2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you wish to enable monitoring.
@@ -110,7 +110,7 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
    For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](https://{DomainName}/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](https://{DomainName}/docs/monitoring?topic=monitoring-platform_metrics_enabling)
-   {:tip}
+   {: tip}
 
 
 ## Set up a multizone Virtual Private Cloud
@@ -131,7 +131,7 @@ As the load increases, you may need more instances to serve the traffic. You may
 An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
-   {:tip}
+   {: tip}
 
    ![instance group](images/solution62-vpc-scaling-dedicated/instance_group.svg)
 
@@ -144,7 +144,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 2. Click on **Apply plan** to provision the VPC resources.
 
    There are multiple Terraform modules involved in provisioning the VPC resources. To understand better, check the [main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf) file.
-   {:tip}
+   {: tip}
 
 3. Follow the status logs by clicking on **Show more**.
    After the apply is succesful, you should see the following resources provisioned:
@@ -156,14 +156,14 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
     - Initially, two VSIs (one frontend instance and one backend instance) with respective security groups attached
 
       The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
-      {:tip}
+      {: tip}
 
 4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance, e.g.,10 and click **Submit** to see the details of the VSIs serving the request.
 
     ![application](images/solution62-vpc-scaling-dedicated/application.png)
 
     To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with [ibmcloud is](https://{DomainName}/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
-    {:tip}
+    {: tip}
 
 In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.
 
@@ -197,12 +197,12 @@ You can check the logs and monitor your load balancers later in the tutorial.
 3. Under **Memberships** tab of your [instance group](https://{DomainName}/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
-   {:tip}
+   {: tip}
 
 4. Navigate to the browser showing the frontend app and **submit** balance multiple times to see the details of the frontend VSI and backend VSI serving the request.
 
    Wait for the instances to scale as the aggregate period is set to `90 seconds` and cooldown period set to `120 seconds`.
-   {:tip}
+   {: tip}
 
 5. Wait for the instances to scale to `1` before moving to the next step.
 
@@ -271,10 +271,10 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```sh
    export INSTANCE_IP=<IP_ADDRESS>
    ```
-   {:pre}
+   {: pre}
 
    Typically, you won't set a public IP (floating IP) for an instance. In this case, a floating IP is set only to simply the use of the app deployed to the instance.
-   {:tip} 
+   {: tip} 
 
 4. Issue the following curl command to query the database. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
@@ -285,7 +285,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
    http://$INSTANCE_IP/api/bank
    ```
-   {:pre}   
+   {: pre}   
 
 5. Issue the following curl command to query the COS bucket. The application running on the instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the instance on the dedicated host.
    ```sh
@@ -295,7 +295,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
    http://$INSTANCE_IP/api/bank
    ```
-   {:pre}
+   {: pre}
 
 6.  Issue the following curl command to query the database and COS bucket at once. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
@@ -305,7 +305,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
    http://$INSTANCE_IP/api/bank
    ```
-   {:pre}
+   {: pre}
 
 ## Resize the VSI on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
@@ -316,7 +316,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
     Virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
-   {:tip}
+   {: tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
 3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the instance name.

@@ -33,7 +33,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to provision and configure {{site.data.keyword.Bluemix_notm}} resources to create an IBM Spectrum LSF cluster.
-{:shortdesc}
+{: shortdesc}
 
 There are many reasons to consider hosting your IBM Spectrum LSF managed workload on the {{site.data.keyword.cloud}}.  While some reasons might be specific to a particular enterprise, this tutorial will demonstrate the advantages in the areas of cost, speed and flexibility. {{site.data.keyword.vpc_full}} offers essentially unlimited compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.
 This tutorial and the associated automation scripts will provide an easy way to get started by giving you an automated path to provisioning cloud based resources and configuring them to run an IBM Spectrum LSF Cluster.

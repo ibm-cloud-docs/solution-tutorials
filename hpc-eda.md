@@ -35,7 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 Electronic Design Automation (EDA) requires a complex set of tools that are resource intensive. These workloads are commonly run on [IBM Spectrum LSF](https://www.ibm.com/products/hpc-workload-management).
 
 An EDA workload currently running in IBM Spectrum LSF in an on-premises data center is a good candidate to evolve to a hybrid cloud environment.  There are many reasons to consider shifting some or all of an existing on-premises EDA workload to the {{site.data.keyword.cloud}}.  Many reasons might be specific to a particular enterprise, but this tutorial focuses on cost, speed and flexibility.  {{site.data.keyword.vpc_full}} offers significantly more compute power that you can provision and return quickly to address increasing or decreasing demand and still allow you to manage costs.  
-{:shortdesc}
+{: shortdesc}
 
 You can span a IBM Spectrum LSF cluster between on-premises and cloud domains in two ways:
 * A stretch cluster operates as a single cluster with a single (on-premises) master that spans two domains by communicating over a secure network.  

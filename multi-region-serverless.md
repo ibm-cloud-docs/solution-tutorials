@@ -81,7 +81,7 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
 6. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. Click **Next** and once the service is configured, click **Done**.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
-   {:tip}
+   {: tip}
 
 ### Create a {{site.data.keyword.cloudcerts_short}} instance and verify ownership of your domain.
 {: #multi-region-serverless-3}

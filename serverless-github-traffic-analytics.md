@@ -146,7 +146,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    Note that each bind causes a new service key to be created and a new revision of the app to be deployed.
 
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
-   {:tip}
+   {: tip}
 
 ## App ID and GitHub configuration (browser)
 {: #serverless-github-traffic-analytics-4}
@@ -157,12 +157,12 @@ The following steps are all performed using your Internet browser. First, you co
 2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **Enabled**, all other providers to **Disabled**.
 
    You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
-   {:tip}
+   {: tip}
 
 3. Click on the **Authentication Settings** tab in the same dialog. In **Add web redirect URLs** enter the **url** of your application + `/redirect_uri`, for example `https://ghstats-app.56ab78cd90ef.us-south.codeengine.appdomain.cloud/redirect_uri`.
 
    For testing the app locally, the redirect URL is `http://127.0.0.1:5000/redirect_uri`. You can configure multiple redirect URLs. In order to test the app locally, copy **.env.local.template** to **.env**, adapt it and start the app using `python3 ghstats.py`.
-   {:tip}
+   {: tip}
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
@@ -207,7 +207,7 @@ With the app in place and configured, the last part is to initiate daily retriev
    This creates a new app revision. You can check that the events were received and processed by the app when navigating in the app to **Administration**, then **System log**.
 
    The command above creates a schedule for 6 am UTC daily. To directly check that the eventing works, choose a time few minutes after your current time, converted to UTC.
-   {:tip}
+   {: tip}
 
 ## Conclusions
 {: #serverless-github-traffic-analytics-7}
@@ -229,7 +229,7 @@ You can recreate and thereby rotate the credentials for the services bound to th
 
 ## Remove resources
 {: #serverless-github-traffic-analytics-9}
-{:removeresources}
+{: removeresources}
 {: step}
 
 To clean up the resources used for this tutorial, you can delete the related project and services.
