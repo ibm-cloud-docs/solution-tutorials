@@ -46,10 +46,8 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 
 This tutorial involves an active/active scenario where two copies of the application are deployed in two different locations and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy location if one copy fails.
 
-<p style="text-align: center;">
+![Architecture](./images/solution1/Architecture.png)
 
-   ![Architecture](./images/solution1/Architecture.png)
-</p>
 
 ## Before you begin
 {: #multi-region-webapp-prereqs}
@@ -95,6 +93,7 @@ In this step, you set up a git source control repository to store your code and 
    cd <name_of_your_app>
    ```
    {: pre}
+
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
 7. Run the application locally by running the commands one after another
@@ -107,6 +106,7 @@ In this step, you set up a git source control repository to store your code and 
    git push origin master
    ```
    {: pre}
+
 9. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 10. Confirm that you see the **BUILD** and **DEPLOY** stages.
   ![HelloWorld](images/solution1/DevOps_Pipeline.png)
@@ -281,6 +281,7 @@ For the application deployed in London, use a separate manifest to configure the
 	  disk_quota: 1024M
    ```
    {: pre}
+   
 1. In the toolchain, change the deploy script to:
    ```sh
    #!/bin/bash

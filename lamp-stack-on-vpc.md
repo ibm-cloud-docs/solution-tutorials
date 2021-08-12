@@ -50,8 +50,8 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
 ## Before you begin
 {: #lamp-stack-on-vpc-1}
-
 {: #prereqs}
+
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
@@ -95,11 +95,12 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-  The above command generates two files inside of the `~/.ssh` directory: `id_rsa` and `id_rsa.pub`.  Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
-  {: tip}
+   The above command generates two files inside of the `~/.ssh` directory: `id_rsa` and `id_rsa.pub`.  Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
+   {: tip}
 
    If you have an existing SSH key that you would like to re-use, you can upload it to your {{site.data.keyword.cloud-shell_short}} session instead.
    {: tip}
+   
 1. Add the SSH key to your account.
    ```sh
    SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --json | jq -r '.id')
@@ -491,7 +492,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
    ibmcloud is instance-start $VSI_ID
    ```
    {: pre}
-   
+
 1.  You may need to wait a couple of minutes as the VSI is placed on an appropriate host and started. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. You should be able to access your WordPress page just as you had it before the resizing.
 
 ## Remove resources

@@ -49,9 +49,8 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-<p style="text-align: center;">
-  ![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
-</p>
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
+
 
 1. The developer builds Docker images for the application.
 2. The images are pushed to {{site.data.keyword.registryshort_notm}} in Dallas and London.
@@ -109,6 +108,7 @@ While the cluster is getting ready, you are going to prepare the application.
    ibmcloud target -r us-south
    ```
    {: pre}
+
 2. Create a namespace for the application.
    ```bash
    MYNAMESPACE=<your_namespace>
@@ -129,6 +129,7 @@ This step builds the application into a Docker image. You can skip this step if 
    git clone https://github.com/IBM/container-service-getting-started-wt.git
    ```
    {: pre}
+
 1. Navigate to the `Lab 1` directory.
    ```bash
    cd 'container-service-getting-started-wt/Lab 1'
@@ -164,17 +165,20 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: pre}
+
 1. Create the deployment:
    ```bash
    kubectl create deploy hello-world-deployment --image=us.icr.io/$MYNAMESPACE/multi-region-hello-world:1
    ```
    {: pre}
+
    Example output: `deployment "hello-world-deployment" created`.
 1. Make the application accessible within the cluster by creating a service:
    ```bash
    kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
    ```
    {: pre}
+
    It returns message like `service "hello-world-service" exposed`.  To see the services:
 
    ```bash
@@ -204,6 +208,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
+   
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 

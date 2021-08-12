@@ -51,10 +51,8 @@ Serverless computing platforms give developers a rapid way to build APIs without
 
 The tutorial considers a public web application with a back-end implemented with {{site.data.keyword.openwhisk_short}}. To reduce network latency and prevent outage, the application is deployed in multiple locations. Two locations are configured in the tutorial.
 
-<p style="text-align: center;">
+![Architecture](images/solution44-multi-region-serverless/Architecture.png)
 
-  ![Architecture](images/solution44-multi-region-serverless/Architecture.png)
-</p>
 
 1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
 2. {{site.data.keyword.cis_full_notm}} redirect the users to the closest healthy API back-end.
@@ -117,10 +115,8 @@ For renewing certificates, check the documentation [here](/docs/certificate-mana
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
 
-<p style="text-align: center;">
+![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
 
-  ![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
-</p>
 
 The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could as simple as returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
 
@@ -144,6 +140,7 @@ The three following sections will need to be repeated for every location where y
    }
    ```
    {: codeblock}
+
 5. Click **Save**
 6. Click **Actions** on the navigation menu to create another action to be used as health check for our API:
    1. Set **Name** to **healthz**.
@@ -157,6 +154,7 @@ The three following sections will need to be repeated for every location where y
    }
    ```
    {: codeblock}
+
 8. Click **Save**
 
 ### Expose the actions with a managed API
@@ -212,10 +210,8 @@ Repeat the previous sections to configure more locations.
 
 **At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
 
-<p style="text-align: center;">
+![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
 
-  ![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
-</p>
 
 ### Create a health check
 {: #multi-region-serverless-10}

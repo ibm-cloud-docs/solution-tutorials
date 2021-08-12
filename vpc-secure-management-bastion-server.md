@@ -93,6 +93,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
     {: tip }
+    
 3. Click **Create security group** to create it.
 
 
