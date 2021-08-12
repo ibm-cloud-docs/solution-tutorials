@@ -52,27 +52,19 @@ After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives)
 
 In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
-<p style="text-align: center;">
+![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
-  ![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
-</p>
 
 The configuration also includes [a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
-<p style="text-align: center;">
-
-  ![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
-</p>
+![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
 
 While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
 1. The file system of a local workstation - using tools like Terraform to create the required infrastructure or Ansible, `ssh` and `scp` to install and configure software on the virtual server instances;
 2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install supported packages;
 3. Internet or intranet software repositories.
 
-<p style="text-align: center;">
-
-  ![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
-</p>
+![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 
 You will explore how to consume these different sources.
 
@@ -99,22 +91,26 @@ It will walk you through example steps on a terminal using the shell, `terraform
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
    {: pre}
+
 2. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
    ```sh
    cd vpc-tutorials
    export CHECKOUT_DIR=$PWD
    ```
    {: pre}
+
 3. Change to the tutorial directory:
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy
    ```
    {: pre}
+
 4. Copy the configuration file:
    ```sh
    cp export.template export
    ```
    {: pre}
+
 5. Edit the `export` file and set the environment variable values:
    * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
    * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
@@ -122,6 +118,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is keys
       ```
       {: pre}
+
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
 
 6. Load the variables into the environment:
@@ -223,11 +220,13 @@ This section uses a shell script found in the [Public frontend and private backe
    cd $CHECKOUT_DIR/vpc-app-deploy/
    ```
    {: pre}
+
 1. Set the current resource group:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name
    ```
    {: pre}
+
 2. Run the provisioning script:
    ```sh
    ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
@@ -262,6 +261,7 @@ This section uses a shell script found in the [Public frontend and private backe
    source resources.sh
    ```
    {: pre}
+
 5.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
@@ -298,6 +298,7 @@ This section uses a shell script found in the [Public frontend and private backe
    source resources.sh
    ```
    {: pre}
+
 1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
    ```sh
    ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
@@ -357,27 +358,32 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
    cd $CHECKOUT_DIR/vpc-app-deploy/tfinstance
    ```
    {: pre}
+
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
    {: pre}
+
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
    {: pre}
+
    The script creates a VPC, a VSI and enable SSH access.
 1. View the output generated by the plan:
    ```sh
    terraform output
    ```
    {: pre}
+
 1. You could copy paste the output of the previous command or you can use `terraform output` as follow to SSH into the VSI
    ```sh
    $(terraform output sshcommand)
    ```
    {: pre}
+
    Using outputs in Terraform can become quite handy when you want to reuse resource properties in other scripts after you have applied a Terraform plan.
    {: tip}
 1. Remove the resources created by Terraform:
@@ -445,16 +451,19 @@ To provision the resources:
    cd $CHECKOUT_DIR/vpc-app-deploy/tf
    ```
    {: pre}
+
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
    {: pre}
+
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
    {: pre}
+
 1. View the output generated by the plan:
    ```sh
    terraform output
@@ -581,26 +590,31 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
    ```
    {: pre}
+
 1. Initialize Terraform:
    ```sh
    terraform init
    ```
    {: pre}
+
 1. Apply the Terraform plan:
    ```sh
    terraform apply
    ```
    {: pre}
+
 1. View the output generated by the plan:
    ```sh
    terraform output
    ```
    {: pre}
+
 1. Generate the Ansible inventory:
    ```sh
    cd .. && ./inventory.bash > inventory
    ```
    {: pre}
+
 1. Provision software on the frontend server:
    ```sh
    ansible-playbook -T 40 -l FRONT_NIC_IP -u root \
@@ -608,6 +622,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
      -i inventory lamp.yaml
    ```
    {: pre}
+   
 1. Provision software on the backend server:
    ```sh
    ansible-playbook -T 40 -l BACK_NIC_IP -u root \

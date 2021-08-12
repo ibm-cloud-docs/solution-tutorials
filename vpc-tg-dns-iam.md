@@ -170,10 +170,12 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
    cp terraform.tfvars.template terraform.tfvars
    ```
    {: pre}
+
    ```
    edit terraform.tfvars
    ```
    {: pre}
+
     - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the above prerequisites.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
     - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required.  Most resources created will use this as a name prefix.
@@ -217,6 +219,7 @@ The admin team will need to have Admin access to the IAM-enabled resources in th
    echo basename=$basename
    ```
    {: pre}
+
 1. Change directory, generate and source your personal API key in local.env.  When terraform is invoked it will become you.  Terraform will be the administrator:
    ```
    cd admin
@@ -225,6 +228,7 @@ The admin team will need to have Admin access to the IAM-enabled resources in th
    source local.env
    ```
    {: pre}
+
 1. Apply of the main.tf terraform configuration file creates the following resources:
    - Resource groups for each team
    - Access groups for each team and a service ID in each access group
@@ -236,6 +240,7 @@ The admin team will need to have Admin access to the IAM-enabled resources in th
    terraform apply
    ```
    {: pre}
+
 1. Verify some of the resources were created:
    ```
    ibmcloud resource groups | grep $basename
@@ -543,6 +548,7 @@ The Admin team has provided them just the right amount of permissions to create 
    source local.env
    ```
    {: pre}
+
    The application1 team resources are very similar to the *shared* team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
 
 1. Optionally investigate the source code that initializes the CentOS instance.  It is has been captured in a terraform module shared by all the teams during this exploratory stage.
@@ -814,6 +820,7 @@ The Admin team has provided them just the right amount of permissions to create 
    edit terraform.tfvars
    ```
    {: pre}
+
    ```
    terraform apply
    ```
@@ -872,6 +879,7 @@ The second *application* team environment is identical to the first.  Optionally
    terraform apply
    ```
    {: pre}
+   
 1. Test the curl commands
 
 ## Remove resources

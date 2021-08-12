@@ -49,7 +49,7 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-  ![Architecture](images/solution41-vpc-multi-region/Architecture.png)
+![Architecture](images/solution41-vpc-multi-region/Architecture.png)
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
 2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
@@ -145,11 +145,13 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
    sudo apt-get install nginx
    ```
    {: codeblock}
+
 2. Check the status of the Nginx service with the following command:
    ```
    sudo systemctl status nginx
    ```
    {: codeblock}
+
    The output should show you that the Nginx service is **active** and running.
 4. Optionally verify that Nginx works as expected.  `curl localhost`.  You should see the default Nginx welcome page.
 5. To update the html page with the region and zone details, run the below command
@@ -157,6 +159,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
    nano /var/www/html/index.nginx-debian.html
    ```
    {: codeblock}
+
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. `curl localhost` again to notice the changes
 7. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.

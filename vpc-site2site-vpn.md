@@ -293,6 +293,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    source network_config.sh
    ```
    {: pre}
+
 2. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh.
 
    ```sh
@@ -375,6 +376,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ipsec restart
    ```
    {: pre}
+
    ```sh
    ipsec status
    ```
@@ -411,12 +413,14 @@ To test that the VPN connection has been successfully established, use the simul
    ipsec stop
    ```
    {: pre}
+
 4. In the command window from step 1), try to establish the connection again:
 
    ```sh
    ssh -J root@$VSI_ONPREM_IP root@$VSI_CLOUD_IP
    ```
    {: pre}
+
    The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
 
 5. In the "onprem" VSI terminal, start the VPN gateway again:
@@ -448,10 +452,12 @@ You can test the working VPN connection by accessing a microservice on the cloud
    scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
    ```
    {: pre}
+
    ```sh
    scp -r nodejs-graphql root@$VSI_ONPREM_IP:nodejs-graphql
    ```
    {: pre}
+
 2. Connect to the cloud VSI, again using the bastion as jump host.
    ```sh
    ssh -J root@$BASTION_IP_ADDRESS root@$VSI_CLOUD_IP
@@ -485,6 +491,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    npm run build
    ```
    {: pre}
+
 6. Copy the config/config.template.json to config/config.json
    ```sh
    cp config/config.template.json config/config.json
@@ -511,11 +518,13 @@ You can test the working VPN connection by accessing a microservice on the cloud
    node ./build/createTables.js
    ```
    {: pre}
+
 9. Create the cloud object storage bucket in the database. The script leverages `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
    ```sh
    node ./build/createBucket.js
    ```
    {: pre}
+
    The command should return something similar to this:
    ```
    Creating new bucket: transactions
@@ -553,6 +562,7 @@ With the microservice app set up and running, test the scenario by accessing the
    VSI_CLOUD_IP=$VSI_CLOUD_IP
    ```
    {: pre}
+
    ```sh
    curl \
    -X POST \
@@ -635,21 +645,25 @@ In some situations, it might be desirable to interact directly from an on-premis
    BASENAME=vpns2s ./onprem-vsi-remove.sh
    ```
    {: codeblock}
+
 7. Delete the instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).  Delete the key:
    ```sh
    ibmcloud resource service-key-delete vpns2s-cos-key
    ```
    {: codeblock}
+
    delete the resource
    ```sh
    ibmcloud resource service-instance-delete vpns2s-cos
    ```
    {: codeblock}
+
 8. Delete the instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql).
    ```sh
    ibmcloud resource service-key-delete vpns2s-pg-key
    ```
    {: codeblock}
+   
    ```sh
    ibmcloud resource service-instance-delete vpns2s-pg
    ```

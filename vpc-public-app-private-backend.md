@@ -164,6 +164,7 @@ To create a virtual server instance in the newly created subnet:
       service nginx start
       ```
       {: pre}
+
       This will install a simple web server into the instance.
 1. Under **Networking**, select the VPC your created.
 1. Under **Network interfaces**, click on the **Edit** icon
@@ -211,6 +212,7 @@ To create a virtual server instance in the newly created subnet:
       service nginx start
       ```
       {: pre}
+
       This will install a simple web server into the instance.
 2. Under **Networking**, select the VPC your created.
 3. Under **Network interfaces**, click on the **Edit** icon
@@ -236,6 +238,7 @@ The frontend instance has its software installed but it can not yet be reached.
    curl -v -m 30 http://<floating-ip-address-of-the-frontend-vsi>
    ```
    {: pre}
+   
    _The connection should time out eventually._
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
