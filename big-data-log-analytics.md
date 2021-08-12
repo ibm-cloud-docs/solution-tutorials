@@ -233,6 +233,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
    ssl.endpoint.identification.algorithm=HTTPS
    ```
    {: codeblock}
+
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
 4. On a terminal, use `ibmcloud login` to log in to your {{site.data.keyword.cloud_notm}} account interactively. Select the region and resource group where the services was provisioned.
 5. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command. 
@@ -240,6 +241,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
     ./kafka-console-producer.sh --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') --producer.config event-streams.config --topic webserver
     ```
     {: pre}
+
 6. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
@@ -293,15 +295,18 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    cd kafka-log-simulator
    ```
    {: pre}
+
 3. Run the following commands to setup the simulator and produce log event messages. Replace `<LOGFILE>` with the file you downloaded e.g., `/Users/VMac/Downloads/access_log_Jul95`. The broker list and the API key will be retrieved with the `ibmcloud resource service-key` command.
    ```sh
    npm install
    ```
    {: pre}
+
    ```sh
    npm run build
    ```
    {: pre}
+
    ```sh
    node dist/index.js --file <LOGFILE> --parser httpd --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') \
     --api-key $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.api_key') --topic webserver --rate 100
@@ -345,6 +350,7 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
    LIMIT 10
    ```
    {: codeblock}
+   
 3. Update the `FROM` clause with your Object SQL URL and click **Run**.
 4. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
@@ -459,21 +465,25 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
    ```
    {: pre}
+
 2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster.
    ```sh
    pyspark
    ```
    {: pre}
+
 3. Create a Spark dataframe of a parquet file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
    ```sh
    df = spark.read.parquet('cos://<bucketname>.<identifier>/<objectname>')
    ```
    {: codeblock}
+
    For example, if the name of the bucket is `<your-initial>-log-analysis`, service name is `log-analysis-cos` and the path to the file is logs-stream-landing/:
    ```sh
    df = spark.read.parquet('cos://<your-initial>-log-analysis.log-analysis-cos/logs-stream-landing/topic=webserver/jobid=<JOBID>/)
    ```
    {: codeblock}
+
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
 5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
    ```sh
