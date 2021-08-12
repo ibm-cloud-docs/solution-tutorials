@@ -184,12 +184,14 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    set system time-zone <timezone>
    ```
    {: codeblock}
+
 5. Set the ping behavior. Ping is not disabled to aid in routing and firewall troubleshooting.
    ```
    set security firewall all-ping enable
    set security firewall broadcast-ping disable
    ```
    {: codeblock}
+
 6. Enable stateful firewall operation. By default, the VRA firewall is stateless.
    ```
    set security firewall global-state-policy icmp
@@ -197,6 +199,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    set security firewall global-state-policy tcp
    ```
    {: codeblock}
+
 7. Commit and automatically save your changes to the startup configuration.
    ```
    commit
@@ -276,6 +279,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    SSH vyatta@<VRA Private IP Address>
    ```
    {: codeblock}
+
 2. Create a new virtual interface with the private VLAN number, subnet gateway IP address, and CIDR recorded in the earlier steps. The CIDR will typically be `/26`.
    ```
    configure
@@ -364,6 +368,7 @@ Two zones are defined:
      commit
      ```
      {: codeblock}
+
 3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone requires that you specify the VLAN ID of the VLAN associated with the VRA created earlier. This is highlighted as `<VLAN ID>`.
    ```
    set security zone-policy zone INSIDE description "IBM Internal network"
@@ -378,6 +383,7 @@ Two zones are defined:
    set security zone-policy zone APP to INSIDE firewall APP-TO-INSIDE
    ```
    {: codeblock}
+
 4. Commit the configuration. Then, from your workstation, verify using ping that the firewall is now denying traffic via the VRA to the VSI:
    ```
    commit
@@ -388,6 +394,7 @@ Two zones are defined:
    ping <VSI Private IP Address>
    ```
    {: codeblock}
+
 5. Define firewall access rules for UDP, TCP and ICMP.
    ```
    set security firewall name INSIDE-TO-APP rule 200 protocol icmp
@@ -419,6 +426,7 @@ Two zones are defined:
    commit
    ```
    {: codeblock}
+
 6. Validate firewall access.
    - Confirm INSIDE-TO-APP firewall is now allowing ICMP and UPD/TCP traffic from your local machine.
      ```bash
@@ -426,12 +434,14 @@ Two zones are defined:
      SSH root@<VSI Private IP Address>
      ```
      {: codeblock}
+
    - Confirm the APP-TO-INSIDE firewall is allowing ICMP and UPD/TCP traffic. Log in to the VSI using SSH and ping one of the {{site.data.keyword.Bluemix_notm}} name servers at 10.0.80.11 and 10.0.80.12.
      ```bash
      SSH root@<VSI Private IP Address>
      [root@vsi  ~]# ping 10.0.80.11
      ```
      {: codeblock}
+
 7. Validate continued access to the VRA management interface via SSH from your workstation. If access is maintained, review and save the configuration. Otherwise, a reboot of the VRA will return back to a working configuration.
    ```bash
    SSH vyatta@<VRA Private IP Address>
@@ -454,6 +464,7 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
    show log firewall name APP-TO-INSIDE
    ```
    {: codeblock}
+
 2. If services or servers are not contactable and nothing is seen in the firewall logs, verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the `<VLAN ID>` from earlier.
    ```bash
    monitor interface bonding dp0bond0 traffic
@@ -477,6 +488,7 @@ This creates a new firewall rule set named `CPP`. View the additional rules and 
    commit
    ```
    {: codeblock}
+
 2. Securing public SSH access. Due to an outstanding issue at this time with the Vyatta firmware, it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively, external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The `<VRA Public IP Subnet>` used here is the same as the `<VRA Public IP Address>` with the last octet being zero (`x.x.x.0`).
    ```
    set security firewall name CPP rule 900 action drop
@@ -486,6 +498,7 @@ This creates a new firewall rule set named `CPP`. View the additional rules and 
    commit
    ```
    {: codeblock}
+   
 3. Validate VRA SSH administrative access over the IBM internal network. If access is lost to the VRA via SSH after performing commits, you can access the VRA via the KVM Console available at the Device Details page of the VRA via the Action menu.
 
 This completes the setup of the secure private network enclosure protecting a single firewall zone containing a VLAN and subnet. Additional firewall zones, rules, virtual and bare-metal servers, VLANs and subnets can be added following the same instructions.

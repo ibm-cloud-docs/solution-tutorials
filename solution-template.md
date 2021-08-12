@@ -111,10 +111,12 @@ In this section, you will create the services required to ...
     ibmcloud login
     ```
     {: pre}
+
     ```sh
     ibmcloud target --cf
     ```
     {: pre}
+    
 2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
     ```sh
     ibmcloud resource service-instance-create service-instance-name service-name lite global
