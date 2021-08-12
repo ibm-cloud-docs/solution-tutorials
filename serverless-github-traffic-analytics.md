@@ -60,6 +60,7 @@ You will find instructions to download and install these tools for your operatin
 ## Service and Environment Setup (shell)
 {: #serverless-github-traffic-analytics-1}
 {: step}
+
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment (terminal).
 
 1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command.
@@ -99,16 +100,19 @@ With the services provisioned and the general setup done, next is to create the 
    ibmcloud ce project create --name ghstats
    ```
    {: pre}
+
 2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. When prompted, enter the API key that was previously stored in **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud ce registry create --name usicr
    ```
    {: pre}
+
 3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats) and stores the image in the registry in the previously created  namespace using the registered user information.
    ```sh
    ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/ghstats/codeengine-ghstats --registry-secret usicr
    ```
    {: pre}
+
 4. Next, run the actual build process.
    ```sh
    ibmcloud ce buildrun submit --build ghstats-build
@@ -124,6 +128,7 @@ With the services provisioned and the general setup done, next is to create the 
 ## Deploy the app (shell)
 {: #serverless-github-traffic-analytics-3}
 {: step}
+
 Once the build is ready, you can use the container image to deploy the app, thereafter bind the previously provisioned services.
 1. To deploy the app means to [create a {{site.data.keyword.codeengineshort}} app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-create) named **ghstats-app**. It pulls the image from the given registry and namespace.
    ```sh
@@ -134,6 +139,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
 
    By default, the minimum scaling is zero (0). It means that {{site.data.keyword.codeengineshort}} reduces the running instances to zero if there is no workload on the app. This saves costs, but requires a short app restart when scaling up from zero again. You can avoid this by using the paramater `--min 1` when creating or updating the app.
    {: tip}
+
 2. To utilize the provisioned services, you have to bind them to the app. First, bind {{site.data.keyword.Db2_on_Cloud_short}}, then {{site.data.keyword.appid_short}}:
    ```sh
    ibmcloud ce application bind --name ghstats-app --service-instance ghstatsDB
@@ -151,6 +157,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
 ## App ID and GitHub configuration (browser)
 {: #serverless-github-traffic-analytics-4}
 {: step}
+
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the app. Thereafter, you create a GitHub access token. It is needed by the app to retrieve the traffic data.
 
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
@@ -172,6 +179,7 @@ The following steps are all performed using your Internet browser. First, you co
 ## Configure and test Python app
 {: #serverless-github-traffic-analytics-5}
 {: step}
+
 After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/) microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
@@ -183,14 +191,15 @@ After the preparation, you configure and test the app. The app is written in Pyt
    ![First Step](images/solution24-github-traffic-analytics/InitializeApp.png)
 
 4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the GitHub account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
-![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png)
+   ![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png)
 5. For testing, click on **Administration**, then **Collect statistics**. It retrieves the traffic data on demand. Thereafter, click on **Repositories** and **Daily Traffic**. It should display collected data.
-![Traffic data](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
+   ![Traffic data](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 
 ## Set up daily data retrieval (shell)
 {: #serverless-github-traffic-analytics-6}
 {: step}
+
 With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a ping subscription](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-subscription-ping-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron), the app subscribes to events on the specified schedule (eventing). 
 
 1. Create the ping subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
@@ -212,6 +221,7 @@ With the app in place and configured, the last part is to initiate daily retriev
 ## Conclusions
 {: #serverless-github-traffic-analytics-7}
 {: step}
+
 In this tutorial, you deployed a serverless app in {{site.data.keyword.codeenginefull_notm}}. The app source is taken from a GitHub repository. You instructed {{site.data.keyword.codeengineshort}} to build the container image and store it in the {{site.data.keyword.registrylong}}. Next, it was pulled from there and deployed as container. The app is bound to {{site.data.keyword.cloud_notm}} services.
 
 The app and the associated eventing allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Python app to manage users, repositories and to present the traffic statistics. Users can see the traffic statistics in searchable tables or visualized in a simple line chart (see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
@@ -222,6 +232,7 @@ The app and the associated eventing allow to automatically retrieve traffic data
 ## Security: Rotate service credentials
 {: #serverless-github-traffic-analytics-8}
 {: step}
+
 If you use this solution in production, then you should rotate the service credentials on a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency.
 
 You can recreate and thereby rotate the credentials for the services bound to the app by unbinding, then binding the services again. When using secrets instead of service bindings, you even have more options by first recreating service keys, then updating the secrets and as last step updating the app.
@@ -238,6 +249,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ibmcloud ce project delete --name ghstats
    ```
    {: pre}
+
 2. Delete the services:
    ```sh
    ibmcloud resource service-instance-delete ghstatsDB
@@ -249,9 +261,9 @@ To clean up the resources used for this tutorial, you can delete the related pro
    {: pre}
 
 
-
 ## Expand the tutorial
 {: #serverless-github-traffic-analytics-10}
+
 Want to add to or change this tutorial? Here are some ideas:
 * Expand the app for multi-tenant support.
 * Integrate a chart for the data.
@@ -261,6 +273,7 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related Content
 {: #serverless-github-traffic-analytics-11}
+
 Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) 
 
 Documentation:
