@@ -266,6 +266,7 @@ Once connected, you can install software on the virtual server or perform mainte
    apt-get update
    ```
    {: pre}
+   
 2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
 
 When done, disconnect from the server with `exit` command.

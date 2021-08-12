@@ -43,7 +43,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Resize the VSI (optional).
 
 ![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png)
-</p>
+
 
 1. End user accesses the LAMP server running on a VPC using a web browser.
 2. The VSI is configured to use data from an encrypted Block Storage volume (optional).
@@ -80,6 +80,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ibmcloud target -r <region-name> -g <resource-group>
    ```
    {: pre}
+
 1. For this tutorial we will use the latest VPC generation 2.  Set the target generation for VPC
    ```sh
    ibmcloud is target --gen 2
@@ -112,16 +113,19 @@ If you prefer to use a Terraform template to generate these resources, you can u
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
    ```
    {: pre}
+
 1. Create the subnet for your VPC. 
    ```sh
    SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone $(ibmcloud target --output json | jq -r '.region.name')-1 --ipv4-address-count 256 --json | jq -r '.id')
    ```
    {: pre}
+
 1. Create the security group for your VPC. 
    ```sh
    SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --json | jq -r '.id')
    ```
    {: pre}
+
 1. Add a rule to limit inbound to SSH port 22.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
@@ -158,11 +162,13 @@ If you prefer to use a Terraform template to generate these resources, you can u
    NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID $(ibmcloud target --output json | jq -r '.region.name')-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --json | jq -r '.primary_network_interface.id')
    ```
    {: pre}
+
 1. Reserve a Floating IP
    ```sh
    FLOATING_IP=$(ibmcloud is floating-ip-reserve fip-lamp-1 --nic-id $NIC_ID --json | jq -r '.address')
    ```
    {: pre}
+
 1. Connect to the server with SSH, note that it may take a minute for the newly created server to be accessible via SSH.
    ```sh
    ssh root@$FLOATING_IP
@@ -186,21 +192,25 @@ When the server is spun up for the first time, it is possible that it is already
    export DEBIAN_FRONTEND=noninteractive
    ```
    {: pre}
+
 1. Update packages 
    ```sh
    apt update
    ```
    {: pre}
+
 1. Install the Apache 
    ```sh
    apt install apache2 -y
    ```
    {: pre}      
+
 1. Install the MySQL 
    ```sh
    apt install mysql-server -y
    ```
    {: pre}
+
 1. Install the PHP 
    ```sh
    apt install php libapache2-mod-php php-mysql php-common php-cli -y
@@ -220,24 +230,29 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    apache2 -v
    ```
    {: pre}
+
    ```sh
    mysql -V
    ```
    {: pre}
+
    ```sh
    php -v
    ```
    {: pre}
+
 1. Run the following script to secure the MySQL database.
   ```sh
   mysql_secure_installation
   ```
   {: pre}
+
 1. Additionally you can quickly create a PHP info page with the following command.
    ```sh
    echo "<?php phpinfo(); ?>" > /var/www/html/info.php
    ```
    {: pre}
+
 1. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
 
 ![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
@@ -253,11 +268,13 @@ Experience your LAMP stack by installing an application. The following steps ins
    apt install wordpress -y
    ```
    {: pre}
+
 2. Configure WordPress to use MySQL and PHP. Run the following command to open a text editor and create the file `/etc/wordpress/config-localhost.php`.
    ```sh
    sensible-editor /etc/wordpress/config-localhost.php
    ```
    {: pre}
+
 3. Copy the following lines to the file substituting *yourPassword* with your MySQL database password and leaving the other values unchanged. Save and exit the file.
    ```php
    <?php
@@ -269,11 +286,13 @@ Experience your LAMP stack by installing an application. The following steps ins
    ?>
    ```
    {: pre}
+
 4. In a working directory, create a text file `wordpress.sql` to configure the WordPress database.
    ```sh
    sensible-editor wordpress.sql
    ```
    {: pre}
+
 5. Add the following commands substituting your database password for *yourPassword* and leaving the other values unchanged. Then save the file.
    ```sql
    CREATE DATABASE wordpress;
@@ -283,17 +302,20 @@ Experience your LAMP stack by installing an application. The following steps ins
    FLUSH PRIVILEGES;
    ```
    {: pre}
+
 6. Run the following command to create the database.
    ```sh
    cat wordpress.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf
    ```
    {: pre}
+
 7. After the command completes, delete the file `wordpress.sql`. Move the WordPress installation to the web server document root.
    ```sh
    ln -s /usr/share/wordpress /var/www/html/wordpress
    mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
    {: pre}
+
 8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. It should look similar to the following image.
    ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
@@ -342,16 +364,19 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')
    ```
    {: pre}   
+
 1. Attach the data volume to your existing VSI.
    ```sh
    ibmcloud is instance-volume-attachment-add attachment-data-1 $VSI_ID $VOLUME_ID --auto-delete false --json
    ```
    {: pre}
+
 1. Connect to the server with SSH.
    ```sh
    ssh root@$FLOATING_IP
    ```
    {: pre}
+
 1. Configure the newly created data volume on the VSI, run each line below one at a time.  
 
    ```sh
@@ -375,16 +400,19 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    service apache2 stop
    ```
    {: pre}
+
 1. Move the Apache directory from /var to /data
    ```sh
    mv /var/www /data/
    ```
    {: pre}
+
 1. Create a link to the new location 
    ```sh
    ln -s /data/www /var/www
    ```
    {: pre}   
+
 1. Start the Apache service
    ```sh
    service apache2 start
@@ -399,32 +427,38 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    service mysql stop
    ```
    {: pre}
+
 1. Move the MySQL directory from /var to /data
    ```sh
    mkdir /data/lib
    mv /var/lib/mysql /data/lib/
    ```
    {: pre}
+
 1. Create a link to the new location 
    ```sh
    ln -s /data/lib/mysql /var/lib/mysql
    ```
    {: pre}
+
 1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor), otherwise AppArmor will block the access. 
    ```sh
    echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
    ```
    {: pre}
+
 1. Restart the AppArmor service
    ```sh
    systemctl restart apparmor
    ```
-   {: pre}     
+   {: pre}   
+
 1. Start the MySQL service
    ```sh
    service mysql start
    ```
    {: pre}
+
 1.  Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. You should be able to access your WordPress page just as you had it before you added the new Data volume.
 
 ## Resize VSI (Optional)
@@ -436,12 +470,14 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
    ```sh
    VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')
    ```
-   {: pre}   
+   {: pre}  
+
 1. Stop the instance.
    ```sh
    ibmcloud is instance-stop $VSI_ID
    ```
    {: pre}
+
 1. Resize the instance.
    ```sh
    ibmcloud is instance-update $VSI_ID --profile cx2-4x8
@@ -455,6 +491,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
    ibmcloud is instance-start $VSI_ID
    ```
    {: pre}
+   
 1.  You may need to wait a couple of minutes as the VSI is placed on an appropriate host and started. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. You should be able to access your WordPress page just as you had it before the resizing.
 
 ## Remove resources
