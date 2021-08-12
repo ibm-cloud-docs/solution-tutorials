@@ -142,6 +142,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc version
    ```
    {: pre}
+
 1. The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 5. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
@@ -292,11 +293,13 @@ An Ingress Gateway resource can be created to allow external requests through th
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/bookinfo-gateway.yaml
    ```
    {: pre}
+
 2. Get the **ROUTE** of the Istio Ingress Gateway.
    ```sh
    oc get routes -n istio-system istio-ingressgateway
    ```
    {: pre}
+
 3. Save the HOST address that you retrieved in the previous step, as it will be used to access the BookInfo app in later parts of the tutorial. Create an environment variable called `$INGRESS_HOST` with your HOST address.
    ```sh
    export INGRESS_HOST=<HOST>
@@ -426,6 +429,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
    ```
    {: pre}
+
    In the modified rule, the routed traffic is split between two different subsets of the reviews microservice. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
    {: tip}
 
@@ -447,6 +451,7 @@ Istio can secure the communication between microservices without requiring appli
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/destination-rule-all-mtls.yaml
    ```
    {: pre}
+
 2. Send more traffic to your application. Everything should still continue to work as expected.
 3. Launch **Kiali** again and go to **Graph**.
 4. Select `bookinfo` from the top **Namespace** bar.
@@ -493,6 +498,7 @@ You can either gradually remove individual resources or skip those steps and dir
    oc get servicemeshcontrolplanes -n istio-system
    ```
    {: pre}
+   
 2. Replace `<NAME_OF_CUSTOM_RESOURCE>` with the name from the previous command, and run this command to remove the custom resource,
    ```sh
    oc delete servicemeshcontrolplanes -n istio-system <NAME_OF_CUSTOM_RESOURCE>

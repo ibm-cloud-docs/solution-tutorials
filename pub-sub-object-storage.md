@@ -48,10 +48,8 @@ You will simulate this pattern using a file processing example. First you will c
 
 In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented as a Cloud Foundry application or serverless function.
 
-<p style="text-align: center;">
+![Architecture Diagram](images/solution25/Architecture.png)
 
-   ![Architecture Diagram](images/solution25/Architecture.png)
-</p>
 
 1. The user uploads file using the UI application
 2. File is saved in {{site.data.keyword.cos_full_notm}}
@@ -150,6 +148,7 @@ The `cluster service bind` command creates a cluster secret that holds the crede
    ibmcloud resource service-key-create cos-for-pub-sub  Writer --instance-name myobjectstorage
    ```
    {: pre}
+
 7. Provide the service credentials to your cluster by creating a secret `binding-myobjectstorage` in the `default` Kubernetes namespace.
    ```sh
    kubectl create secret generic binding-myobjectstorage --from-literal="binding=$(ibmcloud resource service-key cos-for-pub-sub --output JSON | jq --raw-output '.[].credentials')" --namespace default
@@ -168,6 +167,7 @@ The UI application is a simple Node.js Express web application which allows the 
    cd pub-sub-storage-processing/pubsub-ui
    ```
    {: pre}
+
 2. Open `config.js`, update `COSBucketName` with your bucket name and `EndPointURL` with the endpoint you saved earlier.
 3. Build and deploy the application. The deploy command generates a docker image, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
    ```sh
@@ -175,6 +175,7 @@ The UI application is a simple Node.js Express web application which allows the 
    ibmcloud dev deploy -t container
    ```
    {: pre}
+
 4. Visit the application with the URL mentioned in the output of the command above and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![Files Uploaded](images/solution25/files_uploaded.png)
@@ -190,6 +191,7 @@ The worker application is a Java application which listens to the {{site.data.ke
    cd ../pubsub-worker
    ```
    {: pre}
+
 2. Open `resources/cos.properties`, update `bucket.name` property with your bucket name, endpoint URL and the geo you selected for the endpoint.
 3. Build and deploy the worker application.
    ```sh

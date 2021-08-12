@@ -78,7 +78,8 @@ In this section, you will create and configure a bastion host along with a secur
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 2. Switch the **Public gateway** to **Attached**.
 
-   Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.{: tip}
+   Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
+   {: tip}
 
 3. Click **Create subnet** to provision it.
 
@@ -157,14 +158,16 @@ With access to the bastion working, continue and create the security group for m
   |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
   |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
   |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
-  |UDP         |Any            |0.0.0.0/0 |Ports 53-53  | {: caption="Maintenance: Outbound rules" caption-side="bottom"}   
+  |UDP         |Any            |0.0.0.0/0 |Ports 53-53  | 
+  {: caption="Maintenance: Outbound rules" caption-side="bottom"}   
 
 
 
 
   | Protocol | Source type | Source | Value   |
   |------------|---------------|----------|-----------  |
-  |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  | {: caption="Maintenance: Inbound rules" caption-side="bottom"}
+  |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  | 
+  {: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 
 1. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
@@ -173,7 +176,8 @@ With access to the bastion working, continue and create the security group for m
 
   | Protocol | Destination type | Destination | Value   |
   |------------|---------------|----------|-----------  |
-  |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  | {: caption="Bastion: Outbound rules" caption-side="bottom"}
+  |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
+  {: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 ## Use the bastion host to access other instances in the VPC
 {: #vpc-secure-management-bastion-server-bastion-host-access-instances}

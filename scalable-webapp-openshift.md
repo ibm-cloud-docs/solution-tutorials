@@ -48,10 +48,8 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
 
-<p style="text-align: center;">
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 
-  ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
-</p>
 
 1. The developer deploys a web application using the code from a remote Git repository. Optionally, the dev can also push the code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
 2. A Docker container image is build from the code.
@@ -145,6 +143,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
    oc get ns
    ```
    {: pre}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -160,6 +159,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
    oc version
    ```
    {: pre}
+
 1. If the version does not match your cluster version, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
 1. Open the **{{site.data.keyword.openshiftshort}} web console**.
@@ -169,6 +169,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
    oc get ns
    ```
    {: pre}
+
 -->
 <!--#/isworkshop#-->
 
@@ -188,6 +189,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    export MYPROJECT=<your-initials>-openshiftapp
    ```
    {: pre}
+
 2. Create a new {{site.data.keyword.openshiftshort}} project
    ```sh
    oc new-project $MYPROJECT
@@ -232,11 +234,13 @@ To access the app, you need to create a route. A route announces your service to
    oc expose service/$MYPROJECT
    ```
    {: pre}
+
 2. You can access the app through IBM provided domain. Run the below command for the URL
    ```sh
    oc get route/$MYPROJECT
    ```
    {: pre}
+
 3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
 
 ### Secure the default IBM provided domain route
@@ -247,6 +251,7 @@ To access the app, you need to create a route. A route announces your service to
    oc create route edge $MYPROJECT-https --service=$MYPROJECT --port=3000
    ```
    {: pre}
+
 2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *$MYPROJECT-https* in a browser.
    
 ## Monitor the app
@@ -261,6 +266,7 @@ In this section, you will learn to monitor the health and performance of your ap
     oc get routes -n openshift-monitoring
    ```
    {: pre}
+
 2. Run the following script by replacing the placeholder `<APPLICATION_ROUTE_URL>` with the route URL. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
    ```sh
     while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
@@ -292,6 +298,7 @@ In this section, you will learn how to manually and automatically scale your app
    oc scale dc/$MYPROJECT --replicas=2
    ```
    {: pre}
+
 2. You can see a new pod being provisioned by running `oc get pods` command.
 3. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for both the pods using the `oc logs` command.
 
@@ -305,6 +312,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    oc set resources dc/$MYPROJECT --limits=cpu=250m,memory=512Mi --requests=cpu=100m,memory=256Mi
    ```
    {: pre}
+
    To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
 2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 5%.
    ```sh
@@ -314,6 +322,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
     --cpu-percent=5
    ```
    {: pre}
+
 3. You can see new pods being provisioned by running `oc get pods --watch` command.
 4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
 5. Remove the auto scaler:
@@ -334,26 +343,31 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
    ibmcloud cr region
    ```
    {: pre}
+
 2. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
    export MYREGISTRY=us.icr.io
    ```
    {: pre}
+
 3. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
    {: pre}
+
    To create a new namespace:
    ```sh
    ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
    ```
    {: pre}
+
 4. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
    ```sh
    export MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {: pre}
+
 5. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
 
    To create an API key, refer to this [link](https://{DomainName}/docs/Registry?topic=Registry-registry_access#registry_access_user_apikey_create).
@@ -386,6 +400,7 @@ In this section, you will clone a GitHub repo with `yaml` template files and a s
    git clone https://github.com/IBM-Cloud/openshift-node-app
    ```
    {: pre}
+
 2. Change to the application directory,
    ```sh
    cd openshift-node-app
@@ -402,6 +417,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
    ./generate_yaml.sh use_private_registry
    ```
    {: pre}
+
 2. Run the export command from the output to set the existing `MYPROJECT` environment variable with the new application name. Run `echo $MYPROJECT` to see the new application name.
 3. Optionally, check the generated `openshift_private_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
 4. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
@@ -426,6 +442,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
        dockerImageRepository: ""
    ```
    {: codeblock}
+
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
 
 5. **Optional** Check the `spec` under `BuildConfig` section for the output set to kind `DockerImage` and placeholders under `name` updated.
@@ -440,6 +457,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
          name: push-secret
    ```
    {: codeblock}
+
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
 
 6. **Optional** Search for `containers`, check the `image` and `name`
@@ -449,6 +467,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
      name: $MYPROJECT
    ```
    {: codeblock}
+
 7. If updated, **save** the YAML file.
 
 ### Deploy the application using the {{site.data.keyword.registrylong_notm}}
@@ -462,6 +481,7 @@ In this section, you will deploy the application to the cluster using the genera
    oc apply -f openshift_private_registry.yaml
    ```
    {: pre}
+
 2. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
@@ -557,6 +577,7 @@ To generate a deploy token:
    ./generate_yaml.sh use_private_repository
    ```
    {: pre}
+
 2. Run the export command from the output to set the existing `MYPROJECT` environment variable with new project name.
 3. Additional to the private container registry placeholders, the script will also replace the `REPO_URL` under `BuildConfig` spec with the the environment variables you set in the above step,
    ```yaml
@@ -566,22 +587,26 @@ To generate a deploy token:
       type: Git
    ```
    {: codeblock}
+
 4. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc apply -f openshift_private_repository.yaml
    ```
    {: pre}
+
 5. You can check the status of buildconfig, deployment and service using
    ```sh
    oc logs -f bc/$MYPROJECT
    oc status
    ```
    {: pre}
+
 6. Manually import the latest image stream to ensure the deployment takes place as soon as possible with the command 
    ```sh
    oc import-image $MYPROJECT
    ```
    {: pre}
+
 7. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command
    ```sh
    oc expose service/$MYPROJECT
@@ -599,17 +624,20 @@ In this step, you will automate the build and deploy process. So that whenever y
    oc set triggers bc $MYPROJECT --from-gitlab
    ```
    {: pre}
+
 2. To add a webhook on the GitLab repository, you need a URL and a secret
    - For webhook GitLab URL,
      ```sh
      oc describe bc/$MYPROJECT | grep -A 1 "GitLab"
      ```
      {: pre}
+
    - For secret that needs to be passed in the webhook URL,
      ```sh
      oc get bc/$MYPROJECT -o yaml | grep -A 3 "\- gitlab"
      ```
      {: pre}
+
    - **Replace** `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
 3. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Webhooks**.
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
@@ -618,6 +646,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    oc tag $MYREGISTRY/$MYNAMESPACE/${MYPROJECT}:latest ${MYPROJECT}:latest --scheduled=true
    ```
    {: pre}
+
 6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
 7. Save and push the code to the repo
    ```sh
@@ -626,6 +655,7 @@ In this step, you will automate the build and deploy process. So that whenever y
     git push -u origin master
    ```
    {: pre}
+
 8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
@@ -649,6 +679,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    oc expose svc/$MYPROJECT --hostname=<HOSTNAME> --name=$MYPROJECT-domain --port=3000
    ```
    {: pre}
+
 2. Access your application at `http://<HOSTNAME>/`
 
 ### With HTTPS
@@ -682,6 +713,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    oc delete project <your-initials>-openshiftapp
    ```
    {: pre}
+
 <!--##istutorial#-->
 * Delete the cluster you created.
 <!--#/istutorial#-->
