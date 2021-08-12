@@ -186,6 +186,7 @@ In this section, you will deploy the saved model and test the deployed model,
     }
    ```
    {: codeblock}
+
 2. Click **Predict** and you should see the **Predictions** JSON output under **Result**.
 3. You can change the input data and continue testing your model.
 
@@ -210,11 +211,13 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
    ```
    {: pre}
+
 5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
    ```
    {: pre}
+
 6. Run the below **cURL** code in the cloud shell to see the prediction results.
    ```sh
    curl -X POST \
@@ -283,6 +286,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
       ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
       ```
       {: pre}
+      
    4. Copy and paste the credentials without any trailing spaces and click **Connect**
    5. Select the Bucket that starts with `irisproject-donotdelete-`
    6. Select `iris_initial.csv` from the Data set dropdown and click **Next**

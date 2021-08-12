@@ -47,10 +47,8 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 
-<p style="text-align: center;">
+![Architecture](images/solution31/Architecture.png)
 
-  ![Architecture](images/solution31/Architecture.png)
-</p>
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
 2. To persist the log events, they are stream landed into {{site.data.keyword.cos_short}} through {{site.data.keyword.sqlquery_short}}.
@@ -350,7 +348,7 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
    LIMIT 10
    ```
    {: codeblock}
-   
+
 3. Update the `FROM` clause with your Object SQL URL and click **Run**.
 4. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.

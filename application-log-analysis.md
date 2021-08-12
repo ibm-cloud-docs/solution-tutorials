@@ -43,7 +43,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
 
 
-  ![Architecture diagram](images/solution12/Architecture.png)
+![Architecture diagram](images/solution12/Architecture.png)
 
 1. User connects to the application and generates log entries.
 1. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}.

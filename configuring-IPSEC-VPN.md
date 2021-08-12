@@ -66,10 +66,8 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 - Route traffic through a GRE tunnel
 
 
-<p style="text-align: center;">
+![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png)
 
-  ![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png)
-</p>
 
 1.	Document VPN Configuration
 2.	Create IPSec VPN on a VRA
@@ -91,10 +89,8 @@ Configuring an IPSec VPN site-to-site link between your data center and {{site.d
 
 Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.
 
-<p style="text-align: center;">
+![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
 
-  ![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
-</p>
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team.
 
@@ -129,6 +125,7 @@ table.
    configure
    ```
    {: codeblock}
+
 2. Create Internet Key Exchange (IKE) group.
    ```
    set security vpn ipsec ike-group <ike group name> proposal 1
@@ -138,6 +135,7 @@ table.
    set security vpn ipsec ike-group <ike group name> lifetime <ike-lifetime>
    ```
    {: codeblock}
+
 3. Create Encapsulating Security Payload (ESP) group
    ```
    set security vpn ipsec esp-group <esp group name> proposal 1 encryption <esp encryption>
@@ -147,6 +145,7 @@ table.
    set security vpn ipsec esp-group <esp group name> pfs enable
    ```
    {: codeblock}
+
 4. Define site-to-site connection
    ```
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication mode pre-shared-secret
@@ -171,12 +170,14 @@ table.
    ping <DC VPN Public IP>
    ```
    {: codeblock}
+
 2. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status shows that there is one or more active IPsec tunnels. Verify with the data center that both ends of the VPN show active IPsec tunnels.
    ```bash
    show vpn ipsec sa
    show vpn ipsec status
    ```
    {: codeblock}
+
 3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the debug command:
    ``` bash
    show vpn debug
@@ -199,18 +200,21 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
    commit
    ```
    {: codeblock}
+
 2. After both ends of the tunnel have been configured it should come up automatically. Check the operational state of tunnel from the VRA command line.
    ```
    show interfaces tunnel
    show interfaces tun0
    ```
    {: codeblock}
+
    The first command should show the tunnel with State and Link as `u/u` (UP/UP). The second command shows more detail about the tunnel and that traffic is transmitted and received.
 3. Validate that traffic flows across the tunnel
    ```bash
    ping <Remote tunnel IP>
    ```
    {: codeblock}
+
    The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic.
 4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway.
    ```
@@ -232,6 +236,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP>
    ```
    {: codeblock}
+
 2. Review the VRA routing table from the VRA command line. At this time no traffic will transverse the route as no firewall rules exist to allow traffic via the tunnel. Firewall rules are required for traffic initiated at either side.
    ```bash
    show ip route
@@ -254,6 +259,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    commit
    ```
    {: codeblock}
+
 2. Create firewall rules for traffic to the remote subnet in VRA edit mode.
    ```
    set security firewall name APP-TO-TUNNEL default-action drop
@@ -284,6 +290,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    commit
    ```
    {: codeblock}
+
 2. Create Zone for tunnel and associate firewalls for traffic initiated in either zone.
    ```
    set security zone-policy zone TUNNEL description "GRE Tunnel"
@@ -295,6 +302,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    commit
    ```
    {: codeblock}
+
 3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and TCP traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
    ```bash
    ping <Remote Subnet Gateway IP>
@@ -302,11 +310,13 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ping <Remote Subnet Gateway IP>
    ```
    {: codeblock}
+
 4. If the ping from the VRA command line fails, validate that a ping reply is seen in response to a ping request on the tunnel interface.
    ```
    monitor interface tunnel tun0 traffic
    ```
    {: codeblock}
+
    No response indicates an issue with the firewall rules or routing at the data center. If a reply is seen in the monitor output, but the ping command times out, check the configuration of the local VRA firewall rules.
 5. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall.
    ```
