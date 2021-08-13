@@ -43,6 +43,7 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 * Access a Db2 database from {{site.data.keyword.openwhisk_short}} using Node.js
 
 ![Architecture](images/solution19/SlackbotArchitecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Before you begin
 {: #slack-chatbot-database-watson-prereqs}

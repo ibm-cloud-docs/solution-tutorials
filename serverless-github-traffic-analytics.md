@@ -35,6 +35,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 
 
 ![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 ## Objectives
