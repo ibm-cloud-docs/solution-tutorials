@@ -132,7 +132,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
 
-  ![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png)
+   ![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png)
 
   ```terraform
   resource "vcd_network_routed" "tutorial_network" {
@@ -158,7 +158,7 @@ An organization VDC network with a routed connection provides controlled access 
 
 You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
-  ![Internet](images/solution58-vmware-solutions-getting-started/internet.png)
+   ![Internet](images/solution58-vmware-solutions-getting-started/internet.png)
 
   ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet" {
@@ -195,7 +195,7 @@ You can create rules to allow or deny traffic, this section creates a firewall a
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will enable your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
-  ![IBM Cloud](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
+   ![IBM Cloud](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
 
   ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
@@ -233,7 +233,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
-  ![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png)
+   ![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png)
 
   ```terraform
   resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -271,13 +271,13 @@ A vApp consists of one or more virtual machines that communicate over a network 
 
 You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
 
-  ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
+   ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
 
-  This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
-  {: tip}
+   This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
+   {: tip}
 
-  In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
-  {: tip}
+   In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
+   {: tip}
 
   ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
@@ -354,7 +354,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 2. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
 3. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
-  If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
+   If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
     - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
     - Click on the instance `vmware-tutorial` instance.
     - Click on the **vCloud Director console** button found on the top right of the page.
