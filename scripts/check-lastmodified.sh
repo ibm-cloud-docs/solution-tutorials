@@ -29,7 +29,7 @@ for source in *.md; do
   fi
 
   # compare and include special events like mass updates for formatting
-  if [[ "$gitDate" != @("$mdDate"|"2021-08-12"|"2021-08-11") ]]; then
+  if [[ "$gitDate" != @("$mdDate"|"2021-08-12"|"2021-08-11"|"2021-08-13") ]]; then
     echo "$source lastupdated was not updated after its last commit (from git:$gitDate from md:$mdDate)"
     errorCode=1
   fi
