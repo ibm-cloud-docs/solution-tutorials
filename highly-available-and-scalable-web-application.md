@@ -52,7 +52,8 @@ This tutorial walks you through a scenario with the creation of:
 
 The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
-![Architecture diagram](images/solution14/Architecture.png)
+![Architecture diagram](images/solution14/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The user connects to the application.
@@ -623,7 +624,8 @@ On both application servers, start the web server and the PHP runtime:
 
 Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*. Complete the Wordpress installation wizard.
 
-![Configure virtual server](images/solution14/wordpress.png)
+![Configure virtual server](images/solution14/wordpress.png){: class="center"}
+{: style="text-align: center;"}
 
 If you configured the application servers with only a private network link, you will not be able to install Wordpress plugins, themes or upgrades directly from the Wordpress admin console. You will need to upload the files through the Wordpress user interface.
 {: tip}
@@ -704,7 +706,8 @@ To increase resiliency and availability, you can extend the infrastructure setup
 
 With a second location deployment, the architecture will look like this.
 
-![Architecture diagram](images/solution14/Architecture2.png)
+![Architecture diagram](images/solution14/Architecture2.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Users access the application through {{site.data.keyword.cis_short}}.
 2. {{site.data.keyword.cis_short_notm}} routes traffic to a healthy location.

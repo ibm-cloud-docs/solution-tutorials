@@ -55,7 +55,8 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 
-![Architecture](images/solution52-cdn-dca/solution_52_architecture.png)
+![Architecture](images/solution52-cdn-dca/solution_52_architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The developer creates a simple dynamic application and produces a Docker container image.

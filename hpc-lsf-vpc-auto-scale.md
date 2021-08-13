@@ -47,7 +47,8 @@ Regardless of how you begin your VPC-based LSF cluster, the process of adding au
 ## Architecture
 {: #hpc-lsf-vpc-auto-scale-architecture}
  
-![Architecture diagram](images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg)
+![Architecture diagram](images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg){: class="center"}
+{: style="text-align: center;"}
 
 ## Before you begin
 {: #hpc-lsf-vpc-auto-scale-prereqs}

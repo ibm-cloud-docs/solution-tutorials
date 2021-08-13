@@ -52,7 +52,8 @@ The platform is designed to address the needs of developers who just want their 
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
 * Learn the use of jobs to execute run to completion workloads.
 
-![Architecture](images/solution54-code-engine/architecture_diagram.png)
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
 2. Developer connects the frontend (UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.

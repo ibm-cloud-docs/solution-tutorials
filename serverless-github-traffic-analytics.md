@@ -235,6 +235,7 @@ In this tutorial, you deployed a serverless app in {{site.data.keyword.codeengin
 The app and the associated eventing allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Python app to manage users, repositories and to present the traffic statistics. Users can see the traffic statistics in searchable tables or visualized in a simple line chart (see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
 ![Line chart](images/solution24-github-traffic-analytics/LineChart.png){: class="center"}
+{: style="text-align: center;"}
 
 
 ## Security: Rotate service credentials

@@ -54,7 +54,8 @@ In the terminology of machine learning, classification is considered an instance
 * Monitor the deployed model
 * Retrain your model.
 
-![Architecture Diagram](images/solution22-build-machine-learning-model/architecture_diagram.png)
+![Architecture Diagram](images/solution22-build-machine-learning-model/architecture_diagram.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The admin uploads a CSV file from a local machine.
 2. The uploaded CSV file is stored in {{site.data.keyword.cos_full_notm}} service as a dataset.
@@ -94,7 +95,8 @@ You can create a project to add data and open a data asset in the data refiner f
 
 As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 
-![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png)
+![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: class="center"}
+{: style="text-align: center;"}
 
 **Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_initial.csv) which consists of 40 instances of each species.
 

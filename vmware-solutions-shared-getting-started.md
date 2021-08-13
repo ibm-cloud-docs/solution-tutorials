@@ -52,7 +52,8 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 * Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 
-![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png)
+![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and is capable of routing traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network for connectivity to other {{site.data.keyword.Bluemix_notm}} services.

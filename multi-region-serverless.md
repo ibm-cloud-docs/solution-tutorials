@@ -51,7 +51,8 @@ Serverless computing platforms give developers a rapid way to build APIs without
 
 The tutorial considers a public web application with a back-end implemented with {{site.data.keyword.openwhisk_short}}. To reduce network latency and prevent outage, the application is deployed in multiple locations. Two locations are configured in the tutorial.
 
-![Architecture](images/solution44-multi-region-serverless/Architecture.png)
+![Architecture](images/solution44-multi-region-serverless/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
@@ -115,7 +116,8 @@ For renewing certificates, check the documentation [here](/docs/certificate-mana
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
 
-![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
+![API Architecture](images/solution44-multi-region-serverless/api-architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could as simple as returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
@@ -210,7 +212,8 @@ Repeat the previous sections to configure more locations.
 
 **At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
 
-![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
+![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 ### Create a health check

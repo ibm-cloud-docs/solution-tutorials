@@ -48,7 +48,8 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
 
-![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The developer deploys a web application using the code from a remote Git repository. Optionally, the dev can also push the code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.

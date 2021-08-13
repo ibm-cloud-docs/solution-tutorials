@@ -49,7 +49,8 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
 
-![Architecture](images/solution1/Architecture.png)
+![Architecture](images/solution1/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user does this
 2. Then that

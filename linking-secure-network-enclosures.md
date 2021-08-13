@@ -51,7 +51,8 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Configure routing between sites
 
 
-![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png)
+![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. Deploy secure private networks

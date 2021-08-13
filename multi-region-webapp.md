@@ -46,7 +46,8 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 
 This tutorial involves an active/active scenario where two copies of the application are deployed in two different locations and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy location if one copy fails.
 
-![Architecture](./images/solution1/Architecture.png)
+![Architecture](./images/solution1/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 ## Before you begin
@@ -69,7 +70,8 @@ Start by creating a **SDK for Node.js** starter application that runs in a Cloud
 3. And click **Create**.
 4. After the application starts, click the **Visit URL** link on the **Overview** page to see your application in a new tab.
 
-![HelloWorld](images/solution1/HelloWorld.png)
+![HelloWorld](images/solution1/HelloWorld.png){: class="center"}
+{: style="text-align: center;"}
 
 Great start! You have your very own Node.js starter application running in {{site.data.keyword.Bluemix_notm}}
 

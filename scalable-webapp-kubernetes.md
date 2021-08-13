@@ -47,7 +47,8 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-![Architecture](images/solution2/Architecture.png)
+![Architecture](images/solution2/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. A developer downloads or clones a starter web application.
@@ -267,7 +268,8 @@ Paid clusters come with an IBM-provided domain. This gives you a better option t
 
 Use Ingress to set up the cluster inbound connection to the service.
 
-![Ingress](images/solution2/Ingress.png)
+![Ingress](images/solution2/Ingress.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Identify your IBM-provided **Ingress domain**
    ```sh

@@ -47,7 +47,8 @@ Microservices are popular because they allow an enterprise to organize their dev
 ### Abstract Architecture:
 {: #vpc-tg-dns-iam-1}
 
-![Architecture](images/solution59-vpc-tg-dns-iam/simple.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: class="center"}
+{: style="text-align: center;"}
 
 In the diagram above the user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
@@ -56,7 +57,8 @@ In the diagram above the user is accessing the applications. The applications ar
 
 The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Before you begin
 {: #vpc-tg-dns-iam-prereqs}
@@ -86,20 +88,23 @@ Teams:
 
 A conceptual team ownership model was implemented.  The *network* team administers a lot of the diagram.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/network.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/network.png){: class="center"}
+{: style="text-align: center;"}
 
 #### Shared Team
 {: #vpc-tg-dns-iam-7}
 
 The *shared* team creates the VSI in its isolated VPC.  In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/shared.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/shared.png){: class="center"}
+{: style="text-align: center;"}
 
 The *application* teams needs the same access as the *shared* team with the exception of manager access to the {{site.data.keyword.dns_short}}.
 
 *Application* team access:
 
-![Architecture](images/solution59-vpc-tg-dns-iam/app1.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/app1.png){: class="center"}
+{: style="text-align: center;"}
 
 ### IAM Architecture
 {: #vpc-tg-dns-iam-8}
@@ -134,7 +139,8 @@ This is where resource groups can help out. Each service instance (i.e resource)
 
 Resource Group diagram:
 
-![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png){: class="center"}
+{: style="text-align: center;"}
 
 Each micro-service team will be allowed the access in the corresponding resource group.  The **network** team will have access to all of these resource groups.
 
@@ -787,7 +793,8 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #vpc-tg-dns-iam-shared_lb}
 {: step}
 
-![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-lb.png)
+![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-lb.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Change directory and become a member of the shared access group (use the existing API key):
 

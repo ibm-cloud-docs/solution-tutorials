@@ -43,7 +43,8 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
 
 
-![Architecture diagram](images/solution12/Architecture.png)
+![Architecture diagram](images/solution12/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. User connects to the application and generates log entries.
 1. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}.
@@ -420,7 +421,8 @@ Note: Change the interval to **1 M** on the bottom bar of the UI.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
-![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png)
+![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 2. To monitor the calls to a given api endpoint of the application,

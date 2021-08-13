@@ -49,7 +49,8 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-![Architecture](images/solution41-vpc-multi-region/Architecture.png)
+![Architecture](images/solution41-vpc-multi-region/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
 2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.

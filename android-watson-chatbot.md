@@ -47,7 +47,8 @@ This tutorial walks you through the process of defining intents and entities and
 - Configure and run the Android app.
 
 
-![Architecture diagram](images/solution28-watson-chatbot-android/architecture.png)
+![Architecture diagram](images/solution28-watson-chatbot-android/architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. User launches the mobile application on an Android device.
 2. User sends a text message to {{site.data.keyword.conversationfull}}.

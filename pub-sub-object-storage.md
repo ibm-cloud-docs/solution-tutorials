@@ -48,7 +48,8 @@ You will simulate this pattern using a file processing example. First you will c
 
 In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented as a Cloud Foundry application or serverless function.
 
-![Architecture Diagram](images/solution25/Architecture.png)
+![Architecture Diagram](images/solution25/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The user uploads file using the UI application

@@ -42,7 +42,8 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Configure logging and monitoring to detect outages and monitor for slow performance (optional).
 * Resize the VSI (optional).
 
-![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png)
+![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. End user accesses the LAMP server running on a VPC using a web browser.
@@ -256,7 +257,8 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 
 1. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
 
-![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png)
+![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Install and configure WordPress
 {: #lamp-stack-on-vpc-8}

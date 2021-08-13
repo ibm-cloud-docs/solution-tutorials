@@ -52,7 +52,8 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
 
-![Architecture](images/solution55-openshift-microservices/Architecture.png)
+![Architecture](images/solution55-openshift-microservices/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
@@ -578,7 +579,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      serviceName: <your-initials>-cloudant-service
    ```
    {: codeblock}
-   
+
 9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
    ```sh

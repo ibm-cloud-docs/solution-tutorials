@@ -49,7 +49,8 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The developer builds Docker images for the application.

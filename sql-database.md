@@ -33,7 +33,8 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
-![Architecture diagram](images/solution5/Architecture.png)
+![Architecture diagram](images/solution5/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Objectives
 {: #sql-database-0}

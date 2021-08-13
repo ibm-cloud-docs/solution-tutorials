@@ -55,7 +55,8 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 * Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the location.
 * Use {{site.data.keyword.satelliteshort}} configurations to specify what Kubernetes resources you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters.
 
-![Architecture](./images/solution-satellite-tour-hidden/architecture.png)
+![Architecture](./images/solution-satellite-tour-hidden/architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 * The Control Plane Master, running in {{site.data.keyword.cloud_notm}},
@@ -63,7 +64,8 @@ The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 * {{site.data.keyword.satelliteshort}} Link to securely connect the {{site.data.keyword.satelliteshort}} location back to {{site.data.keyword.cloud_notm}},
 * Host infrastructure assigned to the {{site.data.keyword.satelliteshort}} control plane, and to clusters and services running in the {{site.data.keyword.satelliteshort}} location.
 
-![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png)
+![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
 

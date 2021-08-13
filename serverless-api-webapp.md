@@ -51,7 +51,8 @@ Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned 
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-![Architecture](./images/solution8/Architecture.png)
+![Architecture](./images/solution8/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The user accesses the application hosted on the bucket in {{site.data.keyword.cos_short}}
@@ -269,7 +270,8 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
-![Guestbook Screenshot](images/solution8/Guestbook.png)
+![Guestbook Screenshot](images/solution8/Guestbook.png){: class="center"}
+{: style="text-align: center;"}
 
 <!--##istutorial#-->
 ## Optionally configure a custom domain

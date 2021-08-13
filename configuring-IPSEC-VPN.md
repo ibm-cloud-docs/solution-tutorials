@@ -66,7 +66,8 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 - Route traffic through a GRE tunnel
 
 
-![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png)
+![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1.	Document VPN Configuration
@@ -89,7 +90,8 @@ Configuring an IPSec VPN site-to-site link between your data center and {{site.d
 
 Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.
 
-![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
+![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png){: class="center"}
+{: style="text-align: center;"}
 
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team.

@@ -40,7 +40,8 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
-![Architecture](images/solution29/Smart-Data-Lake-Architecture.png)
+![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
 2. Data is reduced, enhanced or refined with SQL Query.
@@ -307,7 +308,8 @@ In this section, you will visualize the previous result set using PixieDust and 
 4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
 5. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
-![Notebook](images/solution29/notebook-mapbox.png)
+![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Share your dataset with the organization
 {: #smart-data-lake-7}
@@ -315,7 +317,8 @@ In this section, you will visualize the previous result set using PixieDust and 
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. The tutorial on [combining serverless and Cloud Foundry for data retrieval and analytics](https://{DomainName/docs/solution-tutorials?topic=solution-tutorials-serverless-github-traffic-analytics) uses {{site.data.keyword.dynamdashbemb_notm}} to effortless provide visualizations as part of a web app.
 
-![Dashboard Chart](images/solution29/dashboard-chart.png)
+![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Expand the tutorial
 {: #smart-data-lake-9}

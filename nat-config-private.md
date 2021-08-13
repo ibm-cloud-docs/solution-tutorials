@@ -49,7 +49,8 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
 
-![Architecture](images/solution35-nat-config-private/vra-nat.png)
+![Architecture](images/solution35-nat-config-private/vra-nat.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1.	Document required Internet services.

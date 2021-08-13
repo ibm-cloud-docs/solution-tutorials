@@ -46,7 +46,8 @@ This tutorial walks you through the creation of a web application using the popu
 
 {: #architecture}
 
-![Architecture diagram](images/solution7/Architecture.png)
+![Architecture diagram](images/solution7/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user accesses the application using a web browser.
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.

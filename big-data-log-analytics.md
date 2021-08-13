@@ -47,7 +47,8 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 
-![Architecture](images/solution31/Architecture.png)
+![Architecture](images/solution31/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.

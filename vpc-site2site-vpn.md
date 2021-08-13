@@ -58,7 +58,8 @@ In short, using a VPC you can
 
 The following diagram shows the virtual private cloud containing an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cloud_notm}} services. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
-![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
+![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The infrastructure (VPC, Subnets, Security Groups with rules, Network ACL and VSIs) are set up using a provided script.
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.

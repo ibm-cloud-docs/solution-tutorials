@@ -55,7 +55,8 @@ You will provision all of these services and VPC resources using {{site.data.key
 * Learn how to scale instances dynamically or periodically.
 * Learn the use of dedicated hosts.
 
-![Architecture](images/solution62-vpc-scaling-dedicated/architecture_diagram.svg)
+![Architecture](images/solution62-vpc-scaling-dedicated/architecture_diagram.svg){: class="center"}
+{: style="text-align: center;"}
 
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).

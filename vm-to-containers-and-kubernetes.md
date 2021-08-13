@@ -49,7 +49,8 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
-![Architecture diagram](images/solution30/traditional_architecture.png)
+![Architecture diagram](images/solution30/traditional_architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by a load balancer service that load balances incoming network traffic between available app server instances.
@@ -61,7 +62,8 @@ The following diagram shows an example of a traditional app architecture that is
 
 The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster.
 
-![Architecture diagram](images/solution30/modern_architecture.png)
+![Architecture diagram](images/solution30/modern_architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.

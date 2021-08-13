@@ -58,7 +58,8 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Secure the VRA and enclosure with firewall rules
 
 
-![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png)
+![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Configure VPN
 2. Deploy VRA

@@ -36,7 +36,8 @@ You already developed and deployed an application on {{site.data.keyword.cloud_n
 
 An existing solution with the application and connected (micro-) services is extended for enhanced security.
 
-![Architecture](images/solution51-extended-app-security/Sol51_Architecture.png)
+![Architecture](images/solution51-extended-app-security/Sol51_Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Assess your application
 {: #extended-app-security-app_properties}
@@ -113,7 +114,8 @@ Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.
 
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key with optionally making use of BYOK or KYOK, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
-![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
+![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png){: class="center"}
+{: style="text-align: center;"}
 
 
 A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
@@ -123,7 +125,8 @@ A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](h
 
 Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type, e.g., {{site.data.keyword.conversationshort}}, to access {{site.data.keyword.keymanagementserviceshort}}, the following additional option is offered when creating an instance with Premium plan.
 
-![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png)
+![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Conclusions
 {: #extended-app-security-5}
