@@ -102,9 +102,9 @@ Create a cluster:
 2. Click **Create toolchain**
 3. Under the left hand column, select **Kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
-5. Enter a unique **name** for the toolchain such as `<your-initial>-mynodestarter-toolchain` and select a resource group. 
-6. Click on the **Delivery Pipeline** tab.
-7. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`.
+5. Enter a unique **Toolchain Name** for the toolchain such as `<your-initial>-mynodestarter-toolchain` and select a resource group.
+6. Enter a unique **Repository Name** for the repository such as `<your-initial>-mynodestarter-repository`.
+7. Click on the **Delivery Pipeline** tab.
 8. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
 9. Select a region and your cluster from the list.
 10. Make sure to set the cluster namespace to `default` and click **Create**.
@@ -122,8 +122,8 @@ The toolchain will build your application and deploy it to the cluster.
 
 1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains`
 1. Click the **Eclipse Orion Web IDE** tile.
-1. Expand the `<your-initial>-mynodestarter` and then `public`.
-1. Update the `index.html` by making a simple change, for example change "Congratulations!" to something else, your changes are automatically saved.
+1. Expand the `<your-initial>-mynodestarter-repository`.
+1. Update the `utils.js` by making a simple change, for example change "Welcome to" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
 1. On the left in the Outgoing section click **Push**.
