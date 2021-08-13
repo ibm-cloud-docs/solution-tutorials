@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-11"
+lastupdated: "2021-08-13"
 lasttested: "2021-08-06"
 
 content-type: tutorial
@@ -227,6 +227,7 @@ With the `oc new-app` command you can create applications from source code in a 
 
 ### Access the app through IBM provided domain
 {: #scalable-webapp-openshift-16}
+
 To access the app, you need to create a route. A route announces your service to the world.
 
 1. Create a route by running the below command in a terminal
@@ -333,6 +334,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 
 ## (Optional) Build and push the container image to {{site.data.keyword.registryshort_notm}}
 {: #scalable-webapp-openshift-12}
+{: step}
 
 In this section, you will learn how to use a remote private {{site.data.keyword.registryshort_notm}} to store the created container images.
 
@@ -472,7 +474,6 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
 
 ### Deploy the application using the {{site.data.keyword.registrylong_notm}}
 {: #scalable-webapp-openshift-deploy-app-priv-reg}
-{: step}
 
 In this section, you will deploy the application to the cluster using the generated **openshift_private_registry.yaml** file. Once deployed, you will access the application by creating a route. 
 
@@ -534,6 +535,7 @@ You should see the same application exposed on a different route and deployed us
 
 ## (Optional) Push the code to a private {{site.data.keyword.cloud_notm}} Git repository
 {: #scalable-webapp-openshift-private-git-repo}
+{: step}
 
 In this step, you will create a private {{site.data.keyword.cloud_notm}} Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
 
