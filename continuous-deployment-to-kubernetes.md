@@ -98,18 +98,10 @@ Create a cluster:
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications to generate all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.  The cloud console is used in this example but the ibmcloud cli, `ibmcloud dev create`, is also available.
 
-<!--##istutorial#-->
-1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
-2. Click **Starter Kits**
-3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
-4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
-<!--#/istutorial#-->
-<!--##isworkshop#-->
-<!--
-1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [ADevOps](https://{DomainName}/devops).
+1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [DevOps](https://{DomainName}/devops).
 2. Click **Create toolchain**
 3. Under the left hand column, select **Kubernetes** as a filter.
-4. Click on the **Develop a Kubernetes app with Helmm** tile.
+4. Click on the **Develop a Kubernetes app with Helm** tile.
 5. Enter a unique **name** for the toolchain such as `<your-initial>-mynodestarter-toolchain` and select a resource group. 
 6. Click on the **Delivery Pipeline** tab.
 7. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`.
@@ -123,32 +115,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
--->
-<!--#/isworkshop#-->
 
-<!--##istutorial#-->
-## Configure DevOps delivery pipeline
-{: #continuous-deployment-to-kubernetes-create_devops}
-{: step}
-
-Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
-
-1. Click **Deploy your app**, under the **Configure Continuous Delivery** tile.
-1. Select **{{site.data.keyword.containershort_notm}}** as the **Deployment target**.
-1. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
-1. Select a region and your cluster from the list.
-1. Select **Helm** as the **Deployment type** and click on **Next**.
-1. Define a unique **DevOps toolchain name**.
-1. Select a region to create your toolchain in.
-1. Click **Create**.
-
-The toolchain will build your application and deploy it to the cluster.
-
-1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
-1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
-1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
-<!--#/istutorial#-->
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
@@ -215,12 +182,11 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 
 In this step, you will clean up the resources to remove what you created above.
 
-<!-- - Delete the Git repository.
+- Delete the Git repository.
   - Click on the configuration for the **BUILD** stage
   - Select the **Input** panel
   - Copy the Git URL and paste into a browser
   - In the git repository: select Settings on the right then General > Advanced > Remove Project
-  -->
 - Delete the toolchain.
 - Delete the images from the Kubernetes Registry
 <!--##istutorial#-->
