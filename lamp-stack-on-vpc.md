@@ -56,7 +56,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
-  * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
 * `terraform` to use Infrastructure as Code to provision resources,
 * `jq` to query JSON files,
 * `git` to clone source code repository,
@@ -177,8 +177,8 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-  You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
-  {: tip}
+   You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
+   {: tip}
 
 ## Install Apache, MySQL, and PHP
 {: #lamp-stack-on-vpc-6}
@@ -244,10 +244,10 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    {: pre}
 
 1. Run the following script to secure the MySQL database.
-  ```sh
-  mysql_secure_installation
-  ```
-  {: pre}
+   ```sh
+   mysql_secure_installation
+   ```
+   {: pre}
 
 1. Additionally you can quickly create a PHP info page with the following command.
    ```sh

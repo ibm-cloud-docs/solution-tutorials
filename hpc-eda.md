@@ -80,45 +80,45 @@ You will find instructions to download and install these tools for your operatin
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
-  ```
-  ibmcloud dev help
-  ```
-  {: pre}
+   ```
+   ibmcloud dev help
+   ```
+   {: pre}
 
 4. Log in to the {{site.data.keyword.cloud_notm}} with your credentials:
 
-  ```
-  ibmcloud login
-  ```
-  {: pre}
+   ```
+   ibmcloud login
+   ```
+   {: pre}
 
 5. Add the VPC infrastructure capabilities plugin to the CLI:
 
-  ```
-  ibmcloud plugin install vpc-infrastructure
-  ```
-  {: pre}
+   ```
+   ibmcloud plugin install vpc-infrastructure
+   ```
+   {: pre}
 
 6. Add DNS-related commands:
 
-  ```
-  ibmcloud plugin install DNS
-  ```
-  {: pre}
+   ```
+   ibmcloud plugin install DNS
+   ```
+   {: pre}
 
 7. Set the infrastructure (is) commands target to {{site.data.keyword.vpc_short}}:
 
-  ```
-  ibmcloud is target --gen 2
-  ```
-  {: pre}
+   ```
+   ibmcloud is target --gen 2
+   ```
+   {: pre}
 
 8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
-  ```
-  ibmcloud target -r us-south
-  ```
-  {: pre}
+   ```
+   ibmcloud target -r us-south
+   ```
+   {: pre}
 
 ## Prepare your environment
 {: #hpc-eda-prep-environment}
@@ -131,10 +131,10 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud) from GitHub.
 
-  ```
-  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
-  ```
-  {: pre}
+   ```
+   git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
+   ```
+   {: pre}
 
 2. Copy the tf_inventory.in file to tf_inventory.yml.
 3. Fill out the parameters in the tf_inventory.yml file. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
@@ -171,24 +171,24 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
 
 1. If you are not already logged in, log in to the {{site.data.keyword.cloud_notm}} CLI:
 
-  ```
-  ibmcloud login
-  ```
-  {: pre}
+   ```
+   ibmcloud login
+   ```
+   {: pre}
 
 2. Create the API key:
 
-  ```
-  ibmcloud iam api-key-create <name of key> --file <file to write the key> -d "your description of the key"
-  ```
-  {: pre}
+   ```
+   ibmcloud iam api-key-create <name of key> --file <file to write the key> -d "your description of the key"
+   ```
+   {: pre}
 
 3. You can find your API key in the text file (the file name you supplied for the `--file` parameter) on the line labeled `apikey`. Copy that key and store it in an environment variable where Terraform can find it:
 
-  ```
-  export IBMCLOUD_API_KEY="<the apikey from the text file you just created>"
-  ```
-  {: pre}
+   ```
+   export IBMCLOUD_API_KEY="<the apikey from the text file you just created>"
+   ```
+   {: pre}
 
 ## Provision the cloud resources
 {: #hpc-eda-provision-cloud-resources}
@@ -198,50 +198,50 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
 
 1. After Ansible is installed, use an Ansible playbook to install Terraform and the {{site.data.keyword.cloud_notm}} Terraform plugin:
 
-  ```
-  ansible-playbook -i tf_inventory.yml create_vpc.yml --tags "install-terraform"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i tf_inventory.yml create_vpc.yml --tags "install-terraform"
+   ```
+   {: pre}
 
 2. The `create_vpc.yml` playbook is a hybrid that combines Ansible configuration with Terraform provisioning. You won’t interact directly with Terraform because all of the functions are orchestrated by Ansible. Because Terraform runs behind the scenes, some of the output files from this process will be familiar to Terraform users. These output files are needed to access the newly provisioned resources and complete the cluster setup. Before running the playbook, specify the location of the files by setting the `GEN_FILES_DIR` environment variable to tell the playbook where you would like the output files placed:
 
-  ```
-  export GEN_FILES_DIR=<a directory of your choice>
-  ```
-  {: pre}
+   ```
+   export GEN_FILES_DIR=<a directory of your choice>
+   ```
+   {: pre}
 
-  This playbook invokes Terraform to do the following:
-  *	Creates and configures the {{site.data.keyword.vpc_short}} based on the parameters you provided in the `tf_inventory.yml` file
-  *	Provisions the specified master and worker virtual instances
-  *	Provisions a login box that will be used as a deployer and login jump box for the cluster
-  *	Provisions and configures a DNS server
-  *	Provisions storage for the virtual instances including storage for the NFS volume
-  *	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
-  *	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
+   This playbook invokes Terraform to do the following:
+   *	Creates and configures the {{site.data.keyword.vpc_short}} based on the parameters you provided in the `tf_inventory.yml` file
+   *	Provisions the specified master and worker virtual instances
+   *	Provisions a login box that will be used as a deployer and login jump box for the cluster
+   *	Provisions and configures a DNS server
+   *	Provisions storage for the virtual instances including storage for the NFS volume
+   *	Provisions a floating IP (fip) for the login node.  This is a public IP used to SSH into the cluster.
+   *	Creates an Ansible inventory file for the cluster to be used by subsequent Ansible playbooks
 
 3. If this is the first time you are running the playbook, ensure that there is not an existing copy of the `terraform.tfstate` file in `GEN_FILES_DIR`. If you previously ran the playbook and it failed, don't delete the `terraform.tfstate` file. You will need it to restart the playbook, beginning with place that it failed.
 4. Run the playbook:
 
-  ```
-  ansible-playbook -i tf_inventory.yml create_vpc.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i tf_inventory.yml create_vpc.yml
+   ```
+   {: pre}
 
 In addition to provisioning all of the cloud resources to create your cloud-based LSF cluster, this command creates the following files in the directory that you specified with the `GEN_FILES_DIR` environment variable:
-  * **cluster.inventory**: To use with subsequent steps (including resource connector)
-  * **ssh_config**: An ssh config file to allow direct login to private IPs from the inventory (`ssh -F <ssh_config> <host>`)
-  *	**terraform.tfstate**: Terraform status (required for tear down of resources)
-  *	**terraform.tfvars**: Terraform variables (required for tear down of resources)
-  *	**GEN2-cfg.yml**: Needed as input for the resource connector
-  *	**vpn.yml**: Ansible playbook to be used to set up the VPN gateway
-  * **clusterhosts**: An `/etc/hosts-style` file with the cluster master and worker nodes
+   * **cluster.inventory**: To use with subsequent steps (including resource connector)
+   * **ssh_config**: An ssh config file to allow direct login to private IPs from the inventory (`ssh -F <ssh_config> <host>`)
+   *	**terraform.tfstate**: Terraform status (required for tear down of resources)
+   *	**terraform.tfvars**: Terraform variables (required for tear down of resources)
+   *	**GEN2-cfg.yml**: Needed as input for the resource connector
+   *	**vpn.yml**: Ansible playbook to be used to set up the VPN gateway
+   * **clusterhosts**: An `/etc/hosts-style` file with the cluster master and worker nodes
 
 You can verify the resources that were created by viewing the `terraform.tfstate` file. You can get a quick overview by looking at the `resource_name` tag in the `terraform.tfstate` file:
 
-  ```
-  grep resource_name $GEN_FILES_DIR/terraform.tfstate
-  ```
-  {: pre}
+   ```
+   grep resource_name $GEN_FILES_DIR/terraform.tfstate
+   ```
+   {: pre}
 
 ## Connect your on-premises and cloud networks with a VPN
 {: #hpc-eda-connect-on-premises-cloud-networks-vpn}
@@ -250,14 +250,14 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 In the previous section, one of the resulting files created was `${GEN_FILES_DIR/vpn.yml}`. This playbook will be used to create a VPN. If you completed all of the information in the `tf_inventory.yml` file, the `vpn.yml` file should contain the information for this section.
 
 1. Open the `vpn.yml` file and verify the information. You might need to edit the following fields:
-  * **peer_address**: The IP of your on-premises VPN gateway.
-  * **peer_cidrs**: A list of CIDR blocks of your on-premises network that you want to access from this VPN.
-  * **preshared_key**: A passphrase or key that provides access to your on-premises VPN gateway.
-  * **security**: The setting in this section needs to match the settings for your on-premises appliance.
+   * **peer_address**: The IP of your on-premises VPN gateway.
+   * **peer_cidrs**: A list of CIDR blocks of your on-premises network that you want to access from this VPN.
+   * **preshared_key**: A passphrase or key that provides access to your on-premises VPN gateway.
+   * **security**: The setting in this section needs to match the settings for your on-premises appliance.
 
 2. Run one of the following playbooks (VPN Option 1 or VPN Option 2).
 
-  **VPN Option 1 - Using an on-premises public IP and VPN appliance**
+   **VPN Option 1 - Using an on-premises public IP and VPN appliance**
 
     Connect your VPC with your on-premises subnet by using a site-to-site VPN between your cloud VPN gateway and your on-premises gateway. This adds an additional section to the `vpn.yml` file with information that is needed to remove this resource later. Affter running the command, you will have a VPN connection between your on-premises network and your VPC:
 
@@ -266,7 +266,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
     ```
     {: pre}
 
-  **VPN Option 2 - Using OpenVPN with on-premises as client**
+   **VPN Option 2 - Using OpenVPN with on-premises as client**
 
     Use OpenVPN to connect your on-premises cluster with your cloud cluster. This option is useful because _VPN Option 1_ requires opening a public IP and employing a VPN appliance. This can be cumbersome and expensive to set up, and might be unnecessary if you are experimenting with a non-production phase of a multi-cluster implementation. With this _VPN Option 2_, you can set up a multi-cluster and start experimenting with your workload on a small scale.  
 
@@ -286,17 +286,17 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies.
 
-  ```
-  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "clean_vpn"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "clean_vpn"
+   ```
+   {: pre}
 
 4. You can use SSH to access cloud nodes through the private network. If your VPN is down, but you need to access cloud nodes, this command can be useful to SSH to a cloud node from the on-premises master (no VPN required).
 
-  ```
-  ssh -F ${GEN_FILES_DIR}/ssh_config <local IP: 10.x.x.x>
-  ```
-  {: pre}
+   ```
+   ssh -F ${GEN_FILES_DIR}/ssh_config <local IP: 10.x.x.x>
+   ```
+   {: pre}
 
 ## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
 {: #hpc-eda-deploy-lsf-cloud-cluster}
@@ -304,58 +304,58 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
-  * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
-  * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-  * **bin**: The name of the LSF install file which currently resides in the local_path.
-  * **multicluster**:
+   * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
+   * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
+   * **bin**: The name of the LSF install file which currently resides in the local_path.
+   * **multicluster**:
       cloud:
         conf_dir:
-    Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
-  * **onprem**: The LSF conf file location and the name of the on-premises cluster.
+     Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
+   * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
       cluster_name: onPremCluster
       host: hostname of the on premises LSF master
       ip: IP address of the on-premises LSF master
-  * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
-  * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
-  * **vpn**:
-      ip: <vpn_server_ip>
+   * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
+   * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
+   * **vpn**:
+       ip: <vpn_server_ip>
 
 2. Install LSF:
 
-  ```
-  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
+   ```
+   {: pre}
 
-  The install command does the following:
-  * Copies the LSF installation binary to the deployer.
-  * Installs the necessary packages on the deployer.
-  * Sets up the NFS server on the deployer including creating and mounting the filesystem.
+   The install command does the following:
+   * Copies the LSF installation binary to the deployer.
+   * Installs the necessary packages on the deployer.
+   * Sets up the NFS server on the deployer including creating and mounting the filesystem.
 
 3. Configure the data manager. For a workload that requires a significant amount of input data, generates a large amount of output data, or both, efficient data management is important. The Spectrum LSF Data Manager provides a number of highly configurable strategies to optimize compute time, network bandwidth, and costs related to data movement.
 
-  ```
-  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "config_dm"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "config_dm"
+   ```
+   {: pre}
 
 4. Configure the on-premises queues and settings for LSF.
 
-  ```
-  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"
+   ```
+   {: pre}
 
-  If you see an error when running this script for `mc_onprem`, you might need to limit the network interfaces that are scanned to just those that will be part of the cluster network.  This can be accomplished by uncommenting the “interfaces” tag in the `lsf_install` file and listing the necessary interfaces.
-  {: note}
+   If you see an error when running this script for `mc_onprem`, you might need to limit the network interfaces that are scanned to just those that will be part of the cluster network.  This can be accomplished by uncommenting the “interfaces” tag in the `lsf_install` file and listing the necessary interfaces.
+   {: note}
 
 5. Configure the cloud queues and settings for LSF.
 
-  ```
-  ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_cloud"
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_cloud"
+   ```
+   {: pre}
 
 ## Verify and test the multi-cluster
 {: #hpc-eda-verify-test-multi-cluster}
@@ -365,31 +365,31 @@ From the on-premises master node, complete the following steps.
 
 1. The `lsclusters` command displays the two clusters that make up the multi-cluster:
 
-  ```
-  lsclusters
-  ```
-  {: pre}
+   ```
+   lsclusters
+   ```
+   {: pre}
 
-  The output of the command should show both the on-premises and cloud clusters.
+   The output of the command should show both the on-premises and cloud clusters.
 
 2. The `bqueues` command displays the normal default array of lsf queues but should also contain the queue that can be used to send jobs to the cloud cluster. The name of this queue is specified by the `sndqueue:` variable in the `lsf_install` file.
 
-  ```
-  bqueues
-  ```
-  {: pre}
+   ```
+   bqueues
+   ```
+   {: pre}
 
 3. Submit a job to the cloud queue with the `bsub` command and then confirm it with the `bjobs` command.
 
-  ```
-  bsub -q <your cloud queue>
-  ```
-  {: pre}
+   ```
+   bsub -q <your cloud queue>
+   ```
+   {: pre}
 
-  ```
-  bjobs
-  ```
-  {: pre}
+   ```
+   bjobs
+   ```
+   {: pre}
 
 ## Remove resources
 {: #hpc-eda-remove-resources}
@@ -400,9 +400,9 @@ To clean up any resources that you created in this tutorial, use the following p
 Make sure `GEN_FILE_DIR` is set.
 {: note}
 
-  ```
-  ansible-playbook -i tf_inventory.yml clean_vpc.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i tf_inventory.yml clean_vpc.yml
+   ```
+   {: pre}
 
 If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.

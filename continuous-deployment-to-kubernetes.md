@@ -149,7 +149,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 2. Rename the **DEPLOY** stage to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
-  ![Access the settings Icon](images/solution21/deploy_stage.png)
+   ![Access the settings Icon](images/solution21/deploy_stage.png)
 3. To save the changes scroll down and click **Save**.
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. On the **Input** panel change the **stage trigger** to `Run jobs only when this stage is run manually`.
@@ -157,7 +157,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
-  ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
+   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
 
 You now have the full deployment setup. To deploy from dev to test, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
@@ -184,10 +184,10 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
-  - Click on the configuration for the **BUILD** stage
-  - Select the **Input** panel
-  - Copy the Git URL and paste into a browser
-  - In the git repository: select Settings on the right then General > Advanced > Remove Project
+   - Click on the configuration for the **BUILD** stage
+   - Select the **Input** panel
+   - Copy the Git URL and paste into a browser
+   - In the git repository: select Settings on the right then General > Advanced > Remove Project
 - Delete the toolchain.
 - Delete the images from the Kubernetes Registry
 <!--##istutorial#-->

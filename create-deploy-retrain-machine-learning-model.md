@@ -75,10 +75,10 @@ You can create a project to add data and open a data asset in the data refiner f
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
-  1. Select a **region**
-  2. Select a **Lite** pricing plan
-  3. Change the **Service name** to **watson-studio-tutorial**
-  4. Select a **resource group** and click **Create**
+   1. Select a **region**
+   2. Select a **Lite** pricing plan
+   3. Change the **Service name** to **watson-studio-tutorial**
+   4. Select a **resource group** and click **Create**
 2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 3. Create a **project** by clicking on **Create a project** under **Work with data** and then in the subsequent page click **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
