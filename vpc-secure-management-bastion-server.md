@@ -101,7 +101,8 @@ Let's create a security group and configure inbound rules to your bastion VSI.
    | Protocol | Source type | Source | Value   |
    |------------|---------------|----------|-----------  |
    |TCP         |Any            |0.0.0.0/0 |Ports 22-22  |
-   |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**| {: caption="Bastion: Inbound rules" caption-side="bottom"}
+   |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**|
+   {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
 ### Create a bastion instance
 {: #vpc-secure-management-bastion-server-create-bastion-instance}
@@ -177,6 +178,7 @@ With access to the bastion working, continue and create the security group for m
    |------------|---------------|----------|-----------  |
    |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
    {: caption="Bastion: Outbound rules" caption-side="bottom"}
+
 
 ## Use the bastion host to access other instances in the VPC
 {: #vpc-secure-management-bastion-server-bastion-host-access-instances}
