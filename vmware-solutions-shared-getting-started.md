@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-19"
+lastupdated: "2021-08-16"
 lasttested: "2020-12-23"
 
 content-type: tutorial
@@ -336,12 +336,12 @@ You can create rules to allow or deny traffic, this section creates a rule to al
    - Select `terraform_v0.13` as the **Terraform version**.
    - Click **Save template information**. 
 4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
-  
-    Some values have defaults which are appropriate to keep for this tutorial.
-    {: tip}
 
-    Set the Sensitive flag for the `vcd-password` variable to that the value is not displayed in the workspace and/or logs.
-    {: tip}
+   Some values have defaults which are appropriate to keep for this tutorial.
+   {: tip}
+
+   Set the Sensitive flag for the **vcd-password** variable to that the value is not displayed in the workspace and/or logs.
+   {: tip}
 
 5. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
 6. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 
