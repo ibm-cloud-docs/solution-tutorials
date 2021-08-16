@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-08-16"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -389,6 +389,7 @@ Note: The agent installation as provided by the IBM Cloud script includes the en
           prometheus.io/scrape: "true"
           prometheus.io/port: "8002"
   ```
+
 Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
 
