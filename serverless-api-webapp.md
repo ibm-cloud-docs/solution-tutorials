@@ -51,10 +51,9 @@ Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned 
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-<p style="text-align: center;">
+![Architecture](./images/solution8/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
-   ![Architecture](./images/solution8/Architecture.png)
-</p>
 
 1. The user accesses the application hosted on the bucket in {{site.data.keyword.cos_short}}
 2. The web application calls a backend API.
@@ -128,6 +127,7 @@ Start by creating the first action:
    }
    ```
    {: codeblock}
+
 6. Thereafter click **Save**.
 
 Then add the action to a sequence:
@@ -155,6 +155,7 @@ Now, add the second action to that sequence:
       }
    ```
    {: codeblock}
+
 6. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
@@ -177,6 +178,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    }
    ```
    {: codeblock}
+
 4. Click **Save**.
 
 Add the action to a sequence:
@@ -210,6 +212,7 @@ Complete the sequence:
    }
    ```
    {: codeblock}
+
 1. Click on **Save**.
 1. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
 1. Click on **Save** and then **Invoke**.
@@ -267,7 +270,8 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
-![Guestbook Screenshot](images/solution8/Guestbook.png)
+![Guestbook Screenshot](images/solution8/Guestbook.png){: class="center"}
+{: style="text-align: center;"}
 
 <!--##istutorial#-->
 ## Optionally configure a custom domain

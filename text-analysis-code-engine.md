@@ -35,11 +35,11 @@ completion-time: 2h
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying a text analysis with {{site.data.keyword.nlushort}} application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} entities - applications and jobs - to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} entities. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
-{:shortdesc}
+{: shortdesc}
 
 {{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. {{site.data.keyword.codeengineshort}} even builds container images for you from your source code. Because these workloads are all hosted within the same Kubernetes infrastructure, all of them can seamlessly work together. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure that is needed to host it.
 
@@ -52,11 +52,8 @@ The platform is designed to address the needs of developers who just want their 
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
 * Learn the use of jobs to execute run to completion workloads.
 
-
-<p style="text-align: center;">
-
-  ![Architecture](images/solution54-code-engine/architecture_diagram.png)
-</p>
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
 2. Developer connects the frontend (UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
@@ -76,7 +73,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 **Note:** To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -109,17 +106,20 @@ Putting entities into a single project enables you to manage access control more
    ```sh
    ibmcloud login
    ```
-   {:pre}
+   {: pre}
+
 4. Target the resource group where you created your project.
    ```
    ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
    ```
-   {:pre}
+   {: pre}
+
 5. Make the command line tooling point to your project
    ```sh
    ibmcloud code-engine project select --name <PROJECT_NAME>
    ```
-   {:pre}
+   {: pre}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -128,12 +128,14 @@ Putting entities into a single project enables you to manage access control more
    ```
    ibmcloud target -g <ASSIGNED_RESOURCE_GROUP_NAME>
    ```
-   {:pre}
+   {: pre}
+
 1. Create a new project with a unique name like `<your-initials>-ceproject`:
    ```
    ibmcloud code-engine project create --name <PROJECT_NAME>
    ```
-   {:pre}
+   {: pre}
+
 -->
 <!--#/isworkshop#-->
 
@@ -153,26 +155,27 @@ We've already built images for the two applications and pushed them to the publi
    ```sh
    ibmcloud code-engine application create --name frontend --image ibmcom/frontend
    ```
-   {:pre}
+   {: pre}
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
 <!--##istutorial#-->
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
-   {:tip}
+   {: tip}
 <!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![Frontend is running](images/solution54-code-engine/frontend-501.png)
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
-   {:tip}
+   {: tip}
 
 3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
    ```
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
-   {:pre}
+   {: pre}
+
    If the application is running, you should see `backend URL: undefined` and App listening on port 8080. Later on in the tutorial, you will connect this frontend application to our backend application
 
 Congratulations!! You've just deployed a web application to {{site.data.keyword.codeengineshort}} with a simple command and also without needing to know about the intricacies of Kubernetes such as pods, deployments, services, and ingress.
@@ -190,16 +193,17 @@ Most of these values have a default set if nothing is provided as an option when
    ```sh
    ibmcloud code-engine application get -n frontend
    ```
-   {:pre}
+   {: pre}
 
    By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag with `application update` command.
-   {:tip}
+   {: tip}
 
 4. If you didn't want to allow as many as 10 instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```sh
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
-    {:pre}
+    {: pre}
+
 5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
 6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
@@ -219,29 +223,30 @@ Most of these values have a default set if nothing is provided as an option when
    ```sh
    ibmcloud code-engine application create --name backend --image ibmcom/backend --cluster-local
    ```
-   {:pre}
+   {: pre}
+
    The `--cluster-local` flag will instruct {{site.data.keyword.codeengineshort}} to keep the endpoint for this application private, meaning that it will only be available from within the cluster. This is often used for security purposes. In this case, there is no reason to expose the backend application with a public endpoint, since it will not be accessed from outside of the cluster.
-   {:tip}
+   {: tip}
 
 2. Copy and save the private endpoint (URL) from the output to use it in the next command.
 
    You can run `ibmcloud code-engine application get -n backend` command to check the status and details of the backend application.
-   {:tip}
+   {: tip}
 
 3. The frontend application uses an environment variable (BACKEND_URL) to know where the backend application is hosted. You now need to update the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command.
    ```sh
    ibmcloud code-engine application update --name frontend --env BACKEND_URL=<BACKEND_PRIVATE_URL>
    ```
-   {:pre}
+   {: pre}
 
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
-   {:tip}
+   {: tip}
 
 4. Hard refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload a text file(.txt) and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the text files. Clicking on **Upload text file** should also show a similar error message.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {: #text-analysis-code-engine-0}
-{:connect_cloud_services}
+{: connect_cloud_services}
 {: step}
 
 In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the text files into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.nlushort}} will be used later in the tutorial to perform text analysis on the uploaded text files.
@@ -317,31 +322,31 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```sh
    ibmcloud code-engine application bind --name backend --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
-   {:pre}
+   {: pre}
 
    If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag.
-   {:tip}
+   {: tip}
 
 2. You will also need to provide the application with your Bucket name where you want to store the text files, as well as your COS endpoint. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.
    ```sh
    ibmcloud code-engine configmap create --name backend-configuration --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
-   {:pre}
+   {: pre}
 
 3. With the configmap defined, you can now update the backend application by asking {{site.data.keyword.codeengineshort}} to set environment variables in the runtime of the application based on the values in the configmap. Update the backend application with the following command
    ```sh
    ibmcloud code-engine application update --name backend --env-from-configmap backend-configuration
    ```
-   {:pre}
+   {: pre}
 
    To create a secret, you would need to use `--env-from-secret` flag. Both secrets and configmaps are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
-   {:tip}
+   {: tip}
 
 4. To verify whether the backend application is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
    ibmcloud code-engine application get --name backend
    ```
-   {:pre}
+   {: pre}
 
 5. Go to the frontend UI and **upload text files** for text analysis. You should see the uploaded files with `Not analyzed` tag on them.
 
@@ -363,10 +368,10 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```sh
    ibmcloud code-engine job create --name backend-job --image ibmcom/backend-job --env-from-configmap backend-configuration
    ```
-   {:pre}
+   {: pre}
 
    You can set the version of {{site.data.keyword.nlushort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/docs/natural-language-understanding?topic=natural-language-understanding-versioning)
-   {:tip}
+   {: tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to job
 {: #text-analysis-code-engine-12}
@@ -375,17 +380,19 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```sh
    ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS_JOB
    ```
-   {:pre}
+   {: pre}
+
 2. Similarly, let's bind {{site.data.keyword.nlushort}} service with a prefix `NLU_JOB` to analyze the uploaded text files,
    ```sh
    ibmcloud code-engine job bind --name backend-job --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-nlu --service-credential nlu-for-code-engine --prefix NLU_JOB
    ```
-   {:pre}
+   {: pre}
+
 3. To verify whether the job is updated with the binding and configmap. You can run the below command and look for the `Service Bindings` and `Environment Variables` sections in the output
    ```sh
    ibmcloud code-engine job get --name backend-job
    ```
-   {:pre}
+   {: pre}
 
 ### Run the job
 {: #text-analysis-code-engine-13}
@@ -394,27 +401,29 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```sh
    ibmcloud code-engine jobrun submit --name backend-jobrun --job backend-job
    ```
-   {:pre}
+   {: pre}
 
    When you run a job, you can override many of the variables that you set in the job configuration. To check the variables, run `ibmcloud code-engine jobrun submit --help`.
-   {:tip}
+   {: tip}
 
 2. To check the status of the `jobrun`, run the following command
    ```sh
    ibmcloud code-engine jobrun get --name backend-jobrun
    ```
-   {:pre}
+   {: pre}
+
 3. For logs, copy the **instance** name from the output of the above command and pass it to `--instance` flag in the following command. It should look something like `backend-jobrun-1-0`.
    ```sh
    ibmcloud code-engine jobrun logs --instance <JOBRUN_INSTANCE_NAME>
    ```
-   {:pre}
+   {: pre}
+
 4. In the frontend UI, click on the **refresh** button (next to Upload text file) to see the **Keywords** and **JSON** for each of the uploaded text files. The tag on each file should now change to `Analyzed`.
 5. Upload new files or delete individual file by clicking the **delete** icon, resubmit the **jobrun** with the below command and hit the **refresh** button to see the results.
    ```sh
    ibmcloud code-engine jobrun resubmit --jobrun backend-jobrun
    ```
-   {:pre}
+   {: pre}
 
 ### Automate the job run
 {: #text-analysis-code-engine-automate}
@@ -426,10 +435,10 @@ Instead of running the job manually, you can automate the job run by creating an
    ```sh
    ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket <your-initials>-bucket-code-engine --prefix files --event-type write
    ```
-   {:pre}
+   {: pre}
 
    You can subscribe to different events such as `write` events, `delete` events, or the default `all` events. You can create at most 100 {{site.data.keyword.cos_short}} subscriptions per {{site.data.keyword.codeengineshort}} project.
-   {:tip}
+   {: tip}
 
 3. Now, just upload new files and hit the **refresh** button to see the results. Going forward, you don't have to resubmit the **jobrun** as it is taken care by the subscription.
 
@@ -448,10 +457,10 @@ A container image registry, or registry, is a repository for your container imag
 
    ibmcloud ce registry create --name myregistry --server $CONTAINER_REGISTRY --username iamapikey --password <API_KEY>
    ``` 
-   {:pre}
+   {: pre}
 
    Check [adding access to a private container registry](https://{DomainName}/docs/codeengine?topic=codeengine-add-registry) for more information.
-   {:tip}
+   {: tip}
 
 2. Create a [build configuration](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-create-cli) by running the below command. Creating a build configuration does not create an image, but creates the configuration to build an image.You must then run a build that references the build configuration to create an image. *For &lt;REGISTRY_NAMESPACE&gt;, check this [link](https://{DomainName}/docs/Registry?topic=Registry-getting-started#gs_registry_namespace_add)*
    ```sh
@@ -459,22 +468,23 @@ A container image registry, or registry, is a repository for your container imag
 
    ibmcloud ce build create --name frontend-build --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry --source https://github.com/IBM-Cloud/code-engine-text-analysis --commit master --context-dir /frontend --strategy dockerfile --size medium
    ```
-   {:pre}
+   {: pre}
 
    Remember to replace `frontend` in the above command with `backend` or `backend-job` based on the container image you are planning to build and push to the {{site.data.keyword.registrylong_notm}}.
-   {:tip}
+   {: tip}
 
 3. [Submit a build run](https://{DomainName}/docs/codeengine?topic=codeengine-build-image#build-run-cli) from the build configuration.
    ```sh
    ibmcloud ce buildrun submit --build frontend-build --name frontend-build-run
    ```
-   {:pre}
+   {: pre}
 
 4. Create an application by replacing the placeholders with appropriate values
    ```sh
    ibmcloud ce app create --name frontend --image $CONTAINER_REGISTRY/$REGISTRY_NAMESPACE/frontend --registry-secret myregistry
    ```
-   {:pre}
+   {: pre}
+
 <!--#/istutorial#-->
 
 ## Remove resources
@@ -485,7 +495,8 @@ A container image registry, or registry, is a repository for your container imag
    ```sh
    ibmcloud code-engine project delete --name <PROJECT_NAME>
    ```
-   {:pre}
+   {: pre}
+   
 2. Navigate to [Resource List](https://{DomainName}/resources/)
 3. Delete the services you created:
  * {{site.data.keyword.cos_full}}

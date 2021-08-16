@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/) enables users to link workloads hosted in secure private networks across data centers and locations.
 
 This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://{DomainName}/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #linking-secure-network-enclosures-objectives}
@@ -51,10 +51,8 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Configure routing between sites
 
 
-<p style="text-align: center;">
-
-  ![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png)
-</p>
+![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: class="center"}
+{: style="text-align: center;"}
 
 
 1. Deploy secure private networks
@@ -78,12 +76,12 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 | Item  | Datacenter1 | Datacenter2 |
 |:------ |:--- | :--- |
 | Data center |  |  |
-| VRA public IP address | <DC1 VRA Public IP Address> | <DC2 VRA Public IP Address> |
-| VRA private IP address | <DC1 VRA Private IP Address> | <DC2 VRA Private IP Address> |
+| VRA public IP address | &lt;DC1 VRA Public IP Address&gt; | &lt;DC2 VRA Public IP Address&gt; |
+| VRA private IP address | &lt;DC1 VRA Private IP Address&gt; | &lt;DC2 VRA Private IP Address&gt; |
 | VRA private subnet & CIDR |  |  |
 | Private VLAN ID | &lt;DC1 Private VLAN ID&gt;  | &lt;DC2 Private VLAN ID&gt; |
-| VSI private IP address | <DC1 VSI Private IP Address> | <DC2 VSI Private IP Address> |
-| APP zone subnet & CIDR | <DC1 APP zone subnet/CIDR> | <DC2 APP zone subnet/CIDR> |
+| VSI private IP address | &lt;DC1 VSI Private IP Address&gt; | &lt;DC2 VSI Private IP Address&gt; |
+| APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
 
 1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page.
 2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
@@ -138,6 +136,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    commit
    ```
    {: codeblock}
+
 2. Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
    ```
    ssh vyatta@<DC2 VRA Private IP Address>
@@ -146,6 +145,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    commit
    ```
    {: codeblock}
+
 2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
    ```
    show ip route
@@ -166,12 +166,14 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    commit
    ```
    {: codeblock}
+
 2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
    ```
    set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
    commit
    ```
    {: codeblock}
+
 3. Verify that the VSIs in both data centers can now communicate
    ```bash
    ping <Remote Subnet Gateway IP>
@@ -189,7 +191,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
 Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
-{:tip}
+{: tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
@@ -203,7 +205,7 @@ This tutorial can be used in conjunction with the
 
 ## Related material
 {: #linking-secure-network-enclosures-8}
-{:related}
+{: related}
 
 1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using [{{site.data.keyword.BluDirectLink}}](https://{DomainName}/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://{DomainName}/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud)
 2. [The IBM Cloud network](https://www.ibm.com/cloud/data-centers/)

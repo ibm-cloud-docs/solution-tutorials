@@ -47,9 +47,8 @@ There are many reasons why you would use a Content Delivery Network in these sit
 * Make content globally available with a Content Delivery Network (CDN).
 * Expose files by using a static website application.
 
-<p style="text-align: center;">
-![Architecture](images/solution3/Architecture.png)
-</p>
+![Architecture](images/solution3/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user accesses the application
 2. The application includes content distributed through a Content Delivery Network
@@ -67,7 +66,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In addition, contact the master user of your Infrastructure account to get the following permissions:
@@ -134,6 +133,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ibmcloud login
    ```
    {: pre}
+
 1. Target the region where the bucket was created. As example for a bucket created in `us-south`:
    ```sh
    ibmcloud target -r us-south
@@ -143,6 +143,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    BUCKET_NAME=<YOUR_BUCKET_NAME>
    ```
    {: pre}
+
 4. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
   ```sh
   ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
@@ -151,6 +152,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
   ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file a-video.mp4
   ```
   {: pre}
+  
 5. View your files from your dashboard.
    ![Bucket Content](images/solution3/Buckets.png)
 6. Access the files through your browser or by using curl:

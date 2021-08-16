@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #solution-template-objectives}
@@ -49,7 +49,8 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
 
-![Architecture](images/solution1/Architecture.png)
+![Architecture](images/solution1/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user does this
 2. Then that
@@ -82,7 +83,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In addition, make sure you have:
@@ -111,10 +112,12 @@ In this section, you will create the services required to ...
     ibmcloud login
     ```
     {: pre}
+
     ```sh
     ibmcloud target --cf
     ```
     {: pre}
+    
 2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
     ```sh
     ibmcloud resource service-instance-create service-instance-name service-name lite global
@@ -130,7 +133,7 @@ Introductory statement that overviews the section
 1. Step 1 Click **This** and enter your name.
 
   This is a tip.
-  {:tip}
+  {: tip}
 
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.

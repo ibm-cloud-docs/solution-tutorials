@@ -27,7 +27,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
-{:shortdesc}
+{: shortdesc}
 
 When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
 
@@ -39,6 +39,7 @@ Isolating the underlying resources, implementing governance and access policies,
 * Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
+
 
 ## Define a project
 {: #users-teams-applications-1}

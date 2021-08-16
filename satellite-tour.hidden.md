@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial guides you through the architecture and components of a {{site.data.keyword.satellitelong_notm}} location.
-{:shortdesc}
+{: shortdesc}
 
 With {{site.data.keyword.satellitelong_notm}}, you use your own compute infrastructure that is in your on-premises data center, other cloud providers, or edge networks to create a {{site.data.keyword.satelliteshort}} location. Then, you use the capabilities of {{site.data.keyword.satelliteshort}} to run {{site.data.keyword.cloud_notm}} services on your infrastructure, and consistently deploy, manage, and control your app workloads through a single pane of glass.
 
@@ -55,7 +55,8 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 * Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the location.
 * Use {{site.data.keyword.satelliteshort}} configurations to specify what Kubernetes resources you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters.
 
-![Architecture](./images/solution-satellite-tour-hidden/architecture.png)
+![Architecture](./images/solution-satellite-tour-hidden/architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 * The Control Plane Master, running in {{site.data.keyword.cloud_notm}},
@@ -63,7 +64,8 @@ The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 * {{site.data.keyword.satelliteshort}} Link to securely connect the {{site.data.keyword.satelliteshort}} location back to {{site.data.keyword.cloud_notm}},
 * Host infrastructure assigned to the {{site.data.keyword.satelliteshort}} control plane, and to clusters and services running in the {{site.data.keyword.satelliteshort}} location.
 
-![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png)
+![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
 
@@ -80,7 +82,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -120,21 +122,25 @@ In this section, you will walk through the components that make up a {{site.data
    ibmcloud sat
    ```
    {: pre}
+
 1. List all locations:
    ```sh
    ibmcloud sat location ls
    ```
    {: pre}
+
 1. To view the details of a location, use:
    ```sh
    ibmcloud sat location get --location <name-or-id>
    ```
    {: pre}
+
 1. Retrieve all hosts attached to a location with:
    ```sh
    ibmcloud sat host ls --location <name-or-id>
    ```
    {: pre}
+
    It also reports whether hosts are part of the control plane (`infrastructure`), or a part of a cluster, or unassigned.
 1. To list all {{site.data.keyword.satelliteshort}} clusters, use:
    ```sh
@@ -156,6 +162,7 @@ Under [Logging](https://{DomainName}/observe/logging):
    host:satellite app:crn:v1:bluemix:public:satellite:us-east:a/123456:c2k1k2jw0ofn1234::
    ```
    {: codeblock}
+
 1. By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
 
 The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
@@ -178,7 +185,7 @@ In the following section, you will deploy an application to a {{site.data.keywor
 1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
 
    You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
-   {:tip}
+   {: tip}
 
 1. To log in the cluster, click the **OpenShift web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
@@ -235,21 +242,25 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
    {: pre}
+
 1. Wait for the first build of the application to complete by monitoring the logs:
    ```sh
    oc logs -f bc/link-example
    ```
    {: pre}
+
 1. When the build is complete, create a secure route to access the application:
    ```sh
    oc create route edge link-example-https --service=link-example --port=8080
    ```
    {: pre}
+
 1. Retrieve the created route:
    ```sh
    oc get route link-example-https --output json | jq -r '"https://" + .spec.host'
    ```
    {: pre}
+   
 1. Open the route URL to access the application.
 
 The application allows to query a {{site.data.keyword.postgresql}} database. The form prompts you for the database credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the database over {{site.data.keyword.satelliteshort}} link.
@@ -271,11 +282,13 @@ The application allows to query a {{site.data.keyword.postgresql}} database. The
    INSERT INTO <your-initials>_EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Win', 30, 'M', 9000)
    ```
    {: codeblock}
+
 1. List all rows
    ```sql
    SELECT * FROM <your-initials>_EMPLOYEE
    ```
    {: codeblock}
+
 1. Delete the table
    ```sql
    DROP TABLE <your-initials>_EMPLOYEE
@@ -324,6 +337,7 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
        example.property.2: world
      ```
      {: pre}
+
    * Click **Add**.
 
 ### Subscribe clusters to the version

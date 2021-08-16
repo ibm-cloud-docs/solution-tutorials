@@ -49,9 +49,9 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-<p style="text-align: center;">
-  ![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
-</p>
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: class="center"}
+{: style="text-align: center;"}
+
 
 1. The developer builds Docker images for the application.
 2. The images are pushed to {{site.data.keyword.registryshort_notm}} in Dallas and London.
@@ -109,6 +109,7 @@ While the cluster is getting ready, you are going to prepare the application.
    ibmcloud target -r us-south
    ```
    {: pre}
+
 2. Create a namespace for the application.
    ```bash
    MYNAMESPACE=<your_namespace>
@@ -124,11 +125,12 @@ You can also reuse an existing namespace if you have one in the location. You ca
 
 This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
 
-1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){:new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
+1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){: new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
    ```bash
    git clone https://github.com/IBM/container-service-getting-started-wt.git
    ```
    {: pre}
+
 1. Navigate to the `Lab 1` directory.
    ```bash
    cd 'container-service-getting-started-wt/Lab 1'
@@ -150,8 +152,8 @@ This step builds the application into a Docker image. You can skip this step if 
    ```
    {: pre}
 
-  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
-  {: tip}
+   The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
+   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
 {: #multi-region-k8s-cis-deploy_application}
@@ -164,23 +166,26 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: pre}
+
 1. Create the deployment:
    ```bash
    kubectl create deploy hello-world-deployment --image=us.icr.io/$MYNAMESPACE/multi-region-hello-world:1
    ```
    {: pre}
+
    Example output: `deployment "hello-world-deployment" created`.
 1. Make the application accessible within the cluster by creating a service:
    ```bash
    kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
    ```
    {: pre}
+
    It returns message like `service "hello-world-service" exposed`.  To see the services:
 
    ```bash
    kubectl get services
    ```
-  {: pre}
+   {: pre}
 
 1. Run the application in the cluster with two replicas:
    ```bash
@@ -204,6 +209,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
+   
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
@@ -254,16 +260,16 @@ It will be required to have your own DNS domain name and a global load balancer 
 
 Repeat the following steps for the London location:
 * In [Create a Kubernetes cluster](#multi-region-k8s-cis-3) replace:
-  * the cluster name **my-us-cluster** with **my-uk-cluster**;
-  * the Geography name **North America** with **Europe**;
-  * the Metro name **Dallas** with **London**;
-  * and the cluster name **my-us-cluster** with **my-uk-cluster**.
+   * the cluster name **my-us-cluster** with **my-uk-cluster**;
+   * the Geography name **North America** with **Europe**;
+   * the Metro name **Dallas** with **London**;
+   * and the cluster name **my-us-cluster** with **my-uk-cluster**.
 * In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#multi-region-k8s-cis-create_namespace) replace:
-  * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
+   * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
 * In the [Deploy the application to the Kubernetes cluster](#multi-region-k8s-cis-deploy_application) replace:
-  * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
+   * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
 * In the [Build and push a Docker image to the location-specific registry](#multi-region-k8s-cis-push_image) replace:
-  * the registry **us.icr.io** with **uk.icr.io**.
+   * the registry **us.icr.io** with **uk.icr.io**.
 * [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress)
 
 ## Configure multi-location load-balancing
@@ -295,7 +301,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
-   {:tip}
+   {: tip}
 
 ### Verify the Global Load Balancer name
 {: #multi-region-k8s-cis-glb}
@@ -320,7 +326,7 @@ Health Checks monitor responses to HTTP/HTTPS requests from origin pools on a se
    1. Click **Create**.
 
    When building your own applications, you could define a dedicated health endpoint such as */heathz* where you would report the application state.
-   {:tip}
+   {: tip}
 
 ### Define Origin Pools
 {: #multi-region-k8s-cis-13}
@@ -431,7 +437,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 
 ## Remove resources
 {: #multi-region-k8s-cis-6}
-{:removeresources}
+{: removeresources}
 {: step}
 
 ### Remove Kubernetes Cluster resources
@@ -449,7 +455,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 
 ## Related content
 {: #multi-region-k8s-cis-7}
-{:related}
+{: related}
 
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 * [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)

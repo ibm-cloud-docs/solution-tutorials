@@ -42,11 +42,8 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 * Create, deploy and bind Node.js actions in {{site.data.keyword.openwhisk_short}}
 * Access a Db2 database from {{site.data.keyword.openwhisk_short}} using Node.js
 
-
-<p style="text-align: center;">
-
-  ![Architecture](images/solution19/SlackbotArchitecture.png)
-</p>
+![Architecture](images/solution19/SlackbotArchitecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Before you begin
 {: #slack-chatbot-database-watson-prereqs}
@@ -71,6 +68,7 @@ In this section, you are going to set up the needed services and prepare the env
    cd slack-chatbot-database-watson
    ```
    {: pre}
+
 2. If you are not logged in, use `ibmcloud login` to log in interactively. Make sure to target the resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
    ```sh
    ibmcloud target -g RESOURCE_GROUP
@@ -93,11 +91,13 @@ In this section, you are going to set up the needed services and prepare the env
    ibmcloud resource service-key-create slackbotkey Manager --instance-name eventDB
    ```
    {: pre}
+
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan. Adapt **us-south** to your location.
    ```sh
    ibmcloud resource service-instance-create eventConversation conversation free us-south
    ```
    {: pre}
+
 6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. The **dispatch** action is enabled as web action and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** script. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
@@ -108,8 +108,8 @@ In this section, you are going to set up the needed services and prepare the env
    {: pre}
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
-7.  Obtain the URI for the deployed **dispatch** action.
 
+7.  Obtain the URI for the deployed **dispatch** action.
    ```sh
    ibmcloud fn action get slackdemo/dispatch --url
    ```
@@ -120,6 +120,7 @@ In this section, you are going to set up the needed services and prepare the env
 ## Load the skill / workspace
 {: #slack-chatbot-database-watson-3}
 {: step}
+
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
@@ -152,6 +153,7 @@ Now, you will create an assistant associated with the skill from before and inte
 ## Test the Slackbot and learn
 {: #slack-chatbot-database-watson-5}
 {: step}
+
 Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
 
 1. Type **help** into the messaging form. The bot should respond with some guidance.
@@ -160,8 +162,8 @@ Open up your Slack workspace for a test drive of the chatbot. Begin a direct cha
 4. Next is the event location. Input is based on the [system entity **sys-location**](https://{DomainName}/docs/assistant?topic=assistant-system-entities#system-entities-sys-location). As a limitation, only cities recognized by {{site.data.keyword.conversationshort}} can be used. Try **Friedrichshafen** as a city.
 5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. You will use a pattern-based entity for that field.
 6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, use the exact date of next Thursday, e.g., **2019-05-09** and **22:00** for the end date and time.
-7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case, the user choice is acknowledged and the environment cleaned up.
-  ![Sample chat in the Slack app](images/solution19/SlackSampleChat.png)
+7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case, the user choice is acknowledged and the environment cleaned up.   
+   ![Sample chat in the Slack app](images/solution19/SlackSampleChat.png)
 
 With some sample data in it is time to search.
 1. Type in **show event information**. Next is a question whether to search by identifier or by date. Enter a **name** and for the next question **"Think 2019"**. Now, the chatbot should display information about that event. The dialog has multiple responses to choose from.
@@ -179,7 +181,7 @@ If you want to work with others on resources of this solution tutorial, you can 
 
 ## Remove resources
 {: #slack-chatbot-database-watson-7}
-{:removeresources}
+{: removeresources}
 {: step}
 
 Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.Db2_on_Cloud_short}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
@@ -192,6 +194,7 @@ In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/
 
 ## Expand the tutorial
 {: #slack-chatbot-database-watson-8}
+
 Want to add to or change this tutorial? Here are some ideas:
 1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.Db2_on_Cloud_short}}.
@@ -202,7 +205,7 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related content
 {: #slack-chatbot-database-watson-9}
-{:related}
+{: related}
 
 Here are links to additional information on the topics covered in this tutorial.
 

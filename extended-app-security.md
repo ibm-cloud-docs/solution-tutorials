@@ -34,13 +34,10 @@ You already developed and deployed an application on {{site.data.keyword.cloud_n
 * Use activity logs and security advisors to evaluate app security.
 
 
-
 An existing solution with the application and connected (micro-) services is extended for enhanced security.
 
-<p style="text-align: center;">
-
-  ![Architecture](images/solution51-extended-app-security/Sol51_Architecture.png)
-</p>
+![Architecture](images/solution51-extended-app-security/Sol51_Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Assess your application
 {: #extended-app-security-app_properties}
@@ -69,8 +66,8 @@ To isolate application runtime environments and related services, you can provis
 
 Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc-ext) to benefit from isolation of compute and network resources.
 
-  Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
-  {: #tip}
+Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
+{: #tip}
 
 * Evaluate the use of [{{site.data.keyword.hpvs}}](https://{DomainName}/docs/hp-virtual-servers?topic=hp-virtual-servers-overview) to run workloads in secure service containers.
 * As another option to secure workloads, consider [{{site.data.keyword.datashield_short}}](https://{DomainName}/docs/data-shield?topic=data-shield-about) for guarding applications running in containers.
@@ -117,9 +114,9 @@ Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.
 
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key with optionally making use of BYOK or KYOK, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
-<p style="text-align: center;">
-  ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
-</p>
+![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png){: class="center"}
+{: style="text-align: center;"}
+
 
 A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
 
@@ -128,10 +125,8 @@ A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](h
 
 Many solutions are based on services with artificial intelligence (AI). At IBM they are offered as [Watson services](https://{DomainName}/developer/watson/services). By default, all data is encrypted. In the Premium plans, you can enhance security by [taking control of the encryption keys (BYOK)](https://{DomainName}/docs/watson?topic=watson-keyservice). After authorizing the service type, e.g., {{site.data.keyword.conversationshort}}, to access {{site.data.keyword.keymanagementserviceshort}}, the following additional option is offered when creating an instance with Premium plan.
 
-<p style="text-align: center;">
-  ![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png)
-</p>
-
+![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Conclusions
 {: #extended-app-security-5}
