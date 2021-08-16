@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-08-10"
+lastupdated: "2021-08-16"
 lasttested: "2020-08-09"
 
 content-type: tutorial
@@ -103,8 +103,8 @@ Create a cluster:
 2. Click **Create toolchain**
 3. Under the left hand column, select **Kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
-5. Enter a unique **Toolchain Name** for the toolchain such as `<your-initial>-mynodestarter-toolchain` and select a resource group.
-6. Enter a unique **Repository Name** for the repository such as `<your-initial>-mynodestarter-repository`.
+5. Enter a unique **Toolchain Name** for the toolchain such as `<your-initials>-mynodestarter-toolchain` and select a resource group.
+6. Enter a unique **Repository Name** for the repository such as `<your-initials>-mynodestarter-repository`.
 7. Click on the **Delivery Pipeline** tab.
 8. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
 9. Select a region and your cluster from the list.
@@ -121,9 +121,9 @@ The toolchain will build your application and deploy it to the cluster.
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
-1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initial>-mynodestarter` after `Toolchains`
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`
 1. Click the **Eclipse Orion Web IDE** tile.
-1. Expand the `<your-initial>-mynodestarter-repository`.
+1. Expand the `<your-initials>-mynodestarter-repository`.
 1. Update the `utils.js` by making a simple change, for example change "Welcome to" to something else, your changes are automatically saved.
 1. Click on the Git icon in the left most column.
 1. Enter a commit message: *my first changes* and click on **Commit**.
