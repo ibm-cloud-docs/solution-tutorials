@@ -274,15 +274,15 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
     {: note}
 
     The following script will:
-      * Configure the epel yum repository if it is not already enabled.
-      * Install the OpenVPN client.
-      * Create a VPN connecting the on-premises network to the cloud.
-      * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
+    * Configure the epel yum repository if it is not already enabled.
+    * Install the OpenVPN client.
+    * Create a VPN connecting the on-premises network to the cloud.
+    * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
 
-        ```
-        ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
-        ```
-        {: pre}
+       ```
+       ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
+       ```
+       {: pre}
 
 3. Clean up the VPN. The following command is common for either type of VPN. It takes down the VPN and removes associated policies.
 
