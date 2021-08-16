@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-08-13"
+lastupdated: "2021-08-16"
 lasttested: "2021-08-06"
 
 content-type: tutorial
@@ -523,7 +523,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {: pre}
    
-   You can also use the command if the deployment is taking more time, Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
+   You can also use the command if the deployment is taking more time, Refer to this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
    {: tip}
 
 5. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
@@ -661,7 +661,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 
 8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
-   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer to this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {: tip}
 
 
