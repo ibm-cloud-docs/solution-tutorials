@@ -238,7 +238,7 @@ The end-to-end architecture of the application is shown below.
 
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
-1.  From your ****, create a project called "bookinfo" with `oc new-project` command
+1.  From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command
    ```sh
    oc new-project bookinfo
    ```
