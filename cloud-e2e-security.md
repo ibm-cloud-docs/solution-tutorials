@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-07-12"
+lastupdated: "2021-08-16"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -137,6 +137,9 @@ While the cluster is being provisioned, you will create the other services requi
 {: #cloud-e2e-security-7}
 
 {{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](https://{DomainName}/docs/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
+
+   You can either create the services using the UI by following the instructions below or [using the Terraform scripts managed by Schematics](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics).
+   {: tip}
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    1. Select a **location**.
