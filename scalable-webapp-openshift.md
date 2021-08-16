@@ -107,17 +107,17 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC,
-  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name.
       - Public gateway is attached to the subnet.
-  - Select the desired VPC.
-  - Select an existing **Cloud Object Storage** service or create one if required and then select.
+   - Select the desired VPC.
+   - Select an existing **Cloud Object Storage** service or create one if required and then select.
 5. Under **Location**,
-  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Select a **Resource group**.
       - Uncheck the inapplicable zones.
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
+   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
       - Select a **Resource group**.
       - Select a **Geography**.
       - Select **Single zone** as **Availability**.
@@ -283,8 +283,8 @@ In this section, you will learn to monitor the health and performance of your ap
 6. Check the CPU and memory usage.
 7. Stop the above script using `control+C`. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.7/logging/viewing-resource-logs.html) to learn about the usage of `oc logs`.
 
-  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
-  {: tip}
+   You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
+   {: tip}
 
 ## Scale the app
 {: #scalable-webapp-openshift-scaling_app}

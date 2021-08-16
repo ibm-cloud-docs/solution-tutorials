@@ -86,17 +86,17 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.6.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-  - Select the desired VPC
-  - Select an existing **Cloud Object Storage** service or create one if required and then select
+   - Select the desired VPC
+   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
-  - For Openshift on VPC infrastructure
+   - For Openshift on VPC infrastructure
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -448,7 +448,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 
 Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
 
-1.  To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
+1. To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
    ```sh
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/destination-rule-all-mtls.yaml
    ```
@@ -487,10 +487,10 @@ You can either gradually remove individual resources or skip those steps and dir
 {: #openshift-service-mesh-19}
 
 - To delete the bookinfo project, run the below command
-  ```sh
-  oc delete project bookinfo
-  ```
-  {: pre}
+   ```sh
+   oc delete project bookinfo
+   ```
+   {: pre}
 
 ### Removing the ServiceMeshControlPlane from the CLI
 {: #openshift-service-mesh-20}

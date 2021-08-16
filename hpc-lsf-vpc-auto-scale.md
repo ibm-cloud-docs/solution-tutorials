@@ -84,45 +84,45 @@ The term "deployer" is applied to the machine that you use to set up the cluster
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
   
-  ```
-  ibmcloud dev help
-  ```
-  {: pre}
+   ```
+   ibmcloud dev help
+   ```
+   {: pre}
 
 4. Log in to the {{site.data.keyword.cloud_notm}} with your credentials:
 
-  ```
-  ibmcloud login
-  ```
-  {: pre}
+   ```
+   ibmcloud login
+   ```
+   {: pre}
 
 5. Add the VPC infrastructure capabilities plugin to the CLI:
 
-  ```
-  ibmcloud plugin install vpc-infrastructure
-  ```
-  {: pre}
+   ```
+   ibmcloud plugin install vpc-infrastructure
+   ```
+   {: pre}
 
 6. Add DNS-related commands:
 
-  ```
-  ibmcloud plugin install DNS
-  ```
-  {: pre}
+   ```
+   ibmcloud plugin install DNS
+   ```
+   {: pre}
 
 7. Set the infrastructure (is) commands to target {{site.data.keyword.vpc_short}}:
 
-  ```
-  ibmcloud is target --gen 2
-  ```
-  {: pre}
+   ```
+   ibmcloud is target --gen 2
+   ```
+   {: pre}
 
 8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
-  ```
-  ibmcloud target -r us-south
-  ```
-  {: pre}
+   ```
+   ibmcloud target -r us-south
+   ```
+   {: pre}
 
 ## Install Ansible version 2.8 or greater
 {: #hpc-lsf-auto-scale-install-ansible}
@@ -136,10 +136,10 @@ Install Ansible on your deployer machine. For instructions on installing Ansible
 
 Change to a directory on your deployer where you would like the setup scripts to live and run the following command:
 
-  ```
-  git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git 
-  ```
-  {: pre}
+   ```
+   git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git 
+   ```
+   {: pre}
 
 You need to install Git if it's not already present on your deployer. Once the scripts are on your deployer, switch to the new `lsf-rescon-automation` directory then to the playbook directory. File locations in this tutorial assume that you know the location of the playbook directory.
 {: note}
@@ -154,17 +154,17 @@ The API key is the credential that you provide to the cloud API, which allows it
 
 1. You can create an API key by using the following {{site.data.keyword.cloud_notm}} CLI command:
 
-  ```
-  ibmcloud iam api-key-create
-  ```
-  {: pre}
+   ```
+   ibmcloud iam api-key-create
+   ```
+   {: pre}
 
 2. Make your key available by exporting it to your shell environment under the name "IBMCLOUD_API_KEY":
 
-  ```
-  export IBMCLOUD_API_KEY=<your api key>
-  ```
-  {: pre}
+   ```
+   export IBMCLOUD_API_KEY=<your api key>
+   ```
+   {: pre}
 
 ## Prepare an inventory for your cluster
 {: #hpc-lsf-auto-scale-prepare-inventory-for-cluster}
@@ -172,21 +172,21 @@ The API key is the credential that you provide to the cloud API, which allows it
 
 1. Locate an existing inventory file or create a new one for the LSF cluster where you want to enable the resource connector. If you originally created your cluster by using one of the existing sets of automation scripts and documentation from the LSF GitHub repository, you should already have an inventory file, `tf_inventory.yml`, located in the directory specified with the `$GEN_FILES_DIR` (for details, see the documentation that you used to create the cluster). If you don't have one, use the following format to create an inventory file:  
 
-  ```
-  [local]
-  localhost ansible_connection=local
+   ```
+   [local]
+   localhost ansible_connection=local
 
-  [LSF_Masters]
-  lsf-master
+   [LSF_Masters]
+   lsf-master
 
-  [LSF_Servers]
-  lsf-worker-0
-  lsf-worker-1
-  ```
-  {: screen}
+   [LSF_Servers]
+   lsf-worker-0
+   lsf-worker-1
+   ```
+   {: screen}
 
-  The listed machines have to be accessible by password-less SSH from your deployer machine by the exact hostname or specified IP. The host in the [local] group is where the playbooks are going to run (for example, the "deployer"). 
-  {: important}
+   The listed machines have to be accessible by password-less SSH from your deployer machine by the exact hostname or specified IP. The host in the [local] group is where the playbooks are going to run (for example, the "deployer"). 
+   {: important}
 
 2. You can choose the name and location of the inventory, but you need to note the name and path and specify them on every invocation of Ansible playbooks. The commands listed in this tutorial assume the filename to be `inventory-file` and that it is located in the playbook directory. If you use that convention, you can copy and paste the Ansible playbook commands from this tutorial. If you are using one in `GEN_FILES_DIR`, substitute `$GEN_FILES_DIR/tf_inventory.yml` for `inventory-file`. 
 
@@ -262,54 +262,54 @@ After you fill out the information for the configuration files, automation can t
 
 The set up and configuration is broken out into four steps, but you can also choose to run the following playbook, which calls the four steps in order for you: 
 
-  ```
-  ansible-playbook -i inventory-file step-all-setup-rc.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i inventory-file step-all-setup-rc.yml
+   ```
+   {: pre}
 
 The advantage of running the scripts separately is that you can quickly spot and fix any configuration errors in your files. If you do use `step-all-setup-rc.yml`, you can skip the following steps.
 {: note}
 
 1. Install tools
 
-  The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
+   The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
 
-  ```
-  ansible-playbook -i inventory-file step1-install-tools.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i inventory-file step1-install-tools.yml
+   ```
+   {: pre}
 
-  Replace `inventory-file` with the name and path of the inventory file that you created in Step 6.
-  {: note}
+   Replace `inventory-file` with the name and path of the inventory file that you created in Step 6.
+   {: note}
 
 2. Prepare files
 
-  The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
+   The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
 
-  ```
-  ansible-playbook -i inventory-file step2-prepare-files.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i inventory-file step2-prepare-files.yml
+   ```
+   {: pre}
 
 3. Deploy the resource connector
 
-  Copy the configuration, template, and credentials files into place on the master node:
+   Copy the configuration, template, and credentials files into place on the master node:
 
-  ```
-  ansible-playbook -i inventory-file step3-deploy-rc.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i inventory-file step3-deploy-rc.yml
+   ```
+   {: pre}
 
 4. Configure LSF
 
-  This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
+   This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
 
-  ```
-  ansible-playbook -i inventory-file step4-config-lsf-rc.yml
-  ```
-  {: pre}
+   ```
+   ansible-playbook -i inventory-file step4-config-lsf-rc.yml
+   ```
+   {: pre}
 
-  The resource connector should now be configured and ready to go to work.
+   The resource connector should now be configured and ready to go to work.
 
 ## Test the resource connector
 {: #hpc-lsf-auto-scale-test-resource-connector}
@@ -319,135 +319,135 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
 1. Log in to the master node of your LSF cluster. If you logged in as `root`, switch to a user with `lsfadmin` permission.
 
-  ```
-  [root@lsf-rc-scripts-master-0 ~]# su - lsfadmin 
-  bash-4.2$
-  ```
-  {: screen}
+   ```
+   [root@lsf-rc-scripts-master-0 ~]# su - lsfadmin 
+   bash-4.2$
+   ```
+   {: screen}
 
 2. Use the `bhosts` command to view hosts that are currently in the cluster.
 
-  Example output:
+   Example output:
 
-  ```
-  bash-4.2$ bhosts 
-  HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
-  lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 
-  lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
-  lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bhosts 
+   HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
+   lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 
+   lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
+   lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
+   ```
+   {: screen}
 
-  In this case, `bhosts` shows that there are three hosts in this small cluster: a master and two worker nodes. The "MAX" colum shows how many jobs each node can run simultaneously. To trigger the resource connector to add a node to the cluster, you can simply create more work than the current cluster has slots to run concurrently. 
+   In this case, `bhosts` shows that there are three hosts in this small cluster: a master and two worker nodes. The "MAX" colum shows how many jobs each node can run simultaneously. To trigger the resource connector to add a node to the cluster, you can simply create more work than the current cluster has slots to run concurrently. 
 
 3. Start by creating one job to see the effect. The `sleep` command will work for the purpose of this demonstration.
 
-  ```
-  bash-4.2$ bsub sleep 1000 
-  Job <320> is submitted to default queue <normal>. 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bsub sleep 1000 
+   Job <320> is submitted to default queue <normal>. 
+   ```
+   {: screen}
 
 4. Look again at the status of the cluster with `bhosts`.
 
-  Example output:
+   Example output:
 
-  ```
-  bash-4.2$ bhosts 
-  HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
-  lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bhosts 
+   HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
+   lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
+   ```
+   {: screen}
 
-  You can now see that one of the worker nodes "NJOBS" is 1, and the node is closed for more work. 
+   You can now see that one of the worker nodes "NJOBS" is 1, and the node is closed for more work. 
 
 5. Now you can create enough jobs to fill the slots on the cluster plus one extra to create more jobs than the cluster can run concurrently.
 
-  ```
-  bash-4.2$ for i in 2 3 4 5; do 
-  > bsub sleep 1000 
-  > done 
-  Job <321> is submitted to default queue <normal>. 
-  Job <322> is submitted to default queue <normal>. 
-  Job <323> is submitted to default queue <normal>. 
-  Job <324> is submitted to default queue <normal>. 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ for i in 2 3 4 5; do 
+   > bsub sleep 1000 
+   > done 
+   Job <321> is submitted to default queue <normal>. 
+   Job <322> is submitted to default queue <normal>. 
+   Job <323> is submitted to default queue <normal>. 
+   Job <324> is submitted to default queue <normal>. 
+   ```
+   {: screen}
 
-  ```
-  bash-4.2$ bhosts 
-  HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
-  lsf-rc-scripts-mas closed          -      2      2      2      0      0      0 
-  lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
-  lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bhosts 
+   HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
+   lsf-rc-scripts-mas closed          -      2      2      2      0      0      0 
+   lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
+   lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
+   ```
+   {: screen}
 
-  As you can see, all of the hosts are running max jobs and are closed for new work.
+   As you can see, all of the hosts are running max jobs and are closed for new work.
 
 6. If you look at the jobs that are currently queued, you can see that there is one job marked "PEND", because there is not a slot in the current cluster for it to run at this time.
 
-  Example output:
+   Example output:
 
-  ```
-  bash-4.2$ bjobs 
-  JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
-  320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
-  321     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  322     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  323     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  324     lsfadmi PEND  normal     lsf-rc-scri             sleep 1000 Mar 12 15:26 
-  ```
- {: screen}
+   ```
+   bash-4.2$ bjobs 
+   JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
+   320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
+   321     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   322     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   323     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   324     lsfadmi PEND  normal     lsf-rc-scri             sleep 1000 Mar 12 15:26 
+   ```
+   {: screen}
 
-  The pending job should have triggered the resource connector to add a node. 
+   The pending job should have triggered the resource connector to add a node. 
 
 7. To verify if a new node was added, take a look at the {{site.data.keyword.cloud_notm}} CLI view of the instance in VPC. The following example output shows that there is a new node with the string `dyn` in the name, and it's using a custom image. That node did not exist did not exist prior to submitting the four jobs, which means it was provisioned by the resource connector.
 
-  Example output: 
+   Example output: 
 
-  ```
-  #ibmcloud is instances (command output is abridged with some columns removed to fit)
-  Name                        Status    Address      Profile            Image     
-  lsf-rc-scripts-dyn-15974-0  starting  10.240.0.13  lsf-spk11-centos7  lsf-rc-scripts-vpc  
-  lsf-rc-scripts-master-0     running   10.240.0.6   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
-  lsf-rc-scripts-worker-0     running   10.240.0.7   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
-  lsf-rc-scripts-worker-1     running   10.240.0.5   ibm-centos-amd64-2 lsf-rc-scripts-vpc 
-  ```
-  {: screen}
+   ```
+   #ibmcloud is instances (command output is abridged with some columns removed to fit)
+   Name                        Status    Address      Profile            Image     
+   lsf-rc-scripts-dyn-15974-0  starting  10.240.0.13  lsf-spk11-centos7  lsf-rc-scripts-vpc  
+   lsf-rc-scripts-master-0     running   10.240.0.6   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
+   lsf-rc-scripts-worker-0     running   10.240.0.7   ibm-centos-amd64-2 lsf-rc-scripts-vpc    
+   lsf-rc-scripts-worker-1     running   10.240.0.5   ibm-centos-amd64-2 lsf-rc-scripts-vpc 
+   ```
+   {: screen}
 
-  Wait a minute or so for the node to finish booting and show its status as "running".
+   Wait a minute or so for the node to finish booting and show its status as "running".
 
 8. Now that the new node is running, revisit the jobs and cluster status.
 
-  Example output:
+   Example output:
 
-  ```
-  bash-4.2$ bjobs 
-  JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
-  320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
-  321     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  322     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  323     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  324     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bjobs 
+   JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
+   320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
+   321     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   322     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   323     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   324     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:26 
+   ```
+   {: screen}
 
-  Note that all five jobs are now running.
+   Note that all five jobs are now running.
 
 9. Take a look at the cluster and note the addition of the new `dyn` node and that it is running a job. 
 
-  Example output:
+   Example output:
 
-  ```
-  bash-4.2$ bhosts 
-  HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
-  lsf-rc-scripts-dyn closed          -      1      1      1      0      0      0 
-  lsf-rc-scripts-mas closed          -      2      2      2      0      0      0 
-  lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
-  lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
-  ```
-  {: screen}
+   ```
+   bash-4.2$ bhosts 
+   HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
+   lsf-rc-scripts-dyn closed          -      1      1      1      0      0      0 
+   lsf-rc-scripts-mas closed          -      2      2      2      0      0      0 
+   lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
+   lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 
+   ```
+   {: screen}
 
 10. When the jobs is done, the new node is removed from the cluster and returned to the cloud for deletion.
 
@@ -464,24 +464,24 @@ You can disable the resource connector so that it doesn't allow demand to trigge
 
 1. Run the following command:
 
-  ```
-  cd $LSF_TOP/conf
-  ```
-  {: pre}
+   ```
+   cd $LSF_TOP/conf
+   ```
+   {: pre}
 
 2. Open `lsf.conf` in an editor and find the option `LSB_RC_EXTERNAL_HOST_FLAG=icgen2host`. 
 3. Comment that line by adding a "#" character: `# LSB_RC_EXTERNAL_HOST_FLAG=icgen2host`.
 4. Restart the daemons to pick up the change:
   
-  ```
-  lsadmin reconfig
-  ```
-  {: pre}
+   ```
+   lsadmin reconfig
+   ```
+   {: pre}
   
-  ```
-  badmin mbdrestart
-  ```
-  {: pre}
+   ```
+   badmin mbdrestart
+   ```
+   {: pre}
 
 5. When you are ready to re-enable the resource connector, remove the comment ("#") from the line and restart the daemons.
 
@@ -492,10 +492,10 @@ You can manage the number of hosts that the resource connector is allowed to pro
 
 1. Run the following command:
 
-  ```
-  cd $LSF_TOP/conf/resource_connector/ibmcloudgen2/conf/
-  ```
-  {: pre}
+   ```
+   cd $LSF_TOP/conf/resource_connector/ibmcloudgen2/conf/
+   ```
+   {: pre}
   
 2. Open the file `ibmcloudgen2_templates.json` in an editor.
 3. Locate the parameter "maxNumber". 

@@ -98,9 +98,8 @@ In this step, you set up a git source control repository to store your code and 
 
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
-7. Run the application locally by running the commands one after another
-  `npm install`, `npm build`,  `npm start ` and visit `localhost:<port_number>` in your browser.
-  **<port_number>** as displayed on the console.
+7. Run the application locally by running the commands one after another `npm install`, `npm build`,  `npm start ` and visit `localhost:<port_number>` in your browser.
+   **<port_number>** as displayed on the console.
 8. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
    git add public/index.html
@@ -111,7 +110,7 @@ In this step, you set up a git source control repository to store your code and 
 
 9. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 10. Confirm that you see the **BUILD** and **DEPLOY** stages.
-  ![HelloWorld](images/solution1/DevOps_Pipeline.png)
+   ![HelloWorld](images/solution1/DevOps_Pipeline.png)
 11. Wait for the **DEPLOY** stage to complete.
 12. Click the **View console** to open the application under **Last execution result** to visit the application.  In the Cloud Foundry application click on **Visit app URL** to see the app and changes.
 
@@ -161,8 +160,8 @@ When deploying a real world application, you will likely want to use your own do
 3. When the service instance is provisioned, set your domain name and click **Add domain**.
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
-  When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
-  {: tip}
+   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
+   {: tip}
 
 ## Add Global Load Balancing to the application
 {: #multi-region-webapp-5}

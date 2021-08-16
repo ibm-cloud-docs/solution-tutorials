@@ -77,32 +77,34 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
 
 1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your {{site.data.keyword.cloud_notm}} account.
 
-  ```sh
-  ibmcloud login
-  ibmcloud target --cf
-  ```
-  {: codeblock}
+   ```sh
+   ibmcloud login
+   ibmcloud target --cf
+   ```
+   {: codeblock}
 
-  You can find more CLI commands [here](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli).
+   You can find more CLI commands [here](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli).
 
 2. Create an instance of {{site.data.keyword.databases-for-mongodb}}. This can also be done using the [console UI](https://{DomainName}/catalog/services/databases-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
-  ```sh
-  ibmcloud cf create-service databases-for-mongodb standard mean-starter-mongodb
-  ```
-  {: codeblock}
+   ```sh
+   ibmcloud cf create-service databases-for-mongodb standard mean-starter-mongodb
+   ```
+   {: codeblock}
 
 3. Wait for the instance to be ready. You can check the provisioning status with the following command:
-  ```sh
-  ibmcloud cf service mean-starter-mongodb
-  ```
-  {: codeblock}
+   
+   ```sh
+   ibmcloud cf service mean-starter-mongodb
+   ```
+   {: codeblock}
 
 4. Create the service key.
-  ```sh
+  
+   ```sh
    ibmcloud cf create-service-key mean-starter-mongodb "Service credentials-1"
-  ```
-  {: codeblock} 
+   ```
+   {: codeblock} 
 
 ## Run the MEAN app locally
 {: #mean-stack-runapplocally}
@@ -112,36 +114,41 @@ In this section, you will clone a MEAN sample code and run the application local
 {: shortdesc}
 
 1. Clone the MEAN starter code.
-  ```sh
-  git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
-  cd nodejs-MEAN-stack
-  ```
-  {: codeblock}
+  
+   ```sh
+   git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
+   cd nodejs-MEAN-stack
+   ```
+   {: codeblock}
 
 1. Install the required packages.
-  ```sh
-  npm install
-  ```
-  {: codeblock}
+  
+   ```sh
+   npm install
+   ```
+   {: codeblock}
 
 1. Copy .env.example file to .env.
-  ```sh
+  
+   ```sh
    cp .env.example .env
-  ```
-  {: codeblock}
+   ```
+   {: codeblock}
 
 1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command
-  ```sh
+  
+   ```sh
    ibmcloud cf service-key mean-starter-mongodb "Service credentials-1"
-  ```
-  {: codeblock}
+   ```
+   {: codeblock}
 
    You can find the URL under mongodb -> composed and certificate_base64 under mongodb -> certificate in the returned JSON output.
 1. Run node server.js to start your app
-  ```sh
-  node server.js
-  ```
-  {: codeblock}
+  
+   ```sh
+   node server.js
+   ```
+   {: codeblock}
 
 1. Access your application, create a new user and log in
 
@@ -155,6 +162,7 @@ In this section, you will deploy the node.js app to the {{site.data.keyword.clou
 {: shortdesc}
 
 1. Push code to the cloud.
+   
    ```sh
    ibmcloud cf push
    ```
@@ -171,7 +179,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 1. Using the console **dashboard**, locate the **MongoDB** service instance and click until you are in the **Service Details**.
 2. Click on the **Resources** panel.
-  ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
+   ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the  rescaling is in progress.
 5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.

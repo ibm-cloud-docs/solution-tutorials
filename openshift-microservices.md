@@ -96,16 +96,16 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-  - Select an existing **Cloud Object Storage** service or create one if required
+   - Select an existing **Cloud Object Storage** service or create one if required
 5. Under **Location**
-  - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**

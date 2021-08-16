@@ -40,6 +40,7 @@ Isolating the underlying resources, implementing governance and access policies,
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
+
 ## Define a project
 {: #users-teams-applications-1}
 

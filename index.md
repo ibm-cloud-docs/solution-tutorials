@@ -63,6 +63,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 
 1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 2. Verify the installation with:
+
    ```sh
    ibmcloud version
    ```
@@ -77,6 +78,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify the installation with:
+
    ```sh
    docker --version
    docker run hello-world

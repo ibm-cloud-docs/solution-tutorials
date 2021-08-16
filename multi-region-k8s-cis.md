@@ -152,8 +152,8 @@ This step builds the application into a Docker image. You can skip this step if 
    ```
    {: pre}
 
-  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
-  {: tip}
+   The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
+   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
 {: #multi-region-k8s-cis-deploy_application}
@@ -185,7 +185,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ```bash
    kubectl get services
    ```
-  {: pre}
+   {: pre}
 
 1. Run the application in the cluster with two replicas:
    ```bash
@@ -260,16 +260,16 @@ It will be required to have your own DNS domain name and a global load balancer 
 
 Repeat the following steps for the London location:
 * In [Create a Kubernetes cluster](#multi-region-k8s-cis-3) replace:
-  * the cluster name **my-us-cluster** with **my-uk-cluster**;
-  * the Geography name **North America** with **Europe**;
-  * the Metro name **Dallas** with **London**;
-  * and the cluster name **my-us-cluster** with **my-uk-cluster**.
+   * the cluster name **my-us-cluster** with **my-uk-cluster**;
+   * the Geography name **North America** with **Europe**;
+   * the Metro name **Dallas** with **London**;
+   * and the cluster name **my-us-cluster** with **my-uk-cluster**.
 * In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#multi-region-k8s-cis-create_namespace) replace:
-  * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
+   * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
 * In the [Deploy the application to the Kubernetes cluster](#multi-region-k8s-cis-deploy_application) replace:
-  * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
+   * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
 * In the [Build and push a Docker image to the location-specific registry](#multi-region-k8s-cis-push_image) replace:
-  * the registry **us.icr.io** with **uk.icr.io**.
+   * the registry **us.icr.io** with **uk.icr.io**.
 * [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress)
 
 ## Configure multi-location load-balancing
