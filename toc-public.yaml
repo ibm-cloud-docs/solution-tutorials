@@ -107,6 +107,7 @@ toc:
 
       - topicgroup:
         label: By Compute Options
+        topics:
 
         - topicgroup:
           label: Kubernetes
