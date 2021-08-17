@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2021-02-18"
+          "lastUpdated": "2021-08-11"
         }
       ]
     },
@@ -89,7 +89,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2021-07-02"
+          "lastUpdated": "2021-08-16"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -103,7 +103,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-07-23"
+          "lastUpdated": "2021-08-16"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -116,7 +116,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-03-10"
+          "lastUpdated": "2021-08-09"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -128,7 +128,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-04-26"
+          "lastUpdated": "2021-07-30"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -256,7 +256,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-07-02"
+          "lastUpdated": "2021-08-16"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -350,7 +350,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-07-12"
+          "lastUpdated": "2021-08-16"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -411,7 +411,7 @@
             "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2021-07-19"
+          "lastUpdated": "2021-08-11"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -684,7 +684,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2021-07-19"
+          "lastUpdated": "2021-08-16"
         }
       ]
     },
