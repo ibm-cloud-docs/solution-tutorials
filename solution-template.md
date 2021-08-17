@@ -30,7 +30,7 @@ completion-time: 2h
 {:beta: .beta}
 
 # How to write a tutorial
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+{: #change-me-to-the-filename-without-md-extension}
 {: toc-content-type="tutorial"}
 {: toc-services="service1, service2"}
 {: toc-completion-time="2h"}
