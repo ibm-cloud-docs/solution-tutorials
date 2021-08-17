@@ -107,6 +107,7 @@ To allow traffic to the application you will deploy on virtual server instances,
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443 |
+   
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Provision VSIs

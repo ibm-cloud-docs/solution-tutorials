@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-17"
 lasttested: "2020-12-18"
 
 content-type: tutorial
@@ -119,11 +119,14 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ```
    {: pre}
 
+   Set the variables accordingly:
    ```bash
    MYCLUSTER=<cluster_name>
    MYCONTAINERREGISTRY=<us.icr.io_like_value_returned_from_ibmcloud_cr_info>
    MYNAMESPACE=<my_container_registry_namespace>
    ```
+   {: pre}
+
 1. Create a namespace to store the container image.  Feel free to skip this step and use an exising namespace.
    ```bash
    ibmcloud cr namespace-add $MYNAMESPACE

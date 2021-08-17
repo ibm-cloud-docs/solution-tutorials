@@ -102,6 +102,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
    |------------|---------------|----------|-----------  |
    |TCP         |Any            |0.0.0.0/0 |Ports 22-22  |
    |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**|
+   
    {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
 ### Create a bastion instance
@@ -160,13 +161,15 @@ With access to the bastion working, continue and create the security group for m
    |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
    |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
    |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
-   |UDP         |Any            |0.0.0.0/0 |Ports 53-53  | 
+   |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |
+   
    {: caption="Maintenance: Outbound rules" caption-side="bottom"}   
 
 
    | Protocol | Source type | Source | Value   |
    |------------|---------------|----------|-----------  |
-   |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  | 
+   |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |
+   
    {: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 
@@ -177,6 +180,7 @@ With access to the bastion working, continue and create the security group for m
    | Protocol | Destination type | Destination | Value   |
    |------------|---------------|----------|-----------  |
    |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
+   
    {: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 
