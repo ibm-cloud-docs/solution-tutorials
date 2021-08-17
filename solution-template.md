@@ -32,7 +32,7 @@ completion-time: 2h
 # How to write a tutorial
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 {: toc-content-type="tutorial"}
-{: toc-services="<change me to be the same as services defined earlier>"}
+{: toc-services="service1, service2"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->

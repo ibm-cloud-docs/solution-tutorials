@@ -57,8 +57,6 @@ function writeFile(templateFile, dest, includeHidden = true) {
   }));
 }
 
-writeFile('./toc.md.tmpl', '../../toc-public', false);
-
 writeFile('./toc.yaml.tmpl', '../../toc.yaml');
 writeFile('./toc.yaml.tmpl', '../../toc-public.yaml', false);
 
