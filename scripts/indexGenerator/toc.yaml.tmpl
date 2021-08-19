@@ -1,0 +1,48 @@
+toc:
+  properties:
+    subcollection: solution-tutorials
+    category: platform_services
+    audience: platform
+    href: /docs/solution-tutorials?topic=solution-tutorials-tutorials
+    path: solution-tutorials
+    label: Solution Tutorials
+    version: 2
+
+  entries:
+    - navgroup:
+      id: learn
+      topics:
+      - index.md
+
+    - navgroup:
+      id: tutorial
+      topics:
+      - topicgroup:
+        label: By Category
+        topics:
+{{#each categories}}
+{{#unless tocOnly}}
+{{#if (or (not hidden) @root.includeHidden)}}
+
+        - topicgroup:
+          label: {{name}}
+          topics:
+    {{#each solutions as |solution|}}
+    {{#if (or (not hidden) @root.includeHidden)}}
+          - {{#tocLink solution}}{{/tocLink}}
+    {{/if}}
+    {{/each}}
+{{/if}}
+{{/unless}}
+{{/each}}
+
+      - topicgroup:
+        label: By Compute Options
+        topics:
+{{#each tags as |tag|}}
+
+        - topicgroup:
+          label: {{tag}}
+          topics:
+{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}          - {{#tocLink solution}}{{/tocLink}}
+{{/hasTag}}{{/if}}{{/each}}{{/if}}{{/each}}{{/each}}

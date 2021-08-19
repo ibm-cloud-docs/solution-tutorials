@@ -28,7 +28,7 @@ tar cf - \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 
 # replace the private toc with the public version
-(cd build && rm -f toc && mv toc-public toc)
+(cd build && rm -f toc.yaml && mv toc-public.yaml toc.yaml)
 
 # remove the custom markup used by tutorials-to-gitbook conversion
 (cd scripts/remove-markup && npm install)

@@ -252,11 +252,13 @@ The frontend instance has its software installed but it can not yet be reached.
    |------------|---------------|----------|-----------|------|
    | TCP        | Any           | 0.0.0.0/0 | Ports 80-80  | This rule allows connections from any IP address to the frontend web server. |
    | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
+   
    {: caption="Inbound rules" caption-side="bottom"}
 
    | Protocol | Destination type | Destination | Value    | Description |
    |------------|---------------|----------|-----------|----------|
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
+   
    {: caption="Outbound rules" caption-side="bottom"}
 
 
@@ -293,6 +295,7 @@ To allow inbound connections to the backend server, you need to configure the as
    | Protocol | Source type | Source | Value   | Description |
    |------------|---------------|----------|-----------|--|
    | TCP        | Security group | vpc-pubpriv-frontend-sg | Ports 80-80  | This rule allows incoming connections on port 80 from the frontend server to the backend server. |
+
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Confirm the connectivity
