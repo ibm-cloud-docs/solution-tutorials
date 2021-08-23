@@ -9,7 +9,7 @@ lasttested: "2019-03-08"
 content-type: tutorial
 services: service1, service2
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -29,237 +29,264 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# How to write a tutorial
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+# Deploy DNS for a VMware Deployment
+{: #vpc-bm-vmware-dns}
 {: toc-content-type="tutorial"}
-{: toc-services="<change me to be the same as services defined earlier>"}
-{: toc-completion-time="2h"}
+{: toc-services="vmwaresolutions, vpc"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
 
-This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
+In this tutorial, you will deploy DNS service for a VMware Deployment in VPC.
 {:shortdesc}
 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+{:important}
+
 ## Objectives
-{: #solution-template-objectives}
+{: #vpc-bm-vmware-dns-objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+In this example, [IBM Cloud DNS service](https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the DNS solution for the VMware Deployment.
 
-![Architecture](images/solution1/Architecture.png)
+![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
 
-1. The user does this
-2. Then that
-3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram
+1. Provision IBM Cloud DNS service
+2. Provision a Zone
+3. Create DNS records
+4. Validate DNS records
 
 
 ## Before you begin
-{: #solution-template-prereqs}
+{: #vpc-bm-vmware-dns-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `oc` to interact with OpenShift,
-* `helm` to deploy charts,
-* `terraform` to use Infrastructure as Code to provision resources,
-* `jq` to query JSON files,
-* `git` to clone source code repository,
-* a GitHub account,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+Important. This tutorial is part of series, and requires that you have completed the related tutorials.
+{:important}
 
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
-<!--#/istutorial#-->
+Make sure you have successfully completed the required previous steps
+* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 
-In addition, make sure you have:
-- a **namespace** created in the {{site.data.keyword.registryfull_notm}}
-- and Android Studio installed.
+[Login](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region.
 
-<!--##isworkshop#-->
-<!--
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #solution-template-2}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 
--->
-<!--#/isworkshop#-->
-
-## Create services
-{: #solution-template-setup}
+## Setup target resource group
+{: #vpc-bm-vmware-dns-rg}
 {: step}
 
-In this section, you will create the services required to ...
+First, specify the target resource group for the DNS service. You can list the available resource groups with the following command.
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-    ```sh
-    ibmcloud resource service-instance-create service-instance-name service-name lite global
-    ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
-
-## Solution Specific Section
-{: #solution-template-section_one}
-{: step}
-
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-{: #solution-template-5}
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-   ```
-   the output of the script
-   is shown in a different format
-   ```
-   {: screen}
-
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
-
-## Another Solution Specific Section
-{: #solution-template-section_two}
-{: step}
-
-Introductory statement that overviews the section
-
-### Another sub section
-{: #solution-template-7}
-
-## Remove resources
-{: #solution-template-removeresources}
-{: step}
-
-Steps to take to remove the resources created in this tutorial
-
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-{: #solution-template-0}
-
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
-
-## Related content
-{: #solution-template-related}
-
-* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
-
-## Writing guide
-{: #solution-template-writing_guide}
-
-### Creating links
-{: #solution-template-12}
-
-For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
-
-For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
-
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/writing?topic=writing-link-format
-
-### Conrefs
-{: #solution-template-13}
-
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
-
-## Markup for workshops
-{: #solution-template-10}
-
-Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
-
-### Tutorial-only content
-{: #solution-template-15}
-
-To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
-
-```markdown
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
+```bash
+$ ibmcloud resource groups
+Retrieving all resource groups under account 1b0834ebce7f4b94983d856f532ebfe2 as xxx@yyy.com...
+OK
+Name           ID                                 Default Group   State   
+Default        28b0e7d18da9417ea85b2ba308088657   true            ACTIVE 
 ```
 
-### Workshop-only content
-{: #solution-template-16}
+The 'Default' resource group is used here, but you may well use another resource group.
 
-To have content showing only in a workshop, use:
-
-```markdown
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #solution-template-access-cluster}
-
-This section will only appear in a workshop and not in the tutorial.
--->
-<!--#/isworkshop#-->
+```bash
+VMWARE_DNS_RG=$(ibmcloud resource groups --output json | jq -r '.[] | select(.name == "Default")'.id)
+ibmcloud target -g $VMWARE_DNS_RG
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+## Provision IBM Cloud DNS service
+{: #vpc-bm-vmware-dns-provision}
+{: step}
 
-### Testing coding styles
-{: #solution-template-18}
+Get the plan ID for the DNS service.
 
-#### Terraform
-{: #solution-template-19}
-
-```terraform
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using terraform"
-}
+```bash
+$ ibmcloud dns plans 
+Retrieving plans for service 'dns-svcs' ...
+OK
+                                                     
+Name       dns-svcs                               
+ID         b4ed8a30-936f-11e9-b289-1d079699cbe5   
+Endpoint   api.dns-svcs.cloud.ibm.com             
+Plans                                             
+           Name                                   ID   
+           standard-dns                           2c8fa097-d7c2-4df2-b53e-2efb7874cdf7 
 ```
-{: codeblock}
+
+Use the 'standard-dns' plan, and record it for future use.
+
+```bash
+DNS_PLAN=2c8fa097-d7c2-4df2-b53e-2efb7874cdf7
+```
+
+Create the DNS service using the 'standard-dns' plan. Get its ID and set it as a default DNS target.
+
+```bash
+VMWARE_DNS=$(ibmcloud dns instance-create dns-vmware $DNS_PLAN --output json | jq -r .id)
+ibmcloud dns instance-target $VMWARE_DNS
+```
+
+## Provision a Zone
+{: #vpc-bm-vmware-dns-zone}
+{: step}
+
+Provision a zone. In this example 'vmware.ibmcloud.local' is used, but you may modify this to fit your needs.
+
+```bash
+VMWARE_DNS_ZONE_NAME=vmware.ibmcloud.local
+VMWARE_DNS_ZONE=$(ibmcloud dns zone-create $VMWARE_DNS_ZONE_NAME -d "Zone for VMware on VPC" --output json | jq -r .id)
+```
+
+Add your previously created VPC in the permitted networks. Use the VPC CRN here.
+
+```bash
+ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
+```
+
+## Create DNS records
+{: #vpc-bm-vmware-dns-record}
+{: step}
+
+To create DNS records the following provides a reference for the record creation via CLI.
+
+```bash
+$ ibmcloud dns resource-record-create --help
+NAME:
+   resource-record-create - Create a resource record.
+
+USAGE:
+   dns resource-record-create DNS_ZONE_ID (-r, --record-content @JSON_FILE | JSON_STRING) [-i, --instance INSTANCE_NAME | INSTANCE_ID] [--output FORMAT]
+   dns resource-record-create DNS_ZONE_ID --type A --name NAME --ipv4 IP_ADDRESS [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type AAAA --name NAME --ipv6 IP_ADDRESS [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type CNAME --name NAME --cname CNAME [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type PTR --name NAME --ptrdname PTRDNAME [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type TXT --name NAME --text TEXT [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type MX --name NAME --exchange EXCHANGE --preference PREFERENCE [--ttl TTL]
+   dns resource-record-create DNS_ZONE_ID --type SRV --name NAME --service SERVICE --protocol PROTOCOL --priority PRIORITY --weight WEIGHT --port PORT --target TARGET  [--ttl TTL]
+
+ARGUMENTS:  
+   DNS_ZONE_ID is the id of DNS zone.
+  
+OPTIONS:
+      --name value              Resource record name.
+      --type value              Resource record type.
+      --ipv4 value              IPv4 address.
+      --ipv6 value              IPv6 address.
+      --cname value             Canonical name.
+      --ptrdname value          Hostname of the relevant A or AAAA record.
+      --text value              Human readable text.
+      --exchange value          Hostname of Exchange server.
+      --preference value        Preference of the MX record
+      --service value           The symbolic name of the desired service, start with an underscore (_).
+      --protocol value          The symbolic name of the desired protocol.
+      --port value              Port number of the target server.
+      --weight value            Weight of distributing queries among multiple target servers.
+      --priority value          Priority of the SRV record.
+      --target value            Hostname of the target server.
+      --ttl value               Time to live in second. Default value is 900.  Valid values: 60, 120, 300, 600, 900, 1800, 3600, 7200, 18000, 43200.
+  -r, --record-content value    The JSON file or JSON string used to describe a DNS Resource Record.
+                                For detailed JSON description, please refer to: https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-cli-plugin-dns-services-cli-commands#required-fields-r-record-content.
+  -i, --instance value          Instance name or ID. If not set, the context instance specified by 'dns instance-target INSTANCE' will be used.
+      --output value            Specify output format, only JSON is supported now.
+  -h, --help                    help for resource-record-create
+```
+
+E.g. when creating A records for your previously created Zone 'vmware.ibmcloud.local', you can use the following CLI commnd:
+
+```bash
+ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
+```
+
+In this example, IBM Cloud VPC allocates the IP addresses for the instances and network interfaces from the prefix/subnets you provisioned in the previous phase. During the process you need to create the following A records and with the IP addresses allocated by VPC. Alternatively, you could create an IP address design and define the IP addresses for PCI NICs and VLAN NICs when you order the bare matal servers and/or VLAN NICs.
+
+The following table summarizes the IP addresses and DNS A-records to be created.
+
+Server type   | Zone                  | A record | IP address
+--------------|-----------------------|----------|-----------------
+bms-001       | vmware.ibmcloud.local | esx-001  | Allocated by VPC
+bms-002       | vmware.ibmcloud.local | esx-002  | Allocated by VPC
+bms-003       | vmware.ibmcloud.local | esx-003  | Allocated by VPC
+VM - vcenter  | vmware.ibmcloud.local | vcenter  | Allocated by VPC
+VM - nsx-mgr  | vmware.ibmcloud.local | nsxmgr-1 | Allocated by VPC
+VM - nsx-mgr  | vmware.ibmcloud.local | nsxmgr-2 | Allocated by VPC
+VM - nsx-mgr  | vmware.ibmcloud.local | nsxmgr-3 | Allocated by VPC
+VIP - nsx-vip | vmware.ibmcloud.local | nsx-vip  | Allocated by VPC
+
+## Validate DNS records
+{: #vpc-bm-vmware-dns-validation}
+{: step}
+
+To list information about configured zones in your DNS instance 'dns-vmware', use the following command.
+
+```bash
+ibmcloud dns zones -i dns-vmware
+```
+
+To list information about configured records in your DNS instance 'dns-vmware' and zone 'vmware.ibmcloud.local', use the following command.
+
+```bash
+ibmcloud dns resource-records $VMWARE_DNS_ZONE -i dns-vmware 
+```
+
+When a DNS record is created during the totorial, validate that you get correct responses from your Windows Jump host, for example using 'nslookup' via Windows command line.
+
+### Example validation using CLI
+{: #vpc-bm-vmware-dns-validation-example}
+
+1. List DNS zones:
+
+```bash
+ibmcloud dns zones
+Listing zones for service instance 'dns-vmware' ...
+OK
+ID                                     Name                    Status   
+78d0bb9b-672e-4f42-93a1-a08ddb9f09b9   vmware.ibmcloud.local   ACTIVE
+
+VMWARE_DNS_ZONE=78d0bb9b-672e-4f42-93a1-a08ddb9f09b9
+```
+
+2. List DNS zone details:
+
+```bash
+ibmcloud dns zone $VMWARE_DNS_ZONE
+Getting zone '78d0bb9b-672e-4f42-93a1-a08ddb9f09b9' for service instance 'dns-vmware' ...
+OK
+                 
+ID            78d0bb9b-672e-4f42-93a1-a08ddb9f09b9   
+Name          vmware.ibmcloud.local   
+Description   Zone for VMware on VPC   
+Label            
+State         ACTIVE   
+Created On    2021-08-05 17:46:41.913166091 +0000 UTC   
+Modified On   2021-08-05 17:47:50.263650443 +0000 UTC 
+```  
+
+3. Retrieve list of DNS zone resource records:
+
+```bash
+ibmcloud dns resource-records $VMWARE_DNS_ZONE
+Listing resource records in zone '78d0bb9b-672e-4f42-93a1-a08ddb9f09b9' for service instance 'dns-vmware' ...
+OK
+                
+Count        3   
+TotalCount   3   
+Page         1   
+Per_Page     200   
+                
+ID                                       Name                            Type   TTL   Content   
+A:6d2a9353-2c64-4eab-9aab-52318c39607a   esx-002.vmware.ibmcloud.local   A      900   10.99.0.5   
+A:a0ff286f-ff11-4496-b308-9d3e09a5c564   esx-001.vmware.ibmcloud.local   A      900   10.99.0.4   
+A:d9241818-ed51-4c12-9b24-27899e8e9016   vcenter.vmware.ibmcloud.local   A      900   10.99.0.132   
+
+```
+
+4. Verify that you permitted your VPC networks to access and use the DNS service:
+
+```bash
+ibmcloud dns permitted-networks $VMWARE_DNS_ZONE
+Listing permitted networks for zone '78d0bb9b-672e-4f42-93a1-a08ddb9f09b9' ...
+OK
+Name                ID                                          Type   VPC CRN                                                                                                            State      
+vmw-arch           r010-608ee5e9-bad4-4c28-b179-57482236cac2   vpc    crn:v1:bluemix:public:is:eu-de:a/1b0834ebce7f4b94983d856f532ebfe2::vpc:r010-608ee5e9-bad4-4c28-b179-57482236cac2   ACTIVE   
+```

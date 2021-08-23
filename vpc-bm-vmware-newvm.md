@@ -9,7 +9,7 @@ lasttested: "2019-03-08"
 content-type: tutorial
 services: service1, service2
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -29,237 +29,255 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# How to write a tutorial
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+# Deploy VMware Virtual Machines in a VMware Cluster in VPC
+{: #vpc-bm-vmware-newvm}
 {: toc-content-type="tutorial"}
-{: toc-services="<change me to be the same as services defined earlier>"}
-{: toc-completion-time="2h"}
+{: toc-services="vmwaresolutions, vpc"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
 
-This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
+This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to VPC subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
 {:shortdesc}
 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+{:important}
+
 ## Objectives
-{: #solution-template-objectives}
+{: #vpc-bm-vmware-newvm-objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+In this tutorial, you will create a VMware virtual machine running on VMware cluster using VPC and VPC bare metal server network constructs. Your virtual machine will be attached to VPC subnet using baremetal server's VLAN NIC. 
 
-![Architecture](images/solution1/Architecture.png)
+![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
 
-1. The user does this
-2. Then that
-3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram
+1. Create a VPC prefix and a subnet for VMware Virtual machines
+2. Allow new VLAN on PCI NICs
+3. Create a VLAN NIC
+4. Create new Portgroup for the Distributed Switch
+5. Deploy a first Virtual Machine
+6. Run a vMotion test for the first Virtual Machine
+7. Deploy a second Virtual Machine
 
 
 ## Before you begin
-{: #solution-template-prereqs}
+{: #vpc-bm-vmware-newvm-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `oc` to interact with OpenShift,
-* `helm` to deploy charts,
-* `terraform` to use Infrastructure as Code to provision resources,
-* `jq` to query JSON files,
-* `git` to clone source code repository,
-* a GitHub account,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
-<!--#/istutorial#-->
+Important. This tutorial is part of series, and requires that you have completed the related tutorials.
+{:important}
 
-In addition, make sure you have:
-- a **namespace** created in the {{site.data.keyword.registryfull_notm}}
-- and Android Studio installed.
+Make sure you have successfully completed the required previous steps
+* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or
+* [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
-<!--##isworkshop#-->
-<!--
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #solution-template-2}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+[Login](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region.
 
--->
-<!--#/isworkshop#-->
 
-## Create services
-{: #solution-template-setup}
+## Create a VPC prefix and a subnet for VMware Virtual machines
+{: #vpc-bm-vmware-newvm-create-prefix}
 {: step}
 
-In this section, you will create the services required to ...
+### Create a VPC prefix
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-    ```sh
-    ibmcloud resource service-instance-create service-instance-name service-name lite global
-    ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
+In this example, a new VPC prefix for VMware VMs is created. Here '192.168.0.0/20' is used as the new prefix for VPC.
 
-## Solution Specific Section
-{: #solution-template-section_one}
-{: step}
-
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-{: #solution-template-5}
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-   ```
-   the output of the script
-   is shown in a different format
-   ```
-   {: screen}
-
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
-
-## Another Solution Specific Section
-{: #solution-template-section_two}
-{: step}
-
-Introductory statement that overviews the section
-
-### Another sub section
-{: #solution-template-7}
-
-## Remove resources
-{: #solution-template-removeresources}
-{: step}
-
-Steps to take to remove the resources created in this tutorial
-
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-{: #solution-template-0}
-
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
-
-## Related content
-{: #solution-template-related}
-
-* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
-
-## Writing guide
-{: #solution-template-writing_guide}
-
-### Creating links
-{: #solution-template-12}
-
-For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
-
-For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
-
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/writing?topic=writing-link-format
-
-### Conrefs
-{: #solution-template-13}
-
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
-
-## Markup for workshops
-{: #solution-template-10}
-
-Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
-
-### Tutorial-only content
-{: #solution-template-15}
-
-To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
-
-```markdown
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-<!--#/istutorial#-->
+```bash
+VMWARE_PREFIX_VM_1=$(ibmcloud is vpc-address-prefix-create vmw-vm-prefix $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/20)
 ```
 
-### Workshop-only content
-{: #solution-template-16}
+### Create a VPC subnet
+{: #vpc-bm-vmware-newvm-create-subnet}
 
-To have content showing only in a workshop, use:
+Next you will create a new VPC subnet with a name 'vmw-vm-subnet-1' using an IP subnet / CIDR block '192.168.0.0/24'. 
 
-```markdown
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #solution-template-access-cluster}
-
-This section will only appear in a workshop and not in the tutorial.
--->
-<!--#/isworkshop#-->
+```bash
+VMWARE_SUBNET_VM1=$(ibmcloud is subnetc vmw-vm-subnet-1 $VMWARE_VPC --ipv4-cidr-block 192.168.0.0/24 --zone $VMWARE_VPC_ZONE --json | jq -r .id)
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+This VPC subnet will be used as the subnet for your initial virtual machines.
 
-### Testing coding styles
-{: #solution-template-18}
+## Allow new VLAN on PCI NICs
+{: #vpc-bm-vmware-newvm-allow-vlans}
+{: step}
 
-#### Terraform
-{: #solution-template-19}
+VLAN 1000 is used as the VLAN ID for the subnet in this tutorial. You can customize the VLAN IDs based on your preferences. 
 
-```terraform
-resource "ibm_is_vpc" "myvpc" {
-  name = "the name using terraform"
-}
+You will need to allow the Bare metal server PCI NICs to use the VLAN ID.
+
+```bash
+ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000
+ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000
+ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000
 ```
-{: codeblock}
+Important. It is important to allow the VLAN for each VMware host's PCI interface in your cluster to retain connectivity after vMotion.  
+{:important}
+
+## Create a VLAN NIC
+{: #vpc-bm-vmware-newvm-create-vlannic}
+{: step}
+
+Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is allowed to 'float' between host (for enabling vMotion).
+
+```bash
+VMWARE_VNIC_VM1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VM1 --interface-type vlan --vlan 1000 --allow-interface-to-float true --name vlan-nic-vm-1 --output json | jq -r .id)
+```
+
+To get the IP address allocated by VPC you can use the following commands:
+
+```bash
+VMWARE_VM1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .primary_ipv4_address)
+echo "IP for VM-1 : "$VMWARE_VM1_IP
+```
+
+In this example, IP address '192.168.0.4' was allocated for the VLAN NIC by VPC. You will need to configure this for the virtual machine with a netmask '/24' and a default gateway '192.168.1.1'.
+
+Alternatively, you could allow VPC to provide an IP address to the Virtual Machine via DHCP by configuring a VPC provided MAC address to the Virtual Machine's network interface.
+
+```bash
+VMWARE_VM1_MAC=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .mac_address)
+echo "MAC address for VM-1 : "$VMWARE_VM1_MAC
+```
+
+## Create new Portgroup for the Distributed Switch
+{: #vpc-bm-vmware-newvm-create-dpg}
+{: step}
+
+Next, you need to create a Portgroup for the VMs in the Distributed Switch in vCenter. This portgroup must use VLAN ID '1000' (or any VLAN ID you chose in your setup).
+
+To create a Port Group for the  Distributed Switch:
+
+1. On the vSphere Client Home page, click Networking and navigate to the distributed switch.
+2. Right-click the distributed switch and select Distributed port group > New distributed port group.
+3. On the Name and location page, enter the name of the new distributed port group (e.g. 'dpg-vm-subnet-1000'), or accept the generated name, and click Next.
+4. On the Configure settings page, set the general properties for the new distributed port group and click Next.
+5. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number '1000'.
+6. On the Ready to complete page, review your settings and click Finish.
+
+## Deploy a first Virtual Machine
+{: #vpc-bm-vmware-newvm-deploy-vm1}
+{: step}
+
+Deploy a VM on your Vmware cluster with the following configurations:
+
+* Cluster : Previously created VMware cluster or one of its hosts
+* Storage : Previously created NFS or vSAN
+* Portgroup : 'dpg-vm-subnet-1000'
+* IP address : 192.168.0.4/24
+* Default Gateway : 192.168.0.1
+* DNS : 161.26.0.7, 161.26.0.8
+* NTP : 161.26.0.6
+
+For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
+
+After the deployment, test that you can ping your default gateway and that you can resolve names with DNS.
+
+```bash
+ping 192.168.0.1
+ping 161.26.0.7
+nslookup cloud.ibm.com
+```
+
+## Run a vMotion test for the first Virtual Machine
+{: #vpc-bm-vmware-newvm-vmotion}
+{: step}
+
+At this point, you may try to move your VM from the original host (e.g. BMS001) to another host with vMotion.
+
+To migrate the created VM:
+
+* Log into the vCenter Server using vSphere Client.
+* Click to select the vCenter Virtual Machine.
+* Right Click, and select migrate
+* Click Change compute resource only, click Next.
+* Select e.g. BMS002 / esx-002, click Next
+* Keep the same Port group, click Next.
+* Select your preferred vMotion priority, click Next.
+* Click Finish.
+
+Network connectivity should remain intact and you should be able to see your Virtual Machine running on a different host e.g. BMS002 / esx-002 via vCenter.
+
+In addition, if you run the following commands, you can see the location change of the VLAN NIC 'vlan-nic-vm-1'.
+
+```bash
+$ ibmcloud is bm-nics $VMWARE_BMS001
+Listing network interfaces of server 02b7-18928fa3-55b7-4d63-a2bb-b0d832ea19bc under account IBM Cloud Acc as user xxx@yyy.com...
+ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
+02b7-122e2c9e-3a9d-4f0c-87c3-f6d75f40a51d   pci-nic-vmnic0        available   primary     10.97.0.5                   pci              02:00:02:21:ED:95   100, 200, 300, 400, 500, 1000   -   
+02b7-6103583c-8a01-4506-95bd-f30eb7338561   vlan-nic-tep-vmk10    available   secondary   10.97.1.132                 vlan             02:00:01:21:ED:9A   -                               400   
+02b7-8114ba6d-0dbd-4453-b38d-83db068cf959   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.4                   vlan             02:00:01:21:ED:97   -                               200   
+02b7-9276f471-1426-49ee-8e8c-0a6d964eccdb   vlan-nic-vsan-vmk2    available   secondary   10.97.2.8                   vlan             02:00:05:21:ED:98   -                               300   
+```
+
+```bash
+$ ibmcloud is bm-nics $VMWARE_BMS002
+Listing network interfaces of server 02b7-02890a7a-e543-4479-92d5-a9d7d5819286 under account IBM Cloud Acc as user xxx@yyy.com...
+ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
+02b7-ba818812-d5a6-4622-9ea5-c5088a60d724   pci-nic-vmnic0        available   primary     10.97.0.6                   pci              02:00:03:21:ED:95   100, 200, 300, 400, 500, 1000   -   
+02b7-736f325e-9b3b-4254-8c0c-6c4add8934c3   vlan-nic-tep-vmk10    available   secondary   10.97.1.133                 vlan             02:00:02:21:ED:9A   -                               400   
+02b7-94073d6d-6658-4b91-b4e1-b15a15fdbf4d   vlan-nic-vsan-vmk2    available   secondary   10.97.2.6                   vlan             02:00:03:21:ED:98   -                               300   
+02b7-97c2c802-a236-41c7-b6ca-bd9f0145cba2   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.5                   vlan             02:00:02:21:ED:97   -                               200   
+02b7-159f23b6-67e1-4aca-a4b8-36fede3b8fc7   vlan-nic-vcenter      available   secondary   10.97.0.132                 vlan             02:00:01:22:01:2B   -                               100   
+02b7-9d8a9d99-c11a-4573-ad69-737f8878387e   vlan-nic-vm-1         available   secondary   192.168.0.4                 vlan             02:00:01:22:6B:AC   -                               1000   
+```
+
+You should be able to access ping / access other Virtual Machines on the same VPC subnet. 
+
+Note. In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same bare metal server will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the VPC network. For example, on a bare metal server host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
+{:note}
+
+## Deploy a second Virtual Machine
+{: #vpc-bm-vmware-newvm-deploy-vm2}
+{: step}
+
+This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID '1001' but attached to the same VPC subnet 'SUBNET_VM1'. You may alter the VLAN ID based on your preferences.
+
+First, you need to allow the VLAN ID '1001' for the bare metal servers' PCI interface. With the process outlined in the previous example, you can allow the BMSs to use the new VLAN ID with the following commands:
+
+```bash
+ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000,1001
+ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000,1001
+ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000,1001
+```
+
+Next, you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is allowed to float between host (for vMotion). 
+
+```bash
+VMWARE_VNIC_VM2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VM1 --interface-type vlan --vlan 1001 --allow-interface-to-float true --name vlan-nic-vm-2 --output json | jq -r .id)
+```
+
+To get the IP address allocated by VPC, you can use the following commands:
+
+```bash
+VMWARE_VM2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM2 --output json | jq -r .primary_ipv4_address)
+echo "IP for VM-2 : "$VMWARE_VM2_IP
+```
+
+In this example, IP address '192.168.0.5' was allocated by VPC, which you will need to configure for the virtual machine with netmask '/24' and default gateway '192.168.0.1'.
+
+Using the process outlined on the previous example, create a new DPG via vCenter with VLAN ID '1001'.
+
+Deploy a new Virtual Machine with the following parameters:
+
+* Cluster : Previously created VMware cluster or one of its hosts
+* Storage : Previously created NFS or vSAN
+* Portgroup : 'dpg-vm-subnet-1001'
+* IP address : 192.168.0.5/24
+* Default Gateway : 192.168.0.1
+* DNS : 161.26.0.7, 161.26.0.8
+* NTP : 161.26.0.6
+
+At this point you should be able to ping the first Virtual Machine (VM1) from this newly created Virtual Machine (VM2).
+
+```bash
+ping 192.168.0.4
+```

@@ -1,0 +1,153 @@
+---
+subcollection: solution-tutorials
+copyright:
+  years: 2018, 2019
+lastupdated: "2021-01-05"
+lasttested: "2019-03-08"
+
+# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
+content-type: tutorial
+services: service1, service2
+account-plan: paid
+completion-time: 1h
+---
+
+{:step: data-tutorial-type='step'}
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:pre: .pre}
+{:deprecated: .deprecated}
+{:important: .important}
+{:note: .note}
+{:tip: .tip}
+{:preview: .preview}
+{:beta: .beta}
+
+# Configure vSAN for VMware Cluster in VPC
+{: #vpc-bm-vmware-vsan}
+{: toc-content-type="tutorial"}
+{: toc-services="vmwaresolutions, vpc"}
+{: toc-completion-time="1h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+<!--#/istutorial#-->
+
+In this tutorial, a vSAN cluster is created using the local disks attached the bare metal servers. 
+{:shortdesc}
+
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+{:important}
+
+Note. This phase is optional, if you use NFS.
+{:note}
+
+Important. You need to have a minimum of three bare metal servers with local SSDs. Make sure you provisioned your bare metal servers with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
+{:important}
+
+
+## Objectives
+{: #vpc-bm-vmware-vsan-objectives}
+
+In this tutorial we create vSAN cluster using the local disks attached the bare metal servers. 
+
+![vSAN as a Datastore](../../08000_Diagrams/manual-deployment/Self-Managed-Simple-20210813v1-VPC-vsan.png "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
+
+1. Create VLAN NICs for vSAN
+2. Configure a vSAN interface using vSphere Client
+3. Create vSAN using vSphere Client
+
+
+## Before you begin
+{: #vpc-bm-vmware-vsan-prereqs}
+
+This tutorial requires:
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+
+Important. This tutorial is part of series, and requires that you have completed the related tutorials.
+{:important}
+
+Make sure you have successfully completed the required previous steps
+* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+
+
+## Create VLAN NICs for vSAN
+{: #vpc-bm-vmware-vsan-vlannic}
+{: step}
+
+If you have not already done so, provision VLAN interfaces for your baremetal servers for vSAN VMKs. See instructions in [provisionining bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
+
+Tip. If you provisioned the vSAN VLAN NICs following the guidance above, you can recall the vSAN IPs with the following commands: 
+{:tip}
+
+```bash
+echo "vSAN IP for BMS001 : "$VMWARE_BMS001_TEP_IP
+echo "vSAN IP for BMS002 : "$VMWARE_BMS002_TEP_IP
+echo "vSAN IP for BMS003 : "$VMWARE_BMS003_TEP_IP
+```
+
+
+## Configure a vSAN interface using vSphere Client
+{: #vpc-bm-vmware-vsan-vmk}
+{: step}
+
+To configure a vMotion Interface:
+
+* Log into the vCenter Server using vSphere Client.
+* Click to select the host.
+* Click the Configuration tab.
+* Click Networking under Hardware.
+* Click Add Networking.
+* Select VMkernel and click Next.
+* Select the existing vSwitch 'vds-vpc' and click Next.
+* Enter a name in the Network Label to identify the network that VSAN uses.
+* Select a VLAN ID from the VLAN ID '300'.
+* Select Use this port group for VSAN and click Next.
+* Enter the IP address and Subnet Mask of the host's VSAN Interface. Use the VLAN interface's IP addresses collected in during the VLAN interface provisioning.
+* Click Next, then click Finish.
+
+Repeat this for each host.
+
+
+## Create vSAN using vSphere Client
+{: #vpc-bm-vmware-vsan-create}
+{: step}
+
+Create a vSAN cluster with two disks for Cache Tier, Select remaining disks for Capacity Tier.
+
+To create a vSAN cluster:
+
+* Log into the vCenter Server using vSphere Client.
+* Click on the cluster
+* Click Configure Tab
+* Click VSAN, Services
+* Click Configure VSAN
+* Single Site Cluster, Click next
+* On Services, click next
+* Select two disks for Cache Tier, Select remaining disks for Capacity Tier
+* Click Finish
+
+## Migrate the vCenter to vSAN
+{: #vpc-bm-vmware-vsan-migratevcenter}
+{: step}
+
+If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster.
+
+To migrate vCenter storage to vSAN:
+
+* Log into the vCenter Server using vSphere Client.
+* Click to select the vCenter Virtual Machine.
+* Right Click, and select migrate.
+* Click Change storage only, click Next.
+* Select vsanDatastore, click Next.
+* Click Next, Click Finish.
