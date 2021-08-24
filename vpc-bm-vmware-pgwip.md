@@ -79,27 +79,25 @@ Make sure you have successfully completed the required previous steps
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
 
 
-
-
 ## Establish Outbound Internet Access with Public Gateway
 {: #vpc-bm-vmware-pgwip-outbound}
 {: step}
 
 VPC subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or bare metal server instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
 
-As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this VPC Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
+1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this VPC Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
 
 ```bash
 ibmcloud is subnetu $VMWARE_SUBNET_VM1 --public-gateway-id $VMWARE_PUBLIC_GW
 ```
 
-After you have attached your newly created subnet to public gateway, you shold be able access Internet from the VM, e.g.: 
+2. After you have attached your newly created subnet to public gateway, you shold be able access Internet from the VM, e.g.: 
 
 ```bash
 ping 1.1.1.1
 ```
 
-Tip. To control outbound Internet access from your virtual machines, you can use security groups or access control lists. In this example, the default security group allows all outbound nternet access.
+Tip. To control outbound Internet access from your virtual machines, you can use security groups or access control lists. In this example, the default security group allows all outbound Internet access.
 {:tip}
 
 ## Establish Inbound Internet Access with Floating IP
@@ -108,7 +106,7 @@ Tip. To control outbound Internet access from your virtual machines, you can use
 
 If you want to access the VMware Virtual Machines directly from the Internet, you need to provision a Floating IP to the VLAN NIC. Floating IP addresses are IP addresses that are provided by IBM Cloud platform and are reachable from the public Internet. You can reserve a Floating IP address from the pool of available addresses that are provided by IBM, and you can associate it with a network interface of your server, and VLAN NIC in this case. That VLAN NIC will keep its private IP address, and the Floating IP provides a One-to-One NAT to this private IP. Note that, associating a floating IP address with an instance removes the instance from the public gateway's Many-to-1 SNAT.
 
-Create a floating IP for the First Virtual Machines (VM1) VLAN NIC and record the IP.
+1. Create a floating IP for the First Virtual Machines (VM1) VLAN NIC and record the IP.
 
 ```bash
 VMWARE_VM_FIP=$(ibmcloud is ipc floating-ip-vm-1 --nic-id $VMWARE_VNIC_VM1 --output json | jq -r .address)
@@ -118,14 +116,14 @@ echo "Public IP for your VLAN NIC : "$VMWARE_VM_FIP
 Tip. To control access to your virtual machine, you may need to update the VLAN NIC's security group (or access control lists). 
 {:tip}
 
-If you provisioned the VM's VLAN interface with the default VPC security group, use following commands: 
+2. If you provisioned the VM's VLAN interface with the default VPC security group, use following commands: 
 
 ```bash
 VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
 ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
 ```
 
-If you provisioned a new security group for the VLAN interface e.g. with a name 'your-security-group', use can use following commands: 
+3. If you provisioned a new security group for the VLAN interface e.g. with a name 'your-security-group', use can use following commands: 
 
 ```bash
 VMWARE_VM_FIP_SG=$(ic is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)

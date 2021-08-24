@@ -196,13 +196,13 @@ ibmcloud is bm-init $VMWARE_BMS003 --private-key @~/.ssh/id_rsa
 1. Get the IP addresses of the servers and record them for future use into a variable.
 
 ```bash
-VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r .primary_network_interface.primary_ipv4_address)
+VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
 echo "VMWARE_BMS001 IP : "$VMWARE_BMS001_MGMT_IP
 
-VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r .primary_network_interface.primary_ipv4_address)
+VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
 echo "VMWARE_BMS002 IP : "$VMWARE_BMS002_MGMT_IP
 
-VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r .primary_network_interface.primary_ipv4_address)
+VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
 echo "VMWARE_BMS003 IP : "$VMWARE_BMS003_MGMT_IP
 ```
 
@@ -250,9 +250,9 @@ Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLAN
 1. Get the PCI NIC IDs and allow them to use the VLANs stated above:
 
 ```bash
-VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r .[0].id)
-VMWARE_BMS002_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS002 --output json | jq -r .[0].id)
-VMWARE_BMS003_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS003 --output json | jq -r .[0].id)
+VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r '.[0].id')
+VMWARE_BMS002_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS002 --output json | jq -r '.[0].id')
+VMWARE_BMS003_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS003 --output json | jq -r '.[0].id')
 
 ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
 ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
