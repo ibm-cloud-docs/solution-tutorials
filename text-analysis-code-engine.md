@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-08-24"
 lasttested: "2021-03-22"
 
 content-type: tutorial
@@ -506,6 +506,9 @@ A container image registry, or registry, is a repository for your container imag
 1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project
 -->
 <!--#/isworkshop#-->
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related resources
 {: #text-analysis-code-engine-related_resources}

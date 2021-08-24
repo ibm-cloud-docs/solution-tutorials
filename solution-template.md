@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-08-24"
 lasttested: "2019-03-08"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -182,6 +182,9 @@ Introductory statement that overviews the section
 {: step}
 
 Steps to take to remove the resources created in this tutorial
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 {: #solution-template-0}

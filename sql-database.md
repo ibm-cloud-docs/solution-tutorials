@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2020
-lastupdated: "2020-12-17"
+lastupdated: "2021-08-24"
 lasttested: "2020-12-17"
 
 content-type: tutorial
@@ -156,6 +156,9 @@ To clean up resources used by the tutorial, follow these steps:
 1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app.
 2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.
 3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Expand the tutorial
 {: #sql-database-10}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-24"
 lasttested: "2020-11-04"
 
 content-type: tutorial
@@ -239,6 +239,10 @@ Accessing the website at the URL provided by the COS bucket is great, but access
 * Delete the {{site.data.keyword.cis_short_notm}} DNS CNAME and Page Rule
 * Delete the {{site.data.keyword.cdn_full}} service
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
+
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #static-files-related-content}
