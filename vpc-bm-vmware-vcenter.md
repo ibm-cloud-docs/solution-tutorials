@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you will deploy a vCenter for a VMware Deployment in VPC and a 'floating' VLAN interface for it.
 {:shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 {:important}
 
 ## Objectives
@@ -66,18 +66,19 @@ In this tutorial you will provision a vCenter appliance to the ESXi hosts and cr
 {: #vpc-bm-vmware-vcenter-prereqs}
 
 This tutorial requires:
+
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
 {:important}
 
 Make sure you have successfully completed the required previous steps
+
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 * [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
-
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
@@ -107,6 +108,7 @@ ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name vcenter --i
 ```
 
 ## Add Port Group for VLAN 100 for Standard switch
+
 {: #vpc-bm-vmware-vcenter-portgroup}
 {: step}
 
@@ -120,15 +122,17 @@ Login to host BMS001 / esx-001 as root and add a Port Group to Standard Switch f
 4. Click Add.
 
 ## Deploy vCenter appliance
+
 {: #vpc-bm-vmware-vcenter-deployappliance}
 {: step}
 
-The vCenter appliance will be deployed next. 
+The vCenter appliance will be deployed next.
 
-1. Download the VMware vCenter Server 7.0U2 (e.g. VMware-VCSA-all-7.0.2-17958471.iso) into your Windows Jump Machine. 
+1. Download the VMware vCenter Server 7.0U2 (e.g. VMware-VCSA-all-7.0.2-17958471.iso) into your Windows Jump Machine.
 2. Mount the iso into the Operating System.
 
 ### Deploy vCenter appliance - Phase 1
+
 {: #vpc-bm-vmware-vcenter-deployappliance-1}
 
 vCenter installation is split into two phases. In the first phase, the appliance is installed into the ESXi host.
@@ -149,7 +153,7 @@ nslookup vcenter.vmware.ibmcloud.local
 nslookup esx-001.vmware.ibmcloud.local
 ```
 
-3. Start the VCSA UI installer (e.g. <drive_letter>:\vcsa-ui-installer\win32\installer.exe). 
+3. Start the VCSA UI installer (e.g. <drive_letter>:\vcsa-ui-installer\win32\installer.exe).
   
 4. Click Install a new vCenter Server.
 
@@ -175,7 +179,7 @@ HTTPS Port | 443
 ### Configure vCenter - Phase 2
 {: #vpc-bm-vmware-vcenter-deployappliance-2}
 
-After the previous step, vCenter installation continues with Phase 2. 
+After the previous step, vCenter installation continues with Phase 2.
 
 1. Login to VMware vCenter Server Management as advised by the VCSA UI installer.
 
@@ -300,14 +304,13 @@ Configure a vMotion Interface as follows:
 6. Select VMkernel Network Adapter and click Next.
 7. Select the existing standard vSwitch and click Next.
 8. Enter a name in the Network Label to identify the network that vMotion uses.
-9. Select a VLAN ID from the VLAN ID dropdown, use VLAN ID '200'.
+9. Select a VLAN ID from the VLAN ID dropdown, use VLAN ID '200'. Inherit or set the vSwitch MTU (9000) and click Next.
 10. Select TCP/IP stack vMotion and select vMotion on Enabled services and click Next.
 11. Select Use static IPv4 settings.
 12. Enter the IP address and Subnet Mask of the host's vMotion Interface. Use the provisioned server's vMotion VLAN NIC's IP.  
 13. Click Next, then click Finish.
 
 Repeat this for each host.
-
 
 ## Migrate Management / VMK interfaces
 {: #vpc-bm-vmware-vcenter-migratevmks}
@@ -340,7 +343,6 @@ Configure the distributed vSwitch as follows:
 11. Click Finish.
 12. Check connectivity to the host, and clear alarms if needed.
 
-
 ### Migrate the vCenter to BMS002
 {: #vpc-bm-vmware-vcenter-migratevmks-vc}
 
@@ -355,7 +357,7 @@ Next, you need to migrate the vCenter:
 7. Change Port group to be 'dpg-management'.
 8. Click Next, Click Finish.
 
-After the vCenter migration, you may excecute the following IBM Cloud CLO command to validate that the vCenter's VLAN NIC has been moved to BMS002 / esx-002.
+After the vCenter migration, you may execute the following IBM Cloud CLO command to validate that the vCenter's VLAN NIC has been moved to BMS002 / esx-002.
 
 ```bash
 ibmcloud is bm-nics $VMWARE_BMS002  

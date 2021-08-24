@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you will deploy DNS service for a VMware Deployment in VPC.
 {:shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 {:important}
 
 ## Objectives
@@ -58,21 +58,21 @@ In this example, [IBM Cloud DNS service](https://{DomainName}/docs/dns-svcs?topi
 3. Create DNS records
 4. Validate DNS records
 
-
 ## Before you begin
 {: #vpc-bm-vmware-dns-prereqs}
 
 This tutorial requires:
+
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
 {:important}
 
 Make sure you have successfully completed the required previous steps
+
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
-
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 ## Provision IBM Cloud DNS service
 {: #vpc-bm-vmware-dns-provision}
@@ -86,6 +86,7 @@ ibmcloud dns instance-target $VMWARE_DNS
 ```
 
 ## Provision a Zone
+
 {: #vpc-bm-vmware-dns-zone}
 {: step}
 
@@ -103,10 +104,11 @@ ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
 ```
 
 ## Creating DNS records
+
 {: #vpc-bm-vmware-dns-record}
 {: step}
 
-Note. DNS records for the ESXi hosts will bre created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below. 
+Note. DNS records for the ESXi hosts will bre created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
 {:note}
 
 1. To create DNS records via CLI, the following command provides a help for record creation.
@@ -121,8 +123,8 @@ ibmcloud dns resource-record-create --help
 ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
 ```
 
-
 ## Validate DNS records
+
 {: #vpc-bm-vmware-dns-validation}
 {: step}
 
@@ -144,4 +146,4 @@ ibmcloud dns resource-records $VMWARE_DNS_ZONE -i dns-vmware
 ibmcloud dns permitted-networks $VMWARE_DNS_ZONE
 ```
 
-4. When a DNS record is created during the totorial, validate that you get correct responses from your Windows Jump host, for example using 'nslookup' via Windows command line.
+4. When a DNS record is created during the tutorial, validate that you get correct responses from your Windows Jump host, for example using 'nslookup' via Windows command line.

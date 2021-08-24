@@ -40,10 +40,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for VMkernel adapters. 
+This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for VMkernel adapters.
 {:shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 {:important}
 
 In IBM Cloud™ VPC, you can create two types of network interfaces on a bare metal server: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
@@ -51,7 +51,6 @@ In IBM Cloud™ VPC, you can create two types of network interfaces on a bare me
 The PCI interface is a physical network interface. By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a bare metal server. In this example, the single PCI interface is used as a vSphere vSphere Standard and/or Distributed Switch uplink. In is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
 
 The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the bare metal server, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
-
 
 ## Objectives
 {: #vpc-bm-vmware-bms-objectives}
@@ -70,7 +69,6 @@ In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP 
 4. Add hosts to DNS
 5. Create VLAN NICs for VMkernel adapters
 
-
 ## Before you begin
 {: #vpc-bm-vmware-bms-prereqs}
 
@@ -84,7 +82,7 @@ Make sure you have successfully completed the required previous steps
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 ## Validate BMS images
 {: #vpc-bm-vmware-bms-image}
@@ -96,7 +94,7 @@ Make sure you have successfully completed the required previous steps
 ibmcloud is images
 ```
 
-2. For VMware deployment, an ID for ESXi image is needed and you can seatch that with a key word 'esx'. In this example, IBM Cloud provided licences are used. You can also bring your own, and in that case select the BYOL image option.
+2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word 'esx'. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
 
 ```bash
 $ ibmcloud is images | grep esx
@@ -140,10 +138,10 @@ Important. If you plan to use vSAN in your VMware deployment, select the 'bx2d-m
 1. Bare metal servers can be provisioned with CLI and to get help for the required parameters you can use the following command:
 
 ```bash
-$ ibmcloud is bare-metal-server-create --help 
+ibmcloud is bare-metal-server-create --help 
 ```
 
-2. As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. 
+2. As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration.
 
 In the example below you can enable ESXi SSH and Shell and set the host name. You will need to create a local file per bare metal server, in the location where you plan to execute the ibmcloud CLI. A script per bare metal server is required to pass in the hostname. An example for VMWARE_BMS001 is shown below. Modify this to fit your deployment's needs.
 
@@ -158,9 +156,9 @@ vim-cmd hostsvc/start_esx_shell
 esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
 ```
 
-3. To provision the BMS with IBM Cloud provided ESXi licences and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licences or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
+3. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
 
-Important. The following commands will order your bame metal servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
+Important. The following commands will order your bare metal servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
 {:important}
 
 ```bash
@@ -175,12 +173,12 @@ VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VPC_ZONE --profile bx2d-m
 ibmcloud is bm $VMWARE_BMS001
 ```
 
-Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'. 
+Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
 ### Obtain Bare Metal Credentials
 {: #vpc-bm-vmware-bms-provision-cred}
 
-1. Once the hosts have been provisioned, get the credentials for 'root' user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this. 
+1. Once the hosts have been provisioned, get the credentials for 'root' user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this.
 
 ```bash
 ibmcloud is bm-init $VMWARE_BMS001 --private-key @~/.ssh/id_rsa
@@ -188,7 +186,7 @@ ibmcloud is bm-init $VMWARE_BMS002 --private-key @~/.ssh/id_rsa
 ibmcloud is bm-init $VMWARE_BMS003 --private-key @~/.ssh/id_rsa
 ```
 
-2. Record the passwords for future use. 
+2. Record the passwords for future use.
 
 ### Obtain the Bare metal IP Details
 {: #vpc-bm-vmware-bms-provision-ip}
@@ -262,7 +260,7 @@ ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,3
 ### Creating VLAN NICs
 {: #vpc-bm-vmware-bms-vlannic-create}
 
-Next you need to create VLAN NICs for VMware kernel adapters (VMK) and NSX-T TEPs. 
+Next you need to create VLAN NICs for VMware kernel adapters (VMK) and NSX-T TEPs.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
@@ -340,7 +338,6 @@ echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
 
 Note. In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
 {: note}
-
 
 ### Create VLAN NICs for TEPs
 {: #vpc-bm-vmware-bms-vlannic-tep}

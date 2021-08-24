@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you will deploy a VPC for a VMware Deployment and a jump machine for configuration tasks.
 {:shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives). 
+Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 {:important}
 
 ## Objectives
@@ -62,7 +62,6 @@ In this tutorial, a dedicated VPC for VMware is used, but you can alter and modi
 5. Create a SSH Key
 6. Provision a Jump Machine / Bastion Host
 
-
 ## Before you begin
 {: #vpc-bm-vmware-vpc-prereqs}
 
@@ -72,8 +71,7 @@ This tutorial requires:
 Important. This tutorial is part of series, and it is required that you follow the [order](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 {:important}
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
-
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 ## Create a VPC
 {: #vpc-bm-vmware-vpc-create}
@@ -86,7 +84,7 @@ VMWARE_VPC=$(ibmcloud is vpcc vmw --output json | jq -r .id)
 VMWARE_VPC_CRN=$(ibmcloud is vpc $VMWARE_VPC --output json | jq -r .crn)
 ```
 
-Tip: You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way. 
+Tip: You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
 {:tip}
 
 Tip. All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command:
@@ -214,6 +212,3 @@ Tip: Inbound access to RDP port (TCP/3389) is blocked by default. Add a SG rule 
 VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
 ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 3389 --remote <add_your_IP_here>
 ```
-
-
-

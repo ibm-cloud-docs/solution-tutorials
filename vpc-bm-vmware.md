@@ -56,7 +56,6 @@ This tutorial walks you through creating your own VPC with multiple subnets whic
 This tutorial assumes a working knowledge of IBM Cloud™ zones, regions, prefixes, subnets and security groups that build the base VPC networking and are used to support the vSphere deployment. More information about VPC concepts and the networking constructs are found in the [VPC pages of the IBM Cloud™ Docs](https://{DomainName}/docs/vpc?topic=vpc-getting-started). More information about deploying Bare metal servers on VPC can be found in the [Bare metal server section of VPC pages](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).
 {:shortdesc}
 
-
 ## Objectives
 {: #vpc-bm-vmware-objectives}
 
@@ -87,9 +86,8 @@ Important. If you plan to use vSAN as your storage, you need to select a compati
 
 When using VPC subnets for your VMware Virtual Machines, follow additional steps after your base VMware deployment to setup your VMware Virtual Machine networking:
 
-1. [Provision VPC Subnets and configure Distributed Virtual Switch Portgoups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+1. [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 2. [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
-
 
 ## Before you begin
 {: #vpc-bm-vmware-prereqs}
@@ -110,7 +108,6 @@ This tutorial requires:
   * Create an SSH key on your workstation and [import](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) it to the VPC. 
   * If you don't already have an SSH key, see the [instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys#locating-ssh-keys) for creating a key for VPC.
 
-
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -124,7 +121,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 Specify the target resource group for your resources. You can list the available resource groups with the following command.
 
 ```bash
-$ ibmcloud resource groups
+ibmcloud resource groups
 Retrieving all resource groups under account 1b0834ebce7f4b94983d856f532ebfe2 as xxx@yyy.com...
 OK
 Name           ID                                 Default Group   State   
