@@ -97,7 +97,7 @@ Note. While VPC provides both IP and MAC addresses, you only need to use the IP 
 ```bash
 VMWARE_VNIC_VCENTER=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_MGMT --interface-type vlan --vlan 100 --allow-interface-to-float true --name vlan-nic-vcenter --output json | jq -r .id)
 VMWARE_VCENTER_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VCENTER --output json | jq -r .primary_ipv4_address)
-echo "IP : "$VMWARE_VCENTER_IP
+echo "vCenter IP : "$VMWARE_VCENTER_IP
 ```
 
 2. Add vCenter IP to DNS Zone as A record:

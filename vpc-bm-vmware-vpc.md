@@ -186,7 +186,7 @@ IMAGE_WIN=$(ibmcloud is images --output json | jq -r '.[] | select(.name == "ibm
 3. Create a Windows Virtual Server with CLI or UI. Once the Virtual Server Instance is created, record the Jump server's ID and its NIC ID.
 
 ```bash
-VMWARE_JUMP=$(ibmcloud is instance-create jump-001 $VMWARE_VPC $VMWARE_VPC_ZONE bx2-2x8 $VMWARE_SUBNET_MGMT --image-id $IMAGE_WIN --key-ids $SSH_KEY --output json | jq -r '.id')
+VMWARE_JUMP=$(ibmcloud is instance-create jump-001 $VMWARE_VPC $VMWARE_VPC_ZONE bx2-2x8 $VMWARE_SUBNET_MGMT --image-id $IMAGE_WIN --key-ids $SSH_KEY --output json | jq -r .id)
 VMWARE_JUMP_NIC=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].id')
 ```
 
@@ -211,7 +211,7 @@ Tip: Inbound access to RDP port (TCP/3389) is blocked by default. Add a SG rule 
 6. Modify security group rule to allow inbound access.
 
 ```bash
-VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r .network_interfaces[0].security_groups[0].id)
+VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
 ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 3389 --remote <add_your_IP_here>
 ```
 
