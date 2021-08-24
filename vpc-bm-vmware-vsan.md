@@ -80,12 +80,16 @@ Make sure you have successfully completed the required previous steps
 * [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
+
 
 ## Create VLAN NICs for vSAN
 {: #vpc-bm-vmware-vsan-vlannic}
 {: step}
 
-If you have not already done so, provision VLAN interfaces for your baremetal servers for vSAN VMKs. See instructions in [provisionining bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
+1. If you have not already done so, provision VLAN interfaces for your baremetal servers for vSAN VMKs. 
+
+See instructions in [provisionining bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
 
 Tip. If you provisioned the vSAN VLAN NICs following the guidance above, you can recall the vSAN IPs with the following commands: 
 {:tip}
@@ -101,20 +105,20 @@ echo "vSAN IP for BMS003 : "$VMWARE_BMS003_TEP_IP
 {: #vpc-bm-vmware-vsan-vmk}
 {: step}
 
-To configure a vMotion Interface:
+Nex, you need to configure a vSAN interface for each host:
 
-* Log into the vCenter Server using vSphere Client.
-* Click to select the host.
-* Click the Configuration tab.
-* Click Networking under Hardware.
-* Click Add Networking.
-* Select VMkernel and click Next.
-* Select the existing vSwitch 'vds-vpc' and click Next.
-* Enter a name in the Network Label to identify the network that VSAN uses.
-* Select a VLAN ID from the VLAN ID '300'.
-* Select Use this port group for VSAN and click Next.
-* Enter the IP address and Subnet Mask of the host's VSAN Interface. Use the VLAN interface's IP addresses collected in during the VLAN interface provisioning.
-* Click Next, then click Finish.
+1. Log into the vCenter Server using vSphere Client.
+2. Click to select the host.
+3. Click the Configuration tab.
+4. Click Networking under Hardware.
+5. Click Add Networking.
+6. Select VMkernel and click Next.
+7. Select the existing vSwitch 'vds-vpc' and click Next.
+8. Enter a name in the Network Label to identify the network that VSAN uses.
+9. Select a VLAN ID from the VLAN ID '300'.
+10. Select Use this port group for VSAN and click Next.
+11. Enter the IP address and Subnet Mask of the host's VSAN Interface. Use the VLAN interface's IP addresses collected in during the VLAN interface provisioning.
+12. Click Next, then click Finish.
 
 Repeat this for each host.
 
@@ -123,31 +127,27 @@ Repeat this for each host.
 {: #vpc-bm-vmware-vsan-create}
 {: step}
 
-Create a vSAN cluster with two disks for Cache Tier, Select remaining disks for Capacity Tier.
+Next, create a vSAN cluster with two disks for Cache Tier, Select remaining disks for Capacity Tier:
 
-To create a vSAN cluster:
-
-* Log into the vCenter Server using vSphere Client.
-* Click on the cluster
-* Click Configure Tab
-* Click VSAN, Services
-* Click Configure VSAN
-* Single Site Cluster, Click next
-* On Services, click next
-* Select two disks for Cache Tier, Select remaining disks for Capacity Tier
-* Click Finish
+1. Log into the vCenter Server using vSphere Client.
+2. Click on the cluster
+3. Click Configure Tab
+4. Click VSAN, Services
+5. Click Configure VSAN
+6. Single Site Cluster, Click next
+7. On Services, click next
+8. Select two disks for Cache Tier, Select remaining disks for Capacity Tier
+9. Click Finish
 
 ## Migrate the vCenter to vSAN
 {: #vpc-bm-vmware-vsan-migratevcenter}
 {: step}
 
-If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster.
+If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. To migrate vCenter storage to vSAN:
 
-To migrate vCenter storage to vSAN:
-
-* Log into the vCenter Server using vSphere Client.
-* Click to select the vCenter Virtual Machine.
-* Right Click, and select migrate.
-* Click Change storage only, click Next.
-* Select vsanDatastore, click Next.
-* Click Next, Click Finish.
+1. Log into the vCenter Server using vSphere Client.
+2. Click to select the vCenter Virtual Machine.
+3. Right Click, and select migrate.
+4. Click Change storage only, click Next.
+5. Select vsanDatastore, click Next.
+6. Click Next, Click Finish.

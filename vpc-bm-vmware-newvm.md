@@ -80,7 +80,7 @@ Make sure you have successfully completed the required previous steps
 * [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or
 * [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
-[Login](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region.
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
 
 
 ## Create a VPC prefix and a subnet for VMware Virtual machines
@@ -184,7 +184,7 @@ After the deployment, test that you can ping your default gateway and that you c
 ```bash
 ping 192.168.0.1
 ping 161.26.0.7
-nslookup cloud.ibm.com
+nslookup {DomainName}
 ```
 
 ## Run a vMotion test for the first Virtual Machine

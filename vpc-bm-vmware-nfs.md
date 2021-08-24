@@ -74,41 +74,20 @@ Make sure you have successfully completed the required previous steps
 * [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 
-[Login](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region.
+[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group. 
 
 
 ## Create file share in VPC
 {: #vpc-bm-vmware-nfs-createfileshare}
 {: step}
 
-To create a file share in VPC, either CLI or UI (or API) can be used. The following provides the reference when using CLI:
+To Create a file share in VPC you can use either CLI or UI (or API). The following provides the reference when using CLI:
 
 ```bash
-$ ibmcloud is share-create --help
-NAME:
-    share-create - [Beta] Create a file share
-  
-USAGE:
-    ibmcloud is share-create --zone ZONE_NAME --profile PROFILE --size SIZE [--name NAME] [--targets TARGETS_JSON | @TARGETS_JSON_FILE] [--resource-group-id RESOURCE_GROUP_ID | --resource-group-name RESOURCE_GROUP_NAME] [--output JSON] [-q, --quiet]
-
-EXAMPLE:
-    ibmcloud is share-create --name my-file-share --zone us-south-1 --profile tier-3iops --size 40
-    ibmcloud is share-create --name my-file-share --zone us-south-1 --profile tier-3iops --size 40 --targets '[{"name": "my-target1", "vpc": {"id": "84710432-9473-4a29-b67d-9d0c92eecf6f"}}, {"name": "my-target2", "vpc": {"id": "93ee28fc-2d6c-4b56-b55d-ec8586042963 "}}]'
-    ibmcloud is share-create --name my-file-share --zone us-south-1 --profile tier-3iops --size 40 --output JSON
-  
-OPTIONS:
-    --name value                 The user-defined name for this file share.
-    --zone value                 Name of the zone
-    --profile value              The profile the file share uses
-    --size value                 The size of the file share rounded up to the next gigabyte. (default: 0)
-    --targets value              TARGETS_JSON|@TARGETS_JSON_FILE, file share targets in JSON or JSON file
-    --resource-group-id value    ID of the resource group. This option is mutually exclusive with --resource-group-name
-    --resource-group-name value  Name of the resource group. This option is mutually exclusive with --resource-group-id
-    --output value               Specify output format, only JSON is supported. One of: JSON.
-    -q, --quiet                  Suppress verbose output
+ibmcloud is share-create --help
 ```
 
-To see the available storage profiles, use the following command.
+1. Check the available storage profiles, and use the following command.
 
 ```bash
 $ ibmcloud is share-profiles
@@ -120,6 +99,8 @@ tier-5iops    tiered
 tier-10iops   tiered 
 ```
 
+2. Create a file share.
+
 In this example, a 1TB 10 IOPS/GB file share is created with using the previously created VPC as a targe. Record the file share's and the file share target's IDs.
 
 ```bash
@@ -127,7 +108,7 @@ VMWARE_DATASTORE01=$(ibmcloud is share-create --name vmware-nfs-datastore-01 --z
 VMWARE_DATASTORE01_TARGET01=$(ibmcloud is share $VMWARE_DATASTORE01 --output json | jq -r .targets[0].id)
 ```
 
-For mounting to the server, you need to get the defined target's NFS mount path.
+3. For mounting to the server, you need to get the defined target's NFS mount path.
 
 ```bash
 VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
@@ -136,7 +117,7 @@ echo "Server : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print 
 echo "Folder : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print $2}')
 ```
 
-Use the Server and Folder values when configuring the datastore in vCenter.
+4. Use the 'Server' and 'Folder' values when configuring the datastore in vCenter.
 
 
 ## Attach VPC File share as a Datastore for a Compute Cluster in vCenter
