@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2021
-lastupdated: "2021-05-21"
+lastupdated: "2021-08-24"
 lasttested: "2019-09-03"
 
 content-type: tutorial
@@ -671,6 +671,9 @@ In some situations, it might be desirable to interact directly from an on-premis
    {: codeblock}
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
+{: tip}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Expand the tutorial
