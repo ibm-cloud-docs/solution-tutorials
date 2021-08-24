@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-07-27"
+lastupdated: "2021-08-24"
 lasttested: "2021-07-27"
 
 content-type: tutorial
@@ -512,6 +512,9 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
    * log-analysis-iae
 2. Before deleting the `log-analysis-kp` service, delete the root key.
 3. Navigate to [Manage > Access (IAM) > Service IDs](https://{DomainName}/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #big-data-log-analytics-8}

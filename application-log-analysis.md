@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-08-16"
+lastupdated: "2021-08-24"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -474,6 +474,9 @@ To focus the dashboard on your cluster:
    {: pre}
 
 <!--#/istutorial#-->
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Expand the tutorial
 {: #application-log-analysis-expand_tutorial}
