@@ -118,7 +118,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 * [OPTIONAL] Virtual machines (attached directly to a VPC subnet)
 * [OPTIONAL] NSX-T T0 uplinks (tbd later)
 
-1. Provision the following VPC subnets, and record their IDs for future use. The subnets have been provisioned inside the VPC zone specifibmcloud prefix defined in the previous step.
+1. Provision the following VPC subnets, and record their IDs for future use. The subnets have been provisioned inside the CIDR block defined in the VPC zone's prefix.
 
 ```bash
 VMWARE_SUBNET_HOST=$(ibmcloud is subnetc vmw-host-mgmt-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.0.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
