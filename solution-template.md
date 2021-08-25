@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-08-24"
+lastupdated: "2021-08-25"
 lasttested: "2019-03-08"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -132,8 +132,8 @@ Introductory statement that overviews the section
 
 1. Step 1 Click **This** and enter your name.
 
-  This is a tip.
-  {: tip}
+   This is a tip.
+   {: tip}
 
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.
@@ -209,10 +209,10 @@ Want to add to or change this tutorial? Here are some ideas:
 {: #solution-template-12}
 
 For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
+   [link_description](#anchor_name)
 
 For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
+   [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
 
 If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
 

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-08-24"
+lastupdated: "2021-08-25"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -132,8 +132,8 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 
    The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
 
-  Details will be explained later below once everything is set up.
-  ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
+   Details will be explained later below once everything is set up.
+   ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
 6. On the left, click on **Options** and then on **Webhooks**. 
 
    Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=openwhisk-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2020
-lastupdated: "2021-08-24"
+lastupdated: "2021-08-25"
 lasttested: "2020-12-17"
 
 content-type: tutorial
@@ -94,7 +94,8 @@ Now that the table "cities" has been created, you are going to load data into it
 2. Click **Next** to get to the schema overview. Choose the schema starting with **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
 
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
-   {: tip }
+   {: tip}
+
 3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.    
   ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
 4. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
@@ -114,6 +115,7 @@ The data has been loaded into the relational database. There were no errors, but
    select count(*) from cities
    ```
    {: codeblock}
+
    then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```
@@ -121,7 +123,8 @@ The data has been loaded into the relational database. There were no errors, but
    group by countrycode
    order by 2 desc
    ```
-   {: codeblock}   
+   {: codeblock}
+
 4. In the editor select the text of the above statement. Click the **Run selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code

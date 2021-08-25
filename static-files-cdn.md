@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2021
-lastupdated: "2021-08-24"
+lastupdated: "2021-08-25"
 lasttested: "2020-11-04"
 
 content-type: tutorial
@@ -87,7 +87,7 @@ To start, retrieve the application code:
    git clone https://github.com/IBM-Cloud/webapp-with-cos-and-cdn
    cd webapp-with-cos-and-cdn
    ```
-  {: pre}
+   {: pre}
 
 ## Create an Object Storage
 {: #static-files-cdn-create_cos}
@@ -145,14 +145,14 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    {: pre}
 
 4. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
-  ```sh
-  ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file a-picture.png 
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-css-file.css --file a-css-file.css
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file a-video.mp4
-  ```
-  {: pre}
-  
+   ```sh
+   ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file a-picture.png 
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-css-file.css --file a-css-file.css
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file a-video.mp4
+   ```
+   {: pre}
+
 5. View your files from your dashboard.
    ![Bucket Content](images/solution3/Buckets.png)
 6. Access the files through your browser or by using curl:
