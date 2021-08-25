@@ -52,9 +52,10 @@ IBM Cloud™ has a number of [offerings for VMware deployments in Classic](https
 [Baremetal servers on IBM Cloud™ Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-about-bare-metal-servers) environment provide a new option to deploy VMware on IBM Cloud. Currently the IBM Cloud™ VPC environment provides only the Automated vSphere OS Image deployment to Intel Bare Metals on VPC. Therefore, you need to manually install and configure the other required VMware components, such as vCenter, vSAN or NSX-T components.
 
 This tutorial walks you through creating your own VPC with multiple subnets which are necessary to support different vSphere networking requirements and the provisioning of baremetal servers (BMS) on VPC for a basic VMware vSphere deployment. Manual deployment of the vCenter, creating VMware compute cluster with vSAN and NFS shared storage options are the basic essentials covered. The guide also covers optional features, such as using VPC network for VMware Virtual Machine networking.
-
-This tutorial assumes a working knowledge of IBM Cloud™ zones, regions, prefixes, subnets and security groups that build the base VPC networking and are used to support the vSphere deployment. More information about VPC concepts and the networking constructs are found in the [VPC pages of the IBM Cloud™ Docs](https://{DomainName}/docs/vpc?topic=vpc-getting-started). More information about deploying Bare metal servers on VPC can be found in the [Bare metal server section of VPC pages](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).
 {:shortdesc}
+
+Note. This tutorial assumes a working knowledge of VMware vSphere Hypervisor and vCenter Server 7.0 as well as IBM Cloud™ zones, regions, prefixes, subnets and security groups that build the base VPC networking and are used to support the vSphere deployment. More information about VPC concepts and the networking constructs are found in the [VPC pages of the IBM Cloud™ Docs](https://{DomainName}/docs/vpc?topic=vpc-getting-started). More information about deploying Bare metal servers on VPC can be found in the [Bare metal server section of VPC pages](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers). More information about VMware products can be found in [VMware Docs](https://docs.vmware.com). 
+{:note}
 
 ## Objectives
 {: #vpc-bm-vmware-objectives}
@@ -69,6 +70,9 @@ The following diagram presents an overview of the base deployment in IBM Cloud V
 ![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
 
 Important. Deploying VMware on VPC requires multiple steps. Follow the steps below for an initial setup for your base VMware Deployment.
+{:important}
+
+Important. You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed VPC file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2-', which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2d-', which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 {:important}
 
 1. [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
