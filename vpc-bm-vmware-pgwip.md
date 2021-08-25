@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy Public Gateway and Floating IPs for VMware Virtual Machines
+# Provision a Public Gateway and Floating IPs for VMware Virtual Machines
 
 {: #vpc-bm-vmware-pgwip}
 {: toc-content-type="tutorial"}
@@ -54,9 +54,9 @@ If your VMware Virtual Machines require public Internet Access, you need to use 
 
 ![Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg "Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines"){: caption="Figure 1. Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines" caption-side="bottom"}
 
-1. The user does this
-2. Then that
-3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram
+1. Establish Outbound Internet Access with Public Gateway
+2. Establish Inbound Internet Access with Floating IP
+
 
 ## Before you begin
 {: #vpc-bm-vmware-pgwip-prereqs}
@@ -79,6 +79,7 @@ Make sure you have successfully completed the required previous steps
 * [Provision VPC Subnets and configure Distributed Virtual Switch Portgoups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+
 
 ## Establish Outbound Internet Access with Public Gateway
 {: #vpc-bm-vmware-pgwip-outbound}

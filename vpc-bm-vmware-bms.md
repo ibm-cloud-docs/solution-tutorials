@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy VPC Baremetal Servers for a VMware Deployment
+# Provision bare metal servers for VMware deployment
 {: #vpc-bm-vmware-bms}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for VMkernel adapters.
+This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {:shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
@@ -48,7 +48,7 @@ Important. This tutorial is part of [series](https://{DomainName}/docs/solution-
 
 In IBM Cloud™ VPC, you can create two types of network interfaces on a bare metal server: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 
-The PCI interface is a physical network interface. By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a bare metal server. In this example, the single PCI interface is used as a vSphere vSphere Standard and/or Distributed Switch uplink. In is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+The PCI interface is a physical network interface. By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a bare metal server. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
 
 The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the bare metal server, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
 
@@ -59,9 +59,9 @@ In this tutorial, you will learn how to:
 * provision bare metal servers for VMware deployment in VPC
 * how to provision baremetal network interfaces for VMkernel adapters
 
-In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' (VMK) needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
+In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
 
-![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svgg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
+![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
 
 1. Validate BMS images
 2. Validate BMS profiles
@@ -162,12 +162,15 @@ Important. The following commands will order your bare metal servers. Make sure 
 {:important}
 
 ```bash
-VMWARE_BMS001=$(ibmcloud is bmc --name esx-001 --zone $VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host1_esxi.sh --output json | jq -r .id)
-VMWARE_BMS002=$(ibmcloud is bmc --name esx-002 --zone $VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host2_esxi.sh --output json | jq -r .id)
-VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host3_esxi.sh --output json | jq -r .id)
+VMWARE_BMS001=$(ibmcloud is bmc --name esx-001 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host1_esxi.sh --output json | jq -r .id)
+VMWARE_BMS002=$(ibmcloud is bmc --name esx-002 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host2_esxi.sh --output json | jq -r .id)
+VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host3_esxi.sh --output json | jq -r .id)
 ```
 
-4. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
+Note: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'. In this case insert this inside the brackets, e.g. $(MSYS_NO_PATHCONV=1 ibmcloud is ...).
+{:note}
+
+1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
 ```bash
 ibmcloud is bm $VMWARE_BMS001
@@ -231,7 +234,7 @@ In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the bare met
 
 The following diagram shows how each VMK's network configurations map to VPC network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
-![VMkernel adapter mapping to VPC Subnets](../../08000_Diagrams/manual-deployment/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.png "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
+![VMkernel adapter mapping to VPC Subnets](../../08000_Diagrams/manual-deployment/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
 
 ### Configure PCI NIC to allow VLANs
 {: #vpc-bm-vmware-bms-vlannic-allow}
@@ -292,15 +295,15 @@ ibmcloud is bm-nicc --help
 | VMWARE_BMS003   | $VMWARE_SUBNET_VMOT | 200  | false            |
 
 ```bash
-VMWARE_BMS001_VMOT=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS001_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS001_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VMOT --output json | jq -r .primary_ipv4_address)
 echo "vMotion IP for BMS001 : "$VMWARE_BMS001_VMOT_IP
 
-VMWARE_BMS002_VMOT=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS002_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS002_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VMOT --output json | jq -r .primary_ipv4_address)
 echo "vMotion IP for BMS002 : "$VMWARE_BMS002_VMOT_IP
 
-VMWARE_BMS003_VMOT=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS003_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS003_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VMOT --output json | jq -r .primary_ipv4_address)
 echo "vMotion IP for BMS003 : "$VMWARE_BMS003_VMOT_IP
 ```
@@ -323,15 +326,15 @@ Note. This phase is optional, if you use NFS.
 | VMWARE_BMS003   | $VMWARE_SUBNET_VSAN | 300  | false            |
 
 ```bash
-VMWARE_BMS001_VSAN=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS001_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS001_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VSAN --output json | jq -r .primary_ipv4_address)
 echo "vSAN IP for BMS001 : "$VMWARE_BMS001_VSAN_IP
 
-VMWARE_BMS002_VSAN=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS002_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS002_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VSAN --output json | jq -r .primary_ipv4_address)
 echo "vSAN IP for BMS002 : "$VMWARE_BMS002_VSAN_IP
 
-VMWARE_BMS003_VSAN=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS003_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS003_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VSAN --output json | jq -r .primary_ipv4_address)
 echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
 ```
@@ -351,15 +354,15 @@ Note. In the above example, the default security group was used for the VMKs. Th
 | VMWARE_BMS003   | $VMWARE_SUBNET_TEP | 400  | false            |
 
 ```bash
-VMWARE_BMS001_TEP=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS001_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS001_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_TEP --output json | jq -r .primary_ipv4_address)
 echo "TEP IP for BMS001 : "$VMWARE_BMS001_TEP_IP
 
-VMWARE_BMS002_TEP=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS002_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS002_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_TEP --output json | jq -r .primary_ipv4_address)
 echo "TEP IP for BMS002 : "$VMWARE_BMS002_TEP_IP
 
-VMWARE_BMS003_TEP=$(ibmcloud is bare-metal-server-network-interface-create $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+VMWARE_BMS003_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
 VMWARE_BMS003_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_TEP --output json | jq -r .primary_ipv4_address)
 echo "TEP IP for BMS003 : "$VMWARE_BMS003_TEP_IP
 ```

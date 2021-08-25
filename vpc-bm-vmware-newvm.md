@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy VMware Virtual Machines in a VMware Cluster in VPC
+# Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs
 {: #vpc-bm-vmware-newvm}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -81,6 +81,9 @@ Make sure you have successfully completed the required previous steps
 * [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+
+Note. When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+{:note}
 
 ## Create a VPC prefix and a subnet for VMware Virtual machines
 {: #vpc-bm-vmware-newvm-create-prefix}
@@ -162,18 +165,20 @@ Next, you need to create a Portgroup for the VMs in the Distributed Switch in vC
 
 To create a Port Group for the  Distributed Switch:
 
-1. On the vSphere Client Home page, click Networking and navigate to the distributed switch.
-2. Right-click the distributed switch and select Distributed port group > New distributed port group.
-3. On the Name and location page, enter the name of the new distributed port group (e.g. 'dpg-vm-subnet-1000'), or accept the generated name, and click Next.
-4. On the Configure settings page, set the general properties for the new distributed port group and click Next.
-5. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number '1000'.
-6. On the Ready to complete page, review your settings and click Finish.
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
+2. On the vSphere Client Home page, click Networking and navigate to the distributed switch.
+3. Right-click the distributed switch and select Distributed port group > New distributed port group.
+4. On the Name and location page, enter the name of the new distributed port group (e.g. 'dpg-vm-subnet-1000'), or accept the generated name, and click Next.
+5. On the Configure settings page, set the general properties for the new distributed port group and click Next.
+6. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number '1000'.
+7. On the Ready to complete page, review your settings and click Finish.
 
 ## Deploy a first Virtual Machine
 {: #vpc-bm-vmware-newvm-deploy-vm1}
 {: step}
 
-1. Deploy a VM on your Vmware cluster with the following configurations:
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
+2. Deploy a VM on your Vmware cluster with the following configurations:
 
 * Cluster : Previously created VMware cluster or one of its hosts
 * Storage : Previously created NFS or vSAN
@@ -183,7 +188,8 @@ To create a Port Group for the  Distributed Switch:
 * DNS : 161.26.0.7, 161.26.0.8
 * NTP : 161.26.0.6
 
-For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
+Note. For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
+{:note}
 
 2. After the deployment, test that you can ping your default gateway and that you can resolve names with DNS.
 
@@ -201,7 +207,7 @@ At this point, you may try to move your VM from the original host (e.g. BMS001) 
 
 To migrate the created VM:
 
-1. Log into the vCenter Server using vSphere Client.
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. Click to select the vCenter Virtual Machine.
 3. Right Click, and select migrate
 4. Click Change compute resource only, click Next.

@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Configure vSAN for VMware Cluster in VPC
+# Provision vSAN storage cluster
 
 {: #vpc-bm-vmware-vsan}
 {: toc-content-type="tutorial"}
@@ -83,6 +83,9 @@ Make sure you have successfully completed the required previous steps
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
+Note. When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+{:note}
+
 ## Create VLAN NICs for vSAN
 {: #vpc-bm-vmware-vsan-vlannic}
 {: step}
@@ -106,7 +109,7 @@ echo "vSAN IP for BMS003 : "$VMWARE_BMS003_TEP_IP
 
 Nex, you need to configure a vSAN interface for each host:
 
-1. Log into the vCenter Server using vSphere Client.
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. Click to select the host.
 3. Click the Configuration tab.
 4. Click Networking under Hardware.
@@ -127,7 +130,7 @@ Repeat this for each host.
 
 Next, create a vSAN cluster with two disks for Cache Tier, Select remaining disks for Capacity Tier:
 
-1. Log into the vCenter Server using vSphere Client.
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. Click on the cluster
 3. Click Configure Tab
 4. Click VSAN, Services
@@ -143,7 +146,7 @@ Next, create a vSAN cluster with two disks for Cache Tier, Select remaining disk
 
 If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. To migrate vCenter storage to vSAN:
 
-1. Log into the vCenter Server using vSphere Client.
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. Click to select the vCenter Virtual Machine.
 3. Right Click, and select migrate.
 4. Click Change storage only, click Next.

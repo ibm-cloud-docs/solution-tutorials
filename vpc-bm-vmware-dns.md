@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy DNS for a VMware Deployment
+# Provision IBM Cloud DNS service for VMware deployment
 {: #vpc-bm-vmware-dns}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -108,7 +108,7 @@ ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
 {: #vpc-bm-vmware-dns-record}
 {: step}
 
-Note. DNS records for the ESXi hosts will bre created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
+Note. DNS records for the ESXi hosts will be created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
 {:note}
 
 1. To create DNS records via CLI, the following command provides a help for record creation.

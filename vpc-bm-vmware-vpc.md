@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy VPC for a VMware Deployment
+# Provision VPC for a VMware Deployment
 {: #vpc-bm-vmware-vpc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -202,6 +202,9 @@ echo "Public IP for the Jump : "$VMWARE_JUMP_FIP
 ```bash
 ibmcloud is in-init $VMWARE_JUMP --private-key @~/.ssh/id_rsa
 ```
+
+Tip: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'.
+{:tip}
 
 Tip: Inbound access to RDP port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
 {:tip}

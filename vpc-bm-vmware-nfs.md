@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploy and Configure NFS for VMware Cluster in VPC
+# Provision NFS storage and attach to cluster
 
 {: #vpc-bm-vmware-nfs}
 {: toc-content-type="tutorial"}
@@ -78,6 +78,9 @@ Make sure you have successfully completed the required previous steps
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+
+Note. When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+{:note}
 
 ## Create file share in VPC
 {: #vpc-bm-vmware-nfs-createfileshare}
