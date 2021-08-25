@@ -96,8 +96,8 @@ Now that the table "cities" has been created, you are going to load data into it
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
    {: tip}
 
-3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.    
-  ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
+3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.
+   ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
 4. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
 5. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 
@@ -109,7 +109,8 @@ The data has been loaded into the relational database. There were no errors, but
 1. In the top navigation click on **Run SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Create new** to create a new editor tab.
 
    Instead of the built-in SQL editor you can use cloud-based and traditional SQL tools on your desktop or server machine with {{site.data.keyword.dashdbshort_notm}}. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
-    {: tip }
+   {: tip}
+
 2. In the editor type or copy in the following query:   
    ```bash
    select count(*) from cities
