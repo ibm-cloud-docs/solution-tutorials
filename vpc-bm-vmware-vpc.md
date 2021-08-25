@@ -116,7 +116,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 * vSAN
 * [OPTIONAL] TEP
 * [OPTIONAL] Virtual machines (attached directly to a VPC subnet)
-* [OPTIONAL] NSX-T T0 uplinks (tbd later)
+* [OPTIONAL] NSX-T T0 uplinks
 
 1. Provision the following VPC subnets, and record their IDs for future use. The subnets have been provisioned inside the CIDR block defined in the VPC zone's prefix.
 

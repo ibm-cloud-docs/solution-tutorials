@@ -248,13 +248,17 @@ Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLAN
 * VLAN 300 - vSAN
 * VLAN 400 - TEP
 
-1. Get the PCI NIC IDs and allow them to use the VLANs stated above:
+1. Get the PCI NIC IDs for the provisioned bare metal servers:
 
 ```bash
 VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r '.[0].id')
 VMWARE_BMS002_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS002 --output json | jq -r '.[0].id')
 VMWARE_BMS003_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS003 --output json | jq -r '.[0].id')
+```
 
+2. Allow PCI NICs to use the VLANs stated above:
+
+```bash
 ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
 ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
 ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400
@@ -263,7 +267,7 @@ ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,3
 ### Creating VLAN NICs
 {: #vpc-bm-vmware-bms-vlannic-create}
 
-Next you need to create VLAN NICs for VMware kernel adapters (VMK) and NSX-T TEPs.
+Next, you need to create VLAN NICs for VMkernel adapters (VMKs) and NSX-T TEPs.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
@@ -271,10 +275,10 @@ vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
 vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
 vlan-nic-tep-vmk10    | vlan           | 400     | $VMWARE_SUBNET_TEP  | false
 
-Note. Instance management VLAN NICs e.g. for vCenter will be created later.
+Note. When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
 {: note}
 
-Note. When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
+Note. Instance management VLAN NICs e.g. for vCenter will be created later.
 {: note}
 
 1. To create the VLAN NICs you can use CLI, and to get the command reference use the following command. The next chapters will detail each VLAN interface provisioning for each VMK.
