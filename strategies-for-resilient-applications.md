@@ -289,7 +289,7 @@ All of these services share the same characteristics:
    - [EnterpriseDB](https://{DomainName}/docs/databases-for-enterprisedb?topic=databases-for-enterprisedb-high-availability)
    - [DataStax](https://{DomainName}/docs/databases-for-cassandra?topic=databases-for-cassandra-high-availability)
    - [{{site.data.keyword.redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
-  - [ElasticSearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
+   - [ElasticSearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
    - [etcd](https://{DomainName}/docs/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
    - [{{site.data.keyword.mongodb}}](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
    - [{{site.data.keyword.rabbitmq}}](https://{DomainName}/docs/messages-for-rabbitmq?topic=messages-for-rabbitmq-high-availability)

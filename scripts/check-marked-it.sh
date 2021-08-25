@@ -15,7 +15,7 @@ echo "Checking for marked-it 2.0 compatibility issues..."
 OUTPUT=$(node ./build/marked-it/bin/markedScript.js -i build/check-marked-it)
 
 # detect any issue -- the tool does not return 1 in case of failures but log messages
-if [ "$(echo $OUTPUT | sed '/^-------------------- Indentation Warnings-----------------$/d' | sed '/^$/d')" = "" ]; then
+if [ -z "$(echo "${OUTPUT}" | sed '/^-------------------- Indentation Warnings-----------------$/d' | sed '/^$/d')" ]; then
   echo "No errors detected"
 else
   echo "$OUTPUT"
