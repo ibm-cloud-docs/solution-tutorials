@@ -26,6 +26,15 @@ toc:
           topics:
           - solution-template.md
           - satellite-tour.hidden.md
+          - vpc-bm-vmware.hidden.md
+          - vpc-bm-vmware-vpc.hidden.md
+          - vpc-bm-vmware-dns.hidden.md
+          - vpc-bm-vmware-bms.hidden.md
+          - vpc-bm-vmware-vcenter.hidden.md
+          - vpc-bm-vmware-vsan.hidden.md
+          - vpc-bm-vmware-nfs.hidden.md
+          - vpc-bm-vmware-newvm.hidden.md
+          - vpc-bm-vmware-pgwip.hidden.md
 
         - topicgroup:
           label: Websites and Web Apps
