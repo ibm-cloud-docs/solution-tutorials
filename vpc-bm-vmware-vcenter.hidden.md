@@ -40,6 +40,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
+This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+{:beta}
+
 In this tutorial, you will deploy a vCenter for a VMware Deployment in VPC and a 'floating' VLAN interface for it.
 {:shortdesc}
 

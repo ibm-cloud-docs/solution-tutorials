@@ -40,6 +40,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
+This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+{:beta}
+
 This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {:shortdesc}
 

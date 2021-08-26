@@ -41,6 +41,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
+This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+{:beta}
+
 If your VMware Virtua Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial provides an example for these use cases for a VMware VM's VLAN NIC.
 {:shortdesc}
 

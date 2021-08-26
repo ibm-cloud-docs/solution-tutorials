@@ -41,6 +41,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
+This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+{:beta}
+
 In this tutorial, a vSAN cluster is created using the local disks attached the bare metal servers.
 {:shortdesc}
 

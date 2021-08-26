@@ -40,6 +40,9 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
+This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+{:beta}
+
 This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to VPC subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
 {:shortdesc}
 
