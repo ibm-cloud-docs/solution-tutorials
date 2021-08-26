@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-03-08"
+  years: 2021
+lastupdated: "2021-08-26"
+lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -41,10 +41,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will deploy a VPC for a VMware Deployment and a jump machine for configuration tasks.
-{:shortdesc}
+{: shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 ## Objectives
 {: #vpc-bm-vmware-vpc-objectives}
@@ -69,7 +69,7 @@ This tutorial requires:
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and it is required that you follow the [order](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
@@ -85,7 +85,7 @@ VMWARE_VPC_CRN=$(ibmcloud is vpc $VMWARE_VPC --output json | jq -r .crn)
 ```
 
 Tip: You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
-{:tip}
+{: tip}
 
 Tip. All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command:
 
@@ -204,12 +204,12 @@ ibmcloud is in-init $VMWARE_JUMP --private-key @~/.ssh/id_rsa
 ```
 
 Tip: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1', for example 'MSYS_NO_PATHCONV=1 ibmcloud is in-init ...'.
-{:tip}
+{: tip}
 
 6. Modify security group rule to allow inbound access.
 
 Tip: Inbound access to Microsoft Remote Desktop (RDP) port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
-{:tip}
+{: tip}
 
 ```bash
 VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
@@ -221,4 +221,4 @@ ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 
 2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
 
 Tip. You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
-{:tip}
+{: tip}

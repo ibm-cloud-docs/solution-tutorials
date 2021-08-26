@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-03-08"
+  years: 2021
+lastupdated: "2021-08-26"
+lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -42,13 +42,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{:beta}
+{: beta}
 
 If your VMware Virtua Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial provides an example for these use cases for a VMware VM's VLAN NIC.
-{:shortdesc}
+{: shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 ## Objectives
 {: #vpc-bm-vmware-pgwip-objectives}
@@ -69,7 +69,7 @@ This tutorial requires:
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{:important}
+{: important}
 
 Make sure you have successfully completed the required previous steps
 
@@ -103,7 +103,7 @@ ping 1.1.1.1
 ```
 
 Tip. To control outbound Internet access from your virtual machines, you can use security groups or access control lists. In this example, the default security group allows all outbound Internet access.
-{:tip}
+{: tip}
 
 ## Establish Inbound Internet Access with Floating IP
 {: #vpc-bm-vmware-pgwip-inbound}
@@ -119,7 +119,7 @@ echo "Public IP for your VLAN NIC : "$VMWARE_VM_FIP
 ```
 
 Tip. To control access to your virtual machine, you may need to update the VLAN NIC's security group (or access control lists).
-{:tip}
+{: tip}
 
 2. If you provisioned the VM's VLAN interface with the default VPC security group, use following commands:
 

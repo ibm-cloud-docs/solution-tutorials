@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-03-08"
+  years: 2021
+lastupdated: "2021-08-26"
+lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -41,13 +41,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{:beta}
+{: beta}
 
 This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
-{:shortdesc}
+{: shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 In IBM Cloud™ VPC, you can create two types of network interfaces on a bare metal server: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 
@@ -79,7 +79,7 @@ This tutorial requires:
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{:important}
+{: important}
 
 Make sure you have successfully completed the required previous steps
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
@@ -132,7 +132,7 @@ bx2d-metal-192x768   amd64          balanced   4                  96            
 ```
 
 Important. If you plan to use vSAN in your VMware deployment, select the 'bx2d-metal-192x768' bare metal server profile.
-{:important}
+{: important}
 
 ## Provision BMS
 {: #vpc-bm-vmware-bms-provision}
@@ -164,7 +164,7 @@ esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
 1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
 
 Important. The following commands will order your bare metal servers. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
-{:important}
+{: important}
 
 ```bash
 VMWARE_BMS001=$(ibmcloud is bmc --name esx-001 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host1_esxi.sh --output json | jq -r .id)
@@ -173,7 +173,7 @@ VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VMWARE_VPC_ZONE --profile
 ```
 
 Note: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'. In this case insert this inside the brackets, e.g. $(MSYS_NO_PATHCONV=1 ibmcloud is ...).
-{:note}
+{: note}
 
 1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 

@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-03-08"
+  years: 2021
+lastupdated: "2021-08-26"
+lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -41,13 +41,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{:beta}
+{: beta}
 
 This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to VPC subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
-{:shortdesc}
+{: shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 ## Objectives
 {: #vpc-bm-vmware-newvm-objectives}
@@ -72,7 +72,7 @@ This tutorial requires:
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{:important}
+{: important}
 
 Make sure you have successfully completed the required previous steps
 
@@ -86,7 +86,7 @@ Make sure you have successfully completed the required previous steps
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 Note. When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
-{:note}
+{: note}
 
 ## Create a VPC prefix and a subnet for VMware Virtual machines
 {: #vpc-bm-vmware-newvm-create-prefix}
@@ -130,7 +130,7 @@ ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,3
 ```
 
 Important. It is important to allow the VLAN for each VMware host's PCI interface in your cluster to retain connectivity after vMotion.  
-{:important}
+{: important}
 
 ## Create a VLAN NIC
 {: #vpc-bm-vmware-newvm-create-vlannic}
@@ -192,7 +192,7 @@ To create a Port Group for the  Distributed Switch:
 * NTP : 161.26.0.6
 
 Note. For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
-{:note}
+{: note}
 
 2. After the deployment, test that you can ping your default gateway and that you can resolve names with DNS.
 
@@ -248,7 +248,7 @@ ID                                          Name                  Status      Ty
 You should be able to access ping / access other Virtual Machines on the same VPC subnet from the provisioned Virtual Machine.
 
 Note. In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same bare metal server will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the VPC network. For example, on a bare metal server host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
-{:note}
+{: note}
 
 ## Deploy a second Virtual Machine
 

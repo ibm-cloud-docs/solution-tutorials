@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-01-05"
-lasttested: "2019-03-08"
+  years: 2021
+lastupdated: "2021-08-26"
+lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -41,13 +41,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{:beta}
+{: beta}
 
 In this tutorial, you will deploy a vCenter for a VMware Deployment in VPC and a 'floating' VLAN interface for it.
-{:shortdesc}
+{: shortdesc}
 
 Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
-{:important}
+{: important}
 
 ## Objectives
 {: #vpc-bm-vmware-vcenter-objectives}
@@ -73,7 +73,7 @@ This tutorial requires:
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
 Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{:important}
+{: important}
 
 Make sure you have successfully completed the required previous steps
 
@@ -85,7 +85,7 @@ Make sure you have successfully completed the required previous steps
 
 
 Note. When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
-{:note}
+{: note}
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
