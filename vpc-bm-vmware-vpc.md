@@ -215,3 +215,7 @@ Tip: Inbound access to RDP port (TCP/3389) is blocked by default. Add a SG rule 
 VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
 ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 3389 --remote <add_your_IP_here>
 ```
+
+7. Login into the Windows Jump server with Mirosoft Remote Desktop client using the credentials provided earlier. 
+  
+8. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.

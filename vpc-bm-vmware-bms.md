@@ -135,15 +135,15 @@ Important. If you plan to use vSAN in your VMware deployment, select the 'bx2d-m
 {: #vpc-bm-vmware-bms-provision}
 {: step}
 
-1. Bare metal servers can be provisioned with CLI and to get help for the required parameters you can use the following command:
+1. Bare metal servers can be provisioned with CLI or GUI. When provisioning with CLI, you can get help for the required parameters with the following command.
 
 ```bash
-ibmcloud is bare-metal-server-create --help 
+ibmcloud is bmc --help 
 ```
 
-2. As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration.
+1. Create user data shell scripts. 
 
-In the example below you can enable ESXi SSH and Shell and set the host name. You will need to create a local file per bare metal server, in the location where you plan to execute the ibmcloud CLI. A script per bare metal server is required to pass in the hostname. An example for VMWARE_BMS001 is shown below. Modify this to fit your deployment's needs.
+As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for bare metal server '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
 
 ```bash
 # enable & start SSH
@@ -156,9 +156,11 @@ vim-cmd hostsvc/start_esx_shell
 esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
 ```
 
-3. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
+ A script per bare metal server is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
 
-Important. The following commands will order your bare metal servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
+1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
+
+Important. The following commands will order your bare metal servers. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
 {:important}
 
 ```bash
@@ -234,7 +236,7 @@ In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the bare met
 
 The following diagram shows how each VMK's network configurations map to VPC network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
-![VMkernel adapter mapping to VPC Subnets](../../08000_Diagrams/manual-deployment/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
+![VMkernel adapter mapping to VPC Subnets](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
 
 ### Configure PCI NIC to allow VLANs
 {: #vpc-bm-vmware-bms-vlannic-allow}

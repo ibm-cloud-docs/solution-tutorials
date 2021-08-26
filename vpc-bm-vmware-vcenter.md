@@ -118,7 +118,7 @@ ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name vcenter --i
 
 You need to create a temporary port group for vCenter's networking for the Standard Switch, i.e. add a Port Group for VLAN ID '100'. 
 
-1. Login to host BMS001 / esx-001 as user 'root' with a Web browser using the hosts PCI interface's IP address ('echo $VMWARE_BMS001_MGMT_IP'). 
+1. Login to host BMS001 / esx-001 as user 'root' with a Web browser (https://<ip address>) using the hosts PCI interface's IP address ('echo $VMWARE_BMS001_MGMT_IP'). 
 2. Select Networking.
 3. On Port Groups tab, click Add port group.
 4. For Virtual switch 0, add a Name 'pg-mgmt' and select VLAN ID 100.
@@ -345,7 +345,7 @@ Configure the distributed vSwitch as follows:
 4. Configure the physical adapters (assign uplink-1) and VMkernel adapters (assign to dpg-vmk).
 5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, vmnic0 and vmk0 to the vDS.
 6. Select an appropriate uplink on the vDS for physical adapter vmnic0. For this example, use Uplink1. The physical adapter is selected and an uplink is chosen.
-7. Migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch. Perform these steps on each host.
+7. Select to migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host BMS002 / esx-002 and BMS003 / esx-003.
 8. Select vmk0, and click Assign port group dpg-vmk.
 9. Finish the configuration.
 10. Review the changes to ensure that you are adding two hosts, two uplinks (vmnic0 from each host), and two VMkernel adapters (vmk0 from each host).
@@ -378,19 +378,20 @@ ibmcloud is bm-nics $VMWARE_BMS002
 Note. Perform this **only** for BMS001 / esx-001 at this point.
 {:note}
 
-To configure distributed vSwitch:
+Configure the distributed vSwitch as follows:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. Right-click the vDS and select menu Add and Manage Hosts.
-3. Add hosts to the vDS. Click the green Add icon (+), and add esx-001 from the cluster.
+3. Add hosts to the vDS. Click the green Add icon (+), and add esx-002/esx-003 from the cluster.
 4. Configure the physical adapters (assign uplink-1) and VMkernel adapters (assign to dpg-vmk).
 5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, vmnic0 and vmk0 to the vDS.
 6. Select an appropriate uplink on the vDS for physical adapter vmnic0. For this example, use Uplink1. The physical adapter is selected and an uplink is chosen.
-7. Migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch. Perform these steps on each host.
+7. Select to migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host BMS002 / esx-002 and BMS003 / esx-003.
 8. Select vmk0, and click Assign port group dpg-vmk.
 9. Finish the configuration.
 10. Review the changes to ensure that you are adding two hosts, two uplinks (vmnic0 from each host), and two VMkernel adapters (vmk0 from each host).
 11. Click Finish.
+12. Check connectivity to the host, and clear alarms if needed.
 
 ## Delete vSwitch0
 {: #vpc-bm-vmware-vcenter-delvswitch}
