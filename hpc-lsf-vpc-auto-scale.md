@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-04-16"
+lastupdated: "2021-08-26"
 
 content-type: tutorial
 services: vpc
@@ -500,6 +500,26 @@ You can manage the number of hosts that the resource connector is allowed to pro
 2. Open the file `ibmcloudgen2_templates.json` in an editor.
 3. Locate the parameter "maxNumber". 
 4. Set the parameter to the maximum number of hosts that you want to allow the resource connector to provision.
+
+
+
+## Remove resources
+{: #hpc-remove-resources}
+{: step}
+
+To clean up any resources that you created in this tutorial, use the following procedure. 
+
+Make sure `GEN_FILE_DIR` is set.
+{: note}
+
+   ```
+   ansible-playbook -i ${GEN_FILES_DIR}/tf_inventory.yml clean_vpc.yml
+   ```
+   {: pre}
+
+As an alternative, you can use the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) or the CLI to remove these resources individually.
+
+
 
 ## Related content
 {: #hpc-lsf-auto-scale-related-content}
