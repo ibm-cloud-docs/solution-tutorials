@@ -104,17 +104,17 @@ Make sure you understand the [IBM Cloud VPC concepts](https://{DomainName}/vpc-e
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-  * Setup up an IBM Cloud account, see [Getting Started](https://{DomainName}/docs/account?topic=account-account-getting-started).
-  * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources and managing bare metal servers. See the list of [required permissions  for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating bare metal servers on VPC](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
-  * [Setup](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui)  an API key.
+   * Setup up an IBM Cloud account, see [Getting Started](https://{DomainName}/docs/account?topic=account-account-getting-started).
+   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources and managing bare metal servers. See the list of [required permissions  for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating bare metal servers on VPC](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
+   * [Setup](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui)  an API key.
 * {{site.data.keyword.cloud_notm}} CLI,
-  * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](https://{DomainName}/docs/cli).
-  * Install {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
-  * Install {{site.data.keyword.vpc_short}} plugin (`cloud-dns-services`)
+   * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](https://{DomainName}/docs/cli).
+   * Install {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
+   * Install {{site.data.keyword.vpc_short}} plugin (`cloud-dns-services`)
 * Install `jq` i.e. [json query](https://stedolan.github.io/jq/) on your workstation used to query JSON files.
 * SSH key
-  * Create an SSH key on your workstation and [import](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) it to the VPC. 
-  * If you don't already have an SSH key, see the [instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys#locating-ssh-keys) for creating a key for VPC.
+   * Create an SSH key on your workstation and [import](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) it to the VPC. 
+   * If you don't already have an SSH key, see the [instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys#locating-ssh-keys) for creating a key for VPC.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
