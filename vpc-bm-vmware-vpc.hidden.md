@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: service1, service2
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 2h
 ---
@@ -84,7 +84,7 @@ VMWARE_VPC=$(ibmcloud is vpcc vmw --output json | jq -r .id)
 VMWARE_VPC_CRN=$(ibmcloud is vpc $VMWARE_VPC --output json | jq -r .crn)
 ```
 
-Tip: You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
+Tip: You can use the commands directly e.g. 'ibmcloud is vpcc vmw' without using the json output format and store the required values into variables manually, if you prefer this way.
 {: tip}
 
 Tip. All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command:
