@@ -55,7 +55,7 @@ Note. This phase is optional, if you use vSAN as your preferred storage option.
 
 In this tutorial, an NFS file share is created in VPC and you will attach this to the VMware Cluster as a datastore.
 
-![NFS as a Datastore](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-nfs.png "NFS as a Datastore"){: caption="Figure 1. NFS as a Datastore" caption-side="bottom"}
+![NFS as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-nfs.png "NFS as a Datastore"){: caption="Figure 1. NFS as a Datastore" caption-side="bottom"}
 
 1. Create file share in VPC
 2. Attach file share as a Datastore for a Compute Cluster in vCenter

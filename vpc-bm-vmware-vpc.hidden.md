@@ -51,7 +51,7 @@ Important. This tutorial is part of [series](https://{DomainName}/docs/solution-
 
 The following diagram shows the VPC layout and subnets to be provisioned. NSX-T subnets are optional for NSX-T based deployments.
 
-![VPC Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "VPC Subnets for VMware Deployment"){: caption="Figure 1. VPC Subnets for VMware Deployment" caption-side="bottom"}
+![VPC Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "VPC Subnets for VMware Deployment"){: caption="Figure 1. VPC Subnets for VMware Deployment" caption-side="bottom"}
 
 In this tutorial, a dedicated VPC for VMware is used, but you can alter and modify the deployment based on your needs.  
 
@@ -165,7 +165,7 @@ SSH_KEY=<your_ssh_key_ID>
 {: #vpc-bm-vmware-vpc-jump}
 {: step}
 
-To ease up configuration tasks, provision a Windows server on the management subnet with a floating IP.  
+To ease up VMware configuration tasks, provision a Windows server on the management subnet in your VPC. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the VPC network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the baremetal server and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
 
 For more information on creating Virtual Servers, refer to [creating Virtual Servers using UI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
 
@@ -203,19 +203,22 @@ echo "Public IP for the Jump : "$VMWARE_JUMP_FIP
 ibmcloud is in-init $VMWARE_JUMP --private-key @~/.ssh/id_rsa
 ```
 
-Tip: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'.
-{:tip}
-
-Tip: Inbound access to RDP port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
+Tip: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1', for example 'MSYS_NO_PATHCONV=1 ibmcloud is in-init ...'.
 {:tip}
 
 6. Modify security group rule to allow inbound access.
+
+Tip: Inbound access to Microsoft Remote Desktop (RDP) port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
+{:tip}
 
 ```bash
 VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
 ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 3389 --remote <add_your_IP_here>
 ```
 
-7. Login into the Windows Jump server with Mirosoft Remote Desktop client using the credentials provided earlier. 
+1. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
   
-8. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
+2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
+
+Tip. You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
+{:tip}

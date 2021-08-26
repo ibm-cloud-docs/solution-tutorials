@@ -61,7 +61,7 @@ In this tutorial, you will learn how to:
 
 In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
 
-![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
+![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
 
 1. Validate BMS images
 2. Validate BMS profiles
@@ -236,7 +236,7 @@ In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the bare met
 
 The following diagram shows how each VMK's network configurations map to VPC network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
-![VMkernel adapter mapping to VPC Subnets](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
+![VMkernel adapter mapping to VPC Subnets](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
 
 ### Configure PCI NIC to allow VLANs
 {: #vpc-bm-vmware-bms-vlannic-allow}

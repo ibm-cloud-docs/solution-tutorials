@@ -51,7 +51,7 @@ Important. This tutorial is part of [series](https://{DomainName}/docs/solution-
 
 In this tutorial, you will create a VMware virtual machine running on VMware cluster using VPC and VPC bare metal server network constructs. Your virtual machine will be attached to VPC subnet using bare metal server's VLAN NIC.
 
-![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
+![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
 
 1. Create a VPC prefix and a subnet for VMware Virtual machines
 2. Allow new VLAN on PCI NICs

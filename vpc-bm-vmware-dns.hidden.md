@@ -51,7 +51,7 @@ Important. This tutorial is part of [series](https://{DomainName}/docs/solution-
 
 In this example, [IBM Cloud DNS service](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the DNS solution for the VMware Deployment.
 
-![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
+![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
 
 1. Provision IBM Cloud DNS service
 2. Provision a Zone

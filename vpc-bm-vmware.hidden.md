@@ -67,7 +67,7 @@ Note. This tutorial assumes a working knowledge of VMware vSphere Hypervisor and
 
 The following diagram presents an overview of the base deployment in IBM Cloud VPC. The deployment is based on bare metal servers on IBM Cloud VPC and uses [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) to host the servers' network interfaces and [access control lists and security groups](https://{DomainName}/docs/vpc?topic=vpc-security-in-your-vpc) to secure the network access. VMware vSAN with local ESXi host embedded SSDs or IBM Cloud VPC File Storage are storage options for datastores to be used for VMware Virtual Machines. VPC subnets can also be used to host network interfaces of VMware Virtual machines. This forms the base deployment for the VMware solution in VPC.
 
-![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
+![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
 
 Important. Deploying VMware on VPC requires multiple steps. Follow the steps below for an initial setup for your base VMware Deployment.
 {:important}

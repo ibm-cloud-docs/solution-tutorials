@@ -51,7 +51,7 @@ Important. This tutorial is part of [series](https://{DomainName}/docs/solution-
 
 In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use VPC bare metal server [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a VPC subnet as shown in the following diagram.
 
-![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
+![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
 1. Provision VLAN NIC for vCenter
 2. Add Port Group for VLAN 100 for Standard switch

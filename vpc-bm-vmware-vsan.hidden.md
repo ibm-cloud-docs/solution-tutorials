@@ -58,7 +58,7 @@ Important. You need to have a minimum of three bare metal servers with local SSD
 
 In this tutorial we create vSAN cluster using the local disks attached the bare metal servers.
 
-![vSAN as a Datastore](../../08000_Diagrams/manual-deployment/Self-Managed-Simple-20210813v1-VPC-vsan.png "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
+![vSAN as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vsan.svg "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
 
 1. Create VLAN NICs for vSAN
 2. Configure a vSAN interface using vSphere Client
