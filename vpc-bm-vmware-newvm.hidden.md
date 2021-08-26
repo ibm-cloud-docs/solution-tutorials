@@ -89,10 +89,11 @@ Note. When advised to use Web browser, use the Jump machine provisioned in the [
 {: note}
 
 ## Create a VPC prefix and a subnet for VMware Virtual machines
-{: #vpc-bm-vmware-newvm-create-prefix}
+{: #vpc-bm-vmware-newvm-prefix}
 {: step}
 
 ### Create a VPC prefix
+{: #vpc-bm-vmware-newvm-create-prefix}
 
 In this example, a new VPC prefix for VMware VMs is created.
 
@@ -251,7 +252,6 @@ Note. In a VMware environment, traffic between VLAN network interfaces that have
 {: note}
 
 ## Deploy a second Virtual Machine
-
 {: #vpc-bm-vmware-newvm-deploy-vm2}
 {: step}
 

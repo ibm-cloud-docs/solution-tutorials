@@ -128,7 +128,7 @@ echo "Folder : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print 
 4. Use the 'Server' and 'Folder' values when configuring the datastore in vCenter.
 
 ## Attach VPC File share as a Datastore for a Compute Cluster in vCenter
-{: #vpc-bm-vmware-nfs-createfileshare}
+{: #vpc-bm-vmware-nfs-attachfileshare}
 {: step}
 
 In the vSphere Client object navigator, browse to a host, a cluster, or a data center.

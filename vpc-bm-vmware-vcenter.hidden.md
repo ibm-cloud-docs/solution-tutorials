@@ -115,7 +115,6 @@ ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name vcenter --i
 ```
 
 ## Add Port Group for VLAN 100 for Standard switch
-
 {: #vpc-bm-vmware-vcenter-portgroup}
 {: step}
 
@@ -128,7 +127,6 @@ You need to create a temporary port group for vCenter's networking for the Stand
 5. Click Add.
 
 ## Deploy vCenter appliance
-
 {: #vpc-bm-vmware-vcenter-deployappliance}
 {: step}
 
@@ -138,7 +136,6 @@ The vCenter appliance will be deployed next. You can do this via the Jump host's
 2. Mount the iso into the Operating System and note the location (e.g. <drive_letter>:\).
 
 ### Deploy vCenter appliance - Phase 1
-
 {: #vpc-bm-vmware-vcenter-deployappliance-1}
 
 vCenter installation is split into two phases. In the first phase, the appliance is installed into the ESXi host.

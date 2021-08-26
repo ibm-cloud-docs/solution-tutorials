@@ -86,7 +86,6 @@ ibmcloud dns instance-target $VMWARE_DNS
 ```
 
 ## Provision a Zone
-
 {: #vpc-bm-vmware-dns-zone}
 {: step}
 
@@ -104,7 +103,6 @@ ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
 ```
 
 ## Creating DNS records
-
 {: #vpc-bm-vmware-dns-record}
 {: step}
 
@@ -124,7 +122,6 @@ ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4
 ```
 
 ## Validate DNS records
-
 {: #vpc-bm-vmware-dns-validation}
 {: step}
 
