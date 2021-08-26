@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-04-26"
+lastupdated: "2021-08-24"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -35,7 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
-{:shortdesc}
+{: shortdesc}
 
 Developers do not like to write the same thing twice. The [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle is one example of this. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Consequently shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and uninteresting tasks.
 
@@ -51,10 +51,9 @@ Multiple environments are pretty common in a project to support the different ph
 * Deploy these environments in your account
 
 
-<p style="text-align: center;">
+![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.png){: class="center"}
+{: style="text-align: center;"}
 
-![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.png)
-</p>
 
 1. A set of Terraform files are created to describe the target infrastructure as code.
 2. An operator uses `terraform apply` to provision the environments.
@@ -103,13 +102,12 @@ The repository is structured as follow:
 
 The *Development*, *Testing* and *Production* environments pretty much look the same.
 
-<p style="text-align: center;">
-  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" alt="Diagram showing one deployment environment" />
-</p>
+<img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" alt="Diagram showing one deployment environment" />
 
 They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
-![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
+![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: class="center"}
+{: style="text-align: center;"}
 
 ### Global Configuration
 {: #plan-create-update-deployments-4}
@@ -282,7 +280,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 
 ### Get the code
 {: #plan-create-update-deployments-9}
@@ -305,6 +303,7 @@ If you have not done it yet, clone the tutorial repository:
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
    ```
    {: codeblock}
+
 1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
 ### Create or reuse a Cloud Foundry organization
@@ -321,6 +320,7 @@ You can choose either to create a new organization or to reuse (import) an exist
    cp global.tfvars.tmpl global.tfvars
    ```
    {: codeblock}
+
 1. Edit `global.tfvars`
    1. Set **org_name** to the organization name to create
    1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
@@ -332,16 +332,19 @@ You can choose either to create a new organization or to reuse (import) an exist
    org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
    ```
    {: codeblock}
+
 1. Initialize Terraform from the `terraform/global` folder
    ```sh
    terraform init
    ```
    {: codeblock}
+
 1. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
    {: codeblock}
+
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
@@ -365,22 +368,26 @@ If you are not the account owner but you manage an organization in the account, 
    ibmcloud iam org <org_name> --guid
    ```
    {: codeblock}
+
 1. Change to the `terraform/global` directory
 1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
    ```sh
    cp global.tfvars.tmpl global.tfvars
    ```
    {: codeblock}
+
 1. Initialize Terraform
    ```sh
    terraform init
    ```
    {: codeblock}
+
 1. After initializing Terraform, import the organization into the Terraform state
    ```sh
    terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
    {: codeblock}
+
 1. Tune `global.tfvars` to match the existing organization name and structure. To keep the existing org managers and users, make sure to list them. Verify possible changes before applying them in the next step.
 1. Apply the changes
    ```sh
@@ -401,6 +408,7 @@ This section will focus on the `development` environment. The steps will be the 
    cp production.tfvars.tmpl production.tfvars
    ```
    {: codeblock}
+
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
@@ -409,11 +417,13 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud ks locations --provider vpc-gen2
       ```
       {: codeblock}
+
    4. Set the **cluster_machine_type**. Find the available flavors and characteristics for the zone with:
       ```sh
       ibmcloud ks flavors --zone <zone>
       ```
       {: codeblock}
+
    1. See the comments in the tfvars file for help initializing the rest of the values
 
 2. Initialize Terraform
@@ -421,21 +431,25 @@ This section will focus on the `development` environment. The steps will be the 
    terraform init
    ```
    {: codeblock}
+
 3. Create a new Terraform workspace for the *development* environment
    ```sh
    terraform workspace new development
    ```
    {: codeblock}
+
    Later to switch between environments use
    ```sh
    terraform workspace select development
    ```
    {: codeblock}
+
 4. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
    It should report (with **NN** being the number of resources to be added):
    ```
    Plan: NN to add, 0 to change, 0 to destroy.
@@ -471,6 +485,7 @@ Instead of creating a new resource group, you can import an existing resource gr
    ibmcloud resource group <resource_group_name> --id
    ```
    {: codeblock}
+
 1. Change to the `terraform/per-environment` folder of the checkout
 1. Copy the template `tfvars` file. There is one per environment:
    ```sh
@@ -479,32 +494,38 @@ Instead of creating a new resource group, you can import an existing resource gr
    cp production.tfvars.tmpl production.tfvars
    ```
    {: codeblock}
+
 1. Initialize Terraform
    ```sh
    terraform init
    ```
    {: codeblock}
+
 1. Create a new Terraform workspace for the *development* environment
    ```sh
    terraform workspace new development
    ```
    {: codeblock}
+
    Later to switch between environments use
    ```sh
    terraform workspace select development
    ```
    {: codeblock}
+
 1. After initializing Terraform, import the resource group into the Terraform state
     ```sh
     terraform import -var-file=../credentials.tfvars -var-file=development.tfvars ibm_resource_group.group <id>
     ```
     {: codeblock}
+
 1. Tune `development.tfvars` to match the existing resource group name and structure
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
 You can repeat the steps for `testing` and `production`.
 
 ### Assign user policies
@@ -586,6 +607,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    cp development.tfvars.tmpl development.tfvars
    ```
    {: codeblock}
+
 3. Edit `development.tfvars`
 
    - Set **iam_access_members_developers** to the list of developers to whom you would like to grant the access.
@@ -601,16 +623,19 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    terraform plan -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
    It should report:
    ```
    Plan: 15 to add, 0 to change, 0 to destroy.
    ```
    {: codeblock}
+
 6. Apply the changes
    ```sh
    terraform apply -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
 You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
@@ -623,12 +648,14 @@ You can repeat the steps for `testing` and `production`.
    terraform destroy -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
 1. Change to the `terraform/per-environment` folder of the checkout
 1. Activate the `development` workspace
    ```sh
    terraform workspace select development
    ```
    {: codeblock}
+   
 1. Destroy the resource group, spaces, services, clusters
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
@@ -636,13 +663,16 @@ You can repeat the steps for `testing` and `production`.
    {: codeblock}
 
     `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
-    {:tip}
+    {: tip}
 1. Repeat the steps for the `testing` and `production` workspaces
 1. If you created it, destroy the organization.  Change to the `terraform/global` directory.
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
    {: codeblock}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #plan-create-update-deployments-18}

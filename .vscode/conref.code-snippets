@@ -158,15 +158,15 @@
 	"cloudaccesstraillong": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Activity Tracker",
-			"ibm.IBM Cloud&trade; Activity Tracker",
-			"site.IBM Cloud&trade; Activity Tracker",
+			"IBM Cloud&reg; Activity Tracker",
+			"ibm.IBM Cloud&reg; Activity Tracker",
+			"site.IBM Cloud&reg; Activity Tracker",
       "{{site.data.keyword.cloudaccesstraillong}}"
 		],
 		"body": [
 			"{{site.data.keyword.cloudaccesstraillong}}"
 		],
-    "description": "IBM Cloud&trade; Activity Tracker"
+    "description": "IBM Cloud&reg; Activity Tracker"
 	},
 	"cloudaccesstraillong_notm": {
 	  "scope": "markdown",
@@ -184,15 +184,15 @@
 	"cloudaccesstrailfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Activity Tracker",
-			"ibm.IBM Cloud&trade; Activity Tracker",
-			"site.IBM Cloud&trade; Activity Tracker",
+			"IBM Cloud&reg; Activity Tracker",
+			"ibm.IBM Cloud&reg; Activity Tracker",
+			"site.IBM Cloud&reg; Activity Tracker",
       "{{site.data.keyword.cloudaccesstrailfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.cloudaccesstrailfull}}"
 		],
-    "description": "IBM Cloud&trade; Activity Tracker"
+    "description": "IBM Cloud&reg; Activity Tracker"
 	},
 	"cloudaccesstrailfull_notm": {
 	  "scope": "markdown",
@@ -210,15 +210,15 @@
 	"at_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Activity Tracker",
-			"ibm.IBM Cloud&trade; Activity Tracker",
-			"site.IBM Cloud&trade; Activity Tracker",
+			"IBM Cloud&reg; Activity Tracker",
+			"ibm.IBM Cloud&reg; Activity Tracker",
+			"site.IBM Cloud&reg; Activity Tracker",
       "{{site.data.keyword.at_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.at_full}}"
 		],
-    "description": "IBM Cloud&trade; Activity Tracker"
+    "description": "IBM Cloud&reg; Activity Tracker"
 	},
 	"at_full_notm": {
 	  "scope": "markdown",
@@ -243,6 +243,45 @@
 		],
 		"body": [
 			"{{site.data.keyword.at_short}}"
+		],
+    "description": "Activity Tracker"
+	},
+	"atracker_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Activity Tracker",
+			"ibm.IBM Cloud&reg; Activity Tracker",
+			"site.IBM Cloud&reg; Activity Tracker",
+      "{{site.data.keyword.atracker_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.atracker_full}}"
+		],
+    "description": "IBM Cloud&reg; Activity Tracker"
+	},
+	"atracker_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Activity Tracker",
+			"ibm.IBM Cloud Activity Tracker",
+			"site.IBM Cloud Activity Tracker",
+      "{{site.data.keyword.atracker_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.atracker_full_notm}}"
+		],
+    "description": "IBM Cloud Activity Tracker"
+	},
+	"atracker_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Activity Tracker",
+			"ibm.Activity Tracker",
+			"site.Activity Tracker",
+      "{{site.data.keyword.atracker_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.atracker_short}}"
 		],
     "description": "Activity Tracker"
 	},
@@ -1585,6 +1624,45 @@
 		],
     "description": "IBM Cloud Live Sync"
 	},
+	"bm_is_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Bare Metal Servers for VPC",
+			"ibm.Bare Metal Servers for VPC",
+			"site.Bare Metal Servers for VPC",
+      "{{site.data.keyword.bm_is_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.bm_is_short}}"
+		],
+    "description": "Bare Metal Servers for VPC"
+	},
+	"bm_is_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Bare Metal Servers for Virtual Private Cloud",
+			"ibm.IBM Cloud&reg; Bare Metal Servers for Virtual Private Cloud",
+			"site.IBM Cloud&reg; Bare Metal Servers for Virtual Private Cloud",
+      "{{site.data.keyword.bm_is_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.bm_is_full}}"
+		],
+    "description": "IBM Cloud&reg; Bare Metal Servers for Virtual Private Cloud"
+	},
+	"bm_is_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Bare Metal Servers for Virtual Private Cloud",
+			"ibm.IBM Cloud Bare Metal Servers for Virtual Private Cloud",
+			"site.IBM Cloud Bare Metal Servers for Virtual Private Cloud",
+      "{{site.data.keyword.bm_is_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.bm_is_full_notm}}"
+		],
+    "description": "IBM Cloud Bare Metal Servers for Virtual Private Cloud"
+	},
 	"rules_short": {
 	  "scope": "markdown",
 		"prefix": [
@@ -2186,15 +2264,15 @@
 	"loganalysislong": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Log Analysis",
-			"ibm.IBM Cloud&trade; Log Analysis",
-			"site.IBM Cloud&trade; Log Analysis",
+			"IBM Cloud&reg; Log Analysis",
+			"ibm.IBM Cloud&reg; Log Analysis",
+			"site.IBM Cloud&reg; Log Analysis",
       "{{site.data.keyword.loganalysislong}}"
 		],
 		"body": [
 			"{{site.data.keyword.loganalysislong}}"
 		],
-    "description": "IBM Cloud&trade; Log Analysis"
+    "description": "IBM Cloud&reg; Log Analysis"
 	},
 	"loganalysislong_notm": {
 	  "scope": "markdown",
@@ -2212,15 +2290,15 @@
 	"loganalysisfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Log Analysis",
-			"ibm.IBM Cloud&trade; Log Analysis",
-			"site.IBM Cloud&trade; Log Analysis",
+			"IBM Cloud&reg; Log Analysis",
+			"ibm.IBM Cloud&reg; Log Analysis",
+			"site.IBM Cloud&reg; Log Analysis",
       "{{site.data.keyword.loganalysisfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.loganalysisfull}}"
 		],
-    "description": "IBM Cloud&trade; Log Analysis"
+    "description": "IBM Cloud&reg; Log Analysis"
 	},
 	"loganalysisfull_notm": {
 	  "scope": "markdown",
@@ -3574,6 +3652,45 @@
 		],
     "description": "IBM Cloud Databases for MongoDB"
 	},
+	"databases-for-mysql": {
+	  "scope": "markdown",
+		"prefix": [
+			"Databases for MySQL",
+			"ibm.Databases for MySQL",
+			"site.Databases for MySQL",
+      "{{site.data.keyword.databases-for-mysql}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-mysql}}"
+		],
+    "description": "Databases for MySQL"
+	},
+	"databases-for-mysql_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Databases for MySQL",
+			"ibm.IBM&reg; Cloud Databases for MySQL",
+			"site.IBM&reg; Cloud Databases for MySQL",
+      "{{site.data.keyword.databases-for-mysql_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-mysql_full}}"
+		],
+    "description": "IBM&reg; Cloud Databases for MySQL"
+	},
+	"databases-for-mysql_fullnotm": {
+	  "scope": "markdown",
+		"prefix": [
+			"Databases for MySQL",
+			"ibm.Databases for MySQL",
+			"site.Databases for MySQL",
+      "{{site.data.keyword.databases-for-mysql_fullnotm}}"
+		],
+		"body": [
+			"{{site.data.keyword.databases-for-mysql_fullnotm}}"
+		],
+    "description": "Databases for MySQL"
+	},
 	"databases-for-postgresql": {
 	  "scope": "markdown",
 		"prefix": [
@@ -3690,6 +3807,45 @@
 			"{{site.data.keyword.datacfull}}"
 		],
     "description": "IBM&reg; Data Cache for IBM Cloud"
+	},
+	"datareplication_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Data Replication on Cloud",
+			"ibm.IBM&reg; Data Replication on Cloud",
+			"site.IBM&reg; Data Replication on Cloud",
+      "{{site.data.keyword.datareplication_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.datareplication_full}}"
+		],
+    "description": "IBM&reg; Data Replication on Cloud"
+	},
+	"datareplication_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Data Replication on Cloud",
+			"ibm.IBM Data Replication on Cloud",
+			"site.IBM Data Replication on Cloud",
+      "{{site.data.keyword.datareplication_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.datareplication_full_notm}}"
+		],
+    "description": "IBM Data Replication on Cloud"
+	},
+	"datareplication_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Data Replication",
+			"ibm.Data Replication",
+			"site.Data Replication",
+      "{{site.data.keyword.datareplication_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.datareplication_short}}"
+		],
+    "description": "Data Replication"
 	},
 	"datashield_full": {
 	  "scope": "markdown",
@@ -4484,6 +4640,45 @@
 		],
     "description": "IBM&reg; Data Science Experience Desktop"
 	},
+	"dv_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Data Virtualization",
+			"ibm.Data Virtualization",
+			"site.Data Virtualization",
+      "{{site.data.keyword.dv_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.dv_short}}"
+		],
+    "description": "Data Virtualization"
+	},
+	"dv_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Data Virtualization",
+			"ibm.IBM&reg; Data Virtualization",
+			"site.IBM&reg; Data Virtualization",
+      "{{site.data.keyword.dv_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.dv_full}}"
+		],
+    "description": "IBM&reg; Data Virtualization"
+	},
+	"dv_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Data Virtualization",
+			"ibm.IBM Data Virtualization",
+			"site.IBM Data Virtualization",
+      "{{site.data.keyword.dv_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.dv_full_notm}}"
+		],
+    "description": "IBM Data Virtualization"
+	},
 	"eclipsetoolsfull": {
 	  "scope": "markdown",
 		"prefix": [
@@ -4601,6 +4796,45 @@
 		],
     "description": "IBM&reg; Cloud Event Management"
 	},
+	"en_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Event Notifications",
+			"ibm.IBM Cloud&reg; Event Notifications",
+			"site.IBM Cloud&reg; Event Notifications",
+      "{{site.data.keyword.en_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.en_full}}"
+		],
+    "description": "IBM Cloud&reg; Event Notifications"
+	},
+	"en_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Event Notifications",
+			"ibm.IBM Cloud Event Notifications",
+			"site.IBM Cloud Event Notifications",
+      "{{site.data.keyword.en_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.en_full_notm}}"
+		],
+    "description": "IBM Cloud Event Notifications"
+	},
+	"en_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Event Notifications",
+			"ibm.Event Notifications",
+			"site.Event Notifications",
+      "{{site.data.keyword.en_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.en_short}}"
+		],
+    "description": "Event Notifications"
+	},
 	"featuretogglesshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -4678,6 +4912,45 @@
 			"{{site.data.keyword.filestorage_full_notm}}"
 		],
     "description": "IBM Cloud File Storage"
+	},
+	"filestorage_vpc_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"File Storage for VPC",
+			"ibm.File Storage for VPC",
+			"site.File Storage for VPC",
+      "{{site.data.keyword.filestorage_vpc_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.filestorage_vpc_short}}"
+		],
+    "description": "File Storage for VPC"
+	},
+	"filestorage_vpc_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; File Storage for VPC",
+			"ibm.IBM Cloud&reg; File Storage for VPC",
+			"site.IBM Cloud&reg; File Storage for VPC",
+      "{{site.data.keyword.filestorage_vpc_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.filestorage_vpc_full}}"
+		],
+    "description": "IBM Cloud&reg; File Storage for VPC"
+	},
+	"filestorage_vpc_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud File Storage for VPC",
+			"ibm.IBM Cloud File Storage for VPC",
+			"site.IBM Cloud File Storage for VPC",
+      "{{site.data.keyword.filestorage_vpc_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.filestorage_vpc_full_notm}}"
+		],
+    "description": "IBM Cloud File Storage for VPC"
 	},
 	"filesync": {
 	  "scope": "markdown",
@@ -6697,15 +6970,15 @@
 	"monitoringlong": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Monitoring",
-			"ibm.IBM Cloud&trade; Monitoring",
-			"site.IBM Cloud&trade; Monitoring",
+			"IBM Cloud&reg; Monitoring",
+			"ibm.IBM Cloud&reg; Monitoring",
+			"site.IBM Cloud&reg; Monitoring",
       "{{site.data.keyword.monitoringlong}}"
 		],
 		"body": [
 			"{{site.data.keyword.monitoringlong}}"
 		],
-    "description": "IBM Cloud&trade; Monitoring"
+    "description": "IBM Cloud&reg; Monitoring"
 	},
 	"monitoringlong_notm": {
 	  "scope": "markdown",
@@ -6723,15 +6996,15 @@
 	"monitoringfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Cloud Monitoring",
-			"ibm.IBM&reg; Cloud Monitoring",
-			"site.IBM&reg; Cloud Monitoring",
+			"IBM Cloud&reg; Monitoring",
+			"ibm.IBM Cloud&reg; Monitoring",
+			"site.IBM Cloud&reg; Monitoring",
       "{{site.data.keyword.monitoringfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.monitoringfull}}"
 		],
-    "description": "IBM&reg; Cloud Monitoring"
+    "description": "IBM Cloud&reg; Monitoring"
 	},
 	"monitoringfull_notm": {
 	  "scope": "markdown",
@@ -6749,15 +7022,15 @@
 	"mon_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&trade; Monitoring",
-			"ibm.IBM Cloud&trade; Monitoring",
-			"site.IBM Cloud&trade; Monitoring",
+			"IBM Cloud&reg; Monitoring",
+			"ibm.IBM Cloud&reg; Monitoring",
+			"site.IBM Cloud&reg; Monitoring",
       "{{site.data.keyword.mon_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.mon_full}}"
 		],
-    "description": "IBM Cloud&trade; Monitoring"
+    "description": "IBM Cloud&reg; Monitoring"
 	},
 	"mon_full_notm": {
 	  "scope": "markdown",
@@ -6992,6 +7265,45 @@
 			"{{site.data.keyword.nlushort}}"
 		],
     "description": "Natural Language Understanding"
+	},
+	"netezza_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Netezza&reg; Performance Server for IBM Cloud Pak&reg; for Data as a Service",
+			"ibm.IBM&reg; Netezza&reg; Performance Server for IBM Cloud Pak&reg; for Data as a Service",
+			"site.IBM&reg; Netezza&reg; Performance Server for IBM Cloud Pak&reg; for Data as a Service",
+      "{{site.data.keyword.netezza_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.netezza_full}}"
+		],
+    "description": "IBM&reg; Netezza&reg; Performance Server for IBM Cloud Pak&reg; for Data as a Service"
+	},
+	"netezza_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Netezza Performance Server for IBM Cloud Pak for Data as a Service",
+			"ibm.IBM Netezza Performance Server for IBM Cloud Pak for Data as a Service",
+			"site.IBM Netezza Performance Server for IBM Cloud Pak for Data as a Service",
+      "{{site.data.keyword.netezza_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.netezza_full_notm}}"
+		],
+    "description": "IBM Netezza Performance Server for IBM Cloud Pak for Data as a Service"
+	},
+	"netezza_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Netezza Performance Server",
+			"ibm.Netezza Performance Server",
+			"site.Netezza Performance Server",
+      "{{site.data.keyword.netezza_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.netezza_short}}"
+		],
+    "description": "Netezza Performance Server"
 	},
 	"nlb_full": {
 	  "scope": "markdown",
@@ -7304,6 +7616,45 @@
 			"{{site.data.keyword.personalityinsightsshort}}"
 		],
     "description": "Personality Insights"
+	},
+	"planninganalytics_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Planning Analytics with Watson",
+			"ibm.Planning Analytics with Watson",
+			"site.Planning Analytics with Watson",
+      "{{site.data.keyword.planninganalytics_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.planninganalytics_short}}"
+		],
+    "description": "Planning Analytics with Watson"
+	},
+	"planninganalytics_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Planning Analytics with Watson for IBM Cloud&reg;",
+			"ibm.IBM Planning Analytics with Watson for IBM Cloud&reg;",
+			"site.IBM Planning Analytics with Watson for IBM Cloud&reg;",
+      "{{site.data.keyword.planninganalytics_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.planninganalytics_full}}"
+		],
+    "description": "IBM Planning Analytics with Watson for IBM Cloud&reg;"
+	},
+	"planninganalytics_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Planning Analytics with Watson for IBM Cloud",
+			"ibm.IBM Planning Analytics with Watson for IBM Cloud",
+			"site.IBM Planning Analytics with Watson for IBM Cloud",
+      "{{site.data.keyword.planninganalytics_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.planninganalytics_full_notm}}"
+		],
+    "description": "IBM Planning Analytics with Watson for IBM Cloud"
 	},
 	"framework-fs_full": {
 	  "scope": "markdown",
@@ -7681,6 +8032,45 @@
 			"{{site.data.keyword.mobilepushfull}}"
 		],
     "description": "IBM&reg; Push Notifications for IBM Cloud"
+	},
+	"quantum_long": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Quantum Services",
+			"ibm.IBM&reg; Quantum Services",
+			"site.IBM&reg; Quantum Services",
+      "{{site.data.keyword.quantum_long}}"
+		],
+		"body": [
+			"{{site.data.keyword.quantum_long}}"
+		],
+    "description": "IBM&reg; Quantum Services"
+	},
+	"quantum_long_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Quantum Services",
+			"ibm.IBM Quantum Services",
+			"site.IBM Quantum Services",
+      "{{site.data.keyword.quantum_long_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.quantum_long_notm}}"
+		],
+    "description": "IBM Quantum Services"
+	},
+	"quantum_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Quantum Services",
+			"ibm.Quantum Services",
+			"site.Quantum Services",
+      "{{site.data.keyword.quantum_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.quantum_short}}"
+		],
+    "description": "Quantum Services"
 	},
 	"questionandanswershort": {
 	  "scope": "markdown",
@@ -8526,6 +8916,45 @@
 			"{{site.data.keyword.speechrecog}}"
 		],
     "description": "Speech Recognition"
+	},
+	"spectrum_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Spectrum LSF",
+			"ibm.IBM&reg; Spectrum LSF",
+			"site.IBM&reg; Spectrum LSF",
+      "{{site.data.keyword.spectrum_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.spectrum_full}}"
+		],
+    "description": "IBM&reg; Spectrum LSF"
+	},
+	"spectrum_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Spectrum LSF",
+			"ibm.IBM Spectrum LSF",
+			"site.IBM Spectrum LSF",
+      "{{site.data.keyword.spectrum_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.spectrum_full_notm}}"
+		],
+    "description": "IBM Spectrum LSF"
+	},
+	"spectrum_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Spectrum LSF",
+			"ibm.Spectrum LSF",
+			"site.Spectrum LSF",
+      "{{site.data.keyword.spectrum_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.spectrum_short}}"
+		],
+    "description": "Spectrum LSF"
 	},
 	"speechtotextshort": {
 	  "scope": "markdown",

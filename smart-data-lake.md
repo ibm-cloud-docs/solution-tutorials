@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-01-29"
+lastupdated: "2021-08-24"
 lasttested: "2021-01-07"
 
 content-type: tutorial
@@ -40,7 +40,8 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
-![Architecture](images/solution29/Smart-Data-Lake-Architecture.png)
+![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
 2. Data is reduced, enhanced or refined with SQL Query.
@@ -75,29 +76,35 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud login
     ```
     {: pre}
+
     ```sh
     ibmcloud target --cf
     ```
     {: pre}
+
 2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
     ```sh
     ibmcloud resource groups
     ```
     {: pre}
+
     ```sh
     ibmcloud target -g <your-default-resource-group>
     ```
     {: pre}
+
 3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
     {: pre}
+
 4. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query). Replace **us-south** by your region, if needed.
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
+
 5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
     ibmcloud resource service-instance-create data-lake-studio data-science-experience free-v1 us-south
@@ -154,6 +161,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
         `Victim Age` <= 35
         ```
         {: codeblock}
+
      - Click **Run**.
 1. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
 1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
@@ -181,6 +189,7 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     from pixiedust.display import *
     ```
     {: codeblock}
+
 1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow {{site.data.keyword.sqlquery_short}} results to be stored in {{site.data.keyword.cos_short}}.
     - Add the following in the next cell, the `In [ ]:` prompt, and then **Run**.
         ```python
@@ -188,11 +197,13 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
         cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
         ```
         {: codeblock}
+
     - From the terminal, create an API key.
         ```sh
         ibmcloud iam api-key-create data-lake-cos-key
         ```
         {: pre}
+
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
@@ -202,17 +213,20 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
         sql_crn = '<SQL_QUERY_CRN>'
         ```
         {: codeblock}
+
     - From the terminal, copy the CRN from the **ID** property to your clipboard.
         ```sh
         ibmcloud resource service-instance data-lake-sql
         ```
         {: pre}
+
     - Paste the CRN between the single quotes, replacing **<SQL_QUERY_CRN>** and then **Run**.
 1. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
+
 1. Enter the following commands in another cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
@@ -283,16 +297,19 @@ In this section, you will visualize the previous result set using PixieDust and 
     traffic_location.head()
     ```
     {: codeblock}
+
 2. In the next cell **Run** the `display` command to view the result using PixieDust.
     ```python
     display(traffic_location)
     ```
     {: codeblock}
+    
 3. Select the chart dropdown button; then select **Map**.
 4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
 5. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
-![Notebook](images/solution29/notebook-mapbox.png)
+![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Share your dataset with the organization
 {: #smart-data-lake-7}
@@ -300,7 +317,8 @@ In this section, you will visualize the previous result set using PixieDust and 
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. The tutorial on [combining serverless and Cloud Foundry for data retrieval and analytics](https://{DomainName/docs/solution-tutorials?topic=solution-tutorials-serverless-github-traffic-analytics) uses {{site.data.keyword.dynamdashbemb_notm}} to effortless provide visualizations as part of a web app.
 
-![Dashboard Chart](images/solution29/dashboard-chart.png)
+![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Expand the tutorial
 {: #smart-data-lake-9}
@@ -321,22 +339,30 @@ Run the following commands to remove services, applications and keys you created
 ibmcloud resource service-alias-delete dashboard-nodejs-cos
 ```
 {: pre}
+
 ```sh
 ibmcloud iam api-key-delete data-lake-cos-key
 ```
 {: pre}
+
 ```sh
 ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
+
 ```sh
 ibmcloud resource service-instance-delete data-lake-sql
 ```
 {: pre}
+
 ```sh
 ibmcloud resource service-instance-delete data-lake-studio
 ```
 {: pre}
+
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #smart-data-lake-11}

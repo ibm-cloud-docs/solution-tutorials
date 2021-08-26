@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-07-27"
+lastupdated: "2021-08-24"
 lasttested: "2021-07-27"
 
 content-type: tutorial
@@ -31,12 +31,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
-{:shortdesc}
+{: shortdesc}
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
 
 While this tutorial focuses on log analysis, it is applicable to other scenarios: storage-limited IoT devices can similarly stream messages to {{site.data.keyword.cos_short}} or marketing professionals can segment and analyze customer events across digital properties with SQL Query.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #big-data-log-analytics-objectives}
@@ -47,10 +47,9 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 
-<p style="text-align: center;">
+![Architecture](images/solution31/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
-  ![Architecture](images/solution31/Architecture.png)
-</p>
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
 2. To persist the log events, they are stream landed into {{site.data.keyword.cos_short}} through {{site.data.keyword.sqlquery_short}}.
@@ -233,6 +232,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
    ssl.endpoint.identification.algorithm=HTTPS
    ```
    {: codeblock}
+
 3. Replace `USER` and `PASSWORD` in your `event-streams.config` file with the `user` and `password` values seen in **Service Credentials** from the {{site.data.keyword.messagehub}} service. Save `event-streams.config`.
 4. On a terminal, use `ibmcloud login` to log in to your {{site.data.keyword.cloud_notm}} account interactively. Select the region and resource group where the services was provisioned.
 5. From the `bin` directory, run the following command. The broker list will be retrieved using `ibmcloud resource service-key` command. 
@@ -240,6 +240,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
     ./kafka-console-producer.sh --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') --producer.config event-streams.config --topic webserver
     ```
     {: pre}
+
 6. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
     ```json
     { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
@@ -262,22 +263,22 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    STORED AS JSON EMIT cos://<REGION>/<BUCKET_NAME>/logs-stream-landing/topic=webserver 
    STORED AS PARQUET EXECUTE AS <KEY_PROTECT_CRN_WITH_KEY>
    ```
-   {:codeblock}
+   {: codeblock}
 
    It is a SELECT statement from your {{site.data.keyword.messagehub}} instance and topic (identified via the unique CRN) and the selected data is emitted (EMIT) to your {{site.data.keyword.cos_short}} bucket AS PARQUET format. The operation is executed (EXECUTE) with the service ID's API key that is stored in the {{site.data.keyword.keymanagementserviceshort}} instance.
-   {:tip}
+   {: tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
    ![COS object view](images/solution31/cos_object_view.png)
    
    In the COS UI, switch to `object view` by clicking on the icon next to `Upload`, You should see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
-   {:tip} 
+   {: tip} 
 
 5. Return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above. Wait for the job to change to `Completed`.
 6. Click on the **Results** tab to see the log messages in a tabular format.
    
    The query saves the result to a `CSV` file under a different bucket with name `sql-<SQL_QUERY_GUID>`. Check the `INTO` part of the query.
-   {:tip}
+   {: tip}
 
 ### Increasing message load
 {: #big-data-log-analytics-streamsload}
@@ -293,15 +294,18 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    cd kafka-log-simulator
    ```
    {: pre}
+
 3. Run the following commands to setup the simulator and produce log event messages. Replace `<LOGFILE>` with the file you downloaded e.g., `/Users/VMac/Downloads/access_log_Jul95`. The broker list and the API key will be retrieved with the `ibmcloud resource service-key` command.
    ```sh
    npm install
    ```
    {: pre}
+
    ```sh
    npm run build
    ```
    {: pre}
+
    ```sh
    node dist/index.js --file <LOGFILE> --parser httpd --broker-list $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.kafka_brokers_sasl | join(",")') \
     --api-key $(ibmcloud resource service-key es-for-log-analysis --output json | jq -r '.[0].credentials.api_key') --topic webserver --rate 100
@@ -309,7 +313,7 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    {: pre}
 
    If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
-   {:tip}
+   {: tip}
 
 4. Stop the simulator after a desired number of messages have been stream landed using `control+C`.
 5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and Click on **Query the result** and then click **Run** to see the messaged feed under the `Results` tab of the batch job. 
@@ -345,6 +349,7 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
    LIMIT 10
    ```
    {: codeblock}
+
 3. Update the `FROM` clause with your Object SQL URL and click **Run**.
 4. Click on the latest **Completed** job to see the result under the **Result** tab.
 6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
@@ -424,7 +429,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    {: pre}
 
    You can find the `SSH` command under **Service credentials** of `log-analysis-iae` service you created earlier and an option to generate `password` under the **Manage** tab of the service.
-   {:tip}
+   {: tip}
 
 2. Connect to the Hive server by using with Beeline client.The hive_jdbc service endpoint can be found under the **service credentials** tab of the `log-analysis-iae` service page.
    ```sh
@@ -459,21 +464,25 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
    ```
    {: pre}
+
 2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster.
    ```sh
    pyspark
    ```
    {: pre}
+
 3. Create a Spark dataframe of a parquet file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
    ```sh
    df = spark.read.parquet('cos://<bucketname>.<identifier>/<objectname>')
    ```
    {: codeblock}
+
    For example, if the name of the bucket is `<your-initial>-log-analysis`, service name is `log-analysis-cos` and the path to the file is logs-stream-landing/:
    ```sh
    df = spark.read.parquet('cos://<your-initial>-log-analysis.log-analysis-cos/logs-stream-landing/topic=webserver/jobid=<JOBID>/)
    ```
    {: codeblock}
+
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
 5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
    ```sh
@@ -504,9 +513,12 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 2. Before deleting the `log-analysis-kp` service, delete the root key.
 3. Navigate to [Manage > Access (IAM) > Service IDs](https://{DomainName}/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
 
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
+
 ## Related content
 {: #big-data-log-analytics-8}
-{:related}
+{: related}
 
 * [Apache Kafka](https://kafka.apache.org/)
 * [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)

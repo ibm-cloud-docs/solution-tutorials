@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-25"
 lasttested: "2020-11-04"
 
 content-type: tutorial
@@ -47,9 +47,8 @@ There are many reasons why you would use a Content Delivery Network in these sit
 * Make content globally available with a Content Delivery Network (CDN).
 * Expose files by using a static website application.
 
-<p style="text-align: center;">
-![Architecture](images/solution3/Architecture.png)
-</p>
+![Architecture](images/solution3/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user accesses the application
 2. The application includes content distributed through a Content Delivery Network
@@ -67,7 +66,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In addition, contact the master user of your Infrastructure account to get the following permissions:
@@ -88,7 +87,7 @@ To start, retrieve the application code:
    git clone https://github.com/IBM-Cloud/webapp-with-cos-and-cdn
    cd webapp-with-cos-and-cdn
    ```
-  {: pre}
+   {: pre}
 
 ## Create an Object Storage
 {: #static-files-cdn-create_cos}
@@ -134,6 +133,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ibmcloud login
    ```
    {: pre}
+
 1. Target the region where the bucket was created. As example for a bucket created in `us-south`:
    ```sh
    ibmcloud target -r us-south
@@ -143,14 +143,16 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    BUCKET_NAME=<YOUR_BUCKET_NAME>
    ```
    {: pre}
+
 4. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
-  ```sh
-  ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file a-picture.png 
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-css-file.css --file a-css-file.css
-  ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file a-video.mp4
-  ```
-  {: pre}
+   ```sh
+   ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file a-picture.png 
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-css-file.css --file a-css-file.css
+   ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file a-video.mp4
+   ```
+   {: pre}
+
 5. View your files from your dashboard.
    ![Bucket Content](images/solution3/Buckets.png)
 6. Access the files through your browser or by using curl:
@@ -237,6 +239,10 @@ Accessing the website at the URL provided by the COS bucket is great, but access
 * Delete the {{site.data.keyword.cis_short_notm}} DNS CNAME and Page Rule
 * Delete the {{site.data.keyword.cdn_full}} service
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
+
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #static-files-related-content}

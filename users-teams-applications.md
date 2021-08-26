@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-02"
+lastupdated: "2021-08-25"
 lasttested: "2020-11-19"
 
 ---
@@ -27,7 +27,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
-{:shortdesc}
+{: shortdesc}
 
 When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
 
@@ -39,6 +39,7 @@ Isolating the underlying resources, implementing governance and access policies,
 * Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
+
 
 ## Define a project
 {: #users-teams-applications-1}
@@ -76,24 +77,21 @@ This tutorial focusses on a single account. Multiple accounts can be grouped wit
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-<p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/iam-model.png" style="width: 70%;" alt="Diagram of IAM model" />
-</p>
+![Diagram of IAM model](./images/solution20-users-teams-applications/iam-model.png){: class="center"}
+{: style="text-align: center;"}
 
 Most services in the {{site.data.keyword.cloud_notm}} catalog are managed by using IAM. A few continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.  If you do not have requirements for Cloud Foundry applications and are using resources that support IAM then ignore the Organization and Space text below.
 
-<p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" style="width: 70%;" alt="Diagram of Cloud Foundry model" />
-</p>
+![Diagram of Cloud Foundry model](./images/solution20-users-teams-applications/cloudfoundry-model.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Create the resources for one environment
 {: #users-teams-applications-3}
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
-<p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/one-environment.png" style="width: 80%;" alt="Architecture diagram showing one environment" />
-</p>
+![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.png){: class="center"}
+{: style="text-align: center;"}
 
 Let's start by building the Development environment.
 
@@ -110,9 +108,8 @@ Let's start by building the Development environment.
 
 The following diagram shows where the project resources are created under the account:
 
-<p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/resources.png" style="height: 400px;" alt="Diagram showing the project resources" />
-</p>
+![Diagram showing the project resources](./images/solution20-users-teams-applications/resources.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Assign roles within the environment
 {: #users-teams-applications-4}
@@ -151,9 +148,8 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 1. Click **Assign access** button to assign policies as shown below
 1. Click the **Users** tab of the **Access group** to add users to the group
 
-<p style="text-align: center;">
-  <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" alt="Configuration of permissions for the developer role" />
-</p>
+![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Replicate for multiple environments
 {: #users-teams-applications-5}
@@ -165,9 +161,8 @@ From there, you can replicate similar steps to build the other environments.
 1. Create one Cloud Foundry space per environment.
 1. Create the required service instances in each space.
 
-<p style="text-align: center;">
-  <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" alt="Diagram showing separate clusters to isolate environments" />
-</p>
+![Diagram showing separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png){: class="center"}
+{: style="text-align: center;"}
 
 Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
@@ -179,9 +174,8 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
-<p style="text-align: center;">
-  <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" alt="Diagram showing separate namespaces to isolate environments" />
-</p>
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}
+{: style="text-align: center;"}
 
 In the `Search` input box of UI, use the field `namespace: ` to filter logs based 0n the namespace.
 {: tip}
@@ -194,9 +188,8 @@ When it comes to deploying to the different environments, your continuous integr
 * promote development builds to the `Testing` environment, either automatically if all tests from the previous stages are OK or through a manual promotion process. Some teams will use different branches too here, merging the working development state to a `stable` branch as example;
 * Repeat a similar process to move to the `Production` environment.
 
-<p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/cicd.png" alt="A CI/CD pipeline from build to deploy" />
-</p>
+![A CI/CD pipeline from build to deploy](./images/solution20-users-teams-applications/cicd.png){: class="center"}
+{: style="text-align: center;"}
 
 When configuring the DevOps pipeline, make sure to use the API key of a service ID. Only the service ID should need to have the required rights to deploy apps to your clusters.
 

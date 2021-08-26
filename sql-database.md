@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2020
-lastupdated: "2020-12-17"
+lastupdated: "2021-08-25"
 lasttested: "2020-12-17"
 
 content-type: tutorial
@@ -33,7 +33,8 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
-![Architecture diagram](images/solution5/Architecture.png)
+![Architecture diagram](images/solution5/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 ## Objectives
 {: #sql-database-0}
@@ -93,9 +94,10 @@ Now that the table "cities" has been created, you are going to load data into it
 2. Click **Next** to get to the schema overview. Choose the schema starting with **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
 
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
-   {:tip }
-3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.    
-  ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
+   {: tip}
+
+3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.
+   ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
 4. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
 5. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 
@@ -107,12 +109,14 @@ The data has been loaded into the relational database. There were no errors, but
 1. In the top navigation click on **Run SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Create new** to create a new editor tab.
 
    Instead of the built-in SQL editor you can use cloud-based and traditional SQL tools on your desktop or server machine with {{site.data.keyword.dashdbshort_notm}}. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
-    {:tip }
+   {: tip}
+
 2. In the editor type or copy in the following query:   
    ```bash
    select count(*) from cities
    ```
-   {:codeblock}
+   {: codeblock}
+
    then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```
@@ -120,7 +124,8 @@ The data has been loaded into the relational database. There were no errors, but
    group by countrycode
    order by 2 desc
    ```
-   {:codeblock}   
+   {: codeblock}
+
 4. In the editor select the text of the above statement. Click the **Run selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
@@ -155,6 +160,9 @@ To clean up resources used by the tutorial, follow these steps:
 1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app.
 2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.
 3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Expand the tutorial
 {: #sql-database-10}

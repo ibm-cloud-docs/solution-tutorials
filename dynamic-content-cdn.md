@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-17"
 lasttested: "2020-12-18"
 
 content-type: tutorial
@@ -55,11 +55,9 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 
+![Architecture](images/solution52-cdn-dca/solution_52_architecture.png){: class="center"}
+{: style="text-align: center;"}
 
-<p style="text-align: center;">
-
-![Architecture](images/solution52-cdn-dca/solution_52_architecture.png)
-</p>
 
 1. The developer creates a simple dynamic application and produces a Docker container image.
 2. The image is pushed to a namespace in {{site.data.keyword.registryshort_notm}}.
@@ -105,11 +103,13 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
    ```
    {: pre}
+
 1. Change to the application directory
    ```bash
    cd cdn-with-cda-todolist
    ```
    {: pre}
+
 1. Identify the cluster, {{site.data.keyword.registryshort_notm}} and cluster namespace.
    - `ibmcloud cr info` will return the name of the container registry.
    - `ibmcloud ks cluster ls` will return cluster names.
@@ -118,26 +118,33 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ibmcloud ks cluster ls
    ```
    {: pre}
+
+   Set the variables accordingly:
    ```bash
    MYCLUSTER=<cluster_name>
    MYCONTAINERREGISTRY=<us.icr.io_like_value_returned_from_ibmcloud_cr_info>
    MYNAMESPACE=<my_container_registry_namespace>
    ```
+   {: pre}
+
 1. Create a namespace to store the container image.  Feel free to skip this step and use an exising namespace.
    ```bash
    ibmcloud cr namespace-add $MYNAMESPACE
    ```
    {: pre}
+
 1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}} and use **cdn-with-cda-todolist** as the image name:
    ```bash
    docker build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest .
    ```
    {: pre}
+
 1. Log in {{site.data.keyword.registryshort_notm}}:
    ```bash
    ibmcloud cr login
    ```
    {: pre}
+
 1. Push the image to {{site.data.keyword.registryshort_notm}}:
    ```bash
    docker push $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest
@@ -152,22 +159,26 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: pre}
+
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
+
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:
    ```bash
    cp deployment.sample.yaml deployment.yaml
    ```
    {: pre}
+
 1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
 1. Deploy the application to the cluster:
    ```bash
    kubectl apply -f deployment.yaml
    ```
    {: pre}
+   
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
 ## Create a CDN instance

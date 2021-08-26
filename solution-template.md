@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-08-25"
 lasttested: "2019-03-08"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -30,9 +30,9 @@ completion-time: 2h
 {:beta: .beta}
 
 # How to write a tutorial
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+{: #change-me-to-the-filename-without-md-extension}
 {: toc-content-type="tutorial"}
-{: toc-services="<change me to be the same as services defined earlier>"}
+{: toc-services="service1, service2"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #solution-template-objectives}
@@ -49,7 +49,8 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
 
-![Architecture](images/solution1/Architecture.png)
+![Architecture](images/solution1/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The user does this
 2. Then that
@@ -82,7 +83,7 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{:tip}
+{: tip}
 <!--#/istutorial#-->
 
 In addition, make sure you have:
@@ -111,10 +112,12 @@ In this section, you will create the services required to ...
     ibmcloud login
     ```
     {: pre}
+
     ```sh
     ibmcloud target --cf
     ```
     {: pre}
+    
 2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
     ```sh
     ibmcloud resource service-instance-create service-instance-name service-name lite global
@@ -129,8 +132,8 @@ Introductory statement that overviews the section
 
 1. Step 1 Click **This** and enter your name.
 
-  This is a tip.
-  {:tip}
+   This is a tip.
+   {: tip}
 
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.
@@ -180,6 +183,9 @@ Introductory statement that overviews the section
 
 Steps to take to remove the resources created in this tutorial
 
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
+
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 {: #solution-template-0}
 
@@ -203,10 +209,10 @@ Want to add to or change this tutorial? Here are some ideas:
 {: #solution-template-12}
 
 For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
+   [link_description](#anchor_name)
 
 For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
+   [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
 
 If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
 

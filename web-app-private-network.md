@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-08-26"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 Hosting web applications is a common deployment pattern for public cloud, where resources can be scaled on demand to meet short term and long term usage demands. Security for the application workloads is a fundamental prerequisite, to complement the resilience and scalability afforded by public cloud.
 
 This tutorial takes you through the creation of a scalable and secure Internet facing web application hosted in private network secured using a virtual router appliance (VRA), VLANs, NAT and firewalls. The application comprises a load balancer, two web application servers and a MySQL database server. It combines three tutorials to illustrate how web applications can be securely deployed on the {{site.data.keyword.Bluemix_notm}} IaaS platform using classic networking.
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #web-app-private-network-objectives}
@@ -54,10 +54,9 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 - Source Network Address Translation (SNAT) for application deployment
 
 
-<p style="text-align: center;">
+![Architecture](images/solution42-web-app-private-network/web-app-private.png){: class="center"}
+{: style="text-align: center;"}
 
-  ![Architecture](images/solution42-web-app-private-network/web-app-private.png)
-</p>
 
 1.	Configure Secure Private Network
 2.	Configure NAT access for application deployment
@@ -127,11 +126,11 @@ At the end of this step the load balancer should be in a healthy state and the W
 Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month.
-{:tip}
+{: tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. Cancel any additional VLANs by support ticket.
+3. [Cancel any additional VLANs](https://{DomainName}.ibm.com/docs/vlans?topic=vlans-cancel-vlan)
 4. Delete the Load Balancer
 5. Delete the File Storage services
 

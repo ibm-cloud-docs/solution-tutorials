@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-08-26"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the Internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to Internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public view.
 
 This tutorial presents the setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolating workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
-{:shortdesc}
+{: shortdesc}
 
 ## Objectives
 {: #nat-config-private-objectives}
@@ -49,11 +49,9 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
 
+![Architecture](images/solution35-nat-config-private/vra-nat.png){: class="center"}
+{: style="text-align: center;"}
 
-<p style="text-align: center;">
-
-  ![Architecture](images/solution35-nat-config-private/vra-nat.png)
-</p>
 
 1.	Document required Internet services.
 2.	Setup NAT.
@@ -90,6 +88,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    configure
    ```
    {: codeblock}
+
 2.	Create the SNAT rules on the VRA, specifying the same `<Subnet Gateway IP>/<CIDR>` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
    ```
    set service nat source rule 1000 description 'pass traffic to the Internet'
@@ -157,6 +156,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    set security zone-policy zone OUTSIDE description 'External Internet'
    ```
    {: codeblock}
+
 2.	Assign firewalls to control traffic to and from the Internet.
    ```
    set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
@@ -164,6 +164,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    commit
    ```
    {: codeblock}
+
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
    ```bash
    ssh root@<VSI Private IP>
@@ -179,20 +180,20 @@ Follow the instructions here to configure external Internet access for hosts in 
 
 ## Remove resources
 {: #nat-config-private-6}
-{:removeresources}
+{: removeresources}
 {: step}
 Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
-{:tip}
+{: tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. Cancel any additional VLANs by support ticket.
+3. [Cancel any VLANs](https://{DomainName}.ibm.com/docs/vlans?topic=vlans-cancel-vlan)
 
 ## Related content
 {: #nat-config-private-7}
-{:related}
+{: related}
 
 -	[VRA Network Address Translation]( https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#network-address-translation-nat-)
 -	[NAT Masquerade]( https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-setting-up-nat-rules-on-vyatta-5400#one-to-many-nat-rule-masquerade-)

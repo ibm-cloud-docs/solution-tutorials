@@ -42,8 +42,8 @@ sed -i 's/{DomainName}/cloud.ibm.com/g' builddocs/input/*.md
 rm -rf builddocs/output
 git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tutorials.git builddocs/output
 
-# retrieve the conref
-(cd builddocs && curl -sSO "https://oauth2:$GITHUB_ENTERPRISE_TOKEN@raw.github.ibm.com/cloud-doc-build/markdown/master/cloudoeconrefs.yml")
+# retrieve the cloud-doc-builds/markdown repo
+(cd builddocs && git clone https://oauth2:$GITHUB_ENTERPRISE_TOKEN@github.ibm.com/cloud-doc-build/markdown)
 
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf .)
@@ -59,7 +59,22 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tut
 
 # generate the new files
 npm install -g marked-it-cli
-marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
+export VERSION=2
+marked-it-cli \
+  builddocs/input \
+  --output=builddocs/output \
+  --header-file=scripts/header.txt \
+  --footer-file=builddocs/markdown/footer.txt \
+  --extension-file=builddocs/markdown/headerFooterExt.js \
+  --extension-file=builddocs/markdown/generateSectionsExt.js \
+  --extension-file=builddocs/markdown/accessibilityExt.js \
+  --extension-file=builddocs/markdown/jsonTocExt.js \
+  --conref-file=builddocs/markdown/cloudoeconrefs.yml \
+  --overwrite --verbose --toc-json \
+  --extension-file=builddocs/markdown/videoExt.js \
+  --extension-file=builddocs/markdown/terraformExt.js \
+  --extension-file=builddocs/markdown/glossaryExt.js \
+  --@glossary:definitions-file=$PWD/builddocs/markdown/glossary.json
 
 # move the index to getting started
 mv builddocs/output/index.html builddocs/output/getting-started.html

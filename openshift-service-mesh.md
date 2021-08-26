@@ -31,7 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
-{:shortdesc}
+{: shortdesc}
 
 Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftshort}} Service Mesh adds a transparent layer on existing distributed applications. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With Red Hat {{site.data.keyword.openshiftshort}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
 
@@ -47,7 +47,8 @@ Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftsho
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png)
+![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
@@ -85,17 +86,17 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.6.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-  - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
-  - Select the desired VPC
-  - Select an existing **Cloud Object Storage** service or create one if required and then select
+   - Select the desired VPC
+   - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
-  - For Openshift on VPC infrastructure
+   - For Openshift on VPC infrastructure
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-  - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -106,7 +107,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
-{:note}
+{: note}
 
 <!--#/istutorial#-->
 
@@ -141,13 +142,14 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```sh
    oc version
    ```
-   {:pre}
+   {: pre}
+
 1. The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 5. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
    ```
-   {:pre}
+   {: pre}
 
 ## Install Service Mesh - Istio
 {: #openshift-service-mesh-install_istio}
@@ -172,7 +174,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
-{:tip}
+{: tip}
 
 ### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
 {: #openshift-service-mesh-6}
@@ -231,36 +233,37 @@ There are 3 versions of the reviews microservice:
 
 The end-to-end architecture of the application is shown below.
 
-![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg)
+![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: class="center"}
+{: style="text-align: center;"}
 
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
-1.  From your ****, create a project called "bookinfo" with `oc new-project` command
+1.  From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command
    ```sh
    oc new-project bookinfo
    ```
-   {:pre}
+   {: pre}
 
    In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
-   {:tip}
+   {: tip}
 
 2.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
    ```sh
    oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/platform/kube/bookinfo.yaml
    ```
-   {:pre}
+   {: pre}
 
    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
    An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.6/service_mesh/v1x/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
-   {:tip}
+   {: tip}
 
 3.  Verify that the pods are up and running.
 
    ```sh
    oc get pods
    ```
-   {:pre}
+   {: pre}
 
    **Sample output:**
 
@@ -275,7 +278,7 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
    ```
 
    Note that each bookinfo pods has 2 containers in it. One is the bookinfo container, and the other is the Envoy proxy sidecar.
-   {:tip}
+   {: tip}
 
 Your bookinfo app is running, but you can't access it as the service is not yet configured to receive external traffic. In the next section, you will expose the `productpage` service to allow incoming traffic.
 
@@ -291,17 +294,19 @@ An Ingress Gateway resource can be created to allow external requests through th
    ```sh
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/bookinfo-gateway.yaml
    ```
-   {:pre}
+   {: pre}
+
 2. Get the **ROUTE** of the Istio Ingress Gateway.
    ```sh
    oc get routes -n istio-system istio-ingressgateway
    ```
-   {:pre}
+   {: pre}
+
 3. Save the HOST address that you retrieved in the previous step, as it will be used to access the BookInfo app in later parts of the tutorial. Create an environment variable called `$INGRESS_HOST` with your HOST address.
    ```sh
    export INGRESS_HOST=<HOST>
    ```
-   {:pre}
+   {: pre}
 
    Visit the application by going to `http://$INGRESS_HOST/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars). **_Keep that browser tab open for later_**.
 
@@ -328,7 +333,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
    ```
-   {:pre}
+   {: pre}
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
@@ -368,20 +373,20 @@ A/B testing is a method of performing identical tests against two separate servi
    ```sh
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/destination-rule-all.yaml
    ```
-   {:pre}
+   {: pre}
 
    A [DestinationRule](https://istio.io/latest/docs/reference/config/networking/virtual-service/#Destination) defines policies that apply to traffic intended for a service after routing has occurred. These rules specify configuration for load balancing, connection pool size from the sidecar, and outlier detection settings to detect and evict unhealthy hosts from the load balancing pool. Any destination `host` and `subset` referenced in a `VirtualService` rule must be defined in a corresponding `DestinationRule`.
-   {:tip}
+   {: tip}
 
 2. A VirtualService defines a set of traffic routing rules to apply when a host is addressed. Each routing rule defines matching criteria for traffic of a specific protocol. If the traffic is matched, then it is sent to a named destination service (or subset/version of it) defined in the registry. Run the below command to send all reviews traffic to v1:
 
    ```sh
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-all-v1.yaml
    ```
-   {:pre}
+   {: pre}
 
    The `VirtualService` defines a rule that captures all HTTP traffic coming in to reviews service, and routes 100% of the traffic to pods of the service with label "version: v1". A subset or version of a route destination is identified with a reference to a named service subset which must be declared in a corresponding `DestinationRule`.
-   {:tip}
+   {: tip}
 
 3. View the bookinfo application in your browser tab. You should only get the v1 of the BookInfo application, i.e., no stars for ratings.
 
@@ -411,10 +416,10 @@ A/B testing is a method of performing identical tests against two separate servi
            subset: v3
    EOF
    ```
-   {:pre}
+   {: pre}
 
    In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version(Black stars) of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3(Red Stars) version of bookinfo.
-   {:tip}
+   {: tip}
 
 ### Canary deployment
 {: #openshift-service-mesh-15}
@@ -425,16 +430,17 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
    ```sh
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
    ```
-   {:pre}
+   {: pre}
+
    In the modified rule, the routed traffic is split between two different subsets of the reviews microservice. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
-   {:tip}
+   {: tip}
 
 2. View the bookinfo application again in your browser tab. Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching. You should notice that the bookinfo application should swap between V1 or V2 at about the weight you specified.
 3. To route all traffic to reviews v3,
    ```sh
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/virtual-service-reviews-v3.yaml
    ```
-   {:pre}
+   {: pre}
 
 ## Secure your services
 {: #openshift-service-mesh-secure_services}
@@ -442,11 +448,12 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 
 Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
 
-1.  To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
+1. To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
    ```sh
    oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.0/samples/bookinfo/networking/destination-rule-all-mtls.yaml
    ```
-   {:pre}
+   {: pre}
+
 2. Send more traffic to your application. Everything should still continue to work as expected.
 3. Launch **Kiali** again and go to **Graph**.
 4. Select `bookinfo` from the top **Namespace** bar.
@@ -480,10 +487,10 @@ You can either gradually remove individual resources or skip those steps and dir
 {: #openshift-service-mesh-19}
 
 - To delete the bookinfo project, run the below command
-  ```sh
-  oc delete project bookinfo
-  ```
-  {:pre}
+   ```sh
+   oc delete project bookinfo
+   ```
+   {: pre}
 
 ### Removing the ServiceMeshControlPlane from the CLI
 {: #openshift-service-mesh-20}
@@ -492,15 +499,16 @@ You can either gradually remove individual resources or skip those steps and dir
    ```sh
    oc get servicemeshcontrolplanes -n istio-system
    ```
-   {:pre}
+   {: pre}
+   
 2. Replace `<NAME_OF_CUSTOM_RESOURCE>` with the name from the previous command, and run this command to remove the custom resource,
    ```sh
    oc delete servicemeshcontrolplanes -n istio-system <NAME_OF_CUSTOM_RESOURCE>
    ```
-   {:pre}
+   {: pre}
 
    The `ServiceMeshMemberRoll` resource is automatically deleted when you delete the `ServiceMeshControlPlane` resource it is associated with.
-   {:tip}
+   {: tip}
 
 ### Remove the Operators
 {: #openshift-service-mesh-21}

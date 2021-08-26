@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
-{:shortdesc}
+{: shortdesc}
 
 A subnet is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Security Groups that act as firewalls to control inbound and outbound traffic for one or more virtual server instances.
 
@@ -56,7 +56,8 @@ In short, using VPC you can:
 - Know how to apply security groups to secure access to the servers
 
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png){: class="center"}
+{: style="text-align: center;"}
 
 1. The admin (DevOps) sets up the required infrastructure (VPC, subnets, security groups with rules, VSIs) on the cloud.
 2. The internet user makes an HTTP/HTTPS request to the web server on the frontend.
@@ -79,7 +80,7 @@ To perform maintenance tasks on these servers such as installing software, perfo
 In this section, you will create the VPC and the bastion host.
 
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
-{:note}
+{: note}
 
 1. Navigate to the **[Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs)** page and click on **Create**.
 1. Under **New Virtual Private Cloud** section:
@@ -163,7 +164,8 @@ To create a virtual server instance in the newly created subnet:
       echo "I'm the backend server" > /var/www/html/index.html
       service nginx start
       ```
-      {:pre}
+      {: pre}
+
       This will install a simple web server into the instance.
 1. Under **Networking**, select the VPC your created.
 1. Under **Network interfaces**, click on the **Edit** icon
@@ -210,7 +212,8 @@ To create a virtual server instance in the newly created subnet:
       echo "I'm the frontend server" > /var/www/html/index.html
       service nginx start
       ```
-      {:pre}
+      {: pre}
+
       This will install a simple web server into the instance.
 2. Under **Networking**, select the VPC your created.
 3. Under **Network interfaces**, click on the **Edit** icon
@@ -235,7 +238,8 @@ The frontend instance has its software installed but it can not yet be reached.
    ```sh
    curl -v -m 30 http://<floating-ip-address-of-the-frontend-vsi>
    ```
-   {:pre}
+   {: pre}
+   
    _The connection should time out eventually._
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
@@ -248,11 +252,13 @@ The frontend instance has its software installed but it can not yet be reached.
    |------------|---------------|----------|-----------|------|
    | TCP        | Any           | 0.0.0.0/0 | Ports 80-80  | This rule allows connections from any IP address to the frontend web server. |
    | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
+   
    {: caption="Inbound rules" caption-side="bottom"}
 
    | Protocol | Destination type | Destination | Value    | Description |
    |------------|---------------|----------|-----------|----------|
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
+   
    {: caption="Outbound rules" caption-side="bottom"}
 
 
@@ -266,10 +272,10 @@ The backend server is running the same web server software as the frontend serve
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
    ```
-   {:pre}
+   {: pre}
 
    SSH to the frontend is only be possible through the bastion and only when the **vpc-secure-maintenance-sg** has been attached to the frontend instance.
-   {:note}
+   {: note}
 
 1. Call the backend web server:
    ```sh
@@ -289,6 +295,7 @@ To allow inbound connections to the backend server, you need to configure the as
    | Protocol | Source type | Source | Value   | Description |
    |------------|---------------|----------|-----------|--|
    | TCP        | Security group | vpc-pubpriv-frontend-sg | Ports 80-80  | This rule allows incoming connections on port 80 from the frontend server to the backend server. |
+
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Confirm the connectivity
@@ -325,4 +332,4 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 4. After the subnets have been deleted, switch to **VPCs** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
-{:tip}
+{: tip}
