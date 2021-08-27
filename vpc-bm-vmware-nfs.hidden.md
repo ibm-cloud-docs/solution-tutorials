@@ -85,13 +85,14 @@ When advised to use Web browser, use the Jump machine provisioned in the [VPC pr
 {: #vpc-bm-vmware-nfs-createfileshare}
 {: step}
 
-To Create a file share in VPC you can use either CLI or UI (or API). The following provides the reference when using CLI:
+To Create a file share in VPC you can use either CLI or UI (or API). 
 
-```sh
-ibmcloud is share-create --help
-```
-{: codeblock}
+1. The following provides the reference when using CLI:
 
+   ```sh
+   ibmcloud is share-create --help
+   ```
+   {: codeblock}
 
 1. Check the available share profiles, and you can use the following command.
 

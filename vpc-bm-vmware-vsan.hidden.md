@@ -97,17 +97,17 @@ If you provisioned the vSAN VLAN NICs following the guidance above, you can reca
 {: tip}
 
    ```sh
-   echo "vSAN IP for BMS001 : "$VMWARE_BMS001_TEP_IP
+   echo "vSAN IP for BMS001 : "$VMWARE_BMS001_VSAN_IP
    ```
    {: codeblock}
 
    ```sh
-   echo "vSAN IP for BMS002 : "$VMWARE_BMS002_TEP_IP
+   echo "vSAN IP for BMS002 : "$VMWARE_BMS002_VSAN_IP
    ```
    {: codeblock}
 
    ```sh
-   echo "vSAN IP for BMS003 : "$VMWARE_BMS003_TEP_IP
+   echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
    ```
    {: codeblock}
 

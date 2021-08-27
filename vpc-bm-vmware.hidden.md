@@ -148,3 +148,4 @@ VMWARE_RG=$(ibmcloud resource group-create $VMWARE_RG_NAME --output json | jq -r
 ibmcloud target -g $VMWARE_RG
 ```
 {: codeblock}
+

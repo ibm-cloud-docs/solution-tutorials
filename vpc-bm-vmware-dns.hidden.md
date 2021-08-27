@@ -85,7 +85,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-2.  Set the DNS as a default DNS target.
+2. Set the DNS as a default DNS target.
 
    ```sh
    ibmcloud dns instance-target $VMWARE_DNS
