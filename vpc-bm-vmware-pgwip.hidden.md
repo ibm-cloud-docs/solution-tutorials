@@ -25,7 +25,7 @@ completion-time: 1h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -116,6 +116,10 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 
    ```sh
    VMWARE_VM_FIP=$(ibmcloud is ipc floating-ip-vm-1 --nic-id $VMWARE_VNIC_VM1 --output json | jq -r .address)
+   ```
+   {: codeblock}
+   
+   ```sh
    echo "Public IP for your VLAN NIC : "$VMWARE_VM_FIP
    ```
    {: codeblock}
@@ -127,6 +131,10 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 
    ```sh
    VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
    ```
    {: codeblock}
@@ -135,6 +143,10 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 
    ```sh
    VMWARE_VM_FIP_SG=$(ic is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
    ```
    {: codeblock}

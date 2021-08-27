@@ -25,7 +25,7 @@ completion-time: 1h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -78,13 +78,19 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-dns-provision}
 {: step}
 
-Create the DNS service using the 'standard-dns' plan. Get its ID and set it as a default DNS target.
+1. Create the DNS service using the 'standard-dns' plan and get its ID.
 
-```sh
-VMWARE_DNS=$(ibmcloud dns instance-create dns-vmware standard-dns --output json | jq -r .id)
-ibmcloud dns instance-target $VMWARE_DNS
-```
-{: codeblock}
+   ```sh
+   VMWARE_DNS=$(ibmcloud dns instance-create dns-vmware standard-dns --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+2.  Set the DNS as a default DNS target.
+
+   ```sh
+   ibmcloud dns instance-target $VMWARE_DNS
+   ```
+   {: codeblock}
 
 
 ## Provision a Zone
@@ -95,6 +101,10 @@ ibmcloud dns instance-target $VMWARE_DNS
 
    ```sh
    VMWARE_DNS_ZONE_NAME=vmware.ibmcloud.local
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_DNS_ZONE=$(ibmcloud dns zone-create $VMWARE_DNS_ZONE_NAME -d "Zone for VMware on VPC" --output json | jq -r .id)
    ```
    {: codeblock}

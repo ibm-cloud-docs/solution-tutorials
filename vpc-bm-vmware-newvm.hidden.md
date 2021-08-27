@@ -25,7 +25,7 @@ completion-time: 1h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -130,7 +130,15 @@ VLAN 1000 is used as the VLAN ID for the subnet in this tutorial. You can custom
 
    ```sh
    ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000
    ```
    {: codeblock}
@@ -156,6 +164,10 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
 
    ```sh
    VMWARE_VM1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .primary_ipv4_address)
+   ```
+   {: codeblock}
+   
+   ```sh
    echo "IP for VM-1 : "$VMWARE_VM1_IP
    ```
    {: codeblock}
@@ -166,6 +178,10 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
 
    ```sh
    VMWARE_VM1_MAC=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .mac_address)
+   ```
+   {: codeblock}
+   
+   ```sh
    echo "MAC address for VM-1 : "$VMWARE_VM1_MAC
    ```
    {: codeblock}
@@ -291,7 +307,15 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 
    ```sh
    ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000,1001
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000,1001
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000,1001
    ```
    {: codeblock}
@@ -307,6 +331,10 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 
    ```sh
    VMWARE_VM2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM2 --output json | jq -r .primary_ipv4_address)
+   ```
+   {: codeblock}
+   
+   ```sh
    echo "IP for VM-2 : "$VMWARE_VM2_IP
    ```
    {: codeblock}

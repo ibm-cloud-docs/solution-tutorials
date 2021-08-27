@@ -25,7 +25,7 @@ completion-time: 2h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -84,15 +84,24 @@ This tutorial is part of series, and it is required that you follow the [order](
 
    ```sh
    VMWARE_VPC=$(ibmcloud is vpcc vmw --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   ```sh
    VMWARE_VPC_CRN=$(ibmcloud is vpc $VMWARE_VPC --output json | jq -r .crn)
    ```
    {: codeblock}
 
-   Tip: You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
+   You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
    {: tip}
 
-   All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command: '( set -o posix; set; set +o posix ) | grep VMWARE_'.
+   All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command.
    {: tip}
+
+      ```sh
+      ( set -o posix; set; set +o posix ) | grep VMWARE_
+      ```
+      {: codeblock}
 
 
 ## Provision a Prefix
@@ -103,6 +112,10 @@ This tutorial is part of series, and it is required that you follow the [order](
 
    ```sh
    VMWARE_VPC_ZONE=eu-de-1
+   ```
+   {: codeblock}
+
+   ```sh
    VMWARE_PREFIX=$(ibmcloud is vpc-address-prefix-create <UNIQUE_PREFIX_NAME> $VMWARE_VPC $VMWARE_VPC_ZONE 10.97.0.0/22)
    ```
    {: codeblock}
@@ -126,9 +139,25 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 
    ```sh
    VMWARE_SUBNET_HOST=$(ibmcloud is subnetc vmw-host-mgmt-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.0.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_SUBNET_MGMT=$(ibmcloud is subnetc vmw-inst-mgmt-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.0.128/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_SUBNET_VMOT=$(ibmcloud is subnetc vmw-vmot-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.1.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_SUBNET_VSAN=$(ibmcloud is subnetc vmw-vsan-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.2.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_SUBNET_TEP=$(ibmcloud is subnetc vmw-tep-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.1.128/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
    ```
    {: codeblock}
@@ -151,9 +180,13 @@ Subnets are private by default. As the management subnet needs outbound internet
 
    ```sh
    VMWARE_PUBLIC_GW=$(ibmcloud is public-gateway-create vmware-mgmt-internet-outbound $VMWARE_VPC $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is subnetu $VMWARE_SUBNET_MGMT --public-gateway-id $VMWARE_PUBLIC_GW
    ```
-      {: codeblock}
+   {: codeblock}
 
 
 ## Create a SSH Key
@@ -198,6 +231,10 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
 
    ```sh
    VMWARE_JUMP=$(ibmcloud is instance-create jump-001 $VMWARE_VPC $VMWARE_VPC_ZONE bx2-2x8 $VMWARE_SUBNET_MGMT --image-id $IMAGE_WIN --key-ids $SSH_KEY --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_JUMP_NIC=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].id')
    ```
    {: codeblock}
@@ -208,6 +245,10 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
 
    ```sh
    VMWARE_JUMP_FIP=$(ibmcloud is ipc jump-001-ip --nic-id $VMWARE_JUMP_NIC --output json | jq -r .address)
+   ```
+   {: codeblock}
+   
+   ```sh
    echo "Public IP for the Jump : "$VMWARE_JUMP_FIP
    ```
    {: codeblock}
@@ -217,18 +258,22 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
    ```sh
    ibmcloud is in-init $VMWARE_JUMP --private-key @~/.ssh/id_rsa
    ```
-      {: codeblock}
+   {: codeblock}
 
-   Tip: If running inside of Git sh on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1', for example 'MSYS_NO_PATHCONV=1 ibmcloud is in-init ...'.
+   If running inside of Git sh on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1', for example 'MSYS_NO_PATHCONV=1 ibmcloud is in-init ...'.
    {: tip}
 
 6. Modify security group rule to allow inbound access.
 
-   Tip: Inbound access to Microsoft Remote Desktop (RDP) port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
+   Inbound access to Microsoft Remote Desktop (RDP) port (TCP/3389) is blocked by default. Add a SG rule for inbound TCP/3389 from your IP to access the jump.
    {: tip}
 
    ```sh
    VMWARE_JUMP_NIC_SG=$(ibmcloud is in $VMWARE_JUMP --output json | jq -r '.network_interfaces[0].security_groups[0].id')
+   ```
+   {: codeblock}
+   
+   ```sh
    ibmcloud is sg-rulec $VMWARE_JUMP_NIC_SG inbound tcp --port-min 3389 --port-max 3389 --remote <add_your_IP_here>
    ```
    {: codeblock}

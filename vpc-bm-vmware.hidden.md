@@ -25,7 +25,7 @@ completion-time: 8h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:.tip}
 {:preview: .preview}
 {:beta: .beta}
 

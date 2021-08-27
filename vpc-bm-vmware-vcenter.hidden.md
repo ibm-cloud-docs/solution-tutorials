@@ -25,7 +25,7 @@ completion-time: 2h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -92,8 +92,8 @@ When advised to use Web browser, use the Jump machine provisioned in the [VPC pr
 
 In this step, you will provision a VLAN NIC for vCenter into 'Instance Management Subnet' using 'VLAN 100' as the matching VLAN ID. Use server BMS001 / esx-001 here. When creating the VLAN NIC, allow it to float between the hosts.
 
-NIC              | Subnet       | VLAN ID  | Allow float | IP                       | MAC
------------------|--------------|----------|-------------|--------------------------|------------------
+NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
+-----------------|---------------------|----------|-------------|--------------------------|------------------
 vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
 
 While VPC provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
@@ -103,7 +103,15 @@ While VPC provides both IP and MAC addresses, you only need to use the IP addres
 
    ```sh
    VMWARE_VNIC_VCENTER=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_MGMT --interface-type vlan --vlan 100 --allow-interface-to-float true --name vlan-nic-vcenter --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   ```sh
    VMWARE_VCENTER_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VCENTER --output json | jq -r .primary_ipv4_address)
+   ```
+   {: codeblock}
+
+   ```sh
    echo "vCenter IP : "$VMWARE_VCENTER_IP
    ```
    {: codeblock}
@@ -159,6 +167,10 @@ Verify that 'vcenter.vmware.ibmcloud.local' resolves to the correct IP address p
     
    ```sh
    nslookup vcenter.vmware.ibmcloud.local
+   ```
+  {: codeblock}
+  
+   ```sh
    nslookup esx-001.vmware.ibmcloud.local
    ```
   {: codeblock}
@@ -392,6 +404,7 @@ After the vCenter migration, you may execute the following IBM Cloud CLO command
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS002  
 ```
+{: codeblock}
 
 ### Migrate the management network (vmk0) and its associated uplink (vmnic0) - BMS001
 {: #vpc-bm-vmware-vcenter-migratevmks-vmk0-2}

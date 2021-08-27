@@ -25,7 +25,7 @@ completion-time: 1h
 {:deprecated: .deprecated}
 {:important: .important}
 {:note: .note}
-{:tip: .tip}
+{:tip .tip}
 {:preview: .preview}
 {:beta: .beta}
 
@@ -112,6 +112,10 @@ ibmcloud is share-create --help
 
    ```sh
    VMWARE_DATASTORE01=$(ibmcloud is share-create --name vmware-nfs-datastore-01 --zone eu-de-1 --profile tier-10iops --size 1000 --targets '[{"name": "vmware-cluster-01", "vpc": {"id": "'$VMWARE_VPC'"}}]' --output json | jq -r .id)
+   ```
+   {: codeblock}
+   
+   ```sh
    VMWARE_DATASTORE01_TARGET01=$(ibmcloud is share $VMWARE_DATASTORE01 --output json | jq -r .targets[0].id)
    ```
    {: codeblock}
@@ -120,6 +124,10 @@ ibmcloud is share-create --help
 
    ```sh
    VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
+      ```
+   {: codeblock}
+   
+   ```sh
    echo "Mount path is : "$VMWARE_DATASTORE01_TARGET01_MOUNTPATH
    echo "Server : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print $1}')
    echo "Folder : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print $2}')
