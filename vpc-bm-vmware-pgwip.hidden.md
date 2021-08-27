@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-26"
+lastupdated: "2021-08-27"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -30,7 +30,6 @@ completion-time: 1h
 {:beta: .beta}
 
 # Provision a Public Gateway and Floating IPs for VMware Virtual Machines
-
 {: #vpc-bm-vmware-pgwip}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
