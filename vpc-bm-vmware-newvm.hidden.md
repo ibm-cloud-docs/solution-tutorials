@@ -330,6 +330,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
+
 3. Get the IP address allocated by VPC, by using the following commands:
 
    ```sh
