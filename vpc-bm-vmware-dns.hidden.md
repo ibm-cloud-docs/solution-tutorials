@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: service1, service2
+services: vpc, vmwaresolutions, dns-svcs
 account-plan: paid
 completion-time: 1h
 ---
