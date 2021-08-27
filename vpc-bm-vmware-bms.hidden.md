@@ -2,12 +2,12 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-26"
+lastupdated: "2021-08-27"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: service1, service2
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 1h
 ---
@@ -46,7 +46,7 @@ This is a Beta feature that requires special approval. Contact your IBM Sales re
 This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {: shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
+This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 In IBM Cloud™ VPC, you can create two types of network interfaces on a bare metal server: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
@@ -54,6 +54,7 @@ In IBM Cloud™ VPC, you can create two types of network interfaces on a bare me
 The PCI interface is a physical network interface. By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a bare metal server. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
 
 The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the bare metal server, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
+
 
 ## Objectives
 {: #vpc-bm-vmware-bms-objectives}
@@ -72,20 +73,21 @@ In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP 
 4. Add hosts to DNS
 5. Create VLAN NICs for VMkernel adapters
 
+
 ## Before you begin
 {: #vpc-bm-vmware-bms-prereqs}
 
 This tutorial requires:
+
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
-Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{: important}
+This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-Make sure you have successfully completed the required previous steps
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+
 
 ## Validate BMS images
 {: #vpc-bm-vmware-bms-image}
@@ -93,23 +95,25 @@ Make sure you have successfully completed the required previous steps
 
 1. Before provisioning a bare metal server, you need to get the Operating System Image ID. To list all available images, you can use the following CLI command:
 
-```bash
-ibmcloud is images
-```
+   ```sh
+   ibmcloud is images
+   ```
+   {: codeblock}
 
 2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word 'esx'. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
 
-```bash
-$ ibmcloud is images | grep esx
-r010-85e78310-b809-4e03-9257-52c7959435ea   ibm-esxi-7-amd64-1                                 available    amd64   esxi-7                               7.x                                       1               public       provider     none         -   
-r010-1c4be597-1090-4aca-8521-623bcf5cbea4   ibm-esxi-7-byol-amd64-1                            available    amd64   esxi-7-byol                          7.x                                       1               public       provider     none         -   
-```
+   ```bash
+   $ ibmcloud is images | grep esx
+   r010-85e78310-b809-4e03-9257-52c7959435ea   ibm-esxi-7-amd64-1                                 available    amd64   esxi-7                               7.x                                       1               public       provider     none         -   
+   r010-1c4be597-1090-4aca-8521-623bcf5cbea4   ibm-esxi-7-byol-amd64-1                            available    amd64   esxi-7-byol                          7.x                                       1               public       provider     none         -   
+   ```
 
 3. Record the image ID as a variable, which is going to be used when provisioning the BMSs.
 
-```bash
-IMAGE_ESX=r010-85e78310-b809-4e03-9257-52c7959435ea
-```
+   ```sh
+   IMAGE_ESX=r010-85e78310-b809-4e03-9257-52c7959435ea
+   ```
+
 
 ## Validate BMS profiles
 {: #vpc-bm-vmware-bms-profile}
@@ -117,22 +121,24 @@ IMAGE_ESX=r010-85e78310-b809-4e03-9257-52c7959435ea
 
 1. There are multiple BMS profiles available with different compute, memory and storage characteristics. You can get the currently available profiles with the following command:
 
-```bash
-ibmcloud is bm-prs
-```
+   ```sh
+   ibmcloud is bm-prs
+   ```
+   {: codeblock}
 
 2. During the Beta, following images are available. The 'bx2' profile provides minimal local storage and this profile would be used with File Storage based environments. The 'bxd2' comes with more local disk which can be used to form a vSAN Storage.
 
-```bash
-$ ibmcloud is bm-prs
-Listing bare metal server profiles in region eu-de under account IBM Cloud Acc as user xxx@yyy.com...
-Name                 Architecture   Family     CPU socket count   CPU core count   Memory(GiB)   Network(Mbps)   Storage(GB)   
-bx2-metal-192x768    amd64          balanced   4                  96               768           100000          1x960   
-bx2d-metal-192x768   amd64          balanced   4                  96               768           100000          1x960, 16x3200   
-```
+   ```bash
+   $ ibmcloud is bm-prs
+   Listing bare metal server profiles in region eu-de under account IBM Cloud Acc as user xxx@yyy.com...
+   Name                 Architecture   Family     CPU socket count   CPU core count   Memory(GiB)   Network(Mbps)   Storage(GB)   
+   bx2-metal-192x768    amd64          balanced   4                  96               768           100000          1x960   
+   bx2d-metal-192x768   amd64          balanced   4                  96               768           100000          1x960, 16x3200   
+   ```
 
-Important. If you plan to use vSAN in your VMware deployment, select the 'bx2d-metal-192x768' bare metal server profile.
-{: important}
+   If you plan to use vSAN in your VMware deployment, select the 'bx2d-metal-192x768' bare metal server profile.
+   {: important}
+
 
 ## Provision BMS
 {: #vpc-bm-vmware-bms-provision}
@@ -140,77 +146,108 @@ Important. If you plan to use vSAN in your VMware deployment, select the 'bx2d-m
 
 1. Bare metal servers can be provisioned with CLI or GUI. When provisioning with CLI, you can get help for the required parameters with the following command.
 
-```bash
-ibmcloud is bmc --help 
-```
+   ```sh
+   ibmcloud is bmc --help 
+   ```
+   {: codeblock}
 
 1. Create user data shell scripts. 
 
-As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for bare metal server '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
+   As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for bare metal server '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
 
-```bash
-# enable & start SSH
-vim-cmd hostsvc/enable_ssh
-vim-cmd hostsvc/start_ssh
-# enable & start ESXi Shell
-vim-cmd hostsvc/enable_esx_shell
-vim-cmd hostsvc/start_esx_shell
-# Attempting to set the hostname
-esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
-```
+   ```bash
+   # enable & start SSH
+   vim-cmd hostsvc/enable_ssh
+   vim-cmd hostsvc/start_ssh
+   # enable & start ESXi Shell
+   vim-cmd hostsvc/enable_esx_shell
+   vim-cmd hostsvc/start_esx_shell
+   # Attempting to set the hostname
+   esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
+   ```
 
- A script per bare metal server is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
+   A script per bare metal server is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
 
-1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
+1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. 
+  
+   If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
+  
+   The following commands will order your bare metal servers. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
+   {: important}
 
-Important. The following commands will order your bare metal servers. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
-{: important}
+   ```sh
+   VMWARE_BMS001=$(ibmcloud is bmc --name esx-001 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host1_esxi.sh --output json | jq -r .id)
+   ```
+   {: codeblock}
 
-```bash
-VMWARE_BMS001=$(ibmcloud is bmc --name esx-001 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host1_esxi.sh --output json | jq -r .id)
-VMWARE_BMS002=$(ibmcloud is bmc --name esx-002 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host2_esxi.sh --output json | jq -r .id)
-VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host3_esxi.sh --output json | jq -r .id)
-```
+   ```sh
+   VMWARE_BMS002=$(ibmcloud is bmc --name esx-002 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host2_esxi.sh --output json | jq -r .id)
+   ```
+   {: codeblock}
 
-Note: If running inside of Git Bash on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'. In this case insert this inside the brackets, e.g. $(MSYS_NO_PATHCONV=1 ibmcloud is ...).
-{: note}
+   ```sh
+   VMWARE_BMS003=$(ibmcloud is bmc --name esx-003 --zone $VMWARE_VPC_ZONE --profile bx2d-metal-192x768 --image $IMAGE_ESX --keys $SSH_KEY --pnic-subnet $VMWARE_SUBNET_HOST --pnic-name pci-nic-vmnic0-vmk0 --user-data @~/host3_esxi.sh --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   Note: If running inside of Git sh on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'. In this case insert this inside the brackets, e.g. $(MSYS_NO_PATHCONV=1 ibmcloud is ...).
+   {: note}
 
 1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
-```bash
-ibmcloud is bm $VMWARE_BMS001
-```
+   ```sh
+   ibmcloud is bm $VMWARE_BMS001
+   ```
+   {: codeblock}
+   Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
-Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
 ### Obtain Bare Metal Credentials
 {: #vpc-bm-vmware-bms-provision-cred}
 
 1. Once the hosts have been provisioned, get the credentials for 'root' user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this.
 
-```bash
-ibmcloud is bm-init $VMWARE_BMS001 --private-key @~/.ssh/id_rsa
-ibmcloud is bm-init $VMWARE_BMS002 --private-key @~/.ssh/id_rsa
-ibmcloud is bm-init $VMWARE_BMS003 --private-key @~/.ssh/id_rsa
-```
+   ```sh
+   ibmcloud is bm-init $VMWARE_BMS001 --private-key @~/.ssh/id_rsa
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud is bm-init $VMWARE_BMS002 --private-key @~/.ssh/id_rsa
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud is bm-init $VMWARE_BMS003 --private-key @~/.ssh/id_rsa
+   ```
+   {: codeblock}
 
 2. Record the passwords for future use.
+
 
 ### Obtain the Bare metal IP Details
 {: #vpc-bm-vmware-bms-provision-ip}
 
 1. Get the IP addresses of the servers and record them for future use into a variable.
 
-```bash
-VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
-echo "VMWARE_BMS001 IP : "$VMWARE_BMS001_MGMT_IP
+   ```sh
+   VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   echo "VMWARE_BMS001 IP : "$VMWARE_BMS001_MGMT_IP
+   ```
+   {: codeblock}
 
-VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
-echo "VMWARE_BMS002 IP : "$VMWARE_BMS002_MGMT_IP
+   ```sh
+   VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   echo "VMWARE_BMS002 IP : "$VMWARE_BMS002_MGMT_IP
+   ```
+   {: codeblock}
 
-VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
-echo "VMWARE_BMS003 IP : "$VMWARE_BMS003_MGMT_IP
-```
+   ```sh
+   VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   echo "VMWARE_BMS003 IP : "$VMWARE_BMS003_MGMT_IP
+   ```
+   {: codeblock}
+
 
 ## Add hosts to DNS
 {: #vpc-bm-vmware-bms-dns}
@@ -218,11 +255,21 @@ echo "VMWARE_BMS003 IP : "$VMWARE_BMS003_MGMT_IP
 
 1. Add the host 'A records' to your previously created DNS instance's zone:
 
-```bash
-ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-001 --ipv4 $VMWARE_BMS001_MGMT_IP
-ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-002 --ipv4 $VMWARE_BMS002_MGMT_IP
-ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-003 --ipv4 $VMWARE_BMS003_MGMT_IP
-```
+   ```sh
+   ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-001 --ipv4 $VMWARE_BMS001_MGMT_IP
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-002 --ipv4 $VMWARE_BMS002_MGMT_IP
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-003 --ipv4 $VMWARE_BMS003_MGMT_IP
+   ```
+   {: codeblock}
+
 
 ## Create VLAN NICs for VMkernel adapters
 {: #vpc-bm-vmware-bms-vlannic}
@@ -241,6 +288,7 @@ The following diagram shows how each VMK's network configurations map to VPC net
 
 ![VMkernel adapter mapping to VPC Subnets](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
 
+
 ### Configure PCI NIC to allow VLANs
 {: #vpc-bm-vmware-bms-vlannic-allow}
 
@@ -255,19 +303,38 @@ Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLAN
 
 1. Get the PCI NIC IDs for the provisioned bare metal servers:
 
-```bash
-VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r '.[0].id')
-VMWARE_BMS002_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS002 --output json | jq -r '.[0].id')
-VMWARE_BMS003_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS003 --output json | jq -r '.[0].id')
-```
+   ```sh
+   VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r '.[0].id')
+      ```
+   {: codeblock}
+
+   ```sh
+   VMWARE_BMS002_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS002 --output json | jq -r '.[0].id')
+      ```
+   {: codeblock}
+
+   ```sh
+   VMWARE_BMS003_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS003 --output json | jq -r '.[0].id')
+   ```
+   {: codeblock}
 
 2. Allow PCI NICs to use the VLANs stated above:
 
-```bash
-ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
-ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
-ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400
-```
+   ```sh
+   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
+      ```
+   {: codeblock}
+
+   ```sh
+   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400
+   ```
+   {: codeblock}
+
 
 ### Creating VLAN NICs
 {: #vpc-bm-vmware-bms-vlannic-create}
@@ -280,101 +347,130 @@ vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
 vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
 vlan-nic-tep-vmk10    | vlan           | 400     | $VMWARE_SUBNET_TEP  | false
 
-Note. When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
+
+When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
 {: note}
 
-Note. Instance management VLAN NICs e.g. for vCenter will be created later.
+Instance management VLAN NICs e.g. for vCenter will be created later.
 {: note}
 
 1. To create the VLAN NICs you can use CLI, and to get the command reference use the following command. The next chapters will detail each VLAN interface provisioning for each VMK.
 
-```bash
-ibmcloud is bm-nicc --help
-```
+   ```sh
+   ibmcloud is bm-nicc --help
+   ```
+   {: codeblock}
+
 
 ### Create VLAN NICs for vMotion
 {: #vpc-bm-vmware-bms-vlannic-vmot}
 
 1. Create vMotion VLAN NICs for each host. Record the IP addresses for later use.
 
-| Bare Metal Name | Subnet Name         | VLAN | Allowed to Float |
-|-----------------|---------------------|------|------------------|
-| VMWARE_BMS001   | $VMWARE_SUBNET_VMOT | 200  | false            |
-| VMWARE_BMS002   | $VMWARE_SUBNET_VMOT | 200  | false            |
-| VMWARE_BMS003   | $VMWARE_SUBNET_VMOT | 200  | false            |
+   | Bare Metal Name | Subnet Name         | VLAN | Allowed to Float |
+   |-----------------|---------------------|------|------------------|
+   | VMWARE_BMS001   | $VMWARE_SUBNET_VMOT | 200  | false            |
+   | VMWARE_BMS002   | $VMWARE_SUBNET_VMOT | 200  | false            |
+   | VMWARE_BMS003   | $VMWARE_SUBNET_VMOT | 200  | false            |
 
-```bash
-VMWARE_BMS001_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS001_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VMOT --output json | jq -r .primary_ipv4_address)
-echo "vMotion IP for BMS001 : "$VMWARE_BMS001_VMOT_IP
 
-VMWARE_BMS002_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS002_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VMOT --output json | jq -r .primary_ipv4_address)
-echo "vMotion IP for BMS002 : "$VMWARE_BMS002_VMOT_IP
+   ```sh
+   VMWARE_BMS001_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS001_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VMOT --output json | jq -r .primary_ipv4_address)
+   echo "vMotion IP for BMS001 : "$VMWARE_BMS001_VMOT_IP
+   ```
+   {: codeblock}
 
-VMWARE_BMS003_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS003_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VMOT --output json | jq -r .primary_ipv4_address)
-echo "vMotion IP for BMS003 : "$VMWARE_BMS003_VMOT_IP
-```
+   ```sh
+   VMWARE_BMS002_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS002_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VMOT --output json | jq -r .primary_ipv4_address)
+   echo "vMotion IP for BMS002 : "$VMWARE_BMS002_VMOT_IP
+   ```
+   {: codeblock}
 
-Note. In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
-{: note}
+   ```sh
+   VMWARE_BMS003_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS003_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VMOT --output json | jq -r .primary_ipv4_address)
+   echo "vMotion IP for BMS003 : "$VMWARE_BMS003_VMOT_IP
+   ```
+   {: codeblock}
+
+   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
+   {: note}
+
 
 ### Create VLAN NICs for vSAN
 {: #vpc-bm-vmware-bms-vlannic-vsan}
 
-Note. This phase is optional, if you use NFS.
+This phase is optional, if you use NFS.
 {:note}
 
 1. Create vSAN VLAN NICs for each host. Record the IP addresses for later use.
 
-| Bare Metal Name | Subnet Name         | VLAN | Allowed to Float |
-|-----------------|---------------------|------|------------------|
-| VMWARE_BMS001   | $VMWARE_SUBNET_VSAN | 300  | false            |
-| VMWARE_BMS002   | $VMWARE_SUBNET_VSAN | 300  | false            |
-| VMWARE_BMS003   | $VMWARE_SUBNET_VSAN | 300  | false            |
+   | Bare Metal Name | Subnet Name         | VLAN | Allowed to Float |
+   |-----------------|---------------------|------|------------------|
+   | VMWARE_BMS001   | $VMWARE_SUBNET_VSAN | 300  | false            |
+   | VMWARE_BMS002   | $VMWARE_SUBNET_VSAN | 300  | false            |
+   | VMWARE_BMS003   | $VMWARE_SUBNET_VSAN | 300  | false            |
 
-```bash
-VMWARE_BMS001_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS001_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VSAN --output json | jq -r .primary_ipv4_address)
-echo "vSAN IP for BMS001 : "$VMWARE_BMS001_VSAN_IP
 
-VMWARE_BMS002_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS002_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VSAN --output json | jq -r .primary_ipv4_address)
-echo "vSAN IP for BMS002 : "$VMWARE_BMS002_VSAN_IP
+   ```sh
+   VMWARE_BMS001_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS001_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VSAN --output json | jq -r .primary_ipv4_address)
+   echo "vSAN IP for BMS001 : "$VMWARE_BMS001_VSAN_IP
+   ```
+   {: codeblock}
 
-VMWARE_BMS003_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS003_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VSAN --output json | jq -r .primary_ipv4_address)
-echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
-```
+   ```sh
+   VMWARE_BMS002_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS002_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VSAN --output json | jq -r .primary_ipv4_address)
+   echo "vSAN IP for BMS002 : "$VMWARE_BMS002_VSAN_IP
+   ```
+   {: codeblock}
 
-Note. In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
-{: note}
+   ```sh
+   VMWARE_BMS003_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS003_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VSAN --output json | jq -r .primary_ipv4_address)
+   echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
+   ```
+   {: codeblock}
+
+   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
+   {: note}
+
 
 ### Create VLAN NICs for TEPs
 {: #vpc-bm-vmware-bms-vlannic-tep}
 
 1. If you plan use NSX-T, you also need to create TEP VLAN NICs for each host. Record the IP addresses for later use.
 
-| Bare Metal Name | Subnet Name        | VLAN | Allowed to Float |
-|-----------------|--------------------|------|------------------|
-| VMWARE_BMS001   | $VMWARE_SUBNET_TEP | 400  | false            |
-| VMWARE_BMS002   | $VMWARE_SUBNET_TEP | 400  | false            |
-| VMWARE_BMS003   | $VMWARE_SUBNET_TEP | 400  | false            |
+   | Bare Metal Name | Subnet Name        | VLAN | Allowed to Float |
+   |-----------------|--------------------|------|------------------|
+   | VMWARE_BMS001   | $VMWARE_SUBNET_TEP | 400  | false            |
+   | VMWARE_BMS002   | $VMWARE_SUBNET_TEP | 400  | false            |
+   | VMWARE_BMS003   | $VMWARE_SUBNET_TEP | 400  | false            |
 
-```bash
-VMWARE_BMS001_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS001_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_TEP --output json | jq -r .primary_ipv4_address)
-echo "TEP IP for BMS001 : "$VMWARE_BMS001_TEP_IP
 
-VMWARE_BMS002_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS002_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_TEP --output json | jq -r .primary_ipv4_address)
-echo "TEP IP for BMS002 : "$VMWARE_BMS002_TEP_IP
+   ```sh
+   VMWARE_BMS001_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS001_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_TEP --output json | jq -r .primary_ipv4_address)
+   echo "TEP IP for BMS001 : "$VMWARE_BMS001_TEP_IP
+   ```
+   {: codeblock}
 
-VMWARE_BMS003_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-VMWARE_BMS003_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_TEP --output json | jq -r .primary_ipv4_address)
-echo "TEP IP for BMS003 : "$VMWARE_BMS003_TEP_IP
-```
+   ```sh
+   VMWARE_BMS002_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS002_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_TEP --output json | jq -r .primary_ipv4_address)
+   echo "TEP IP for BMS002 : "$VMWARE_BMS002_TEP_IP
+   ```
+   {: codeblock}
 
-Note. In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
-{: note}
+   ```sh
+   VMWARE_BMS003_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
+   VMWARE_BMS003_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_TEP --output json | jq -r .primary_ipv4_address)
+   echo "TEP IP for BMS003 : "$VMWARE_BMS003_TEP_IP
+   ```
+   {: codeblock}
+
+   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
+   {: note}
