@@ -136,16 +136,24 @@ If you want to use the 'default' resource group, you can set your target resourc
 
 ```sh
 VMWARE_RG=$(ibmcloud resource groups --output json | jq -r '.[] | select(.name == "default")'.id)
-ibmcloud target -g $VMWARE_RG
 ```
 {: codeblock}
 
-If you want to create a new resource group for your VMware assets e.g. with a name 'VMware', you can use the following command:
+If you want to create a new resource group for your VMware assets e.g. with a name 'VMware', you can use the following commands:
 
 ```sh
 VMWARE_RG_NAME="VMware"
-VMWARE_RG=$(ibmcloud resource group-create $VMWARE_RG_NAME --output json | jq -r .id)
-ibmcloud target -g $VMWARE_RG
 ```
 {: codeblock}
 
+```sh
+VMWARE_RG=$(ibmcloud resource group-create $VMWARE_RG_NAME --output json | jq -r .id)
+```
+{: codeblock}
+
+Then set your target to the wanted resource group.
+
+```sh
+ibmcloud target -g $VMWARE_RG
+```
+{: codeblock}
