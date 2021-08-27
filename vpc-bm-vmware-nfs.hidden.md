@@ -93,9 +93,15 @@ ibmcloud is share-create --help
 {: codeblock}
 
 
-1. Check the available share profiles, and use the following command.
+1. Check the available share profiles, and you can use the following command.
 
    ```sh
+   ibmcloud is share-profiles
+   ```
+   {: codeblock}
+
+   Example:
+   ```bash
    ibmcloud is share-profiles
    Listing file share profiles in region eu-de under account IBM Cloud Acc as user xxx@yyy.com...
    Name          Family   
@@ -104,11 +110,10 @@ ibmcloud is share-create --help
    tier-5iops    tiered
    tier-10iops   tiered 
    ```
-   {: codeblock}
 
 2. Create a file share.
 
-   In this example, a 1TB 10 IOPS/GB file share is created with using the previously created VPC as a targe. Record the file share's and the file share target's IDs.
+   In this example, a 1TB with 10IOPS/GB file share is created with using the previously created VPC as a targe. Record the file share's and the file share target's IDs.
 
    ```sh
    VMWARE_DATASTORE01=$(ibmcloud is share-create --name vmware-nfs-datastore-01 --zone eu-de-1 --profile tier-10iops --size 1000 --targets '[{"name": "vmware-cluster-01", "vpc": {"id": "'$VMWARE_VPC'"}}]' --output json | jq -r .id)
@@ -124,12 +129,22 @@ ibmcloud is share-create --help
 
    ```sh
    VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
-      ```
+   ```
    {: codeblock}
    
    ```sh
    echo "Mount path is : "$VMWARE_DATASTORE01_TARGET01_MOUNTPATH
+   ```
+   {: codeblock}
+
+   vCenter needs the values separated for mount path, server and folder. You can use the following commands to get the required values:
+
+   ```sh
    echo "Server : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print $1}')
+   ```
+   {: codeblock}
+
+   ```sh
    echo "Folder : "$(echo $VMWARE_DATASTORE01_TARGET01_MOUNTPATH | awk -F: '{print $2}')
    ```
    {: codeblock}
