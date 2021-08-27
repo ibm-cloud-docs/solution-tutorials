@@ -322,6 +322,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
+
 2. Create a new VLAN NIC in the subnet '192.168.0.0/24', which is allowed to float between host (for vMotion).
 
    ```sh
