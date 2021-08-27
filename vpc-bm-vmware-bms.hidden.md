@@ -199,6 +199,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ibmcloud is bm $VMWARE_BMS001
    ```
    {: codeblock}
+   
    Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
 
