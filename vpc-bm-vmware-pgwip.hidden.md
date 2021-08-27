@@ -47,8 +47,9 @@ This is a Beta feature that requires special approval. Contact your IBM Sales re
 If your VMware Virtua Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial provides an example for these use cases for a VMware VM's VLAN NIC.
 {: shortdesc}
 
-Important. This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
+This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
+
 
 ## Objectives
 {: #vpc-bm-vmware-pgwip-objectives}
@@ -68,10 +69,7 @@ This tutorial requires:
 
 * Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
 
-Important. This tutorial is part of series, and requires that you have completed the related tutorials.
-{: important}
-
-Make sure you have successfully completed the required previous steps
+This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
@@ -92,18 +90,21 @@ VPC subnets are private by default. If your VMware Virtual Machines on the VM su
 
 1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this VPC Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
 
-```bash
-ibmcloud is subnetu $VMWARE_SUBNET_VM1 --public-gateway-id $VMWARE_PUBLIC_GW
-```
+   ```sh
+   ibmcloud is subnetu $VMWARE_SUBNET_VM1 --public-gateway-id $VMWARE_PUBLIC_GW
+   ```
+   {: codeblock}
 
 2. After you have attached your newly created subnet to public gateway, you shold be able access Internet from the VM, e.g.:
 
-```bash
-ping 1.1.1.1
-```
+   ```sh
+   ping 1.1.1.1
+   ```
+   {: codeblock}
 
-Tip. To control outbound Internet access from your virtual machines, you can use security groups or access control lists. In this example, the default security group allows all outbound Internet access.
-{: tip}
+   To control outbound Internet access from your virtual machines, you can use security groups or access control lists. In this example, the default security group allows all outbound Internet access.
+   {: tip}
+
 
 ## Establish Inbound Internet Access with Floating IP
 {: #vpc-bm-vmware-pgwip-inbound}
@@ -113,24 +114,27 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 
 1. Create a floating IP for the First Virtual Machines (VM1) VLAN NIC and record the IP.
 
-```bash
-VMWARE_VM_FIP=$(ibmcloud is ipc floating-ip-vm-1 --nic-id $VMWARE_VNIC_VM1 --output json | jq -r .address)
-echo "Public IP for your VLAN NIC : "$VMWARE_VM_FIP
-```
+   ```sh
+   VMWARE_VM_FIP=$(ibmcloud is ipc floating-ip-vm-1 --nic-id $VMWARE_VNIC_VM1 --output json | jq -r .address)
+   echo "Public IP for your VLAN NIC : "$VMWARE_VM_FIP
+   ```
+   {: codeblock}
 
-Tip. To control access to your virtual machine, you may need to update the VLAN NIC's security group (or access control lists).
-{: tip}
+   To control access to your virtual machine, you may need to update the VLAN NIC's security group (or access control lists).
+   {: tip}
 
 2. If you provisioned the VM's VLAN interface with the default VPC security group, use following commands:
 
-```bash
-VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
-ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
-```
+   ```sh
+   VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
+   ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
+   ```
+   {: codeblock}
 
 3. If you provisioned a new security group for the VLAN interface e.g. with a name 'your-security-group', use can use following commands:
 
-```bash
-VMWARE_VM_FIP_SG=$(ic is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)
-ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
-```
+   ```sh
+   VMWARE_VM_FIP_SG=$(ic is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)
+   ibmcloud is sg-rulec $VMWARE_VM_FIP_SG inbound tcp --port-min <your_port_number> --port-max <your_port_number> --remote <add_your_IP_here>
+   ```
+   {: codeblock}
