@@ -322,14 +322,12 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
-
 2. Create a new VLAN NIC in the subnet '192.168.0.0/24', which is allowed to float between host (for vMotion).
 
    ```sh
    VMWARE_VNIC_VM2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VM1 --interface-type vlan --vlan 1001 --allow-interface-to-float true --name vlan-nic-vm-2 --output json | jq -r .id)
    ```
    {: codeblock}
-
 
 3. Get the IP address allocated by VPC, by using the following commands:
 
