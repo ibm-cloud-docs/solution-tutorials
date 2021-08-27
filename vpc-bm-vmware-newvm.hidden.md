@@ -251,7 +251,7 @@ To migrate the created VM:
 
 Network connectivity should remain intact and you should be able to see your Virtual Machine running on a different host e.g. BMS002 / esx-002 via vCenter.
 
-In addition, if you run the following commands, you can see the location change of the VLAN NIC 'vlan-nic-vm-1'.
+In addition, if you run the following commands, you can see the location change of the VLAN NIC 'vlan-nic-vm-1' from $VMWARE_BMS001.
 
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS001
@@ -269,6 +269,8 @@ ID                                          Name                  Status      Ty
 02b7-8114ba6d-0dbd-4453-b38d-83db068cf959   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.4                   vlan             02:00:01:21:ED:97   -                               200   
 02b7-9276f471-1426-49ee-8e8c-0a6d964eccdb   vlan-nic-vsan-vmk2    available   secondary   10.97.2.8                   vlan             02:00:05:21:ED:98   -                               300   
 ```
+
+And then see the location change of the VLAN NIC 'vlan-nic-vm-1' to $VMWARE_BMS001.
 
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS002
@@ -299,9 +301,9 @@ In a VMware environment, traffic between VLAN network interfaces that have the s
 {: #vpc-bm-vmware-newvm-deploy-vm2}
 {: step}
 
-This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID '1001' but attached to the same VPC subnet 'SUBNET_VM1'. You may alter the VLAN ID based on your preferences.
+This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID '1001' but attached to the same VPC subnet '$SUBNET_VM1'. You may alter the VLAN ID based on your preferences.
 
-1. Allow the VLAN ID '1001' for the bare metal servers' PCI interface.
+1. Allow the VLAN ID '1001' for the PCI interface of the bare metal server.
 
    With the process outlined in the previous example, you can allow the BMSs to use the new VLAN ID with the following commands:
 
@@ -353,7 +355,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    * DNS : 161.26.0.7, 161.26.0.8
    * NTP : 161.26.0.6
 
-5. At this point you should be able to ping the first Virtual Machine (VM1) from this newly created Virtual Machine (VM2).
+6. At this point you should be able to ping the first Virtual Machine (VM1) from this newly created Virtual Machine (VM2).
 
    ```sh
    ping 192.168.0.4
