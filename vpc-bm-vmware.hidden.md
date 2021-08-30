@@ -161,4 +161,6 @@ ibmcloud target -g $VMWARE_RG
 ## Next Steps
 {: #vpc-bm-vmware-next-steps}
 
-1. [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+The next step in the tutorial series is:
+
+* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)

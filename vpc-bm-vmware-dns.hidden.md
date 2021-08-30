@@ -54,11 +54,6 @@ In this tutorial [IBM Cloud DNS service](https://{DomainName}/docs/dns-svcs?topi
 
 ![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
 
-1. Provision IBM Cloud DNS service
-2. Provision a Zone
-3. Create DNS records
-4. Validate DNS records
-
 
 ## Before you begin
 {: #vpc-bm-vmware-dns-prereqs}
@@ -174,4 +169,6 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
 ## Next Steps
 {: #vpc-bm-vmware-dns-next-steps}
 
-1. [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+The next step in the tutorial series is:
+
+* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)

@@ -111,6 +111,7 @@ To Create a file share in VPC you can use either CLI or UI (or API).
    tier-5iops    tiered
    tier-10iops   tiered 
    ```
+   {: screen}
 
 2. Create a file share.
 
@@ -190,4 +191,6 @@ Your hosts will access NFS share using the ESXi hosts' management interfaces (PC
 ## Next Steps
 {: #vpc-bm-vmware-nfs-next-steps}
 
-1. [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+The next step in the tutorial series is:
+
+* [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)

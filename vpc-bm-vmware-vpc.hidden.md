@@ -52,16 +52,9 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 
 In this tutorial, you will create a VPC for your VMware Deployment. The following diagram shows the VPC layout and subnets to be provisioned. NSX-T subnets are optional for NSX-T based deployments.
 
-![VPC Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "VPC Subnets for VMware Deployment"){: caption="Figure 1. VPC Subnets for VMware Deployment" caption-side="bottom"}
-
 In this tutorial, a dedicated VPC for VMware is used, but you can alter and modify the deployment based on your needs.  
 
-1. Create a VPC
-2. Provision a Prefix
-3. Provision Subnets
-4. Provision a Public Gateway for Management Subnet
-5. Create a SSH Key
-6. Provision a Jump Machine / Bastion Host
+![VPC Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "VPC Subnets for VMware Deployment"){: caption="Figure 1. VPC Subnets for VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin
@@ -288,4 +281,6 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
 ## Next Steps
 {: #vpc-bm-vmware-vpc-next-steps}
 
-1. [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+The next step in the tutorial series is:
+
+* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)

@@ -60,10 +60,6 @@ In this tutorial, you will create a vSAN cluster using the local disks attached 
 
 ![vSAN as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vsan.svg "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
 
-1. Create VLAN NICs for vSAN
-2. Configure a vSAN interface using vSphere Client
-3. Create vSAN using vSphere Client
-
 
 ## Before you begin
 {: #vpc-bm-vmware-vsan-prereqs}
@@ -167,4 +163,6 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 ## Next Steps
 {: #vpc-bm-vmware-vsan-next-steps}
 
-1. OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
+The next step in the tutorial series is:
+
+* OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)

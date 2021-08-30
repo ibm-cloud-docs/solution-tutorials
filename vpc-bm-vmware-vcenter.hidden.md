@@ -57,15 +57,6 @@ In this tutorial you will provision a vCenter appliance to the ESXi hosts and cr
 
 ![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
-1. Provision VLAN NIC for vCenter
-2. Add Port Group for VLAN 100 for Standard switch
-3. Deploy vCenter appliance
-4. Create a new Datacenter and create a Cluster
-5. Create new Distributed Switch (vDS)
-6. Create the vMotion Kernel Interfaces
-7. Migrate Management / VMK interfaces
-8. Delete vSwitch0
-
 
 ## Before you begin
 {: #vpc-bm-vmware-vcenter-prereqs}
@@ -445,4 +436,6 @@ Delete 'vSwitch0' on all hosts using the following method
 ## Next Steps
 {: #vpc-bm-vmware-vcenter-next-steps}
 
-1. OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+The next step in the tutorial series is:
+
+* OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)

@@ -57,14 +57,6 @@ In this tutorial, you will create a VMware virtual machine running on VMware clu
 
 ![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
 
-1. Create a VPC prefix and a subnet for VMware Virtual machines
-2. Allow new VLAN on PCI NICs
-3. Create a VLAN NIC
-4. Create new Portgroup for the Distributed Switch
-5. Deploy a first Virtual Machine
-6. Run a vMotion test for the first Virtual Machine
-7. Deploy a second Virtual Machine
-
 ## Before you begin
 {: #vpc-bm-vmware-newvm-prereqs}
 
@@ -367,4 +359,6 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 ## Next Steps
 {: #vpc-bm-vmware-newvm-next-steps}
 
-1. [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+The next step in the tutorial series is:
+
+* [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
