@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-27"
+lastupdated: "2021-08-30"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -182,6 +182,12 @@ Kerberos:  Disabled
 Hosts that will have access to this datastore
 Hosts:  esx-001.vmware.ibmcloud.local, esx-002.vmware.ibmcloud.local, esx-003.vmware.ibmcloud.local 
 ```
+{: screen}
 
 Your hosts will access NFS share using the ESXi hosts' management interfaces (PCI NICs) with this setup. This is for simplicity for this non-production setup.  
 {: note}
+
+## Next Steps
+{: #vpc-bm-vmware-nfs-next-steps}
+
+1. [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)

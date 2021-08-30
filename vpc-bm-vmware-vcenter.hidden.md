@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-27"
+lastupdated: "2021-08-30"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -441,3 +441,8 @@ Delete 'vSwitch0' on all hosts using the following method
 4. Click Networking, Virtual Switches.
 5. Expand the standard switch.
 6. Click the '...' and select Remove.
+
+## Next Steps
+{: #vpc-bm-vmware-vcenter-next-steps}
+
+1. OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)

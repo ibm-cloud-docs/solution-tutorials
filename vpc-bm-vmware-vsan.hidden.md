@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-27"
+lastupdated: "2021-08-30"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -163,3 +163,8 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 4. Click Change storage only, click Next.
 5. Select vsanDatastore, click Next.
 6. Click Next, Click Finish.
+
+## Next Steps
+{: #vpc-bm-vmware-vsan-next-steps}
+
+1. OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)

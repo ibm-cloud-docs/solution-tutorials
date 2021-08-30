@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-27"
+lastupdated: "2021-08-30"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -136,6 +136,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
    ```
+   {: codeblock}
 
 
 ## Validate DNS records
@@ -169,3 +170,8 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    nslookup <hostname>
    ```
    {: codeblock}
+
+## Next Steps
+{: #vpc-bm-vmware-dns-next-steps}
+
+1. [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
