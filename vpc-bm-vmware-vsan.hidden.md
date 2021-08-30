@@ -163,3 +163,8 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 4. Click Change storage only, click Next.
 5. Select vsanDatastore, click Next.
 6. Click Next, Click Finish.
+
+## Next Steps
+{: #vpc-bm-vmware-vsan-next-steps}
+
+1. OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)

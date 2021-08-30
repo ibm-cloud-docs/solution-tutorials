@@ -284,3 +284,8 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
 
    You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
    {: tip}
+
+## Next Steps
+{: #vpc-bm-vmware-vpc-next-steps}
+
+1. [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)

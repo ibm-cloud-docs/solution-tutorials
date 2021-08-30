@@ -474,3 +474,8 @@ This phase is optional, if you use NFS.
 
    In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
    {: note}
+
+## Next Steps
+{: #vpc-bm-vmware-bms-next-steps}
+
+1. [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)

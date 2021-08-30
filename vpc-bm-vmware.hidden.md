@@ -157,3 +157,8 @@ Then set your target to the wanted resource group.
 ibmcloud target -g $VMWARE_RG
 ```
 {: codeblock}
+
+## Next Steps
+{: #vpc-bm-vmware-next-steps}
+
+1. [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)

@@ -260,7 +260,7 @@ ibmcloud is bm-nics $VMWARE_BMS001
 
 Example:
 
-```bash
+```
 ibmcloud is bm-nics $VMWARE_BMS001
 Listing network interfaces of server 02b7-18928fa3-55b7-4d63-a2bb-b0d832ea19bc under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
@@ -269,6 +269,7 @@ ID                                          Name                  Status      Ty
 02b7-8114ba6d-0dbd-4453-b38d-83db068cf959   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.4                   vlan             02:00:01:21:ED:97   -                               200   
 02b7-9276f471-1426-49ee-8e8c-0a6d964eccdb   vlan-nic-vsan-vmk2    available   secondary   10.97.2.8                   vlan             02:00:05:21:ED:98   -                               300   
 ```
+{: screen}
 
 And then see the location change of the VLAN NIC 'vlan-nic-vm-1' to $VMWARE_BMS001.
 
@@ -279,7 +280,7 @@ ibmcloud is bm-nics $VMWARE_BMS002
 
 Example:
 
-```bash
+```
 $ ibmcloud is bm-nics $VMWARE_BMS002
 Listing network interfaces of server 02b7-02890a7a-e543-4479-92d5-a9d7d5819286 under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
@@ -290,6 +291,7 @@ ID                                          Name                  Status      Ty
 02b7-159f23b6-67e1-4aca-a4b8-36fede3b8fc7   vlan-nic-vcenter      available   secondary   10.97.0.132                 vlan             02:00:01:22:01:2B   -                               100   
 02b7-9d8a9d99-c11a-4573-ad69-737f8878387e   vlan-nic-vm-1         available   secondary   192.168.0.4                 vlan             02:00:01:22:6B:AC   -                               1000   
 ```
+{: screen}
 
 You should be able to access ping / access other Virtual Machines on the same VPC subnet from the provisioned Virtual Machine.
 
@@ -361,3 +363,8 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ping 192.168.0.4
    ```
    {: codeblock}
+
+## Next Steps
+{: #vpc-bm-vmware-newvm-next-steps}
+
+1. [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

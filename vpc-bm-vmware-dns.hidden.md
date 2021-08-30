@@ -169,3 +169,8 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    nslookup <hostname>
    ```
    {: codeblock}
+
+## Next Steps
+{: #vpc-bm-vmware-dns-next-steps}
+
+1. [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
