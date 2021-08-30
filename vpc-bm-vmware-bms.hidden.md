@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-27"
+lastupdated: "2021-08-30"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -203,7 +203,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ibmcloud is bm $VMWARE_BMS001
    ```
    {: codeblock}
-   
+
    Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
 
