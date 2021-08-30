@@ -303,9 +303,9 @@ In a VMware environment, traffic between VLAN network interfaces that have the s
 {: #vpc-bm-vmware-newvm-deploy-vm2}
 {: step}
 
-This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID '1001' but attached to the same VPC subnet '$SUBNET_VM1'. You may alter the VLAN ID based on your preferences.
+This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID `1001` but attached to the same VPC subnet `$SUBNET_VM1`. You may alter the VLAN ID based on your preferences.
 
-1. Allow the VLAN ID '1001' for the PCI interface of the bare metal server.
+1. Allow the VLAN ID `1001` for the PCI interface of the bare metal server.
 
    With the process outlined in the previous example, you can allow the BMSs to use the new VLAN ID with the following commands:
 
