@@ -102,17 +102,19 @@ This tutorial is part of series, and requires that you have completed the relate
 
 2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word 'esx'. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
 
-   ```bash
+   ```sh
    $ ibmcloud is images | grep esx
    r010-85e78310-b809-4e03-9257-52c7959435ea   ibm-esxi-7-amd64-1                                 available    amd64   esxi-7                               7.x                                       1               public       provider     none         -   
    r010-1c4be597-1090-4aca-8521-623bcf5cbea4   ibm-esxi-7-byol-amd64-1                            available    amd64   esxi-7-byol                          7.x                                       1               public       provider     none         -   
    ```
+   {: screen}
 
 3. Record the image ID as a variable, which is going to be used when provisioning the BMSs.
 
    ```sh
    IMAGE_ESX=r010-85e78310-b809-4e03-9257-52c7959435ea
    ```
+   {: screen}
 
 
 ## Validate BMS profiles
@@ -128,13 +130,14 @@ This tutorial is part of series, and requires that you have completed the relate
 
 2. During the Beta, following images are available. The 'bx2' profile provides minimal local storage and this profile would be used with File Storage based environments. The 'bxd2' comes with more local disk which can be used to form a vSAN Storage.
 
-   ```bash
+   ```sh
    $ ibmcloud is bm-prs
    Listing bare metal server profiles in region eu-de under account IBM Cloud Acc as user xxx@yyy.com...
    Name                 Architecture   Family     CPU socket count   CPU core count   Memory(GiB)   Network(Mbps)   Storage(GB)   
    bx2-metal-192x768    amd64          balanced   4                  96               768           100000          1x960   
    bx2d-metal-192x768   amd64          balanced   4                  96               768           100000          1x960, 16x3200   
    ```
+   {: screen}
 
    If you plan to use vSAN in your VMware deployment, select the 'bx2d-metal-192x768' bare metal server profile.
    {: important}
@@ -165,6 +168,7 @@ This tutorial is part of series, and requires that you have completed the relate
    # Attempting to set the hostname
    esxcli system hostname set --fqdn=esx-001.vmware.ibmcloud.local
    ```
+   {: screen}
 
    A script per bare metal server is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
 
@@ -199,6 +203,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ibmcloud is bm $VMWARE_BMS001
    ```
    {: codeblock}
+   
    Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
 
 

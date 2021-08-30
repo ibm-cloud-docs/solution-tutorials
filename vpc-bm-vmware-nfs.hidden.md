@@ -182,6 +182,7 @@ Kerberos:  Disabled
 Hosts that will have access to this datastore
 Hosts:  esx-001.vmware.ibmcloud.local, esx-002.vmware.ibmcloud.local, esx-003.vmware.ibmcloud.local 
 ```
+{: screen}
 
 Your hosts will access NFS share using the ESXi hosts' management interfaces (PCI NICs) with this setup. This is for simplicity for this non-production setup.  
 {: note}

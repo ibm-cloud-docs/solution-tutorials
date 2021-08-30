@@ -136,6 +136,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
    ```
+   {: codeblock}
 
 
 ## Validate DNS records
