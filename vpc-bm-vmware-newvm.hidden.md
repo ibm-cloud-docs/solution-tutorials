@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -53,7 +53,7 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-newvm-objectives}
 
-In this tutorial, you will create a VMware virtual machine running on VMware cluster using VPC and VPC bare metal server network constructs. Your virtual machine will be attached to VPC subnet using bare metal server's VLAN NIC.
+In this tutorial, you will create a VMware virtual machine running on VMware cluster using VPC and {{site.data.keyword.bm_is_short}} network constructs. Your virtual machine will be attached to VPC subnet using bare metal server's VLAN NIC.
 
 ![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
 
@@ -118,7 +118,7 @@ Next you will create a new VPC subnet with a name 'vmw-vm-subnet-1'.
 
 VLAN 1000 is used as the VLAN ID for the subnet in this tutorial. You can customize the VLAN IDs based on your preferences.
 
-1. Allow the Bare metal server PCI NICs to use the VLAN ID.
+1. Allow the {{site.data.keyword.bm_is_short}} PCI NICs to use the VLAN ID.
 
    ```sh
    ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000
@@ -287,7 +287,7 @@ ID                                          Name                  Status      Ty
 
 You should be able to access ping / access other Virtual Machines on the same VPC subnet from the provisioned Virtual Machine.
 
-In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same bare metal server will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the VPC network. For example, on a bare metal server host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
+In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same {{site.data.keyword.bm_is_short}} will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the VPC network. For example, on a {{site.data.keyword.bm_is_short}} host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
 {: note}
 
 
@@ -297,7 +297,7 @@ In a VMware environment, traffic between VLAN network interfaces that have the s
 
 This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID `1001` but attached to the same VPC subnet `$SUBNET_VM1`. You may alter the VLAN ID based on your preferences.
 
-1. Allow the VLAN ID `1001` for the PCI interface of the bare metal server.
+1. Allow the VLAN ID `1001` for the PCI interface of the {{site.data.keyword.bm_is_short}}.
 
    With the process outlined in the previous example, you can allow the BMSs to use the new VLAN ID with the following commands:
 
@@ -361,4 +361,6 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 
 The next step in the tutorial series is:
 
+* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+* OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 * [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

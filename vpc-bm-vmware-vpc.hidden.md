@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -167,7 +167,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 {: #vpc-bm-vmware-vpc-pgw}
 {: step}
 
-Subnets are private by default. As the management subnet needs outbound internet access (e.g. for getting software updates from VMware), a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or bare metal server instances to connect to the internet. After a subnet is attached to the public gateway, all instances in that subnet can connect to the internet. Public gateways use Many-to-1 SNAT.
+Subnets are private by default. As the management subnet needs outbound internet access (e.g. for getting software updates from VMware), a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the public gateway, all instances in that subnet can connect to the internet. Public gateways use Many-to-1 SNAT.
 
 1. Provision a Public Gateway and attach that to the management subnet.
 
@@ -186,7 +186,7 @@ Subnets are private by default. As the management subnet needs outbound internet
 {: #vpc-bm-vmware-vpc-sshkey}
 {: step}
 
-If you have not already done so, create a SSH key for the VPC. The SSH key is used e.g. for accessing linux based virtual servers or decrypting the passwords.
+If you have not already done so, create a SSH key for the VPC. The SSH key is used e.g. for accessing linux based {{site.data.keyword.vsi_is_short}} or decrypting the passwords.
 
 1. Create a new key on your local workstation or use on existing key based on your preferences. For more information, refer to [IBM Cloud Docs](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys).
 
@@ -202,9 +202,9 @@ If you have not already done so, create a SSH key for the VPC. The SSH key is us
 {: #vpc-bm-vmware-vpc-jump}
 {: step}
 
-To ease up VMware configuration tasks, provision a Windows server on the management subnet in your VPC. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the VPC network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the baremetal server and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
+To ease up VMware configuration tasks, provision a Windows server on the management subnet in your VPC. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the VPC network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the {{site.data.keyword.bm_is_short}} and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
 
-For more information on creating Virtual Servers, refer to [creating Virtual Servers using UI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
+For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
 
 1. List available images and select your preferred image. You can use the following CLI command to list all available images:
 
@@ -220,7 +220,7 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
    ```
    {: codeblock}
 
-3. Create a Windows Virtual Server with CLI or UI. Once the Virtual Server Instance is created, record the Jump server's ID and its NIC ID.
+3. Create a Windows {{site.data.keyword.vsi_is_short}} with CLI or UI. Once the {{site.data.keyword.vsi_is_short}} Instance is created, record the Jump server's ID and its NIC ID.
 
    ```sh
    VMWARE_JUMP=$(ibmcloud is instance-create jump-001 $VMWARE_VPC $VMWARE_VPC_ZONE bx2-2x8 $VMWARE_SUBNET_MGMT --image-id $IMAGE_WIN --key-ids $SSH_KEY --output json | jq -r .id)
@@ -234,7 +234,7 @@ For more information on creating Virtual Servers, refer to [creating Virtual Ser
 
    In this example, the Jump server is accessed directly from the Internet and a Floating IP to the server for this purpose. Floating IP addresses are IP addresses that are provided by IBM Cloud platform and are reachable from the public internet. You can reserve a floating IP address from the pool of available addresses that are provided by IBM, and you can associate it with a network interface of your server. That interface also will have a private IP address.
 
-4. Create a floating IP for the Virtual Server and record the IP.
+4. Create a floating IP for the {{site.data.keyword.vsi_is_short}} and record the IP.
 
    ```sh
    VMWARE_JUMP_FIP=$(ibmcloud is ipc jump-001-ip --nic-id $VMWARE_JUMP_NIC --output json | jq -r .address)

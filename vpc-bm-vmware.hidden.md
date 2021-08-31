@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vpc, vmwaresolutions
 account-plan: paid
-completion-time: 8h
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -29,7 +29,7 @@ completion-time: 8h
 {:preview: .preview}
 {:beta: .beta}
 
-# Deploying Roll Your Own VMware on VPC Bare Metal Servers
+# Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -45,16 +45,16 @@ This is a Beta feature that requires special approval. Contact your IBM Sales re
 
 IBM Cloud™ has a number of [offerings for VMware deployments in Classic](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings). These can be classified and described as:
 
-1. Automated vSphere Hypervisor Image deployment ([IBM Cloud bare metal servers with VMware vSphere](https://{DomainName}/docs/vmware?topic=vmware-vmware-getting-started))
+1. Automated vSphere Hypervisor Image deployment ([{{site.data.keyword.bm_is_full_notm}} with VMware vSphere](https://{DomainName}/docs/vmware?topic=vmware-vmware-getting-started))
 2. Automated vSphere Hypervisor Image deployment, installation and configuration ([VMware Solutions Dedicated - VMware vSphere®](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vs_vsphereclusteroverview))
 3. Automated vCenter and vSphere clusters deployment, installation and configuration ([VMware Solutions Dedicated - vCenter Server](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vc_vcenterserveroverview))
 
-[Bare metal servers on IBM Cloud™ Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-about-bare-metal-servers) environment provide a new option to deploy VMware on IBM Cloud. Currently the IBM Cloud™ VPC environment provides only the automated vSphere Hypervisor (ESXi) Operating System image deployment to Intel Bare Metals on VPC. Therefore, you need to manually install and configure the required VMware components, such as ESXi hosts, vCenter, vSAN or NSX-T components.
+[{{site.data.keyword.bm_is_full_notm}}](https://{DomainName}/docs/vpc?topic=vpc-about-bare-metal-servers) environment provide a new option to deploy VMware on IBM Cloud. Currently the {{site.data.keyword.vpc_short}} environment provides only the automated vSphere Hypervisor (ESXi) Operating System image deployment to Intel Bare Metals on VPC. Therefore, you need to manually install and configure the required VMware components, such as ESXi hosts, vCenter, vSAN or NSX-T components.
 
-This tutorial walks you through creating your own IBM Cloud™ VPC with multiple subnets as required to support vSphere networking and the provisioning of bare metal servers (BMS) for a basic VMware vSphere deployment. After the VPC and bare metal servers have been provisioned, the tutorial covers a manual deployment of the vCenter, creating VMware compute cluster with vSAN or NFS shared storage options. The tutorial also covers optional features, such as using VPC network for VMware Virtual Machine networking.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_short}} with multiple subnets as required to support vSphere networking and the provisioning of {{site.data.keyword.bm_is_full_notm}} (BMS) for a basic VMware vSphere deployment. After the VPC and {{site.data.keyword.bm_is_short}} have been provisioned, the tutorial covers a manual deployment of the vCenter, creating VMware compute cluster with vSAN or NFS shared storage options. The tutorial also covers optional features, such as using VPC network for VMware Virtual Machine networking.
 {: shortdesc}
 
-This tutorial assumes a working knowledge of VMware vSphere Hypervisor and vCenter Server 7.0 as well as IBM Cloud™ zones, regions, prefixes, subnets and security groups that build the base VPC networking and are used to support the vSphere deployment. More information about VMware products can be found in [VMware Docs](https://docs.vmware.com). VPC concepts and the networking constructs are explained in the [VPC pages of the IBM Cloud™ Docs](https://{DomainName}/docs/vpc?topic=vpc-getting-started). More information about planning and deploying bare metal servers on VPC can be found in the [Bare metal server section of VPC pages](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).  
+This tutorial assumes a working knowledge of VMware vSphere Hypervisor and vCenter Server 7.0 as well as {{site.data.keyword.cloud_notm}} zones, regions, prefixes, subnets and security groups that build the base VPC networking and are used to support the vSphere deployment. More information about VMware products can be found in [VMware Docs](https://docs.vmware.com). VPC concepts and the networking constructs are explained in the [VPC pages of the IBM Cloud™ Docs](https://{DomainName}/docs/vpc?topic=vpc-getting-started). More information about planning and deploying bare metal servers on VPC can be found in the [Bare metal server section of VPC pages](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).  
 {: note}
 
 ## Objectives
@@ -66,11 +66,11 @@ This tutorial assumes a working knowledge of VMware vSphere Hypervisor and vCent
 * Create shared storage for your compute cluster either by using vSAN or VPC file share (NFS).
 * Use VPC networking for your VMware Virtual Machines.
 
-The following diagram presents an overview of the base deployment in IBM Cloud VPC. The deployment is based on bare metal servers on IBM Cloud VPC and uses [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) to host the servers' network interfaces and [access control lists and security groups](https://{DomainName}/docs/vpc?topic=vpc-security-in-your-vpc) to secure the network access. VMware vSAN with local ESXi host embedded SSDs or IBM Cloud VPC file share are the storage options for datastores to be used for VMware Virtual Machines. VPC subnets can also be used to host network interfaces of VMware Virtual machines. 
+The following diagram presents an overview of the base deployment in IBM Cloud VPC. The deployment is based on {{site.data.keyword.bm_is_full}} and uses [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) to host the servers' network interfaces and [access control lists and security groups](https://{DomainName}/docs/vpc?topic=vpc-security-in-your-vpc) to secure the network access. VMware vSAN with local ESXi host embedded SSDs or IBM Cloud VPC file share are the storage options for datastores to be used for VMware Virtual Machines. VPC subnets can also be used to host network interfaces of VMware Virtual machines. 
 
 ![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
 
-You need to plan and decide your VPC networking solution for the VMware deployment before you start. This tutorial provides a simple example where a fully dedicated IBM Cloud™ Virtual Private Cloud is created for the VMware deployment, but you may customise your network solution if you so wish. You may also use [IBM Cloud interconnectivity ](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity) options. These are recommended for advanced users only.
+You need to plan and decide your VPC networking solution for the VMware deployment before you start. This tutorial provides a simple example where a fully dedicated {{site.data.keyword.vpc_full}} is created for the VMware deployment, but you may customise your network solution if you so wish. You may also use [IBM Cloud interconnectivity ](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity) options. These are recommended for advanced users only.
 {: important}
 
 You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed VPC file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2-', which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2d-', which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
@@ -96,12 +96,12 @@ When using VPC subnets for your VMware Virtual Machines, follow these additional
 ## Before you begin
 {: #vpc-bm-vmware-prereqs}
 
-Make sure you understand the [IBM Cloud VPC concepts](https://{DomainName}/vpc-ext/overview) and [VPC bare metal server capabilities](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).
+Make sure you understand the [IBM Cloud VPC concepts](https://{DomainName}/vpc-ext/overview) and [{{site.data.keyword.bm_is_full_notm}} capabilities](https://{DomainName}/docs/vpc?topic=vpc-planning-for-bare-metal-servers).
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
    * Setup up an IBM Cloud account, see [Getting Started](https://{DomainName}/docs/account?topic=account-account-getting-started).
-   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources and managing bare metal servers. See the list of [required permissions  for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating bare metal servers on VPC](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
+   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources and managing {{site.data.keyword.bm_is_short}}. See the list of [required permissions  for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
    * [Setup](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui)  an API key.
 * {{site.data.keyword.cloud_notm}} CLI,
    * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](https://{DomainName}/docs/cli).

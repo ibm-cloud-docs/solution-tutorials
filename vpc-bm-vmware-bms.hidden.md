@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Provision bare metal servers for VMware deployment
+# Provision {{site.data.keyword.bm_is_short}} for VMware deployment
 {: #vpc-bm-vmware-bms}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -43,24 +43,24 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial will show how to [provision bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
+This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In IBM Cloud™ VPC, you can create two types of network interfaces on a bare metal server: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
+In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 
-The PCI interface is a physical network interface. By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a bare metal server. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
 
-The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the bare metal server, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
+The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
 
 
 ## Objectives
 {: #vpc-bm-vmware-bms-objectives}
 
 In this tutorial, you will learn how to:
-* provision bare metal servers for VMware deployment in VPC
+* provision {{site.data.keyword.bm_is_short}} for VMware deployment in VPC
 * how to provision baremetal network interfaces for VMkernel adapters
 
 In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
@@ -78,7 +78,7 @@ This tutorial requires:
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
@@ -87,7 +87,7 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-bms-image}
 {: step}
 
-1. Before provisioning a bare metal server, you need to get the Operating System Image ID. To list all available images, you can use the following CLI command:
+1. Before provisioning a {{site.data.keyword.bm_is_short}}, you need to get the Operating System Image ID. To list all available images, you can use the following CLI command:
 
    ```sh
    ibmcloud is images
@@ -141,7 +141,7 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-bms-provision}
 {: step}
 
-1. Bare metal servers can be provisioned with CLI or GUI. When provisioning with CLI, you can get help for the required parameters with the following command.
+1. {{site.data.keyword.bm_is_short}} can be provisioned with CLI or GUI. When provisioning with CLI, you can get help for the required parameters with the following command.
 
    ```sh
    ibmcloud is bmc --help 
@@ -150,7 +150,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 1. Create user data shell scripts. 
 
-   As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for bare metal server '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
+   As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for {{site.data.keyword.bm_is_short}} '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
 
    ```bash
    # enable & start SSH
@@ -164,13 +164,13 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: screen}
 
-   A script per bare metal server is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
+   A script per {{site.data.keyword.bm_is_short}} is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
 
 1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. 
   
    If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
   
-   The following commands will order your bare metal servers. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
+   The following commands will order your {{site.data.keyword.bm_is_short}}. You may also have a different number of servers. Make sure your parameters match your planned design and deployment as you may not alter e.g. profile, image or subnet post deployment.
    {: important}
 
    ```sh
@@ -198,10 +198,10 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-   Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the bare metal server **Status** shows 'running'.
+   Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the {{site.data.keyword.bm_is_short}} **Status** shows 'running'.
 
 
-### Obtain Bare Metal Credentials
+### Obtain {{site.data.keyword.bm_is_short}} Credentials
 {: #vpc-bm-vmware-bms-provision-cred}
 
 1. Once the hosts have been provisioned, get the credentials for 'root' user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this.
@@ -224,7 +224,7 @@ This tutorial is part of series, and requires that you have completed the relate
 2. Record the passwords for future use.
 
 
-### Obtain the Bare metal IP Details
+### Obtain the {{site.data.keyword.bm_is_short}} IP Details
 {: #vpc-bm-vmware-bms-provision-ip}
 
 1. Get the IP addresses of the servers and record them for future use into a variable.
@@ -281,7 +281,7 @@ In this step, the VLAN interfaces for different VMware VMKs will be created. Eac
 * NSX-T TEP traffic
 * NFS traffic
 
-In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the bare metal servers to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
+In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the {{site.data.keyword.bm_is_short}} to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
 
 The following diagram shows how each VMK's network configurations map to VPC network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
@@ -291,7 +291,7 @@ The following diagram shows how each VMK's network configurations map to VPC net
 ### Configure PCI NIC to allow VLANs
 {: #vpc-bm-vmware-bms-vlannic-allow}
 
-By default, each bare metal server is attached with one PCI network interface as the server's primary network interface. In this example, the PCI NIC is used as the uplink. In is important to understand, that all network interfaces on the bare metal server are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons.
+By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. In this example, the PCI NIC is used as the uplink. In is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons.
 
 Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLANs. The following VLAN IDs are use in this example:
 
@@ -300,7 +300,7 @@ Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLAN
 * VLAN 300 - vSAN
 * VLAN 400 - TEP
 
-1. Get the PCI NIC IDs for the provisioned bare metal servers:
+1. Get the PCI NIC IDs for the provisioned {{site.data.keyword.bm_is_short}}:
 
    ```sh
    VMWARE_BMS001_PNIC=$(ibmcloud is bm-nics $VMWARE_BMS001 --output json | jq -r '.[0].id')
