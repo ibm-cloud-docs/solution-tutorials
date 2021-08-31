@@ -43,12 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.data.keyword.vpc_short}} and a 'floating' VLAN interface for it.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.data.keyword.vpc_short}} and a 'floating' VLAN interface for it.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-vcenter-objectives}

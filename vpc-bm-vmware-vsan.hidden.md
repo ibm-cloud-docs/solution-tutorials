@@ -43,15 +43,14 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, a vSAN cluster is created using the local disks attached the 	{{site.data.keyword.bm_is_short}}. This phase is optional, if you use NFS.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 You need to have a minimum of three {{site.data.keyword.bm_is_short}} with local SSDs. Make sure you provisioned your {{site.data.keyword.bm_is_short}} with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
 {: important}
 
+In this tutorial, a vSAN cluster is created using the local disks attached the 	{{site.data.keyword.bm_is_short}}. This phase is optional, if you use NFS.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-vsan-objectives}

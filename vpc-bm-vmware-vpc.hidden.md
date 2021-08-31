@@ -40,12 +40,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-vpc-objectives}
@@ -54,7 +53,7 @@ In this tutorial, you will create a {{site.data.keyword.vpc_short}} for your VMw
 
 In this tutorial, a dedicated {{site.data.keyword.vpc_short}} for VMware is used, but you can alter and modify the deployment based on your needs.  
 
-![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
+![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin

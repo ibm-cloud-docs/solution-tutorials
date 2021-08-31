@@ -43,11 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
+
+This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
+{: shortdesc}
 
 In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 

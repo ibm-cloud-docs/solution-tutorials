@@ -43,12 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to {{site.data.keyword.vpc_short}} subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to {{site.data.keyword.vpc_short}} subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-newvm-objectives}
