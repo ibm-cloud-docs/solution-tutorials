@@ -193,4 +193,6 @@ Your hosts will access NFS share using the ESXi hosts' management interfaces (PC
 
 The next step in the tutorial series is:
 
+* OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 * [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
