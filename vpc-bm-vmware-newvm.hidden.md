@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs
+# Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs
 {: #vpc-bm-vmware-newvm}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to VPC subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
+This tutorial presents a simple example to deploy a VMware virtual machine running on VMware cluster and attached to {{site.data.keyword.vpc_short}} subnet using a VLAN interface and allow the virtual machine to vMotion between hosts.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -53,21 +53,21 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-newvm-objectives}
 
-In this tutorial, you will create a VMware virtual machine running on VMware cluster using VPC and {{site.data.keyword.bm_is_short}} network constructs. Your virtual machine will be attached to VPC subnet using bare metal server's VLAN NIC.
+In this tutorial, you will create a VMware virtual machine running on VMware cluster using {{site.data.keyword.vpc_short}} and {{site.data.keyword.bm_is_short}} network constructs. Your virtual machine will be attached to {{site.data.keyword.vpc_short}} subnet using bare metal server's VLAN NIC.
 
-![Virtual machines attached to VPC subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to VPC subnet"){: caption="Figure 1. Virtual machines attached to VPC subnet" caption-side="bottom"}
+![Virtual machines attached to {{site.data.keyword.vpc_short}} subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to {{site.data.keyword.vpc_short}} subnet"){: caption="Figure 1. Virtual machines attached to {{site.data.keyword.vpc_short}} subnet" caption-side="bottom"}
 
 ## Before you begin
 {: #vpc-bm-vmware-newvm-prereqs}
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 * [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 * [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or
@@ -75,21 +75,21 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
 {: note}
 
 
-## Create a VPC prefix and a subnet for VMware Virtual machines
+## Create a {{site.data.keyword.vpc_short}} prefix and a subnet for VMware Virtual machines
 {: #vpc-bm-vmware-newvm-prefix}
 {: step}
 
 
-### Create a VPC prefix
+### Create a {{site.data.keyword.vpc_short}} prefix
 {: #vpc-bm-vmware-newvm-create-prefix}
 
-In this example, a new VPC prefix for VMware VMs is created.
+In this example, a new {{site.data.keyword.vpc_short}} prefix for VMware VMs is created.
 
-1. Create a prefix. '192.168.0.0/20' is used as the new prefix for VPC.
+1. Create a prefix. '192.168.0.0/20' is used as the new prefix for {{site.data.keyword.vpc_short}}.
 
    ```sh
    VMWARE_PREFIX_VM_1=$(ibmcloud is vpc-address-prefix-create vmw-vm-prefix $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/20)
@@ -97,10 +97,10 @@ In this example, a new VPC prefix for VMware VMs is created.
    {: codeblock}
 
 
-### Create a VPC subnet
+### Create a {{site.data.keyword.vpc_short}} subnet
 {: #vpc-bm-vmware-newvm-create-subnet}
 
-Next you will create a new VPC subnet with a name 'vmw-vm-subnet-1'.
+Next you will create a new {{site.data.keyword.vpc_short}} subnet with a name 'vmw-vm-subnet-1'.
 
 1. Create a subnet using an IP subnet / CIDR block '192.168.0.0/24'.
 
@@ -109,7 +109,7 @@ Next you will create a new VPC subnet with a name 'vmw-vm-subnet-1'.
    ```
    {: codeblock}
 
-   This VPC subnet will be used as the subnet for your initial virtual machines.
+   This {{site.data.keyword.vpc_short}} subnet will be used as the subnet for your initial virtual machines.
 
 
 ## Allow new VLAN on PCI NICs
@@ -152,7 +152,7 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
    ```
    {: codeblock}
 
-2. Get the IP address allocated by VPC.
+2. Get the IP address allocated by {{site.data.keyword.vpc_short}}.
 
    ```sh
    VMWARE_VM1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .primary_ipv4_address)
@@ -164,9 +164,9 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
    ```
    {: codeblock}
 
-   In this example, IP address '192.168.0.4' was allocated for the VLAN NIC by VPC. You will need to configure this for the virtual machine with a netmask '/24' and a default gateway '192.168.1.1'.
+   In this example, IP address '192.168.0.4' was allocated for the VLAN NIC by {{site.data.keyword.vpc_short}}. You will need to configure this for the virtual machine with a netmask '/24' and a default gateway '192.168.1.1'.
 
-3. Alternatively, you could allow VPC to provide an IP address to the VMware Virtual Machine via DHCP by configuring a VPC provided MAC address to the Virtual Machine's network interface.
+3. Alternatively, you could allow {{site.data.keyword.vpc_short}} to provide an IP address to the VMware Virtual Machine via DHCP by configuring a {{site.data.keyword.vpc_short}} provided MAC address to the Virtual Machine's network interface.
 
    ```sh
    VMWARE_VM1_MAC=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .mac_address)
@@ -285,9 +285,9 @@ ID                                          Name                  Status      Ty
 ```
 {: screen}
 
-You should be able to access ping / access other Virtual Machines on the same VPC subnet from the provisioned Virtual Machine.
+You should be able to access ping / access other Virtual Machines on the same {{site.data.keyword.vpc_short}} subnet from the provisioned Virtual Machine.
 
-In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same {{site.data.keyword.bm_is_short}} will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the VPC network. For example, on a {{site.data.keyword.bm_is_short}} host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
+In a VMware environment, traffic between VLAN network interfaces that have the same VLAN ID on the same {{site.data.keyword.bm_is_short}} will typically be switched by the Standard / Distributed vSwitch internally within the server and never reach the {{site.data.keyword.vpc_short}} network. For example, on a {{site.data.keyword.bm_is_short}} host, the default Standard vSwitch is vSwitch0. You can create a Port Group with VLAN ID 111 and add it to vSwitch0. Traffic between network interfaces attached to Port Group 111 is controlled by vSwitch0. This has the consequences for Security Group rules that control traffic between the network interfaces in Port Group 111 - they will not be applied to the internal traffic. If you need Security Group rules enforced, you should use separate VLAN IDs for the VLAN interfaces.
 {: note}
 
 
@@ -295,7 +295,7 @@ In a VMware environment, traffic between VLAN network interfaces that have the s
 {: #vpc-bm-vmware-newvm-deploy-vm2}
 {: step}
 
-This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID `1001` but attached to the same VPC subnet `$SUBNET_VM1`. You may alter the VLAN ID based on your preferences.
+This time you will deploy a 2nd Virtual machine to the cluster, but using a new VLAN NIC and using a different VLAN ID `1001` but attached to the same {{site.data.keyword.vpc_short}} subnet `$SUBNET_VM1`. You may alter the VLAN ID based on your preferences.
 
 1. Allow the VLAN ID `1001` for the PCI interface of the {{site.data.keyword.bm_is_short}}.
 
@@ -323,7 +323,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
-3. Get the IP address allocated by VPC, by using the following commands:
+3. Get the IP address allocated by {{site.data.keyword.vpc_short}}, by using the following commands:
 
    ```sh
    VMWARE_VM2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM2 --output json | jq -r .primary_ipv4_address)
@@ -335,7 +335,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
-   In this example, IP address '192.168.0.5' was allocated by VPC, which you will need to configure for the virtual machine with netmask '/24' and default gateway '192.168.0.1'.
+   In this example, IP address '192.168.0.5' was allocated by {{site.data.keyword.vpc_short}}, which you will need to configure for the virtual machine with netmask '/24' and default gateway '192.168.0.1'.
 
 4. Using the process outlined on the previous example, create a new DPG via vCenter with VLAN ID '1001'.
 
@@ -361,6 +361,6 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 
 The next step in the tutorial series is:
 
-* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+* OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 * OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

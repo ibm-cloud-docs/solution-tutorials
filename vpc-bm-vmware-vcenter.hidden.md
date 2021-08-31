@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, you will deploy a vCenter for a VMware Deployment in VPC and a 'floating' VLAN interface for it.
+In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.data.keyword.vpc_short}} and a 'floating' VLAN interface for it.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -53,7 +53,7 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-vcenter-objectives}
 
-In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a VPC subnet as shown in the following diagram.
+In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a {{site.data.keyword.vpc_short}} subnet as shown in the following diagram.
 
 ![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
@@ -63,17 +63,17 @@ In this tutorial you will provision a vCenter appliance to the ESXi hosts and cr
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 * [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
 {: note}
 
 
@@ -87,7 +87,7 @@ NIC              | Subnet              | VLAN ID  | Allow float | IP            
 -----------------|---------------------|----------|-------------|--------------------------|------------------
 vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
 
-While VPC provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
+While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
 {:note}
 
 1. Create VLAN NIC for vCenter and record its IP address:
@@ -345,7 +345,7 @@ Repeat this for each host.
 {: #vpc-bm-vmware-vcenter-migratevmks}
 {: step}
 
-With IBM Cloud VPC BMSs, a single uplink (PCI NIC) is used. To be able to migrate vmk interfaces smoothly, you need to follow the following procedure:
+With {{site.data.keyword.bm_is_short}}, a single uplink (PCI NIC) is used. To be able to migrate vmk interfaces smoothly, you need to follow the following procedure:
 
 1. Configure BMS002 / esx-002 and BMS003 / esx-003 to use the distributed switch first.
 2. Migrate vCenter to BMS002 / esx-002.
@@ -438,7 +438,7 @@ Delete 'vSwitch0' on all hosts using the following method
 
 The next step in the tutorial series is:
 
-* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+* OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 * OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
-* [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

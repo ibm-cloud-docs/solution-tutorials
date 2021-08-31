@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMware Deployment in VPC. {{site.data.keyword.dns_full_notm}} will be used and your VPC will be configured to access and use the deployed DNS serrvice.
+In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMware Deployment in {{site.data.keyword.vpc_short}}. {{site.data.keyword.dns_full_notm}} will be used and your {{site.data.keyword.vpc_short}} will be configured to access and use the deployed DNS serrvice.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -60,11 +60,11 @@ In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
@@ -104,7 +104,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-2. Add your previously created VPC in the permitted networks. Use the VPC CRN here.
+2. Add your previously created {{site.data.keyword.vpc_short}} in the permitted networks. Use the {{site.data.keyword.vpc_short}} CRN here.
 
    ```sh
    ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
@@ -152,7 +152,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-3. Verify that you permitted your VPC networks to access and use the DNS service:
+3. Verify that you permitted your {{site.data.keyword.vpc_short}} networks to access and use the DNS service:
 
    ```sh
    ibmcloud dns permitted-networks $VMWARE_DNS_ZONE

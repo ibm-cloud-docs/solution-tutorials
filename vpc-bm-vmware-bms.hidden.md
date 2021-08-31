@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into VPC, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
+This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -51,21 +51,21 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 
 In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 
-The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for VPC with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for {{site.data.keyword.vpc_short}} with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
 
-The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a VPC subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the VPC subnet, but to be able to communicate with a VPC subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with VPC.
+The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a {{site.data.keyword.vpc_short}} subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the {{site.data.keyword.vpc_short}} subnet, but to be able to communicate with a {{site.data.keyword.vpc_short}} subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with {{site.data.keyword.vpc_short}}.
 
 
 ## Objectives
 {: #vpc-bm-vmware-bms-objectives}
 
 In this tutorial, you will learn how to:
-* provision {{site.data.keyword.bm_is_short}} for VMware deployment in VPC
+* provision {{site.data.keyword.bm_is_short}} for VMware deployment in {{site.data.keyword.vpc_short}}
 * how to provision baremetal network interfaces for VMkernel adapters
 
 In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
 
-![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
+![Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
 
 ## Before you begin
@@ -73,17 +73,17 @@ In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP 
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 
-## Validate BMS images
+## Validate {{site.data.keyword.bm_is_short}} images
 {: #vpc-bm-vmware-bms-image}
 {: step}
 
@@ -111,7 +111,7 @@ This tutorial is part of series, and requires that you have completed the relate
    {: screen}
 
 
-## Validate BMS profiles
+## Validate {{site.data.keyword.bm_is_short}}  profiles
 {: #vpc-bm-vmware-bms-profile}
 {: step}
 
@@ -137,7 +137,7 @@ This tutorial is part of series, and requires that you have completed the relate
    {: important}
 
 
-## Provision BMS
+## Provision {{site.data.keyword.bm_is_short}} 
 {: #vpc-bm-vmware-bms-provision}
 {: step}
 
@@ -247,8 +247,8 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-
-## Add hosts to DNS
+{{site.data.keyword.bm_is_short}} 
+## Add hosts to {{site.data.keyword.dns_full_notm}}
 {: #vpc-bm-vmware-bms-dns}
 {: step}
 
@@ -283,9 +283,9 @@ In this step, the VLAN interfaces for different VMware VMKs will be created. Eac
 
 In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the {{site.data.keyword.bm_is_short}} to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
 
-The following diagram shows how each VMK's network configurations map to VPC network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
+The following diagram shows how each VMK's network configurations map to {{site.data.keyword.vpc_short}} network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
-![VMkernel adapter mapping to VPC Subnets](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to VPC Subnets"){: caption="Figure 2. VMkernel adapter mapping to VPC Subnets" caption-side="bottom"}
+![VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets"){: caption="Figure 2. VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets" caption-side="bottom"}
 
 
 ### Configure PCI NIC to allow VLANs
@@ -434,7 +434,7 @@ This phase is optional, if you use NFS.
    ```
    {: codeblock}
 
-   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
+   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
    {: note}
 
 
@@ -471,7 +471,7 @@ This phase is optional, if you use NFS.
    ```
    {: codeblock}
 
-   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in VPC, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
+   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
    {: note}
 
 ## Next Steps

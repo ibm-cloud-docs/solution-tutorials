@@ -29,7 +29,7 @@ completion-time: 2h
 {:preview: .preview}
 {:beta: .beta}
 
-# Provision VPC for a VMware Deployment
+# Provision {{site.data.keyword.vpc_short}} for a VMware Deployment
 {: #vpc-bm-vmware-vpc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will deploy a VPC for a VMware Deployment and a jump machine for configuration tasks.
+In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -50,11 +50,11 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-vpc-objectives}
 
-In this tutorial, you will create a VPC for your VMware Deployment. The following diagram shows the VPC layout and subnets to be provisioned. NSX-T subnets are optional for NSX-T based deployments.
+In this tutorial, you will create a {{site.data.keyword.vpc_short}} for your VMware Deployment. The following diagram shows the {{site.data.keyword.vpc_short}} layout and subnets to be provisioned. NSX-T subnets are optional for NSX-T based deployments.
 
-In this tutorial, a dedicated VPC for VMware is used, but you can alter and modify the deployment based on your needs.  
+In this tutorial, a dedicated {{site.data.keyword.vpc_short}} for VMware is used, but you can alter and modify the deployment based on your needs.  
 
-![VPC Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "VPC Subnets for VMware Deployment"){: caption="Figure 1. VPC Subnets for VMware Deployment" caption-side="bottom"}
+![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin
@@ -62,18 +62,18 @@ In this tutorial, a dedicated VPC for VMware is used, but you can alter and modi
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and it is required that you follow the [order](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 
-## Create a VPC
+## Create a {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-vpc-create}
 {: step}
 
-1. Create a VPC, and record its ID and CRN.
+1. Create a {{site.data.keyword.vpc_short}}, and record its ID and CRN.
 
    ```sh
    VMWARE_VPC=$(ibmcloud is vpcc vmw --output json | jq -r .id)
@@ -101,7 +101,7 @@ This tutorial is part of series, and it is required that you follow the [order](
 {: #vpc-bm-vmware-vpc-prefix}
 {: step}
 
-1. Provision a prefix for the VPC. In this example '10.97.0.0/22' is used in Zone 'eu-de-1'.
+1. Provision a prefix for the {{site.data.keyword.vpc_short}}. In this example '10.97.0.0/22' is used in Zone 'eu-de-1'.
 
    ```sh
    VMWARE_VPC_ZONE=eu-de-1
@@ -128,7 +128,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 * [OPTIONAL] Virtual machines (attached directly to a VPC subnet)
 * [OPTIONAL] NSX-T T0 uplinks
 
-1. Provision the following VPC subnets, and record their IDs for future use. The subnets have been provisioned inside the CIDR block defined in the VPC zone's prefix.
+1. Provision the following {{site.data.keyword.vpc_short}} subnets, and record their IDs for future use. The subnets have been provisioned inside the CIDR block defined in the {{site.data.keyword.vpc_short}} zone's prefix.
 
    ```sh
    VMWARE_SUBNET_HOST=$(ibmcloud is subnetc vmw-host-mgmt-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.0.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
@@ -186,7 +186,7 @@ Subnets are private by default. As the management subnet needs outbound internet
 {: #vpc-bm-vmware-vpc-sshkey}
 {: step}
 
-If you have not already done so, create a SSH key for the VPC. The SSH key is used e.g. for accessing linux based {{site.data.keyword.vsi_is_short}} or decrypting the passwords.
+If you have not already done so, create a SSH key for the {{site.data.keyword.vpc_short}}. The SSH key is used e.g. for accessing linux based {{site.data.keyword.vsi_is_short}} or decrypting the passwords.
 
 1. Create a new key on your local workstation or use on existing key based on your preferences. For more information, refer to [IBM Cloud Docs](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys).
 
@@ -202,7 +202,7 @@ If you have not already done so, create a SSH key for the VPC. The SSH key is us
 {: #vpc-bm-vmware-vpc-jump}
 {: step}
 
-To ease up VMware configuration tasks, provision a Windows server on the management subnet in your VPC. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the VPC network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the {{site.data.keyword.bm_is_short}} and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
+To ease up VMware configuration tasks, provision a Windows server on the management subnet in your {{site.data.keyword.vpc_short}}. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the {{site.data.keyword.vpc_short}} network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the {{site.data.keyword.bm_is_short}} and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
 
 For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
 
@@ -283,4 +283,4 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
 
 The next step in the tutorial series is:
 
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
