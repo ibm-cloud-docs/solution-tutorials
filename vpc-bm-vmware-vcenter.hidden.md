@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -53,7 +53,7 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-vcenter-objectives}
 
-In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use VPC bare metal server [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a VPC subnet as shown in the following diagram.
+In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a VPC subnet as shown in the following diagram.
 
 ![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
@@ -248,7 +248,7 @@ In this step, you will create a new Cluster.
 ### Add hosts to vCenter
 {: #vpc-bm-vmware-vcenter-dccluster-hosts}
 
-Next, you need to add the deployed VPC bare metal servers as hosts to the Cluster.
+Next, you need to add the deployed {{site.data.keyword.bm_is_short}} as hosts to the Cluster.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
 2. In the vSphere Client Host and Clusters view, right-click the created Cluster and select Add hosts.

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -43,20 +43,20 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, a vSAN cluster is created using the local disks attached the bare metal servers. This phase is optional, if you use NFS.
+In this tutorial, a vSAN cluster is created using the local disks attached the 	{{site.data.keyword.bm_is_short}}. This phase is optional, if you use NFS.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-You need to have a minimum of three bare metal servers with local SSDs. Make sure you provisioned your bare metal servers with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
+You need to have a minimum of three {{site.data.keyword.bm_is_short}} with local SSDs. Make sure you provisioned your {{site.data.keyword.bm_is_short}} with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
 {: important}
 
 
 ## Objectives
 {: #vpc-bm-vmware-vsan-objectives}
 
-In this tutorial, you will create a vSAN cluster using the local disks attached the bare metal servers.
+In this tutorial, you will create a vSAN cluster using the local disks attached the {{site.data.keyword.bm_is_short}}.
 
 ![vSAN as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vsan.svg "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
 
@@ -85,9 +85,9 @@ When advised to use Web browser, use the Jump machine provisioned in the [VPC pr
 {: #vpc-bm-vmware-vsan-vlannic}
 {: step}
 
-1. If you have not already done so, provision VLAN interfaces for your baremetal servers for vSAN VMKs.
+1. If you have not already done so, provision VLAN interfaces for your {{site.data.keyword.bm_is_short}} for vSAN VMKs.
 
-See instructions in [provisionining bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
+See instructions in [provisioning {{site.data.keyword.bm_is_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
 
 If you provisioned the vSAN VLAN NICs following the guidance above, you can recall the vSAN IPs with the following commands:
 {: tip}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-30"
+lastupdated: "2021-08-31"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -69,7 +69,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 * [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 * [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
-* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision {{site.data.keyword.bm_is_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 * [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 * [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
@@ -82,7 +82,7 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-pgwip-outbound}
 {: step}
 
-VPC subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or bare metal server instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
+VPC subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
 
 1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this VPC Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
 
