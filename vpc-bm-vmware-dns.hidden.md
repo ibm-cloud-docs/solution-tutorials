@@ -72,7 +72,7 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-dns-provision}
 {: step}
 
-1. Create the DNS service using the 'standard-dns' plan and get its ID.
+1. Create the DNS service using the `standard-dns` plan and get its ID.
 
    ```sh
    VMWARE_DNS=$(ibmcloud dns instance-create dns-vmware standard-dns --output json | jq -r .id)
@@ -91,7 +91,7 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-dns-zone}
 {: step}
 
-1. Provision a zone. In this example 'vmware.ibmcloud.local' is used, but you may modify this to fit your needs.
+1. Provision a zone. In this example `vmware.ibmcloud.local` is used, but you may modify this to fit your needs.
 
    ```sh
    VMWARE_DNS_ZONE_NAME=vmware.ibmcloud.local
@@ -125,7 +125,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-2. Create 'A records' for your previously created Zone 'vmware.ibmcloud.local' using the following CLI commnd:
+2. Create `A records` for your previously created Zone `vmware.ibmcloud.local` using the following CLI command:
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
@@ -137,14 +137,14 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
 {: #vpc-bm-vmware-dns-validation}
 {: step}
 
-1. List information about configured zones in your DNS instance 'dns-vmware'. Use the following command.
+1. List information about configured zones in your DNS instance `dns-vmware`. Use the following command.
 
    ```sh
    ibmcloud dns zones -i dns-vmware
    ```
    {: codeblock}
 
-2. List information about configured records in your DNS instance 'dns-vmware' and zone 'vmware.ibmcloud.local'. Use the following command.
+2. List information about configured records in your DNS instance `dns-vmware` and zone `vmware.ibmcloud.local`. Use the following command.
 
    ```sh
    ibmcloud dns resource-records $VMWARE_DNS_ZONE -i dns-vmware 
@@ -158,7 +158,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-4. When a DNS record is created during the tutorial, validate that you get correct responses from your Windows Jump host, for example using 'nslookup' via Windows command line.
+4. When a DNS record is created during the tutorial, validate that you get correct responses from your Windows Jump host, for example using `nslookup` via Windows command line.
 
    ```sh
    nslookup <hostname>

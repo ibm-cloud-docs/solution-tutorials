@@ -73,7 +73,7 @@ The following diagram presents an overview of the base deployment in {{site.data
 You need to plan and decide your {{site.data.keyword.vpc_short}} networking solution for the VMware deployment before you start. This tutorial provides a simple example where a fully dedicated {{site.data.keyword.vpc_full}} is created for the VMware deployment, but you may customise your network solution if you so wish. You may also use [IBM Cloud interconnectivity ](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity) options. These are recommended for advanced users only.
 {: important}
 
-You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2-', which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with 'bx2d-', which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
+You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 {: important}
 
 Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow the steps below for an initial setup for your base VMware Deployment.
@@ -132,14 +132,14 @@ Name           ID                                 Default Group   State
 default        28b0e7d18da9417ea85b2ba308088657   true            ACTIVE 
 ```
 
-If you want to use the 'default' resource group, you can set your target resource group with the following command: 
+If you want to use the **default** resource group, you can set your target resource group with the following command: 
 
 ```sh
 VMWARE_RG=$(ibmcloud resource groups --output json | jq -r '.[] | select(.name == "default")'.id)
 ```
 {: codeblock}
 
-If you want to create a new resource group for your VMware assets e.g. with a name 'VMware', you can use the following commands:
+If you want to create a new resource group for your VMware assets e.g. with a name **VMware**, you can use the following commands:
 
 ```sh
 VMWARE_RG_NAME="VMware"

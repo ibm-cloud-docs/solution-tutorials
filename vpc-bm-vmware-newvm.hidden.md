@@ -74,7 +74,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
@@ -88,7 +88,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 
 In this example, a new {{site.data.keyword.vpc_short}} prefix for VMware VMs is created.
 
-1. Create a prefix. '192.168.0.0/20' is used as the new prefix for {{site.data.keyword.vpc_short}}.
+1. Create a prefix. `192.168.0.0/20` is used as the new prefix for {{site.data.keyword.vpc_short}}.
 
    ```sh
    VMWARE_PREFIX_VM_1=$(ibmcloud is vpc-address-prefix-create vmw-vm-prefix $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/20)
@@ -99,9 +99,9 @@ In this example, a new {{site.data.keyword.vpc_short}} prefix for VMware VMs is 
 ### Create a {{site.data.keyword.vpc_short}} subnet
 {: #vpc-bm-vmware-newvm-create-subnet}
 
-Next you will create a new {{site.data.keyword.vpc_short}} subnet with a name 'vmw-vm-subnet-1'.
+Next you will create a new {{site.data.keyword.vpc_short}} subnet with a name `vmw-vm-subnet-1`.
 
-1. Create a subnet using an IP subnet / CIDR block '192.168.0.0/24'.
+1. Create a subnet using an IP subnet / CIDR block `192.168.0.0/24`.
 
    ```sh
    VMWARE_SUBNET_VM1=$(ibmcloud is subnetc vmw-vm-subnet-1 $VMWARE_VPC --ipv4-cidr-block 192.168.0.0/24 --zone $VMWARE_VPC_ZONE --json | jq -r .id)
@@ -142,7 +142,7 @@ VLAN 1000 is used as the VLAN ID for the subnet in this tutorial. You can custom
 {: #vpc-bm-vmware-newvm-create-vlannic}
 {: step}
 
-Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is allowed to 'float' between host (for enabling vMotion).
+Next you will create a new VLAN NIC in the subnet `192.168.0.0/24`, which is allowed to `float` between host (for enabling vMotion).
 
 1. Create a VLAN interface.
 
@@ -163,7 +163,7 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
    ```
    {: codeblock}
 
-   In this example, IP address '192.168.0.4' was allocated for the VLAN NIC by {{site.data.keyword.vpc_short}}. You will need to configure this for the virtual machine with a netmask '/24' and a default gateway '192.168.1.1'.
+   In this example, IP address `192.168.0.4` was allocated for the VLAN NIC by {{site.data.keyword.vpc_short}}. You will need to configure this for the virtual machine with a netmask `/24` and a default gateway `192.168.1.1`.
 
 3. Alternatively, you could allow {{site.data.keyword.vpc_short}} to provide an IP address to the VMware Virtual Machine via DHCP by configuring a {{site.data.keyword.vpc_short}} provided MAC address to the Virtual Machine's network interface.
 
@@ -182,17 +182,17 @@ Next you will create a new VLAN NIC in the subnet '192.168.0.0/24', which is all
 {: #vpc-bm-vmware-newvm-create-dpg}
 {: step}
 
-Next, you need to create a Portgroup for the VMs in the Distributed Switch in vCenter. This portgroup must use VLAN ID '1000' (or any VLAN ID you chose in your setup).
+Next, you need to create a Portgroup for the VMs in the Distributed Switch in vCenter. This portgroup must use VLAN ID **1000** (or any VLAN ID you chose in your setup).
 
 To create a Port Group for the  Distributed Switch:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. On the vSphere Client Home page, click Networking and navigate to the distributed switch.
-3. Right-click the distributed switch and select Distributed port group > New distributed port group.
-4. On the Name and location page, enter the name of the new distributed port group (e.g. 'dpg-vm-subnet-1000'), or accept the generated name, and click Next.
-5. On the Configure settings page, set the general properties for the new distributed port group and click Next.
-6. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number '1000'.
-7. On the Ready to complete page, review your settings and click Finish.
+2. On the **vSphere Client Home** page, click **Networking** and navigate to the distributed switch.
+3. Right-click the **distributed switch** and select Distributed port group > **New distributed port group**.
+4. On the **Name and location** page, enter the name of the new distributed port group (e.g. `dpg-vm-subnet-1000`), or accept the generated name, and click **Next**.
+5. On the **Configure settings** page, set the general properties for the new distributed port group and click **Next**.
+6. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number `1000`.
+7. On the Ready to complete page, review your settings and click **Finish**.
 
 
 ## Deploy a first Virtual Machine
@@ -204,7 +204,7 @@ To create a Port Group for the  Distributed Switch:
 
    * Cluster : Previously created VMware cluster or one of its hosts
    * Storage : Previously created NFS or vSAN
-   * Portgroup : 'dpg-vm-subnet-1000'
+   * Portgroup : `dpg-vm-subnet-1000`
    * IP address : 192.168.0.4/24
    * Default Gateway : 192.168.0.1
    * DNS : 161.26.0.7, 161.26.0.8
@@ -227,22 +227,22 @@ To create a Port Group for the  Distributed Switch:
 {: #vpc-bm-vmware-newvm-vmotion}
 {: step}
 
-At this point, you may try to move your VM from the original host (e.g. BMS001) to another host with vMotion.
+At this point, you may try to move your VM from the original host (e.g. `VMWARE_BMS001`) to another host with vMotion.
 
 To migrate the created VM:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click to select the vCenter Virtual Machine.
-3. Right Click, and select migrate
-4. Click Change compute resource only, click Next.
-5. Select e.g. BMS002 / esx-002, click Next
-6. Keep the same Port group, click Next.
-7. Select your preferred vMotion priority, click Next.
-8. Click Finish.
+2. Click to select the **vCenter Virtual Machine**.
+3. Right Click, and select **migrate**
+4. Click Change compute resource only, click **Next**.
+5. Select e.g. `VMWARE_BMS002` / esx-002, click **Next**
+6. Keep the same Port group, click **Next**.
+7. Select your preferred vMotion priority, click **Next**.
+8. Click **Finish**.
 
-Network connectivity should remain intact and you should be able to see your Virtual Machine running on a different host e.g. BMS002 / esx-002 via vCenter.
+Network connectivity should remain intact and you should be able to see your Virtual Machine running on a different host e.g. `VMWARE_BMS002` / esx-002 via vCenter.
 
-In addition, if you run the following commands, you can see the location change of the VLAN NIC 'vlan-nic-vm-1' from $VMWARE_BMS001.
+In addition, if you run the following commands, you can see the location change of the VLAN NIC `vlan-nic-vm-1` from `$VMWARE_BMS001`.
 
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS001
@@ -262,7 +262,7 @@ ID                                          Name                  Status      Ty
 ```
 {: screen}
 
-And then see the location change of the VLAN NIC 'vlan-nic-vm-1' to $VMWARE_BMS001.
+And then see the location change of the VLAN NIC `vlan-nic-vm-1` to `$VMWARE_BMS001`.
 
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS002
@@ -334,9 +334,9 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
-   In this example, IP address '192.168.0.5' was allocated by {{site.data.keyword.vpc_short}}, which you will need to configure for the virtual machine with netmask '/24' and default gateway '192.168.0.1'.
+   In this example, IP address `192.168.0.5` was allocated by {{site.data.keyword.vpc_short}}, which you will need to configure for the virtual machine with netmask `/24` and default gateway `192.168.0.1`.
 
-4. Using the process outlined on the previous example, create a new DPG via vCenter with VLAN ID '1001'.
+4. Using the process outlined on the previous example, create a new DPG via vCenter with VLAN ID `1001`.
 
 5. Deploy a new Virtual Machine with the following parameters:
 

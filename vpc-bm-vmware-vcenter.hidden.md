@@ -46,7 +46,7 @@ This is a Beta feature that requires special approval. Contact your IBM Sales re
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.data.keyword.vpc_short}} and a 'floating' VLAN interface for it.
+In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.data.keyword.vpc_short}} and a `floating` VLAN interface for it.
 {: shortdesc}
 
 ## Objectives
@@ -72,7 +72,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
@@ -80,7 +80,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: #vpc-bm-vmware-vcenter-vlannic}
 {: step}
 
-In this step, you will provision a VLAN NIC for vCenter into 'Instance Management Subnet' using 'VLAN 100' as the matching VLAN ID. Use server BMS001 / esx-001 here. When creating the VLAN NIC, allow it to float between the hosts.
+In this step, you will provision a VLAN NIC for vCenter into `Instance Management Subnet` using `VLAN 100` as the matching VLAN ID. Use server BMS001 / esx-001 here. When creating the VLAN NIC, allow it to float between the hosts.
 
 NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
 -----------------|---------------------|----------|-------------|--------------------------|------------------
@@ -119,12 +119,12 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
 {: #vpc-bm-vmware-vcenter-portgroup}
 {: step}
 
-You need to create a temporary port group for vCenter's networking for the Standard Switch, i.e. add a Port Group for VLAN ID '100'. 
+You need to create a temporary port group for vCenter's networking for the Standard Switch, i.e. add a Port Group for VLAN ID `100`. 
 
-1. Login to host BMS001 / esx-001 as user 'root' with a Web browser (https://<ip address>) using the hosts PCI interface's IP address ('echo $VMWARE_BMS001_MGMT_IP'). 
-2. Select Networking.
-3. On Port Groups tab, click Add port group.
-4. For Virtual switch 0, add a Name 'pg-mgmt' and select VLAN ID 100.
+1. Login to host BMS001 / esx-001 as user `root` with a Web browser (https://<ip address>) using the hosts PCI interface IP address (`echo $VMWARE_BMS001_MGMT_IP`).
+2. Select **Networking**.
+3. On **Port Groups** tab, click `Add port group`.
+4. For Virtual switch 0, add a Name **pg-mgmt** and select **VLAN ID 100**.
 5. Click Add.
 
 
@@ -143,17 +143,17 @@ The vCenter appliance will be deployed next. You can do this via the Jump host's
 
 vCenter installation is split into two phases. In the first phase, the appliance is installed into the ESXi host.
 
-Verify that 'vcenter.vmware.ibmcloud.local' resolves to the correct IP address prior continuing.
+Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address prior continuing.
 {:important}
 
-1. Before continuing further with vCenter deployment, verify that 'vcenter.vmware.ibmcloud.local' resolves to the correct IP address. List information about configured records in your DNS instance 'dns-vmware' and zone 'vmware.ibmcloud.local', use the following command.
+1. Before continuing further with vCenter deployment, verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address. List information about configured records in your DNS instance `dns-vmware` and zone `vmware.ibmcloud.local`, use the following command.
 
    ```sh
    ibmcloud dns resource-records $VMWARE_DNS_ZONE -i dns-vmware 
    ```
    {: codeblock}
 
-2. Validate that you get correct responses for each entry (including the listed esx hosts) from your Windows Jump host, for example using 'nslookup' via Windows command line.
+2. Validate that you get correct responses for each entry (including the listed esx hosts) from your Windows Jump host, for example using `nslookup` via Windows command line.
     
    ```sh
    nslookup vcenter.vmware.ibmcloud.local
@@ -226,8 +226,8 @@ After the previous step, vCenter installation continues with Phase 2.
 In this step, a new Datacenter is created.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. In the vSphere Client Host and Clusters view, right-click and select New data center.
-3. Enter a name, e.g. 'VMware-On-IBM-Cloud-VPC'.
+2. In the vSphere Client **Host and Clusters view**, right-click and select **New data center**.
+3. Enter a name, e.g. `VMware-On-IBM-Cloud-VPC`.
 4. Finish the configuration.
 
 
@@ -237,8 +237,8 @@ In this step, a new Datacenter is created.
 In this step, you will create a new Cluster.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. In the vSphere Client Host and Clusters view, right-click and select New cluster.
-3. Enter a name, e.g. 'Cluster-eu-de-1'.
+2. In the vSphere Client **Host and Clusters view**, right-click and select **New cluster**.
+3. Enter a name, e.g. `Cluster-eu-de-1`.
 4. Do not enable DRS or vSphere HA at this point.
 5. Review the details.
 6. Finish the configuration.
@@ -250,10 +250,10 @@ In this step, you will create a new Cluster.
 Next, you need to add the deployed {{site.data.keyword.bm_is_short}} as hosts to the Cluster.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. In the vSphere Client Host and Clusters view, right-click the created Cluster and select Add hosts.
-3. Enter the hostnames and credentials for each host, and Click Next.
-4. On Security Alert, manually verify these certificates and accept the thumbprints.
-5. On Host summary, validate configurations and Click Next.
+2. In the vSphere Client **Host and Clusters view**, right-click the created **Cluster** and select **Add hosts**.
+3. Enter the hostnames and credentials for each host, and Click **Next**.
+4. On Security Alert, manually verify these certificates and **accept the thumbprints**.
+5. On Host summary, validate configurations and Click **Next**.
 6. Review and finish the configuration.
 
 Disable Maintenance mode, if needed.
@@ -266,11 +266,11 @@ Disable Maintenance mode, if needed.
 Next, create a new distributed vSwitch.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. In the vSphere Client Host and Clusters view, right-click a data center and select menu New Distributed Switch.
-3. Enter a name, e.g. 'vds-vpc'.
-4. Select the version of the vSphere Distributed Switch. In this example, version 7.0.0 is used.
-5. Add the settings. Set the number of uplinks to 1.
-6. You can create a default port group at this point (e.g. 'dpg-management'), but additional port groups are needed e.g. for vMotion, vSAN, NSX-T TEPs, NFS etc.
+2. In the vSphere Client **Host and Clusters view**, right-click a **data center** and select menu **New Distributed Switch**.
+3. Enter a name, e.g. `vds-vpc`.
+4. Select the version of the vSphere Distributed Switch. In this example, `version 7.0.0` is used.
+5. Add the **settings**. Set the number of uplinks to 1.
+6. You can create a default port group at this point (e.g. `dpg-management`), but additional port groups are needed e.g. for **vMotion, vSAN, NSX-T TEPs, NFS** etc.
 7. Finish the configuration of the distributed vSwitch.
 
 
@@ -280,9 +280,9 @@ Next, create a new distributed vSwitch.
 Modify distributed vSwitch MTU to 9000.
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. In the vSphere Client Networking view, right-click the 'vds-vpc'.
-3. Select Setting > Edit Settings.
-4. Click Advanced Tab, and modify MTU (Bytes) to 9000.
+2. In the vSphere Client **Networking view**, right-click the `vds-vpc`.
+3. Select Setting > Edit **Settings**.
+4. Click **Advanced Tab**, and modify MTU (Bytes) to 9000.
 5. Click OK.
 
 
@@ -291,28 +291,28 @@ Modify distributed vSwitch MTU to 9000.
 
 A single default port group was created for the management network. Edit this port group to make sure it has all the characteristics of the management port group on the standard vSwitch, such as VLAN id, NIC teaming, and failover settings.
 
-In this example the 'VLAN ID' will be changed to be '100', as this is where the vCenter is configured.
+In this example the `VLAN ID` will be changed to be `100`, as this is where the vCenter is configured.
 
 Create the additional Port Groups for the other VMKs:
 
-* Hosts: 'dpg-vmk'; no VLAN
-* vMotion: 'dpg-vmotion'; VLAN 200
-* vSAN: 'dpg-vsan'; VLAN 300
+* Hosts: **dpg-vmk**; no VLAN
+* vMotion: **dpg-vmotion**; VLAN 200
+* vSAN: **dpg-vsan**; VLAN 300
 
 To create a Port Group in distributed switch:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. On the vSphere Client Home page, click Networking and navigate to the distributed switch.
-3. Right-click the distributed switch and select Distributed port group > New distributed port group.
-4. On the Name and location page, enter the name of the new distributed port group, or accept the generated name, and click Next.
-5. On the Configure settings page, set the general properties for the new distributed port group and click Next.
+2. On the vSphere Client Home page, click **Networking** and navigate to the distributed switch.
+3. Right-click the distributed switch and select Distributed port group > **New distributed port group**.
+4. On the **Name and location** page, enter the name of the new distributed port group, or accept the generated name, and click Next.
+5. On the **Configure settings** page, set the general properties for the new distributed port group and click **Next**.
 6. Use the VLAN type drop-down menu to specify the type of VLAN traffic filtering and marking. Select VLAN and in the VLAN ID text box, enter the VLAN number.
-7. (Optional) On the Security page, edit the security exceptions and click Next. No changes needed here for this example.
-8. (Optional) On the Traffic shaping page, enable or disable Ingress or Egress traffic shaping and click Next. No changes needed here for this example.
-9. (Optional) On the Teaming and failover page, edit the settings and click Next. No changes needed here for this example.
-10. (Optional) On the Monitoring page, enable or disable NetFlow and click Next. No changes needed here for this example.
-11. (Optional) On the Miscellaneous page, select Yes or No and click Next. No changes needed here for this example.
-12. On the Ready to complete page, review your settings and click Finish.
+7. (Optional) On the **Security** page, edit the security exceptions and click Next. No changes needed here for this example.
+8. (Optional) On the **Traffic shaping** page, enable or disable Ingress or Egress traffic shaping and click Next. No changes needed here for this example.
+9. (Optional) On the **Teaming and failover** page, edit the settings and click Next. No changes needed here for this example.
+10. (Optional) On the **Monitoring** page, enable or disable NetFlow and click Next. No changes needed here for this example.
+11. (Optional) On the **Miscellaneous** page, select Yes or No and click Next. No changes needed here for this example.
+12. On the **Ready to complete** page, review your settings and click **Finish**.
 
 
 ## Create the vMotion Kernel Interfaces
@@ -324,18 +324,18 @@ Next, you need to configure a vMotion interface for the host using vCenter.
 Configure a vMotion Interface as follows:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click to select the host.
-3. Click the Configuration tab.
-4. Click Networking.
+2. Click to select the **host**.
+3. Click the **Configuration** tab.
+4. Click **Networking**.
 5. Click Add Networking.
-6. Select VMkernel Network Adapter and click Next.
-7. Select the existing standard vSwitch and click Next.
-8. Enter a name in the Network Label to identify the network that vMotion uses.
-9. Select a VLAN ID from the VLAN ID dropdown, use VLAN ID '200'. Inherit or set the vSwitch MTU (9000) and click Next.
-10. Select TCP/IP stack vMotion and select vMotion on Enabled services and click Next.
+6. Select VMkernel Network Adapter and click **Next**.
+7. Select the existing standard vSwitch and click **Next**.
+8. Enter a name in the **Network Label** to identify the network that vMotion uses.
+9. Select a **VLAN ID** from the VLAN ID dropdown, use VLAN ID `200`. Inherit or set the vSwitch MTU (9000) and click **Next**.
+10. Select **TCP/IP stack** vMotion and select **vMotion on Enabled** services and click **Next**.
 11. Select Use static IPv4 settings.
-12. Enter the IP address and Subnet Mask of the host's vMotion Interface. Use the provisioned server's vMotion VLAN NIC's IP.  
-13. Click Next, then click Finish.
+12. Enter the **IP address** and **Subnet Mask** of the host's vMotion Interface. Use the provisioned server's vMotion VLAN NIC's IP.  
+13. Click Next, then click **Finish**.
 
 Repeat this for each host.
 
@@ -346,50 +346,50 @@ Repeat this for each host.
 
 With {{site.data.keyword.bm_is_short}}, a single uplink (PCI NIC) is used. To be able to migrate vmk interfaces smoothly, you need to follow the following procedure:
 
-1. Configure BMS002 / esx-002 and BMS003 / esx-003 to use the distributed switch first.
-2. Migrate vCenter to BMS002 / esx-002.
-3. Configure BMS001 / esx-001 to use the distributed switch.
+1. Configure `VMWARE_BMS002` / esx-002 and `VMWARE_BMS003` / esx-003 to use the distributed switch first.
+2. Migrate vCenter to `VMWARE_BMS002` / esx-002.
+3. Configure `VMWARE_BMS001` / esx-001 to use the distributed switch.
 
 
 ### Migrate the management network (vmk0) and its associated uplink (vmnic0) - BMS002 and BMS003
 {: #vpc-bm-vmware-vcenter-migratevmks-vmk0-1}
 
-In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for BMS002 and BMS003.
+In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for `VMWARE_BMS002` and `VMWARE_BMS003`.
 
-Perform this **only** for BMS002 / esx-002 and BMS003 / esx-003 at this point.
+Perform this **only** for `VMWARE_BMS002` / esx-002 and `VMWARE_BMS003` / esx-003 at this point.
 {:note}
 
 Configure the distributed vSwitch as follows:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Right-click the vDS and select menu Add and Manage Hosts.
-3. Add hosts to the vDS. Click the green Add icon (+), and add esx-002/esx-003 from the cluster.
-4. Configure the physical adapters (assign uplink-1) and VMkernel adapters (assign to dpg-vmk).
-5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, vmnic0 and vmk0 to the vDS.
-6. Select an appropriate uplink on the vDS for physical adapter vmnic0. For this example, use Uplink1. The physical adapter is selected and an uplink is chosen.
-7. Select to migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host BMS002 / esx-002 and BMS003 / esx-003.
-8. Select vmk0, and click Assign port group dpg-vmk.
+2. Right-click the **vDS** and select menu **Add and Manage Hosts**.
+3. Add hosts to the vDS. Click the `green Add icon (+)`, and add esx-002/esx-003 from the cluster.
+4. Configure the physical adapters (`assign uplink-1`) and VMkernel adapters (`assign to dpg-vmk`).
+5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, **vmnic0 and vmk0 to the vDS**.
+6. Select an appropriate uplink on the vDS for physical adapter `vmnic0`. For this example, use `Uplink1`. The physical adapter is selected and an uplink is chosen.
+7. Select to **migrate the management network** on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host `VMWARE_BMS002` / esx-002 and `VMWARE_BMS003` / esx-003.
+8. Select `vmk0`, and click Assign port group `dpg-vmk`.
 9. Finish the configuration.
 10. Review the changes to ensure that you are adding two hosts, two uplinks (vmnic0 from each host), and two VMkernel adapters (vmk0 from each host).
-11. Click Finish.
+11. Click **Finish**.
 12. Check connectivity to the host, and clear alarms if needed.
 
 
-### Migrate the vCenter to BMS002
+### Migrate the vCenter to `VMWARE_BMS002`
 {: #vpc-bm-vmware-vcenter-migratevmks-vc}
 
 Next, you need to migrate the vCenter:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click to select the vCenter Virtual Machine.
-3. Right Click, and select Migrate.
-4. Click Change both compute resource and storage, click Next.
-5. Select BMS002 / esx-002, click Next.
-6. Select DataStore1, click Next.
-7. Change Port group to be 'dpg-management'.
-8. Click Next, Click Finish.
+2. Click to select the **vCenter Virtual Machine**.
+3. Right Click, and select **Migrate**.
+4. Click Change both **compute resource and storage**, click **Next**.
+5. Select `VMWARE_BMS002` / esx-002, click **Next**
+6. Select `DataStore1`, click **Next**.
+7. Change Port group to be `dpg-management`.
+8. Click Next, Click **Finish**.
 
-After the vCenter migration, you may execute the following IBM Cloud CLO command to validate that the vCenter's VLAN NIC has been moved to BMS002 / esx-002.
+After the vCenter migration, you may execute the following IBM Cloud CLO command to validate that the vCenter's VLAN NIC has been moved to `VMWARE_BMS002` / esx-002.
 
 ```sh
 ibmcloud is bm-nics $VMWARE_BMS002  
@@ -399,38 +399,38 @@ ibmcloud is bm-nics $VMWARE_BMS002
 ### Migrate the management network (vmk0) and its associated uplink (vmnic0) - BMS001
 {: #vpc-bm-vmware-vcenter-migratevmks-vmk0-2}
 
-In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for BMS001.
+In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for `VMWARE_BMS001`.
 
-Perform this **only** for BMS001 / esx-001 at this point.
+Perform this **only** for `VMWARE_BMS001` / esx-001 at this point.
 {:note}
 
 Configure the distributed vSwitch as follows:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Right-click the vDS and select menu Add and Manage Hosts.
-3. Add hosts to the vDS. Click the green Add icon (+), and add esx-002/esx-003 from the cluster.
-4. Configure the physical adapters (assign uplink-1) and VMkernel adapters (assign to dpg-vmk).
-5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, vmnic0 and vmk0 to the vDS.
-6. Select an appropriate uplink on the vDS for physical adapter vmnic0. For this example, use Uplink1. The physical adapter is selected and an uplink is chosen.
-7. Select to migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host BMS002 / esx-002 and BMS003 / esx-003.
-8. Select vmk0, and click Assign port group dpg-vmk.
-9. Finish the configuration.
+2. Right-click the **vDS** and select menu **Add and Manage Hosts**.
+3. Add hosts to the vDS. Click the `green Add icon (+)`, and add esx-002/esx-003 from the cluster.
+4. Configure the physical adapters (`assign uplink-1`) and VMkernel adapters (`assign to dpg-vmk`).
+5. Click Manage physical adapters to migrate the physical adapters and VMkernel adapters, **vmnic0 and vmk0 to the vDS**.
+6. Select an appropriate uplink on the vDS for physical adapter `vmnic0`. For this example, use `Uplink1`. The physical adapter is selected and an uplink is chosen.
+7. Select to migrate the management network on vmk0 from the standard vSwitch to the distributed vSwitch as follows. Select these steps on host `VMWARE_BMS002` / esx-002 and `VMWARE_BMS003` / esx-003.
+8. Select `vmk0`, and click **Assign port group** `dpg-vmk`.
+9. **Finish** the configuration.
 10. Review the changes to ensure that you are adding two hosts, two uplinks (vmnic0 from each host), and two VMkernel adapters (vmk0 from each host).
-11. Click Finish.
+11. Click **Finish**.
 12. Check connectivity to the host, and clear alarms if needed.
 
 ## Delete vSwitch0
 {: #vpc-bm-vmware-vcenter-delvswitch}
 {: step}
 
-Delete 'vSwitch0' on all hosts using the following method
+Delete `vSwitch0` on all hosts using the following method
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click on a host.
-3. Click on the Configure Tab.
-4. Click Networking, Virtual Switches.
+2. Click on a **host**.
+3. Click on the **Configure Tab**.
+4. Click Networking, **Virtual Switches**.
 5. Expand the standard switch.
-6. Click the '...' and select Remove.
+6. Click the '...' and select **Remove**.
 
 ## Next Steps
 {: #vpc-bm-vmware-vcenter-next-steps}
