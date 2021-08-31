@@ -53,7 +53,7 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-pgwip-objectives}
 
-If your VMware Virtual Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial will provide you examples how to configure internet access for your VMware Virtual Machines using these VPC network constructs.
+If your VMware Virtual Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial will provide you examples how to configure internet access for your VMware Virtual Machines using these {{site.data.keyword.vpc_short}} network constructs.
 
 ![Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg "Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines"){: caption="Figure 1. Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines" caption-side="bottom"}
 
@@ -63,17 +63,17 @@ If your VMware Virtual Machines require public Internet Access, you need to use 
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 * [Provision {{site.data.keyword.bm_is_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 * [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 * [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision VPC Subnets and configure Distributed Virtual Switch Portgoups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgoups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
@@ -82,16 +82,16 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-pgwip-outbound}
 {: step}
 
-VPC subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
+{{site.data.keyword.vpc_short}} subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
 
-1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this VPC Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
+1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this {{site.data.keyword.vpc_short}} Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
 
    ```sh
    ibmcloud is subnetu $VMWARE_SUBNET_VM1 --public-gateway-id $VMWARE_PUBLIC_GW
    ```
    {: codeblock}
 
-2. After you have attached your newly created subnet to public gateway, you shold be able access Internet from the VM, e.g.:
+2. After you have attached your newly created subnet to public gateway, you should be able access Internet from the VM, e.g.:
 
    ```sh
    ping 1.1.1.1
@@ -123,7 +123,7 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
    To control access to your virtual machine, you may need to update the VLAN NIC's security group (or access control lists).
    {: tip}
 
-2. If you provisioned the VM's VLAN interface with the default VPC security group, use following commands:
+2. If you provisioned the VM's VLAN interface with the default {{site.data.keyword.vpc_short}} security group, use following commands:
 
    ```sh
    VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)

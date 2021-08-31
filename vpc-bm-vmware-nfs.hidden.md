@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, an NFS file share is created in VPC and it is attached to a VMware cluster as a Datastore. This phase is optional, if you use vSAN as your preferred storage option.
+In this tutorial, an NFS file share is created in {{site.data.keyword.vpc_short}} and it is attached to a VMware cluster as a Datastore. This phase is optional, if you use vSAN as your preferred storage option.
 {: shortdesc}
 
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -53,11 +53,11 @@ This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?t
 ## Objectives
 {: #vpc-bm-vmware-nfs-objectives}
 
-In this tutorial, an VPC file share is created and you will attach this to the VMware Cluster as a datastore via NFS.
+In this tutorial, an {{site.data.keyword.vpc_short}} file share is created and you will attach this to the VMware Cluster as a datastore via NFS.
 
 ![NFS as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-nfs.svg "NFS as a Datastore"){: caption="Figure 1. NFS as a Datastore" caption-side="bottom"}
 
-1. Create file share in VPC
+1. Create file share in {{site.data.keyword.vpc_short}}
 2. Attach file share as a Datastore for a Compute Cluster in vCenter
 
 
@@ -66,26 +66,26 @@ In this tutorial, an VPC file share is created and you will attach this to the V
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in VPC
+* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a VPC for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 * [Provision {{site.data.keyword.bm_is_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 * [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [VPC provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
 {: note}
 
 
-## Create file share in VPC
+## Create file share in {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-nfs-createfileshare}
 {: step}
 
-To Create a file share in VPC you can use either CLI or UI (or API). 
+To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI or UI (or API). 
 
 1. The following provides the reference when using CLI:
 
@@ -115,7 +115,7 @@ To Create a file share in VPC you can use either CLI or UI (or API).
 
 2. Create a file share.
 
-   In this example, a 1TB with 10IOPS/GB file share is created with using the previously created VPC as a targe. Record the file share's and the file share target's IDs.
+   In this example, a 1TB with 10IOPS/GB file share is created with using the previously created {{site.data.keyword.vpc_short}} as a targe. Record the file share's and the file share target's IDs.
 
    ```sh
    VMWARE_DATASTORE01=$(ibmcloud is share-create --name vmware-nfs-datastore-01 --zone eu-de-1 --profile tier-10iops --size 1000 --targets '[{"name": "vmware-cluster-01", "vpc": {"id": "'$VMWARE_VPC'"}}]' --output json | jq -r .id)
@@ -154,7 +154,7 @@ To Create a file share in VPC you can use either CLI or UI (or API).
 4. Use the 'Server' and 'Folder' values when configuring the datastore in vCenter.
 
 
-## Attach VPC File share as a Datastore for a Compute Cluster in vCenter
+## Attach {{site.data.keyword.vpc_short}} File share as a Datastore for a Compute Cluster in vCenter
 {: #vpc-bm-vmware-nfs-attachfileshare}
 {: step}
 
@@ -193,6 +193,6 @@ Your hosts will access NFS share using the ESXi hosts' management interfaces (PC
 
 The next step in the tutorial series is:
 
-* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
-* [Provision VPC Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
-* [Provision VPC Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+* OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
