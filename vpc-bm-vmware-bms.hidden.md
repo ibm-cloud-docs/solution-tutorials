@@ -67,12 +67,6 @@ In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP 
 
 ![Deploying Bare metal server as ESX hosts in VPC](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in VPC"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in VPC" caption-side="bottom"}
 
-1. Validate BMS images
-2. Validate BMS profiles
-3. Provision BMS
-4. Add hosts to DNS
-5. Create VLAN NICs for VMkernel adapters
-
 
 ## Before you begin
 {: #vpc-bm-vmware-bms-prereqs}
@@ -483,4 +477,6 @@ This phase is optional, if you use NFS.
 ## Next Steps
 {: #vpc-bm-vmware-bms-next-steps}
 
-1. [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+The next step in the tutorial series is:
+
+* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)

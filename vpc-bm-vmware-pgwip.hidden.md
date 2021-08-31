@@ -57,9 +57,6 @@ If your VMware Virtual Machines require public Internet Access, you need to use 
 
 ![Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg "Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines"){: caption="Figure 1. Deploying Public Gateway and/or Floating IPs for a VMware Virtual Machines" caption-side="bottom"}
 
-1. Establish Outbound Internet Access with Public Gateway
-2. Establish Inbound Internet Access with Floating IP
-
 
 ## Before you begin
 {: #vpc-bm-vmware-pgwip-prereqs}
