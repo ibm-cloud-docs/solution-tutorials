@@ -43,12 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-If your VMware Virtua Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial provides an example for these use cases for a VMware VM's VLAN NIC.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+If your VMware Virtual Machines require public Internet Access, you need to use either Public Gateway (outbound) or Floating IP (inbound). This tutorial provides an example for these use cases for a VMware VM's VLAN NIC.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-pgwip-objectives}
@@ -82,9 +81,9 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-pgwip-outbound}
 {: step}
 
-{{site.data.keyword.vpc_short}} subnets are private by default. If your VMware Virtual Machines on the VM subnet ('$SUBNET_VM1') need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
+{{site.data.keyword.vpc_short}} subnets are private by default. If your VMware Virtual Machines on the VM subnet (`$SUBNET_VM1`) need outbound internet access, a Public Gateway is needed. A Public Gateway enables a subnet and all its attached virtual or {{site.data.keyword.bm_is_short}} instances to connect to the internet. After a subnet is attached to the Public Gateway, all instances in that subnet can connect to the internet. Public Gateways use Many-to-1 SNAT.
 
-1. As you already provisioned a Public Gateway ('$PUBLIC_GW') in the previous step for this {{site.data.keyword.vpc_short}} Zone, you only need to attach that to the VM subnet ('$SUBNET_VM1').
+1. As you already provisioned a Public Gateway (`$PUBLIC_GW`) in the previous step for this {{site.data.keyword.vpc_short}} Zone, you only need to attach that to the VM subnet (`$SUBNET_VM1`).
 
    ```sh
    ibmcloud is subnetu $VMWARE_SUBNET_VM1 --public-gateway-id $VMWARE_PUBLIC_GW

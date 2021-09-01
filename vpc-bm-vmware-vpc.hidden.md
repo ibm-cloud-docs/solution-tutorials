@@ -40,12 +40,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-vpc-objectives}
@@ -54,7 +53,7 @@ In this tutorial, you will create a {{site.data.keyword.vpc_short}} for your VMw
 
 In this tutorial, a dedicated {{site.data.keyword.vpc_short}} for VMware is used, but you can alter and modify the deployment based on your needs.  
 
-![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg) "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
+![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin
@@ -85,10 +84,10 @@ This tutorial is part of series, and it is required that you follow the [order](
    ```
    {: codeblock}
 
-   You can use the commands directly e.g. 'ibmcloud is vpcc ic4v' without using the json output format and store the required values into variables manually, if you prefer this way.
+   You can use the commands directly e.g. `ibmcloud is vpcc ic4v` without using the json output format and store the required values into variables manually, if you prefer this way.
    {: tip}
 
-   All local variables used in this tutorial start with 'VMWARE_' and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command.
+   All local variables used in this tutorial start with `VMWARE_` and they are present within the current instance of the shell. If you want to collect them after for future use, you can use the following command.
    {: tip}
 
       ```sh
@@ -101,7 +100,7 @@ This tutorial is part of series, and it is required that you follow the [order](
 {: #vpc-bm-vmware-vpc-prefix}
 {: step}
 
-1. Provision a prefix for the {{site.data.keyword.vpc_short}}. In this example '10.97.0.0/22' is used in Zone 'eu-de-1'.
+1. Provision a prefix for the {{site.data.keyword.vpc_short}}. In this example `10.97.0.0/22` is used in Zone `eu-de-1`.
 
    ```sh
    VMWARE_VPC_ZONE=eu-de-1
@@ -246,14 +245,14 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
    ```
    {: codeblock}
 
-5. To get the server Administrator’s password, use the SSH key to decrypt it. In this example, the private key is located in the folder '~/.ssh/' in the workstation where 'ibmcloud' CLI command in run from.
+5. To get the server Administrator’s password, use the SSH key to decrypt it. In this example, the private key is located in the folder `~/.ssh/` in the workstation where `ibmcloud` CLI command in run from.
 
    ```sh
    ibmcloud is in-init $VMWARE_JUMP --private-key @~/.ssh/id_rsa
    ```
    {: codeblock}
 
-   If running inside of Git sh on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1', for example 'MSYS_NO_PATHCONV=1 ibmcloud is in-init ...'.
+   If running inside of Git sh on Windows, prefix the above command with `MSYS_NO_PATHCONV=1`, for example `MSYS_NO_PATHCONV=1 ibmcloud is in-init ...`.
    {: tip}
 
 6. Modify security group rule to allow inbound access.

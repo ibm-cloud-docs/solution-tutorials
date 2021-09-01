@@ -43,12 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, an NFS file share is created in {{site.data.keyword.vpc_short}} and it is attached to a VMware cluster as a Datastore. This phase is optional, if you use vSAN as your preferred storage option.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
+In this tutorial, an NFS file share is created in {{site.data.keyword.vpc_short}} and it is attached to a VMware cluster as a Datastore. This phase is optional, if you use vSAN as your preferred storage option.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-nfs-objectives}
@@ -77,7 +76,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
@@ -151,7 +150,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-4. Use the 'Server' and 'Folder' values when configuring the datastore in vCenter.
+4. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
 
 
 ## Attach {{site.data.keyword.vpc_short}} File share as a Datastore for a Compute Cluster in vCenter
@@ -160,12 +159,12 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
 
 In the vSphere Client object navigator, browse to a host, a cluster, or a data center.
 
-1. From the right-click menu, select Storage > New Datastore.
-2. Select NFS as the datastore type and specify an NFS version as NFS 4.1.
+1. From the right-click menu, select Storage > **New Datastore**.
+2. Select **NFS** as the datastore type and specify an NFS version as `NFS 4.1`.
 3. Enter the datastore parameters: Datastore name, Folder and Server. With NFS 4.1, you can add multiple IP addresses or server names if the NFS server supports trunking, IBM Cloud uses multiple IPs behind the provided FQDN. The ESXi host uses these values to achieve multipathing to the NFS server mount point.
-4. On Configure Kerberos authentication selection, select Don't use Kerberos authentication.
-5. On Host Accessibility, select all hosts on your cluster.
-6. Review the configuration options and click Finish.
+4. On Configure Kerberos authentication selection, select **Don't use Kerberos authentication**.
+5. On Host Accessibility, select **all hosts on your cluster**.
+6. Review the configuration options and click **Finish**.
 
 The following parameters were used in this example.
 

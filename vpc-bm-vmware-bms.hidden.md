@@ -43,11 +43,11 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
+
+This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
+{: shortdesc}
 
 In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
 
@@ -63,7 +63,7 @@ In this tutorial, you will learn how to:
 * provision {{site.data.keyword.bm_is_short}} for VMware deployment in {{site.data.keyword.vpc_short}}
 * how to provision baremetal network interfaces for VMkernel adapters
 
-In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as 'vmk0' for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters' needs (such as vMotion, vSAN, NFS and TEP) as 'vmk1', 'vmk2' etc. as shown in the following diagram.
+In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as `vmk0` for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters needs (such as vMotion, vSAN, NFS and TEP) as `vmk1`, `vmk2` etc. as shown in the following diagram.
 
 ![Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -94,7 +94,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word 'esx'. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
+2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word **esx**. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
 
    ```sh
    $ ibmcloud is images | grep esx
@@ -122,7 +122,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-2. During the Beta, following images are available. The 'bx2' profile provides minimal local storage and this profile would be used with File Storage based environments. The 'bxd2' comes with more local disk which can be used to form a vSAN Storage.
+2. During the Beta, following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
 
    ```sh
    $ ibmcloud is bm-prs
@@ -133,7 +133,7 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: screen}
 
-   If you plan to use vSAN in your VMware deployment, select the 'bx2d-metal-192x768' bare metal server profile.
+   If you plan to use vSAN in your VMware deployment, select the `bx2d-metal-192x768` bare metal server profile.
    {: important}
 
 
@@ -150,7 +150,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 1. Create user data shell scripts. 
 
-   As part of the command line the '--user-data' property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for {{site.data.keyword.bm_is_short}} '$VMWARE_BMS001'. Modify this example to fit your deployment's needs.
+   As part of the command line the `--user-data` property is used to execute commands as part of the bare metal configuration. In the example below, SSH and ESXi Shell are enabled, and the host name is set for {{site.data.keyword.bm_is_short}} `$VMWARE_BMS001. Modify this example to fit your deployment's needs.
 
    ```bash
    # enable & start SSH
@@ -164,9 +164,9 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: screen}
 
-   A script per {{site.data.keyword.bm_is_short}} is required to pass in the hostname. Create a file for each server (e.g. 'host1_esxi.sh', 'host2_esxi.sh', etc.) and store them on the folder where you execute the 'ibmcloud' CLI commands.
+   A script per {{site.data.keyword.bm_is_short}} is required to pass in the hostname. Create a file for each server (e.g. `host1_esxi.sh`, `host2_esxi.sh`, etc.) and store them on the folder where you execute the `ibmcloud` CLI commands.
 
-1. To provision the BMS with IBM Cloud provided ESXi licenses and 'bx2d-metal-192x768' profile the following commands are used. 
+1. To provision the BMS with IBM Cloud provided ESXi licenses and `bx2d-metal-192x768` profile the following commands are used. 
   
    If you use your own licenses or other profiles, modify the parameters accordingly. You need to record the ID of the BMS for future use.
   
@@ -188,23 +188,23 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-   Note: If running inside of Git sh on Windows, prefix the above command with 'MSYS_NO_PATHCONV=1'. In this case insert this inside the brackets, e.g. $(MSYS_NO_PATHCONV=1 ibmcloud is ...).
+   Note: If running inside of Git sh on Windows, prefix the above command with `MSYS_NO_PATHCONV=1`. In this case insert this inside the brackets, e.g. `$(MSYS_NO_PATHCONV=1 ibmcloud is ...`).
    {: note}
 
-1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
+2. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
    ```sh
    ibmcloud is bm $VMWARE_BMS001
    ```
    {: codeblock}
 
-   Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the {{site.data.keyword.bm_is_short}} **Status** shows 'running'.
+   Host provisioning will typically take 10-15 minutes, and you can continue the next steps after the provisioning is completed, and the {{site.data.keyword.bm_is_short}} **Status** shows `running`.
 
 
 ### Obtain {{site.data.keyword.bm_is_short}} Credentials
 {: #vpc-bm-vmware-bms-provision-cred}
 
-1. Once the hosts have been provisioned, get the credentials for 'root' user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this.
+1. Once the hosts have been provisioned, get the credentials for `root` user for each BMS. You need the SSH key for decrypting the passwords, and you can use the following commands for this.
 
    ```sh
    ibmcloud is bm-init $VMWARE_BMS001 --private-key @~/.ssh/id_rsa
@@ -247,12 +247,11 @@ This tutorial is part of series, and requires that you have completed the relate
    ```
    {: codeblock}
 
-{{site.data.keyword.bm_is_short}} 
 ## Add hosts to {{site.data.keyword.dns_full_notm}}
 {: #vpc-bm-vmware-bms-dns}
 {: step}
 
-1. Add the host 'A records' to your previously created DNS instance's zone:
+1. Add the host `A records` to your previously created DNS instance's zone:
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name esx-001 --ipv4 $VMWARE_BMS001_MGMT_IP
@@ -283,7 +282,7 @@ In this step, the VLAN interfaces for different VMware VMKs will be created. Eac
 
 In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the {{site.data.keyword.bm_is_short}} to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
 
-The following diagram shows how each VMK's network configurations map to {{site.data.keyword.vpc_short}} network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default 'vSwitch0') and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
+The following diagram shows how each VMK's network configurations map to {{site.data.keyword.vpc_short}} network constructs (Subnets). Each host will be configured first with Standard Virtual Switch (default `vSwitch0`) and after vCenter deployment, these will be configured and migrated to Distributed Virtual Switch.
 
 ![VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts-vmk.svg "VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets"){: caption="Figure 2. VMkernel adapter mapping to {{site.data.keyword.vpc_short}} Subnets" caption-side="bottom"}
 
@@ -293,7 +292,7 @@ The following diagram shows how each VMK's network configurations map to {{site.
 
 By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. In this example, the PCI NIC is used as the uplink. In is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons.
 
-Before provisioning VLAN interfaces, configure each hosts' PCI NIC to allow VLANs. The following VLAN IDs are use in this example:
+Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLANs. The following VLAN IDs are use in this example:
 
 * VLAN 100 - Instance management (e.g. vCenter and NSX Managers)
 * VLAN 200 - vMotion

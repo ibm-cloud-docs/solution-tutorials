@@ -43,15 +43,14 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-In this tutorial, a vSAN cluster is created using the local disks attached the 	{{site.data.keyword.bm_is_short}}. This phase is optional, if you use NFS.
-{: shortdesc}
-
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 You need to have a minimum of three {{site.data.keyword.bm_is_short}} with local SSDs. Make sure you provisioned your {{site.data.keyword.bm_is_short}} with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
 {: important}
 
+In this tutorial, a vSAN cluster is created using the local disks attached the 	{{site.data.keyword.bm_is_short}}. This phase is optional, if you use NFS.
+{: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-vsan-objectives}
@@ -77,7 +76,7 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. 'https://vcenter.vmware.ibmcloud.local' as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
@@ -115,17 +114,17 @@ If you provisioned the vSAN VLAN NICs following the guidance above, you can reca
 Nex, you need to configure a vSAN interface for each host:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click to select the host.
-3. Click the Configuration tab.
-4. Click Networking under Hardware.
-5. Click Add Networking.
-6. Select VMkernel and click Next.
-7. Select the existing vSwitch 'vds-vpc' and click Next.
+2. Click to select the **host**.
+3. Click the **Configuration** tab.
+4. Click **Networking** under Hardware.
+5. Click **Add Networking**.
+6. Select **VMkernel** and click **Next**.
+7. Select the existing vSwitch `vds-vpc` and click **Next**.
 8. Enter a name in the Network Label to identify the network that VSAN uses.
-9. Select a VLAN ID from the VLAN ID '300'.
-10. Select Use this port group for VSAN, inherit or set the vSwitch MTU (9000) and click Next.
+9. Select a **VLAN ID** from the VLAN ID `300`.
+10. Select Use this port group for VSAN, inherit or set the vSwitch MTU (9000) and click **Next**.
 11. Enter the IP address and Subnet Mask of the host's VSAN Interface. Use the VLAN interface's IP addresses collected in during the VLAN interface provisioning.
-12. Click Next, then click Finish.
+12. Click Next, then click **Finish**.
 
 Repeat this for each host.
 
@@ -137,14 +136,14 @@ Repeat this for each host.
 Next, create a vSAN cluster with two disks for Cache Tier, Select remaining disks for Capacity Tier:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click on the cluster
-3. Click Configure Tab
-4. Click VSAN, Services
-5. Click Configure VSAN
-6. Single Site Cluster, Click next
-7. On Services, click next
-8. On Claim disks, select two disks for Cache Tier, select remaining disks for Capacity Tier for each host
-9. Click Finish
+2. Click on the **cluster**
+3. Click **Configure** Tab
+4. Click **VSAN**, **Services**
+5. Click **Configure VSAN**
+6. Single Site Cluster, Click **Next**
+7. On Services, click **Next**
+8. On Claim disks, select `two disks` for Cache Tier, select remaining disks for Capacity Tier for each host
+9. Click **Finish**
 
 
 ## Migrate the vCenter to vSAN
@@ -154,11 +153,11 @@ Next, create a vSAN cluster with two disks for Cache Tier, Select remaining disk
 If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. To migrate vCenter storage to vSAN:
 
 1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
-2. Click to select the vCenter Virtual Machine.
-3. Right Click, and select migrate.
-4. Click Change storage only, click Next.
-5. Select vsanDatastore, click Next.
-6. Click Next, Click Finish.
+2. Click to select the **vCenter Virtual Machine**.
+3. Right **Click**, and select **migrate**.
+4. Click Change storage only, click **Next**.
+5. Select `vsanDatastore`, click **Next**.
+6. Click **Next**, Click **Finish**.
 
 ## Next Steps
 {: #vpc-bm-vmware-vsan-next-steps}
