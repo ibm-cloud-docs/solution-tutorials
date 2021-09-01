@@ -136,7 +136,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
    ```
    {: codeblock}
 
-4. If you want to create a new resource group for your VMware assets e.g. with a name **VMware**, you can use the following commands:
+   If you want to create a new resource group for your VMware assets e.g. with a name **VMware**, you can use the following commands:
 
    ```sh
    VMWARE_RG_NAME="VMware"
@@ -148,7 +148,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
    ```
    {: codeblock}
 
-5. Then set your target to the wanted resource group.
+4. Then set your target to the wanted resource group.
 
    ```sh
    ibmcloud target -g $VMWARE_RG
