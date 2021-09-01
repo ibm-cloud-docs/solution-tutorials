@@ -100,7 +100,7 @@ toc:
           - web-app-private-network.md
 
         - topicgroup:
-          label: VMware on Bare metal VPC
+          label: VMware on Bare metal VPC (Beta)
           topics:
           - vpc-bm-vmware.hidden.md
           - vpc-bm-vmware-vpc.hidden.md

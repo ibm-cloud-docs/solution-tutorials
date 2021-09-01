@@ -925,7 +925,7 @@
       ]
     },
     {
-      "name": "VMware on Bare metal VPC",
+      "name": "VMware on Bare metal VPC (Beta)",
       "hidden": "hidden",
       "anchor": "vmwarebmsvpc",
       "solutions": [
