@@ -76,20 +76,14 @@ You need to plan and decide your {{site.data.keyword.vpc_short}} networking solu
 You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 {: important}
 
-Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow the steps below for an initial setup for your base VMware Deployment.
+Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow steps 1 through 4 below for an initial setup for your base VMware Deployment. After vCenter and the base setup has been completed, you can create storage for your cluster based on your preference by following either step 5 or 6. When using {{site.data.keyword.vpc_short}} subnets for your VMware Virtual Machines, follow steps 7 and 8 to setup your VMware Virtual Machine networking.
 
 1. [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 2. [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 3. [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 4. [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
-
-After vCenter and the base setup has been completed, you can create storage for your cluster based on your preference.
-
 5. OPTIONAL: [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 6. OPTIONAL: [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-
-When using {{site.data.keyword.vpc_short}} subnets for your VMware Virtual Machines, follow these additional steps to setup your VMware Virtual Machine networking.
-
 7. [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 8. [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
 
@@ -106,7 +100,7 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](https://{DomainName}/docs/cli).
    * Install {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
-   * Install {{site.data.keyword.vpc_short}} plugin (`cloud-dns-services`)
+   * Install {{site.data.keyword.dns_short}} plugin (`cloud-dns-services`)
 * Install `jq` i.e. [json query](https://stedolan.github.io/jq/) on your workstation used to query JSON files.
 * SSH key
    * Create an SSH key on your workstation and [import](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) it to the {{site.data.keyword.vpc_short}}. 
@@ -119,6 +113,9 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 <!--#/istutorial#-->
 
+## Target a resource group
+{: #vpc-bm-vmware-rg}
+{: step}
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key.
 
