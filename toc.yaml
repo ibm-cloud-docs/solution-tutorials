@@ -26,15 +26,6 @@ toc:
           topics:
           - solution-template.md
           - satellite-tour.hidden.md
-          - vpc-bm-vmware.hidden.md
-          - vpc-bm-vmware-vpc.hidden.md
-          - vpc-bm-vmware-dns.hidden.md
-          - vpc-bm-vmware-bms.hidden.md
-          - vpc-bm-vmware-vcenter.hidden.md
-          - vpc-bm-vmware-vsan.hidden.md
-          - vpc-bm-vmware-nfs.hidden.md
-          - vpc-bm-vmware-newvm.hidden.md
-          - vpc-bm-vmware-pgwip.hidden.md
 
         - topicgroup:
           label: Websites and Web Apps
@@ -107,6 +98,19 @@ toc:
           - configuring-IPSEC-VPN.md
           - linking-secure-network-enclosures.md
           - web-app-private-network.md
+
+        - topicgroup:
+          label: VMware on Bare metal VPC
+          topics:
+          - vpc-bm-vmware.hidden.md
+          - vpc-bm-vmware-vpc.hidden.md
+          - vpc-bm-vmware-dns.hidden.md
+          - vpc-bm-vmware-bms.hidden.md
+          - vpc-bm-vmware-vcenter.hidden.md
+          - vpc-bm-vmware-vsan.hidden.md
+          - vpc-bm-vmware-nfs.hidden.md
+          - vpc-bm-vmware-newvm.hidden.md
+          - vpc-bm-vmware-pgwip.hidden.md
 
         - topicgroup:
           label: VMware Solutions
