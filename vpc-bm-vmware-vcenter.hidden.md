@@ -125,7 +125,7 @@ You need to create a temporary port group for vCenter's networking for the Stand
 2. Select **Networking**.
 3. On **Port Groups** tab, click `Add port group`.
 4. For Virtual switch 0, add a Name **pg-mgmt** and select **VLAN ID 100**.
-5. Click Add.
+5. Click **Add**.
 
 
 ## Deploy vCenter appliance
@@ -167,7 +167,7 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
 
 3. Start the VCSA UI installer (e.g. <drive_letter>:\vcsa-ui-installer\win32\installer.exe).
   
-4. Click Install a new vCenter Server.
+4. Click **Install a new vCenter Server**.
 
 5. Deploy vcenter into BMS001 / esx-001 using the following parameters (match with your IP address plan and host names).
 
@@ -283,7 +283,7 @@ Modify distributed vSwitch MTU to 9000.
 2. In the vSphere Client **Networking view**, right-click the `vds-vpc`.
 3. Select Setting > Edit **Settings**.
 4. Click **Advanced Tab**, and modify MTU (Bytes) to 9000.
-5. Click OK.
+5. Click **OK**.
 
 
 ### Create Port Groups
@@ -327,7 +327,7 @@ Configure a vMotion Interface as follows:
 2. Click to select the **host**.
 3. Click the **Configuration** tab.
 4. Click **Networking**.
-5. Click Add Networking.
+5. Click **Add Networking**.
 6. Select VMkernel Network Adapter and click **Next**.
 7. Select the existing standard vSwitch and click **Next**.
 8. Enter a name in the **Network Label** to identify the network that vMotion uses.
@@ -335,7 +335,7 @@ Configure a vMotion Interface as follows:
 10. Select **TCP/IP stack** vMotion and select **vMotion on Enabled** services and click **Next**.
 11. Select Use static IPv4 settings.
 12. Enter the **IP address** and **Subnet Mask** of the host's vMotion Interface. Use the provisioned server's vMotion VLAN NIC's IP.  
-13. Click Next, then click **Finish**.
+13. Click **Next**, then click **Finish**.
 
 Repeat this for each host.
 
@@ -387,7 +387,7 @@ Next, you need to migrate the vCenter:
 5. Select `VMWARE_BMS002` / esx-002, click **Next**
 6. Select `DataStore1`, click **Next**.
 7. Change Port group to be `dpg-management`.
-8. Click Next, Click **Finish**.
+8. Click **Next**, then click **Finish**.
 
 After the vCenter migration, you may execute the following IBM Cloud CLO command to validate that the vCenter's VLAN NIC has been moved to `VMWARE_BMS002` / esx-002.
 

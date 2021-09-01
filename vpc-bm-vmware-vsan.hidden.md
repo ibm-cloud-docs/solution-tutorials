@@ -124,7 +124,7 @@ Nex, you need to configure a vSAN interface for each host:
 9. Select a **VLAN ID** from the VLAN ID `300`.
 10. Select Use this port group for VSAN, inherit or set the vSwitch MTU (9000) and click **Next**.
 11. Enter the IP address and Subnet Mask of the host's VSAN Interface. Use the VLAN interface's IP addresses collected in during the VLAN interface provisioning.
-12. Click Next, then click **Finish**.
+12. Click **Next**, then click **Finish**.
 
 Repeat this for each host.
 
@@ -157,7 +157,7 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 3. Right **Click**, and select **migrate**.
 4. Click Change storage only, click **Next**.
 5. Select `vsanDatastore`, click **Next**.
-6. Click **Next**, Click **Finish**.
+6. Click **Next**, then click **Finish**.
 
 ## Next Steps
 {: #vpc-bm-vmware-vsan-next-steps}
