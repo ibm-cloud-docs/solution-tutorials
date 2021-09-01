@@ -54,7 +54,7 @@ In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.da
 
 In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a {{site.data.keyword.vpc_short}} subnet as shown in the following diagram.
 
-![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
+![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
 
 ## Before you begin

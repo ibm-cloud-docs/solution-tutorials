@@ -54,7 +54,7 @@ This tutorial presents a simple example to deploy a VMware virtual machine runni
 
 In this tutorial, you will create a VMware virtual machine running on VMware cluster using {{site.data.keyword.vpc_short}} and {{site.data.keyword.bm_is_short}} network constructs. Your virtual machine will be attached to {{site.data.keyword.vpc_short}} subnet using bare metal server's VLAN NIC.
 
-![Virtual machines attached to {{site.data.keyword.vpc_short}} subnet](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to {{site.data.keyword.vpc_short}} subnet"){: caption="Figure 1. Virtual machines attached to {{site.data.keyword.vpc_short}} subnet" caption-side="bottom"}
+![Virtual machines attached to {{site.data.keyword.vpc_short}} subnet](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg "Virtual machines attached to {{site.data.keyword.vpc_short}} subnet"){: caption="Figure 1. Virtual machines attached to {{site.data.keyword.vpc_short}} subnet" caption-side="bottom"}
 
 ## Before you begin
 {: #vpc-bm-vmware-newvm-prereqs}

@@ -51,7 +51,7 @@ In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMwa
 
 In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the {{site.data.keyword.dns_full_notm}} solution for the VMware Deployment.
 
-![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
+![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin

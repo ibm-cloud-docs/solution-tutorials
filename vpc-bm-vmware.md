@@ -68,7 +68,7 @@ This tutorial assumes a working knowledge of VMware vSphere Hypervisor and vCent
 
 The following diagram presents an overview of the base deployment in {{site.data.keyword.vpc_short}}. The deployment is based on {{site.data.keyword.bm_is_full}} and uses [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) to host the servers' network interfaces and [access control lists and security groups](https://{DomainName}/docs/vpc?topic=vpc-security-in-your-vpc) to secure the network access. VMware vSAN with local ESXi host embedded SSDs or {{site.data.keyword.vpc_short}} file share are the storage options for datastores to be used for VMware Virtual Machines. {{site.data.keyword.vpc_short}} subnets can also be used to host network interfaces of VMware Virtual machines. 
 
-![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
+![Architecture Overview - Base Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg "Architecture Overview - Base Deployment"){: caption="Figure 1. Architecture Overview - Base Deployment" caption-side="bottom"}
 
 You need to plan and decide your {{site.data.keyword.vpc_short}} networking solution for the VMware deployment before you start. This tutorial provides a simple example where a fully dedicated {{site.data.keyword.vpc_full}} is created for the VMware deployment, but you may customise your network solution if you so wish. You may also use [IBM Cloud interconnectivity ](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity) options. These are recommended for advanced users only.
 {: important}
@@ -117,43 +117,43 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #vpc-bm-vmware-rg}
 {: step}
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key.
+1. [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key.
 
-Specify the target resource group for your resources. You can list the available resource groups with the following command.
+2. Specify the target resource group for your resources. You can list the available resource groups with the following command.
 
-```bash
-ibmcloud resource groups
-Retrieving all resource groups under account 1b0834ebce7f4b94983d856f532ebfe2 as xxx@yyy.com...
-OK
-Name           ID                                 Default Group   State   
-default        28b0e7d18da9417ea85b2ba308088657   true            ACTIVE 
-```
+   ```bash
+   ibmcloud resource groups
+   Retrieving all resource groups under account 1b0834ebce7f4b94983d856f532ebfe2 as xxx@yyy.com...
+   OK
+   Name           ID                                 Default Group   State   
+   default        28b0e7d18da9417ea85b2ba308088657   true            ACTIVE 
+   ```
 
-If you want to use the **default** resource group, you can set your target resource group with the following command: 
+3. If you want to use the **default** resource group, you can set your target resource group with the following command: 
 
-```sh
-VMWARE_RG=$(ibmcloud resource groups --output json | jq -r '.[] | select(.name == "default")'.id)
-```
-{: codeblock}
+   ```sh
+   VMWARE_RG=$(ibmcloud resource groups --output json | jq -r '.[] | select(.name == "default")'.id)
+   ```
+   {: codeblock}
 
-If you want to create a new resource group for your VMware assets e.g. with a name **VMware**, you can use the following commands:
+4. If you want to create a new resource group for your VMware assets e.g. with a name **VMware**, you can use the following commands:
 
-```sh
-VMWARE_RG_NAME="VMware"
-```
-{: codeblock}
+   ```sh
+   VMWARE_RG_NAME="VMware"
+   ```
+   {: codeblock}
 
-```sh
-VMWARE_RG=$(ibmcloud resource group-create $VMWARE_RG_NAME --output json | jq -r .id)
-```
-{: codeblock}
+   ```sh
+   VMWARE_RG=$(ibmcloud resource group-create $VMWARE_RG_NAME --output json | jq -r .id)
+   ```
+   {: codeblock}
 
-Then set your target to the wanted resource group.
+5. Then set your target to the wanted resource group.
 
-```sh
-ibmcloud target -g $VMWARE_RG
-```
-{: codeblock}
+   ```sh
+   ibmcloud target -g $VMWARE_RG
+   ```
+   {: codeblock}
 
 ## Next Steps
 {: #vpc-bm-vmware-next-steps}

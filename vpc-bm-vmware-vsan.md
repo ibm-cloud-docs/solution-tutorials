@@ -57,7 +57,7 @@ In this tutorial, a vSAN cluster is created using the local disks attached the 	
 
 In this tutorial, you will create a vSAN cluster using the local disks attached the {{site.data.keyword.bm_is_short}}.
 
-![vSAN as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vsan.svg "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
+![vSAN as a Datastore](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vsan.svg "vSAN as a Datastore"){: caption="Figure 1. vSAN as a Datastore" caption-side="bottom"}
 
 
 ## Before you begin

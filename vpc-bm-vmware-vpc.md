@@ -56,7 +56,7 @@ In this tutorial, you will create a {{site.data.keyword.vpc_short}} for your VMw
 
 In this tutorial, a dedicated {{site.data.keyword.vpc_short}} for VMware is used, but you can alter and modify the deployment based on your needs.  
 
-![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
+![{{site.data.keyword.vpc_short}} Subnets for VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-subnets.svg "{{site.data.keyword.vpc_short}} Subnets for VMware Deployment"){: caption="Figure 1. {{site.data.keyword.vpc_short}} Subnets for VMware Deployment" caption-side="bottom"}
 
 
 ## Before you begin

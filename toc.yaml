@@ -102,15 +102,15 @@ toc:
         - topicgroup:
           label: VMware on Bare metal VPC (Beta)
           topics:
-          - vpc-bm-vmware.hidden.md
-          - vpc-bm-vmware-vpc.hidden.md
-          - vpc-bm-vmware-dns.hidden.md
-          - vpc-bm-vmware-bms.hidden.md
-          - vpc-bm-vmware-vcenter.hidden.md
-          - vpc-bm-vmware-vsan.hidden.md
-          - vpc-bm-vmware-nfs.hidden.md
-          - vpc-bm-vmware-newvm.hidden.md
-          - vpc-bm-vmware-pgwip.hidden.md
+          - vpc-bm-vmware.md
+          - vpc-bm-vmware-vpc.md
+          - vpc-bm-vmware-dns.md
+          - vpc-bm-vmware-bms.md
+          - vpc-bm-vmware-vcenter.md
+          - vpc-bm-vmware-vsan.md
+          - vpc-bm-vmware-nfs.md
+          - vpc-bm-vmware-newvm.md
+          - vpc-bm-vmware-pgwip.md
 
         - topicgroup:
           label: VMware Solutions

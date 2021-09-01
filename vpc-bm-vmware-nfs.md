@@ -54,7 +54,7 @@ In this tutorial, an NFS file share is created in {{site.data.keyword.vpc_short}
 
 In this tutorial, an {{site.data.keyword.vpc_short}} file share is created and you will attach this to the VMware Cluster as a datastore via NFS.
 
-![NFS as a Datastore](images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-nfs.svg "NFS as a Datastore"){: caption="Figure 1. NFS as a Datastore" caption-side="bottom"}
+![NFS as a Datastore](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-nfs.svg "NFS as a Datastore"){: caption="Figure 1. NFS as a Datastore" caption-side="bottom"}
 
 1. Create file share in {{site.data.keyword.vpc_short}}
 2. Attach file share as a Datastore for a Compute Cluster in vCenter

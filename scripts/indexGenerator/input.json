@@ -926,14 +926,13 @@
     },
     {
       "name": "VMware on Bare metal VPC (Beta)",
-      "hidden": "hidden",
       "anchor": "vmwarebmsvpc",
       "solutions": [
         {
           "name": "VMware",
-          "url": "vpc-bm-vmware.hidden.html",
+          "url": "vpc-bm-vmware.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -946,9 +945,9 @@
         },
         {
           "name": "VMware VPC",
-          "url": "vpc-bm-vmware-vpc.hidden.html",
+          "url": "vpc-bm-vmware-vpc.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-subnets.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-subnets.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -961,9 +960,9 @@
         },
         {
           "name": "VMware DNS",
-          "url": "vpc-bm-vmware-dns.hidden.html",
+          "url": "vpc-bm-vmware-dns.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-DNS.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -976,8 +975,8 @@
         },
         {
           "name": "VMware BMS",
-          "url": "vpc-bm-vmware-bms.hidden.html",
-          "description": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
+          "url": "vpc-bm-vmware-bms.html",
+          "description": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
           "imgSrc": "",
           "tags": [
             "VMware",
@@ -991,9 +990,9 @@
         },
         {
           "name": "VMware vCenter",
-          "url": "vpc-bm-vmware-vcenter.hidden.html",
+          "url": "vpc-bm-vmware-vcenter.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vcenter.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vcenter.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -1006,9 +1005,9 @@
         },
         {
           "name": "VMware VSAN",
-          "url": "vpc-bm-vmware-vsan.hidden.html",
+          "url": "vpc-bm-vmware-vsan.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-vsan.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vsan.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -1021,9 +1020,9 @@
         },
         {
           "name": "VMware NFS",
-          "url": "vpc-bm-vmware-nfs.hidden.html",
+          "url": "vpc-bm-vmware-nfs.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-VPC-nfs.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-nfs.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -1036,9 +1035,9 @@
         },
         {
           "name": "VMware NewVM",
-          "url": "vpc-bm-vmware-newvm.hidden.html",
+          "url": "vpc-bm-vmware-newvm.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -1051,9 +1050,9 @@
         },
         {
           "name": "VMware PGWIP",
-          "url": "vpc-bm-vmware-pgwip.hidden.html",
+          "url": "vpc-bm-vmware-pgwip.html",
           "description": "",
-          "imgSrc": "images/solution63-ryo-vmware-on-vpc-hidden/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
