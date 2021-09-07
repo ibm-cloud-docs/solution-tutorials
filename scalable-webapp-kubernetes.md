@@ -174,9 +174,19 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```
    {: pre}
 
-1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
+1. Login, build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
    ```sh
-   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
+   ibmcloud cr login
+   ```
+   {: pre}
+
+   ```sh
+   docker build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
+   ```
+   {: pre}
+
+   ```sh
+   docker push $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0
    ```
    {: pre}
 
