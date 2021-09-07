@@ -283,6 +283,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:    mycluster
    ```
    {: screen}
+
 2. Define environment variables `INGRESS_SUBDOMAIN` and `INGRESS_SECRET` to hold the values 
    ```sh
    export INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN_FROM_ABOVE_STEP>
