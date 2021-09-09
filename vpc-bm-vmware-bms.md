@@ -82,6 +82,9 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
+The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
+{:note}
+
 
 ## Validate {{site.data.keyword.bm_is_short}} images
 {: #vpc-bm-vmware-bms-image}
@@ -273,12 +276,11 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-bms-vlannic}
 {: step}
 
-In this step, the VLAN interfaces for different VMware VMKs will be created. Each VMK will need its own VLAN interface, for example:
+In this step, the VLAN interfaces for different VMware VMKs will be created. In VMware deployments, each VMK will need its own VLAN interface, for example:
 
 * vMotion traffic
 * vSAN traffic
 * NSX-T TEP traffic
-* NFS traffic
 
 In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the {{site.data.keyword.bm_is_short}} to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
 
@@ -294,10 +296,9 @@ By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI netw
 
 Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLANs. The following VLAN IDs are use in this example:
 
-* VLAN 100 - Instance management (e.g. vCenter and NSX Managers)
+* VLAN 100 - Instance management (e.g. vCenter and NSX-T Managers)
 * VLAN 200 - vMotion
 * VLAN 300 - vSAN
-* VLAN 400 - TEP
 
 1. Get the PCI NIC IDs for the provisioned {{site.data.keyword.bm_is_short}}:
 
@@ -319,17 +320,17 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 2. Allow PCI NICs to use the VLANs stated above:
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300
       ```
    {: codeblock}
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300
       ```
    {: codeblock}
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300
    ```
    {: codeblock}
 
@@ -337,13 +338,12 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 ### Creating VLAN NICs
 {: #vpc-bm-vmware-bms-vlannic-create}
 
-Next, you need to create VLAN NICs for VMkernel adapters (VMKs) and NSX-T TEPs.
+Next, you need to create VLAN NICs for VMkernel adapters (VMKs).
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
 vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
 vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
-vlan-nic-tep-vmk10    | vlan           | 400     | $VMWARE_SUBNET_TEP  | false
 
 
 When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
@@ -436,42 +436,6 @@ This phase is optional, if you use NFS.
    In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
    {: note}
 
-
-### Create VLAN NICs for TEPs
-{: #vpc-bm-vmware-bms-vlannic-tep}
-
-1. If you plan use NSX-T, you also need to create TEP VLAN NICs for each host. Record the IP addresses for later use.
-
-   | Bare Metal Name | Subnet Name        | VLAN | Allowed to Float |
-   |-----------------|--------------------|------|------------------|
-   | VMWARE_BMS001   | $VMWARE_SUBNET_TEP | 400  | false            |
-   | VMWARE_BMS002   | $VMWARE_SUBNET_TEP | 400  | false            |
-   | VMWARE_BMS003   | $VMWARE_SUBNET_TEP | 400  | false            |
-
-
-   ```sh
-   VMWARE_BMS001_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS001_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS001 : "$VMWARE_BMS001_TEP_IP
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_BMS002_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS002_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS002 : "$VMWARE_BMS002_TEP_IP
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_BMS003_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS003_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS003 : "$VMWARE_BMS003_TEP_IP
-   ```
-   {: codeblock}
-
-   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
-   {: note}
 
 ## Next Steps
 {: #vpc-bm-vmware-bms-next-steps}

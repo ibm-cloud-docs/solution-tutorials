@@ -76,6 +76,8 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
+The used variables e.g. $VMWARE_VPC, $VMWARE_SUBNET_VM1 and $VMWARE_PUBLIC_GW are defined in the previous steps of this tutorial.
+{:note}
 
 ## Establish Outbound Internet Access with Public Gateway
 {: #vpc-bm-vmware-pgwip-outbound}

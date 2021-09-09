@@ -70,6 +70,9 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
+The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of this tutorial.
+{:note}
+
 
 ## Provision IBM Cloud DNS service
 {: #vpc-bm-vmware-dns-provision}
@@ -128,7 +131,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-2. Create `A records` for your previously created Zone `vmware.ibmcloud.local` using the following CLI command:
+2. To create `A records` for your previously created Zone `vmware.ibmcloud.local`, you can use the following CLI command (modify the 'NAME' and 'IP_ADDRESS' accordingly):
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS

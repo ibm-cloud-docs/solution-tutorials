@@ -126,9 +126,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
 * management
 * vMotion
 * vSAN
-* [OPTIONAL] TEP
 * [OPTIONAL] Virtual machines (attached directly to a VPC subnet)
-* [OPTIONAL] NSX-T T0 uplinks
 
 1. Provision the following {{site.data.keyword.vpc_short}} subnets, and record their IDs for future use. The subnets have been provisioned inside the CIDR block defined in the {{site.data.keyword.vpc_short}} zone's prefix.
 
@@ -151,11 +149,7 @@ Multiple subnets will be needed for various use cases in the VMware deployment, 
    VMWARE_SUBNET_VSAN=$(ibmcloud is subnetc vmw-vsan-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.2.0/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
    ```
    {: codeblock}
-   
-   ```sh
-   VMWARE_SUBNET_TEP=$(ibmcloud is subnetc vmw-tep-subnet $VMWARE_VPC --ipv4-cidr-block 10.97.1.128/25 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
-   ```
-   {: codeblock}
+
 
 2. List the subnets and take a note of the CIDRs. Check that this maps your network addressing design.
 
@@ -195,7 +189,7 @@ If you have not already done so, create a SSH key for the {{site.data.keyword.vp
 2. Record and note the SSH key ID.
 
    ```sh
-   SSH_KEY=<your_ssh_key_ID>
+   SSH_KEY=$(ibmcloud is keys --output json | jq -r '.[] | select(.name == "put-your-key-name-here")'.id)
    ```
    {: codeblock}
 

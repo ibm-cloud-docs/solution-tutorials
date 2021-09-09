@@ -77,6 +77,8 @@ This tutorial is part of series, and requires that you have completed the relate
 When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
+The used variables e.g. $VMWARE_VPC, $VMWARE_VPC_ZONE, $VMWARE_BMS001 and $VMWARE_BMS001_PNIC are defined in the previous steps of this tutorial.
+{:note}
 
 ## Create a {{site.data.keyword.vpc_short}} prefix and a subnet for VMware Virtual machines
 {: #vpc-bm-vmware-newvm-prefix}
@@ -120,17 +122,17 @@ VLAN 1000 is used as the VLAN ID for the subnet in this tutorial. You can custom
 1. Allow the {{site.data.keyword.bm_is_short}} PCI NICs to use the VLAN ID.
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000
+   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,1000
    ```
    {: codeblock}
    
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000
+   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,1000
    ```
    {: codeblock}
    
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000
+   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,1000
    ```
    {: codeblock}
 
@@ -207,7 +209,7 @@ To create a Port Group for the  Distributed Switch:
    * Portgroup : `dpg-vm-subnet-1000`
    * IP address : 192.168.0.4/24
    * Default Gateway : 192.168.0.1
-   * DNS : 161.26.0.7, 161.26.0.8
+   * DNS : 161.26.0.10, 161.26.0.11
    * NTP : 161.26.0.6
 
    For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
@@ -217,7 +219,7 @@ To create a Port Group for the  Distributed Switch:
 
    ```sh
    ping 192.168.0.1
-   ping 161.26.0.7
+   ping 161.26.0.10
    nslookup {DomainName}
    ```
    {: codeblock}
@@ -256,7 +258,6 @@ ibmcloud is bm-nics $VMWARE_BMS001
 Listing network interfaces of server 02b7-18928fa3-55b7-4d63-a2bb-b0d832ea19bc under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
 02b7-122e2c9e-3a9d-4f0c-87c3-f6d75f40a51d   pci-nic-vmnic0        available   primary     10.97.0.5                   pci              02:00:02:21:ED:95   100, 200, 300, 400, 500, 1000   -   
-02b7-6103583c-8a01-4506-95bd-f30eb7338561   vlan-nic-tep-vmk10    available   secondary   10.97.1.132                 vlan             02:00:01:21:ED:9A   -                               400   
 02b7-8114ba6d-0dbd-4453-b38d-83db068cf959   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.4                   vlan             02:00:01:21:ED:97   -                               200   
 02b7-9276f471-1426-49ee-8e8c-0a6d964eccdb   vlan-nic-vsan-vmk2    available   secondary   10.97.2.8                   vlan             02:00:05:21:ED:98   -                               300   
 ```
@@ -276,7 +277,6 @@ $ ibmcloud is bm-nics $VMWARE_BMS002
 Listing network interfaces of server 02b7-02890a7a-e543-4479-92d5-a9d7d5819286 under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
 02b7-ba818812-d5a6-4622-9ea5-c5088a60d724   pci-nic-vmnic0        available   primary     10.97.0.6                   pci              02:00:03:21:ED:95   100, 200, 300, 400, 500, 1000   -   
-02b7-736f325e-9b3b-4254-8c0c-6c4add8934c3   vlan-nic-tep-vmk10    available   secondary   10.97.1.133                 vlan             02:00:02:21:ED:9A   -                               400   
 02b7-94073d6d-6658-4b91-b4e1-b15a15fdbf4d   vlan-nic-vsan-vmk2    available   secondary   10.97.2.6                   vlan             02:00:03:21:ED:98   -                               300   
 02b7-97c2c802-a236-41c7-b6ca-bd9f0145cba2   vlan-nic-vmotion-vmk1 available   secondary   10.97.1.5                   vlan             02:00:02:21:ED:97   -                               200   
 02b7-159f23b6-67e1-4aca-a4b8-36fede3b8fc7   vlan-nic-vcenter      available   secondary   10.97.0.132                 vlan             02:00:01:22:01:2B   -                               100   
@@ -301,17 +301,17 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    With the process outlined in the previous example, you can allow the BMSs to use the new VLAN ID with the following commands:
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400,1000,1001
+   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,1000,1001
    ```
    {: codeblock}
    
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400,1000,1001
+   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,1000,1001
    ```
    {: codeblock}
    
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400,1000,1001
+   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,1000,1001
    ```
    {: codeblock}
 
@@ -345,7 +345,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    * Portgroup : 'dpg-vm-subnet-1001'
    * IP address : 192.168.0.5/24
    * Default Gateway : 192.168.0.1
-   * DNS : 161.26.0.7, 161.26.0.8
+   * DNS : 161.26.0.10, 161.26.0.11
    * NTP : 161.26.0.6
 
 6. At this point you should be able to ping the first Virtual Machine (VM1) from this newly created Virtual Machine (VM2).
