@@ -65,7 +65,7 @@ In this tutorial, you will learn how to:
 * provision {{site.data.keyword.bm_is_short}} for VMware deployment in {{site.data.keyword.vpc_short}}
 * provision baremetal network interfaces for VMkernel adapters
 
-In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as `vmk0` for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters needs (such as vMotion, vSAN, NFS and TEP) as `vmk1`, `vmk2` etc. as shown in the following diagram.
+In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as `vmk0` for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters needs (such as vMotion and vSAN) as `vmk1`, `vmk2` etc. as shown in the following diagram.
 
 ![Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
