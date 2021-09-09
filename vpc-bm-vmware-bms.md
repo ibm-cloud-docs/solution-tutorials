@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-01"
+lastupdated: "2021-09-09"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -49,11 +49,13 @@ This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutori
 This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
 {: shortdesc}
 
-In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface.
+You need to plan and decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 
-The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. It is important to understand, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for {{site.data.keyword.vpc_short}} with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface. Before provisioning {{site.data.keyword.bm_is_short}}, it is important to understand how these two interface types work.
 
-The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a {{site.data.keyword.vpc_short}} subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the {{site.data.keyword.vpc_short}} subnet, but to be able to communicate with a {{site.data.keyword.vpc_short}} subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300, 400] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with {{site.data.keyword.vpc_short}}.
+The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. Note, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for {{site.data.keyword.vpc_short}} with VMware vSphere](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+
+The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a {{site.data.keyword.vpc_short}} subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the {{site.data.keyword.vpc_short}} subnet, but to be able to communicate with a {{site.data.keyword.vpc_short}} subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with {{site.data.keyword.vpc_short}}.
 
 
 ## Objectives
@@ -61,9 +63,9 @@ The VLAN interface is a virtual network interface that is associated with a PCI 
 
 In this tutorial, you will learn how to:
 * provision {{site.data.keyword.bm_is_short}} for VMware deployment in {{site.data.keyword.vpc_short}}
-* how to provision baremetal network interfaces for VMkernel adapters
+* provision baremetal network interfaces for VMkernel adapters
 
-In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as `vmk0` for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters needs (such as vMotion, vSAN, NFS and TEP) as `vmk1`, `vmk2` etc. as shown in the following diagram.
+In this tutorial, PCI interface is used as the vSphere Switch uplink and its IP address is used as `vmk0` for managing the host, and additional VLAN NICs are provisioned for other vSphere VMkernel adapters needs (such as vMotion and vSAN) as `vmk1`, `vmk2` etc. as shown in the following diagram.
 
 ![Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg "Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. Deploying Bare metal server as ESX hosts in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -81,6 +83,9 @@ This tutorial is part of series, and requires that you have completed the relate
 * [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+
+The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
+{:note}
 
 
 ## Validate {{site.data.keyword.bm_is_short}} images
@@ -273,12 +278,11 @@ This tutorial is part of series, and requires that you have completed the relate
 {: #vpc-bm-vmware-bms-vlannic}
 {: step}
 
-In this step, the VLAN interfaces for different VMware VMKs will be created. Each VMK will need its own VLAN interface, for example:
+In this step, the VLAN interfaces for different VMware VMKs will be created. In VMware deployments, each VMK will need its own VLAN interface, for example:
 
 * vMotion traffic
 * vSAN traffic
 * NSX-T TEP traffic
-* NFS traffic
 
 In IBM Cloud VPC, you can attach PCI and VLAN network interfaces to the {{site.data.keyword.bm_is_short}} to support the VMware networking topology. The PCI interface is a physical network interface. The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface. See more in [Network interfaces of the bare metal servers](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro).
 
@@ -294,10 +298,9 @@ By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI netw
 
 Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLANs. The following VLAN IDs are use in this example:
 
-* VLAN 100 - Instance management (e.g. vCenter and NSX Managers)
+* VLAN 100 - Instance management (e.g. vCenter and NSX-T Managers)
 * VLAN 200 - vMotion
 * VLAN 300 - vSAN
-* VLAN 400 - TEP
 
 1. Get the PCI NIC IDs for the provisioned {{site.data.keyword.bm_is_short}}:
 
@@ -319,17 +322,17 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 2. Allow PCI NICs to use the VLANs stated above:
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300
       ```
    {: codeblock}
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS002 $VMWARE_BMS002_PNIC --allowed-vlans 100,200,300
       ```
    {: codeblock}
 
    ```sh
-   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300,400
+   ibmcloud is bm-nicu $VMWARE_BMS003 $VMWARE_BMS003_PNIC --allowed-vlans 100,200,300
    ```
    {: codeblock}
 
@@ -337,13 +340,12 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 ### Creating VLAN NICs
 {: #vpc-bm-vmware-bms-vlannic-create}
 
-Next, you need to create VLAN NICs for VMkernel adapters (VMKs) and NSX-T TEPs.
+Next, you need to create VLAN NICs for VMkernel adapters (VMKs).
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
 vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
 vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
-vlan-nic-tep-vmk10    | vlan           | 400     | $VMWARE_SUBNET_TEP  | false
 
 
 When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
@@ -436,42 +438,6 @@ This phase is optional, if you use NFS.
    In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
    {: note}
 
-
-### Create VLAN NICs for TEPs
-{: #vpc-bm-vmware-bms-vlannic-tep}
-
-1. If you plan use NSX-T, you also need to create TEP VLAN NICs for each host. Record the IP addresses for later use.
-
-   | Bare Metal Name | Subnet Name        | VLAN | Allowed to Float |
-   |-----------------|--------------------|------|------------------|
-   | VMWARE_BMS001   | $VMWARE_SUBNET_TEP | 400  | false            |
-   | VMWARE_BMS002   | $VMWARE_SUBNET_TEP | 400  | false            |
-   | VMWARE_BMS003   | $VMWARE_SUBNET_TEP | 400  | false            |
-
-
-   ```sh
-   VMWARE_BMS001_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS001_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS001 : "$VMWARE_BMS001_TEP_IP
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_BMS002_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS002_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS002 : "$VMWARE_BMS002_TEP_IP
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_BMS003_TEP=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_TEP --name vlan-nic-tep-vmk10 --interface-type vlan --vlan 400 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS003_TEP_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_TEP --output json | jq -r .primary_ipv4_address)
-   echo "TEP IP for BMS003 : "$VMWARE_BMS003_TEP_IP
-   ```
-   {: codeblock}
-
-   In the above example, the default security group was used for the VMKs. This is for easy testing, but in real environments it is recommended to isolate VMK traffic, and only allow traffic what is needed. To be able to do this in {{site.data.keyword.vpc_short}}, create separate Security Groups for each interface role, and create rules to only allow the required traffic at the detail level required by your network security policies.
-   {: note}
 
 ## Next Steps
 {: #vpc-bm-vmware-bms-next-steps}

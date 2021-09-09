@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-01"
+lastupdated: "2021-09-09"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -75,6 +75,8 @@ This tutorial is part of series, and requires that you have completed the relate
 When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
+The used variables e.g. $VMWARE_SUBNET_MGMT, $VMWARE_BMS001 and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
+{:note}
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
@@ -85,6 +87,7 @@ In this step, you will provision a VLAN NIC for vCenter into `Instance Managemen
 NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
 -----------------|---------------------|----------|-------------|--------------------------|------------------
 vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
+
 
 While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
 {:note}
@@ -107,7 +110,7 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
    {: codeblock}
 
 
-1. Add vCenter IP to DNS Zone as A record:
+2. Add vCenter IP to DNS Zone as A record:
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name vcenter --ipv4 $VMWARE_VCENTER_IP
@@ -184,7 +187,7 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
    Host name | vcenter.vmware.ibmcloud.local
    Subnet mask or prefix length | 25
    Default gateway | 10.97.0.129
-   DNS servers | 161.26.0.7, 161.26.0.9
+   DNS servers | 161.26.0.10, 161.26.0.11
    HTTP Port | 80
    HTTPS Port | 443
 
@@ -206,7 +209,7 @@ After the previous step, vCenter installation continues with Phase 2.
    Subnet mask | 25
    Host name | vcenter.vmware.ibmcloud.local
    Gateway | 10.97.0.129
-   DNS servers | 161.26.0.7,161.26.0.8
+   DNS servers | 161.26.0.10, 161.26.0.11
    Time synchronization mode | Synchronize time with the NTP servers
    NTP Servers | 161.26.0.6
    SSH access | Disabled

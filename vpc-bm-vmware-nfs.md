@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-01"
+lastupdated: "2021-09-09"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -79,6 +79,8 @@ This tutorial is part of series, and requires that you have completed the relate
 When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
+The used variables e.g. $VMWARE_VPC are defined in the previous steps of this tutorial.
+{:note}
 
 ## Create file share in {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-nfs-createfileshare}

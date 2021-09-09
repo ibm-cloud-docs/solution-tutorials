@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-01"
+lastupdated: "2021-09-09"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -73,7 +73,7 @@ The following diagram presents an overview of the base deployment in {{site.data
 You need to plan and decide your {{site.data.keyword.vpc_short}} networking solution for the VMware deployment before you start. This tutorial provides a simple example where a fully dedicated {{site.data.keyword.vpc_full}} is created for the VMware deployment, but you may customise your network solution if you so wish. You may also use [IBM Cloud interconnectivity ](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity) options. These are recommended for advanced users only.
 {: important}
 
-You need to plan / decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
+You need to plan and decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 {: important}
 
 Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow steps 1 through 4 below for an initial setup for your base VMware Deployment. After vCenter and the base setup has been completed, you can create storage for your cluster based on your preference by following either step 5 or 6. When using {{site.data.keyword.vpc_short}} subnets for your VMware Virtual Machines, follow steps 7 and 8 to setup your VMware Virtual Machine networking.
