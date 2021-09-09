@@ -80,7 +80,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_VPC are defined in the previous steps of this tutorial.
-{:note}
+{: note}
 
 ## Create file share in {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-nfs-createfileshare}

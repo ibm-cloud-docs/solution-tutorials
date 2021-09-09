@@ -76,7 +76,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_SUBNET_MGMT, $VMWARE_BMS001 and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
-{:note}
+{: note}
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
