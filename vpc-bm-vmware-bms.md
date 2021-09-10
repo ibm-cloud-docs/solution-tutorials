@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-09"
+lastupdated: "2021-09-10"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -342,10 +342,10 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 
 Next, you need to create VLAN NICs for VMkernel adapters (VMKs).
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float
+Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
-vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
-vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
+vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
+vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
 
 
 When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.

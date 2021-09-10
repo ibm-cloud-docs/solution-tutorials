@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-03-30"
+lastupdated: "2021-09-10"
 lasttested: "2020-12-08"
 
 ---
@@ -233,7 +233,7 @@ Here are some of the key principles required:
 {: #vm-to-containers-and-kubernetes-17}
 {: secrets}
 
-It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or SSH keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or SSH keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
 
 One way of using secrets in Kubernetes in by doing something like this:
 

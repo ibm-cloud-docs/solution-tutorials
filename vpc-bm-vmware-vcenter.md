@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-09"
+lastupdated: "2021-09-10"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -86,7 +86,7 @@ In this step, you will provision a VLAN NIC for vCenter into `Instance Managemen
 
 NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
 -----------------|---------------------|----------|-------------|--------------------------|------------------
-vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
+vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
 
 
 While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
@@ -181,13 +181,13 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
    Deployment size | Small
    Storage size | Default
    Datastore | datastore1, thin
-   Network | pg-mgmt (VLAN ID 100)
+   Network | pg-mgmt (VLAN ID 100)
    IPv4 | static
    IP address | 10.97.0.132
    Host name | vcenter.vmware.ibmcloud.local
    Subnet mask or prefix length | 25
-   Default gateway | 10.97.0.129
-   DNS servers | 161.26.0.10, 161.26.0.11
+   Default gateway | 10.97.0.129
+   DNS servers | 161.26.0.10, 161.26.0.11
    HTTP Port | 80
    HTTPS Port | 443
 
@@ -203,7 +203,7 @@ After the previous step, vCenter installation continues with Phase 2.
 
    Parameter | Value
    -----------------|----------
-   Network configuration | Assign static IP address
+   Network configuration | Assign static IP address
    IP version | IPv4
    IP address | 10.97.0.132
    Subnet mask | 25
@@ -215,7 +215,7 @@ After the previous step, vCenter installation continues with Phase 2.
    SSH access | Disabled
    SSO Details | vmware.ibmcloud.local
    Username | administrator
-   CEIP setting | Opted out
+   CEIP setting | Opted out
     
 
 ## Create a new Datacenter and create a Cluster
