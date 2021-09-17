@@ -248,7 +248,7 @@ Note: If you wish to build and push the application to your own container regist
 
 1. Install the Helm chart:
    ```sh
-   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=docker.io/ibmcom/tutorial-scalable-webapp-kubernetes
+   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=ibmcom/tutorial-scalable-webapp-kubernetes
    ```
    {: pre}
 
