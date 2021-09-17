@@ -122,6 +122,21 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
+### Clone the application	
+{: #application-log-analysis-build}	
+On a terminal:	
+1. Clone the GitHub repository:	
+   ```sh	
+   git clone https://github.com/IBM-Cloud/application-log-analysis	
+   ```	
+   {: pre}
+   
+1. Change to the application directory	
+   ```sh	
+   cd application-log-analysis	
+   ```	
+   {: pre}
+
 ### Deploy the application
 {: #application-log-analysis-8}
 
