@@ -41,15 +41,12 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 {: #scalable-webapp-kubernetes-objectives}
 
 * Deploy a web application to the Kubernetes cluster.
-<!--##istutorial#-->
-* Bind a custom subdomain.
-<!--#/istutorial#-->
+<!--##istutorial#-->* Bind a custom subdomain.<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
 ![Architecture](images/solution2/Architecture.png){: class="center"}
 {: style="text-align: center;"}
-
 
 1. A developer downloads or clones a starter web application.
 1. Optionally build the application produces a Docker container image.
