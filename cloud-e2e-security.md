@@ -285,35 +285,6 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-### Build the container image
-{: #cloud-e2e-security-14}
-
-To [build the container image](https://{DomainName}/docs/Registry?topic=Registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}:
-
-1. Identify your {{site.data.keyword.registryshort_notm}} URL, such as **us**.icr.io or **uk**.icr.io:
-   ```sh
-   ibmcloud cr region
-   ```
-   {: pre}
-   
-2. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
-   ```sh
-   ibmcloud cr namespaces
-   ```
-   {: pre}
-
-   To create a new namespace:
-   ```sh
-   ibmcloud cr namespace-add <your-namespace>
-   ```
-   {: pre}
-
-3. Build the image with a unique name such as **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage** :
-   ```sh
-   ibmcloud cr build -t <your-registry-url>/<your-namespace>/<your-image-name>:latest .
-   ```
-   {: codeblock}
-
 ### Fill in credentials and configuration settings
 {: #cloud-e2e-security-15}
 
@@ -344,9 +315,9 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
       ```
       {: pre}
 
-   3. Set the image repository name e.g., `us.icr.io/namespace/image-name`:
+   3. Set the image repository name e.g., if you are using your private container registry `icr.io/namespace/image-name` or use the pre-built one `ibmcom/tutorial-cloud-e2e-security`:
       ```sh
-      export IMAGE_REPOSITORY=<REGISTRY_NAME>.<NAMESPACE>.<IMAGE_NAME>
+      export IMAGE_REPOSITORY=ibmcom/tutorial-cloud-e2e-security
       ```
       {: pre}
 
@@ -357,7 +328,7 @@ To [build the container image](https://{DomainName}/docs/Registry?topic=Registry
       ```
       {: pre}
 
-   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
+   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one and the {{site.data.keyword.registryfull_notm}}. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
    {: tip}
 
 4. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
