@@ -64,8 +64,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-* a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
 * `Helm 3` to deploy charts.
 
