@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-09-07"
+          "lastUpdated": "2021-09-17"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -256,7 +256,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-09-17"
         },
         {
           "name": "Text Analysis with Code Engine",
