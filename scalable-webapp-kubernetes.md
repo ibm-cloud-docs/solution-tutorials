@@ -125,69 +125,6 @@ This starter application code contains all the necessary configuration files for
 {: #scalable-webapp-kubernetes-deploy}
 {: step}
 
-<!-- 
-
-In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
-
-### Prepare the access to {{site.data.keyword.registryshort_notm}}
-{: #scalable-webapp-kubernetes-7}
-
-1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
-   ```sh
-   ibmcloud cr region
-   ```
-   {: pre}
-
-1. Define an variable named `MYREGISTRY` pointing to the URL such as:
-   ```sh
-   MYREGISTRY=us.icr.io
-   ```
-   {: pre}
-
-1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
-   ```sh
-   ibmcloud cr namespaces
-   ```
-   {: pre}
-
-   Define an variable named `MYNAMESPACE` for the registry namespace:
-   ```sh
-   MYNAMESPACE=<REGISTRY_NAMESPACE>
-   ```
-   {: pre}
-
-   Create it if required:
-   ```sh
-   ibmcloud cr namespace-add $MYNAMESPACE
-   ```
-   {: pre}
-
-### Build the container image
-{: #scalable-webapp-kubernetes-8}
-
-1. Define an environment variable named `MYPROJECT` and set the name of the application by replacing the placeholder with your initials:
-   ```sh
-   export MYPROJECT=<your-initials>kubenodeapp
-   ```
-   {: pre}
-
-1. Login, build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
-   ```sh
-   ibmcloud cr login
-   ```
-   {: pre}
-
-   ```sh
-   docker build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
-   ```
-   {: pre}
-
-   ```sh
-   docker push $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0
-   ```
-   {: pre}
--->
-
 ### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
 
