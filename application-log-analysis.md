@@ -122,6 +122,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
+<!--
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
 {: #application-log-analysis-6}
 
@@ -189,6 +190,7 @@ On a terminal:
    ibmcloud cr build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYIMAGE}:latest
    ```
    {: pre}
+-->
 
 ### Deploy the application
 {: #application-log-analysis-8}
@@ -215,7 +217,7 @@ On a terminal:
    ```
    {: pre}
 
-5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps. *Check the table in this section below for more details*.
+5. Edit `app-log-analysis.yaml` and replace the placeholder (`$MYINGRESSSUBDOMAIN`) with the value captured in the previous step. *Check the table in this section below for more details*.
 6. Once the `yaml` is updated, deploy the app with the following command:
    ```sh
    kubectl apply -f app-log-analysis.yaml
@@ -227,9 +229,6 @@ On a terminal:
 
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-   | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
-   | $MYNAMESPACE        | &lt;your\-namespace&gt;                                                    | The registry namespace where the image was built in the previous section\.                                  |
-   | $MYIMAGE            | &lt;your\-initials&gt;\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
    | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster  &lt;your\-cluster\-name&gt;\. |
 
 
