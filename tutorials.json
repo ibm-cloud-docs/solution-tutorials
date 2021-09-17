@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-07-02"
+          "lastUpdated": "2021-09-17"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -54,7 +54,7 @@
             "Virtual Servers"
           ],
           "guide": true,
-          "lastUpdated": "2021-03-30"
+          "lastUpdated": "2021-09-10"
         },
         {
           "name": "Strategies for resilient applications",
@@ -256,7 +256,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-09-17"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -685,7 +685,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware VPC",
@@ -696,7 +696,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware DNS",
@@ -707,7 +707,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware BMS",
@@ -718,7 +718,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-10"
         },
         {
           "name": "VMware vCenter",
@@ -729,7 +729,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-10"
         },
         {
           "name": "VMware VSAN",
@@ -740,7 +740,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware NFS",
@@ -751,7 +751,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware NewVM",
@@ -762,7 +762,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         },
         {
           "name": "VMware PGWIP",
@@ -773,7 +773,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-01"
+          "lastUpdated": "2021-09-09"
         }
       ]
     },
