@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-09-17"
+lastupdated: "2021-09-20"
 lasttested: "2021-09-17"
 
 content-type: tutorial
@@ -41,7 +41,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 {: #scalable-webapp-kubernetes-objectives}
 
 * Deploy a web application to the Kubernetes cluster.
-<!--##istutorial#-->* Bind a custom subdomain.<!--#/istutorial#-->
+<!--##istutorial#-->
+* Bind a custom subdomain.
+<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
@@ -49,8 +51,8 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 {: style="text-align: center;"}
 
 1. A developer downloads or clones a starter web application.
-1. Optionally build the application produces a Docker container image.
-1. Optionally the image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
+1. Optionally build the application to produce a container image.
+1. Optionally the image is pushed to a namespace in the {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 

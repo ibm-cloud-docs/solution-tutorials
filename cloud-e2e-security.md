@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-09-17"
+lastupdated: "2021-09-20"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -52,7 +52,7 @@ The tutorial features a sample application that enables groups of users to uploa
 This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
 <!--#/istutorial#-->
 
-![Architecture](images/solution34-cloud-e2e-security/architecture_diagram.svg){: class="center"}
+![Architecture](images/solution34-cloud-e2e-security/Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 

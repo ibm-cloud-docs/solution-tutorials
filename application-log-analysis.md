@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-09-17"
+lastupdated: "2021-09-20"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -123,8 +123,9 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
 ### Clone the application	
-{: #application-log-analysis-build}	
-On a terminal:	
+{: #application-log-analysis-build}
+
+In a terminal:	
 1. Clone the GitHub repository:	
    ```sh	
    git clone https://github.com/IBM-Cloud/application-log-analysis	
@@ -144,6 +145,7 @@ On a terminal:
 
    For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
    {: tip}
+
 2. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
    MYCLUSTER=mycluster
