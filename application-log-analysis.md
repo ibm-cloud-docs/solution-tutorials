@@ -125,7 +125,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 ### Clone the application
 {: #application-log-analysis-build}
 
-In a terminal:
+In a terminal window:
 1. Clone the GitHub repository:
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
