@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-09-17"
+lastupdated: "2021-09-20"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -124,6 +124,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 
 ### Clone the application	
 {: #application-log-analysis-build}	
+
 On a terminal:	
 1. Clone the GitHub repository:	
    ```sh	
