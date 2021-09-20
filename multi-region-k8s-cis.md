@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-09-17"
+lastupdated: "2021-09-20"
 lasttested: "2020-12-09"
 
 content-type: tutorial
@@ -65,7 +65,6 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
@@ -75,7 +74,6 @@ You will find instructions to download and install these tools for your operatin
 
 In addition, make sure you:
 - own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers.
-- [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
