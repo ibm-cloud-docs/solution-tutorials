@@ -203,6 +203,7 @@ Most of these values have a default set if nothing is provided as an option when
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {: pre}
+    
 5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
 6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
