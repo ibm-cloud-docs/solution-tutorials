@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-01-26"
+lastupdated: "2021-08-26"
 lasttested: "2020-12-21"
 
 content-type: tutorial
@@ -318,7 +318,7 @@ Complete the following steps.
 {: #hpc-lsf-on-vpc-remove-resources}
 {: step}
 
-To clean up any resources that you created in this tutorial, use the following procedure. This is useful if you complete this tutorial as a part of a proof of concept or you don't need the cluster any longer.
+To clean up any resources that you created in this tutorial, use the following procedure.
 
 Make sure `GEN_FILE_DIR` is set.
 {: note}
@@ -328,7 +328,7 @@ Make sure `GEN_FILE_DIR` is set.
    ```
    {: pre}
 
-If the cleanup process times out before it completes, Terraform prints out a list of resources that were not removed. You can use the CLI to remove these resources individually.
+As an alternative, you can use the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) or the CLI to remove these resources individually.
 
 
 ## Related content

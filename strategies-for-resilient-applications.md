@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-04-23"
+lastupdated: "2021-08-25"
 lasttested: "2019-12-07"
 
 ---
@@ -285,14 +285,14 @@ More information is available in the [High Availability documentation](https://{
 
 All of these services share the same characteristics:
 * For high availability they are deployed in clusters. Details can be found in the documentation of each service:
-  - [{{site.data.keyword.postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
-  - [EnterpriseDB](https://{DomainName}/docs/databases-for-enterprisedb?topic=databases-for-enterprisedb-high-availability)
-  - [DataStax](https://{DomainName}/docs/databases-for-cassandra?topic=databases-for-cassandra-high-availability)
-  - [{{site.data.keyword.redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
-  - [ElasticSearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
-  - [etcd](https://{DomainName}/docs/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
-  - [{{site.data.keyword.mongodb}}](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
-  - [{{site.data.keyword.rabbitmq}}](https://{DomainName}/docs/messages-for-rabbitmq?topic=messages-for-rabbitmq-high-availability)
+   - [{{site.data.keyword.postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
+   - [EnterpriseDB](https://{DomainName}/docs/databases-for-enterprisedb?topic=databases-for-enterprisedb-high-availability)
+   - [DataStax](https://{DomainName}/docs/databases-for-cassandra?topic=databases-for-cassandra-high-availability)
+   - [{{site.data.keyword.redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
+   - [ElasticSearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
+   - [etcd](https://{DomainName}/docs/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
+   - [{{site.data.keyword.mongodb}}](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
+   - [{{site.data.keyword.rabbitmq}}](https://{DomainName}/docs/messages-for-rabbitmq?topic=messages-for-rabbitmq-high-availability)
 * Each cluster is spread over multiple zones.
 * Data is replicated across the zones.
 * Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-resources-scaling) for details.

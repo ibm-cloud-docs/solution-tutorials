@@ -100,6 +100,19 @@ toc:
           - web-app-private-network.md
 
         - topicgroup:
+          label: VMware on Bare metal VPC (Beta)
+          topics:
+          - vpc-bm-vmware.md
+          - vpc-bm-vmware-vpc.md
+          - vpc-bm-vmware-dns.md
+          - vpc-bm-vmware-bms.md
+          - vpc-bm-vmware-vcenter.md
+          - vpc-bm-vmware-vsan.md
+          - vpc-bm-vmware-nfs.md
+          - vpc-bm-vmware-newvm.md
+          - vpc-bm-vmware-pgwip.md
+
+        - topicgroup:
           label: VMware Solutions
           topics:
           - vmware-solutions-shared-getting-started.md

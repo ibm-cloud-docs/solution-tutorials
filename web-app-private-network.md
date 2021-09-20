@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-05"
+lastupdated: "2021-08-26"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -130,7 +130,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. Cancel any additional VLANs by support ticket.
+3. [Cancel any additional VLANs](https://{DomainName}.ibm.com/docs/vlans?topic=vlans-cancel-vlan)
 4. Delete the Load Balancer
 5. Delete the File Storage services
 

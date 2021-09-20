@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-01-19"
+lastupdated: "2021-09-17"
 lasttested: "2020-12-09"
 
 content-type: tutorial
@@ -101,59 +101,24 @@ Create the Kubernetes cluster:
 
 While the cluster is getting ready, you are going to prepare the application.
 
-### Create a namespace in {{site.data.keyword.registryshort_notm}}
-{: #multi-region-k8s-cis-create_namespace}
 
-1. Target the {{site.data.keyword.Bluemix_notm}} CLI to Dallas.
+### Clone the application
+{: #multi-region-k8s-cis-clone_application}
+
+This step clones the application. You can skip this step if you are configuring the second cluster.
+
+1. Clone the source code for the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: new_windows} to your user home directory.
    ```bash
-   ibmcloud target -r us-south
+   git clone https://github.com/IBM-Cloud/kubernetes-node-app
    ```
    {: pre}
 
-2. Create a namespace for the application.
+1. Change to the application directory,
    ```bash
-   MYNAMESPACE=<your_namespace>
-   ibmcloud cr namespace-add $MYNAMESPACE
+   cd kubernetes-node-app
    ```
    {: pre}
 
-You can also reuse an existing namespace if you have one in the location. You can list existing namespaces with `ibmcloud cr namespaces`.
-{: tip}
-
-### Build the application
-{: #multi-region-k8s-cis-build_application}
-
-This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
-
-1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){: new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
-   ```bash
-   git clone https://github.com/IBM/container-service-getting-started-wt.git
-   ```
-   {: pre}
-
-1. Navigate to the `Lab 1` directory.
-   ```bash
-   cd 'container-service-getting-started-wt/Lab 1'
-   ```
-   {: pre}
-
-### Build and push a Docker image to the location-specific registry
-{: #multi-region-k8s-cis-push_image}
-
-1. Ensure your local Docker engine can push to registry in Dallas.
-   ```bash
-   ibmcloud cr login
-   ```
-   {: pre}
-
-2. Build and push the image.
-   ```bash
-   ibmcloud cr build -t us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .
-   ```
-   {: pre}
-
-   The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
-   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
 {: #multi-region-k8s-cis-deploy_application}
@@ -169,14 +134,14 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
 
 1. Create the deployment:
    ```bash
-   kubectl create deploy hello-world-deployment --image=us.icr.io/$MYNAMESPACE/multi-region-hello-world:1
+   kubectl create deploy hello-world-deployment --image=ibmcom/tutorial-scalable-webapp-kubernetes
    ```
    {: pre}
 
    Example output: `deployment "hello-world-deployment" created`.
 1. Make the application accessible within the cluster by creating a service:
    ```bash
-   kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
+   kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=3000
    ```
    {: pre}
 
@@ -221,7 +186,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.your-domain.com `<glb_name> = hello-world-service` and `<your_domain_name> = your-domain.com`
 
 1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
-   ```
+   ```bash
    apiVersion: networking.k8s.io/v1beta1
    kind: Ingress
    metadata:
@@ -238,19 +203,25 @@ It will be required to have your own DNS domain name and a global load balancer 
             serviceName: hello-world-service
             servicePort: 80
    ```
+   {: pre}
+
 1. Add the ingress instance:
    ```bash
    kubectl apply -f glb-ingress.yaml
    ```
+   {: pre}
 
    It can take a few minutes before ingress becomes available as indicated by a value in the ADDRESS column in the command:
    ```bash
    kubectl get ingress
    ```
+   {: pre}
+
 1. Now test by configuring the curl **Host** http header with your DNS subdomain name to override the default of `<IngressSubdomain>`:
    ```bash
-   curl --header 'Host: <glb_name>.<your_domain_name>' <IngressSubdomain>
+   curl --header 'Host: <glb_name>.<your_domain_name>' <IngressSubdomain>/hostname
    ```
+   {: pre}
 
    The curl command would look something like this: `curl --header 'Host: hello-world-service.ibmom.com' my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
 
@@ -376,25 +347,24 @@ With the origin pools defined, you can complete the configuration of the load ba
    1. Select the pool **All**
    1. Click Add
 
-Repeat the process to create the following:
+   Repeat the process to create the following:
 
 
-| Region               | Origin Pool |
-| :---------------:    | :---------: |
-|Default               |     All     |
-|Western Europe        |     UK      |
-|Eastern Europe        |     UK      |
-|Northeast Asia        |     UK      |
-|Southeast Asia        |     UK      |
-|Western North America |     US      |
-|Eastern North America |     US      |
+   | Region               | Origin Pool |
+   | :---------------:    | :---------: |
+   |Default               |     All     |
+   |Western Europe        |     UK      |
+   |Eastern Europe        |     UK      |
+   |Northeast Asia        |     UK      |
+   |Southeast Asia        |     UK      |
+   |Western North America |     US      |
+   |Eastern North America |     US      |
 
+   With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
 
-With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
+1. Click **Create**
 
-4. Click **Create**
-
-At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
+At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>/hostname` to view your application. Based on your location, you are redirected to the closest cluster or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
 
 ## Secure the application
 {: #multi-region-k8s-cis-secure_via_CIS}

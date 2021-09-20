@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-02-23"
+lastupdated: "2021-08-24"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -328,6 +328,9 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
 2. Under **Name**, enter **tutorial** in the search box.
 3. Delete the services which you created for this tutorial.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #create-deploy-retrain-machine-learning-model-8}

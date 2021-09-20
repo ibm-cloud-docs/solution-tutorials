@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-08-16"
+lastupdated: "2021-09-17"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -122,72 +122,19 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
-### Prepare the access to {{site.data.keyword.registryshort_notm}}
-{: #application-log-analysis-6}
-
-1. Set the target region and resource group to the same as your cluster.
-   ```sh
-   ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
-    ```
+### Clone the application	
+{: #application-log-analysis-build}	
+On a terminal:	
+1. Clone the GitHub repository:	
+   ```sh	
+   git clone https://github.com/IBM-Cloud/application-log-analysis	
+   ```	
    {: pre}
-
-1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
-   ```sh
-   ibmcloud cr region
-   ```
-   {: pre}
-
-1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
-   ```sh
-   MYREGISTRY=us.icr.io
-   ```
-   {: pre}
-
-1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
-   ```sh
-   ibmcloud cr namespaces
-   ```
-   {: pre}
-
-   To create a new namespace:
-   ```sh
-   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
-   ```
-   {: pre}
-
-1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
-   ```sh
-   MYNAMESPACE=<REGISTRY_NAMESPACE>
-   ```
-   {: pre}
-
-1. Define a **unique name** for the container image such as `<your-initials>-app-log-analysis`.
-   ```sh
-   MYIMAGE=<your-initials>-app-log-analysis
-   ```
-   {: pre}
-
-### Build the application
-{: #application-log-analysis-build}
-
-On a terminal:
-
-1. Clone the GitHub repository:
-   ```sh
-   git clone https://github.com/IBM-Cloud/application-log-analysis
-   ```
-   {: pre}
-
-1. Change to the application directory
-   ```sh
-   cd application-log-analysis
-   ```
-   {: pre}
-
-5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
-   ```sh
-   ibmcloud cr build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYIMAGE}:latest
-   ```
+   
+1. Change to the application directory	
+   ```sh	
+   cd application-log-analysis	
+   ```	
    {: pre}
 
 ### Deploy the application
@@ -215,7 +162,7 @@ On a terminal:
    ```
    {: pre}
 
-5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps. *Check the table in this section below for more details*.
+5. Edit `app-log-analysis.yaml` and replace the placeholder (`$MYINGRESSSUBDOMAIN`) with the value captured in the previous step. *Check the table in this section below for more details*.
 6. Once the `yaml` is updated, deploy the app with the following command:
    ```sh
    kubectl apply -f app-log-analysis.yaml
@@ -227,9 +174,6 @@ On a terminal:
 
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-   | $MYREGISTRY         | us\.icr\.io                                                          | The registry where the image was built in the previous section\.                                            |
-   | $MYNAMESPACE        | &lt;your\-namespace&gt;                                                    | The registry namespace where the image was built in the previous section\.                                  |
-   | $MYIMAGE            | &lt;your\-initials&gt;\-app\-log\-analysis                                 | The name of the container image\.                                                                           |
    | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster  &lt;your\-cluster\-name&gt;\. |
 
 
@@ -474,6 +418,9 @@ To focus the dashboard on your cluster:
    {: pre}
 
 <!--#/istutorial#-->
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Expand the tutorial
 {: #application-log-analysis-expand_tutorial}

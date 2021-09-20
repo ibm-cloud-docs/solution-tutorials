@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-07-02"
-lasttested: "2021-03-22"
+lastupdated: "2021-09-17"
+lasttested: "2021-09-17"
 
 content-type: tutorial
 services: containers, Registry, certificate-manager
@@ -30,7 +30,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial walks you through how to run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
+This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Optionaly you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
 {: shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -40,20 +40,17 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 ## Objectives
 {: #scalable-webapp-kubernetes-objectives}
 
-* Build and deploy a web application to the Kubernetes cluster.
-<!--##istutorial#-->
-* Bind a custom subdomain.
-<!--#/istutorial#-->
+* Deploy a web application to the Kubernetes cluster.
+<!--##istutorial#-->* Bind a custom subdomain.<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
 ![Architecture](images/solution2/Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
-
 1. A developer downloads or clones a starter web application.
-1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
+1. Optionally build the application produces a Docker container image.
+1. Optionally the image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 
@@ -64,8 +61,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-* a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
 * `Helm 3` to deploy charts.
 
@@ -130,60 +125,20 @@ This starter application code contains all the necessary configuration files for
 {: #scalable-webapp-kubernetes-deploy}
 {: step}
 
-In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
+### Deploy the application with Helm 3
+{: #scalable-webapp-kubernetes-9}
 
-### Prepare the access to {{site.data.keyword.registryshort_notm}}
-{: #scalable-webapp-kubernetes-7}
+The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the starter application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
-1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
-   ```sh
-   ibmcloud cr region
-   ```
-   {: pre}
+Note: If you wish to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryshort_notm}} or any other container registry.  
+{: tip}
 
-1. Define an variable named `MYREGISTRY` pointing to the URL such as:
-   ```sh
-   MYREGISTRY=us.icr.io
-   ```
-   {: pre}
-
-1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
-   ```sh
-   ibmcloud cr namespaces
-   ```
-   {: pre}
-
-   Define an variable named `MYNAMESPACE` for the registry namespace:
-   ```sh
-   MYNAMESPACE=<REGISTRY_NAMESPACE>
-   ```
-   {: pre}
-
-   Create it if required:
-   ```sh
-   ibmcloud cr namespace-add $MYNAMESPACE
-   ```
-   {: pre}
-
-### Build the container image
-{: #scalable-webapp-kubernetes-8}
 
 1. Define an environment variable named `MYPROJECT` and set the name of the application by replacing the placeholder with your initials:
    ```sh
    export MYPROJECT=<your-initials>kubenodeapp
    ```
    {: pre}
-
-1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
-   ```sh
-   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
-   ```
-   {: pre}
-
-### Deploy the application with Helm 3
-{: #scalable-webapp-kubernetes-9}
-
-In this section you will deploy the starter application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 1. Identify your cluster:
 
@@ -230,7 +185,7 @@ In this section you will deploy the starter application using [Helm](https://hel
 
 1. Install the Helm chart:
    ```sh
-   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT
+   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=ibmcom/tutorial-scalable-webapp-kubernetes
    ```
    {: pre}
 
@@ -283,6 +238,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:    mycluster
    ```
    {: screen}
+
 2. Define environment variables `INGRESS_SUBDOMAIN` and `INGRESS_SECRET` to hold the values 
    ```sh
    export INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN_FROM_ABOVE_STEP>

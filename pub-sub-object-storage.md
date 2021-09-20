@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-24"
 lasttested: "2020-12-16"
 
 content-type: tutorial
@@ -216,6 +216,9 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 3. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 4. Delete {{site.data.keyword.messagehub}} `myeventstreams`
 5. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #pub-sub-object-storage-8}

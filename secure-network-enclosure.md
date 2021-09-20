@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-01-21"
+lastupdated: "2021-08-26"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -511,7 +511,7 @@ This completes the setup of the secure private network enclosure protecting a si
 In this step, you will clean up the resources to remove what you created.
 
 - Cancel any virtual servers or bare-metal servers
-- Disassociate and [Cancel any VLANs](/docs/vlans?topic=vlans-cancel-vlan)
+- Disassociate and [Cancel any VLANs](https://{DomainName}.ibm.com/docs/vlans?topic=vlans-cancel-vlan)
 - Cancel the VRA
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances/) page.

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-02"
-lasttested: "2021-03-22"
+lastupdated: "2021-09-20"
+lasttested: "2021-09-20"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, natural-language-understanding
@@ -98,10 +98,10 @@ Putting entities into a single project enables you to manage access control more
 <!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
-   - Select a location
-   - Provide a project name and select a Resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
-   - Click on **Create** and then **Confirm & create**
-   - Wait until the project `status` changes to **Active**
+   - Select a location.
+   - Provide a project name and select a resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
+   - Click on **Create**.
+   - Wait until the project `status` changes to **Active**.
 3. In a terminal on your machine, ensure you're logged in to the `ibmcloud` CLI.
    ```sh
    ibmcloud login
@@ -203,17 +203,18 @@ Most of these values have a default set if nothing is provided as an option when
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {: pre}
-
+    
 5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
 6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:
     ```
-    frontend-gxbsr-2-deployment-5f55c4cf6f-869fb  2/2      Running  0         24s
-    frontend-gxbsr-2-deployment-5f55c4cf6f-bg2cn  1/2      Running  0         9s
-    frontend-gxbsr-2-deployment-5f55c4cf6f-ckxqw  2/2      Running  0         9s
-    frontend-gxbsr-2-deployment-5f55c4cf6f-djcj6  2/2      Running  0         9s
-    frontend-gxbsr-2-deployment-5f55c4cf6f-wb6j8  2/2      Running  0         9s
+    Name                                        Revision        Running  Status   Restarts  Age
+    frontend-00002-deployment-77d5fbfb5d-7zpfl  frontend-00002  3/3      Running  0         70s
+    frontend-00002-deployment-77d5fbfb5d-kv6rn  frontend-00002  3/3      Running  0         69s
+    frontend-00002-deployment-77d5fbfb5d-mhlwn  frontend-00002  3/3      Running  0         68s
+    frontend-00002-deployment-77d5fbfb5d-qkjmd  frontend-00002  3/3      Running  0         67s
+    frontend-00002-deployment-77d5fbfb5d-zpr9n  frontend-00002  3/3      Running  0         85s
     ```
 
 ### Deploy a backend application and test the connection
@@ -264,11 +265,11 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
    2. Click **Add**.
 3. Under **Buckets**, create a **Custom** bucket named `<your-initials>-bucket-code-engine` , _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
-   1. Select **Cross Region** resiliency.
-   2. Select a location.
+   1. Select **Regional** resiliency.
+   2. Select a location where you created the {{site.data.keyword.codeengineshort}} project.
    3. Select a **Standard** storage class for high performance and low latency.
-   4. Click **Create bucket**
-4. On the left pane under **Endpoints**, Select **Cross Region** resiliency and select a location.
+   4. Click **Create bucket**.
+4. On the left pane under **Endpoints**, Select **Regional** resiliency and select the location you created the bucket in.
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Lite** plan.
@@ -430,7 +431,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 
 Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a subscription to a bucket, your job receives a separate event for each successful change to that bucket. 
 
-1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify_mgr) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
+1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify-mgr-cos) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
 2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
    ```sh
    ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket <your-initials>-bucket-code-engine --prefix files --event-type write
@@ -506,6 +507,9 @@ A container image registry, or registry, is a repository for your container imag
 1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project
 -->
 <!--#/isworkshop#-->
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related resources
 {: #text-analysis-code-engine-related_resources}

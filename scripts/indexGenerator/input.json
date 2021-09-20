@@ -925,6 +925,147 @@
       ]
     },
     {
+      "name": "VMware on Bare metal VPC (Beta)",
+      "anchor": "vmwarebmsvpc",
+      "solutions": [
+        {
+          "name": "VMware",
+          "url": "vpc-bm-vmware.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware VPC",
+          "url": "vpc-bm-vmware-vpc.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-subnets.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware DNS",
+          "url": "vpc-bm-vmware-dns.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware BMS",
+          "url": "vpc-bm-vmware-bms.html",
+          "description": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
+          "imgSrc": "",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware vCenter",
+          "url": "vpc-bm-vmware-vcenter.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vcenter.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware VSAN",
+          "url": "vpc-bm-vmware-vsan.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vsan.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware NFS",
+          "url": "vpc-bm-vmware-nfs.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-nfs.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware NewVM",
+          "url": "vpc-bm-vmware-newvm.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        },
+        {
+          "name": "VMware PGWIP",
+          "url": "vpc-bm-vmware-pgwip.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based-VMs-pgw.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "vpc",
+            "vmware"
+          ],
+          "supportsCloudShell": "yes"
+        }
+      ]
+    },
+    {
       "name": "VMware Solutions",
       "anchor": "vmware",
       "solutions": [

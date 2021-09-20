@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-01-29"
+lastupdated: "2021-08-24"
 lasttested: "2021-01-07"
 
 content-type: tutorial
@@ -359,6 +359,10 @@ ibmcloud resource service-instance-delete data-lake-sql
 ibmcloud resource service-instance-delete data-lake-studio
 ```
 {: pre}
+
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #smart-data-lake-11}

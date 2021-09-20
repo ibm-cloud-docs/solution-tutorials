@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-06-30"
+lastupdated: "2021-08-25"
 lasttested: "2020-12-08"
 
 content-type: tutorial
@@ -211,6 +211,7 @@ The repository contains Android application code with required gradle dependenci
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
    {: pre}
+
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
 
@@ -269,6 +270,9 @@ The repository contains Android application code with required gradle dependenci
    - {{site.data.keyword.conversationfull}}
    - {{site.data.keyword.speechtotextfull}}
    - {{site.data.keyword.texttospeechfull}}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #android-watson-chatbot-7}

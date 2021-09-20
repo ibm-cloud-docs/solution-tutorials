@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2021-01-13"
+lastupdated: "2021-08-24"
 lasttested: "2021-01-13"
 
 content-type: tutorial
@@ -729,6 +729,9 @@ To implement this architecture, you would need to do the following in location t
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
 4. If a second location is configured, then delete all the resources and the {{site.data.keyword.cis_full_notm}} instance.
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #highly-available-and-scalable-web-application-related}

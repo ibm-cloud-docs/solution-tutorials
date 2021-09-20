@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-07-30"
+lastupdated: "2021-08-24"
 lasttested: "2021-07-28"
 
 content-type: tutorial
@@ -1167,6 +1167,10 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
 * {{site.data.keyword.cloudant_short_notm}} service
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
+
 <!--#/istutorial#-->
 
 ## Related content

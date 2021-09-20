@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-04-26"
+lastupdated: "2021-08-24"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -670,6 +670,9 @@ You can repeat the steps for `testing` and `production`.
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
    {: codeblock}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+{: tip}
 
 ## Related content
 {: #plan-create-update-deployments-18}

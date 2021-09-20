@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "8"
+  - "14"
 
 branches:
   only:
@@ -13,7 +13,7 @@ script:
     ./scripts/sync.sh;
     fi
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "draft" ]; then
-    ./scripts/check-translation.sh && ./scripts/check-a11y.sh && ./scripts/check-lastmodified.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
+    ./scripts/check-marked-it.sh && ./scripts/check-translation.sh && ./scripts/check-a11y.sh && ./scripts/check-lastmodified.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
     fi
 
 notifications:
