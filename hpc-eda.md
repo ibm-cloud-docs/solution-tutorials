@@ -320,7 +320,6 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
    * **vpn**:
       ip: <vpn_server_ip>
-
 2. Install LSF:   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
@@ -331,13 +330,12 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    * Copies the LSF installation binary to the deployer.
    * Installs the necessary packages on the deployer.
    * Sets up the NFS server on the deployer including creating and mounting the filesystem.
-
 3. Configure the data manager. For a workload that requires a significant amount of input data, generates a large amount of output data, or both, efficient data management is important. The Spectrum LSF Data Manager provides a number of highly configurable strategies to optimize compute time, network bandwidth, and costs related to data movement.   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "config_dm"
    ```
    {: pre}
-
+   
 4. Configure the on-premises queues and settings for LSF.   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"
