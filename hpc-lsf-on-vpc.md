@@ -30,6 +30,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to provision and configure {{site.data.keyword.Bluemix_notm}} resources to create an IBM Spectrum LSF cluster.
@@ -70,42 +71,42 @@ You will also need:
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
-   ```
+   ```sh
    ibmcloud dev help
    ```
    {: pre}
 
 4. Log in to the {{site.data.keyword.cloud_notm}} with your credentials:
 
-   ```
+   ```sh
    ibmcloud login
    ```
    {: pre}
 
 5. Add the VPC infrastructure capabilities plugin to the CLI:
 
-   ```
+   ```sh
    ibmcloud plugin install vpc-infrastructure
    ```
    {: pre}
 
 6. Add DNS-related commands:
 
-   ```
+   ```sh
    ibmcloud plugin install DNS
    ```
    {: pre}
 
 7. Set the infrastructure (is) commands target to {{site.data.keyword.vpc_short}}:
 
-   ```
+   ```sh
    ibmcloud is target --gen 2
    ```
    {: pre}
 
 8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
-   ```
+   ```sh
    ibmcloud target -r us-south
    ```
    {: pre}
@@ -121,14 +122,14 @@ With the {{site.data.keyword.cloud_notm}} CLI now configured, you can get the LS
 
 1. Download or clone the [IBM Spectrum LSF hybrid cloud scripts](https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud) from GitHub.
 
-   ```
+   ```sh
    git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git
    ```
    {: pre}
 
 2. Copy the tf_inventory.in file to tf_inventory.yml.
 3. Fill out the parameters in the tf_inventory.yml file. See [The tf_inventory.yml file parameters](#tf_inventory-parameters).
-3. Save the tf_inventory.yml file and create a backup copy.
+4. Save the tf_inventory.yml file and create a backup copy.
 
 #### The tf_inventory.yml file parameters
 {: #hpc-lsf-on-vpc-tf_inventory-parameters}
@@ -161,21 +162,21 @@ You need an {{site.data.keyword.cloud_notm}} API key for your cloud account to p
 
 1. If you are not already logged in, log in to the {{site.data.keyword.cloud_notm}} CLI:
 
-   ```
+   ```sh
    ibmcloud login
    ```
    {: pre}
 
 2. Create the API key:
 
-   ```
+   ```sh
    ibmcloud iam api-key-create <name of key> --file <file to write the key> -d "your description of the key"
    ```
    {: pre}
 
 3. You can find your API key in the text file (the file name you supplied for the `--file` parameter) on the line labeled `apikey`. Copy that key and store it in an environment variable where Terraform can find it:
 
-   ```
+   ```sh
    export IBMCLOUD_API_KEY="<the apikey from the text file you just created>"
    ```
    {: pre}
@@ -188,14 +189,14 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
 
 1. After Ansible is installed, use an Ansible playbook to install Terraform and the {{site.data.keyword.cloud_notm}} Terraform plugin:
 
-   ```
+   ```sh
    ansible-playbook -i tf_inventory.yml create_vpc.yml --tags install-terraform
    ```
    {: pre}
 
 2. The `create_vpc.yml` playbook is a hybrid that combines Ansible configuration with Terraform provisioning. You won’t interact directly with Terraform because all of the functions are orchestrated by Ansible. Because Terraform runs behind the scenes, some of the output files from this process will be familiar to Terraform users. These output files are needed to access the newly provisioned resources and complete the cluster setup. Before running the playbook, specify the location of the files by setting the `GEN_FILES_DIR` environment variable to tell the playbook where you would like the output files placed:
 
-   ```
+   ```sh
    export GEN_FILES_DIR=<a directory of your choice>
    ```
    {: pre}
@@ -212,23 +213,23 @@ If it is not already installed, you need Ansible version 2.7 or higher installed
 3. If this is the first time you are running the playbook, ensure that there is not an existing copy of the `terraform.tfstate` file in `GEN_FILES_DIR`. If you previously ran the playbook and it failed, don't delete the `terraform.tfstate` file. You will need it to restart the playbook, beginning with place that it failed.
 4. Run the playbook:
 
-   ```
+   ```sh
    ansible-playbook -i tf_inventory.yml create_vpc.yml
    ```
    {: pre}
 
 In addition to provisioning all of the cloud resources to create your cloud-based LSF cluster, this command creates the following files in the directory that you specified with the `GEN_FILES_DIR` environment variable:
-   * **cluster.inventory**: To use with subsequent steps (including resource connector)
-   * **ssh_config**: An ssh config file to allow a proxyjump login to the cluster nodes with private IPs via the login node (`ssh -F <ssh_config> <host>`)
-   *	**terraform.tfstate**: Terraform status (required for tear down of resources)
-   *	**terraform.tfvars**: Terraform variables (required for tear down of resources)
-   *	**GEN2-cfg.yml**: Needed as input for the resource connector
-   *	**vpn.yml**: Not used for this configuration
-   * **clusterhosts**: An `/etc/hosts-style` file with the cluster master and worker nodes
+* **cluster.inventory**: To use with subsequent steps (including resource connector)
+* **ssh_config**: An ssh config file to allow a proxyjump login to the cluster nodes with private IPs via the login node (`ssh -F <ssh_config> <host>`)
+* **terraform.tfstate**: Terraform status (required for tear down of resources)
+* **terraform.tfvars**: Terraform variables (required for tear down of resources)
+* **GEN2-cfg.yml**: Needed as input for the resource connector
+* **vpn.yml**: Not used for this configuration
+* **clusterhosts**: An `/etc/hosts-style` file with the cluster master and worker nodes
 
 You can verify the resources that were created by viewing the `terraform.tfstate` file. You can get a quick overview by looking at the `resource_name` tag in the `terraform.tfstate` file:
 
-   ```
+   ```sh
    grep resource_name $GEN_FILES_DIR/terraform.tfstate
    ```
    {: pre}
@@ -243,7 +244,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
    Note: you will need at least the following 3 paramaters for this configuration.
    * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
    * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-   * **bin**: The name of the LSF install file which currently resides in the local_path.
+   *  **bin**: The name of the LSF install file which currently resides in the local_path.
 
    Additionally, you can add user credentials with the following parameters found in the cloud only: section of group_vars:
    * **lsf_user_list**: A comma separated list of user ids that will be created and given login credentials on the new cluster.
@@ -253,7 +254,7 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 
 2. Install LSF:
 
-   ```
+   ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory cloud_only.yml --tags setup
    ```
    {: pre}
@@ -272,7 +273,7 @@ Complete the following steps.
 
 1. Login to your master node using the login node as a jump box.  You could do this in 2 steps by ssh'ing to the login box public IP then ssh'ing to the master node's private IP, but the scripts have created an ssh configuration file that allows you to login in 1 step using the ssh proxyjump feature.
 
-   ```
+   ```sh
    ssh -F ${GEN_FILES_DIR}/ssh_config <private IP: 10.x.x.x>
    ```
    {: pre}
@@ -281,35 +282,35 @@ Complete the following steps.
 
 2. The `lsclusters` command displays some information about the cluster:
 
-   ```
+   ```sh
    lsclusters
    ```
    {: pre}
 
    The output of the command should show the cloud cluster.
 
-2. The `bqueues` command displays the default array of lsf queues.
+3. The `bqueues` command displays the default array of lsf queues.
 
-   ```
+   ```sh
    bqueues
    ```
    {: pre}
 
-3. Submit a job to the cloud queue with the `bsub` command ("sleep 30" will work as a test job) and then confirm it with the `bjobs` command.
+4. Submit a job to the cloud queue with the `bsub` command ("sleep 30" will work as a test job) and then confirm it with the `bjobs` command.
 
-   ```
+   ```sh
    bsub <job>
    ```
    {: pre}
 
-   ```
+   ```sh
    bjobs
    ```
    {: pre}
 
-4.  If you specified userids with the lsf_user_list parameter in the lsf_install configuration file, you can also login with those userids and run the tests.  The procedure to login is the following:
+5.  If you specified userids with the lsf_user_list parameter in the lsf_install configuration file, you can also login with those userids and run the tests.  The procedure to login is the following:
 
-   ```
+   ```sh
    ssh -F ${GEN_FILES_DIR}/ssh_config -i ${GEN_FILES_DIR}/userkeys/id_rsa_<username> <username>@<cloud_master_ip>
    ```
    {: pre}
@@ -323,7 +324,7 @@ To clean up any resources that you created in this tutorial, use the following p
 Make sure `GEN_FILE_DIR` is set.
 {: note}
 
-   ```
+   ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/tf_inventory.yml clean_vpc.yml
    ```
    {: pre}

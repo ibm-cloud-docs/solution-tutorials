@@ -81,7 +81,7 @@ You will find instructions to download and install these tools for your operatin
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
 
-   ```
+   ```sh
    ibmcloud dev help
    ```
    {: pre}
@@ -280,7 +280,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
     * Create a VPN connecting the on-premises network to the cloud.
     * Add information about the VPN to the `vpn.yml` file that is needed to remove the VPN.
 
-       ```
+       ```sh
        ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "open_vpn"
        ```
        {: pre}
@@ -309,7 +309,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    * **bin**: The name of the LSF install file which currently resides in the local_path.
    * **multicluster**:
       cloud:
-        conf_dir:
+         conf_dir:
      Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
    * **onprem**: The LSF conf file location and the name of the on-premises cluster.
       conf_dir: `/opt/ibm/lsfsuite/lsf/conf`

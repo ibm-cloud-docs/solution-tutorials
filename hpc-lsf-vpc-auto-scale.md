@@ -84,42 +84,42 @@ The term "deployer" is applied to the machine that you use to set up the cluster
 2. Install the {{site.data.keyword.cloud_notm}} CLI. See [Installing from the shell](/docs/cli?topic=cli-install-ibmcloud-cli#shell_install).
 3. Test the {{site.data.keyword.cloud_notm}} CLI:
   
-   ```
+   ```sh
    ibmcloud dev help
    ```
    {: pre}
 
 4. Log in to the {{site.data.keyword.cloud_notm}} with your credentials:
 
-   ```
+   ```sh
    ibmcloud login
    ```
    {: pre}
 
 5. Add the VPC infrastructure capabilities plugin to the CLI:
 
-   ```
+   ```sh
    ibmcloud plugin install vpc-infrastructure
    ```
    {: pre}
 
 6. Add DNS-related commands:
 
-   ```
+   ```sh
    ibmcloud plugin install DNS
    ```
    {: pre}
 
 7. Set the infrastructure (is) commands to target {{site.data.keyword.vpc_short}}:
 
-   ```
+   ```sh
    ibmcloud is target --gen 2
    ```
    {: pre}
 
 8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
-   ```
+   ```sh
    ibmcloud target -r us-south
    ```
    {: pre}
@@ -136,7 +136,7 @@ Install Ansible on your deployer machine. For instructions on installing Ansible
 
 Change to a directory on your deployer where you would like the setup scripts to live and run the following command:
 
-   ```
+   ```sh
    git clone https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud.git 
    ```
    {: pre}
@@ -154,14 +154,14 @@ The API key is the credential that you provide to the cloud API, which allows it
 
 1. You can create an API key by using the following {{site.data.keyword.cloud_notm}} CLI command:
 
-   ```
+   ```sh
    ibmcloud iam api-key-create
    ```
    {: pre}
 
 2. Make your key available by exporting it to your shell environment under the name "IBMCLOUD_API_KEY":
 
-   ```
+   ```sh
    export IBMCLOUD_API_KEY=<your api key>
    ```
    {: pre}
@@ -172,7 +172,7 @@ The API key is the credential that you provide to the cloud API, which allows it
 
 1. Locate an existing inventory file or create a new one for the LSF cluster where you want to enable the resource connector. If you originally created your cluster by using one of the existing sets of automation scripts and documentation from the LSF GitHub repository, you should already have an inventory file, `tf_inventory.yml`, located in the directory specified with the `$GEN_FILES_DIR` (for details, see the documentation that you used to create the cluster). If you don't have one, use the following format to create an inventory file:  
 
-   ```
+   ```sh
    [local]
    localhost ansible_connection=local
 
@@ -203,7 +203,7 @@ The file is annotated and should be straightforward to fill out based on the inf
 
 The following is a summary of the relevant lines in the file. The file itself is annotated with more detail:
 
-```
+```sh
 LSF_SUITE_TOP: <path to the “lsfsuite” directory> 
 LSF_TOP: "{{ LSF_SUITE_TOP }}/lsf" 
 LSF_CONF_DIR: "{{ LSF_TOP }}/conf" 
@@ -262,7 +262,7 @@ After you fill out the information for the configuration files, automation can t
 
 The set up and configuration is broken out into four steps, but you can also choose to run the following playbook, which calls the four steps in order for you: 
 
-   ```
+   ```sh
    ansible-playbook -i inventory-file step-all-setup-rc.yml
    ```
    {: pre}
@@ -274,7 +274,7 @@ The advantage of running the scripts separately is that you can quickly spot and
 
    The resource connector requires Python 3 and the {{site.data.keyword.vpc_short}} and Networking Services API libraries to be installed on the master node. Run the following script to carry out those tasks:
 
-   ```
+   ```sh
    ansible-playbook -i inventory-file step1-install-tools.yml
    ```
    {: pre}
@@ -286,7 +286,7 @@ The advantage of running the scripts separately is that you can quickly spot and
 
    The resource connector requires a number of configuration files to be in place on the master node. The following script uses the configuration details you supplied in the `GEN2_config.yml` and `group_vars/all` files to create these files:
 
-   ```
+   ```sh
    ansible-playbook -i inventory-file step2-prepare-files.yml
    ```
    {: pre}
@@ -295,7 +295,7 @@ The advantage of running the scripts separately is that you can quickly spot and
 
    Copy the configuration, template, and credentials files into place on the master node:
 
-   ```
+   ```sh
    ansible-playbook -i inventory-file step3-deploy-rc.yml
    ```
    {: pre}
@@ -304,7 +304,7 @@ The advantage of running the scripts separately is that you can quickly spot and
 
    This playbook edits the LSF configuration files on the master node to enable the resource connector and restarts the cluster daemons for them to pick up the changes.
 
-   ```
+   ```sh
    ansible-playbook -i inventory-file step4-config-lsf-rc.yml
    ```
    {: pre}
@@ -319,7 +319,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
 1. Log in to the master node of your LSF cluster. If you logged in as `root`, switch to a user with `lsfadmin` permission.
 
-   ```
+   ```sh
    [root@lsf-rc-scripts-master-0 ~]# su - lsfadmin 
    bash-4.2$
    ```
@@ -329,7 +329,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output:
 
-   ```
+   ```sh
    bash-4.2$ bhosts 
    HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
    lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 
@@ -342,7 +342,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
 3. Start by creating one job to see the effect. The `sleep` command will work for the purpose of this demonstration.
 
-   ```
+   ```sh
    bash-4.2$ bsub sleep 1000 
    Job <320> is submitted to default queue <normal>. 
    ```
@@ -352,7 +352,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output:
 
-   ```
+   ```sh
    bash-4.2$ bhosts 
    HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
    lsf-rc-scripts-mas ok              -      2      0      0      0      0      0 lsf-rc-scripts-wor closed          -      1      1      1      0      0      0 lsf-rc-scripts-wor ok              -      1      0      0      0      0      0 
@@ -363,7 +363,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
 5. Now you can create enough jobs to fill the slots on the cluster plus one extra to create more jobs than the cluster can run concurrently.
 
-   ```
+   ```sh
    bash-4.2$ for i in 2 3 4 5; do 
    > bsub sleep 1000 
    > done 
@@ -374,7 +374,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
    ```
    {: screen}
 
-   ```
+   ```sh
    bash-4.2$ bhosts 
    HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
    lsf-rc-scripts-mas closed          -      2      2      2      0      0      0 
@@ -389,7 +389,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output:
 
-   ```
+   ```sh
    bash-4.2$ bjobs 
    JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
    320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
@@ -406,7 +406,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output: 
 
-   ```
+   ```sh
    #ibmcloud is instances (command output is abridged with some columns removed to fit)
    Name                        Status    Address      Profile            Image     
    lsf-rc-scripts-dyn-15974-0  starting  10.240.0.13  lsf-spk11-centos7  lsf-rc-scripts-vpc  
@@ -422,7 +422,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output:
 
-   ```
+   ```sh
    bash-4.2$ bjobs 
    JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME 
    320     lsfadmi RUN   normal     lsf-rc-scri lsf-rc-scri sleep 1000 Mar 12 15:21 
@@ -439,7 +439,7 @@ This step is an example of how you can create demand on an LSF cluster to trigge
 
    Example output:
 
-   ```
+   ```sh
    bash-4.2$ bhosts 
    HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV  
    lsf-rc-scripts-dyn closed          -      1      1      1      0      0      0 
@@ -464,7 +464,7 @@ You can disable the resource connector so that it doesn't allow demand to trigge
 
 1. Run the following command:
 
-   ```
+   ```sh
    cd $LSF_TOP/conf
    ```
    {: pre}
@@ -473,12 +473,12 @@ You can disable the resource connector so that it doesn't allow demand to trigge
 3. Comment that line by adding a "#" character: `# LSB_RC_EXTERNAL_HOST_FLAG=icgen2host`.
 4. Restart the daemons to pick up the change:
   
-   ```
+   ```sh
    lsadmin reconfig
    ```
    {: pre}
   
-   ```
+   ```sh
    badmin mbdrestart
    ```
    {: pre}
@@ -492,7 +492,7 @@ You can manage the number of hosts that the resource connector is allowed to pro
 
 1. Run the following command:
 
-   ```
+   ```sh
    cd $LSF_TOP/conf/resource_connector/ibmcloudgen2/conf/
    ```
    {: pre}
@@ -512,7 +512,7 @@ To clean up any resources that you created in this tutorial, use the following p
 Make sure `GEN_FILE_DIR` is set.
 {: note}
 
-   ```
+   ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/tf_inventory.yml clean_vpc.yml
    ```
    {: pre}

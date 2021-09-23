@@ -28,6 +28,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
@@ -64,6 +65,7 @@ This tutorial requires:
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 ## Create services
@@ -90,6 +92,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 ### Create SSH Key(s)
 {: #lamp-stack-on-vpc-3}
+
 1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
@@ -110,6 +113,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 ### Create VPC, Subnet(s) and Security Group(s)
 {: #lamp-stack-on-vpc-4}
+
 1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
@@ -134,16 +138,18 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote <your-ip-address> --port-min 22 --port-max 22 --json`
+   You can restrict access to the SSH port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote YOUR_IP_ADDRESS --port-min 22 --port-max 22 --json`
    {: tip}
+
 1. Add a rule to limit inbound to HTTP port 80.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80 --json
    ```
    {: pre}
 
-   You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote <your-ip-address> --port-min 80 --port-max 80 --json`
+   You can also restrict access to the HTTP port to a subset of addresses, use --remote <IP address or CIDR> in the above command to limit who can access this server, i.e. `ibmcloud is security-group-rule-add $SG_ID inbound tcp --remote YOUR_IP_ADDRESS --port-min 80 --port-max 80 --json`
    {: tip}
+
 1. Add a rule to allow outbound to all, this is required to install software, it can be disabled or removed later on.
    ```sh
    ibmcloud is security-group-rule-add $SG_ID outbound all --json
@@ -352,6 +358,7 @@ If you would like to configure the logging service follow the steps outlined in 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
 {: #lamp-stack-on-vpc-configure_data_volume}
 {: step}
+
 The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted and attached to a new VSI.  You can also encrypt the volume with your own key. If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
 
 1. Create a data volume configuration file.
@@ -467,6 +474,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 ## Resize VSI (Optional)
 {: #lamp-stack-on-vpc-resizing}
 {: step}
+
 The VSI was created using one of the smallest profiles available in VPC, i.e. 2 vCPU and 4GiB RAM.  It is possible based on your usage requirements to increase - or decrease - the amount of vCPU and RAM available, see [Resizing a virtual server instance](https://{DomainName}/docs/vpc?topic=vpc-resizing-an-instance). 
 
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
@@ -489,6 +497,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
 
    You can get a list of alternative profiles by issuing the following command `ibmcloud is instance-profiles`, note however the restrictions on resizing based on current/target profiles in the [Resizing a virtual server instance](https://{DomainName}/docs/vpc?topic=vpc-resizing-an-instance) topic.
    {: tip}
+   
 1. Start the instance.
    ```sh
    ibmcloud is instance-start $VSI_ID
