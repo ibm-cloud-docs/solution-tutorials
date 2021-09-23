@@ -35,6 +35,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. This tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
@@ -64,7 +65,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 3. The application is deployed to {{site.data.keyword.containershort_notm}}.
 4. User accesses the application.
 5. The application is accelerated through the Dynamic Content Acceleration capability of {{site.data.keyword.cdn_full}}.
-5. {{site.data.keyword.cdn_full}} interacts with the application to fetch dynamic contents.
+6. {{site.data.keyword.cdn_full}} interacts with the application to fetch dynamic contents.
 
 ## Before you begin
 {: #dynamic-content-cdn-prereqs}
@@ -197,11 +198,12 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 
       With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
       {: note}
+
 1. Accept the **Master Service Agreement** and click **Create**.
 
 After you have successfully created the CDN mapping:
-   * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-   * You application is now accessible through the CNAME only: `https://<CNAME>`.
+* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+* You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
 {: #dynamic-content-cdn-6}

@@ -28,6 +28,7 @@ completion-time:
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
@@ -74,6 +75,7 @@ In this tutorial, the load balancer is the front door for the application users.
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {: tip}
+
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
@@ -104,6 +106,7 @@ In this section, you configure one server to act as the master database.
 
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
+
    - Review the other configuration options and click **Create** to provision the server.
 
    Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
@@ -126,6 +129,7 @@ The server does not come with a database. In this section, you install MySQL on 
 
    Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
    {: tip}
+
 2. Install MySQL:
    ```sh
    apt-get update
@@ -135,6 +139,7 @@ The server does not come with a database. In this section, you install MySQL on 
 
    You may be prompted for a password. Read through the instructions on the console shown.
    {: tip}
+
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
@@ -193,7 +198,7 @@ The server does not come with a database. In this section, you install MySQL on 
 By default MySQL only listens on the local interface. The application servers will need to connect to the database so the MySQL configuration needs to be changed to listen on the private network interfaces.
 
 1. Edit the my.cnf file using `nano /etc/mysql/my.cnf` and add these lines:
-   ```
+   ```sh
    [mysqld]
    bind-address    = 0.0.0.0
    ```
@@ -202,7 +207,6 @@ By default MySQL only listens on the local interface. The application servers wi
 2. Exit and save the file using Ctrl+X.
 
 3. Restart MySQL:
-
    ```sh
    systemctl restart mysql
    ```
@@ -259,13 +263,13 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {: pre}
 
 3. Edit the mnt-database.mount by using:
-   ```
+   ```sh
    nano /etc/systemd/system/mnt-database.mount
    ```
    {: pre}
 
 4. Add the content below to the mnt-database.mount file and replace `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** of the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created.
-   ```
+   ```sh
    [Unit]
    Description = Mount for Container Storage
 
@@ -327,7 +331,7 @@ The file storage can be mounted as an NFS drive into the virtual server.
    {: pre}
 
 4. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
-   ```
+   ```sh
    0 23 * * * /root/dbbackup.sh
    ```
    {: codeblock}
@@ -338,9 +342,9 @@ The file storage can be mounted as an NFS drive into the virtual server.
 
 In this section, you will create two web application servers.
 
-1.  In the {{site.data.keyword.Bluemix_notm}} catalog, select [**Virtual Server**](https://{DomainName}/gen1/infrastructure/provision/vs) from the **Compute** section.
-2.  For the type of virtual server, select **Public**.
-3.  Configure the server with the following:
+1. In the {{site.data.keyword.Bluemix_notm}} catalog, select [**Virtual Server**](https://{DomainName}/gen1/infrastructure/provision/vs) from the **Compute** section.
+2. For the type of virtual server, select **Public**.
+3. Configure the server with the following:
    * Set **Quantity** to **2**
    * Set **Name** to **app1**
    * Create a new **Placement Group**.  Placement group ensures the app Virtual Servers are provisioned on different hypervisors.
@@ -350,7 +354,7 @@ In this section, you will create two web application servers.
    * Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
    * Select the **Ubuntu Minimal image**. You can choose any version of the image.
    * In the **Network interface** section, select the **100 Mbps Private Network Uplink** option as the uplink port speed. If you did not configure the VPN access, select the **100 Mbps Public and Private Network Uplink** option.
-1. Review the other configuration options and click **Create** to provision the server.
+4. Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
 {: #highly-available-and-scalable-web-application-0}
@@ -363,8 +367,8 @@ This file storage is used to share the application files between **app1** and **
 {: #highly-available-and-scalable-web-application-create_for_sharing}
 
 In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
-2. Click **Create**
-3. Configure the service with the following:
+1. Click **Create**
+2. Configure the service with the following:
    - Select the same **Location** as the one where you created the application servers.
    - Select a billing method.
    - Set **Size** to **20GB**.
@@ -401,7 +405,7 @@ Repeat the following steps on each application server(app1 and app2):
    {: pre}
 
 2. Create a file using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content by replacing `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can find the mount points under [list of file storage volumes](https://{DomainName}/classic/storage/file)
-   ```
+   ```sh
    [Unit]
    Description = Mount for Container Storage
 
@@ -644,6 +648,7 @@ At this point, we have two application servers with separate IP addresses. They 
 1. Select the **IBM system pool** for **Public IPs**.
 1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
+
 1. In **Health Checks**, set the **Path** to `/nginx-health`.
 1. In **Servers**, add *app1* and *app2* servers.
 1. Review and **Create** to complete the wizard.
@@ -657,6 +662,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
    You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
    {: tip}
+
 2. Log as administrator in the Wordpress blog via *app1* or *app2* URL (`http://YourAppServerIPAddress/wp-login.php`)
 3. In Settings / General, set both the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
 4. Save the settings. Wordpress should redirect to the Load Balancer address
@@ -676,6 +682,7 @@ The load balancer is configured to check the health of the servers and to redire
 
    You should already see the regular pings from the Load Balancer to check the server health.
    {: tip}
+   
 2. Access Wordpress through the Load Balancer address and make sure to force a hard reload of the page. Notice in the nginx logs both *app1* and *app2* are serving content for the page. The Load Balancer is redirecting traffic to both servers as expected.
 
 3. Stop nginx on *app1*
