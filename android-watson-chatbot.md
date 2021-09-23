@@ -123,6 +123,8 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 - `#pay_bill`
 - `#escalate_to_agent`
 
+
+
 1. Click on the newly created skill - **Ana**.
 
    Ana is an insurance bot for users to query their health benefits and file claims.

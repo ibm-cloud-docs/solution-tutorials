@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-09-20"
+lastupdated: "2021-09-23"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -410,7 +410,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 <!--##isworkshop#-->
 <!--
-2. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
+1. If not present, enable the [ALB OAuth Proxy add-on](https://{DomainName}/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
    ```sh
    ibmcloud ks cluster addon enable alb-oauth-proxy --cluster $MYCLUSTER
    ```
@@ -422,7 +422,7 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+2. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
@@ -430,17 +430,17 @@ All services have been configured. In this section you will deploy the tutorial 
 
 3. Create the secret used by the application to obtain service credentials:
    ```sh
-   kubectl create secret generic <your-initials>-secure-file-storage-credentials --from-env-file=credentials.env
+   kubectl create secret generic YOUR-INITIALS-secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 
 4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
-   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service <your-initials>-secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service YOUR-INITIALS-secure-file-storage-appid
    ```
    {: codeblock}
 
-6. Deploy the app.
+5. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```

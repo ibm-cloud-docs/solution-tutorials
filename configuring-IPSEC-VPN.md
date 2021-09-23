@@ -36,6 +36,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks.
@@ -129,7 +130,7 @@ table.
    {: codeblock}
 
 2. Create Internet Key Exchange (IKE) group.
-   ```
+   ```sh
    set security vpn ipsec ike-group <ike group name> proposal 1
    set security vpn ipsec ike-group <ike group name> proposal 1 encryption <ike encryption>
    set security vpn ipsec ike-group <ike group name> proposal 1 hash <ike hash>
@@ -139,7 +140,7 @@ table.
    {: codeblock}
 
 3. Create Encapsulating Security Payload (ESP) group
-   ```
+   ```sh
    set security vpn ipsec esp-group <esp group name> proposal 1 encryption <esp encryption>
    set security vpn ipsec esp-group <esp group name> proposal 1 hash <esp hash>
    set security vpn ipsec esp-group <esp group name> lifetime <esp-lifetime>
@@ -149,7 +150,7 @@ table.
    {: codeblock}
 
 4. Define site-to-site connection
-   ```
+   ```sh
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication mode pre-shared-secret
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication pre-shared-secret <Shared-Secret>
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  connection-type initiate
@@ -167,20 +168,20 @@ table.
 {: step}
 
 1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN.
-1. Validate that the public IP address of the DC VPN gateway is accessible over the internet before proceeding:
-   ```
+2. Validate that the public IP address of the DC VPN gateway is accessible over the internet before proceeding:
+   ```sh
    ping <DC VPN Public IP>
    ```
    {: codeblock}
 
-2. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status shows that there is one or more active IPsec tunnels. Verify with the data center that both ends of the VPN show active IPsec tunnels.
+3. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status shows that there is one or more active IPsec tunnels. Verify with the data center that both ends of the VPN show active IPsec tunnels.
    ```bash
    show vpn ipsec sa
    show vpn ipsec status
    ```
    {: codeblock}
 
-3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the debug command:
+4. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the debug command:
    ``` bash
    show vpn debug
    ```
@@ -193,7 +194,7 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
 {: step}
 
 1. Create the GRE tunnel in VRA edit mode.
-   ```
+   ```sh
    set interfaces tunnel tun0 address <Local tunnel IP/24>
    set interfaces tunnel tun0 encapsulation gre
    set interfaces tunnel tun0 mtu 1300
@@ -204,7 +205,7 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
    {: codeblock}
 
 2. After both ends of the tunnel have been configured it should come up automatically. Check the operational state of tunnel from the VRA command line.
-   ```
+   ```sh
    show interfaces tunnel
    show interfaces tun0
    ```
@@ -219,7 +220,7 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
 
    The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic.
 4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway.
-   ```
+   ```sh
    monitor interface tunnel tun0 traffic
    monitor interface bonding dp0bond1 traffic
    ```
@@ -234,7 +235,7 @@ If no return traffic is seen, the data center networking team will need to monit
 Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
 1. Create static route in VRA edit mode.
-   ```
+   ```sh
    set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP>
    ```
    {: codeblock}
@@ -250,7 +251,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 {: step}
 
 1. Create resource groups for allowed icmp traffic and tcp ports.
-   ```
+   ```sh
    set res group icmp-group icmpgrp type 8
    set res group icmp-group icmpgrp type 11
    set res group icmp-group icmpgrp type 3
@@ -263,7 +264,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    {: codeblock}
 
 2. Create firewall rules for traffic to the remote subnet in VRA edit mode.
-   ```
+   ```sh
    set security firewall name APP-TO-TUNNEL default-action drop
    set security firewall name APP-TO-TUNNEL default-log
 
@@ -278,7 +279,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
 
-   ```
+   ```sh
    set security firewall name TUNNEL-TO-APP default-action drop
    set security firewall name TUNNEL-TO-APP default-log
 
@@ -293,8 +294,8 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
 
-2. Create Zone for tunnel and associate firewalls for traffic initiated in either zone.
-   ```
+3. Create Zone for tunnel and associate firewalls for traffic initiated in either zone.
+   ```sh
    set security zone-policy zone TUNNEL description "GRE Tunnel"
    set security zone-policy zone TUNNEL default-action drop
    set security zone-policy zone TUNNEL interface tun0
@@ -305,7 +306,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
 
-3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and TCP traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
+4. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and TCP traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
    ```bash
    ping <Remote Subnet Gateway IP>
    ssh root@<VSI Private IP>
@@ -313,15 +314,15 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
 
-4. If the ping from the VRA command line fails, validate that a ping reply is seen in response to a ping request on the tunnel interface.
-   ```
+5. If the ping from the VRA command line fails, validate that a ping reply is seen in response to a ping request on the tunnel interface.
+   ```sh
    monitor interface tunnel tun0 traffic
    ```
    {: codeblock}
 
    No response indicates an issue with the firewall rules or routing at the data center. If a reply is seen in the monitor output, but the ping command times out, check the configuration of the local VRA firewall rules.
-5. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall.
-   ```
+6. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall.
+   ```sh
    monitor interfaces bonding dp0bond0.<VLAN ID>
    show log firewall name APP-TO-TUNNEL
    show log firewall name TUNNEL-TO-APP
@@ -347,6 +348,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Related content
 {: #configuring-IPSEC-VPN-9}
 {: related}
+
 - [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips)
 - [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)
