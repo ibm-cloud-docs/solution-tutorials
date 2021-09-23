@@ -28,6 +28,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) pipeline.
@@ -62,13 +63,13 @@ A custom domain and {{site.data.keyword.cis_full_notm}} are required for load ba
 Start by creating a **SDK for Node.js** starter application that runs in a Cloud Foundry environment.
 
 1. In the [**Catalog**](https://{DomainName}/catalog/), under the [**Compute**](https://{DomainName}/catalog?category=compute) category, select [**Cloud Foundry**](https://{DomainName}/cloudfoundry/overview), Select [**Public Applications**](https://{DomainName}/catalog/starters/cloud-foundry?runtime=sdk-for-nodejs) and choose the **{{site.data.keyword.runtime_nodejs_notm}}** runtime.
-3. Verify **SDK for Node.js** is checked.
+2. Verify **SDK for Node.js** is checked.
 3. **Select a region**.  **Dallas**, us-south, is expected for the text below but any region will work if you make the appropriate substitutions.
-3. Enter a **unique name** for your application. Notice host name filled identically. for example: myusername-nodeapp.
-3. Take note of the IBM **Domain** selected.  The default for  the **Dallas** region is **us-south.cf.appdomain.cloud**.
-3. Select a **Organization** and **Space**.  The space will be named after the region: **myaccount-org** (Organization) / **us-south** (Space).  A second space will be needed in a future step.
-3. And click **Create**.
-4. After the application starts, click the **Visit URL** link on the **Overview** page to see your application in a new tab.
+4. Enter a **unique name** for your application. Notice host name filled identically. for example: myusername-nodeapp.
+5. Take note of the IBM **Domain** selected.  The default for  the **Dallas** region is **us-south.cf.appdomain.cloud**.
+6. Select a **Organization** and **Space**.  The space will be named after the region: **myaccount-org** (Organization) / **us-south** (Space).  A second space will be needed in a future step.
+7. And click **Create**.
+8. After the application starts, click the **Visit URL** link on the **Overview** page to see your application in a new tab.
 
 ![HelloWorld](images/solution1/HelloWorld.png){: class="center"}
 {: style="text-align: center;"}
@@ -84,12 +85,12 @@ Next, let's push the source code of your application to a repository and deploy 
 In this step, you set up a git source control repository to store your code and then create a pipeline, which deploys any code changes automatically.
 
 1. On the left pane of your application you just created, select **Overview** and scroll to find **{{site.data.keyword.contdelivery_short}}**. Click **Enable Continuous Delivery**.
-2. Keep the default options in the **Git Repos and Issue Tracking** panel.
-3. Click the **Delivery Pipeline** panel and choose **New** to create a API key with full access and click **OK** or follow the instructions to create or use a specific API key.
-3. Click **Create**. You should now have a default **toolchain** created.
-3. Select the **Git** tile under **Code**. You're then directed to your git repository page.
-4. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking  **create a personal access token**. Remember to save the key or token for future reference.
-5. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine.
+1. Keep the default options in the **Git Repos and Issue Tracking** panel.
+1. Click the **Delivery Pipeline** panel and choose **New** to create a API key with full access and click **OK** or follow the instructions to create or use a specific API key.
+1. Click **Create**. You should now have a default **toolchain** created.
+1. Select the **Git** tile under **Code**. You're then directed to your git repository page.
+1. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking  **create a personal access token**. Remember to save the key or token for future reference.
+1. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine.
    ```bash
    git clone <your_repo_url>
    cd <name_of_your_app>
@@ -97,10 +98,10 @@ In this step, you set up a git source control repository to store your code and 
    {: pre}
 
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
-6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
-7. Run the application locally by running the commands one after another `npm install`, `npm build`,  `npm start ` and visit `localhost:<port_number>` in your browser.
+1. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
+1. Run the application locally by running the commands one after another `npm install`, `npm build`, `npm start ` and visit `localhost:<port_number>` in your browser.
    **<port_number>** as displayed on the console.
-8. Push the change to your repository with three simple steps: Add, commit, and push.
+1. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
    git add public/index.html
    git commit -m "my first changes"
@@ -108,11 +109,11 @@ In this step, you set up a git source control repository to store your code and 
    ```
    {: pre}
 
-9. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-10. Confirm that you see the **BUILD** and **DEPLOY** stages.
+1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
+1. Confirm that you see the **BUILD** and **DEPLOY** stages.
    ![HelloWorld](images/solution1/DevOps_Pipeline.png)
-11. Wait for the **DEPLOY** stage to complete.
-12. Click the **View console** to open the application under **Last execution result** to visit the application.  In the Cloud Foundry application click on **Visit app URL** to see the app and changes.
+1. Wait for the **DEPLOY** stage to complete.
+1. Click the **View console** to open the application under **Last execution result** to visit the application.  In the Cloud Foundry application click on **Visit app URL** to see the app and changes.
 
 Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
@@ -127,7 +128,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 3. Click the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**.
 4. Rename stage to "Deploy to UK" and select **JOBS**.
 5. Change **IBM Cloud region** to **London - https://api.eu-gb.cf.cloud.ibm.com**. Create a **space** named eu-gb if you don't have one.
-7. Click **Save** and run the new stage by clicking the **Play button**.
+6. Click **Save** and run the new stage by clicking the **Play button**.
 7. Navigate via **View console** to see the application and **Visit app URL**.  Take note of the live application in the URL in the browser.  Back in the console for the app show the **Details** tab and note the **route** list in the format `<hostname>.<domain>`.
 
 
@@ -156,10 +157,10 @@ When deploying a real world application, you will likely want to use your own do
 
 1. Buy a domain from a registrar.
 2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-2. Enter a service name, and click **Create** to create an instance of the service.
-3. When the service instance is provisioned, set your domain name and click **Add domain**.
-4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+3. Enter a service name, and click **Create** to create an instance of the service.
+4. When the service instance is provisioned, set your domain name and click **Add domain**.
+5. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+6. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
    {: tip}
 
@@ -175,8 +176,8 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 {: #multi-region-webapp-6}
 
 1. In the {{site.data.keyword.cis_full_notm}} application, navigate to **Reliability** > **Global Load Balancer**.
-1. Select **Health checks** and click **Create**.
-2. Enter a name, HTTPS, `/` for the path.  In your real application you can create a dedicated health endpoint that evaluates the application health and returns the status. Click **Create**.
+2. Select **Health checks** and click **Create**.
+3. Enter a name, HTTPS, `/` for the path.  In your real application you can create a dedicated health endpoint that evaluates the application health and returns the status. Click **Create**.
 
 ### Create an origin pool with two origins.
 {: #multi-region-webapp-7}
@@ -192,9 +193,9 @@ Values are copied from the table of applications (substitute your values):
 2. Enter a name for the pool: `myusername-nodeapp`.
 3. Enter a name for the first origin, **us-south**, and the full subdomain of the application in Dallas: `myusername-nodeapp`.`us-south.cf.appdomain.cloud`.
 4. Similarly, add another origin, **eu-gb**,  with the full subdomain of the application in London: `myusername-nodeapp`.`eu-gb.mybluemix.net`.
-4. Select a **Health check region** close to the location of one of your applications.
-4. Select the **Health check** created earlier.
-5. Click **Save**.
+5. Select a **Health check region** close to the location of one of your applications.
+6. Select the **Health check** created earlier.
+7. Click **Save**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
 You may need to wait for the health checks to complete and refresh in the browser to see a Healthy status.
@@ -205,11 +206,11 @@ You may need to wait for the health checks to complete and refresh in the browse
 
 1. Select **Load balancers** and click **Create**.
 1. Keep the defaults of **Enable**: **On** and **Proxy**: **Off**.
-2. Enter the name for the Global Load Balancer, **myusername-nodeapp**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (http://`<gbl_name>`.`<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
-3. Click **Add route**.
-3. Select the **Region**: **Default**.
-3. Select the origin pool that you just created.
-4. Click **Create**.
+1. Enter the name for the Global Load Balancer, **myusername-nodeapp**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (http://`<gbl_name>`.`<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
+1. Click **Add route**.
+1. Select the **Region**: **Default**.
+1. Select the origin pool that you just created.
+1. Click **Create**.
    ![Global Load Balancer](images/solution1/load_balancer.png)
 
 The applications (.i.e origins) can not yet be reached.  The health checks for the origin subdomains, like `myusername-nodeapp`.`us-south.cf.appdomain.cloud`, are healthy. The GLB is resolving `<glb_name>`.`<your_domain_name>` to the IP addresses of one of the Cloud Foundry regions (us-south or eu-gb) in your account based on health. However, when Cloud Foundry receives the request it does not know how to route it to an application.  Cloud Foundry **routes** need to be created to map the subdomain, `<glb_name>`.`<your_domain_name>`, to the application.  Next step will fix this in each region.
@@ -230,18 +231,18 @@ Values are copied from the table of applications (substitute your values):
 In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
 1. From the menu bar, click on **Manage** and then **Account**: [Account](https://{DomainName}/account).
-2. On the account page, navigate to **Cloud Foundry Orgs**, select your organization: **myaccount-org**.
-2. Select the **Domains** panel.
-3. Add domain in the region of the first application, us-south. Click **Add a domain**.
+1. On the account page, navigate to **Cloud Foundry Orgs**, select your organization: **myaccount-org**.
+1. Select the **Domains** panel.
+1. Add domain in the region of the first application, us-south. Click **Add a domain**.
    1. Enter the **Domain name**: <your_domain_name> - the custom domain name acquired from the registrar.
    2. Select **US-South** and click **Add**.
-6. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas.
+1. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas.
    1. Click **Actions...** > **Edit Routes**.
    1. Notice the existing route, `myusername-nodeapp` . `us-south.cf.appdomain.com` (keep this route for health checks).
    1. Click **Add Route**.
    1. Enter the GLB hostname you configured earlier, `<glb_name>`, in the **Enter host (optional)** field.
    1. Select the custom domain, `<your_domain_name>`, Click **Save**.
-8. Similarly, configure the domain and route for the application in London.
+1. Similarly, configure the domain and route for the application in London.
 
 HTTPS access will not work correctly.  This will be fixed in the step below:  **Bind SSL certificate to your application**
 {: tip}
@@ -313,7 +314,7 @@ If you are using a different DNS provider, the steps for setting up the CNAME re
 
 For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-custom-domains#mapcustomdomain). Once done you can add the routes to the application manifests.  For the application in us-south:
 
-   ```
+   ```sh
    applications:
    - path: .
 	  name: <your_app>

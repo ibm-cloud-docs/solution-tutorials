@@ -369,6 +369,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 
    In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
+   
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
    ```sh
    VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')

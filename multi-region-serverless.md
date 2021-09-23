@@ -32,6 +32,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial shows how to configure {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
@@ -72,12 +73,12 @@ The tutorial considers a public web application with a back-end implemented with
 The first step is to create an instance of {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) and to point your custom domain {{site.data.keyword.cis_short_notm}} name servers.
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-1. Set the service name - `mr-serverless-internet-services`, and click **Create** to create an instance of the service. _You can use any pricing plans for this tutorial_.
-2. When the service instance is provisioned, click on **Add domain** under **Overview** page.
-3. Enter your domain name and click **Next**.
-4. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**.
-5. When the name servers are assigned under **Delegate domain management**, configure your registrar or domain name provider to use the name servers listed.
-6. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. Click **Next** and once the service is configured, click **Done**.
+2. Set the service name - `mr-serverless-internet-services`, and click **Create** to create an instance of the service. _You can use any pricing plans for this tutorial_.
+3. When the service instance is provisioned, click on **Add domain** under **Overview** page.
+4. Enter your domain name and click **Next**.
+5. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**.
+6. When the name servers are assigned under **Delegate domain management**, configure your registrar or domain name provider to use the name servers listed.
+7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. Click **Next** and once the service is configured, click **Done**.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
@@ -89,8 +90,8 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
 2. Before a certificate can be issued to you, {{site.data.keyword.cloudcerts_short}} must verify that you control all of the domains that you list in your request. To do so, {{site.data.keyword.cloudcerts_short}} uses DNS validation. Complete the following steps to verify ownership of your domains in Internet Services (CIS),
    1. Click **Manage** on the top bar, click **Access (IAM)**  and then **Authorizations**.
    2. Click **Create** and assign a source and target service. The source service is granted access to the target service based on the roles that you set in the next step.
-     - Source service: {{site.data.keyword.cloudcerts_short}} > **Services based on attributes** > Source service instance and then select `mr-serverless-cert-manager` from the dropdown menu.
-     - Target Service: Internet Services > **Services based on attributes** > Service instance and then select `mr-serverless-internet-services` from the dropdown menu.
+      - Source service: {{site.data.keyword.cloudcerts_short}} > **Services based on attributes** > Source service instance and then select `mr-serverless-cert-manager` from the dropdown menu.
+      - Target Service: Internet Services > **Services based on attributes** > Service instance and then select `mr-serverless-internet-services` from the dropdown menu.
    3. Assign the **Reader** role to allow {{site.data.keyword.cloudcerts_short}} to view the CIS instance and its domains.
    4. Click **Authorize**.
 
@@ -165,22 +166,22 @@ The three following sections will need to be repeated for every location where y
 The next step involves creating a managed API to expose your actions.
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/functions/apimanagement).
-1. Click **Create API** to create a new managed {{site.data.keyword.openwhisk_short}} API:
+2. Click **Create API** to create a new managed {{site.data.keyword.openwhisk_short}} API:
    1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
-2. Click **Create operation**  to create an API operation that invokes actions:
+3. Click **Create operation**  to create an API operation that invokes actions:
    1. Set **Path** to **/do**.
    2. Set **Verb** to **GET**.
    3. Set **Package** to **Default**.
    4. Set **Action** to **doWork**.
    5. Click **Create**.
-3. Create another operation:
+4. Create another operation:
    1. Set **Path** to **/healthz**.
    2. Set **Verb** to **GET**.
    3. Set **Package** to **default**.
    4. Set **Action** to **healthz**.
    5. Click **Create**.
-4. **Save** the API
+5. **Save** the API
 
 ### Configure the custom domain for the managed API
 {: #multi-region-serverless-8}
@@ -278,6 +279,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 
 ### Remove {{site.data.keyword.cloudcerts_short}} resources
 {: #multi-region-serverless-16}
+
 1. Remove the certificate from the {{site.data.keyword.cloudcerts_short}} instance
 1. Remove the {{site.data.keyword.cloudcerts_short}} instance (optional)
 

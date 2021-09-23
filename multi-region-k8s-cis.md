@@ -32,6 +32,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
@@ -84,6 +85,7 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 
 ### Create a Kubernetes cluster
 {: #multi-region-k8s-cis-3}
+
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 
@@ -266,8 +268,8 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 4. When the service instance is provisioned, click on **Let's get Started**.
 5. Enter your domain name and click **Connect and continue**.
 6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
-6. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+8. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
@@ -304,6 +306,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 
 #### One pool for the cluster in London
 {: #multi-region-k8s-cis-14}
+
 1. Select the **Origin pools** tab and click **Create**.
 1. Set **Name** to **US**
 1. Set **Origin Name** to **us-cluster**
@@ -314,6 +317,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 
 #### One pool for the cluster in Dallas
 {: #multi-region-k8s-cis-15}
+
 1. Select the **Origin pools** tab and click **Create**.
 1. Set **Name** to **UK**
 1. Set **Origin Name** to **uk-cluster**
@@ -324,6 +328,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 
 #### And one pool with both clusters
 {: #multi-region-k8s-cis-16}
+
 1. Select the **Origin pools** tab and click **Create**.
 1. Set **Name** to **All**
 1. Add two origins:
@@ -410,6 +415,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 
 ### Remove Kubernetes Cluster resources
 {: #multi-region-k8s-cis-23}
+
 1. Remove the Ingress.
 1. Remove the service.
 1. Remove the deployment.
@@ -417,6 +423,7 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
 {: #multi-region-k8s-cis-24}
+
 1. Remove the GLB.
 1. Remove the origin pools.
 1. Remove the health checks.

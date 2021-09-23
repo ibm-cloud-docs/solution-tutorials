@@ -308,18 +308,18 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
    * **bin**: The name of the LSF install file which currently resides in the local_path.
    * **multicluster**:
-      cloud:
-         conf_dir:
-     Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
-   * **onprem**: The LSF conf file location and the name of the on-premises cluster.
-      conf_dir: `/opt/ibm/lsfsuite/lsf/conf`
-      cluster_name: onPremCluster
-      host: hostname of the on premises LSF master
-      ip: IP address of the on-premises LSF master
+      cloud:   
+         conf_dir:   
+      Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
+   * **onprem**: The LSF conf file location and the name of the on-premises cluster.   
+      conf_dir: `/opt/ibm/lsfsuite/lsf/conf`   
+      cluster_name: onPremCluster   
+      host: hostname of the on premises LSF master   
+      ip: IP address of the on-premises LSF master   
    * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
    * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
    * **vpn**:
-       ip: <vpn_server_ip>
+      ip: <vpn_server_ip>
 
 2. Install LSF:   
    ```sh

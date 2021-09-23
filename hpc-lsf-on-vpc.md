@@ -239,12 +239,12 @@ You can verify the resources that were created by viewing the `terraform.tfstate
 {: #hpc-lsf-on-vpc-deploy-lsf-cloud-cluster}
 {: step}
 
-1.  To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
+1. To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
 
    Note: you will need at least the following 3 paramaters for this configuration.
    * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
    * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-   *  **bin**: The name of the LSF install file which currently resides in the local_path.
+   * **bin**: The name of the LSF install file which currently resides in the local_path.
 
    Additionally, you can add user credentials with the following parameters found in the cloud only: section of group_vars:
    * **lsf_user_list**: A comma separated list of user ids that will be created and given login credentials on the new cluster.

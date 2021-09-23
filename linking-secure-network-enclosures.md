@@ -36,6 +36,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/) enables users to link workloads hosted in secure private networks across data centers and locations.
@@ -109,14 +110,14 @@ Enable VLAN Spanning:
 
    Login to data center 1 VRA and ping data center 2 VRA
 
-   ```
+   ```sh
    SSH vyatta@<DC1 VRA Private IP Address>
    ping <DC2 VRA Private IP Address>
    ```
    {: codeblock}
 
    Login to data center 2 VRA and ping data center 1 VRA
-   ```
+   ```sh
    SSH vyatta@<DC2 VRA Private IP Address>
    ping <DC1 VRA Private IP Address>
    ```
@@ -129,7 +130,7 @@ Enable VLAN Spanning:
 Create the VRA routing in each data center to enable the VSIs in the APP zones in both data centers to communicate.
 
 1. Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
-   ```
+   ```sh
    ssh vyatta@<DC1 VRA Private IP Address>
    conf
    set protocols static route <DC2 APP zone subnet/CIDR>  next-hop <DC2 VRA Private IP>
@@ -138,7 +139,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    {: codeblock}
 
 2. Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
-   ```
+   ```sh
    ssh vyatta@<DC2 VRA Private IP Address>
    conf
    set protocols static route <DC1 APP zone subnet/CIDR>  next-hop <DC1 VRA Private IP>
@@ -146,8 +147,8 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    ```
    {: codeblock}
 
-2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
-   ```
+3. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
+   ```sh
    show ip route
    ```
    {: codeblock}
@@ -161,14 +162,14 @@ The new route to allow the APP zone to communicate via the IBM private network w
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center.
 
 1. On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate` resource group
-   ```
+   ```sh
    set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>
    commit
    ```
    {: codeblock}
 
 2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
-   ```
+   ```sh
    set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
    commit
    ```
