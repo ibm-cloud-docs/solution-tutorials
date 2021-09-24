@@ -125,7 +125,7 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
 
 You need to create a temporary port group for vCenter's networking for the Standard Switch, i.e. add a Port Group for VLAN ID `100`. 
 
-1. Login to host BMS001 / esx-001 as user `root` with a Web browser (https://<ip address>) using the hosts PCI interface IP address (`echo $VMWARE_BMS001_MGMT_IP`).
+1. Login to host BMS001 / esx-001 as user `root` with a Web browser (`https://&lt;ip address&gt;`) using the hosts PCI interface IP address (`echo $VMWARE_BMS001_MGMT_IP`).
 2. Select **Networking**.
 3. On **Port Groups** tab, click `Add port group`.
 4. For Virtual switch 0, add a Name **pg-mgmt** and select **VLAN ID 100**.

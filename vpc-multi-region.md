@@ -389,6 +389,7 @@ In a browser open **https://lb.mydomain.com** to verify success
 
 ### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
 {: #vpc-multi-region-16}
+
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
 
 It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record.
