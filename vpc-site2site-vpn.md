@@ -188,7 +188,7 @@ In this section, you will create the database service.
    ```
    {: codeblock}
 
-4. Save the self-signed certificate to a file **<generated>**. The file will be used later on.
+4. Save the self-signed certificate to a file **&lt;generated&gt;**. The file will be used later on.
    ```sh
    ibmcloud cdb deployment-cacert vpns2s-pg -e private -c ../sampleapps/nodejs-graphql/ -s
    ```
