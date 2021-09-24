@@ -38,6 +38,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
@@ -196,7 +197,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    Note: If running inside of Git sh on Windows, prefix the above command with `MSYS_NO_PATHCONV=1`. In this case insert this inside the brackets, e.g. `$(MSYS_NO_PATHCONV=1 ibmcloud is ...`).
    {: note}
 
-2. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
+1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
    ```sh
    ibmcloud is bm $VMWARE_BMS001
@@ -403,7 +404,7 @@ Instance management VLAN NICs e.g. for vCenter will be created later.
 {: #vpc-bm-vmware-bms-vlannic-vsan}
 
 This phase is optional, if you use NFS.
-{:note}
+{: note}
 
 1. Create vSAN VLAN NICs for each host. Record the IP addresses for later use.
 

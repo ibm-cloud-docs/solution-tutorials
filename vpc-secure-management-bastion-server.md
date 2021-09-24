@@ -34,6 +34,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
@@ -149,11 +150,11 @@ With access to the bastion working, continue and create the security group for m
 
 1. Navigate to **Security groups** and **create** a new security group called **vpc-secure-maintenance-sg** with the **outbound** rules show in the table below.
 
- DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
- {: tip }
+   DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
+   {: tip }
 
-2. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
-3. Create the security group.
+1. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
+1. Create the security group.
 
 
    | Protocol | Destination type | Destination | Value   |
@@ -174,7 +175,7 @@ With access to the bastion working, continue and create the security group for m
 
 
 1. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
-2. Finally, edit the security group and add the following **outbound** rule.
+1. Finally, edit the security group and add the following **outbound** rule.
 
 
    | Protocol | Destination type | Destination | Value   |
@@ -227,12 +228,12 @@ To create a virtual server instance in the newly created subnet:
    4. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
    5. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **View all profiles**.
    6. For **SSH keys** pick the SSH key you created earlier for the bastion.
-2. Scroll to **Networking** and select the VPC your created.
-3. Under **Network interfaces**, click on the **Edit** icon
+1. Scroll to **Networking** and select the VPC your created.
+1. Under **Network interfaces**, click on the **Edit** icon
       - Select **vpc-secure-private-subnet** as the subnet.
       - Uncheck the default security and group and activate **vpc-secure-private-sg**.
       - Click **Save**.
-4. Click **Create virtual server instance**.
+1. Click **Create virtual server instance**.
 
 ### Add virtual servers to the maintenance security group
 {: #vpc-secure-management-bastion-server-add-vsi-to-maintenance}

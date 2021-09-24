@@ -36,6 +36,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Hosting web applications is a common deployment pattern for public cloud, where resources can be scaled on demand to meet short term and long term usage demands. Security for the application workloads is a fundamental prerequisite, to complement the resilience and scalability afforded by public cloud.
