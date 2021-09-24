@@ -28,6 +28,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
@@ -144,7 +145,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
     - Enter the following SQL into the **Type SQL here ...** text area.
-        ```
+        ```sql
         SELECT
         `Dr Number` AS id,
         `Date Occurred` AS date,
@@ -162,9 +163,9 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
         ```
         {: codeblock}
 
-     - Click **Run**.
-1. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
-1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
+    - Click **Run**.
+4. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
+5. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
 {: #smart-data-lake-5}
@@ -190,7 +191,7 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     ```
     {: codeblock}
 
-1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow {{site.data.keyword.sqlquery_short}} results to be stored in {{site.data.keyword.cos_short}}.
+3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow {{site.data.keyword.sqlquery_short}} results to be stored in {{site.data.keyword.cos_short}}.
     - Add the following in the next cell, the `In [ ]:` prompt, and then **Run**.
         ```python
         import getpass
@@ -207,7 +208,7 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-1. Add the {{site.data.keyword.sqlquery_short}} instance's CRN (Cloud Resource Name) to the Notebook.
+4. Add the {{site.data.keyword.sqlquery_short}} instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next cell, assign the CRN to a variable in your Notebook. Copy the following into it, but do not run it yet.
         ```python
         sql_crn = '<SQL_QUERY_CRN>'
@@ -221,13 +222,13 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
         {: pre}
 
     - Paste the CRN between the single quotes, replacing **<SQL_QUERY_CRN>** and then **Run**.
-1. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
+5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
 
-1. Enter the following commands in another cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
+6. Enter the following commands in another cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 

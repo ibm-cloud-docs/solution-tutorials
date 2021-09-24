@@ -72,9 +72,9 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    1. Under **Multitenant** select a region.
    1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a resource group.
-   2. Select **IAM and legacy credentials** as authentication method.
-   3. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
-   4. Click **Create**.
+   1. Select **IAM and legacy credentials** as authentication method.
+   1. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
+   1. Click **Create**.
 2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
 4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partitioned** under **Partitioning**. Click **Create** to create the database.

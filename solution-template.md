@@ -38,6 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
@@ -84,6 +85,7 @@ You will find instructions to download and install these tools for your operatin
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 In addition, make sure you have:
@@ -150,7 +152,7 @@ Introductory statement that overviews the section
    ```
    {: pre}
 
-   ```
+   ```bash
    the output of the script
    is shown in a different format
    ```
@@ -190,7 +192,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #solution-template-0}
 
 Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
+- idea with [link](http://example.com) to resources to help implement the idea
 - idea with high level steps the user should follow
 - avoid generic ideas you did not test on your own
 - don't throw up ideas that would take days to implement
