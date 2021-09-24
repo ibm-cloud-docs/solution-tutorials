@@ -34,6 +34,7 @@ completion-time: 3h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
@@ -80,6 +81,7 @@ You will find instructions to download and install these tools for your operatin
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: note}
+
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -688,7 +690,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    {: pre}
 
 1. Back in the console, and in the **Topology** view of the **Developer** perspective, open the **patient-health-backend** app and wait for the build to complete. Notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
-   ```
+   ```sh
    > node app.js
 
    /opt/app-root/src/app.js:23
@@ -711,7 +713,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 
 2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template / Containers / Port` output of this command:
 
-   ```
+   ```sh
    oc describe dc/patient-health-backend
    ```
    {: pre}
@@ -725,6 +727,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 ## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}} to the {{site.data.keyword.openshiftshort}}  cluster
 {: #openshift-microservices-connect-logging-metrics}
 {: step}
+
 It can take a few minutes for logging and metric data to flow through the analysis systems so it is best to connect both at this time for later use.
 
 <!--##isworkshop#-->
@@ -770,12 +773,13 @@ oc get pods -n ibm-observe
 {: pre}
 
 The deployment is successful when you see one or more {{site.data.keyword.la_short}} pods:
-```
+```sh
 someone@cloudshell:~$ oc get pods -n ibm-observe
 NAME                 READY     STATUS    RESTARTS   AGE
 logdna-agent-mdgdz   1/1       Running   0          86s
 logdna-agent-qlqwc   1/1       Running   0          86s
 ```
+{: screen}
 
 **The number of {{site.data.keyword.la_short}} pods equals the number of worker nodes in your cluster.**
 
@@ -840,10 +844,12 @@ With the application now connected to a database for its data, to simulate load 
    {: pre}
 
    Output should look like:
-   ```
+   ```sh
    $ curl http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
    {"personal":{"name":"Opal Larkin","age":22,"street":"805 Bosco Vale","city":"Lincoln","zipcode":"68336"},"medications":["Cefaclor ","Amoxicillin ","Ibuprofen ","Trinessa ","Mirena ","Naproxen sodium "],"appointments":["2009-01-29 10:46 - GENERAL PRACTICE","1999-07-01 10:46 - GENERAL PRACTICE","2001-12-27 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2004-01-01 10:46 - GENERAL PRACTICE","1999-09-30 10:46 - GENERAL PRACTICE","2018-10-29 10:46 - GENERAL PRACTICE","2012-02-16 10:46 - GENERAL PRACTICE","2015-11-23 10:46 - GENERAL PRACTICE","2000-03-30 10:46 - GENERAL PRACTICE","1999-04-29 10:46 - GENERAL PRACTICE","2015-01-07 10:46 - GENERAL PRACTICE","1999-02-25 10:46 - GENERAL PRACTICE","2010-07-23 10:46 - GENERAL PRACTICE","2008-01-24 10:46 - GENERAL PRACTICE","2004-05-24 10:46 - GENERAL PRACTICE","1999-01-21 10:46 - GENERAL PRACTICE","2015-03-05 10:46 - GENERAL PRACTICE","2002-06-27 10:46 - GENERAL PRACTICE","2000-06-29 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2015-01-10 10:46 - GENERAL PRACTICE","2000-12-28 10:46 - GENERAL PRACTICE","2016-06-02 10:46 - GENERAL PRACTICE","2016-03-10 10:46 - GENERAL PRACTICE","2013-09-08 10:46 - GENERAL PRACTICE","2011-02-10 10:46 - GENERAL PRACTICE","2013-02-21 10:46 - GENERAL PRACTICE","2003-04-30 10:46 - GENERAL PRACTICE","2004-07-23 10:46 - GENERAL PRACTICE","2006-01-12 10:46 - GENERAL PRACTICE","2002-12-26 10:46 - GENERAL PRACTICE","1999-12-30 10:46 - GENERAL PRACTICE","2017-01-04 10:46 - GENERAL PRACTICE","2018-03-22 10:46 - GENERAL PRACTICE","2010-02-04 10:46 - GENERAL PRACTICE","2009-11-29 10:46 - GENERAL PRACTICE","2013-02-26 10:46 - GENERAL PRACTICE","2003-02-04 10:46 - GENERAL PRACTICE","2003-03-01 10:46 - GENERAL PRACTICE","2000-04-15 10:46 - GENERAL PRACTICE","2001-06-28 10:46 - GENERAL PRACTICE","2007-01-18 10:46 - GENERAL PRACTICE","2018-08-30 10:46 - GENERAL PRACTICE","2017-03-16 10:46 - GENERAL PRACTICE","2014-02-27 10:46 - GENERAL PRACTICE","2000-09-27 10:46 - GENERAL PRACTICE"]}
    ```
+   {: screen}
+
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
    while sleep 0.2; do curl --max-time 2 -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06 >/dev/null; done
@@ -1051,11 +1057,12 @@ oc get pods -n ibm-observe
 {: pre}
 
 Example output:
-```
+```sh
 NAME                 READY     STATUS    RESTARTS   AGE
 sysdig-agent-qrbcq   1/1       Running   0          1m
 sysdig-agent-rhrgz   1/1       Running   0          1m
 ```
+{: screen}
 
 ## Monitor your Cluster
 {: #openshift-microservices-use-sysdig}
@@ -1171,6 +1178,7 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
    oc delete project/example-health
    ```
    {: pre}
+   
 * Delete {{site.data.keyword.la_short}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice

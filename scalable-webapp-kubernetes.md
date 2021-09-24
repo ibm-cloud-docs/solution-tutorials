@@ -28,6 +28,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Optionaly you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
@@ -89,6 +90,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
    - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
    - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -168,16 +170,16 @@ Note: If you wish to build and push the application to your own container regist
 
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 
    1. If you wish to use the `default` Kubernetes namespace, run the below command to set an environment variable
-    ```sh
-    export KUBERNETES_NAMESPACE=default
-    ```
-    {: pre}
+      ```sh
+      export KUBERNETES_NAMESPACE=default
+      ```
+      {: pre}
 
    2. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
-    ```sh
-    export KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
-    ```
-    {: pre}
+      ```sh
+      export KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
+      ```
+      {: pre}
 
 1. Change to the chart directory under your starter application directory:
    ```sh
@@ -325,19 +327,19 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
    ```
    {: pre}
 
-4. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
+1. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
    ```sh
    ./ingress.sh customdomain_https
    ```
    {: pre}
 
-5. Deploy the Ingress:
+1. Deploy the Ingress:
    ```sh
    kubectl apply -f ingress-customdomain-https.yaml
    ```
    {: pre}
    
-6. Access your application at `https://<my-custom-subdomain.com>/`.
+1. Access your application at `https://<my-custom-subdomain.com>/`.
 <!--#/istutorial#-->
 
 ## Monitor application health
@@ -386,6 +388,7 @@ Once the autoscaler is successfully created, you should see
    kubectl delete -f ingress-ibmdomain.yaml
    ```
    {: pre}
+
    <!--#/istutorial#-->
    <!--##isworkshop#-->
    <!--
@@ -400,11 +403,13 @@ Once the autoscaler is successfully created, you should see
    ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $SECRET_NAME --namespace default
    ```
    {: pre}
+
 * Delete the Kubernetes artifacts created for this application:
    ```sh
    helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> uninstall $MYPROJECT --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
+   
 <!--##istutorial#-->
 * Delete the cluster.
 <!--#/istutorial#-->
