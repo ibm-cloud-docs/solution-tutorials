@@ -313,7 +313,7 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    ```
    {: pre}
 
-   If you are seeing `UnhandledPromiseRejection` warning, ignore by adding `--unhandled-rejections=strict ` flag to the above command.
+   If you are seeing `UnhandledPromiseRejection` warning, ignore by adding `--unhandled-rejections=strict` flag to the above command.
    {: tip}
 
 4. Stop the simulator after a desired number of messages have been stream landed using `control+C`.

@@ -320,6 +320,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
    * **vpn**:
       ip: <vpn_server_ip>
+      
 2. Install LSF:   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
@@ -335,7 +336,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "config_dm"
    ```
    {: pre}
-   
+
 4. Configure the on-premises queues and settings for LSF.   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "mc_onprem"

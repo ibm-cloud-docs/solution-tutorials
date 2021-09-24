@@ -157,7 +157,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    set security zone-policy zone OUTSIDE description 'External Internet'
    ```
    {: codeblock}
-
+   
 2.	Assign firewalls to control traffic to and from the Internet.
    ```bash
    set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
@@ -165,7 +165,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    commit
    ```
    {: codeblock}
-
+   
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
    ```bash
    ssh root@<VSI Private IP>
