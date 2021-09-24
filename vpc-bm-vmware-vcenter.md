@@ -38,6 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
@@ -90,7 +91,7 @@ vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VP
 
 
 While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
-{:note}
+{: note}
 
 1. Create VLAN NIC for vCenter and record its IP address:
 
@@ -147,7 +148,7 @@ The vCenter appliance will be deployed next. You can do this via the Jump host's
 vCenter installation is split into two phases. In the first phase, the appliance is installed into the ESXi host.
 
 Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address prior continuing.
-{:important}
+{: important}
 
 1. Before continuing further with vCenter deployment, verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address. List information about configured records in your DNS instance `dns-vmware` and zone `vmware.ibmcloud.local`, use the following command.
 
@@ -161,12 +162,12 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
    ```sh
    nslookup vcenter.vmware.ibmcloud.local
    ```
-  {: codeblock}
+   {: codeblock}
   
    ```sh
    nslookup esx-001.vmware.ibmcloud.local
    ```
-  {: codeblock}
+   {: codeblock}
 
 3. Start the VCSA UI installer (e.g. <drive_letter>:\vcsa-ui-installer\win32\installer.exe).
   
@@ -360,7 +361,7 @@ With {{site.data.keyword.bm_is_short}}, a single uplink (PCI NIC) is used. To be
 In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for `VMWARE_BMS002` and `VMWARE_BMS003`.
 
 Perform this **only** for `VMWARE_BMS002` / esx-002 and `VMWARE_BMS003` / esx-003 at this point.
-{:note}
+{: note}
 
 Configure the distributed vSwitch as follows:
 
@@ -405,7 +406,7 @@ ibmcloud is bm-nics $VMWARE_BMS002
 In this step, you need to migrate the management network (vmk0) and its associated uplink (vmnic0) from the standard vSwitch to the distributed vSwitch (vDS) for `VMWARE_BMS001`.
 
 Perform this **only** for `VMWARE_BMS001` / esx-001 at this point.
-{:note}
+{: note}
 
 Configure the distributed vSwitch as follows:
 

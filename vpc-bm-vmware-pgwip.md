@@ -38,6 +38,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.

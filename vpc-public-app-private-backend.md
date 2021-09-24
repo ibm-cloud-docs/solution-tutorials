@@ -34,6 +34,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
@@ -196,7 +197,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
 2. Click **Attached resources**, under **Attached instances** click **Create**.
-1. To configure the instance:
+3. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
    2. Select the resource group as earlier.
    3. Select the same **Location** as before.
@@ -215,13 +216,13 @@ To create a virtual server instance in the newly created subnet:
       {: pre}
 
       This will install a simple web server into the instance.
-2. Under **Networking**, select the VPC your created.
-3. Under **Network interfaces**, click on the **Edit** icon
+4. Under **Networking**, select the VPC your created.
+5. Under **Network interfaces**, click on the **Edit** icon
    1. Select **vpc-pubpriv-frontend-subnet** as the subnet.
    2. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
    3. Click **Save**.
    4. Click **Create virtual server instance**.
-4. Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click on the **Edit** icon. Under **Floating IP address** ,associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+6. Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click on the **Edit** icon. Under **Floating IP address** ,associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
 {: #vpc-public-app-private-backend-setup-connectivity-frontend-backend}
