@@ -24,6 +24,7 @@ lasttested: "2020-11-19"
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
@@ -177,7 +178,7 @@ Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/co
 ![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}
 {: style="text-align: center;"}
 
-In the `Search` input box of UI, use the field `namespace: ` to filter logs based 0n the namespace.
+In the `Search` input box of UI, use the field `namespace:` to filter logs based 0n the namespace.
 {: tip}
 
 ## Setup delivery pipeline

@@ -28,6 +28,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
@@ -67,11 +68,12 @@ You will find instructions to download and install these tools for your operatin
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 In addition, contact the master user of your Infrastructure account to get the following permissions:
-   * Manage CDN Account
-   * Manage {{site.data.keyword.cos_full_notm}}
+* Manage CDN Account
+* Manage {{site.data.keyword.cos_full_notm}}
 
 These permissions are required to be able to view and use the Storage and CDN services.
 
@@ -97,9 +99,9 @@ To start, retrieve the application code:
 
 1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Provide a **Service Name**.
-2. Select the desired **resource group**
-2. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
-4. In the service dashboard, click **Create Bucket**.
+3. Select the desired **resource group**
+4. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
+5. In the service dashboard, click **Create Bucket**.
    * Select **Customize your bucket**
 
 In the Custom Bucket dialog:
@@ -144,7 +146,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ```
    {: pre}
 
-4. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
+1. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
    ```sh
    ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file index.html
    ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file a-picture.png 
@@ -153,15 +155,15 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ```
    {: pre}
 
-5. View your files from your dashboard.
+1. View your files from your dashboard.
    ![Bucket Content](images/solution3/Buckets.png)
-6. Access the files through your browser or by using curl:
-  ```sh
+1. Access the files through your browser or by using curl:
+   ```sh
    curl http://$BUCKET_NAME.$PUBLIC_ENDPOINT/index.html
    echo open http://$BUCKET_NAME.$PUBLIC_ENDPOINT/index.html
    ```
    It will look like:
-   ```
+   ```html
    <html>
    <head>
      <title>Files hosted in Cloud Object Storage and accessible through a Content Delivery Network</title>
@@ -169,6 +171,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    </html>
    open http://fredflinstone-mywebsite.s3.us-south.cloud-object-storage.appdomain.cloud/index.html
    ```
+   {: screen}
 
 ## Make the files globally available with a CDN
 {: #static-files-cdn-5}
@@ -186,10 +189,10 @@ In this section, you will create a CDN service. The CDN service distributes cont
 5. Select **Object Storage** to configure the CDN for COS.
 6. Set the **Endpoint** to your bucket API endpoint ($PUBLIC_ENDPOINT).  Above thie was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
 7. Set **Bucket name** to $BUCKET_NAME
-7. Enable HTTP (80)
-7. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.
+8. Enable HTTP (80)
+9. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.
    - For **SSL certificate** select **DV SAN Certificate** to use your custom domain. If you do not have a custom domain pick the **Wildcard Certificate** option.
-9. Accept the **Master Service Agreement** and click **Create**.
+10. Accept the **Master Service Agreement** and click **Create**.
 
 ### Access your content through the CDN CNAME
 {: #static-files-cdn-7}
@@ -197,19 +200,20 @@ In this section, you will create a CDN service. The CDN service distributes cont
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
 2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete.  When available follow the steps shown when clicking on **View domain validation**.  Note that this can take a few hours.  If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate.  Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
-3. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.yourdomain.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`
-4. Access your files with `http://<static.yourdomain.com>/index.html`.
+4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.yourdomain.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`
+5. Access your files with `http://<static.yourdomain.com>/index.html`.
 
 You can demonstrate the performance improvement.  Access via the CDN.  Check the output of the first curl to verify successful connection:
-```
+```sh
 SUBDOMAIN=static.yourdomain.com
 curl http://$SUBDOMAIN/index.html
 while sleep 1; do curl --output /tmp/fast http://$SUBDOMAIN/a-video.mp4; done
 ```
+{: screen}
 
 Access via COS:
 
-```
+```sh
 curl http://$PUBLIC_ENDPOINT/$BUCKET_NAME/index.html
 while sleep 1; do curl --output /tmp/slow http://$PUBLIC_ENDPOINT/$BUCKET_NAME/a-video.mp4 ; done
 ```
@@ -218,12 +222,13 @@ If you are using {{site.data.keyword.cloud-shell_short}} you can change the loca
 
 ### Access index.html through COS and other content through CDN
 {: #static-files-cdn-8}
+
 All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.yourdomain.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
 
 Upload cdn.html into the index.html and open the application in a browser:
-   ```sh
-   ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file cdn.html
-   ```
+```sh
+ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file cdn.html
+```
 
 Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configuration** panel scroll down to the **Static website hosting endpoints** section and copy the **Public** url into a browser tab.  Since you configured this earlier to redirect to `index.html` the web application will be displayed and content will be delivered through the CDN.  For me the url was fredflinstone-mywebsite.s3-web.us-south.cloud-object-storage.appdomain.cloud notice the s3-web.
 

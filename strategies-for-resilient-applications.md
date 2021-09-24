@@ -24,6 +24,7 @@ lasttested: "2019-12-07"
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions, Code Engine or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
@@ -181,6 +182,7 @@ Learn how to deploy this architecture by following the [**Deploying an applicati
 
 ### Virtual server instances on VPC Infrastructure
 {: #strategies-for-resilient-applications-13}
+
 {{site.data.keyword.vsi_is_full}} offer the capability to achieve a multi-region architecture. You can provision instances in multiple availability zones on {{site.data.keyword.cloud_notm}}.
 
 The below architecture demonstrates deploying isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners, and proper health checks.
@@ -307,9 +309,9 @@ All of these services share the same characteristics:
 {{site.data.keyword.cos_full_notm}} (COS) provides durable, secure, and cost-effective cloud storage. Information stored with {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations. When creating storage buckets within a COS instance, you decide in which location the bucket should be created and which resiliency option to use.
 
 There are three types of bucket resiliency:
-   - **Cross Region** resiliency will spread your data across several metropolitan areas. This can be seen as a multi-region option. When accessing content stored in a Cross Region bucket, COS offers a special endpoint able to retrieve content from a healthy region.
-   - **Regional** resiliency will spread data across a single metropolitan area. This can be seen as a multi-zone within a region configuration.
-   - **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
+- **Cross Region** resiliency will spread your data across several metropolitan areas. This can be seen as a multi-region option. When accessing content stored in a Cross Region bucket, COS offers a special endpoint able to retrieve content from a healthy region.
+- **Regional** resiliency will spread data across a single metropolitan area. This can be seen as a multi-zone within a region configuration.
+- **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
 
 Refer to [this documentation](https://{DomainName}/docs/cloud-object-storage/basics?topic=cloud-object-storage-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
 

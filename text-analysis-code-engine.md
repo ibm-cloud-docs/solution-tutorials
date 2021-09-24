@@ -36,6 +36,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying a text analysis with {{site.data.keyword.nlushort}} application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} entities - applications and jobs - to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} entities. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
@@ -74,6 +75,7 @@ You will find instructions to download and install these tools for your operatin
 
 **Note:** To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -109,7 +111,7 @@ Putting entities into a single project enables you to manage access control more
    {: pre}
 
 4. Target the resource group where you created your project.
-   ```
+   ```sh
    ibmcloud target -g <YOUR_RESOURCE_GROUP_NAME>
    ```
    {: pre}
@@ -151,7 +153,6 @@ We've already built images for the two applications and pushed them to the publi
 {: #text-analysis-code-engine-4}
 
 1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
-
    ```sh
    ibmcloud code-engine application create --name frontend --image ibmcom/frontend
    ```
@@ -162,6 +163,7 @@ We've already built images for the two applications and pushed them to the publi
 <!--##istutorial#-->
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {: tip}
+   
 <!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
@@ -171,7 +173,7 @@ We've already built images for the two applications and pushed them to the publi
    {: tip}
 
 3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
-   ```
+   ```sh
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
    {: pre}
@@ -208,7 +210,7 @@ Most of these values have a default set if nothing is provided as an option when
 6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:
-    ```
+    ```sh
     Name                                        Revision        Running  Status   Restarts  Age
     frontend-00002-deployment-77d5fbfb5d-7zpfl  frontend-00002  3/3      Running  0         70s
     frontend-00002-deployment-77d5fbfb5d-kv6rn  frontend-00002  3/3      Running  0         69s
@@ -216,6 +218,7 @@ Most of these values have a default set if nothing is provided as an option when
     frontend-00002-deployment-77d5fbfb5d-qkjmd  frontend-00002  3/3      Running  0         67s
     frontend-00002-deployment-77d5fbfb5d-zpr9n  frontend-00002  3/3      Running  0         85s
     ```
+    {: screen}
 
 ### Deploy a backend application and test the connection
 {: #text-analysis-code-engine-6}
@@ -500,8 +503,8 @@ A container image registry, or registry, is a repository for your container imag
    
 2. Navigate to [Resource List](https://{DomainName}/resources/)
 3. Delete the services you created:
- * {{site.data.keyword.cos_full}}
- * {{site.data.keyword.nlufull}}
+   * {{site.data.keyword.cos_full}}
+   * {{site.data.keyword.nlufull}}
 <!--##isworkshop#-->
 <!--
 1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project

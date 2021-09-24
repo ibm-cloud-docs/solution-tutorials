@@ -20,6 +20,7 @@ lasttested: "2020-12-08"
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-getting-started) delivers powerful tools by combining container and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
@@ -173,7 +174,7 @@ To copy data from your local machine to your persistent storage, you must mount 
 
 1. To copy date, first, you would need to create a configuration that looks like something like this:
 
-   ```
+   ```yaml
    kind: Pod
    apiVersion: v1
    metadata:
@@ -238,7 +239,7 @@ It's never good practice to store credentials within the app code. Instead, Kube
 One way of using secrets in Kubernetes in by doing something like this:
 
 1. Create a file called `cloud-secrets.txt` and store the service credentials of any cloud service inside it.
-   ```
+   ```json
    {
        "url": "<SERVICE_URL>",
        "api_key": <API_Key>
@@ -276,7 +277,7 @@ Images are typically stored in a registry that can either be accessible by the p
 To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
 1. You would need to create a Dockerfile, below is an example of a Dockerfile.
-   ```
+   ```sh
    # Build JPetStore war
    FROM openjdk:8 as builder
    COPY . /src
