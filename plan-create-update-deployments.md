@@ -541,10 +541,10 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 
 |           | IAM Access policies |
 | --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Administrator*</li></ul> |
-| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
-| Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
+| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Administrator* |
+| Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
+| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* |
+| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 
 Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
