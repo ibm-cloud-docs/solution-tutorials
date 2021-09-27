@@ -340,16 +340,16 @@ Many of the services provide stateless APIs and offer high availability through 
 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
-| Cloud Foundry | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li></ul> |
-| {{site.data.keyword.containerlong_notm}}, {{site.data.keyword.openshiftlong_notm}} | <ul><li>Resiliency by design with support for multi-zone clusters</li><li>Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
-| {{site.data.keyword.openwhisk_short}} | <ul><li>Available in multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Functions API to deploy actions in multiple locations</li></ul> |
-| {{site.data.keyword.codeengineshort}} | <ul><li>Available in multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
-| {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | <ul><li>Provision servers in multiple locations</li><li>Attach servers in the same location to a local load balancer</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
-| {{site.data.keyword.cloudant}} | <ul><li>One-shot and Continuous replication between databases</li><li>Automatic data redundancy within a region</li></ul> |
-| {{site.data.keyword.Db2_on_Cloud_short}} | <ul><li>Provision a geo-replicated disaster recovery node for real-time data synchronization</li><li>Daily backup with paid plans</li></ul> |
-| Cloud Databases | <ul><li>Built on multi-zone Kubernetes clusters</li><li>Cross-region read replicas</li><li>Daily and on-demand backups</li></ul> |
-| {{site.data.keyword.cos_short}} | <ul><li>Single Data Center, Regional and Cross-Regional resiliency</li><li>Use API to synchronize contents across storage buckets</li></ul> |
-| {{site.data.keyword.filestorage_short}} | <ul><li>Use snapshots to automatically capture content to a destination in a remote data center</li></ul> |
+| Cloud Foundry | - Deploy applications to multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations |
+| {{site.data.keyword.containerlong_notm}}, {{site.data.keyword.openshiftlong_notm}} | - Resiliency by design with support for multi-zone clusters \n - Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}} |
+| {{site.data.keyword.openwhisk_short}} | - Available in multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Functions API to deploy actions in multiple locations |
+| {{site.data.keyword.codeengineshort}} | - Available in multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} |
+| {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | - Provision servers in multiple locations \n - Attach servers in the same location to a local load balancer \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} |
+| {{site.data.keyword.cloudant}} | - One-shot and Continuous replication between databases \n - Automatic data redundancy within a region |
+| {{site.data.keyword.Db2_on_Cloud_short}} | - Provision a geo-replicated disaster recovery node for real-time data synchronization \n - Daily backup with paid plans |
+| Cloud Databases | - Built on multi-zone Kubernetes clusters \n - Cross-region read replicas \n - Daily and on-demand backups |
+| {{site.data.keyword.cos_short}} | - Single Data Center, Regional and Cross-Regional resiliency \n - Use API to synchronize contents across storage buckets |
+| {{site.data.keyword.filestorage_short}} | - Use snapshots to automatically capture content to a destination in a remote data center |
 
 
 ## Related content
