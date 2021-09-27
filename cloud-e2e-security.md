@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2021
-lastupdated: "2021-09-23"
+lastupdated: "2021-09-27"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -148,7 +148,7 @@ While the cluster is being provisioned, you will create the other services requi
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    1. Select a **location**.
-   2. Set the name to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-kp**.
+   2. Set the name to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-kp**.
    3. Select the **resource group** where to create the service instance and click **Create**.
 2. Under **Keys**, click the **Add** button to create a new root key. It will be used to encrypt the storage bucket and {{site.data.keyword.appid_short}} data.
    1. Set the key type to **Root key**.
@@ -170,7 +170,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 {: #cloud-e2e-security-9}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   1. Select a **Standard** plan and Set the **name** to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cos**.
+   1. Select a **Standard** plan and Set the **name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cos**.
    2. Use the same **resource group** as for the previous services and click **Create**.
 2. Under **Service credentials**, create a *New credential*.
    1. Set the **name** to **secure-file-storage-cos-acckey**.
@@ -218,7 +218,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service.
    1. Select **Cloudant** as the offering. 
    2. Select a **Multitenant** environment and a **region** same as the previous services.
-   3. Set the **name** to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+   3. Set the **name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
    4. Use the same **resource group** as for the previous services.
    5. Set **Authentication method** to **IAM**.
    6. Click **Create**.
@@ -253,7 +253,7 @@ Now, Create an instance of the {{site.data.keyword.appid_short}} service.
 1. Navigate to the [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID) service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
-   3. Set the **Service name** to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid**.
+   3. Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
@@ -301,7 +301,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 2. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-   * and the credentials for **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+   * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
 
    When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
    {: tip}
@@ -351,7 +351,7 @@ All services have been configured. In this section you will deploy the tutorial 
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$BASENAME` | *<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
 
 
 ### Deploy to the cluster
