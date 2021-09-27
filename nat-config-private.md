@@ -90,7 +90,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    ```
    {: codeblock}
 
-2.	Create the SNAT rules on the VRA, specifying the same `<Subnet Gateway IP>/<CIDR>` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
+2.	Create the SNAT rules on the VRA, specifying the same `&lt;Subnet Gateway IP&gt;/&lt;CIDR&gt;` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
    ```bash
    set service nat source rule 1000 description 'pass traffic to the Internet'
    set service nat source rule 1000 outbound-interface 'dp0bond1'
@@ -168,7 +168,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
    ```bash
-   ssh root@<VSI Private IP>
+   ssh root@&lt;VSI Private IP&gt;
    ```
    {: codeblock}
 

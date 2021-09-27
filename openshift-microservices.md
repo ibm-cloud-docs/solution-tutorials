@@ -163,7 +163,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}   
 
-1. Initialize the `oc` command environment by replacing the placeholder <your-cluster-name>:
+1. Initialize the `oc` command environment by replacing the placeholder &lt;your-cluster-name&gt;:
    ```sh
    ibmcloud oc cluster config -c <your-cluster-name> --admin
    ```
