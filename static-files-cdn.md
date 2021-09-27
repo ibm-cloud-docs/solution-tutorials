@@ -110,13 +110,11 @@ In the Custom Bucket dialog:
 1. Set the **Resiliency** to **Regional**.
 1. Set the **Location** appropriately.  Choose **us-south** or make substitutions in the instructions below when you see us-south.
 1. Scroll down to **Static website hosting** and click **Add rule**
-   1. **Routing rules (individual)** should be selected
-   1. Enter index.html into the **Index document** text box
-   1. Click **Public access** to **On**
-   1. Click **Save** above in the **Static website hosting** title
-1. Scroll down and click **Create bucket**
-
-The bucket will be displayed after creation completes.  Identify the public endpoint.
+   * **Routing rules (individual)** should be selected
+   * Enter index.html into the **Index document** text box
+   * Click **Public access** to **On**
+   * Click **Save** above in the **Static website hosting** title
+1. Scroll down and click **Create bucket**. The bucket will be displayed after creation completes.  Identify the public endpoint.
 1. Click **Buckets** **Configuration** on the left side
 1. Notice the **Endpoint** section and take note of the **Public** endpoint which will be needed later to both configure ibmcloud CLI and the CDN. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
