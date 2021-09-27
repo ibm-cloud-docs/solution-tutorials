@@ -154,7 +154,7 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |domain_name|Your domain name.|
 |worker_nodes|The number of LSF worker nodes to deploy to the cluster.|
 |master_nodes|The number of LSF master nodes to deploy to the cluster.|
-|key_name|This is the name of an ssh public key that you have stored in the IBM Cloud.  This key will be added to the access list of all newly provisioned virtual resources.\n Note: If you use the key name of the public key for the machine and userid you plan to use for the deployer (such as /root/.ssh/id_rsa.pub), you will not need to add anything to the access lists of all the nodes before deploying LSF.  \n You can create the key instance in the cloud using the following commands:  \n  \n `ibmcloud is keys (to view existing keys)`  \n `ibmcloud is key-create <descriptive name for key> @/root/.ssh/id_rsa.pub`|
+|key_name|This is the name of an ssh public key that you have stored in the IBM Cloud.  This key will be added to the access list of all newly provisioned virtual resources.  \n Note: If you use the key name of the public key for the machine and userid you plan to use for the deployer (such as /root/.ssh/id_rsa.pub), you will not need to add anything to the access lists of all the nodes before deploying LSF.  \n You can create the key instance in the cloud using the following commands:  \n  \n `ibmcloud is keys (to view existing keys)`  \n `ibmcloud is key-create <descriptive name for key> @/root/.ssh/id_rsa.pub`|
 |ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as &lt;name of private key&gt;.public (such as id_rsa.public ).|
 |lsf_cluster_name|The name you want LSF to apply to your cloud based cluster.|
 |worker_profile\n master_profile  \n login_profile  \n |These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:  \n \n `ibmcloud is in-prs`  \n \n The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
@@ -304,6 +304,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 {: step}
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
+
 
    |Parameter|Description|
    |---------|-----------|
