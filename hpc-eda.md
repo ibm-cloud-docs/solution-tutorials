@@ -155,13 +155,13 @@ Much of the work needed to configure your cloud cluster is configuring the follo
 |worker_nodes|The number of LSF worker nodes to deploy to the cluster.|
 |master_nodes|The number of LSF master nodes to deploy to the cluster.|
 |key_name|This is the name of an ssh public key that you have stored in the IBM Cloud.  This key will be added to the access list of all newly provisioned virtual resources.\n Note: If you use the key name of the public key for the machine and userid you plan to use for the deployer (such as /root/.ssh/id_rsa.pub), you will not need to add anything to the access lists of all the nodes before deploying LSF.\n You can create the key instance in the cloud using the following commands:\n \n `ibmcloud is keys (to view existing keys)`\n `ibmcloud is key-create <descriptive name for key> @/root/.ssh/id_rsa.pub`|
-|ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as <name of private key>.public (such as id_rsa.public ).|
+|ssh_key_file|The ssh key file for the deployer that you will be using to log in to your provisioned hosts.  Typically, this is id_rsa unless you are using a non-standard file name.   The name of the matching public key will be inferred as &lt;name of private key&gt;.public (such as id_rsa.public ).|
 |lsf_cluster_name|The name you want LSF to apply to your cloud based cluster.|
 |worker_profile\n master_profile\n login_profile\n |These are the names of the instance profiles that you would like created for the three  different types of instances.  The instance profile is a unique name (based on a terse description) for a particular profile.  You can see a listing of all available profiles and their associated attributes for your region with the following command:\n \n `ibmcloud is in-prs`\n \n The profiles you choose should be  specific to your workload needs for the worker and master. The login profile will likely be a minimal configuration.|
 |image_name|This should be a recent RedHat or Centos amd64 release. You can see the available options with the following command.\n \n  `ibmcloud is images`|
 |volume_capacity|The size in Gigabytes for the cloud NFS volume your cloud cluster nodes will share.|
 |volume_dir|The mount point for the cloud shared NFS volume.|
-|vpn_peer|_address_: The public IP address of your on-premises VPN gateway.\n _cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.\n _psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.\n \n <code>echo -n <your_key>  ansible-vault encrypt_string --ask-vault-pass</code>\n \n _Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.\n Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
+|vpn_peer|_address_: The public IP address of your on-premises VPN gateway.\n _cidrs_: A list of CIDRs for the private IPs that will be accessible in your VPC.\n _psk_: A passkey for authenticating with the VPN.  You can encrypt using ansible-vault.\n \n `echo -n <your_key>  ansible-vault encrypt_string --ask-vault-pass` \n \n _Security_:There are a number of parameters in this section.  You can configure them now or they can be left to the defaults and edited as needed when you prepare the vpn.yml file in Step 5: Connect Your on-premises and {{site.data.keyword.cloud_notm}} Networks with a VPN.\n Note: If you intend to install Terraform using the Ansible playbook as described below in Step 4: Provision the Cloud Resources, you can customize the installation to place the Terraform command and the {{site.data.keyword.cloud_notm}} Terraform plugin in your preferred locations.  The defaults will probably work in most cases.|
 |tfbinary_path|Location to install the Terraform command.|
 |tfplugin_path|The location of the IBM Cloud specific Terraform plugin.|
 
@@ -299,11 +299,11 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    ```
    {: pre}
 
-## Deploy LSF on IBM Cloud to create the {{site.data.keyword.cloud_notm}} cluster
+## Deploy LSF on {{site.data.keyword.cloud_notm}} to create the cluster
 {: #hpc-eda-deploy-lsf-cloud-cluster}
 {: step}
 
-1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:   
+1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
    * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
    * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
    * **bin**: The name of the LSF install file which currently resides in the local_path.

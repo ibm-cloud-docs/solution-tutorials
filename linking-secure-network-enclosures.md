@@ -161,14 +161,14 @@ The new route to allow the APP zone to communicate via the IBM private network w
 
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center.
 
-1. On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate` resource group
+1. On the data center 1 VRA edit command mode, add the &lt;DC2 APP zone subnet&gt;/CIDR to the `ibmprivate` resource group
    ```sh
    set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>
    commit
    ```
    {: codeblock}
 
-2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
+2. On the data center 2 VRA edit command mode, add the &lt;DC1 APP zone subnet&gt;/CIDR to the `ibmprivate` resource group
    ```sh
    set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
    commit
