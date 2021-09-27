@@ -32,6 +32,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}} and {{site.data.keyword.speechtotextshort}} services on {{site.data.keyword.Bluemix_short}}.
@@ -118,14 +119,17 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support. By recognizing the intent expressed in a user's input, the {{site.data.keyword.conversationshort}} service can choose the correct dialog flow for responding to it. In the tool, the name of an intent is always prefixed with the `#` character.
 
 Simply put, intents are the intentions of the end-user. The following are examples of intent names.
- - `#weather_conditions`
- - `#pay_bill`
- - `#escalate_to_agent`
+- `#weather_conditions`
+- `#pay_bill`
+- `#escalate_to_agent`
+
+
 
 1. Click on the newly created skill - **Ana**.
 
    Ana is an insurance bot for users to query their health benefits and file claims.
    {: tip}
+
 2. Click on **Create intent** under Intents. Enter `cancel_policy` as your intent name and provide an optional description.
 3. Click **Create intent**.
 4. Add user examples when requested to cancel a policy
@@ -151,9 +155,9 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the {{site.data.keyword.conversationshort}} service can choose the specific actions to take to fulfill an intent. In the tool, the name of an entity is always prefixed with the `@` character.
 
 The following are examples of entity names
- - `@location`
- - `@menu_item`
- - `@product`
+- `@location`
+- `@menu_item`
+- `@product`
 
    System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.Click **System entities** under **Entities** to check the common entities created by {{site.data.keyword.IBM_notm}} that could be used across any use case.
    {: tip}

@@ -34,6 +34,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in two different regions with subnets and virtual server instances (VSIs). You will create VSIs in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer to provide high availability between regions and reduce network latency for users in different geographies.
@@ -80,19 +81,19 @@ To create your own {{site.data.keyword.vpc_short}} in region 1 with a subnet in 
    * Optionally, add **Tags** to organize your resources.
 3. The default access control list (ACL) **(Allow all)** is appropriate for your VPC
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
-4. Leave **Create a default prefix for each zone** checked.
-5. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
+5. Leave **Create a default prefix for each zone** checked.
+6. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-6. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
+7. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
    * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-7. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
-8. Click **Create virtual private cloud** to provision the instance.
+8. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
+9. Click **Create virtual private cloud** to provision the instance.
 
 ### Create a security group to allow inbound traffic to your application
 {: #vpc-multi-region-4}
@@ -112,6 +113,7 @@ To allow traffic to the application you will deploy on virtual server instances,
 
 ### Provision VSIs
 {: #vpc-multi-region-5}
+
 1. Navigate to **Subnets**.
 1. Verify status is available and click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **Create**.
    1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name.
@@ -142,29 +144,29 @@ Follow the steps mentioned in [securely access remote instances with a bastion h
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
 
 1. At the prompt, run the below commands to install Nginx as your web server
-   ```
+   ```sh
    sudo apt-get update
    sudo apt-get install nginx
    ```
    {: codeblock}
 
 2. Check the status of the Nginx service with the following command:
-   ```
+   ```sh
    sudo systemctl status nginx
    ```
    {: codeblock}
 
    The output should show you that the Nginx service is **active** and running.
-4. Optionally verify that Nginx works as expected.  `curl localhost`.  You should see the default Nginx welcome page.
-5. To update the html page with the region and zone details, run the below command
-   ```
+3. Optionally verify that Nginx works as expected.  `curl localhost`.  You should see the default Nginx welcome page.
+4. To update the html page with the region and zone details, run the below command
+   ```sh
    nano /var/www/html/index.nginx-debian.html
    ```
    {: codeblock}
 
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
-6. `curl localhost` again to notice the changes
-7. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+5. `curl localhost` again to notice the changes
+6. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Distribute traffic between zones with load balancers
 {: #vpc-multi-region-distribute-traffic-with-load-balancers}
@@ -179,17 +181,17 @@ In this section, you will create two load balancers. One in each region to distr
 2. Enter **vpc-lb-region1** as the Name, select **vpc-region1** as the Virtual Private Cloud, select the resource group, **Application load balancer** as the Load balancer and Load balancer Type: **Public**.
 3. Select the **Subnets** of **vpc-region1-zone1-subnet** and **vpc-region1-zone2-subnet**..
 4. Click **New pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the parameters with the values below and click **Save**.
-	- **Name**:  region1-pool
-	- **Protocol**: HTTP
+   - **Name**:  region1-pool
+   - **Protocol**: HTTP
    - **Session stickiness**: None
-	- **Proxy protocol**: Disabled
+   - **Proxy protocol**: Disabled
    - **Method**: Round robin
-	- **Health check path**: /
-	- **Health protocol**: HTTP
-	- **Health port**: Leave blank
-	- **Interval(sec)**: 15
-	- **Timeout(sec)**: 5
-	- **Max retries**: 2
+   - **Health check path**: /
+   - **Health protocol**: HTTP
+   - **Health port**: Leave blank
+   - **Interval(sec)**: 15
+   - **Timeout(sec)**: 5
+   - **Max retries**: 2
 5. Click **Attach** to add server instances to the pool
    - From the Subnet dropdown, select **vpc-region1-zone1-subnet**, select the instance your created and set 80 as the port.
    - Click on **Add**
@@ -239,8 +241,8 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 4. When the service instance is provisioned, click on **Let's get Started**.
 5. Enter your domain name and click **Connect and continue**.
 6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
-6. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+8. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
@@ -266,6 +268,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 
 #### One pool for the VPC load balancers in region 1
 {: #vpc-multi-region-13}
+
 1. Click **Create**.
 2. Set **Name** to **region-1-pool**
 3. Set **Health check** to the one created in the previous section
@@ -276,6 +279,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 
 #### One pool for the VPC load balancers in region 2
 {: #vpc-multi-region-18}
+
 1. Click **Create**.
 2. Set **Name** to **region-2-pool**
 3. Set **Health check** to the one created in the previous section
@@ -318,7 +322,7 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - Assign the **Writer** service access role.
    - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
    - Click on **Authorize**.
-1. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
+3. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
    - Click **Create** and choose **Certificate Manager** as the source service
    - Choose **All instances** or just the {{site.data.keyword.cloudcerts_short}} created earlier
    - **Internet Services** as the target service
@@ -328,6 +332,7 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
 
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate
 {: #vpc-multi-region-15}
+
 This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
@@ -361,11 +366,12 @@ Add an HTTPS listener to the VPC load balancers:
 
    If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**.
    {: tip}
+
 1. Repeat for the **vpc-lb-region2** load balancer.
 
-The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-<region>.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
+The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
-1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-<region>.lb.appdomain.cloud.
+1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-REGION.lb.appdomain.cloud.
    - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**
    - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**
    - Add a DNS CNAME record for **vpc-lb-region2**
@@ -383,6 +389,7 @@ In a browser open **https://lb.mydomain.com** to verify success
 
 ### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
 {: #vpc-multi-region-16}
+
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
 
 It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record.
@@ -422,7 +429,7 @@ Create a HTTPS listener:
 
 1. Navigate to the VPC **Load balancers** page.
 1. Select **vpc-lb-region1**
-2. Under **Front-end listeners**, Click **Create**
+1. Under **Front-end listeners**, Click **Create**
 
    -  **Protocol**: HTTPS
    -  **Port**: 443
@@ -430,7 +437,7 @@ Create a HTTPS listener:
    - Choose the current region as your SSL region
    - Choose the SSL certificate order name you just created for **lb.mydomain.com**
 
-3. Click **Save** to configure an HTTPS listener
+1. Click **Save** to configure an HTTPS listener
 
 **REPEAT** the above steps in the load balancer of **region 2**.
 
@@ -439,6 +446,7 @@ In a browser open https://**lb.mydomain.com** to verify success
 
 ### Failover test
 {: #vpc-multi-region-17}
+
 By now, you should have seen that most of the time you are hitting the servers in **region 1** as it's assigned higher weight compared to the servers in **region 2**. Let's introduce a health check failure in the **region 1** origin pool,
 
 1. Navigate to the list of **virtual server instances**.

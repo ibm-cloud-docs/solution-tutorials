@@ -35,6 +35,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
@@ -142,7 +143,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
 
 When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images. The output will look like:
 
-```
+```sh
 Listing images...
 ID                                     Name                    OS                                                        Created                         Status      Visibility
 cc8debe0-1b30-6e37-2e13-744bfb2a0c11   centos-7.x-amd64        CentOS (7.x - Minimal Install)                            2018-10-30T06:12:06.651+00:00   available   public
@@ -155,6 +156,7 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 81485856-df27-93b8-a838-fa28a29b3b04   windows-2012-r2-amd64   Windows Server (2012 R2 Standard Edition)                 2018-10-30T06:12:06.564+00:00   available   public
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
+{: screen}
 
 {{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints](/docs/vpc?topic=vpc-service-endpoints-for-vpc) available for {{site.data.keyword.vpc_short}}. There is no ingress cost for reading the mirrors.
 
@@ -230,7 +232,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ```
    {: pre}
 
-2. Run the provisioning script:
+1. Run the provisioning script:
    ```sh
    ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
    ```
@@ -249,7 +251,7 @@ This section uses a shell script found in the [Public frontend and private backe
    ibmcloud is instance-create ... --user-data @shared/install.sh
    ```
 
-3. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
+1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
    ```sh
    $ cat resources.sh
    FRONT_IP_ADDRESS=169.61.247.108
@@ -259,13 +261,13 @@ This section uses a shell script found in the [Public frontend and private backe
    FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
    BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
    ```
-4. Load the variables into your environment:
+1. Load the variables into your environment:
    ```sh
    source resources.sh
    ```
    {: pre}
 
-5.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
+1. The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
    ```
@@ -309,12 +311,14 @@ This section uses a shell script found in the [Public frontend and private backe
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    INTERNET
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
+
 1. Validate that the backend can be reached through the bastion host and has access to the internet:
    ```sh
    ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
@@ -322,12 +326,13 @@ This section uses a shell script found in the [Public frontend and private backe
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    INTERNET
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
 
 ### Remove resources
 {: #vpc-app-deploy-cli-cleanup}
@@ -389,6 +394,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 
    Using outputs in Terraform can become quite handy when you want to reuse resource properties in other scripts after you have applied a Terraform plan.
    {: tip}
+
 1. Remove the resources created by Terraform:
    ```sh
    terraform destroy
@@ -402,7 +408,7 @@ The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tuto
 
 The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
 
-   ```sh
+```terraform
    module vpc_pub_priv {
      source = "../../vpc-public-app-private-backend/tfmodule"
      basename = "${local.BASENAME}"
@@ -416,15 +422,15 @@ The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorial
      frontend_user_data = "${file("../shared/install.sh")}"
      backend_user_data = "${file("../shared/install.sh")}"
    }
-   ```
+```
 
 In this definition:
-   - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
-   - **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
+- **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
+- **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
 
 With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://www.terraform.io/docs/provisioners/connection.html#connecting-through-a-bastion-host-with-ssh) as provisioned in the tutorial:
 
-   ```sh
+```terraform
    resource "null_resource" "copy_from_on_prem" {
      connection {
        type        = "ssh"
@@ -445,7 +451,7 @@ With Terraform, all resources can have associated provisioners. The `null_resour
         ]
      }
    }
-   ```
+```
 
 To provision the resources:
 
@@ -485,12 +491,14 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    INTERNET
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
+
 1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
    ```sh
    ../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
@@ -498,12 +506,13 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    ISOLATED
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
 
 ### Remove resources
 {: #vpc-app-deploy-terraform-cleanup}
@@ -646,12 +655,14 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    INTERNET
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
+
 1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
    ```sh
    ../test_provision.bash $(cd tf && terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output BASTION_IP_ADDRESS)"
@@ -659,12 +670,13 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    {: pre}
 
    The command output should be:
-   ```
+   ```sh
    success: httpd default file was correctly replaced with the following contents:
    ISOLATED
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
+   {: screen}
 
 ### Remove resources
 {: #vpc-app-deploy-ansible-cleanup}

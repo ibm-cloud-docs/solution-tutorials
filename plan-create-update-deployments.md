@@ -32,6 +32,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
@@ -102,7 +103,8 @@ The repository is structured as follow:
 
 The *Development*, *Testing* and *Production* environments pretty much look the same.
 
-<img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" alt="Diagram showing one deployment environment" />
+![Diagram showing one deployment environment](./images/solution26-plan-create-update-deployments/one-environment.png){: class="center"}
+{: style="text-align: center; height: 400px;"}
 
 They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
@@ -418,7 +420,7 @@ This section will focus on the `development` environment. The steps will be the 
       ```
       {: codeblock}
 
-   4. Set the **cluster_machine_type**. Find the available flavors and characteristics for the zone with:
+   1. Set the **cluster_machine_type**. Find the available flavors and characteristics for the zone with:
       ```sh
       ibmcloud ks flavors --zone <zone>
       ```
@@ -426,13 +428,13 @@ This section will focus on the `development` environment. The steps will be the 
 
    1. See the comments in the tfvars file for help initializing the rest of the values
 
-2. Initialize Terraform
+1. Initialize Terraform
    ```sh
    terraform init
    ```
    {: codeblock}
 
-3. Create a new Terraform workspace for the *development* environment
+1. Create a new Terraform workspace for the *development* environment
    ```sh
    terraform workspace new development
    ```
@@ -444,17 +446,19 @@ This section will focus on the `development` environment. The steps will be the 
    ```
    {: codeblock}
 
-4. Look at the Terraform plan
+1. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
 
    It should report (with **NN** being the number of resources to be added):
-   ```
+   ```sh
    Plan: NN to add, 0 to change, 0 to destroy.
    ```
-5. Apply the changes
+   {: screen}
+
+1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
@@ -478,6 +482,7 @@ You can repeat the steps for `testing` and `production`.
 
 ### To reuse an existing resource group
 {: #plan-create-update-deployments-15}
+
 Instead of creating a new resource group, you can import an existing resource group into Terraform
 
 1. Retrieve the resource group ID
@@ -537,10 +542,10 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 
 |           | IAM Access policies |
 | --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Administrator*</li></ul> |
-| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
-| Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
+| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Administrator* |
+| Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
+| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* |
+| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 
 Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
@@ -625,10 +630,10 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    {: codeblock}
 
    It should report:
-   ```
+   ```sh
    Plan: 15 to add, 0 to change, 0 to destroy.
    ```
-   {: codeblock}
+   {: screen}
 
 6. Apply the changes
    ```sh
@@ -664,6 +669,7 @@ You can repeat the steps for `testing` and `production`.
 
     `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
     {: tip}
+    
 1. Repeat the steps for the `testing` and `production` workspaces
 1. If you created it, destroy the organization.  Change to the `terraform/global` directory.
    ```sh

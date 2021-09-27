@@ -34,11 +34,12 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
-   - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
-   - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
+- On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
+- Reserved where vCPU and RAM are pre-allocated and priced monthly. 
 {: shortdesc}
 
 VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Director, you may see references in the UI and/or related documentation of one or the other, they are the same product.
@@ -75,6 +76,7 @@ This tutorial requires:
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
+
 <!--#/istutorial#-->
 
 ## Create services
@@ -91,10 +93,10 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, i.e. `vmware-tutorial`.
 5. Select the **Resource group** where to create the service instance.
-5. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
-6. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
-7. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
-8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
+6. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
+7. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
+8. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
+9. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
@@ -132,9 +134,9 @@ The `main.tf` file contains most of the critical sections for this template.
 
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
 
-   ![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png)
+![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png)
 
-  ```terraform
+```terraform
   resource "vcd_network_routed" "tutorial_network" {
 
     name         = "Tutorial-Network"
@@ -151,16 +153,16 @@ An organization VDC network with a routed connection provides controlled access 
     dns1 = "9.9.9.9"
     dns2 = "1.1.1.1"
   }
-  ```
+```
 
 ### Create a firewall and SNAT rule to access the Internet
 {: #vmware-solutions-shared-getting-started-create_internet_rules}
 
 You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
-   ![Internet](images/solution58-vmware-solutions-getting-started/internet.png)
+![Internet](images/solution58-vmware-solutions-getting-started/internet.png)
 
-  ```terraform
+```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet" {
     edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
     name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -188,16 +190,16 @@ You can create rules to allow or deny traffic, this section creates a firewall a
     original_address   = "${vcd_network_routed.tutorial_network.gateway}/24"
     translated_address = module.ibm_vmware_solutions_shared_instance.default_external_network_ip
   }
-  ```
+```
 
 ### Create a firewall rule to access the IBM Cloud private network
 {: #vmware-solutions-shared-getting-started-create_private_rules}
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will enable your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
-   ![IBM Cloud](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
+![IBM Cloud](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
 
-  ```terraform
+```terraform
   resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
     edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
     name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -226,16 +228,16 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     original_address   = "${vcd_network_routed.tutorial_network.gateway}/24"
     translated_address = module.ibm_vmware_solutions_shared_instance.external_network_ips_2
   }
-  ```
+```
 
 ### Create vApp and VM
 {: #vmware-solutions-shared-getting-started-create_vm}
 
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
-   ![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png)
+![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png)
 
-  ```terraform
+```terraform
   resource "vcd_vapp" "vmware_tutorial_vapp" {
     name = "vmware-tutorial-vApp"
   }
@@ -264,22 +266,22 @@ A vApp consists of one or more virtual machines that communicate over a network 
       is_primary         = true
     }
   }
-  ```
+```
 
 ### Create a firewall rule to allow to SSH into the VM from the Internet
 {: #vmware-solutions-shared-getting-started-create_ssh_rules}
 
 You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
 
-   ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
+![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
 
-   This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
-   {: tip}
+This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
+{: tip}
 
-   In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
-   {: tip}
+In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
+{: tip}
 
-  ```terraform
+```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
     count = var.allow_ssh == true ? 1 :0
 
@@ -316,7 +318,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     translated_port    = 22
     protocol           = "tcp"
   }
-  ```
+```
 
 ## Deploy using Schematics
 {: #vmware-solutions-shared-getting-started-deploy_using_schematics}

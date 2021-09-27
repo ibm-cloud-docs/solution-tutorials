@@ -36,6 +36,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.
@@ -81,6 +82,7 @@ In this tutorial, the network enclosure created is not visible on the public int
 
      You should be a **Master User** to enable VPN access or contact a master user for access.
      {: tip}
+
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
@@ -159,7 +161,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    {: tip}
 
 2. Enhance security by only allowing SSH login. Now that SSH login is successful using the private network, disable access via userid/password authentication.
-   ```
+   ```bash
    configure
    set service ssh disable-password-authentication
    commit
@@ -169,7 +171,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
    From this point in this tutorial, it is assumed that all VRA commands are entered at the `edit` prompt after using the `configure` command.
 3. Review the initial configuration.
-   ```
+   ```bash
    show
    ```
    {: codeblock}
@@ -181,20 +183,20 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    - HTTPS web server
    - Default time-zone US/Chicago
 4. Set the local time zone as required. Auto-complete with the tab key will list the potential time zone values.
-   ```
+   ```bash
    set system time-zone <timezone>
    ```
    {: codeblock}
 
 5. Set the ping behavior. Ping is not disabled to aid in routing and firewall troubleshooting.
-   ```
+   ```bash
    set security firewall all-ping enable
    set security firewall broadcast-ping disable
    ```
    {: codeblock}
 
 6. Enable stateful firewall operation. By default, the VRA firewall is stateless.
-   ```
+   ```bash
    set security firewall global-state-policy icmp
    set security firewall global-state-policy udp
    set security firewall global-state-policy tcp
@@ -202,7 +204,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    {: codeblock}
 
 7. Commit and automatically save your changes to the startup configuration.
-   ```
+   ```bash
    commit
    ```
    {: codeblock}
@@ -254,7 +256,7 @@ The private VLAN(s) for the virtual server are associated by the {{site.data.key
 
 4. Click on the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet network, gateway addresses and CIDR (/26) as these are required for further VRA configuration.
 
-7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using ping.
+5. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using ping.
    ```bash
    ping <VSI Private IP Address>
    ```
@@ -282,7 +284,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    {: codeblock}
 
 2. Create a new virtual interface with the private VLAN number, subnet gateway IP address, and CIDR recorded in the earlier steps. The CIDR will typically be `/26`.
-   ```
+   ```bash
    configure
    set interfaces bonding dp0bond0 vif <VLAN ID> address <Subnet Gateway IP>/<CIDR>
    commit
@@ -294,7 +296,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 
    By default, VRRP is set to disabled. This ensures that new provisions and reloads do not cause outages on the Master device. In order for VLAN traffic to work, VRRP must be reenabled once provisioning or a reload completes.
 
-   ```
+   ```bash
    delete interfaces bonding dp0bond0 vrrp vrrp-group 1 disable
    commit
    ```
@@ -305,7 +307,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 
 
 3. List the new virtual interface (vif):
-   ```
+   ```bash
    show interfaces
    ```
    {: codeblock}
@@ -332,11 +334,11 @@ This completes the IP routing configuration.
 The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls) before proceeding.
 
 Two zones are defined:
-   - INSIDE:  The IBM private network and the IBM management network
-   - APP:  The user VLAN and subnet within the private network enclosure
+- INSIDE:  The IBM private network and the IBM management network
+- APP:  The user VLAN and subnet within the private network enclosure
 
 1. Define firewalls and defaults.
-   ```
+   ```bash
    configure
    set security firewall name APP-TO-INSIDE default-action drop
    set security firewall name APP-TO-INSIDE default-log
@@ -349,10 +351,11 @@ Two zones are defined:
 
    If a set command is accidentally run twice, you receive a message *'Configuration path xxxxxxxx is not valid. Node exists'*. This can be ignored. To change an incorrect parameter, it is necessary to first delete the node with 'delete security xxxxx xxxx xxxxx'.
    {: tip}
+   
 2. Create the {{site.data.keyword.Bluemix_notm}} private network resource group. This address group defines the {{site.data.keyword.Bluemix_notm}} private networks that can access the enclosure and the networks that can be reached from the enclosure. Two sets of IP addresses need access to and from the secure enclosure. These IP addresses are the SSL VPN data centers and the {{site.data.keyword.Bluemix_notm}} Service Network (backend/private network). [{{site.data.keyword.Bluemix_notm}} IP Ranges](https://{DomainName}/docs/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-ibm-cloud-ip-ranges) provides the full list of IP ranges that are allowed.
 
    - Define the SSL VPN address of the data center(s) you are using for VPN access. From the 'SSL VPN datacenters' section of {{site.data.keyword.Bluemix_notm}} IP ranges, select the VPN access points for your data center or DC cluster. This example shows the VPN address ranges for the {{site.data.keyword.Bluemix_notm}} London data centers.
-     ```
+     ```bash
      set resources group address-group ibmprivate address 10.2.220.0/24
      set resources group address-group ibmprivate address 10.200.196.0/24
      set resources group address-group ibmprivate address 10.3.200.0/24
@@ -360,7 +363,7 @@ Two zones are defined:
      {: codeblock}
 
    - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL10, WDC04, and your target data center. The example here is DAL10, WDC04 (two addresses), and LON06.
-     ```
+     ```bash
      set resources group address-group ibmprivate address 10.200.80.0/20
      set resources group address-group ibmprivate address 10.3.160.0/20
      set resources group address-group ibmprivate address 10.201.0.0/20
@@ -371,7 +374,7 @@ Two zones are defined:
      {: codeblock}
 
 3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone requires that you specify the VLAN ID of the VLAN associated with the VRA created earlier. This is highlighted as `<VLAN ID>`.
-   ```
+   ```bash
    set security zone-policy zone INSIDE description "IBM Internal network"
    set security zone-policy zone INSIDE default-action drop
    set security zone-policy zone INSIDE interface dp0bond0
@@ -386,7 +389,7 @@ Two zones are defined:
    {: codeblock}
 
 4. Commit the configuration. Then, from your workstation, verify using ping that the firewall is now denying traffic via the VRA to the VSI:
-   ```
+   ```bash
    commit
    ```
    {: codeblock}
@@ -397,7 +400,7 @@ Two zones are defined:
    {: codeblock}
 
 5. Define firewall access rules for UDP, TCP and ICMP.
-   ```
+   ```bash
    set security firewall name INSIDE-TO-APP rule 200 protocol icmp
    set security firewall name INSIDE-TO-APP rule 200 icmp type 8
    set security firewall name INSIDE-TO-APP rule 200 action accept
@@ -449,7 +452,7 @@ Two zones are defined:
    ```
    {: codeblock}
 
-   ```
+   ```bash
    show security
    ```
    {: codeblock}
@@ -460,7 +463,7 @@ Two zones are defined:
 The firewall logs can be viewed from the VRA operational command prompt. In this configuration, only dropped traffic for each zone is logged to aid in diagnosis of firewall misconfiguration.
 
 1. Review firewall logs for denied traffic. Periodic review of the logs will identify if servers in the APP zone are attempting to validly or erroneously contact services on the IBM network.
-   ```
+   ```bash
    show log firewall name INSIDE-TO-APP
    show log firewall name APP-TO-INSIDE
    ```
@@ -483,15 +486,15 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
    ```
    {: codeblock}
 
-This creates a new firewall rule set named `CPP`. View the additional rules and commit in \[edit\] mode.
-   ```
+   This creates a new firewall rule set named `CPP`. View the additional rules and commit in \[edit\] mode.
+   ```bash
    show security firewall name CPP
    commit
    ```
    {: codeblock}
 
 2. Securing public SSH access. Due to an outstanding issue at this time with the Vyatta firmware, it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively, external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The `<VRA Public IP Subnet>` used here is the same as the `<VRA Public IP Address>` with the last octet being zero (`x.x.x.0`).
-   ```
+   ```bash
    set security firewall name CPP rule 900 action drop
    set security firewall name CPP rule 900 destination address <VRA Public IP Subnet>/24
    set security firewall name CPP rule 900 protocol tcp

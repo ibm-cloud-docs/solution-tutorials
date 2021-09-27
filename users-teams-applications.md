@@ -24,6 +24,7 @@ lasttested: "2020-11-19"
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
@@ -62,10 +63,10 @@ When it comes to assigning responsibilities to the project team members, let's d
 
 |           | Development | Testing | Production |
 | --------- | ----------- | ------- | ---------- |
-| Developer | <ul><li>contributes code</li><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
-| Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
-| Operator  | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> |
-| Pipeline Service ID  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
+| Developer | - contributes code \n - can access log files \n - can view app and service configuration \n - use the deployed applications | - can access log files \n - can view app and service configuration \n - use the deployed applications | - no access |
+| Tester    | - use the deployed applications | - use the deployed applications | - no access |
+| Operator  | - can access log files \n - can view/set app and service configuration | - can access log files \n - can view/set app and service configuration | - can access log files \n - can view/set app and service configuration |
+| Pipeline Service ID  | - can deploy/undeploy applications \n - can view/set app and service configuration | - can deploy/undeploy applications \n - can view/set app and service configuration | - can deploy/undeploy applications \n - can view/set app and service configuration |
 
 ## Identity and Access Management (IAM)
 {: #users-teams-applications-first_objective}
@@ -137,10 +138,10 @@ For the Development environment, the user responsibilities defined earlier could
 
 |           | IAM Access policies | Cloud Foundry |
 | --------- | ----------- | ------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
-| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> | <ul><li>No configuration needed</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
-| Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Writer* | - Organization Role: *Auditor* \n - Space Role: *Auditor* |
+| Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments | - No configuration needed |
+| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* | - Organization Role: *Auditor* \n - Space Role: *Developer* |
+| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* | - Organization Role: *Auditor* \n - Space Role: *Developer* |
 
 The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
 1. Select or create an access group.
@@ -177,7 +178,7 @@ Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/co
 ![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}
 {: style="text-align: center;"}
 
-In the `Search` input box of UI, use the field `namespace: ` to filter logs based 0n the namespace.
+In the `Search` input box of UI, use the field `namespace:` to filter logs based 0n the namespace.
 {: tip}
 
 ## Setup delivery pipeline

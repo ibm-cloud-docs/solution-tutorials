@@ -32,6 +32,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
@@ -97,6 +98,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
    Make sure you are targeting the resource group where the cluster was created before running this command. You can view and set the current resource group with `ibmcloud target`.
    {: tip}
+
 3. Check that the `kubectl` command is correctly configured
    ```sh
    kubectl cluster-info
@@ -126,7 +128,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {: pre}
 
-The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-service-binding) for more info
+The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-service-binding) for more info.
 {: tip}
 
 ## Create an {{site.data.keyword.objectstorageshort}} service

@@ -30,6 +30,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster from a remote Git repository, expose the app on an {{site.data.keyword.openshiftshort}} route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to your application.
@@ -139,7 +140,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
 3. **Copy** the text under Log in with this token.
-1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
+4. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
    ```
@@ -328,7 +329,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 3. You can see new pods being provisioned by running `oc get pods --watch` command.
 4. Rerun the [Monitoring](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application) step to see the updated logs for all the pods.
 5. Remove the auto scaler:
-   ```
+   ```sh
    oc delete hpa/$MYPROJECT
    ```
    {: pre}
@@ -375,6 +376,7 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
 
    To create an API key, refer to this [link](https://{DomainName}/docs/Registry?topic=Registry-registry_access#registry_access_user_apikey_create).
    {: tip}
+
 6. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
@@ -491,7 +493,7 @@ In this section, you will deploy the application to the cluster using the genera
    {: pre}
 
    In the logs, you should see the below message if the container image is pushed to the private container registry 
-   ```
+   ```sh
    Pushing image us.icr.io/mods15/vmac-openshift-app-registry:latest ...
    Getting image source signatures
    Copying blob sha256:9d038e1c7afbe92c29313557c02110e8fb796818ebb78441c68929381103a94b
@@ -509,7 +511,7 @@ In this section, you will deploy the application to the cluster using the genera
    Successfully pushed us.icr.io/mods15/vmac-openshift-app-registry@sha256:6847b889397704b9fb8c3122c84b505c3dc5f99a0669fb69f534d3504eec385d
    Push successful
    ```
-   {: codeblock}
+   {: screen}
 
 3. You can check the status of deployment and service using
    ```sh
@@ -620,6 +622,7 @@ A new application is deployed using the code from the private Git repo and the c
 
 ### Update the app and redeploy
 {: #scalable-webapp-openshift-18}
+
 In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
 
 1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the {{site.data.keyword.openshiftshort}} Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
@@ -677,6 +680,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
 ### With HTTP
 {: #scalable-webapp-openshift-20}
+
 1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com or openshiftapp.example.com), so that external clients can reach it by name.
    ```sh
    oc expose svc/$MYPROJECT --hostname=<HOSTNAME> --name=$MYPROJECT-domain --port=3000
@@ -696,6 +700,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
    Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help` command)
    {: tip}
+   
 <!--#/istutorial#-->
 
 ## Remove resources

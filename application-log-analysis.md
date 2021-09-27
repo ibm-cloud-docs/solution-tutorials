@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-09-20"
+lastupdated: "2021-09-23"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -29,6 +29,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
@@ -38,6 +39,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 
 ## Objectives
 {: #application-log-analysis-objectives}
+
 * Deploy an application to a Kubernetes cluster to generate log entries.
 * Access and analyze different types of logs to troubleshoot problems and pre-empt issues.
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
@@ -112,7 +114,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
    kubectl get namespaces
    ```
    {: pre}
-   
+    
 -->
 <!--#/isworkshop#-->
 
@@ -125,7 +127,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 ### Clone the application
 {: #application-log-analysis-build}
 
-In a terminal:
+In a terminal window:
 1. Clone the GitHub repository:
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
@@ -257,6 +259,7 @@ In this section, you will modify what and how much is displayed and save this as
 
    For more search fields and help, click the syntax help icon next to the search input box
    {: tip}
+
 1. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 1. To highlight the terms, click on **Toggle Viewer Tools** icon.
 1. Enter **error** as your highlight term in the first input box, **container** as your highlight term in the second input box and check the highlighted lines with the terms.
@@ -327,14 +330,14 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
    ```
 
 Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
-  ```yaml
-  spec:
-    template:
-      metadata:
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "8002"
-  ```
+   ```yaml
+   spec:
+     template:
+       metadata:
+         annotations:
+           prometheus.io/scrape: "true"
+           prometheus.io/port: "8002"
+   ```
 
 Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
@@ -348,18 +351,18 @@ Note: Change the interval to **1 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
-1. Back to the UI, under `Explore` choose `Deployments` for `My Groupings`
-    ![Dashboard showing deployments](images/solution12/sysdig_groupings.png)
-2. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
-3. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
-4. To monitor the latency of the application,
+2. Back to the UI, under `Explore` choose `Deployments` for `My Groupings`
+   ![Dashboard showing deployments](images/solution12/sysdig_groupings.png)
+3. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+4. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
+5. To monitor the latency of the application,
    - From the Explore tab, select `Deployments`.
    - Select `Metrics` > `Network` in the `Metrics and Dashboards` dropdown.
    - Select **net.http.request.time**.
    - Select Time: **Sum** and Group: **Average**.
    - Click **More options** and then click **Topology** icon.
    - Click **Done** and Double click the box to expand the view.
-5. To monitor the Kubernetes namespace where the application is running,
+6. To monitor the Kubernetes namespace where the application is running,
    - From the Explore tab, select `Deployments`.
    - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
    - Click the arrow next to `net.http.request.time`.
@@ -387,10 +390,10 @@ Along with the pre-defined dashboards, you can create your own custom dashboard 
 
 To create a dashboard with a first panel:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. In the New Panel, set the **Metrics** to **net.http.request.time**.
-2. Set **Segmentation** to **container.id**.
-1. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
-2. Save the dashboard.
+2. In the New Panel, set the **Metrics** to **net.http.request.time**.
+3. Set **Segmentation** to **container.id**.
+4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+5. Save the dashboard.
 
 To add another panel:
 1. Use the **Add Panel** button in the dashboard.
@@ -404,8 +407,8 @@ To add another panel:
 
 To focus the dashboard on your cluster:
 1. To edit the scope of this dashboard,
-1. Set the filter to **kubernetes.cluster.name**, **is**, and your cluster name.
-2. Click **Save**.
+2. Set the filter to **kubernetes.cluster.name**, **is**, and your cluster name.
+3. Click **Save**.
 
 ## Remove resources
 {: #application-log-analysis-remove_resource}
@@ -435,6 +438,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #application-log-analysis-12}
 {: related}
+
 - [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-kube_reset#kube_reset)
 - [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-archiving#archiving)
 - [Working with monitoring alerts](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-alerts)

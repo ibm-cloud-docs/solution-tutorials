@@ -29,6 +29,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 In this tutorial, you will create a serverless web application using a bucket in {{site.data.keyword.cos_short}} and implementing the application backend using {{site.data.keyword.openwhisk}}.
@@ -71,9 +72,9 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    1. Under **Multitenant** select a region.
    1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a resource group.
-   2. Select **IAM and legacy credentials** as authentication method.
-   3. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
-   4. Click **Create**.
+   1. Select **IAM and legacy credentials** as authentication method.
+   1. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
+   1. Click **Create**.
 2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
 4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partitioned** under **Partitioning**. Click **Create** to create the database.
@@ -93,20 +94,20 @@ In this section, you will create serverless actions (commonly termed as **Functi
 {: #serverless-api-webapp-4}
 
 You will create a **sequence** which is a chain of actions. In a sequence, the output of one action acts as input to the following action and so on. The first sequence you will create is used to persist a guest message. Provided a name, an emailID and a comment, the sequence will:
-   * Create a document to be persisted.
-   * Store the document in the {{site.data.keyword.cloudant_short_notm}} database.
+* Create a document to be persisted.
+* Store the document in the {{site.data.keyword.cloudant_short_notm}} database.
 
 Start by creating the first action:
 
 1. In the browser, open a tab and go to [**Functions**](https://{DomainName}/functions).
-2. From the namespace drop-down, either select an existing namespace or use **Create Namespace** to create a new one.
-2. Go to the [**Actions** list](https://{DomainName}/functions/actions).
+1. From the namespace drop-down, either select an existing namespace or use **Create Namespace** to create a new one.
+1. Go to the [**Actions** list](https://{DomainName}/functions/actions).
 1. **Create** a new action:
    1. Set **Name** as `prepare-entry-for-save` as name.
    2. Click **Create Package** to create a new package with name `guestbook`.
    3. Pick a **Node.js** as **Runtime** (Note: Pick the latest version).
    4. Click **Create** to create the action.
-5. In the new dialog replace the existing code with the code snippet below:
+1. In the new dialog replace the existing code with the code snippet below:
    ```js
    /**
     * Prepare the guestbook entry to be persisted
@@ -128,7 +129,7 @@ Start by creating the first action:
    ```
    {: codeblock}
 
-6. Thereafter click **Save**.
+1. Thereafter click **Save**.
 
 Then add the action to a sequence:
 
@@ -141,12 +142,12 @@ Now, add the second action to that sequence:
 
 1. Click on the entry **save-guestbook-entry-sequence**. It opens sequence details. Then click **Add** on the upper right.
 1. Instead of **Create New** select **Use Public**. It loads and displays icons for available integrations. Pick **Cloudant**.
-2. Under **Actions** choose **create-document**.
-3. Create a **New Binding** and complete the form as follows:
+1. Under **Actions** choose **create-document**.
+1. Create a **New Binding** and complete the form as follows:
    1. Set **Name** to `binding-for-guestbook`.
    2. For **Instance** select your instance, for the credentials **for-guestbook** as created earlier, and as **Database** pick **guestbook**.
-4. Click **Add**, thereafter **Save**.
-5. To test the entire sequence, click on **Invoke with parameters** and enter the JSON below
+1. Click **Add**, thereafter **Save**.
+1. To test the entire sequence, click on **Invoke with parameters** and enter the JSON below
    ```json
       {
         "name": "John Smith",
@@ -156,14 +157,14 @@ Now, add the second action to that sequence:
    ```
    {: codeblock}
 
-6. Click **Invoke**.
+1. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
 {: #serverless-api-webapp-5}
 
 The second sequence is used to retrieve the existing guestbook entries. This sequence will:
-   * List all documents from the database.
-   * Format the documents and return them.
+* List all documents from the database.
+* Format the documents and return them.
 
 1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create**.
 2. Then, after selecting **Action**, use `set-read-input` as name. Again, select **guestbook** as package and a **Node.js** version as runtime. Click **Create**.
@@ -220,6 +221,7 @@ Complete the sequence:
 ## Create an API
 {: #serverless-api-webapp-6}
 {: step}
+
 1. Go to [Actions](https://{DomainName}/functions/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
@@ -277,6 +279,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 ## Optionally configure a custom domain
 {: #serverless-api-webapp-custom-domain}
 {: step}
+
 You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
 
 A custom domain can also be assigned to the static website bucket. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos). Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint that will be used for the CNAME target.

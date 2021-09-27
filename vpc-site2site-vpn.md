@@ -30,6 +30,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
@@ -93,6 +94,7 @@ In the following, you will download the scripts to set up a baseline VPC environ
 
 ### Get the code
 {: #vpc-site2site-vpn-setup}
+
 The tutorial uses scripts to deploy a baseline of infrastructure resources before you create the VPN gateways. These scripts and the code for the microservice is available in a GitHub repository.
 
 1. Get the application's code:
@@ -186,7 +188,7 @@ In this section, you will create the database service.
    ```
    {: codeblock}
 
-4. Save the self-signed certificate to a file **<generated>**. The file will be used later on.
+4. Save the self-signed certificate to a file **&lt;generated&gt;**. The file will be used later on.
    ```sh
    ibmcloud cdb deployment-cacert vpns2s-pg -e private -c ../sampleapps/nodejs-graphql/ -s
    ```
@@ -194,15 +196,17 @@ In this section, you will create the database service.
 
    You will get a result similar to the following, take note of the name of the file generated following `nodejs-graphql/`:
 
-   ```
+   ```sh
    Retrieving certificate for vpns2s-pg...
    OK
 
    Certificate written to nodejs-graphql/1575c397-934c-11e9-a1a6-c27ac0347fc3
    ```
+   {: screen}
 
 ### Create Virtual Private Cloud baseline resources
 {: #vpc-site2site-vpn-create-vpc}
+
 The tutorial provides a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
@@ -336,7 +340,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
 
 5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **$VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **$GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
-   ```
+   ```sh
    $VSI_ONPREM_IP $GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {: codeblock}
@@ -448,7 +452,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: codeblock}
 
-2. The app is only run on the cloud VSI, but some of the configuration information is also needed on the on-premises VSI, so you will need to copy the directory to both computers.  The command uses the bastion as a jump host to the cloud VSI.
+1. The app is only run on the cloud VSI, but some of the configuration information is also needed on the on-premises VSI, so you will need to copy the directory to both computers.  The command uses the bastion as a jump host to the cloud VSI.
    ```sh
    scp -r -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
    ```
@@ -459,19 +463,19 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: pre}
 
-2. Connect to the cloud VSI, again using the bastion as jump host.
+1. Connect to the cloud VSI, again using the bastion as jump host.
    ```sh
    ssh -J root@$BASTION_IP_ADDRESS root@$VSI_CLOUD_IP
    ```
    {: pre}
 
-3. On the cloud VSI, change into the code directory:
+1. On the cloud VSI, change into the code directory:
    ```sh
    cd nodejs-graphql
    ```
    {: pre}
 
-4. Install Node.js 12.x and the Node package manager (NPM).
+1. Install Node.js 12.x and the Node package manager (NPM).
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x | bash -
    ```
@@ -482,7 +486,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: pre}
 
-5. Install the necessary modules using **npm**, then build the app:
+1. Install the necessary modules using **npm**, then build the app:
    ```sh
    npm install
    ```
@@ -493,13 +497,13 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: pre}
 
-6. Copy the config/config.template.json to config/config.json
+1. Copy the config/config.template.json to config/config.json
    ```sh
    cp config/config.template.json config/config.json
    ```
    {: pre}
 
-7. You can keep the defaults found in the `config/config.json` file or modify for your desired storage location/settings.
+1. You can keep the defaults found in the `config/config.json` file or modify for your desired storage location/settings.
    ```json
    {
    "cookie": "some_ridiculously_long_string_of_your_choice_or_keep_this_one",
@@ -514,20 +518,20 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: pre}
 
-8. Create the tables in the PostgreSQL database. The script leverages the file `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
+1. Create the tables in the PostgreSQL database. The script leverages the file `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
    ```sh
    node ./build/createTables.js
    ```
    {: pre}
 
-9. Create the cloud object storage bucket in the database. The script leverages `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
+1. Create the cloud object storage bucket in the database. The script leverages `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
    ```sh
    node ./build/createBucket.js
    ```
    {: pre}
 
    The command should return something similar to this:
-   ```
+   ```sh
    Creating new bucket: transactions
 
    Bucket: transactions created!
@@ -535,7 +539,9 @@ You can test the working VPN connection by accessing a microservice on the cloud
    Retrieving list of buckets:
    Bucket Name: transactions
    ```
-10. Run the app.
+   {: screen}
+
+1. Run the app.
    ```sh
    npm run start
    ```
@@ -613,16 +619,16 @@ In some situations, it might be desirable to interact directly from an on-premis
 1. Edit the file located under the
 **sampleapps/nodejs-graphql/config/pg_credentials.json** subdirectory in your local system to obtain your {{site.data.keyword.databases-for-postgresql}} credentials.
 1. Copy the command found under `credentials.connection.cli.composed` to be used later. You can use `jq` to extract the value: `jq '.[]|.credentials.connection.cli.composed' pg_credentials.json`.
-2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
+1. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
 
    ```sh
    apt-get install postgresql-client -y
    ```
    {: pre}
 
-3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint.
+1. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint.
 
-4. From the `ibmclouddb=>` prompt issue the following command:
+1. From the `ibmclouddb=>` prompt issue the following command:
 
    ```sql
    select * from accounts;

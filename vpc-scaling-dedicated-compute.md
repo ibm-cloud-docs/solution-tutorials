@@ -38,6 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
@@ -119,15 +120,17 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {: step}
 
 In this section, you will:
-   - Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
-   - Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
-   - Create an instance template used to provision instances in your instance group.
+- Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
+- Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
+- Create an instance template used to provision instances in your instance group.
 
-Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
-   ![one vsi](images/solution62-vpc-scaling-dedicated/one_vsi.svg)
+Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.   
 
-As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
-   ![multiple vsi](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg)
+![one vsi](images/solution62-vpc-scaling-dedicated/one_vsi.svg)
+
+As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.   
+
+![multiple vsi](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg)
 
 An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
 
@@ -254,6 +257,7 @@ For checking the logs of other VPC resources, refer to [VPC logging](https://{Do
 <!--##istutorial#-->
 Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 In this section, you will create a dedicated host in a group and provision an instance with an encrypted data volume. 

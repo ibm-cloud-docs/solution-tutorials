@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-08-24"
+lastupdated: "2021-09-23"
 lasttested: "2021-07-27"
 
 content-type: tutorial
@@ -28,6 +28,7 @@ completion-time: 3h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
@@ -88,7 +89,7 @@ In this section, you will create the services required to perform analysis of lo
    1. Set the **Topic Name** to `webserver` and click **Next**.
    2. Select **1** partition and click **Next**.
    3. Set message retention to **1 Day** and click the **Create topic** button.
-3.  Under **Service credentials**, click on **New credential**
+3. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `es-for-log-analysis`.
    2. select **Writer** as the role and click **Add**.
 4. Make note of the values. They will be used in the `event-streams.config` file in the next section.
@@ -223,7 +224,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
 
 1. Download and unzip the [Kafka 2.6.x client](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.6.0/kafka_2.13-2.6.0.tgz).
 2. Change directory to `bin` and create a text file named `event-streams.config` with the following contents.
-   ```
+   ```sh
    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
    security.protocol=SASL_SSL
    sasl.mechanism=PLAIN
@@ -312,7 +313,7 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
    ```
    {: pre}
 
-   If you are seeing `UnhandledPromiseRejection` warning , ignore by adding `--unhandled-rejections=strict ` flag to the above command.
+   If you are seeing `UnhandledPromiseRejection` warning, ignore by adding `--unhandled-rejections=strict` flag to the above command.
    {: tip}
 
 4. Stop the simulator after a desired number of messages have been stream landed using `control+C`.
@@ -352,8 +353,8 @@ Depending on how long you ran the simulator, the number of files on {{site.data.
 
 3. Update the `FROM` clause with your Object SQL URL and click **Run**.
 4. Click on the latest **Completed** job to see the result under the **Result** tab.
-6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
-7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
+5. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
+6. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
    ```sql
    -- Who are the top 5 viewers?
    SELECT HOST, COUNT(*)

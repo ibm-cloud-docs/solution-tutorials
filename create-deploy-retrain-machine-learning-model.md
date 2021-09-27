@@ -32,6 +32,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in your applications and testing the model all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model with {{site.data.keyword.aios_full_notm}}.
@@ -208,6 +209,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 
    {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
    {: tip}
+
 4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
    ```sh
    ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
@@ -257,6 +259,7 @@ In this section, you will create a {{site.data.keyword.aios_short}} service to m
 
 ### Selecting a deployment
 {: #create-deploy-retrain-machine-learning-model-12}
+
 In this section, as part of preparing your model for monitoring you will set up and enable monitors for each deployment that you are tracking with {{site.data.keyword.aios_full_notm}}.
 
 1. By clicking on the **Edit** icon on the **Database** tile, choose **Free lite plan database** as your Database type and click **Save**. _This is to store your model transactions and model evaluation results._
@@ -274,13 +277,14 @@ In this section, as part of preparing your model for monitoring you will set up 
 
 ### Provide model details
 {: #create-deploy-retrain-machine-learning-model-13}
+
 Provide information about your model so that {{site.data.keyword.aios_full_notm}} can access the database and understand how the model is set up.
 
 1. Provide the Model details by clicking the **edit** icon on the **Model input** tile and select
    1. Data type: **Numerical/categorical**
    2. Algorithm type: **Multi-class classification**
    3. Click **Save and continue**
-2.  Click the **edit** icon on the **Training data** tile and select
+2. Click the **edit** icon on the **Training data** tile and select
    1. Storage type: **Database or cloud storage**
    2. Location: **Cloud Object Storage**
    3. For Resource instance ID and API key, Run the below command in the Cloud Shell
@@ -308,6 +312,7 @@ As the tutorial uses a small dataset, configuring Fairness and Drift won't have 
 
 ### Evaluate the deployed model
 {: #create-deploy-retrain-machine-learning-model-14}
+
 In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
 
 1. Click on **Actions** and then **Evaluate now**.

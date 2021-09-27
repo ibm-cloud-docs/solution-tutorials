@@ -38,6 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial guides you through the architecture and components of a {{site.data.keyword.satellitelong_notm}} location.
@@ -83,6 +84,7 @@ You will find instructions to download and install these tools for your operatin
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -158,7 +160,7 @@ Under [Logging](https://{DomainName}/observe/logging):
 1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
 1. Set the search to `host:satellite` to view only logs from {{site.data.keyword.satelliteshort}}. You can filter even more by setting the `app` attribute to the {{site.data.keyword.satelliteshort}} location CRN or using the **Sources** and **Apps** filters at the top of the window.
-   ```
+   ```sh
    host:satellite app:crn:v1:bluemix:public:satellite:us-east:a/123456:c2k1k2jw0ofn1234::
    ```
    {: codeblock}
@@ -277,6 +279,7 @@ The application allows to query a {{site.data.keyword.postgresql}} database. The
 
    To avoid conflicts with other users of the database, use a unique table name like `<your-initials>_EMPLOYEE`.
    {: tip}
+   
 1. Insert a row
    ```sql
    INSERT INTO <your-initials>_EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Win', 30, 'M', 9000)
