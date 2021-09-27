@@ -84,6 +84,7 @@ Verify if the third party service supports defining a list of allowed source add
 Follow the instructions here to configure external Internet access for hosts in the APP zone using NAT masquerade.
 
 1.	SSH into VRA and enter \[edit\] (config) mode.
+
    ```bash
    SSH vyatta@<VRA Private IP Address>
    configure
@@ -91,6 +92,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
 
 2.	Create the SNAT rules on the VRA, specifying the same `<Subnet Gateway IP>/<CIDR>` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
+
    ```bash
    set service nat source rule 1000 description 'pass traffic to the Internet'
    set service nat source rule 1000 outbound-interface 'dp0bond1'
@@ -105,6 +107,7 @@ Follow the instructions here to configure external Internet access for hosts in 
 {: step}
 
 1.	Create firewall rules for APP-TO-OUTSIDE
+
    ```bash
    set security firewall name APP-TO-OUTSIDE default-action drop
    set security firewall name APP-TO-OUTSIDE description 'APP traffic to the Internet'
@@ -125,7 +128,8 @@ Follow the instructions here to configure external Internet access for hosts in 
    ```
    {: codeblock}
 
-1.	Create firewall rules OUTSIDE-TO-APP
+2.	Create firewall rules OUTSIDE-TO-APP
+
    ```bash
    set security firewall name OUTSIDE-TO-APP default-action drop
    set security firewall name OUTSIDE-TO-APP description 'Internet traffic to APP'
@@ -151,6 +155,7 @@ Follow the instructions here to configure external Internet access for hosts in 
 {: step}
 
 1.	Create zone OUTSIDE to control access to the external Internet.
+
    ```bash
    set security zone-policy zone OUTSIDE default-action drop
    set security zone-policy zone OUTSIDE interface dp0bond1
@@ -159,6 +164,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
 
 2.	Assign firewalls to control traffic to and from the Internet.
+
    ```bash
    set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
    set security zone-policy zone OUTSIDE to APP firewall OUTSIDE-TO-APP
@@ -167,6 +173,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    {: codeblock}
    
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
+
    ```bash
    ssh root@<VSI Private IP>
    ```

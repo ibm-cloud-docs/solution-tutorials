@@ -160,11 +160,11 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
-<!--##istutorial#-->
+   <!--##istutorial#-->
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {: tip}
    
-<!--#/istutorial#-->
+   <!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this
    ![Frontend is running](images/solution54-code-engine/frontend-501.png)
@@ -172,9 +172,9 @@ We've already built images for the two applications and pushed them to the publi
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
    {: tip}
 
-3. For troubleshooting and to check the logs of your application, run the following command by replacing the `&lt;INSTANCE_NAME&gt;` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
+3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
    ```sh
-   ibmcloud code-engine application logs --instance &lt;INSTANCE_NAME&gt;
+   ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
    {: pre}
 
