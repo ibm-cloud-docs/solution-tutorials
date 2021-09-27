@@ -275,7 +275,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 {: #scalable-webapp-kubernetes-custom_domain}
 {: step}
 
-This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM <ingress-sub-domain> for the cluster.  If your domain is `example.com` then the subdomain will be `kubenodeapp.example.com` or something like `abckubeapp.example.com`
+This section requires you to own a custom domain. You will need to create a `CNAME` subdomain record pointing to the IBM &lt;ingress-sub-domain&gt; for the cluster.  If your domain is `example.com` then the subdomain will be `kubenodeapp.example.com` or something like `abckubeapp.example.com`
 
 ### with HTTP
 {: #scalable-webapp-kubernetes-15}
@@ -314,7 +314,7 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
    {: pre}
 
 1. Import the certificate for the subdomain and give it the name `kubernetesnodeapp`, (.e.g kubernetesnodeapp.example.com) and certificate manager certificate name `kubernetesnodeapp`.  If you are already managing your certificate with the {{site.data.keyword.cloudcerts_short}} service you can download the certificate zip file, unzip it, then import into the cluster's {{site.data.keyword.cloudcerts_short}} instance.
-1. Open the imported certificate in the cloud console and copy the Cerfificate CRN.  Create a TLS secret for the cert and the key, name the secret, <secret-name>, the same as the certificate name just imported (.e.g abckubeapp).
+1. Open the imported certificate in the cloud console and copy the Cerfificate CRN.  Create a TLS secret for the cert and the key, name the secret, &lt;secret-name&gt;, the same as the certificate name just imported (.e.g abckubeapp).
    ```sh
    SECRET_NAME=<certificate-name>
    CERT_CRN=<crn-of-the-certificate>
