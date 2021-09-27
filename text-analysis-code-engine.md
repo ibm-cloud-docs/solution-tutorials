@@ -312,7 +312,7 @@ Now that you have configured the service ID, you need to update the {{site.data.
 
 1. From the command line, update the project:
    ```
-   ibmcloud code-engine project update --binding-service-id &lt;ID-of-the-Service-ID-retrieved-from-Details-panel&gt;
+   ibmcloud code-engine project update --binding-service-id <ID-of-the-Service-ID-retrieved-from-Details-panel>
    ```
 -->
 <!--#/isworkshop#-->
