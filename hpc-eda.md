@@ -304,22 +304,18 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 {: step}
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
-   * **local_path**: The full path to the directory where the lsf binary resides on the local machine.
-   * **target_path**: The full path to where the lsf binary will be copied on the cloud master.
-   * **bin**: The name of the LSF install file which currently resides in the local_path.
-   * **multicluster**:
-      cloud:   
-         conf_dir:   
-      Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.
-   * **onprem**: The LSF conf file location and the name of the on-premises cluster.   
-      conf_dir: `/opt/ibm/lsfsuite/lsf/conf`   
-      cluster_name: onPremCluster   
-      host: hostname of the on premises LSF master   
-      ip: IP address of the on-premises LSF master   
-   * **sndqueue**: The name of the on-premises queue the forwards jobs to the cloud cluster.
-   * **lsf_user_list**: List of users to be enabled to run jobs on the cloud.
-   * **vpn**:
-      ip: <vpn_server_ip>
+
+   |Parameter|Description|
+   |---------|-----------|
+   | **local_path**| The full path to the directory where the lsf binary resides on the local machine.|
+   | **target_path**| The full path to where the lsf binary will be copied on the cloud master.|
+   | **bin**| The name of the LSF install file which currently resides in the local_path.|
+   | **multicluster**: \n cloud: conf_dir | Location where you would like the cloud cluster conf file to reside: Typically, it will be `/opt/ibm/lsfsuite/lsf/conf`.|
+   | **onprem**: \n | The LSF conf file location and the name of the on-premises cluster.   \n - conf_dir: `/opt/ibm/lsfsuite/lsf/conf` \n - cluster_name: onPremCluster \n - host: hostname of the on premises LSF master \n - ip: IP address of the on-premises LSF master   |
+   | **sndqueue** | The name of the on-premises queue the forwards jobs to the cloud cluster.|
+   | **lsf_user_list**| List of users to be enabled to run jobs on the cloud.|
+   | **vpn**: \n ip | <vpn_server_ip>|
+   
 2. Install LSF:   
    ```sh
    ansible-playbook -i ${GEN_FILES_DIR}/cluster.inventory static_cluster.yml --tags "setup"
