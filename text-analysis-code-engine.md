@@ -262,7 +262,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
@@ -276,7 +276,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Lite** plan.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **<!--##isworkshop#--><!--<your-initials>;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
 7. Under **Service credentials**, click on **New credential**
    1. Give it a name - `nlu-for-code-engine` and select **Writer** as the role.
