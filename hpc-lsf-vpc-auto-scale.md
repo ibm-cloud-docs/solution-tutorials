@@ -232,19 +232,19 @@ You can use a helper script that is available in `playbook/scripts/get-vm-info.s
 
 |Parameter|Description|
 |---------|-----------|
-|GEN2_Region: `<ID>`|The geographic region where resources are physically located. You can see options with the command: \n \n `ibmcloud is regions`|
-|GEN2_Zone: `<ID>`|Zones exist primarily to provide redundancy within a given region. To view available zones, run the following command: \n \n `ibmcloud is zones`|
-|GEN2_VPC_ID: `<ID>`|The ID for VPC where the cluster resides. See a listing of VPCs in your cloud account with: \n \n `ibmcloud is vpcs`|
-|GEN2_Image_ID: `<ID>`|The ID for the LSF instance image that you will provision for all of the resource connector provisioned nodes. In this case, it will either be a stock LSF image from the catalog or a custom image that you've created that already contains LSF binaries. You can see available images with: \n \n `ibmcloud is images`|
-|GEN2_SUBNET_ID: `<ID>`|Specify the ID for the subnet. Typically, there is one subnet per VPC. This subnet is the one that contains your master and existing worker nodes. List subnets with the command: \n \n `ibmcloud is subnets`|
-|GEN2_SG_ID: `<ID>`|The security group that will be applied to the resource connector provisioned nodes. The security group should match the one used by the master node. See available options with the command: \n \n `ibmcloud is security-groups`|
-|GEN2_PROFILE: `<profile name string>`|The profile describes the hardware characteristics of the instance. You can see available options with the command: \n \n `ibmcloud is instance-profiles`|
-|CORES_PER_SOCKET: `<num>` \n SOCKET_PER_NODE: `<num>` \n MEMORY_PER_NODE: `<number specifying memory in MiB>` \n | These options are the hardware characteristics for the node that you would like to report to LSF. Typically, these tell LSF the machine characteristics that you select. You can view them with the command: \n \n `ibmcloud is instance-profile <profile name>`|
+|GEN2_Region: `<ID>`|The geographic region where resources are physically located. You can see options with the command:  \n  \n `ibmcloud is regions`|
+|GEN2_Zone: `<ID>`|Zones exist primarily to provide redundancy within a given region. To view available zones, run the following command:  \n  \n `ibmcloud is zones`|
+|GEN2_VPC_ID: `<ID>`|The ID for VPC where the cluster resides. See a listing of VPCs in your cloud account with:  \n  \n `ibmcloud is vpcs`|
+|GEN2_Image_ID: `<ID>`|The ID for the LSF instance image that you will provision for all of the resource connector provisioned nodes. In this case, it will either be a stock LSF image from the catalog or a custom image that you've created that already contains LSF binaries. You can see available images with:  \n  \n `ibmcloud is images`|
+|GEN2_SUBNET_ID: `<ID>`|Specify the ID for the subnet. Typically, there is one subnet per VPC. This subnet is the one that contains your master and existing worker nodes. List subnets with the command:  \n  \n `ibmcloud is subnets`|
+|GEN2_SG_ID: `<ID>`|The security group that will be applied to the resource connector provisioned nodes. The security group should match the one used by the master node. See available options with the command:  \n  \n `ibmcloud is security-groups`|
+|GEN2_PROFILE: `<profile name string>`|The profile describes the hardware characteristics of the instance. You can see available options with the command:  \n  \n `ibmcloud is instance-profiles`|
+|CORES_PER_SOCKET: `<num>`  \n SOCKET_PER_NODE: `<num>`  \n MEMORY_PER_NODE: `<number specifying memory in MiB>`  \n | These options are the hardware characteristics for the node that you would like to report to LSF. Typically, these tell LSF the machine characteristics that you select. You can view them with the command:  \n  \n `ibmcloud is instance-profile <profile name>`|
 |GEN2_DNS_SVCS_ENDPOINT: https://api.dns-svcs.cloud.ibm.com|This is the API endpoint for VPC DNS services. You can leave it as is since it's unlikely to change.|
 |GEN2_DNS_Instance_ID: `<ID>`|The DNS instance associated with your VPC `ibmcloud dns instances`. If you created the cluster by using the existing automation, your DNS instance has a name with a prefix that matches your VPC name.|
-|GEN2_DNS_Zone_ID: `<ID>`|The DNS zone associated with the DNS instance. You can find your zone ID by setting the target to match the ID of the instance: \n \n 1. `ibmcloud dns instance-target <ID>`, then \n \n 2. List the available zones with `ibmcloud dns zones`|
+|GEN2_DNS_Zone_ID: `<ID>`|The DNS zone associated with the DNS instance. You can find your zone ID by setting the target to match the ID of the instance:  \n  \n 1. `ibmcloud dns instance-target <ID>`, then  \n  \n 2. List the available zones with `ibmcloud dns zones`|
 |GEN2_DNS_Domain_Name: `<a string with your VPC's domain name>`|This should match the domain name that you specified when you created the cluster. If you ran the `ibmcloud dns zones` command, the domain is listed as well.|
-|lsf_key_name: `<key name string>`|The key name of the RSA public key that is on the LSF master. You can display all of the keys in your account with the command: \n \n `ibmcloud is keys`|
+|lsf_key_name: `<key name string>`|The key name of the RSA public key that is on the LSF master. You can display all of the keys in your account with the command:  \n  \n `ibmcloud is keys`|
 |rc_maxNumber: `<number>`|If there is sufficient load, the resource connector keeps adding hosts until you reach this number.|
 |rc_vm_prefix: `<string>`|This is the prefix that will be used in the name of new hosts created by the resource connector.|
 |lsf_master_ip: `<IP address>`|The IP address of the master node.|
