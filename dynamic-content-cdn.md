@@ -189,12 +189,12 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
 1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
-   1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
-   1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
-   1. Leave **Host header** and **Path** empty.
-   1. Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
-   1. Uncheck HTTP port.
-   1. Check HTTPS port and select **Wildcard** SSL certificate.
+   * Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
+   * Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
+   * Leave **Host header** and **Path** empty.
+   * Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
+   * Uncheck HTTP port.
+   * Check HTTPS port and select **Wildcard** SSL certificate.
 
       With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
       {: note}
