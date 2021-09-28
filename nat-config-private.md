@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2021-08-26"
+  years: 2018-2021
+lastupdated: "2021-09-28"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -91,7 +91,7 @@ Follow the instructions here to configure external Internet access for hosts in 
    ```
    {: codeblock}
 
-2.	Create the SNAT rules on the VRA, specifying the same `<Subnet Gateway IP>/<CIDR>` as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
+2.	Create the SNAT rules on the VRA, specifying the same &lt;Subnet Gateway IP&gt;/&lt;CIDR&gt; as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial.
 
    ```bash
    set service nat source rule 1000 description 'pass traffic to the Internet'

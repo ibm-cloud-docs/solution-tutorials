@@ -303,7 +303,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 {: #hpc-eda-deploy-lsf-cloud-cluster}
 {: step}
 
-1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:
+1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:   
 
 
    |Parameter|Description|
@@ -315,7 +315,7 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
    | **onprem**:  | The LSF conf file location and the name of the on-premises cluster.  \n - conf_dir: `/opt/ibm/lsfsuite/lsf/conf`  \n - cluster_name: onPremCluster  \n - host: hostname of the on premises LSF master  \n - ip: IP address of the on-premises LSF master   |
    | **sndqueue** | The name of the on-premises queue the forwards jobs to the cloud cluster.|
    | **lsf_user_list**| List of users to be enabled to run jobs on the cloud.|
-   | **vpn**: ip | &lt;vpn_server_ip&gt; |
+   | **vpn** | ip: &lt;vpn_server_ip&gt; |
    
    
 2. Install LSF:
