@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019-2021
-lastupdated: "2021-07-20"
+lastupdated: "2021-09-29"
 lasttested: "2020-02-16"
 
 ---
@@ -50,7 +50,7 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 * to isolate the application, its services, the network traffic and stored data from those of other applications,
 * to encrypt data and have control over the management of encryption keys,
 * to log all kind of events, regularly analyze logs and keep them for audits or incident forensics,
-* to organize devops activities and the related teams with more fine-grained privileges
+* to organize devops activities and the related teams with more fine-grained privileges,
 * and much more.
 
 To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [getting started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
@@ -129,6 +129,17 @@ Many solutions are based on services with artificial intelligence (AI). At IBM t
 ![control encryption in Watson services](images/solution51-extended-app-security/Sol51_WatsonBYOK.png){: class="center"}
 {: style="text-align: center;"}
 
+## Organize and control access
+{: #extended-app-security-access-control}
+
+{{site.data.keyword.cloud_notm}} includes many capabilities for fine-grained access control. Depending on your type of application, project, and account, the following features help you to organize who has access to the application resources and with what set of privileges.
+
+- [**Service IDs**](https://{DomainName}/docs/account?topic=account-serviceids): Similar to how a user ID identifies a user, a service ID can identify a specific service or application, even a task. It could be considered a "technical user". You can assign privileges to a service ID. Moreover, a service ID has its own IAM API keys to authenticate. Thus, a service ID can be used instead of a regular user ID, thereby simplifying resource management and increasing security. [To avoid deleting a service ID by mistake, you can lock them](https://{DomainName}/docs/account?topic=account-serviceids&interface=ui#lock_serviceid).
+- [**Access groups with access policies**](https://{DomainName}/docs/account?topic=account-groups): To simplify management of privileges (authorization), you can group user IDs and service IDs into access groups. You create an access group for a purpose, e.g., to administrate the application or a component. Then, you create access policies for that group to assign privileges and add the related user IDs and service IDs. 
+- [**Trusted profiles**](https://{DomainName}/docs/account?topic=account-create-trusted-profile): Using a trusted profile, you can automatically grant access to your account in a defined context and with a set of defined privileges. You can define such a context for either **federated users** based on properties in the enterprise directory, e.g., for users labeled as administrators or project members. Or you can allow access for [**compute identities**](https://{DomainName}/docs/account?topic=account-create-trusted-profile), i.e., specific computing resources like a virtual server instance (VSI).
+
+To learn more about the above concepts and how to use them in your development project, see the tutorial [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications).
+
 ## Conclusions
 {: #extended-app-security-5}
 
@@ -137,7 +148,10 @@ In this tutorial, you learned how to increase application security by moving fro
 ## Related content
 {: #extended-app-security-related}
 
+The following resources provide additional insights to security on {{site.data.keyword.cloud_notm}}.
+
 * Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
+* Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)
 * Blog: [Onboarding Cloud Projects: Security and Resource Considerations](https://www.ibm.com/cloud/blog/onboarding-cloud-projects-security-and-resource-considerations)
 * Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps)
