@@ -26,6 +26,7 @@ toc:
           topics:
           - solution-template.md
           - satellite-tour.hidden.md
+          - users-teams-applications-rework.hidden.md
 
         - topicgroup:
           label: Websites and Web Apps
@@ -131,6 +132,7 @@ toc:
         - topicgroup:
           label: Kubernetes
           topics:
+          - users-teams-applications-rework.hidden.md
           - scalable-webapp-kubernetes.md
           - vm-to-containers-and-kubernetes.md
           - strategies-for-resilient-applications.md
