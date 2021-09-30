@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019,2020,2021
-lastupdated: "2021-06-03"
+lastupdated: "2021-09-30"
 lasttested: "2020-12-28"
 
 content-type: tutorial
@@ -63,6 +63,18 @@ The following architecture implements the isolation and connectivity requirement
 
 ## Before you begin
 {: #vpc-tg-dns-iam-prereqs}
+
+This tutorial requires:
+- {{site.data.keyword.cloud_notm}} CLI,
+   - {{site.data.keyword.tg_short}} plugin (`tg`)
+   - {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
+   - {{site.data.keyword.dns_short}} (`dns`)
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+<!--#/istutorial#-->
+
+In addition:
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
