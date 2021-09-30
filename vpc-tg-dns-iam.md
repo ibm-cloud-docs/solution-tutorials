@@ -65,10 +65,12 @@ The following architecture implements the isolation and connectivity requirement
 {: #vpc-tg-dns-iam-prereqs}
 
 This tutorial requires:
-- {{site.data.keyword.cloud_notm}} CLI,
-   - {{site.data.keyword.tg_short}} plugin (`tg`)
-   - {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
-   - {{site.data.keyword.dns_short}} (`dns`)
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.tg_short}} plugin (`tg`)
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
+   * {{site.data.keyword.dns_short}} (`dns`)
+* `git` to clone source code repository.
+* `Terraform CLI` to run the Terraform commands.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
