@@ -81,11 +81,6 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
 ![Diagram of IAM model](./images/solution20-users-teams-applications/iam-model.png){: class="center"}
 {: style="text-align: center;"}
 
-Most services in the {{site.data.keyword.cloud_notm}} catalog are managed by using IAM. A few continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.  If you do not have requirements for Cloud Foundry applications and are using resources that support IAM then ignore the Organization and Space text below.
-
-![Diagram of Cloud Foundry model](./images/solution20-users-teams-applications/cloudfoundry-model.png){: class="center"}
-{: style="text-align: center;"}
-
 ## Create the resources for one environment
 {: #users-teams-applications-3}
 
@@ -98,10 +93,6 @@ Let's start by building the Development environment.
 
 1. Most cloud service instances are regional.  Keep this in mind and choose the same region for all resources in this tutorial.
 1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
-1. For Cloud Foundry services and apps:
-   1. [Create an organization for the project](https://{DomainName}/docs/account?topic=account-orgsspacesusers#createorg).
-   1. [Create a Cloud Foundry space for the environment](https://{DomainName}/docs/account?topic=account-orgsspacesusers#spaceinfo).
-   1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
 1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
 1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
@@ -117,9 +108,8 @@ The following diagram shows where the project resources are created under the ac
 
 1. Invite users to the account
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
-1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/account?topic=account-cfaccess#cfaccess) to assign the right roles based on the environment.
 
-Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
+Refer to the documentation of services to understand how a service is mapping IAM roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
@@ -136,12 +126,12 @@ A good practice is to start with the minimum set of permissions then expand care
 
 For the Development environment, the user responsibilities defined earlier could translate to the following:
 
-|           | IAM Access policies | Cloud Foundry |
+|           | IAM Access policies |
 | --------- | ----------- | ------- |
-| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Writer* | - Organization Role: *Auditor* \n - Space Role: *Auditor* |
-| Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments | - No configuration needed |
-| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* | - Organization Role: *Auditor* \n - Space Role: *Developer* |
-| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* | - Organization Role: *Auditor* \n - Space Role: *Developer* |
+| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Writer* |
+| Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
+| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* |
+| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 
 The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
 1. Select or create an access group.
@@ -159,8 +149,6 @@ From there, you can replicate similar steps to build the other environments.
 
 1. Create one resource group per environment.
 1. Create one cluster and required service instances per environment.
-1. Create one Cloud Foundry space per environment.
-1. Create the required service instances in each space.
 
 ![Diagram showing separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png){: class="center"}
 {: style="text-align: center;"}
