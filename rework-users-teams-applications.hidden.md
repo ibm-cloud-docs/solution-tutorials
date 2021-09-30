@@ -19,7 +19,7 @@ lasttested: "2020-11-19"
 {:pre: .pre}
 
 # (Rework) Best practices for organizing users, teams, applications
-{: #users-teams-applications}
+{: #rework-users-teams-applications}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -35,7 +35,7 @@ When building an application, it is very common to define multiple environments 
 Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 ## Objectives
-{: #users-teams-applications-objectives}
+{: #rework-users-teams-applications-objectives}
 
 * Learn about {{site.data.keyword.iamlong}}
 * Configure a project with separation between roles and environments
@@ -43,7 +43,7 @@ Isolating the underlying resources, implementing governance and access policies,
 
 
 ## Define a project
-{: #users-teams-applications-1}
+{: #rework-users-teams-applications-1}
 
 Let's consider a sample project with the following components:
 * several microservices deployed in {{site.data.keyword.containershort_notm}},
@@ -69,7 +69,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | Pipeline Service ID  | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration |
 
 ## Identity and Access Management (IAM)
-{: #users-teams-applications-first_objective}
+{: #rework-users-teams-applications-first_objective}
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** and **service IDs** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
@@ -82,7 +82,7 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
 {: style="text-align: center;"}
 
 ## Create the resources for one environment
-{: #users-teams-applications-3}
+{: #rework-users-teams-applications-3}
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
@@ -104,7 +104,7 @@ The following diagram shows where the project resources are created under the ac
 {: style="text-align: center;"}
 
 ## Assign roles within the environment
-{: #users-teams-applications-4}
+{: #rework-users-teams-applications-4}
 
 1. Invite users to the account
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
@@ -143,7 +143,7 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 {: style="text-align: center;"}
 
 ## Replicate for multiple environments
-{: #users-teams-applications-5}
+{: #rework-users-teams-applications-5}
 
 From there, you can replicate similar steps to build the other environments.
 
@@ -170,7 +170,7 @@ In the `Search` input box of UI, use the field `namespace:` to filter logs based
 {: tip}
 
 ## Setup delivery pipeline
-{: #users-teams-applications-6}
+{: #rework-users-teams-applications-6}
 
 When it comes to deploying to the different environments, your continuous integration / continuous delivery pipeline can be setup to drive the full process:
 * continuously update the `Development` environment with the latest and greatest code from the `development` branch, running unit tests and integration tests on the dedicated cluster;
@@ -187,7 +187,7 @@ During the build phase, it is important to properly version the Docker images. Y
 As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Expand the tutorial
-{: #users-teams-applications-7}
+{: #rework-users-teams-applications-7}
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
@@ -195,7 +195,7 @@ Congratulations, your application can now safely be deployed from dev to product
 * Investigate [Using the IBM Cloud console to create VPC resources](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console)
 
 ## Related information
-{: #users-teams-applications-8}
+{: #rework-users-teams-applications-8}
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/account?topic=account-access-getstarted)
 * [Best practices for organizing resources in a resource group](https://{DomainName}/docs/account?topic=account-account_setup)
