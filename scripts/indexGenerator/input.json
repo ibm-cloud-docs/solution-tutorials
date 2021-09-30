@@ -41,19 +41,8 @@
         {
           "name": "(Rework) Best practices for organizing users, teams, applications",
           "url": "users-teams-applications-rework.hidden.html",
-          "description": "An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.",
-          "imgSrc": "images/solution20-users-teams-applications/architecture.png",
-          "tags": [
-            "Identity and Access Management",
-            "Kubernetes",
-            "Container Service",
-            "Container Registry",
-            "DevOps",
-            "Security"
-          ],
-          "requirements": [],
-          "guide": true,
-          "supportsCloudShell": "not_applicable"
+          "description": "Rework",
+          "imgSrc": "images/solution20-users-teams-applications/architecture.png"
         }
       ]
     },

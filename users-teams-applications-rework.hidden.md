@@ -71,7 +71,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 ## Identity and Access Management (IAM)
 {: #users-teams-applications-first_objective}
 
-{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
+{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
 This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
 {: tip}
