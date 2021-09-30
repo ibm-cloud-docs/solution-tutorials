@@ -78,7 +78,7 @@ This tutorial focusses on a single account. Multiple accounts can be grouped wit
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}
+![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}{: caption="How IAM access works in an account by using access groups" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Create the resources for one environment
@@ -86,12 +86,12 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
-![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.png){: class="center"}
+![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.png){: class="center"}{: caption="Architecture diagram showing one environment" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Let's start by building the Development environment.
 
-1. Most cloud service instances are regional.  Keep this in mind and choose the same region for all resources in this tutorial.
+1. Most cloud service instances are regional. Keep this in mind and choose the same region for all resources in this tutorial.
 1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
 1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
@@ -100,7 +100,7 @@ Let's start by building the Development environment.
 
 The following diagram shows where the project resources are created under the account:
 
-![Diagram showing the project resources](./images/solution20-users-teams-applications/resources.png){: class="center"}
+![Diagram showing the project resources](./images/solution20-users-teams-applications/resources.png){: class="center"}{: caption="Project resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Assign roles within the environment
@@ -113,7 +113,7 @@ Refer to the documentation of services to understand how a service is mapping IA
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
-Some services also provide IAM-based data access controls, i.e. IAM groups combined with the service own group filtering.  For example: 
+Some services also provide IAM-based data access controls, i.e. IAM groups combined with the service own group filtering. For example: 
 
 - [Using groups to control data access in IBM Log Analysis](https://{DomainName}/docs/log-analysis?topic=log-analysis-group_data_access)
 - [Using groups to control data access in IBM Cloud Activity Tracker](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-group_data_access)
@@ -139,7 +139,7 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 1. Click **Assign access** button to assign policies as shown below
 1. Click the **Users** tab of the **Access group** to add users to the group
 
-![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy.png){: class="center"}
+![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy.png){: class="center"}{: caption="Configuration of permissions for the developer role" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Replicate for multiple environments
@@ -150,7 +150,7 @@ From there, you can replicate similar steps to build the other environments.
 1. Create one resource group per environment.
 1. Create one cluster and required service instances per environment.
 
-![Diagram showing separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png){: class="center"}
+![Diagram showing separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png){: class="center"}{: caption="Separate clusters to isolate environments" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
@@ -163,7 +163,7 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
-![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}{: caption="Separate namespaces to isolate environments" caption-side="bottom"}
 {: style="text-align: center;"}
 
 In the `Search` input box of UI, use the field `namespace:` to filter logs based 0n the namespace.
@@ -177,7 +177,7 @@ When it comes to deploying to the different environments, your continuous integr
 * promote development builds to the `Testing` environment, either automatically if all tests from the previous stages are OK or through a manual promotion process. Some teams will use different branches too here, merging the working development state to a `stable` branch as example;
 * Repeat a similar process to move to the `Production` environment.
 
-![A CI/CD pipeline from build to deploy](./images/solution20-users-teams-applications/cicd.png){: class="center"}
+![A CI/CD pipeline from build to deploy](./images/solution20-users-teams-applications/cicd.png){: class="center"}{: caption="A CI/CD pipeline from build to deploy" caption-side="bottom"}
 {: style="text-align: center;"}
 
 When configuring the DevOps pipeline, make sure to use the API key of a service ID. Only the service ID should need to have the required rights to deploy apps to your clusters.
