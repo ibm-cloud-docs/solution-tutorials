@@ -18,7 +18,7 @@ lasttested: "2020-11-19"
 {:tip: .tip}
 {:pre: .pre}
 
-# Best practices for organizing users, teams, applications
+# (Rework) Best practices for organizing users, teams, applications
 {: #users-teams-applications}
 
 <!--##istutorial#-->
@@ -63,22 +63,22 @@ When it comes to assigning responsibilities to the project team members, let's d
 
 |           | Development | Testing | Production |
 | --------- | ----------- | ------- | ---------- |
-| Developer | - contributes code \n - can access log files \n - can view app and service configuration \n - use the deployed applications | - can access log files \n - can view app and service configuration \n - use the deployed applications | - no access |
+| Developer | - contributes code  \n - can access log files  \n - can view app and service configuration  \n - use the deployed applications | - can access log files  \n - can view app and service configuration  \n - use the deployed applications | - no access |
 | Tester    | - use the deployed applications | - use the deployed applications | - no access |
-| Operator  | - can access log files \n - can view/set app and service configuration | - can access log files \n - can view/set app and service configuration | - can access log files \n - can view/set app and service configuration |
-| Pipeline Service ID  | - can deploy/undeploy applications \n - can view/set app and service configuration | - can deploy/undeploy applications \n - can view/set app and service configuration | - can deploy/undeploy applications \n - can view/set app and service configuration |
+| Operator  | - can access log files  \n - can view/set app and service configuration | - can access log files  \n - can view/set app and service configuration | - can access log files  \n - can view/set app and service configuration |
+| Pipeline Service ID  | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration |
 
 ## Identity and Access Management (IAM)
 {: #users-teams-applications-first_objective}
 
-{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
+{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** and **service IDs** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
 This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
 {: tip}
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-![Diagram of IAM model](./images/solution20-users-teams-applications/iam-model.png){: class="center"}
+![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}
 {: style="text-align: center;"}
 
 ## Create the resources for one environment
@@ -127,11 +127,11 @@ A good practice is to start with the minimum set of permissions then expand care
 For the Development environment, the user responsibilities defined earlier could translate to the following:
 
 |           | IAM Access policies |
-| --------- | ----------- | ------- |
-| Developer | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Viewer* \n - Logging & Monitoring service role: *Writer* |
+| --------- | ----------- |
+| Developer | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Viewer*  \n - Logging & Monitoring service role: *Writer* |
 | Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
-| Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* |
-| Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
+| Operator  | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer*  \n - Logging & Monitoring service role: *Writer* |
+| Pipeline Service ID | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 
 The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
 1. Select or create an access group.
