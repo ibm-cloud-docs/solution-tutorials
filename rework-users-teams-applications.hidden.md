@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-09-30"
+lastupdated: "2021-10-01"
 lasttested: "2020-11-19"
 
 ---
@@ -27,26 +27,26 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
+This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} for identity and access management and how they can be implemented to support the multiple development stages of an application.
 {: shortdesc}
 
-When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
+When building an application, it is very common to define multiple environments. They reflect the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
 
 Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 ## Objectives
 {: #rework-users-teams-applications-objectives}
 
-* Learn about {{site.data.keyword.iamlong}}
-* Configure a project with separation between roles and environments
-* Setup continuous integration
+* Learn about {{site.data.keyword.iamlong}}.
+* Configure a project with separation between roles and environments.
+* Setup continuous integration.
 
 
 ## Define a project
 {: #rework-users-teams-applications-1}
 
 Let's consider a sample project with the following components:
-* several microservices deployed in {{site.data.keyword.containershort_notm}},
+* several microservices deployed in {{site.data.keyword.containershort_notm}} within {{site.data.keyword.vpc_short}} (Virtual Private Cloud),
 * databases,
 * file storage buckets.
 
@@ -86,7 +86,7 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
-![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.png){: class="center"}{: caption="Architecture diagram showing one environment" caption-side="bottom"}
+![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.svg){: class="center"}{: caption="Architecture diagram showing one environment" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Let's start by building the Development environment.
@@ -95,7 +95,8 @@ Let's start by building the Development environment.
 1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
 1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
-1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
+1. Create a [Virtual Private Cloud](https://{DomainName}/vpc-ext/network/vpcs) including subnets. Select the resource group you created earlier and the region.
+1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, under **Infrastructure** select the new VPC as target, make sure to select the resource group created above.
 1. From the Kubernetes cluster connect to the {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} service instances to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
