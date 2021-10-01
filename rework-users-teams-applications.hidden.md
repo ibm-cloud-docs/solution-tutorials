@@ -101,7 +101,7 @@ Let's start by building the Development environment.
 
 The following diagram shows where the project resources are created under the account:
 
-![Diagram showing the project resources](./images/solution20-users-teams-applications/resources.png){: class="center"}{: caption="Project resources" caption-side="bottom"}
+![Diagram showing the project resources](./images/solution20-users-teams-applications/resource-deployment.svg){: class="center"}{: caption="Project resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Assign roles within the environment
