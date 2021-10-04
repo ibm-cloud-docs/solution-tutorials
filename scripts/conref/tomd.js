@@ -6,7 +6,9 @@ const conref = require('./conref.js');
 const destinationFolder = process.argv[2] || '.'
 
 Handlebars.registerHelper('value', function( aKey, options) {
-  return conref.getValue(aKey);
+  return conref.getValue(aKey)
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '\\n');
 });
 
 Handlebars.registerHelper('placeholder', function( aKey, options) {
