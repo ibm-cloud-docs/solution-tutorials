@@ -57,7 +57,7 @@ In this project, we define three environments:
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline, we introduce **a [Service ID](https://{DomainName}/docs/account?topic=account-serviceids)**. A service ID identifies a service or application similar to how a user ID identifies a user. Policies can be assigned to a service ID, providing it access to resources. This service ID is used in the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The service ID will be dedicated to your project and will not change over the lifetime of the project. The [service ID should be locked](https://{DomainName}/docs/account?topic=account-serviceids#lock_serviceid) to protect it against accidental deletion. The next thing you will want to create is [an API key](https://{DomainName}/iam/serviceids) for this service ID. You will select this API key when you set up the DevOps pipelines, or when you want to run automation scripts, to impersonate the service ID.
+To support the execution of the build pipeline, we introduce **a [Service ID](https://{DomainName}/docs/account?topic=account-serviceids)**. A service ID identifies a service or application similar to how a user ID identifies a user. Policies can be assigned to a service ID, providing it access to resources. This service ID is used in the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The service ID will be dedicated to your project and will not change over the lifetime of the project. The [service ID should be locked](https://{DomainName}/docs/account?topic=account-serviceids#lock_serviceid) to protect it against accidental deletion. The next thing you will want to create is [an API key](https://{DomainName}/iam/serviceids) for this service ID. You will select this API key when you set up the DevOps (or DevSecOps) pipelines, or when you want to run automation scripts, to impersonate the service ID.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
@@ -108,8 +108,11 @@ The following diagram shows where the project resources are created under the ac
 {: #rework-users-teams-applications-4}
 
 1. Invite users to the account. 
-   TODO: This could be done via Trusted Profiles using IBMid or App ID and filters on user ID properties. A TP could map to a role in a stage OR to a role in the table above.
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
+
+Usually, you can invite team members to the account as users. You could also leverage [trusted profiles](https://{DomainName}/docs/account?topic=account-create-trusted-profile) to map federated users to your defined roles (see above). By defining rules on the properties provided by the **Identity Provider** (IdP), you could assign external users to trusted profiles which you would define for the roles, e.g., Developer or Tester. Then you would apply policies similar to those defined for access groups.
+{: tip}
+
 
 Refer to the documentation of services to understand how a service is mapping IAM roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
 
@@ -167,13 +170,12 @@ Separate Kubernetes clusters for the environments come with good properties:
 * it gives flexibility in the update cycles for deployments and underlying resources; when there is a new Kubernetes version, it gives you the option to update the Development cluster first, validate your application then update the other environment;
 * it avoids mixing different workloads that may impact each other such as isolating the production deployment from the others.
 
-Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
+Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
 
-![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png){: class="center"}{: caption="Separate namespaces to isolate environments" caption-side="bottom"}
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: class="center"}
+{: caption="Separate namespaces to isolate environments" caption-side="bottom"}
 {: style="text-align: center;"}
 
-In the `Search` input box of UI, use the field `namespace:` to filter logs based 0n the namespace.
-{: tip}
 
 ## Setup delivery pipeline
 {: #rework-users-teams-applications-6}
