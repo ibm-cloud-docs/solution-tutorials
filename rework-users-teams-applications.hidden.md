@@ -71,14 +71,12 @@ When it comes to assigning responsibilities to the project team members, let's d
 ## Identity and Access Management (IAM)
 {: #rework-users-teams-applications-first_objective}
 
-{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** and **service IDs** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
-
-TODO: Mention Trusted Profiles here. Should we have the diagram from the account / IAM doc page?
+{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users**, **service IDs**, and **trusted profiles** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
 This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
 {: tip}
 
-A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
+A **policy** assigns a user, service ID, or trusted profile one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user, service ID, or trusted profile is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
 ![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}{: caption="How IAM access works in an account by using access groups" caption-side="bottom"}
 {: style="text-align: center;"}
