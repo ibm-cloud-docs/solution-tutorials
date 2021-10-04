@@ -78,7 +78,7 @@ This tutorial focusses on a single account. Multiple accounts can be grouped wit
 
 A **policy** assigns a user, service ID, or trusted profile one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user, service ID, or trusted profile is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}{: caption="How IAM access works in an account by using access groups" caption-side="bottom" class="center"}
+![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: caption="How IAM access works in an account by using access groups" caption-side="bottom"}
 
 
 ## Create the resources for one environment
@@ -86,8 +86,7 @@ A **policy** assigns a user, service ID, or trusted profile one or more **roles*
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
-![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.svg){: class="center"}{: caption="Architecture diagram showing one environment" caption-side="bottom"}
-{: style="text-align: center;"}
+![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.svg){: caption="Architecture diagram showing one environment" caption-side="bottom"}
 
 Let's start by building the Development environment.
 
@@ -101,8 +100,7 @@ Let's start by building the Development environment.
 
 The following diagram shows where the project resources are created under the account:
 
-![Diagram showing the project resources](./images/solution20-users-teams-applications/resource-deployment.svg){: class="center"}{: caption="Project resources" caption-side="bottom"}
-{: style="text-align: center;"}
+![Diagram showing the project resources](./images/solution20-users-teams-applications/resource-deployment.svg){: caption="Project resources" caption-side="bottom"}
 
 ## Assign roles within the environment
 {: #rework-users-teams-applications-4}
