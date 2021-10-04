@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-10-01"
+lastupdated: "2021-10-04"
 lasttested: "2020-11-19"
 
 ---
@@ -73,6 +73,8 @@ When it comes to assigning responsibilities to the project team members, let's d
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users** and **service IDs** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
+TODO: Mention Trusted Profiles here. Should we have the diagram from the account / IAM doc page?
+
 This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
 {: tip}
 
@@ -107,7 +109,8 @@ The following diagram shows where the project resources are created under the ac
 ## Assign roles within the environment
 {: #rework-users-teams-applications-4}
 
-1. Invite users to the account
+1. Invite users to the account. 
+   TODO: This could be done via Trusted Profiles using IBMid or App ID and filters on user ID properties. A TP could map to a role in a stage OR to a role in the table above.
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/account?topic=account-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
 
 Refer to the documentation of services to understand how a service is mapping IAM roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
@@ -140,7 +143,8 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 1. Click **Assign access** button to assign policies as shown below
 1. Click the **Users** tab of the **Access group** to add users to the group
 
-![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy.png){: class="center"}{: caption="Configuration of permissions for the developer role" caption-side="bottom"}
+
+![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy-new.png){: class="center"}{: caption="Configuration of permissions for the developer role" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Replicate for multiple environments
