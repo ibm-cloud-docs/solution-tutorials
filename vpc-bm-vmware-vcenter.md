@@ -90,7 +90,7 @@ Use the following steps to order licenses for the VMware products
 2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
 3. Click the drop-down list under **Add License**... to list the VMware products and number of CPUs for the licenses that you want to order.
 4. Select **VMware vCenter Server Appliance 7.x (x CPU)** .
-5. Click Continue to order the licenses or you can click Add License to add more licenses.
+5. Click **Continue** to order the licenses or you can click **Add License** to add more licenses.
 6. After you click Continue, you are taken back to the VMware Licenses page, which displays your VMware products and license keys.
 7. Copy the VMware vCenter license key and can be added to the vCenter after the installation.
 
@@ -474,7 +474,7 @@ To assign the license to a vCenter.
 3. Select the vCenter you want to license.
 4. Click **Assign License**.
 5. Select the license you want to use.
-6. Click OK.
+6. Click **OK**.
 The vCenter is now licensed.
 
 ## Next Steps
