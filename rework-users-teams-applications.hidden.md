@@ -151,9 +151,12 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 From there, you can replicate similar steps to build the other environments.
 
 1. Create one resource group per environment.
-1. Create one cluster and required service instances per environment.
+2. Create one VPC per environment in the related resource group, each with a cluster.
+3. Create the required service instances per environment in the related resource group.
 
-![Diagram showing separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png){: class="center"}{: caption="Separate clusters to isolate environments" caption-side="bottom"}
+The following diagram shows the development and testing resource group with the VPC, cluster, and services. The production resource group would have the same resources.
+
+![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: class="center"}{: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
