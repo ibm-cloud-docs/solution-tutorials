@@ -143,8 +143,9 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 1. Click the **Users** tab of the **Access group** to add users to the group
 
 
-![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy-new.png){: class="center"}{: caption="Configuration of permissions for the developer role" caption-side="bottom"}
-{: style="text-align: center;"}
+![Configuration of permissions for the developer role](./images/solution20-users-teams-applications/edit-policy-new.png){: caption="Configuration of permissions for the developer role" caption-side="bottom"}
+{: class="center"}
+
 
 ## Replicate for multiple environments
 {: #rework-users-teams-applications-5}
@@ -157,8 +158,7 @@ From there, you can replicate similar steps to build the other environments.
 
 The following diagram shows the development and testing resource group with the VPC, cluster, and services. The production resource group would have the same resources.
 
-![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: class="center"}{: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
-{: style="text-align: center;"}
+![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 
 Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
@@ -170,7 +170,7 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
 
-![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Separate namespaces to isolate environments" caption-side="bottom" class="center"}
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Separate namespaces to isolate environments" caption-side="bottom"}
 {: class="center"}
 
 
@@ -182,8 +182,8 @@ When it comes to deploying to the different environments, your continuous integr
 * promote development builds to the `Testing` environment, either automatically if all tests from the previous stages are OK or through a manual promotion process. Some teams will use different branches too here, merging the working development state to a `stable` branch as example;
 * Repeat a similar process to move to the `Production` environment.
 
-![A CI/CD pipeline from build to deploy](./images/solution20-users-teams-applications/cicd.png){: class="center"}{: caption="A CI/CD pipeline from build to deploy" caption-side="bottom"}
-{: style="text-align: center;"}
+![A CI/CD pipeline from build to deploy](./images/solution20-users-teams-applications/cicd.png){: caption="A CI/CD pipeline from build to deploy" caption-side="bottom"}
+{: class="center"}
 
 When configuring the DevOps pipeline, make sure to use the API key of a service ID. Only the service ID should need to have the required rights to deploy apps to your clusters.
 
