@@ -78,8 +78,8 @@ This tutorial focusses on a single account. Multiple accounts can be grouped wit
 
 A **policy** assigns a user, service ID, or trusted profile one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user, service ID, or trusted profile is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}{: caption="How IAM access works in an account by using access groups" caption-side="bottom"}
-{: style="text-align: center;"}
+![Diagram of IAM model](./images/solution20-users-teams-applications/IAM-access-groups-diagram.svg){: class="center"}{: caption="How IAM access works in an account by using access groups" caption-side="bottom" class="center"}
+
 
 ## Create the resources for one environment
 {: #rework-users-teams-applications-3}
@@ -172,7 +172,7 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
 
-![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Separate namespaces to isolate environments" caption-side="bottom"}
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Separate namespaces to isolate environments" caption-side="bottom" class="center"}
 {: class="center"}
 
 
