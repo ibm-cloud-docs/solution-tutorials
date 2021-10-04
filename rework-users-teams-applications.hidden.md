@@ -172,9 +172,8 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
 
-![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: class="center"}
-{: caption="Separate namespaces to isolate environments" caption-side="bottom"}
-{: style="text-align: center;"}
+![Diagram showing separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Separate namespaces to isolate environments" caption-side="bottom"}
+{: class="center"}
 
 
 ## Setup delivery pipeline
