@@ -23,5 +23,5 @@ function writeFile(templateFile, destinationFile) {
   }));
 }
 
-writeFile('./tomd.md.tmpl', `${destinationFolder}/conref.md`);
+writeFile('./tomd.md.tmpl', `${destinationFolder}/conref-table.md`);
 writeFile('./tovscodesnippets.json.tmpl', `${destinationFolder}/vscodesnippets.json`);

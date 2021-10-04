@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2021-08-25"
+lastupdated: "2021-10-04"
 lasttested: "2019-03-08"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -223,7 +223,7 @@ Finally refer to the link topic under the content and design documentation if yo
 ### Conrefs
 {: #solution-template-13}
 
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref-table.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
 {: #solution-template-10}
