@@ -75,6 +75,20 @@ This tutorial is part of series, and requires that you have completed the relate
 When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
+### Order a vCenter License from IBM Cloud
+{: #vpc-bm-vmware-vcenter-order-license}
+
+As a customer on IBM Cloud, you can bring your own license or you can obtain a license from IBM Cloud as a monthly fee.
+
+Use the following steps to order licenses for the VMware products
+
+1. From the {{site.data.keyword.Bluemix}} Portal
+2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
+3. Click the drop-down list under **Add License**... to list the VMware products and number of CPUs for the licenses that you want to order.
+4. Select **VMware vCenter Server Appliance 7.x (x CPU)** .
+5. Click Continue to order the licenses or you can click Add License to add more licenses.
+6. After you click Continue, you are taken back to the VMware Licenses page, which displays your VMware products and license keys.
+7. Copy the VMware vCenter license key and can be added to the vCenter after the installation.
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
@@ -431,6 +445,32 @@ Delete `vSwitch0` on all hosts using the following method
 4. Click Networking, **Virtual Switches**.
 5. Expand the standard switch.
 6. Click the '...' and select **Remove**.
+
+## Assign VMWare vCenter License
+{: #vpc-bm-vmware-vcenter-assign-lic}
+{: step}
+
+Assign the VMware vCenter BYO or IBM Cloud License.
+
+1. Log into the vCenter Server using vSphere Client via Web Browser on the Jump machine.
+2. Click **Menu** > **Home**.
+3. Click **Administration**.
+4. Select Licenses in the left column, then select Licenses Tab.
+5. Click **Add New Licenses**.
+6. Enter the license keys. Click **Next**.
+7. Edit license names, then click **Next**.
+8. Click **Finish**.
+The license is now added.
+
+To assign the license to a vCenter.
+
+1. Select the **Asset** tab.
+2. Select vCenter Server Systems tab.
+3. Select the vCenter you want to license.
+4. Click **Assign License**.
+5. Select the license you want to use.
+6. Click OK.
+The vCenter is now licensed.
 
 ## Next Steps
 {: #vpc-bm-vmware-vcenter-next-steps}
