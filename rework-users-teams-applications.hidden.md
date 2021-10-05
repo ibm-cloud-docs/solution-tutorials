@@ -154,10 +154,10 @@ The IAM access configuration for groups is centralized in [Access (IAM) Acess gr
 From there, you can replicate similar steps to build the other environments.
 
 1. Create one resource group per environment.
-2. Create one VPC per environment in the related resource group, each with a cluster.
+2. Create one VPC per environment in the related resource group, each with a cluster and VSI.
 3. Create the required service instances per environment in the related resource group.
 
-The following diagram shows the development and testing resource group with the VPC, cluster, and services. The production resource group would have the same resources.
+The following diagram shows the development, testing, and production resource groups each having the same components with the VPC, cluster and VSI, and services.
 
 ![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 
