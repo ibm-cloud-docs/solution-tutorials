@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-10-04"
+lastupdated: "2021-10-05"
 lasttested: "2020-11-19"
 
 ---
@@ -46,7 +46,7 @@ Isolating the underlying resources, implementing governance and access policies,
 {: #rework-users-teams-applications-1}
 
 Let's consider a sample project with the following components:
-* several microservices deployed in {{site.data.keyword.containershort_notm}} within {{site.data.keyword.vpc_short}} (Virtual Private Cloud),
+* several microservices deployed in {{site.data.keyword.containershort_notm}} or virtual server instances (VSIs) within {{site.data.keyword.vpc_short}} (Virtual Private Cloud),
 * databases,
 * file storage buckets.
 
@@ -93,9 +93,10 @@ Let's start by building the Development environment.
 1. Most cloud service instances are regional. Keep this in mind and choose the same region for all resources in this tutorial.
 1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
-1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
+1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
 1. Create a [Virtual Private Cloud](https://{DomainName}/vpc-ext/network/vpcs) including subnets. Select the resource group you created earlier and the region.
 1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, under **Infrastructure** select the new VPC as target, make sure to select the resource group created above.
+1. Create a [{{site.data.keyword.vsi_is_short}} instance](https://{DomainName}/vpc-ext/compute/vs) in the same VPC.
 1. From the Kubernetes cluster connect to the {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} service instances to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
