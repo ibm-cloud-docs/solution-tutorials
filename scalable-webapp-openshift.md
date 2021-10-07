@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-10-05"
-lasttested: "2021-10-05"
+lastupdated: "2021-10-07"
+lasttested: "2021-10-07"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -207,7 +207,7 @@ With the `oc new-app` command you can create applications from source code in a 
    ```sh
    oc new-app https://github.com/IBM-Cloud/openshift-node-app --name=$MYPROJECT --strategy=docker --as-deployment-config
    ```
-   {pre}
+   {: pre}
 
    If a Jenkins file exists in the root or specified context directory of the source repository when creating a new application, {{site.data.keyword.openshiftshort}} generates a `pipeline` build strategy. Otherwise, it generates a `source` build strategy.You can always override the build strategy by setting the `--strategy` flag.
    {: tip}
@@ -244,7 +244,11 @@ To access the app, you need to create a route. A route announces your service to
    ```
    {: pre}
 
-3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
+3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`. Also, set an environment variable pointing to the hostname
+   ```sh
+   export HOST=<HOST>
+   ```
+   {: pre}
 
 ### Secure the default IBM provided domain route
 {: #scalable-webapp-openshift-secure_default_route}
@@ -270,11 +274,14 @@ In this section, you will learn to monitor the health and performance of your ap
    ```
    {: pre}
 
-2. Run the following script by replacing the placeholder `<APPLICATION_ROUTE_URL>` with the route URL. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
+2. Run the below command with the route URL that generates load. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
    ```sh
-    while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
+   curl --max-time 180 -s http://$HOST/load/1000
    ```
    {: pre}
+
+   If you see `504 Gateway Time-out` error, run this command `oc annotate route $MYPROJECT --overwrite haproxy.router.openshift.io/timeout=600s` and then rerun the above `cURL` command.
+   {: tip}
 
 3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
@@ -317,12 +324,12 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    {: pre}
 
    To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
-2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 2%.
+2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 5%.
    ```sh
    oc autoscale dc/$MYPROJECT \
     --min=1 \
     --max=5 \
-    --cpu-percent=2
+    --cpu-percent=5
    ```
    {: pre}
 
