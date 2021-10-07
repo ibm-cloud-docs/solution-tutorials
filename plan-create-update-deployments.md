@@ -52,8 +52,7 @@ Multiple environments are pretty common in a project to support the different ph
 * Deploy these environments in your account
 
 
-![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.png){: class="center"}
-{: style="text-align: center;"}
+![Architecture Diagram](./images/solution26-plan-create-update-deployments/architecture.svg){: caption="Architecture diagram" caption-side="bottom" class="center" }
 
 
 1. A set of Terraform files are created to describe the target infrastructure as code.
@@ -103,8 +102,8 @@ The repository is structured as follow:
 
 The *Development*, *Testing* and *Production* environments pretty much look the same. 
 
-![Diagram showing the deployment environment](./images/solution26-plan-create-update-deployments/one-environment.svg){: class="center"}
-{: caption="One environment deployed into a resource group" caption-side="bottom"}
+![Diagram showing the deployment environment](./images/solution26-plan-create-update-deployments/one-environment.svg){: caption="One environment deployed into a resource group" caption-side="bottom" class="center" }
+
 
 They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, we will only deploy a VSI each and no cluster. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
@@ -256,7 +255,6 @@ If you have not done it yet, clone the tutorial repository:
 
 1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
 
-   > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
 1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
    ```sh
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
@@ -311,7 +309,7 @@ This section will focus on the `development` environment. The steps will be the 
    {: codeblock}
 
 1. Edit `development.tfvars`
-   1. Set **environment_name** to the name of the Cloud Foundry space you want to create
+   1. Set **environment_name** to the name of the deployment you want to create. Some of the resources will use it as name prefix.
    1. Set **cluster_datacenter** to the zone where you want to create the VPC subnet and VSI. Find the available zones with:
       ```sh
       ibmcloud ks locations
@@ -435,9 +433,9 @@ You can repeat the steps for `testing` and `production`.
 ### Assign user policies
 {: #plan-create-update-deployments-16}
 
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
+For user policies on resources like the deployed services or a possible Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 
-For the *Development* environment as defined in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), the policies to define are:
+For the *Development* environment as discussed in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), the policies to define are:
 
 |           | IAM Access policies |
 | --------- | ----------- |
