@@ -125,14 +125,13 @@ data "ibm_iam_account_settings" "iam_account_settings" {
 To fully deploy the environments, you will use a mix of Terraform and the {{site.data.keyword.cloud_notm}} CLI. Shell scripts written with the CLI may need to reference the account ID or region. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
 
 ```sh
-   # generate a property file suitable for shell scripts with useful variables relating to the environment
-   resource "local_file" "output" {
-  content = <<EOF
-ACCOUNT_ID=${data.ibm_iam_account_settings.iam_account_settings.account_id}
-REGION=${var.region}
+# generate a property file suitable for shell scripts with useful variables relating to the environment
+resource "local_file" "output" {
+content = <<EOF
+     ACCOUNT_ID=${data.ibm_iam_account_settings.iam_account_settings.account_id}
+     REGION=${var.region}
 EOF
-
-  filename = "../outputs/global.env"
+filename = "../outputs/global.env"
 }
 ```
 {: codeblock}
@@ -153,55 +152,57 @@ Each environment requires:
 
 If we would need to access information from the global configuration, we could utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html) will help. It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
 
-   ```sh
-   data "terraform_remote_state" "global" {
-      backend = "local"
+```sh
+data "terraform_remote_state" "global" {
+   backend = "local"
 
-      config {
-        path = "${path.module}/../global/terraform.tfstate"
-      }
+   config {
+      path = "${path.module}/../global/terraform.tfstate"
    }
-   ```
-   {: codeblock}
+}
+```
+{: codeblock}
 
 
 To set up a deployment environment, we begin by creating a resource group. Its name is taken from an environment variable:
 
-   ```sh
-   # a resource group
-   resource "ibm_resource_group" "group" {
-    name     = "${var.environment_name}"
-   }
-   ```
+```sh
+# a resource group
+resource "ibm_resource_group" "group" {
+   name     = "${var.environment_name}"
+}
+```
+{: codeblock}
 
 The VPC is created in that resource group and named like the deployment environment.
 
-   ```sh
-   resource "ibm_is_vpc" "vpc1" {
-    name              = var.environment_name
-    resource_group    = ibm_resource_group.group.id
-   }
-   ```
-   {: codeblock}
+```sh
+resource "ibm_is_vpc" "vpc1" {
+   name              = var.environment_name
+   resource_group    = ibm_resource_group.group.id
+}
+```
+{: codeblock}
 
 
 After the VPC and its network, the VSI is created. Most of the properties will be initialized from configuration variables. You can adjust the tone, the machine profile and image type, etc.
-   ```sh
-   resource "ibm_is_instance" "vsi1" {
-    name           = "${var.environment_name}-vsi1"
-    vpc            = ibm_is_vpc.vpc1.id
-    zone           = "${var.region}-1"
-    profile        = "cx2-2x4"
-    image          = data.ibm_is_image.vsi_image.id
-    keys           = [ibm_is_ssh_key.generated_key.id]
-    resource_group = ibm_resource_group.group.id
+
+```sh
+resource "ibm_is_instance" "vsi1" {
+   name           = "${var.environment_name}-vsi1"
+   vpc            = ibm_is_vpc.vpc1.id
+   zone           = "${var.region}-1"
+   profile        = "cx2-2x4"
+   image          = data.ibm_is_image.vsi_image.id
+   keys           = [ibm_is_ssh_key.generated_key.id]
+   resource_group = ibm_resource_group.group.id
   
-    primary_network_interface {
+   primary_network_interface {
       subnet = ibm_is_subnet.subnet11.id
-    }
    }
-   ```
-   {: codeblock}
+}
+```
+{: codeblock}
 
 The ssh key to access the VSI is generated, too. It private key part is written to the output directory and can be used later on to connect to the VSI.
 
@@ -210,19 +211,20 @@ IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {{site.data.ke
 ```sh
 # a database
 resource "ibm_resource_instance" "database" {
-    name              = "database"
-    service           = "cloudantnosqldb"
-    plan              = "${var.cloudantnosqldb_plan}"
-    location          = "${var.cloudantnosqldb_location}"
-    resource_group_id = "${ibm_resource_group.group.id}"
+   name              = "database"
+   service           = "cloudantnosqldb"
+   plan              = "${var.cloudantnosqldb_plan}"
+   location          = "${var.cloudantnosqldb_location}"
+   resource_group_id = "${ibm_resource_group.group.id}"
 }
+
 # a cloud object storage
 resource "ibm_resource_instance" "objectstorage" {
-    name              = "objectstorage"
-    service           = "cloud-object-storage"
-    plan              = "${var.cloudobjectstorage_plan}"
-    location          = "${var.cloudobjectstorage_location}"
-    resource_group_id = "${ibm_resource_group.group.id}"
+   name              = "objectstorage"
+   service           = "cloud-object-storage"
+   plan              = "${var.cloudobjectstorage_plan}"
+   location          = "${var.cloudobjectstorage_location}"
+   resource_group_id = "${ibm_resource_group.group.id}"
 }
 ```
 {: codeblock}
@@ -245,17 +247,17 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 If you have not done it yet, clone the tutorial repository:
 
-   ```sh
-   git clone https://github.com/IBM-Cloud/multiple-environments-as-code
-   ```
-   {: codeblock}
+```sh
+git clone https://github.com/IBM-Cloud/multiple-environments-as-code
+```
+{: codeblock}
 
 ### Set Platform API key
 {: #plan-create-update-deployments-10}
 
 1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
 
-1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
+1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command:
    ```sh
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
    ```
@@ -448,57 +450,59 @@ Given a team may be composed of several developers, testers, you can leverage th
 
 For the *Developer* role in the *Development* environment, this translates to:
 
-   ```sh
+```sh
 resource "ibm_iam_access_group" "developer_role" {
-  name        = var.access_group_name_developer_role
-  description = var.access_group_description
+   name        = var.access_group_name_developer_role
+   description = var.access_group_description
 }
 
 resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
-  access_group_id = ibm_iam_access_group.developer_role.id
-  roles           = ["Viewer"]
+   access_group_id = ibm_iam_access_group.developer_role.id
+   roles           = ["Viewer"]
 
-  resources {
-    resource_type = "resource-group"
-    resource      = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
-  }
+   resources {
+     resource_type = "resource-group"
+     resource      = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+   }
 }
 
 resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
-  access_group_id = ibm_iam_access_group.developer_role.id
-  roles           = ["Viewer"]
+   access_group_id = ibm_iam_access_group.developer_role.id
+   roles           = ["Viewer"]
 
-  resources {
-    resource_group_id = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
-  }
+   resources {
+     resource_group_id = data.terraform_remote_state.per_environment_dev.outputs.resource_group_id
+   }
 }
 
 resource "ibm_iam_access_group_policy" "developer_logging_policy" {
-  access_group_id = ibm_iam_access_group.developer_role.id
-  roles           = ["Administrator"]
+   access_group_id = ibm_iam_access_group.developer_role.id
+   roles           = ["Administrator"]
 
-  resources {
-    service              = "logdna"
-    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.logdna_instance_id
-  }
+   resources {
+     service              = "logdna"
+     resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.logdna_instance_id
+   }
 }
 
 resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
-  access_group_id = ibm_iam_access_group.developer_role.id
-  roles           = ["Writer"]
+   access_group_id = ibm_iam_access_group.developer_role.id
+   roles           = ["Writer"]
 
-  resources {
-    service              = "sysdig-monitor"
-    resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.sysdig_instance_id
-  }
+   resources {
+     service              = "sysdig-monitor"
+     resource_instance_id = data.terraform_remote_state.per_environment_dev.outputs.sysdig_instance_id
+   }
 }
 
 resource "ibm_iam_access_group_members" "developers" {
-  access_group_id = ibm_iam_access_group.developer_role.id
-  ibm_ids         = var.iam_access_members_developers
+   access_group_id = ibm_iam_access_group.developer_role.id
+   ibm_ids         = var.iam_access_members_developers
 }
 
-   ```
+```
+{: codeblock}
+
 
 The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Service ID* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment,
 
