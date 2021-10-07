@@ -304,7 +304,6 @@ In the previous section, one of the resulting files created was `${GEN_FILES_DIR
 {: step}
 
 1.	To install and configure LSF on IBM Cloud, you will need to provide some information to the LSF install scripts by configuring the `lsf_install` file in the `group_vars` directory with the following parameters:   
-
    |Parameter|Description|
    |---------|-----------|
    | **local_path**| The full path to the directory where the lsf binary resides on the local machine.|
