@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-10-06"
+lastupdated: "2021-10-07"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -316,6 +316,7 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud ks locations
       ```
       {: codeblock}
+      
    1. See the comments in the tfvars file for help initializing the rest of the values
 
 1. Initialize Terraform
