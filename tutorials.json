@@ -54,7 +54,7 @@
             "Virtual Servers"
           ],
           "guide": true,
-          "lastUpdated": "2021-09-10"
+          "lastUpdated": "2021-10-04"
         },
         {
           "name": "Strategies for resilient applications",
@@ -181,7 +181,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -437,7 +437,7 @@
           "name": "Best practices for organizing users, teams, applications",
           "url": "users-teams-applications.html",
           "description": "An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.",
-          "imgSrc": "images/solution20-users-teams-applications/architecture.png",
+          "imgSrc": "images/solution20-users-teams-applications/one-environment.svg",
           "tags": [
             "Identity and Access Management",
             "Kubernetes",
@@ -447,7 +447,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-10-07"
         }
       ]
     },
@@ -611,7 +611,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-09-28"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -729,7 +729,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-10"
+          "lastUpdated": "2021-10-04"
         },
         {
           "name": "VMware VSAN",
@@ -807,7 +807,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-28"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
