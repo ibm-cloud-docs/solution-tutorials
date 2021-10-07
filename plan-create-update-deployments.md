@@ -101,12 +101,13 @@ The repository is structured as follow:
 ### Heavy lifting with Terraform
 {: #plan-create-update-deployments-3}
 
-The *Development*, *Testing* and *Production* environments pretty much look the same.
+The *Development*, *Testing* and *Production* environments pretty much look the same. 
 
-![Diagram showing one deployment environment](./images/solution26-plan-create-update-deployments/one-environment.png){: class="center"}
-{: style="text-align: center; height: 400px;"}
+![Diagram showing the deployment environment](./images/solution26-plan-create-update-deployments/one-environment.svg){: class="center"}
+{: caption="One environment deployed into a resource group" caption-side="bottom"}
 
-They all share the same type of resources, but differ by the allocated capacity and the access rights. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
+They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, we will only deploy a VSI each and no cluster. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
+
 
 ![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: class="center"}
 {: style="text-align: center;"}
@@ -316,7 +317,7 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud ks locations
       ```
       {: codeblock}
-      
+
    1. See the comments in the tfvars file for help initializing the rest of the values
 
 1. Initialize Terraform
