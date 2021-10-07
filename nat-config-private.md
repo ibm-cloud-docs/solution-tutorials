@@ -107,48 +107,48 @@ Follow the instructions here to configure external Internet access for hosts in 
 {: step}
 
 1.	Create firewall rules for APP-TO-OUTSIDE
-   
-   ```bash
-   set security firewall name APP-TO-OUTSIDE default-action drop
-   set security firewall name APP-TO-OUTSIDE description 'APP traffic to the Internet'
-   set security firewall name APP-TO-OUTSIDE default-log
-   
-   set security firewall name APP-TO-OUTSIDE rule 90 protocol tcp
-   set security firewall name APP-TO-OUTSIDE rule 90 action accept
-   set security firewall name APP-TO-OUTSIDE rule 90 destination port 80
-   
-   set security firewall name APP-TO-OUTSIDE rule 100 protocol tcp
-   set security firewall name APP-TO-OUTSIDE rule 100 action accept
-   set security firewall name APP-TO-OUTSIDE rule 100 destination port 443
-   
-   set security firewall name APP-TO-OUTSIDE rule 200 protocol icmp
-   set security firewall name APP-TO-OUTSIDE rule 200 icmp type 8
-   set security firewall name APP-TO-OUTSIDE rule 200 action accept
-   commit
-   ```
-   {: codeblock}
+    
+    ```bash
+    set security firewall name APP-TO-OUTSIDE default-action drop
+    set security firewall name APP-TO-OUTSIDE description 'APP traffic to the Internet'
+    set security firewall name APP-TO-OUTSIDE default-log
+    
+    set security firewall name APP-TO-OUTSIDE rule 90 protocol tcp
+    set security firewall name APP-TO-OUTSIDE rule 90 action accept
+    set security firewall name APP-TO-OUTSIDE rule 90 destination port 80
+    
+    set security firewall name APP-TO-OUTSIDE rule 100 protocol tcp
+    set security firewall name APP-TO-OUTSIDE rule 100 action accept
+    set security firewall name APP-TO-OUTSIDE rule 100 destination port 443
+    
+    set security firewall name APP-TO-OUTSIDE rule 200 protocol icmp
+    set security firewall name APP-TO-OUTSIDE rule 200 icmp type 8
+    set security firewall name APP-TO-OUTSIDE rule 200 action accept
+    commit
+    ```
+    {: codeblock}
 
 2.	Create firewall rules OUTSIDE-TO-APP
    
-   ```bash
-   set security firewall name OUTSIDE-TO-APP default-action drop
-   set security firewall name OUTSIDE-TO-APP description 'Internet traffic to APP'
-   set security firewall name OUTSIDE-TO-APP default-log
-   
-   set security firewall name OUTSIDE-TO-APP rule 100 protocol tcp
-   set security firewall name OUTSIDE-TO-APP rule 100 action accept
-   set security firewall name OUTSIDE-TO-APP rule 100 destination port 443
-   
-   set security firewall name OUTSIDE-TO-APP rule 90 protocol tcp
-   set security firewall name OUTSIDE-TO-APP rule 90 action accept
-   set security firewall name OUTSIDE-TO-APP rule 90 destination port 80
-   
-   set security firewall name OUTSIDE-TO-APP rule 200 protocol icmp
-   set security firewall name OUTSIDE-TO-APP rule 200 icmp type 8
-   set security firewall name OUTSIDE-TO-APP rule 200 action accept
-   commit
-   ```
-   {: codeblock}
+    ```bash
+    set security firewall name OUTSIDE-TO-APP default-action drop
+    set security firewall name OUTSIDE-TO-APP description 'Internet traffic to APP'
+    set security firewall name OUTSIDE-TO-APP default-log
+    
+    set security firewall name OUTSIDE-TO-APP rule 100 protocol tcp
+    set security firewall name OUTSIDE-TO-APP rule 100 action accept
+    set security firewall name OUTSIDE-TO-APP rule 100 destination port 443
+    
+    set security firewall name OUTSIDE-TO-APP rule 90 protocol tcp
+    set security firewall name OUTSIDE-TO-APP rule 90 action accept
+    set security firewall name OUTSIDE-TO-APP rule 90 destination port 80
+    
+    set security firewall name OUTSIDE-TO-APP rule 200 protocol icmp
+    set security firewall name OUTSIDE-TO-APP rule 200 icmp type 8
+    set security firewall name OUTSIDE-TO-APP rule 200 action accept
+    commit
+    ```
+    {: codeblock}
 
 ## Create Zone and apply rules
 {: #nat-config-private-Create_zone}
@@ -179,7 +179,7 @@ Follow the instructions here to configure external Internet access for hosts in 
     ```
     {: codeblock}
     
-   use ping and curl to validate icmp and tcp access to sites on the Internet:
+    use ping and curl to validate icmp and tcp access to sites on the Internet:
     
     ```bash
     ping 8.8.8.8
