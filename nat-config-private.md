@@ -112,15 +112,15 @@ Follow the instructions here to configure external Internet access for hosts in 
    set security firewall name APP-TO-OUTSIDE default-action drop
    set security firewall name APP-TO-OUTSIDE description 'APP traffic to the Internet'
    set security firewall name APP-TO-OUTSIDE default-log
-
+   
    set security firewall name APP-TO-OUTSIDE rule 90 protocol tcp
    set security firewall name APP-TO-OUTSIDE rule 90 action accept
    set security firewall name APP-TO-OUTSIDE rule 90 destination port 80
-
+   
    set security firewall name APP-TO-OUTSIDE rule 100 protocol tcp
    set security firewall name APP-TO-OUTSIDE rule 100 action accept
    set security firewall name APP-TO-OUTSIDE rule 100 destination port 443
-
+   
    set security firewall name APP-TO-OUTSIDE rule 200 protocol icmp
    set security firewall name APP-TO-OUTSIDE rule 200 icmp type 8
    set security firewall name APP-TO-OUTSIDE rule 200 action accept
@@ -134,15 +134,15 @@ Follow the instructions here to configure external Internet access for hosts in 
    set security firewall name OUTSIDE-TO-APP default-action drop
    set security firewall name OUTSIDE-TO-APP description 'Internet traffic to APP'
    set security firewall name OUTSIDE-TO-APP default-log
-
+   
    set security firewall name OUTSIDE-TO-APP rule 100 protocol tcp
    set security firewall name OUTSIDE-TO-APP rule 100 action accept
    set security firewall name OUTSIDE-TO-APP rule 100 destination port 443
-
+   
    set security firewall name OUTSIDE-TO-APP rule 90 protocol tcp
    set security firewall name OUTSIDE-TO-APP rule 90 action accept
    set security firewall name OUTSIDE-TO-APP rule 90 destination port 80
-
+   
    set security firewall name OUTSIDE-TO-APP rule 200 protocol icmp
    set security firewall name OUTSIDE-TO-APP rule 200 icmp type 8
    set security firewall name OUTSIDE-TO-APP rule 200 action accept
@@ -156,35 +156,36 @@ Follow the instructions here to configure external Internet access for hosts in 
 
 1.	Create zone OUTSIDE to control access to the external Internet.
    
-   ```bash
-   set security zone-policy zone OUTSIDE default-action drop
-   set security zone-policy zone OUTSIDE interface dp0bond1
-   set security zone-policy zone OUTSIDE description 'External Internet'
-   ```
-   {: codeblock}
+    ```bash
+    set security zone-policy zone OUTSIDE default-action drop
+    set security zone-policy zone OUTSIDE interface dp0bond1
+    set security zone-policy zone OUTSIDE description 'External Internet'
+    ```
+    {: codeblock}
 
 2.	Assign firewalls to control traffic to and from the Internet.
    
-   ```bash
-   set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
-   set security zone-policy zone OUTSIDE to APP firewall OUTSIDE-TO-APP
-   commit
-   ```
-   {: codeblock}
+    ```bash
+    set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE
+    set security zone-policy zone OUTSIDE to APP firewall OUTSIDE-TO-APP
+    commit
+    ```
+    {: codeblock}
    
 3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH:
    
-   ```bash
-   ssh root@<VSI Private IP>
-   ```
-   {: codeblock}
-   
+    ```bash
+    ssh root@<VSI Private IP>
+    ```
+    {: codeblock}
+    
    use ping and curl to validate icmp and tcp access to sites on the Internet:
-   ```bash
-   ping 8.8.8.8
-   curl www.google.com
-   ```
-   {: codeblock}
+    
+    ```bash
+    ping 8.8.8.8
+    curl www.google.com
+    ```
+    {: codeblock}
 
 ## Remove resources
 {: #nat-config-private-6}
