@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-10-07"
-lasttested: "2021-10-07"
+lastupdated: "2021-10-08"
+lasttested: "2021-10-08"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -276,12 +276,9 @@ In this section, you will learn to monitor the health and performance of your ap
 
 2. Run the below command with the route URL that generates load. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
    ```sh
-   curl --max-time 180 -s http://$HOST/load/1000
+   while sleep 1; do curl --max-time 2 -s http://$HOST/load/50; done
    ```
    {: pre}
-
-   If you see `504 Gateway Time-out` error, run this command `oc annotate route $MYPROJECT --overwrite haproxy.router.openshift.io/timeout=600s` and then rerun the above `cURL` command.
-   {: tip}
 
 3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
