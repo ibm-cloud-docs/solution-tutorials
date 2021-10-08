@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020, 2021
-lastupdated: "2021-10-07"
+lastupdated: "2021-10-08"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -185,7 +185,7 @@ resource "ibm_is_vpc" "vpc1" {
 {: codeblock}
 
 
-After the VPC and its network, the VSI is created. Most of the properties will be initialized from configuration variables. You can adjust the tone, the machine profile and image type, etc.
+After the VPC and its network, the VSI is created. Most of the properties will be initialized from configuration variables. You can adjust the zone, the machine profile and image type, etc.
 
 ```sh
 resource "ibm_is_instance" "vsi1" {
@@ -312,9 +312,9 @@ This section will focus on the `development` environment. The steps will be the 
 
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the deployment you want to create. Some of the resources will use it as name prefix.
-   1. Set **cluster_datacenter** to the zone where you want to create the VPC subnet and VSI. Find the available zones with:
+   1. Set **network_zones** to the zone where you want to create the VPC subnet and VSI. Find the available zones with:
       ```sh
-      ibmcloud ks locations
+      ibmcloud is zones
       ```
       {: codeblock}
 

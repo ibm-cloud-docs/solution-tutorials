@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-10-07"
+lastupdated: "2021-10-08"
 lasttested: "2020-11-19"
 
 ---
@@ -88,12 +88,12 @@ Although the three environments needed by this sample project require different 
 
 ![Architecture diagram showing one environment](./images/solution20-users-teams-applications/one-environment.svg){: caption="Architecture diagram showing one environment" caption-side="bottom"}
 
-Let's start by building the Development environment.
+Let's start by building the Development environment. Note that {{site.data.keyword.registrylong_notm}} is always present and you don't need to provision it.
 
 1. Most cloud service instances are regional. Keep this in mind and choose the same region for all resources in this tutorial.
-1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
-1. Create the services {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
+1. Create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
+1. In that resource group create the services [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery),  [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/objectstorage/create), [{{site.data.keyword.la_full_notm}}](https://{DomainName}/catalog/services/logdna?callback=%2Fobserve%2Flogging%2Fcreate), [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/catalog/services/ibm-cloud-monitoring?callback=%2Fobserve%2Fmonitoring%2Fcreate) and [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant).
 1. Create a [Virtual Private Cloud](https://{DomainName}/vpc-ext/network/vpcs) including subnets. Select the resource group you created earlier and the region.
 1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, under **Infrastructure** select the new VPC as target, make sure to select the resource group created above.
 1. Create a [{{site.data.keyword.vsi_is_short}} instance](https://{DomainName}/vpc-ext/compute/vs) in the same VPC.
@@ -113,7 +113,7 @@ Usually, you can invite team members to the account as users. You could also lev
 {: tip}
 
 
-Refer to the documentation of services to understand how a service is mapping IAM roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam).
+Refer to the services documentation to understand how a service is mapping IAM roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/monitoring?topic=monitoring-iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
@@ -161,15 +161,15 @@ The following diagram shows the development, testing, and production resource gr
 
 ![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [Terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
-Separate Kubernetes clusters for the environments come with good properties:
-* no matter the environment, all clusters will tend to look the same;
-* it is easier to control who has access to a specific cluster;
-* it gives flexibility in the update cycles for deployments and underlying resources; when there is a new Kubernetes version, it gives you the option to update the Development cluster first, validate your application then update the other environment;
+The above design utilizes a Kubernetes cluster for each environment. This has the following benefits:
+* no matter the environment, all clusters will tend to look the same,
+* it is easier to control who has access to a specific cluster,
+* it gives flexibility in the update cycles for deployments and underlying resources: When there is a new Kubernetes version, it gives you the option to update the Development cluster first, validate your application then update the other environment,
 * it avoids mixing different workloads that may impact each other such as isolating the production deployment from the others.
 
-Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
+However, often not all of that properties are needed and the use of fewer resources is desired. Then, another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption. The following diagram shows a **non-production** and a **production resource group** with a Kubernetes cluster in a VPC each. The non-production cluster has a **development** and **testing** namespace, the **production** cluster a production namespace.
 
 ![Diagram showing separate Kubernetes namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.svg){: caption="Use separate Kubernetes namespaces to isolate environments" caption-side="bottom"}
 
