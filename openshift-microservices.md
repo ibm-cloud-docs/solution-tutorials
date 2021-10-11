@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-07-28"
+lastupdated: "2021-10-11"
+lasttested: "2021-10-11"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -95,7 +95,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
+2. Select **Manual setup** and set the **Orchestration service** to **4.8.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -155,7 +155,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.8.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
@@ -190,22 +190,22 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 1. Navigate to the {{site.data.keyword.openshiftshort}} web console by clicking the **{{site.data.keyword.openshiftshort}} web console** button in the selected **Cluster**.
 1. On the left navigation pane, under the **Administrator** perspective, select **Home** > **Projects** view to display all the projects.
 1. Create a new project by clicking **Create Project**. In the pop up **Name** the project `example-health`, leave **Display Name** and **Description** blank, click **Create**.
-1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project Details** > **example-health** on the top.
+1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project details** > **example-health** on the top.
 
 ### Build and Deploy Application
 {: #openshift-microservices-6}
 
-1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
-   ![Project View](images/solution55-openshift-microservices/ocp45-project-view.png)
+1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **+Add** on the left and **Project: example-health** on the top.
+   ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png)
 2. Let's build and deploy the application by selecting **From Git**.
-3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend` in the Git Repo URL field.
-   * Note the `Validated` indication
-   * Note that the builder image automatically detected the language Node.js
-   * **Builder Image Version** leave at the default
+3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend.git` in the Git Repo URL field.
+   * Note the `Validated` indication.
+   * Note that the builder image automatically detected the language Node.js. If not detected, select `Node.js` from the provided list.
+   * **Builder Image Version** leave at the default.
    * **Application Name** delete all of the characters and leave it empty (this will default to the **Name**)
-   * **Name** patient-health-frontend
-   * Select **Deployment Config**
-   * Leave defaults for other selections
+   * **Name :** patient-health-frontend.
+   * Select **Deployment Config**.
+   * Leave defaults for other selections.
 4. Click **Create** at the bottom of the window to build and deploy the application.
 
 ### View Application
@@ -230,8 +230,8 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 1. Click on the URL under **Routes** to visit your application. Enter any string for username and password, for instance `test:test` because the app is running in demonstration mode.
 
 The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Container Platform. To recap:
-* The "Example Health" Node.js application was deployed directly from GitHub into your cluster
-* The application was examined in the {{site.data.keyword.openshiftshort}} console
+* The "Example Health" Node.js application was deployed directly from GitHub into your cluster.
+* The application was examined in the {{site.data.keyword.openshiftshort}} console.
 * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
 
 ## Logging and monitoring
