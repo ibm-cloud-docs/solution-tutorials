@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-09-17"
+          "lastUpdated": "2021-09-20"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -54,7 +54,7 @@
             "Virtual Servers"
           ],
           "guide": true,
-          "lastUpdated": "2021-09-10"
+          "lastUpdated": "2021-10-04"
         },
         {
           "name": "Strategies for resilient applications",
@@ -141,7 +141,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-09-27"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -154,7 +154,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2021-08-17"
+          "lastUpdated": "2021-09-27"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -181,7 +181,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -256,7 +256,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-09-17"
+          "lastUpdated": "2021-09-23"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -267,7 +267,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-09-27"
         }
       ]
     },
@@ -334,7 +334,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-01-19"
+          "lastUpdated": "2021-09-20"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -350,7 +350,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-09-27"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -366,7 +366,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-07-20"
+          "lastUpdated": "2021-09-29"
         }
       ]
     },
@@ -386,7 +386,7 @@
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-09-23"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -437,7 +437,7 @@
           "name": "Best practices for organizing users, teams, applications",
           "url": "users-teams-applications.html",
           "description": "An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.",
-          "imgSrc": "images/solution20-users-teams-applications/architecture.png",
+          "imgSrc": "images/solution20-users-teams-applications/one-environment.svg",
           "tags": [
             "Identity and Access Management",
             "Kubernetes",
@@ -447,7 +447,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-10-07"
         }
       ]
     },
@@ -559,7 +559,7 @@
             "Linux",
             "Security"
           ],
-          "lastUpdated": "2021-06-03"
+          "lastUpdated": "2021-09-30"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",
@@ -611,7 +611,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-08-26"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -729,7 +729,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-10"
+          "lastUpdated": "2021-10-04"
         },
         {
           "name": "VMware VSAN",
@@ -807,7 +807,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-08-26"
+          "lastUpdated": "2021-10-07"
         },
         {
           "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",

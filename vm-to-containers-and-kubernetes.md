@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-09-10"
+lastupdated: "2021-10-04"
 lasttested: "2020-12-08"
 
 ---
@@ -50,7 +50,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
-![Architecture diagram](images/solution30/traditional_architecture.png){: class="center"}
+![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 
@@ -63,7 +63,7 @@ The following diagram shows an example of a traditional app architecture that is
 
 The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster.
 
-![Architecture diagram](images/solution30/modern_architecture.png){: class="center"}
+![Diagram of a modern container architecture](images/solution30/modern_architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020, 2021
-lastupdated: "2021-08-24"
-lasttested: "2020-12-22"
+lastupdated: "2021-10-11"
+lasttested: "2021-10-11"
 
 content-type: tutorial
 services: openwhisk, api-gateway, Cloudant, cloud-object-storage
@@ -77,7 +77,7 @@ Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service ins
    1. Click **Create**.
 2. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
-4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partitioned** under **Partitioning**. Click **Create** to create the database.
+4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and do **not** select **Partitioned** under **Partitioning**. Click **Create** to create the database.
 5. Switch back to the browser tab with the service dashboard page. Go to **Service credentials**, then:
    1. Click **New credential**.
    2. Set the name to **for-guestbook**. Leave the role as **Manager**.
@@ -231,10 +231,12 @@ Complete the sequence:
    1. Set **path** to `/entries`
    2. Set **verb** to `GET`
    3. Select the **read-guestbook-entries-sequence** action
+   4. Click **Create** to add the operation.
 7. Click on **Create operation** and create an operation to persist a guestbook entry:
    1. Set **path** to `/entries`
    2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
+   4. Click **Create** to add the operation
 8. Scroll to the end of the page to **Create** the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
@@ -294,7 +296,7 @@ To delete the created bucket and {{site.data.keyword.openwhisk_short}} service:
 1. Check the box in the title row to select all objects in the bucket
 1. Click **Delete objects**
 1. In the upper right of the bucket object page **Actions** menu select **Delete bucket**
-1. In the upper right of the {{site.data.keyword.openwhisk_short}} instance **Actions** menu select **Delete Service**
+1. In the upper right of the {{site.data.keyword.cos_short}} instance **Actions** menu select **Delete Service**
 
 To delete the created {{site.data.keyword.cloudant_short_notm}} service,
 1. Navigate to [resource list](https://{DomainName}/resources)

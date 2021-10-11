@@ -60,7 +60,7 @@
 <div data-hd-programlang="java">Text in this color only show for Java</div>
 <div data-hd-programlang="swift">Text in this color only show for Swift</div>
 <a href="index.html">HOME</a> -
-<a href="conref.html">CONREF TABLE</a> -
+<a href="conref-table.html">CONREF TABLE</a> -
 <a href="vscodesnippets.json">VS CODE SNIPPETS</a> -
 <a href="solution-table.html">SOLUTIONS TABLE</a> -
 <a href="salesplay.html">SALES PLAY</a>

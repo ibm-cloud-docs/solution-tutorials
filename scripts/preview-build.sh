@@ -69,7 +69,7 @@ marked-it-cli \
   --extension-file=builddocs/markdown/generateSectionsExt.js \
   --extension-file=builddocs/markdown/accessibilityExt.js \
   --extension-file=builddocs/markdown/jsonTocExt.js \
-  --conref-file=builddocs/markdown/cloudoeconrefs.yml \
+  --conref-file=builddocs/markdown/cloudoeconkeyrefs.yml \
   --overwrite --verbose --toc-json \
   --extension-file=builddocs/markdown/videoExt.js \
   --extension-file=builddocs/markdown/terraformExt.js \
@@ -92,7 +92,7 @@ done
 sed -i 's/"\/cloud-docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
 # check that there is no "{{site" not replaced in the output, ignoring binaries
-if grep -rI "{{site" --exclude=conref.html --exclude=index.html --exclude vscodesnippets.json builddocs/output
+if grep -rI "{{site" --exclude=conref-table.html --exclude=index.html --exclude vscodesnippets.json builddocs/output
 then
   echo "Found incorrect references"
   exit 1
