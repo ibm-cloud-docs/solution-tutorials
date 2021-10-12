@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-10-11"
+lastupdated: "2021-10-12"
 lasttested: "2021-10-08"
 
 content-type: tutorial
@@ -529,7 +529,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {: pre}
    
-   You can also use the command if the deployment is taking more time, Refer to this [link](https://docs.openshift.com/container-platform/4.8/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
+   You can also use the command if the deployment is taking more time, Refer to this [link](https://docs.openshift.com/container-platform/4.8/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {: tip}
 
 5. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
