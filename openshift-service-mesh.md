@@ -199,7 +199,7 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
 3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** or **Create ServiceMeshMemberRoll** and then select **YAML View**
-4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).  After the edits, the YAML should look something like this:
+4. Change `your-project` to `bookinfo` and delete the last line(`- another-of-your-projects`).  After the edits, the YAML should look something like this:
    ```yaml
    apiVersion: maistra.io/v1
    kind: ServiceMeshMemberRoll
