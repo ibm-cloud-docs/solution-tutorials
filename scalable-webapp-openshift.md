@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020, 2021
-lastupdated: "2021-10-12"
+lastupdated: "2021-10-18"
 lasttested: "2021-10-08"
 
 content-type: tutorial
@@ -285,6 +285,7 @@ In this section, you will learn to monitor the health and performance of your ap
 5. On the Grafana **Home** page, click on **General** > **Default** > **Kubernetes / Compute Resources / Namespace (Pods)** and Select
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
+   - time: **Last 5 minutes**
 6. Check the CPU and memory usage.
 7. Stop the above script using `control+C`. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.8/logging/viewing-resource-logs.html) to learn about the usage of `oc logs`.
 
