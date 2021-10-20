@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-10-11"
+lastupdated: "2021-10-20"
 lasttested: "2021-10-08"
 
 content-type: tutorial
@@ -170,10 +170,13 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 ### Install the Operators
 {: #openshift-service-mesh-5}
 
-1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
-2. Select **Operators** and then **OperatorHub**
+1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down.
+2. Select **Operators** and then **OperatorHub**.
 3. Search for **OpenShift Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
-4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
+4. **Repeat** the above steps 2 and 3 for installing Operators,
+   1. **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**
+   2. **Kiali Operator** (provided by Red Hat) 
+   3. **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** .
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
 {: tip}
@@ -183,13 +186,14 @@ This installs the Operators in the default `openshift-operators` project and mak
 
 The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
 
-1.  Create a new project by going to **Home** on the left pane of the web console, click **Projects** and then **Create Project**
-2.  Enter `istio-system` in the **Name** and click **Create**
-3.  Navigate to **Operators** and click **Installed Operators**
+1.  Create a new project by going to **Home** on the left pane of the web console, click **Projects** and then **Create Project**.
+2.  Enter `istio-system` in the **Name** and click **Create**.
+3.  Navigate to **Operators** and click **Installed Operators**.
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
 6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance** or **Create ServiceMeshControlPlane**.
-7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
+7.  Then, click **Create**. _The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters._
+8. To make sure that the Service Mesh Control Plane is installed properly, click on **basic** under `Name` in the list. On the subsequent page, you should see `9/9` readiness components and also when you scroll to the **Conditions** section of the page, you should see the reason `ComponentsReady` and a message `All component deployments are Available`.
 
 ### Create a ServiceMeshMemberRoll
 {: #openshift-service-mesh-7}
