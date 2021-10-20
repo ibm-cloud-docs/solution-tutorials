@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020, 2021
-lastupdated: "2021-10-12"
+lastupdated: "2021-10-20"
 lasttested: "2021-10-12"
 
 content-type: tutorial
@@ -576,7 +576,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 
 6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
-7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
+7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **state** field will change from **provisioning** to **Online** meaning it is good to go.
 8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Binding** tab.  Open the **Binding** tab, click **Create Binding** and select **YAML View**.  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1
@@ -720,7 +720,7 @@ The `patient-health-frontend` application has an environment variable for the ba
    ```
    {: pre}
 
-Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
+Your application is now backed by the mock patient data in the Cloudant DB! You can now log-in using any user-id/password in the Cloudant DB, use "**opall:opall**".
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your `services` in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
 2. Launch the Cloudant dashboard by clicking on **Launch Dashboard** button and then click the `patients` db.
@@ -1137,7 +1137,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 
    ![Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-2.png)
 
-2. Make this dashboard your own and then scope it to a specific namespace.
+2. Create a customized dashboard and then scope it to a specific namespace.
    - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network Traffic & Bandwidth`
    - Click **Create and Open**.
    - Edit the dashboard scope.
