@@ -321,6 +321,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 In this section, you will also expand the block storage volume attached to the VSI from 100 GB to 250 GB. To understand the maximum capacity on the selected volume profile, check [expanding block storage volume capacity](https://{DomainName}/docs/vpc?topic=vpc-expanding-block-storage-volumes&interface=ui)
 
 ### Resize the VSI 
+{: #vpc-scaling-dedicated-compute-resize-vsi}
 
 1. To resize the VSI, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
@@ -331,6 +332,7 @@ In this section, you will also expand the block storage volume attached to the V
 3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ### Expand block storage volume capacity
+{: #vpc-scaling-dedicated-compute-expand-volume}
 
 1. To expand the capacity of the attached block storage volume, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance_volume` variable to **true** and **Save** the setting.
 2. **Apply the plan** to increase the block storage volume capacity from `100 GB` to `250 GB`. 
