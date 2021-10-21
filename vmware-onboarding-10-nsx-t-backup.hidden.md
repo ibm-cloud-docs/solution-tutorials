@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [NSX-T Upgrade (Day2)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-11-nsx-t-upgrade)
+* [NSX-T Upgrade (Day2)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-nsx-t-upgrade)

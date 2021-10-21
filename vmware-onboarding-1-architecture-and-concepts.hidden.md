@@ -102,4 +102,4 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 
 The next step in the tutorial series is:
 
-* [Enable VRF and Service Endpoints](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-2-vrf-service-endpoints)
+* [Enable VRF and Service Endpoints](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vrf-service-endpoints)

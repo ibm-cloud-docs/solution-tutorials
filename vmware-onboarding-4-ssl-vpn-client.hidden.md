@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Order vCenter Server cluster w/NSX-T and NFS Storage](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-5-order-cluster-storage)
+* [Order vCenter Server cluster w/NSX-T and NFS Storage](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-order-cluster-storage)

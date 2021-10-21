@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Configure the Network and vSRX routing (BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-7-bgp)
+* [Configure the Network and vSRX routing (BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)

@@ -52,10 +52,3 @@ This tutorial requires:
 
 <!--#/istutorial#-->
 
-
-## Next Steps
-{: #vmware-onboarding-nsx-t-upgrade-next-steps}
-
-The next step in the tutorial series is:
-
-* [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vrf-service-endpoints)

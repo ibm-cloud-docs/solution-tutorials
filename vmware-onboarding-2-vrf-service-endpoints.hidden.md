@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Setup resource groups and IAM policies](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-3-resource-groups-iam)
+* [Setup resource groups and IAM policies](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-resource-groups-iam)

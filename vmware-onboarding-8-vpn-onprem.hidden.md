@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-9-deploy-workload)
+* [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-deploy-workload)

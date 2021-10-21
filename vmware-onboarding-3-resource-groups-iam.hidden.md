@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Setup SSL VPN Client](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-4-ssl-vpn-client)
+* [Setup SSL VPN Client](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-ssl-vpn-client)

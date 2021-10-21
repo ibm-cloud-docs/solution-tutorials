@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Order vSRX Gateway](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-6-vsrx-gateway)
+* [Order vSRX Gateway](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vsrx-gateway)

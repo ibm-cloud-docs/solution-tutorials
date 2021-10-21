@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [NSX-T Backup (Day2)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-10-nsx-t-backup)
+* [NSX-T Backup (Day2)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-nsx-t-backup)

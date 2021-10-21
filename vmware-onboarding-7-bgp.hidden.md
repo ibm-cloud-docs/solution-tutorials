@@ -58,4 +58,4 @@ This tutorial requires:
 
 The next step in the tutorial series is:
 
-* [Setup IPsec VPN tunnel to on-prem (Optional)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-8-vpn-onprem)
+* [Setup IPsec VPN tunnel to on-prem (Optional)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vpn-onprem)
