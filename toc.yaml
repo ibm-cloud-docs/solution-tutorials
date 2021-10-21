@@ -118,6 +118,21 @@ toc:
           - vmware-solutions-shared-getting-started.md
 
         - topicgroup:
+          label: VMware Journey (Classic)
+          topics:
+          - vmware-onboarding-1-architecture-and-concepts.hidden.md
+          - vmware-onboarding-2-vrf-service-endpoints.hidden.md
+          - vmware-onboarding-3-resource-groups-iam.hidden.md
+          - vmware-onboarding-4-ssl-vpn-client.hidden.md
+          - vmware-onboarding-5-order-cluster-storage.hidden.md
+          - vmware-onboarding-6-vsrx-gateway.hidden.md
+          - vmware-onboarding-7-bgp.hidden.md
+          - vmware-onboarding-8-vpn-onprem.hidden.md
+          - vmware-onboarding-9-deploy-workload.hidden.md
+          - vmware-onboarding-10-nsx-t-backup.hidden.md
+          - vmware-onboarding-11-nsx-t-upgrade.hidden.md
+
+        - topicgroup:
           label: High Performance Computing
           topics:
           - hpc-eda.md
