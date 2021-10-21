@@ -26,7 +26,7 @@ completion-time: 1h
 {:note: .note}
 
 # NSX-T Upgrade (Day2)
-{: #vmware-onboarding-nsx-t-backup}
+{: #vmware-onboarding-nsx-t-upgrade}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,13 +39,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-nsx-t-backup-objectives}
+{: #vmware-onboarding-nsx-t-upgrade-objectives}
 
 
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-nsx-t-backup-prereqs}
+{: #vmware-onboarding-nsx-t-upgrade-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -54,7 +54,7 @@ This tutorial requires:
 
 
 ## Next Steps
-{: #vmware-onboarding-nsx-t-backup-next-steps}
+{: #vmware-onboarding-nsx-t-upgrade-next-steps}
 
 The next step in the tutorial series is:
 
