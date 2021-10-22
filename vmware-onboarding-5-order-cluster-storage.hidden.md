@@ -8,7 +8,7 @@ lasttested: "2021-10-22"
 content-type: tutorial
 services: vmwaresolutions
 account-plan: paid
-completion-time: 1h
+completion-time: 20m
 ---
 
 {:step: data-tutorial-type='step'}
