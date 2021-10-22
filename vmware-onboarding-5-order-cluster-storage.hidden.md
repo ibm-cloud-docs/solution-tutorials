@@ -55,7 +55,6 @@ This tutorial requires:
 
 
 ## Provision VMware Solutions Dedicated Environment
-
 {: #vmware-onboarding-order-cluster-storage-provision}
 
 {: step}
