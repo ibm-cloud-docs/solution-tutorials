@@ -60,7 +60,7 @@ This tutorial requires:
 
 {: step}
 
-1. Login to the IBM Cloud and navigate to the IBM Cloud Catalog (https://cloud.ibm.com/catalog). Search for and click on the VMware Solutions tile:
+1. Login to the IBM Cloud and navigate to the IBM Cloud Catalog. Search for and click on the VMware Solutions tile:
 
    ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/catalog-tile.png){: class="center"}
    
