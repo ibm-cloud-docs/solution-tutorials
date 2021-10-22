@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-22"
+lasttested: "2021-10-22"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -50,8 +50,7 @@ A tip if needed.
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
 * Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
-
-![Architecture](images/solution-vmware-onboarding-hidden/Architecture.png){: class="center"}
+![Architecture](images/solution-vmware-onboarding-hidden/architecture.jpg){: class="center"}
 {: style="text-align: center;"}
 
 
