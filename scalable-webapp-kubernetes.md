@@ -6,7 +6,7 @@ lastupdated: "2021-09-20"
 lasttested: "2021-09-17"
 
 content-type: tutorial
-services: containers, Registry, certificate-manager
+services: containers, Registry
 account-plan: paid
 completion-time: 2h
 ---

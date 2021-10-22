@@ -22,7 +22,7 @@ completion-time: 2h
 # Accelerate delivery of static files using a CDN
 {: #static-files-cdn}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-foundry-public, CDN, cloud-object-storage"}
+{: toc-services="CDN, cloud-object-storage"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->

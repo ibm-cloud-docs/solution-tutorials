@@ -8,7 +8,7 @@ lasttested: "2021-01-07"
 content-type: tutorial
 services: cloud-object-storage, sql-query
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
