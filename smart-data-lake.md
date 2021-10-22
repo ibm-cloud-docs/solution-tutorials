@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018-2021
+  years: 2021
 lastupdated: "2021-08-24"
 lasttested: "2021-01-07"
 
