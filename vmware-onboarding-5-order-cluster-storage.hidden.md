@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-22"
-lasttested: "2021-10-22"
+lastupdated: "2021-10-25"
+lasttested: "2021-10-25"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -63,12 +63,10 @@ This tutorial requires:
 
    ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/catalog-tile.png){: class="center"}
    
-
 1. Select the VMware Solutions Dedicate resource.
 
    ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/vmware-sol-dedicated-tile.png){: class="center"}
    
-
 1. Cluster to be ordered:
 
    - A single VMware instance (cluster) to be located in Washington 07
