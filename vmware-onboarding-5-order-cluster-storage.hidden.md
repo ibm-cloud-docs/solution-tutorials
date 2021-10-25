@@ -55,7 +55,6 @@ This tutorial requires:
 
 
 ## Provision VMware Solutions Dedicated Environment
-
 {: #vmware-onboarding-order-cluster-storage-provision}
 
 {: step}
@@ -64,12 +63,10 @@ This tutorial requires:
 
    ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/catalog-tile.png){: class="center"}
    
-
 1. Select the VMware Solutions Dedicate resource.
 
    ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/vmware-sol-dedicated-tile.png){: class="center"}
    
-
 1. Cluster to be ordered:
 
    - A single VMware instance (cluster) to be located in Washington 07
