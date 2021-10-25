@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-22"
-lasttested: "2021-10-22"
+lastupdated: "2021-10-25"
+lasttested: "2021-10-25"
 
 content-type: tutorial
 services: vmwaresolutions
