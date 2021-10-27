@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-25"
-lasttested: "2021-10-25"
+lastupdated: "2021-10-27"
+lasttested: "2021-10-27"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -36,6 +36,10 @@ The SSL VPN client establishes connectivity with the IBM Cloud Classic Infra. Th
 {: tip}
 
 <!--#/istutorial#-->
+
+![Architecture](images/solution-vmware-onboarding-hidden/ssl-vpn/architecture-sslvpn-callout.jpg){: class="center"}
+
+
 
 
 ## Video Walk Through
