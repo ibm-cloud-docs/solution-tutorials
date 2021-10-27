@@ -25,15 +25,13 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Review architecture and concepts
+# VM
 {: #vmware-onboarding-architecture-and-concepts}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
 
 <!--#/istutorial#-->
 
