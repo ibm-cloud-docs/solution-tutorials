@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-25"
-lasttested: "2021-10-25"
+lastupdated: "2021-10-27"
+lasttested: "2021-10-27"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -29,21 +29,18 @@ completion-time: 1h
 {: #vmware-onboarding-order-cluster-storage}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
-{: toc-completion-time="20m"}
-
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
-
-<!--#/istutorial#-->
+{: toc-completion-time="30m"}
 
 
-## Objectives
+
+
+## Overview
 {: #vmware-onboarding-order-cluster-storage-objectives}
 
-
+Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud Catalog. Automated deployment will provision to required VLANs, bare metal servers, VCS software, 
 
 <!--##istutorial#-->
+
 ## Before you begin
 {: #vmware-onboarding-order-cluster-storage-prereqs}
 
