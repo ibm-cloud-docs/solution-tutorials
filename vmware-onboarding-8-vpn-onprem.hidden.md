@@ -95,13 +95,13 @@ Scroll down to Network Interfaces. Next to the datacenter you have deployed the 
 Open this file – you will need the following information:
 - VLAN number – in the example below the VLAN is 822
 - Gateways that will need to be assigned to the vSRX. In the example below there are seven subnets that need to have the vSRX as the next-hop. They are:
-  - 10.65.0.65/26
-  - 10.65.14.129/25
-  - 10.65.159.65/26
-  - 10.65.200.129/26
-  - 10.211.71.193/26
-  - 10.211.147.1/25
-  - 10.65.13.65/26
+   - 10.65.0.65/26
+   - 10.65.14.129/25
+   - 10.65.159.65/26
+   - 10.65.200.129/26
+   - 10.211.71.193/26
+   - 10.211.147.1/25
+   - 10.65.13.65/26
 
 Log back into the vSRX using the user ID created above. From the vSRX prompt run the following commands to assign the gateway IP addresses to a new interface unit. Replace 822 with your VLAN ID and the address as appropriate:
 ```
