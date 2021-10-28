@@ -25,8 +25,8 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Configure Route-through to on-prem (Optional)
-{: #vmware-onboarding-vpn-onprem}
+# Setup Route-through
+{: #vmware-onboarding-route-through-setup}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,69 +39,82 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-vpn-onprem-objectives}
+{: #vmware-onboarding-route-through-setup-objectives}
 
+- These instructions assume that no additional configuration has been done on the vSRX.
+- The setup will route the Primary VLAN of your VCS instance only. Secondary VLANs can also be routed but an additional interface unit on the vSRX would have to be configured.
+- Rules provided are for private-to-private communication only. This configuration will allow the vSRX to supplant the Backend Customer Router (BCR) as the ‘next-hop’ for the VCS environment.
+- While firewall policies are configured, they are set as ‘allow all’. More detailed configuration is possible but outside the scope of this document. 
 
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-vpn-onprem-prereqs}
+{: #vmware-onboarding-route-through-setup-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
+- An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
+- A configured VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://cloud.ibm.com/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
+
 
 <!--#/istutorial#-->
 ## Steps
 
-Configuring the vSRX
-The steps below will walk through the steps required in order to correctly configure the vSRX. A few points:
-- These instructions assume that no additional configuration has been done on the vSRX.
-- These instructions will route the Primary VLAN of your VCS instance only. Secondary VLANs can also be routed but an additional interface unit on the vSRX would have to be configured.
-- Rules provided are for private-to-private communication only. This configuration will allow the vSRX to supplant the Backend Customer Router (BCR) as the ‘next-hop’ for the VCS environment.
-- While firewall policies are configured, they are set as ‘allow all’. More detailed configuration is possible but outside the scope of this document. 
-The first step is to configure your VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://cloud.ibm.com/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
-Once logged into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://cloud.ibm.com. 
-From the IBM Cloud home page of your account click on the menu hamburger in the upper right corner and navigate to VMware  Resources.
-Select the vCenter Server instances that has the vSRX deployed.
-In the left-hand menu pane – select Services.
-Select Juniper vSRX in the menu.
-On the Juniper vSRX screen – capture the Private IP address and the command line password for the device. Below is an example from our test instance.
+### Configuring the vSRX
+
+The steps below will walk through the steps required in order to correctly configure the vSRX.
+
+1. Log into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://cloud.ibm.com. 
+2. From the IBM Cloud home page of your account click on the menu hamburger in the upper corner and navigate to VMware -> Resources.
+3. Select the vCenter Server instances that has the vSRX deployed.
+4. In the left-hand menu pane – select Services.
+5. Select Juniper vSRX in the menu.
+6. On the Juniper vSRX screen – capture the Private IP address and the command line password for the device. Below is an example from our test instance.
+
+![Architecture](images/solution-vmware-onboarding-hidden/route-through-setup/private-ip-password-page.png){: class="center"}
  
-From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
+7. From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
 `ssh root@10.211.7.4`
-Log into the vSRX using the password from the IBM Cloud portal.
+8. Log into the vSRX using the password from the IBM Cloud portal.
 We recommend that if this is your first-time logging into the vSRX you create a user account to use as opposed to root. To do so type the folling commands:
-```
-cli
-configure
-- set system login user `<USERNAME>` class super user authentication plain-text-password
-  - where `<USERNAME>` is the user name you would like to use
-  - Enter a password for the user, then enter the same password again.
-commit
-exit
-exit
-exit
-```
+    ```
+    cli
+    configure
+    set system login user `<USERNAME>` class super user authentication plain-text-password
+    ```
+    where `<USERNAME>` is the user name you would like to use
+    Enter a password for the user, then enter the same password again.
+    ```
+    commit
+    exit
+    exit
+    exit
+    ```
   
-At this point you should be back to your terminal shell. Now login again to the vSRX at:
-•	`ssh <USERNAME>@10.211.7.4`
-To confirm that your new ID and password is functional.
-The next step is to gather the information needed for the gateway IP address that will be added to the vSRX.
-From the IBM Cloud Portal once again click on the hamburger menu in the upper right corner and navigate to to VMware  Resources.
-Select the vCenter Server instances that has the vSRX deployed.
-In the left-hand menu pane – select Infrastructure.
-Select the cluster you plan on routing through the vSRX.
-Scroll down to Network Interfaces. Next to the datacenter you have deployed the cluster you will see a download link. Click on this link to download a .csv file that contains all the VLAN and subnet information for the cluster.
+9. At this point you should be back to your terminal shell. To confirm that your new ID and password is functional, login to the vSRX at:
+
+    ```
+    ssh <USERNAME>@10.211.7.4
+    ```
+
+10. The next step is to gather the information needed for the gateway IP address that will be added to the vSRX.
+From the IBM Cloud Portal:
+    - Click on the hamburger menu in upper corner and navigate to VMware -> Resources.
+    - Select the vCenter Server instances that has the vSRX deployed.
+    - In the left-hand menu pane – select Infrastructure.
+    - Select the cluster you plan on routing through the vSRX.
+    - Scroll down to Network Interfaces. Next to the datacenter you have deployed the cluster you will see a download link.
+    - Click on this link to download a .csv file that contains all the VLAN and subnet information for the cluster.
+
 Open this file – you will need the following information:
 - VLAN number – in the example below the VLAN is 822
 - Gateways that will need to be assigned to the vSRX. In the example below there are seven subnets that need to have the vSRX as the next-hop. They are:
-  - 10.65.0.65/26
-  - 10.65.14.129/25
-  - 10.65.159.65/26
-  - 10.65.200.129/26
-  - 10.211.71.193/26
-  - 10.211.147.1/25
-  - 10.65.13.65/26
+   - 10.65.0.65/26
+   - 10.65.14.129/25
+   - 10.65.159.65/26
+   - 10.65.200.129/26
+   - 10.211.71.193/26
+   - 10.211.147.1/25
+   - 10.65.13.65/26
 
 Log back into the vSRX using the user ID created above. From the vSRX prompt run the following commands to assign the gateway IP addresses to a new interface unit. Replace 822 with your VLAN ID and the address as appropriate:
 ```
@@ -163,7 +176,7 @@ commit
 ```
 At this point your configuration is complete. The next steps are to set the vSRX into route-through mode. By setting the vSRX into route-through you will ‘move’ the VLAN to being the BCR as the next-hop to the vSRX as the next-hop. 
 
-From the IBM Cloud Portal: 
+### IBM Cloud Portal Set Route-Through: 
 - click on the hamburger menu and navigate to Classic Infrastructure -> Gateway Appliances.
 - Select the VMware instance gateway cluster.
 - Select VLANs in the left menu selection bar.
@@ -176,8 +189,8 @@ It will take a minute or two to take effect. To confirm that this configuration 
 
 
 ## Next Steps
-{: #vmware-onboarding-vpn-onprem-next-steps}
+{: #vmware-onboarding-route-through-setup-next-steps}
 
 The next step in the tutorial series is:
 
-* [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-deploy-workload)
+* [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
