@@ -59,8 +59,8 @@ The steps below will walk through the steps required in order to correctly confi
 - These instructions will route the Primary VLAN of your VCS instance only. Secondary VLANs can also be routed but an additional interface unit on the vSRX would have to be configured.
 - Rules provided are for private-to-private communication only. This configuration will allow the vSRX to supplant the Backend Customer Router (BCR) as the ‘next-hop’ for the VCS environment.
 - While firewall policies are configured, they are set as ‘allow all’. More detailed configuration is possible but outside the scope of this document. 
-The first step is to configure your VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://cloud.ibm.com/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
-Once logged into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://cloud.ibm.com. 
+The first step is to configure your VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://{DomainName}/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
+Once logged into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://{DomainName}. 
 From the IBM Cloud home page of your account click on the menu hamburger in the upper right corner and navigate to VMware  Resources.
 Select the vCenter Server instances that has the vSRX deployed.
 In the left-hand menu pane – select Services.
