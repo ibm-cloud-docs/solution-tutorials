@@ -58,8 +58,10 @@ This tutorial requires:
 
 <!--#/istutorial#-->
 ## Steps
+{: #vmware-onboarding-route-through-setup-steps}
 
 ### Configuring the vSRX
+{: #vmware-onboarding-route-through-setup-vsrx}
 
 The steps below will walk through the steps required in order to correctly configure the vSRX.
 
@@ -176,7 +178,9 @@ commit
 ```
 At this point your configuration is complete. The next steps are to set the vSRX into route-through mode. By setting the vSRX into route-through you will ‘move’ the VLAN to being the BCR as the next-hop to the vSRX as the next-hop. 
 
-### IBM Cloud Portal Set Route-Through: 
+### IBM Cloud Portal Set Route-Through:
+{: #vmware-onboarding-route-through-setup-portal}
+
 - click on the hamburger menu and navigate to Classic Infrastructure -> Gateway Appliances.
 - Select the VMware instance gateway cluster.
 - Select VLANs in the left menu selection bar.
