@@ -1162,20 +1162,20 @@
           ]
         },
         {
+         "name": "Setup Route-through",
+         "url": "vmware-onboarding-6.5-route-through-setup.hidden.html",
+         "description": ".",
+         "imgSrc": "images/solution-vmware-onboarding-hidden/route-through-setup/private-ip-password-page.png",
+         "tags": [
+           "VMware"
+         ],
+         "requirements": [
+           "vmware"
+         ]
+       },
+        {
           "name": "Configure the Network and vSRX routing (BGP)",
           "url": "vmware-onboarding-7-bgp.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Setup IPsec VPN tunnel to on-prem (Optional)",
-          "url": "vmware-onboarding-8-vpn-onprem.hidden.html",
           "description": ".",
           "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
           "tags": [

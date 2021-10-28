@@ -126,8 +126,8 @@ toc:
           - vmware-onboarding-4-ssl-vpn-client.hidden.md
           - vmware-onboarding-5-order-cluster-storage.hidden.md
           - vmware-onboarding-6-vsrx-gateway.hidden.md
+          - vmware-onboarding-6.5-route-through-setup.hidden.md
           - vmware-onboarding-7-bgp.hidden.md
-          - vmware-onboarding-8-vpn-onprem.hidden.md
           - vmware-onboarding-9-deploy-workload.hidden.md
           - vmware-onboarding-10-nsx-t-backup.hidden.md
           - vmware-onboarding-11-nsx-t-upgrade.hidden.md
