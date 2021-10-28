@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018-2021
-lastupdated: "2021-09-27"
+  years: 2021
+lastupdated: "2021-10-28"
 lasttested: "2021-07-09"
 
 content-type: tutorial
@@ -333,7 +333,7 @@ All services have been configured. In this section you will deploy the tutorial 
       ```
       {: pre}
 
-   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` one and the {{site.data.keyword.registryfull_notm}}. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
+   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
    {: tip}
 
 4. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
