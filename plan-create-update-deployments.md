@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-08"
+lastupdated: "2021-10-28"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -105,7 +105,7 @@ The *Development*, *Testing* and *Production* environments pretty much look the 
 ![Diagram showing the deployment environment](./images/solution26-plan-create-update-deployments/one-environment.svg){: caption="One environment deployed into a resource group" caption-side="bottom" class="center" }
 
 
-They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, we will only deploy a VSI each and no cluster. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
+They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, only a VSI will be deployed in each environment, no cluster will be deployed. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
 
 ![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: class="center"}
@@ -114,7 +114,7 @@ They all share the same type of resources, but differ by the allocated capacity 
 ### Global Configuration
 {: #plan-create-update-deployments-4}
 
-Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) directory, you find the Terraform scripts to provision common resources. It could be an instance of {{site.data.keyword.atracker_full_notm}} which we won't do in this tutorial. To illustrate what could be done, the file [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the readout of the account ID:
+Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) directory, you find the Terraform scripts to provision common resources. It could be an instance of {{site.data.keyword.atracker_full_notm}} (this tutorial won't create such instance). To illustrate what could be done, the file [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the readout of the account ID:
 
 ```sh
 data "ibm_iam_account_settings" "iam_account_settings" {
@@ -150,7 +150,7 @@ Each environment requires:
 * a database
 * a file storage
 
-If we would need to access information from the global configuration, we could utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html) will help. It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
+To access information from the global configuration, you can utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html). It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
 
 ```sh
 data "terraform_remote_state" "global" {
@@ -164,7 +164,7 @@ data "terraform_remote_state" "global" {
 {: codeblock}
 
 
-To set up a deployment environment, we begin by creating a resource group. Its name is taken from an environment variable:
+Setting up a deployment environment begins with creating a resource group. Its name is taken from an environment variable:
 
 ```sh
 # a resource group
@@ -174,7 +174,7 @@ resource "ibm_resource_group" "group" {
 ```
 {: codeblock}
 
-The VPC is created in that resource group and named like the deployment environment.
+The VPC is created in that resource group. The VPC is named after the deployment environment.
 
 ```sh
 resource "ibm_is_vpc" "vpc1" {
@@ -204,7 +204,7 @@ resource "ibm_is_instance" "vsi1" {
 ```
 {: codeblock}
 
-The ssh key to access the VSI is generated, too. It private key part is written to the output directory and can be used later on to connect to the VSI.
+The ssh key to access the VSI is generated, too. The private key part of this ssh key is written to the output directory and can be used later on to connect to the VSI.
 
 IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {{site.data.keyword.cloudant_short_notm}} are also created as resources within the group:
 
