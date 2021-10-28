@@ -53,7 +53,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial requires:
 - An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
-- A configured VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://cloud.ibm.com/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
+- A configured VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://{DomainName}/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
 
 
 <!--#/istutorial#-->
@@ -65,7 +65,7 @@ This tutorial requires:
 
 The steps below will walk through the steps required in order to correctly configure the vSRX.
 
-1. Log into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://cloud.ibm.com. 
+1. Log into your VPN client, bring up a browser on your desktop and log into IBM Cloud at https://{DomainName}. 
 2. From the IBM Cloud home page of your account click on the menu hamburger in the upper corner and navigate to VMware -> Resources.
 3. Select the vCenter Server instances that has the vSRX deployed.
 4. In the left-hand menu pane – select Services.
