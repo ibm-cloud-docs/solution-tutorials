@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -25,8 +25,8 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Order vSRX Gateway
-{: #vmware-onboarding-vsrx-gateway}
+# Prepare Your IBM Cloud Account
+{: #vmware-onboarding-resource-groups-iam}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,13 +39,27 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-vsrx-gateway-objectives}
+{: #vmware-onboarding-resource-groups-iam-objectives}
 
 
+
+In this section ...... 
+
+![Architecture](images/solution-vmware-onboarding-hidden/prepare-account/journey-map.png){: class="center"}
+
+
+
+* Enable VRF and Service Endpoints
+
+* Setup IAM
+
+* Setup Resource Groups
+
+  
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-vsrx-gateway-prereqs}
+{: #vmware-onboarding-resource-groups-iam-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -54,8 +68,8 @@ This tutorial requires:
 
 
 ## Next Steps
-{: #vmware-onboarding-vsrx-gateway-next-steps}
+{: #vmware-onboarding-resource-groups-iam-next-steps}
 
 The next step in the tutorial series is:
 
-* [Configure the Network and vSRX routing (BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
+* [Setup SSL VPN Client](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-ssl-vpn-client)

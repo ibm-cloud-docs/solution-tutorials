@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-27"
-lasttested: "2021-10-27"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -37,6 +37,12 @@ completion-time: 20m
 ## Overview
 {: #vmware-onboarding-order-cluster-storage-objectives}
 
+In this section of the deployment journey, a VCS environment ordered. The information below will focus on commonly used configuration. 
+
+![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/journey-map.png){: class="center"}
+
+
+
 Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud Catalog. Automated deployment will provision the required VLANs, bare metal servers, and VCS software. For the purposes of this guide, the following assumptions are being made:
 
 - A single VMware instance (cluster) to be located in Washington 07 
@@ -47,7 +53,7 @@ Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud
 <!--##istutorial#-->
 
 ## Video Walk Through
-{: #vmware-onboarding-order-cluster-storage-prereqs}
+{: #vmware-onboarding-order-cluster-video-walkthrough}
 
 * Video Goes Here
 

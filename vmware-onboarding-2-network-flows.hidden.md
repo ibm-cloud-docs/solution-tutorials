@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -25,7 +25,7 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Enable VRF and Service Endpoints
+# Plan Network Connectivity Flows
 {: #vmware-onboarding-vrf-service-endpoints}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
@@ -40,6 +40,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 ## Objectives
 {: #vmware-onboarding-vrf-service-endpoints-objectives}
+
+
+
+In this section ...... 
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/journey-map.png){: class="center"}
 
 
 

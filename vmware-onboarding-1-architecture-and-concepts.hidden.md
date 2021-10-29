@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-22"
-lasttested: "2021-10-22"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -25,50 +25,39 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Review architecture and concepts
+# Deployment Journey Overview
 {: #vmware-onboarding-architecture-and-concepts}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
+{: toc-completion-time="30m"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
 
 <!--#/istutorial#-->
 
-This should show the big picture of what we are going to walk users through.  Mike has some of the content already from the Netifinity Journey boxnote.
+IBM Cloud for VMware Solutions makes it simpler for your organization to capitalize on the tremendous value of the cloud. The solution provides a path to migrate VMware workloads to the IBM Cloud while using existing tools, technologies and skills from your on-premises environment.  The information contained within this document is meant to serve as a technical guide for starting with a new IBM Cloud towards a fully configured VMware instance. 
 {: shortdesc}
 
-A tip if needed.
-{: tip}
-
-## Objectives (Example)
-{: #vmware-onboarding-architecture-and-concepts-objectives}
-
-* Create and explore a {{site.data.keyword.vmwaresolutions_short}} Shared instance in the {{site.data.keyword.Bluemix_notm}}.
-* Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
-* Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
-
-![Architecture](images/solution-vmware-onboarding-hidden/architecture.jpg){: class="center"}
-{: style="text-align: center;"}
+## Getting Started
+{: #vmware-onboarding-architecture-and-concepts-overview}
 
 
-1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and is capable of routing traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network for connectivity to other {{site.data.keyword.Bluemix_notm}} services.
-2. Review a Terraform template that will be used to configure and create resources in the VDC:
-    - Create a routed network, this type of network provides controlled access to machines outside of the VDC via an edge gateway.
-    - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network.
-    - Create a vApp and configure it to use the routed network.
-    - Create a virtual machine instance inside of the vApp.
-    - Create firewall and DNAT rules on the edge gateway to allow SSH from the Internet to the virtual machine.
-3. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
-4. Use the {{site.data.keyword.bplong_notm}} service to apply the Terraform template and create the resources in the VDC.
+
+![Architecture](images/solution-vmware-onboarding-hidden/intro/journeymap-1.png){: class="center"}
+
+
+
+
+1. 
 
 <!--##istutorial#-->
-## Before you begin
+## Technical Architure
 {: #vmware-onboarding-architecture-and-concepts-prereqs}
 
+![Architecture](images/solution-vmware-onboarding-hidden/architecture.jpg){: class="center"}
+
 This tutorial requires:
+
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
@@ -82,14 +71,6 @@ A GitHub account is optional and only required if you plan on modifying the prov
 
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
-### {{site.data.keyword.vmwaresolutions_short}} Shared
-{: #vmware-onboarding-architecture-and-concepts-create-1}
-
-1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
-2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
-3. For **Pricing Plans**, select `On-Demand`.
-4. Enter the virtual data center name, i.e. `vmware-tutorial`.
-5. Select the **Resource group** where to create the service instance.
 6. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
 7. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
 8. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
