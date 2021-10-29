@@ -58,7 +58,6 @@ Taking the time to understand and plan network fows is a key ingredient to succe
 
 
 ## Detailed Flows
-
 {: #vmware-onboarding-network-flows-details}
 
 
