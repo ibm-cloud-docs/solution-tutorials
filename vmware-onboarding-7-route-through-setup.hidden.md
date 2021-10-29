@@ -77,7 +77,7 @@ The steps below will walk through the steps required in order to correctly confi
 7. From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
 `ssh root@10.211.7.4`
 8. Log into the vSRX using the password from the IBM Cloud portal.
-  We recommend that if this is your first-time logging into the vSRX you create a user account to use as opposed to root. To do so type the folling commands:
+   We recommend that if this is your first-time logging into the vSRX you create a user account to use as opposed to root. To do so type the folling commands:
     ```
     cli
     configure
