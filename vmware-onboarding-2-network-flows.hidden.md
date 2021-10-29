@@ -26,42 +26,75 @@ completion-time: 1h
 {:note: .note}
 
 # Plan Network Connectivity Flows
-{: #vmware-onboarding-vrf-service-endpoints}
+{: #vmware-onboarding-network-flows}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+Taking the time to understand and plan network fows is a key ingredient to successful deployment. As you review this section, consider the connectivity requirements you have today but may also need in the future.
 {: tip}
 
 <!--#/istutorial#-->
 
 
 ## Objectives
-{: #vmware-onboarding-vrf-service-endpoints-objectives}
+{: #vmware-onboarding-network-flows-objectives}
 
 
-
-In this section ...... 
 
 ![Architecture](images/solution-vmware-onboarding-hidden/network-flows/journey-map.png){: class="center"}
 
 
 
 <!--##istutorial#-->
-## Before you begin
-{: #vmware-onboarding-vrf-service-endpoints-prereqs}
+## Video Walk Through
+{: #vmware-onboarding-network-flows-video-walkthrough}
 
-This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
+* Video walk through will go here [TODO]
 
 <!--#/istutorial#-->
 
 
+
+## Detailed Flows
+{: #vmware-onboarding-network-flows-details}
+
+
+
+In this section, detailed network flows will be reviewed. The following network architecture will be broken down into five different flows:
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow3.png){: class="center"}
+
+
+
+**Flow1: VM to VM traffic (overlay workload)**
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow2.png){: class="center"}
+
+
+
+**Flow2: VM to IBM Cloud Private (10.x & 161.x) networks**
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow3.png){: class="center"}
+
+
+
+**Flow3: VM to Internet**
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow4.png){: class="center"}
+
+**Flow4: Internet to VM**
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow5.png){: class="center"}
+
+**Flow5: VM to Client Campus Network over VPN**
+
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow6.png){: class="center"}
+
 ## Next Steps
-{: #vvmware-onboarding-vrf-service-endpoints-next-steps}
+{: #vvmware-onboarding-network-flows-next-steps}
 
-The next step in the tutorial series is:
+The next step in the series is:
 
-* [Setup resource groups and IAM policies](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-resource-groups-iam)
+* [Prepare Your Cloud Account](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-resource-groups-iam)
