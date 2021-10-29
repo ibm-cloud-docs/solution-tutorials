@@ -1122,6 +1122,30 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Deployment Journey",
+      "hidden": true,
+      "journey": true,
+      "journeys": [
+        {
+          "name": "VMware on Classic",
+          "hidden": true,
+          "files": [
+            "vmware-onboarding-1-architecture-and-concepts.hidden.md",
+            "vmware-onboarding-2-network-flows.hidden.md",
+            "vmware-onboarding-3-prepare-account.hidden.md",
+            "vmware-onboarding-4-order-cluster-storage.hidden.md",
+            "vmware-onboarding-5-vsrx-gateway.hidden.md",
+            "vmware-onboarding-6-ssl-vpn-client.hidden.md",
+            "vmware-onboarding-7-vsrx-route-through-setup.hidden.md",
+            "vmware-onboarding-8-vsrx-bgp.hidden.md",
+            "vmware-onboarding-9-deploy-workload.hidden.md",
+            "vmware-onboarding-10-nsx-t-backup.hidden.md",
+            "vmware-onboarding-11-nsx-t-upgrade.hidden.md"
+          ]
+        }
+      ]
     }
   ]
 }

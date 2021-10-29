@@ -181,7 +181,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-10-08"
+          "lastUpdated": "2021-10-28"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -350,7 +350,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-09-27"
+          "lastUpdated": "2021-10-28"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -366,7 +366,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-09-29"
+          "lastUpdated": "2021-10-28"
         }
       ]
     },
