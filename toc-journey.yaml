@@ -1,0 +1,38 @@
+toc:
+  properties:
+    subcollection: solution-tutorials
+    category: platform_services
+    audience: platform
+    href: /docs/solution-tutorials?topic=solution-tutorials-tutorials
+    path: solution-tutorials
+    label: Solution Tutorials
+    version: 2
+
+  entries:
+    - navgroup:
+      id: learn
+      topics:
+      - index.md
+
+    - navgroup:
+      id: tutorial
+      topics:
+      - topicgroup:
+        label: Deployment Journey
+        topics:
+
+        - topicgroup:
+          label: VMware on Classic
+          topics:
+          - vmware-onboarding-1-architecture-and-concepts.hidden.md
+          - vmware-onboarding-2-network-flows.hidden.md
+          - vmware-onboarding-3-prepare-account.hidden.md
+          - vmware-onboarding-4-order-cluster-storage.hidden.md
+          - vmware-onboarding-5-vsrx-gateway.hidden.md
+          - vmware-onboarding-6-ssl-vpn-client.hidden.md
+          - vmware-onboarding-6.5-route-through-setup.hidden.md
+          - vmware-onboarding-7-vsrx-route-through.hidden.md
+          - vmware-onboarding-8-vsrx-bgp.hidden.md
+          - vmware-onboarding-9-deploy-workload.hidden.md
+          - vmware-onboarding-10-nsx-t-backup.hidden.md
+          - vmware-onboarding-11-nsx-t-upgrade.hidden.md
