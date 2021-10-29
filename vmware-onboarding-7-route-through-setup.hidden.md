@@ -25,17 +25,17 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Setup Route-through
+# Setup Route Through on vSRX
 {: #vmware-onboarding-route-through-setup}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
 
-<!--#/istutorial#-->
+
+![Architecture](images/solution-vmware-onboarding-hidden/vsrx-route-through/journey-map.png){: class="center"}
+
+
 
 
 ## Objectives
@@ -73,11 +73,11 @@ The steps below will walk through the steps required in order to correctly confi
 6. On the Juniper vSRX screen – capture the Private IP address and the command line password for the device. Below is an example from our test instance.
 
 ![Architecture](images/solution-vmware-onboarding-hidden/route-through-setup/private-ip-password-page.png){: class="center"}
- 
+
 7. From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
 `ssh root@10.211.7.4`
 8. Log into the vSRX using the password from the IBM Cloud portal.
-We recommend that if this is your first-time logging into the vSRX you create a user account to use as opposed to root. To do so type the folling commands:
+  We recommend that if this is your first-time logging into the vSRX you create a user account to use as opposed to root. To do so type the folling commands:
     ```
     cli
     configure
@@ -99,7 +99,7 @@ We recommend that if this is your first-time logging into the vSRX you create a 
     ```
 
 10. The next step is to gather the information needed for the gateway IP address that will be added to the vSRX.
-From the IBM Cloud Portal:
+    From the IBM Cloud Portal:
     - Click on the hamburger menu in upper corner and navigate to VMware -> Resources.
     - Select the vCenter Server instances that has the vSRX deployed.
     - In the left-hand menu pane – select Infrastructure.
