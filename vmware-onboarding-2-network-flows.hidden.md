@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -45,9 +45,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 In this section ...... 
 
-<img src="/Users/bryand/Documents/Sandbox/cloud-docs/solution-tutorials/images/solution-vmware-onboarding-hidden/network-flows/journey-map.png" alt="Journey Map" style="zoom:67%;" />
-
-
+![Architecture](images/solution-vmware-onboarding-hidden/network-flows/journey-map.png){: class="center"}
 
 
 

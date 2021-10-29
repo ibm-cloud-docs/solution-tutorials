@@ -39,7 +39,7 @@ completion-time: 20m
 
 In this section of the deployment journey, a VCS environment ordered. The information below will focus on commonly used configuration. 
 
-<img src="images/solution-vmware-onboarding-hidden/order-cluster/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/journey-map.png){: class="center"}
 
 
 

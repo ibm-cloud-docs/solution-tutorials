@@ -45,7 +45,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 In this section ...... 
 
-<img src="images/solution-vmware-onboarding-hidden/prepare-account/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+![Architecture](images/solution-vmware-onboarding-hidden/prepare-account/journey-map.png){: class="center"}
 
 
 

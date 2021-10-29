@@ -43,7 +43,9 @@ For this deployment journey, a vSRX device is used. Other gateway devices may al
 
 In this section of the deployment journey, a gateway device is ordered. The information below will focus on one of our commonly used gateway devices, a vSRX. However, concepts can be applied to others as well.
 
-<img src="images/solution-vmware-onboarding-hidden/order-vsrx/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+
+
+![Architecture](images/solution-vmware-onboarding-hidden/order-vsrx/journey-map.png){: class="center"}
 
 <!--##istutorial#-->
 

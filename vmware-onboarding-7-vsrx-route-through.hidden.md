@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-28"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 
-<img src="images/solution-vmware-onboarding-hidden/vsrx-route-through/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+![Architecture](images/solution-vmware-onboarding-hidden/vsrx-route-through/journey-map.png){: class="center"}
 
 
 
