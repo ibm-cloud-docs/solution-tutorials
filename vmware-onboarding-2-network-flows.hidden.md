@@ -94,7 +94,6 @@ In this section, detailed network flows will be reviewed. The following network 
 ![Architecture](images/solution-vmware-onboarding-hidden/network-flows/flow6.png){: class="center"}
 
 ## Next Steps
-
 {: #vvmware-onboarding-network-flows-next-steps}
 
 The next step in the series is:
