@@ -56,6 +56,7 @@ This tutorial requires:
 
 <!--#/istutorial#-->
 ## Steps
+{: #vmware-onboarding-vpn-onprem-steps}
 
 Configuring the vSRX
 The steps below will walk through the steps required in order to correctly configure the vSRX. A few points:

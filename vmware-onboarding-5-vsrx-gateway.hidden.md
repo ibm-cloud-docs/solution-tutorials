@@ -58,7 +58,6 @@ The gateway device both provides a network boundary protecting all traffic enter
 
 
 ## Detailed Steps
-
 {: #vmware-onboarding-vsrx-gateway-prereqs}
 
 {: step}
