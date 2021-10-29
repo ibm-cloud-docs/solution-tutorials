@@ -25,8 +25,8 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Order vSRX Gateway
-{: #vmware-onboarding-vsrx-gateway}
+# Plan Network Connectivity Flows
+{: #vmware-onboarding-vrf-service-endpoints}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,13 +39,21 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-vsrx-gateway-objectives}
+{: #vmware-onboarding-vrf-service-endpoints-objectives}
+
+
+
+In this section ...... 
+
+<img src="/Users/bryand/Documents/Sandbox/cloud-docs/solution-tutorials/images/solution-vmware-onboarding-hidden/network-flows/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+
+
 
 
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-vsrx-gateway-prereqs}
+{: #vmware-onboarding-vrf-service-endpoints-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -54,8 +62,8 @@ This tutorial requires:
 
 
 ## Next Steps
-{: #vmware-onboarding-vsrx-gateway-next-steps}
+{: #vvmware-onboarding-vrf-service-endpoints-next-steps}
 
 The next step in the tutorial series is:
 
-* [Configure the Network and vSRX routing (BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
+* [Setup resource groups and IAM policies](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-resource-groups-iam)

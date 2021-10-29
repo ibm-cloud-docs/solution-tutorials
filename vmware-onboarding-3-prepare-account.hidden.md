@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -25,8 +25,8 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Enable VRF and Service Endpoints
-{: #vmware-onboarding-vrf-service-endpoints}
+# Prepare Your IBM Cloud Account
+{: #vmware-onboarding-resource-groups-iam}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,13 +39,27 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-vrf-service-endpoints-objectives}
+{: #vmware-onboarding-resource-groups-iam-objectives}
 
 
+
+In this section ...... 
+
+<img src="images/solution-vmware-onboarding-hidden/prepare-account/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+
+
+
+* Enable VRF and Service Endpoints
+
+* Setup IAM
+
+* Setup Resource Groups
+
+  
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-vrf-service-endpoints-prereqs}
+{: #vmware-onboarding-resource-groups-iam-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -54,8 +68,8 @@ This tutorial requires:
 
 
 ## Next Steps
-{: #vvmware-onboarding-vrf-service-endpoints-next-steps}
+{: #vmware-onboarding-resource-groups-iam-next-steps}
 
 The next step in the tutorial series is:
 
-* [Setup resource groups and IAM policies](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-resource-groups-iam)
+* [Setup SSL VPN Client](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-ssl-vpn-client)

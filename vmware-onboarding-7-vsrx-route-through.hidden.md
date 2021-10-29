@@ -43,6 +43,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 
+<img src="images/solution-vmware-onboarding-hidden/vsrx-route-through/journey-map.png" alt="Journey Map" style="zoom:67%;" />
+
+
+
 <!--##istutorial#-->
 ## Before you begin
 {: #vmware-onboarding-vpn-onprem-prereqs}
@@ -66,7 +70,7 @@ Select the vCenter Server instances that has the vSRX deployed.
 In the left-hand menu pane – select Services.
 Select Juniper vSRX in the menu.
 On the Juniper vSRX screen – capture the Private IP address and the command line password for the device. Below is an example from our test instance.
- 
+
 From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
 `ssh root@10.211.7.4`
 Log into the vSRX using the password from the IBM Cloud portal.
@@ -82,7 +86,7 @@ exit
 exit
 exit
 ```
-  
+
 At this point you should be back to your terminal shell. Now login again to the vSRX at:
 •	`ssh <USERNAME>@10.211.7.4`
 To confirm that your new ID and password is functional.
@@ -178,6 +182,6 @@ It will take a minute or two to take effect. To confirm that this configuration 
 ## Next Steps
 {: #vmware-onboarding-vpn-onprem-next-steps}
 
-The next step in the tutorial series is:
+The next step in the series is:
 
 * [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-deploy-workload)
