@@ -75,7 +75,7 @@ The gateway device both provides a network boundary protecting all traffic enter
 
    <img src="images/solution-vmware-onboarding-hidden/order-vsrx/network-interface.png" alt="Architecture" style="zoom:67%;" />
 
-1. From the hamburger menu choose Classic Infrastructure > Gateway Appliances (or go to https://cloud.ibm.com/gen1/infrastructure/provision/gateway).
+1. From the hamburger menu choose Classic Infrastructure > Gateway Appliances (or go to https://{DomainName}/gen1/infrastructure/provision/gateway).
    <img src="images/solution-vmware-onboarding-hidden/order-vsrx/gateway-menu-item.png" alt="Architecture" style="zoom:50%;" />
 
    
