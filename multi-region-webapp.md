@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017-2021
-lastupdated: "2021-02-16"
+  years: 2021
+lastupdated: "2021-10-12"
 lasttested: "2020-11-30"
 
 content-type: tutorial
@@ -331,7 +331,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 {: #multi-region-webapp-ssl}
 {: step}
 
-1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates).
+1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.secrets-manager_full_notm}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
 3. Click the SSL Certificate upload button and upload the certificate.
 4. Access your application with https instead of http.

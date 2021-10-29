@@ -32,7 +32,7 @@ completion-time: 1h
 # Provision {{site.data.keyword.dns_full_notm}} for VMware deployment
 {: #vpc-bm-vmware-dns}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions, dns-svcs"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->

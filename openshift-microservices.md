@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2020, 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-07-28"
+  years: 2021
+lastupdated: "2021-10-20"
+lasttested: "2021-10-12"
 
 content-type: tutorial
 services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
@@ -95,7 +95,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.8.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -138,7 +138,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -155,7 +155,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.6.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.8.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
@@ -190,22 +190,22 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 1. Navigate to the {{site.data.keyword.openshiftshort}} web console by clicking the **{{site.data.keyword.openshiftshort}} web console** button in the selected **Cluster**.
 1. On the left navigation pane, under the **Administrator** perspective, select **Home** > **Projects** view to display all the projects.
 1. Create a new project by clicking **Create Project**. In the pop up **Name** the project `example-health`, leave **Display Name** and **Description** blank, click **Create**.
-1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project Details** > **example-health** on the top.
+1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project details** > **example-health** on the top.
 
 ### Build and Deploy Application
 {: #openshift-microservices-6}
 
-1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
-   ![Project View](images/solution55-openshift-microservices/ocp45-project-view.png)
+1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **+Add** on the left and **Project: example-health** on the top.
+   ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png)
 2. Let's build and deploy the application by selecting **From Git**.
-3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend` in the Git Repo URL field.
-   * Note the `Validated` indication
-   * Note that the builder image automatically detected the language Node.js
-   * **Builder Image Version** leave at the default
+3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend.git` in the Git Repo URL field.
+   * Note the `Validated` indication.
+   * Note that the builder image automatically detected the language Node.js. If not detected, select `Node.js` from the provided list.
+   * **Builder Image Version** leave at the default.
    * **Application Name** delete all of the characters and leave it empty (this will default to the **Name**)
-   * **Name** patient-health-frontend
-   * Select **Deployment Config**
-   * Leave defaults for other selections
+   * **Name :** patient-health-frontend.
+   * Select **Deployment Config**.
+   * Leave defaults for other selections.
 4. Click **Create** at the bottom of the window to build and deploy the application.
 
 ### View Application
@@ -230,8 +230,8 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 1. Click on the URL under **Routes** to visit your application. Enter any string for username and password, for instance `test:test` because the app is running in demonstration mode.
 
 The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Container Platform. To recap:
-* The "Example Health" Node.js application was deployed directly from GitHub into your cluster
-* The application was examined in the {{site.data.keyword.openshiftshort}} console
+* The "Example Health" Node.js application was deployed directly from GitHub into your cluster.
+* The application was examined in the {{site.data.keyword.openshiftshort}} console.
 * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
 
 ## Logging and monitoring
@@ -340,7 +340,7 @@ In this section explore the third-party monitoring and metrics dashboards includ
 Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](https://grafana.com/) preinstalled.
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
-2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You can either view the dashboard inline or by clicking **Grafana UI** to launch the dashboard in a new tab.
+2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
    - If inline, select **Kubernetes / Compute Resources / Namespace (Pods)** from the dropdown and Namespace to **example-health**
    - If you have clicked **Grafana UI** link, You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
 3. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
@@ -358,17 +358,20 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 {{site.data.keyword.openshiftshort}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
 
 1. The Metrics page is accessible in the **Administrator** perspective by clicking **Monitoring → Metrics**.
-2. Navigate through the **Prometheus UI**. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
-3. In the top box a query expression can be entered.  Paste in the following to get a look at our frontend:
+2. You can either view the metrics inline or access the Prometheus UI by clicking on the **Platform Prometheus UI** link next to `Metrics` in the top.
+3. If you are using the inline metrics view, in the `Expression` box, enter the below query and click **Run queries**. You should see the value and the graph associated with the query.
+
    ```sh
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
    {: codeblock}
 
-4. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
-   ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp45.png)
+4. Navigate through the **Prometheus UI** by clicking the link. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
+5. In the top box a query expression can be entered. Paste the above query to look into your frontend.
+6. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
+   ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp48.png)
 
-5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
+7. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
 {: #openshift-microservices-scaling}
@@ -384,9 +387,9 @@ Before autoscaling maximum CPU and memory resource limits must be established.
 Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deploymentConfig
 
 1. Make sure the script to generate traffic is running. 
-1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployment Configs** in the left-hand bar. Choose the `patient-health-frontend` Deployment Configs, then choose **Actions menu (three vertical dots) > Edit Deployment Config**.
-   ![Deployments](images/solution55-openshift-microservices/ocp45-deployments.png)
-1. In the YAML editor, find the section **spec > template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
+1. Switch to the **Administrator** perspective and then navigate to **Workloads > DeploymentConfigs** in the left-hand bar. Choose the `patient-health-frontend` Deployment Configs, then choose **Actions menu (three vertical dots) > Edit DeploymentConfig**.
+   ![Deployments](images/solution55-openshift-microservices/ocp48-deploymentconfigs.png)
+1. Under the **YAML view**, find the section **spec > template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
    ```yaml
              resources:
@@ -415,7 +418,7 @@ Grafana earlier showed you that the load was consuming anywhere between ".002" t
    ```
 1. **Save** and **Reload** to see the new version.
 1. Verify that the replication controller has been changed by navigating to **Events** tab:
-   ![Resource Limits](images/solution55-openshift-microservices/ocp45-dc-events.png)
+   ![Resource Limits](images/solution55-openshift-microservices/ocp48-dc-events.png)
 
 ### Enable Autoscaler
 {: #openshift-microservices-18}
@@ -424,9 +427,9 @@ Now that resource limits are configured, the pod autoscaler can be enabled.
 
 By default, the autoscaler allows you to scale based on CPU or Memory. Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, `1`% can be used with the load being provided.
 
-1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then click **Create Horizontal Pod Autoscaler**.
+1. Navigate to **Administrator** perspective **Workloads > HorizontalPodAutoscalers**, then click **Create HorizontalPodAutoscaler**.
 
-   ![HPA](images/solution55-openshift-microservices/ocp45-hpa.png)
+   ![HPA](images/solution55-openshift-microservices/ocp48-hpa.png)
 
    Replace the contents of the editor with this yaml:
 
@@ -462,7 +465,7 @@ If you're not running the script to simulate load, the number of pods should sta
 
 1. Check by opening the **Overview** page of the deployment config.  Click **Workloads** > **DeploymentConfigs** and click **patient-health-frontend** and make sure the **Details** panel is selected.
 2. Start simulating load (see previous section to simulate load on the application).
-   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp-hpa-after.png)
+   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp48-hpa-after.png)
    
    It can take a few minutes for the autoscaler to make adjustments.
    {: note}
@@ -498,7 +501,7 @@ You can also can delete and create resources like autoscalars with the command l
    ```
    {: pre}
 
-1. Revisit the **Workloads > Deployment Configs** Details page for `patient-health-frontend` deployment and watch it work.
+1. Revisit the **Workloads > DeploymentConfigs** Details page for `patient-health-frontend` deployment and watch it work.
 
 ## Using the IBM Cloud Operator to create a Cloudant DB
 {: #openshift-microservices-operator}
@@ -512,11 +515,9 @@ Currently, the Example Health `patient-health-frontend` app is using a dummy in-
 Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.openshiftshort}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
-2. Find the **IBM Cloud Operator**, and click **Install**:
-3. Keep the default options and click **Install**:
-   ![Operator Install](images/solution55-openshift-microservices/operatorinstall.png)
-4. You may need to wait a few seconds and refresh for the operator to show the status as `Succeeded`:
-   ![Installed Operators](images/solution55-openshift-microservices/installedoperators-ocp45.png)
+2. Find the **IBM Cloud Operator**, and click **Install**.
+3. Keep the default options and click **Install**.
+4. You may need to wait a few seconds and refresh for the operator to show the status as `Succeeded`.
 
 ### Create a Cloudant Service and Bind using the CRDs
 {: #openshift-microservices-23}
@@ -575,7 +576,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 
 6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
-7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
+7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **state** field will change from **provisioning** to **Online** meaning it is good to go.
 8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Binding** tab.  Open the **Binding** tab, click **Create Binding** and select **YAML View**.  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1
@@ -598,6 +599,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```sh
    YOURINITIALS=<your-initials>
    ```
+   {: pre}
 
    ```sh
    ibmcloud resource service-instance $YOURINITIALS-cloudant-service
@@ -700,7 +702,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    ```
 1. Let's fix this by setting the environment variable of the **DeploymentConfig** to the **cloudant-binding** secret created earlier in the operator binding section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
    ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig-ocp45.png)
-1. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Click **Save**.
+1. Go to the **Environment** tab, click **Add from ConfigMap or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Click **Save**.
    ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret-ocp45.png)
 1. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should indicate **Running** shortly.  Click on **View logs** next to the running pod and notice the databases created.
 
@@ -709,7 +711,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 The `patient-health-frontend` application has an environment variable for the backend microservice url.
 
-1. Set the **API_URL** environment variable to **default** in the frontend **Deployment Config**. Navigate to the deployment config for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **DC**:
+1. Set the **API_URL** environment variable to **default** in the frontend **DeploymentConfig**. Navigate to the deployment config for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **DC**:
 
 2. Go to the **Environment** tab, and in the **Single values (env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template / Containers / Port` output of this command:
 
@@ -718,9 +720,9 @@ The `patient-health-frontend` application has an environment variable for the ba
    ```
    {: pre}
 
-Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
+Your application is now backed by the mock patient data in the Cloudant DB! You can now log-in using any user-id/password in the Cloudant DB, use "**opall:opall**".
 
-1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
+1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your `services` in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
 2. Launch the Cloudant dashboard by clicking on **Launch Dashboard** button and then click the `patients` db.
 3. Click through the different patients you can log-in as.
 
@@ -1098,7 +1100,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 - After a few minutes, raw data will be displayed
 - After about an hour, indexing will provides the detail required to proceed with this tutorial
 
-1. Under the **Explore** section,select **Hosts & Containers** to view raw metrics for all workloads running on the cluster.
+1. Under the **Explore** section, select **Hosts & Containers** to view raw metrics for all workloads running on the cluster.
 
    If the drop down is not fully populated and indicates some inapplicable items double check that you have chosen **Explore** on the upper left and clicked on the **Hosts & Containers** drop down.  If so you will need to wait until the indexing step mentioned above is complete before continuing
    {: note}
@@ -1107,7 +1109,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 1. Under **Explore**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Troubleshooting Views > Hosts & Containers) from the Top dropdown
    ![Explore Nodes](images/solution55-openshift-microservices/sysdig-explore-node.png)
 1. Under **Dashboards** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
-1. From the **Explore** tab, select **Deployments**.
+1. From the **Explore** tab, select **Replication Controllers**.
 1. Search for `example-health` namespace.
 1. Select the `patient-health-frontend` to select all pods for the frontend.
    ![Overview by Host](images/solution55-openshift-microservices/explore-img-9.png)
@@ -1119,12 +1121,12 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
 
-2. Select the **Kubernetes > Kubernetes Cluster and Node Capacity** template:
-   - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons
-   - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons
-   - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster
-   - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster
-   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster
+2. Select the **Kubernetes > Cluster and Node Capacity** template:
+   - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
+   - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons.
+   - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster.
+   - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster.
+   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster.
 
 ### Explore the Network
 {: #openshift-microservices-45}
@@ -1135,13 +1137,13 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 
    ![Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-2.png)
 
-2. Make this dashboard your own and then scope it to a specific namespace.
+2. Create a customized dashboard and then scope it to a specific namespace.
    - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network Traffic & Bandwidth`
-   - Click **Create and Open**
-   - Edit the dashboard scope
-   - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`
+   - Click **Create and Open**.
+   - Edit the dashboard scope.
+   - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`.
    ![Configure Filter](images/solution55-openshift-microservices/explore-img-10.png)
-   - Click Save
+   - Click **Save**.
 
     The dashboard now shows information about the ibm-observe namespace.
 
@@ -1195,4 +1197,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.6/nodes/pods/nodes-pods-autoscaling.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.8/nodes/pods/nodes-pods-autoscaling.html)

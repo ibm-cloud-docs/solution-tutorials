@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018-2021
+  years: 2021
 lastupdated: "2021-08-24"
 lasttested: "2021-07-19"
 
@@ -23,7 +23,7 @@ completion-time: 1h
 {: #serverless-github-traffic-analytics}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, Db2onCloud, appid"}
-{: toc-completion-time="2h"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

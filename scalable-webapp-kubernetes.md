@@ -1,12 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019, 2020, 2021
+  years: 2021
 lastupdated: "2021-09-20"
 lasttested: "2021-09-17"
 
 content-type: tutorial
-services: containers, Registry, certificate-manager
+services: containers, Registry
 account-plan: paid
 completion-time: 2h
 ---

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-07-01"
+lastupdated: "2021-10-21"
+lasttested: "2021-10-21"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
-Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, and resizing the VSI after the fact. 
+Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, expanding the attached data volume, and resizing the VSI after the fact. 
 {: shortdesc}
 
 You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. The Terraform template defines the {{site.data.keyword.Bluemix_notm}} resources to be created, updated, or deleted.
@@ -62,7 +62,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
 3. As the load on the application increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
-4. As the scope expands, dedicated host isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement.
+4. As the scope expands, dedicated host isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement. Also, expand the block storage volume capacity. 
 5. All instances communicate with IBM Cloud services over the private backbone using a virtual private endpoint (VPE). See the [About virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) topic for more details.
 
 
@@ -79,22 +79,22 @@ The tutorial requires:
 In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}. 
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
+   1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. 
+   2. Select **terraform_v0.14** as the Terraform version and click *Next.
+2. Under **Workspace details**,
    1. Provide a workspace name : **vpc-scaling-workspace**.
    2. Choose a `Resource Group` and a `Location`.
-   3. Click on **Create**.
-2. Under Settings, move to the **Import your Terraform template** section.
-   1. Provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub, GitLab or Bitbucket repository URL. For the Terraform scripts and modules used in this tutorial, check the [Git repo](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host).
-   2. Select `terraform_v0.14` as the Terraform version.
-   3. Click on **Save template information**.
-3. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row and then **Edit**.
+   3. Click on **Next**.
+3. Verify the details and then click on **Create**.
+4. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row and then **Edit**.
    1. Enter your {{site.data.keyword.Bluemix_notm}} API key.
    2. Check **Sensitive**.
    3. Click on **Save**.
-4. Set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
-5. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
-6. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
-7. Click on **Show more** to check the resources to be provisioned.
-8. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services created.
+5. Set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
+6. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
+7. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
+8. Click on **Show more** to check the resources to be provisioned.
+9. Navigate to the workspace page using the breadcrumb menu and click on **Apply plan**. Check the logs to see the status of the services created.
 
 Navigate to the [resource list](https://{DomainName}/resources). Here, you can filter by the `basename` used to create the resources, i.e., **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
@@ -312,19 +312,31 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```
    {: pre}
 
-## Resize the VSI on the dedicated host
+## Resize the VSI and expand the attached block storage volume on the dedicated host
 {: #vpc-scaling-dedicated-compute-dedicated-resize}
 {: step}
 
 If you have observed the profile of the instance provisioned on the dedicated host, it is set to `cx2-2x4` where `c` stands for **Compute** family (category) with 2 vCPUs and 4 GiB RAM. In this section, you will resize the instance by updating the profile to `cx2-8x16` with 8 vCPUs, 16 GiB RAM.
 
-1. To resize the capacity of the attached volume to the instance, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
+In this section, you will also expand the block storage volume attached to the VSI from 100 GB to 250 GB. To understand the maximum capacity on the selected volume profile, check [expanding block storage volume capacity](https://{DomainName}/docs/vpc?topic=vpc-expanding-block-storage-volumes&interface=ui)
+
+### Resize the VSI 
+{: #vpc-scaling-dedicated-compute-resize-vsi}
+
+1. To resize the VSI, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
 
     Virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](https://{DomainName}/docs/vpc?topic=vpc-profiles).
    {: tip}
 
 2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
-3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the instance name.
+3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
+
+### Expand block storage volume capacity
+{: #vpc-scaling-dedicated-compute-expand-volume}
+
+1. To expand the capacity of the attached block storage volume, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance_volume` variable to **true** and **Save** the setting.
+2. **Apply the plan** to increase the block storage volume capacity from `100 GB` to `250 GB`. 
+3. You can check the size of the `Data volume` from [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ## What's next?
 {: #vpc-scaling-dedicated-compute-dedicated-next}

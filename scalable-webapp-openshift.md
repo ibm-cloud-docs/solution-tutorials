@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019, 2020, 2021
-lastupdated: "2021-08-16"
-lasttested: "2021-08-06"
+  years: 2021
+lastupdated: "2021-10-20"
+lasttested: "2021-10-08"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -36,7 +36,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster from a remote Git repository, expose the app on an {{site.data.keyword.openshiftshort}} route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to your application.
 {: shortdesc}
 
-With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.7/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.8/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
@@ -73,7 +73,7 @@ This tutorial requires:
 * (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**.Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.7.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.8.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
 In addition, make sure you [set up a registry namespace](https://{DomainName}/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
@@ -105,7 +105,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.7.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.8.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC,
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -135,9 +135,9 @@ Take a note of the resource group selected above.  This same resource group will
 ### Configure CLI
 {: #scalable-webapp-openshift-4}
 
-In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
-1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
+1. When the cluster is ready, click on **{{site.data.keyword.openshiftshort}} web console** to open the console.
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
 3. **Copy** the text under Log in with this token.
 4. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
@@ -154,7 +154,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 {: #scalable-webapp-openshift-access-cluster}
 {: step}
 
-In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. Check the version of the {{site.data.keyword.openshiftshort}} CLI:
    ```sh
@@ -207,7 +207,7 @@ With the `oc new-app` command you can create applications from source code in a 
    ```sh
    oc new-app https://github.com/IBM-Cloud/openshift-node-app --name=$MYPROJECT --strategy=docker --as-deployment-config
    ```
-   {pre}
+   {: pre}
 
    If a Jenkins file exists in the root or specified context directory of the source repository when creating a new application, {{site.data.keyword.openshiftshort}} generates a `pipeline` build strategy. Otherwise, it generates a `source` build strategy.You can always override the build strategy by setting the `--strategy` flag.
    {: tip}
@@ -244,7 +244,11 @@ To access the app, you need to create a route. A route announces your service to
    ```
    {: pre}
 
-3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`.
+3. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action at `http://<HOST/PORT>`. Also, set an environment variable pointing to the hostname
+   ```sh
+   export HOST=<HOST>
+   ```
+   {: pre}
 
 ### Secure the default IBM provided domain route
 {: #scalable-webapp-openshift-secure_default_route}
@@ -270,19 +274,20 @@ In this section, you will learn to monitor the health and performance of your ap
    ```
    {: pre}
 
-2. Run the following script by replacing the placeholder `<APPLICATION_ROUTE_URL>` with the route URL. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
+2. Run the below command with the route URL that generates load. The command will endlessly send requests to the application, this will in turn generate data into Prometheus. 
    ```sh
-    while true; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL> >/dev/null; done
+   while sleep 1; do curl --max-time 2 -s http://$HOST/load/50; done
    ```
    {: pre}
 
 3. In the expression box of Prometheus web UI, enter **`sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}) by (container)`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
-5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
+5. On the Grafana **Home** page, click on **General** > **Default** > **Kubernetes / Compute Resources / Namespace (Pods)** and Select
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
+   - time: **Last 5 minutes**
 6. Check the CPU and memory usage.
-7. Stop the above script using `control+C`. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.7/logging/viewing-resource-logs.html) to learn about the usage of `oc logs`.
+7. Stop the above script using `control+C`. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.8/logging/viewing-resource-logs.html) to learn about the usage of `oc logs`.
 
    You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](https://{DomainName}/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
    {: tip}
@@ -525,7 +530,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {: pre}
    
-   You can also use the command if the deployment is taking more time, Refer to this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options)for more info.
+   You can also use the command if the deployment is taking more time, Refer to this [link](https://docs.openshift.com/container-platform/4.8/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {: tip}
 
 5. Expose the service to create a new route and access the application with the `HOST/PORT` from the `oc get route/$MYPROJECT` command.
@@ -664,7 +669,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 
 8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
-   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer to this [link](https://docs.openshift.com/container-platform/4.7/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer to this [link](https://docs.openshift.com/container-platform/4.8/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {: tip}
 
 
@@ -730,5 +735,5 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 {: #scalable-webapp-openshift-0}
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-autoscaling.html)
-* [Secured routes](https://docs.openshift.com/container-platform/4.7/networking/routes/secured-routes.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.8/nodes/pods/nodes-pods-autoscaling.html)
+* [Secured routes](https://docs.openshift.com/container-platform/4.8/networking/routes/secured-routes.html)

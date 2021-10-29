@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
+  years: 2021
 lastupdated: "2021-10-04"
 lasttested: "2019-03-08"
 
@@ -158,14 +158,38 @@ Introductory statement that overviews the section
    ```
    {: screen}
 
+```bash
+some iOS stuff
+```
+{: codeblock}
+{: ios}
+
 This paragraph only appears in the iOS documentation
 {: ios}
+
+```bash
+some Android stuff
+```
+{: codeblock}
+{: android}
 
 And this paragraph only appears in the Android documentation
 {: android}
 
+```bash
+some Java stuff
+```
+{: codeblock}
+{: java}
+
 This paragraph only appears for Java code
 {: java}
+
+```bash
+some Swift stuff
+```
+{: codeblock}
+{: swift}
 
 And this paragraph only appears for Swift code
 {: swift}
