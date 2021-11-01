@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
+lastupdated: "2021-11-01"
 lasttested: "2021-10-21"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ completion-time: 1h
 {:note: .note}
 
 # Setup Route Through on vSRX
-{: #vmware-onboarding-route-through-setup}
+{: #vmware-onboarding-route-through-and-bgp-setup}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,7 +39,7 @@ completion-time: 1h
 
 
 ## Objectives
-{: #vmware-onboarding-route-through-setup-objectives}
+{: #vmware-onboarding-route-through-and-bgp-setup-objectives}
 
 - These instructions assume that no additional configuration has been done on the vSRX.
 - The setup will route the Primary VLAN of your VCS instance only. Secondary VLANs can also be routed but an additional interface unit on the vSRX would have to be configured.
@@ -49,7 +49,7 @@ completion-time: 1h
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-route-through-setup-prereqs}
+{: #vmware-onboarding-route-through-and-bgp-setup-prereqs}
 
 This tutorial requires:
 - An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -58,10 +58,10 @@ This tutorial requires:
 
 <!--#/istutorial#-->
 ## Steps
-{: #vmware-onboarding-route-through-setup-steps}
+{: #vmware-onboarding-route-through-and-bgp-setup-steps}
 
 ### Configuring the vSRX
-{: #vmware-onboarding-route-through-setup-vsrx}
+{: #vmware-onboarding-route-through-and-bgp-setup-vsrx}
 
 The steps below will walk through the steps required in order to correctly configure the vSRX.
 
@@ -72,7 +72,7 @@ The steps below will walk through the steps required in order to correctly confi
 5. Select Juniper vSRX in the menu.
 6. On the Juniper vSRX screen – capture the Private IP address and the command line password for the device. Below is an example from our test instance.
 
-![Architecture](images/solution-vmware-onboarding-hidden/route-through-setup/private-ip-password-page.png){: class="center"}
+![Architecture](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/private-ip-password-page.png){: class="center"}
 
 7. From your desktop open a command terminal (on Linux of MacOS) or an SSH client (on Windows) and log into the vSRX. Using the example above on MacOS you would open a terminal and type:
 `ssh root@10.211.7.4`
@@ -179,7 +179,7 @@ commit
 At this point your configuration is complete. The next steps are to set the vSRX into route-through mode. By setting the vSRX into route-through you will ‘move’ the VLAN to being the BCR as the next-hop to the vSRX as the next-hop. 
 
 ### IBM Cloud Portal Set Route-Through:
-{: #vmware-onboarding-route-through-setup-portal}
+{: #vmware-onboarding-route-through-and-bgp-setup-portal}
 
 - click on the hamburger menu and navigate to Classic Infrastructure -> Gateway Appliances.
 - Select the VMware instance gateway cluster.
@@ -191,9 +191,61 @@ It will take a minute or two to take effect. To confirm that this configuration 
 
 
 
+### Setup of BGP on NSX
+{: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx}
+
+1. Enable BGP on workload-t0.
+2. Set the Local AS to a specific number in this case 64546 is used. 
+    ![BGP Enabled](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/bgp-enabled-settings.png){: class="center"}
+    NOTE: The Local AS will be used in the BGP setup on the vSRX side.  Ensure the local AS on the vSRX and NSX are unique and different from each other
+3. Setup BGP Neighbors 
+4. Gather the Local AS and IP Address from the vSRX admins 
+
+5. Specify the ip address of the BGP neighbor which in this case will by the vSRX.
+6. Set the remote AS number to the vSRX’s local AS. 
+7. Set the Source Addresses to the uplink ips.
+    ![BGP Neighbors](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/bgp-neighbors.png){: class="center"} 
+
+### Setup of BGP on vSRX
+{: #vmware-onboarding-route-through-and-bgp-setup-bgp-vsrx}
+
+1. Gather the ips from nsx for the tier-0 uplinks from the vmware admins.
+2. Gather the Local AS value from workload-t0 from the vmware admins.
+3. Setup the BGP Options on the vSRX
+4. Set the local-as
+5. Set the local-address to the ip address of the vSRX that will be used for BGP
+6. Set the neighbors to be the ip addresses of the uplink ips from NSX and the peer-as to the Local AS value from workload-t0
+
+Example configuration:
+
+```
+# show protocols 
+bgp {
+    group region_location {
+        type external;
+        local-address xxx.xxx.xxx.xxx;
+        export [ LOCAL_GATEWAY ATTACHED ];
+        peer-as 64546;
+        local-as 65001;
+        neighbor xxx.xxx.xxx.xxx;
+    }
+}
+```
+
+
+### Results of BGP Setup
+{: #vmware-onboarding-route-through-and-bgp-setup-bgp-results}
+
+1. Examine the ‘show route protocol bgp’ to see the routes on the vSRX
+ 
+
+
+
+
+
 
 ## Next Steps
-{: #vmware-onboarding-route-through-setup-next-steps}
+{: #vmware-onboarding-route-through-and-bgp-setup-next-steps}
 
 The next step in the tutorial series is:
 
