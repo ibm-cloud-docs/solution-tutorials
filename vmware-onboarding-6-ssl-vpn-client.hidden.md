@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-27"
-lasttested: "2021-10-27"
+lastupdated: "2021-10-29"
+lasttested: "2021-10-29"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -32,7 +32,13 @@ completion-time: 45m
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-The SSL VPN client establishes connectivity with the IBM Cloud Classic Infra. This allows you to connect to the 10.x.x.x IPs of the  VCS Cluster for managemenet and configuration purposes.  For production, businesses will establish network connectivity to the IBM Cloud Classic Infra via Direct Link or Site-to-Site VPN, but having the SSL VPN client configured is useful for initial configuration and/or to serve as a backup.
+
+In this section of the deployment journey, a SSL VPN client is configured. The SSL VPN client establishes connectivity with the IBM Cloud Classic Infra. 
+
+![Architecture](images/solution-vmware-onboarding-hidden/ssl-vpn/journey-map.png){: class="center"}
+
+
+As shown in the architecute below, the SSL VPN allows you to connect to the 10.x.x.x Private IPs of the  VCS Cluster for managemenet and configuration purposes.  For production, businesses will typically establish network connectivity to the IBM Cloud Classic Infra via Direct Link or Site-to-Site VPN, but having the SSL VPN client configured is useful for initial configuration and/or to serve as a backup.
 {: tip}
 
 <!--#/istutorial#-->
