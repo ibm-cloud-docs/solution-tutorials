@@ -72,6 +72,12 @@ TODO. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ipsum ipsum
 <!--#/istutorial#-->
 
 
+
+Federate Active Directory
+
+
+
+
 ## Next Steps
 {: #vmware-onboarding-resource-groups-iam-next-steps}
 
