@@ -194,27 +194,27 @@ It will take a minute or two to take effect. To confirm that this configuration 
 ### Setup of BGP on NSX
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx}
 
-1.	Enable BGP on workload-t0.
-2.	Set the Local AS to a specific number in this case 64546 is used. 
+1. Enable BGP on workload-t0.
+2. Set the Local AS to a specific number in this case 64546 is used. 
     ![BGP Enabled](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/bgp-enabled-settings.png){: class="center"}
- 	NOTE: The Local AS will be used in the BGP setup on the vSRX side.  Ensure the local AS on the vSRX and NSX are unique and different from each other
-3.	Setup BGP Neighbors 
-4.	Gather the Local AS and IP Address from the vSRX admins 
+    NOTE: The Local AS will be used in the BGP setup on the vSRX side.  Ensure the local AS on the vSRX and NSX are unique and different from each other
+3. Setup BGP Neighbors 
+4. Gather the Local AS and IP Address from the vSRX admins 
 
-5.	Specify the ip address of the BGP neighbor which in this case will by the vSRX.
-6.	Set the remote AS number to the vSRX’s local AS. 
-7.	Set the Source Addresses to the uplink ips.
+5. Specify the ip address of the BGP neighbor which in this case will by the vSRX.
+6. Set the remote AS number to the vSRX’s local AS. 
+7. Set the Source Addresses to the uplink ips.
     ![BGP Neighbors](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/bgp-neighbors.png){: class="center"} 
 
 ### Setup of BGP on vSRX
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-vsrx}
 
-1.	Gather the ips from nsx for the tier-0 uplinks from the vmware admins.
-2.	Gather the Local AS value from workload-t0 from the vmware admins.
-3.	Setup the BGP Options on the vSRX
-4.	Set the local-as
-5.	Set the local-address to the ip address of the vSRX that will be used for BGP
-6.	Set the neighbors to be the ip addresses of the uplink ips from NSX and the peer-as to the Local AS value from workload-t0
+1. Gather the ips from nsx for the tier-0 uplinks from the vmware admins.
+2. Gather the Local AS value from workload-t0 from the vmware admins.
+3. Setup the BGP Options on the vSRX
+4. Set the local-as
+5. Set the local-address to the ip address of the vSRX that will be used for BGP
+6. Set the neighbors to be the ip addresses of the uplink ips from NSX and the peer-as to the Local AS value from workload-t0
 
 Example configuration:
 
@@ -236,7 +236,7 @@ bgp {
 ### Results of BGP Setup
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-results}
 
-1.	Examine the ‘show route protocol bgp’ to see the routes on the vSRX
+1. Examine the ‘show route protocol bgp’ to see the routes on the vSRX
  
 
 
