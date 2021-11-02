@@ -406,7 +406,6 @@
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
           "tags": [
-            "Cloud Foundry",
             "IBM Watson Assistant",
             "Cloudant NoSQL DB",
             "Db2 Warehouse",
