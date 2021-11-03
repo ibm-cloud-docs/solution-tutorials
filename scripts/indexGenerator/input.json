@@ -1138,7 +1138,7 @@
             "vmware-onboarding-5-vsrx-gateway.hidden.md",
             "vmware-onboarding-6-ssl-vpn-client.hidden.md",
             "vmware-onboarding-7-route-through-and-bgp-setup.hidden.md",
-            "vmware-onboarding-8-vsrx-bgp.hidden.md",
+            "vmware-onboarding-8-ipsec-vpn-tunnel.hidden.md",
             "vmware-onboarding-9-deploy-workload.hidden.md"
           ]
         }
