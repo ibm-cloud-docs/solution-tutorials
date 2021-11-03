@@ -98,7 +98,6 @@ Resource Groups allow you to organize the resources/instances into groups (i.e. 
   
 
 ## Create a Classic Infrastructure API Key
-
 {: #vmware-onboarding-prepare-account-apikey}
 
 The VMware solution described in this guide will be deployed on Classic Infrastructure (not VPC), so you need to have a Classic Infrastructure API associated with your IBM Cloud Userid. The key is used as part of the provisioning process (i.e. provisioning the underlying bare metals on Classic Infrastructure where VMware will be running).
