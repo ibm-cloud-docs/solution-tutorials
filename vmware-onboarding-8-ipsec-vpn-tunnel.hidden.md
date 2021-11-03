@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
-lasttested: "2021-10-29"
+lastupdated: "2021-11-03"
+lasttested: "2021-11-03"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -26,7 +26,7 @@ completion-time: 1h
 {:note: .note}
 
 # Configure the Network and vSRX routing (BGP)
-{: #vmware-onboarding-bgp}
+{: #vmware-onboarding-ipsecvpn}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -39,13 +39,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 
 ## Objectives
-{: #vmware-onboarding-bgp-objectives}
+{: #vmware-onboarding-ipsecvpn-objectives}
 
 
 
 <!--##istutorial#-->
 ## Before you begin
-{: #vmware-onboarding-bgp-prereqs}
+{: #vmware-onboarding-ipsecvpn-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
@@ -54,8 +54,8 @@ This tutorial requires:
 
 
 ## Next Steps
-{: #vmware-onboarding-bgp-next-steps}
+{: #vmware-onboarding-ipsecvpn-next-steps}
 
-The next step in the tutorial series is:
+The next step on the deployment journey is:
 
-* [Setup IPsec VPN tunnel to on-prem (Optional)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vpn-onprem)
+* [Deploy Initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vpn-onprem)

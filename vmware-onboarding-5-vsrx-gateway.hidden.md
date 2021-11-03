@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
-lasttested: "2021-10-29"
+lastupdated: "2021-11-03"
+lasttested: "2021-11-03"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -132,6 +132,7 @@ The gateway device both provides a network boundary protecting all traffic enter
 ## Next Steps
 {: #vmware-onboarding-vsrx-gateway-next-steps}
 
-The next step in the series is:
+The next step on the deployment journey is:
 
-* [Configure the Network and vSRX routing (BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
+* [Setup SSL VPN Client](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-ssl-vpn-client)
+

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
-lasttested: "2021-10-29"
+lastupdated: "2021-11-03"
+lasttested: "2021-11-03"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -25,7 +25,7 @@ completion-time: 20m
 {:important: .important}
 {:note: .note}
 
-# Order vCenter Server cluster w/NSX-T and NFS Storage
+# Order vCenter Server cluster w/NSX-T and Storage
 {: #vmware-onboarding-order-cluster-storage}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions"}
@@ -142,6 +142,6 @@ Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud
 ## Next Steps
 {: #vmware-onboarding-order-cluster-storage-next-steps}
 
-The next step in the series is:
+The next step on the deployment journey is:
 
 * [Order vSRX Gateway](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-vsrx-gateway)

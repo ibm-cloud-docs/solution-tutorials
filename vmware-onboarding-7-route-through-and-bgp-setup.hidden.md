@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-01"
-lasttested: "2021-10-21"
+lastupdated: "2021-11-03"
+lasttested: "2021-11-03"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -237,7 +237,7 @@ bgp {
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-results}
 
 1. Examine the ‘show route protocol bgp’ to see the routes on the vSRX
- 
+
 
 
 
@@ -247,6 +247,6 @@ bgp {
 ## Next Steps
 {: #vmware-onboarding-route-through-and-bgp-setup-next-steps}
 
-The next step in the tutorial series is:
+The next step on the deployment journey is:
 
-* [Deploy initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
+* [Deploy Initial VM workload](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-bgp)
