@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
-lasttested: "2021-10-29"
+lastupdated: "2021-11-03"
+lasttested: "2021-11-03"
 
 content-type: tutorial
 services: vmwaresolutions
@@ -73,7 +73,7 @@ Once connected, validate connectivity by pinging the vCenter IP and/or opening t
 ## Next Steps
 {: #vmware-onboarding-ssl-vpn-client-next-steps}
 
-The next step in the tutorial series is:
+The next step on the deployment journey is:
 
-* [Order vCenter Server cluster w/NSX-T and NFS Storage](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-order-cluster-storage)
+* [Configure vSRX (Route Thru Mode and BGP)](/docs/solution-tutorials?topic=solution-tutorials-vmware-onboarding-route-through-and-bgp-setup)
 
