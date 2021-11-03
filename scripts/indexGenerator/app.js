@@ -10,12 +10,15 @@ helper.registerHelpers(Handlebars);
 const input = require('./input.json');
 const categories = input.categories;
 const solutions = categories.reduce((previousValue, currentValue) => {
-  return previousValue.concat(currentValue.solutions);
+  return previousValue.concat(currentValue.solutions || []);
 }, []);
 const featured = solutions
   .filter((solution) => solution.featuredPosition)
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
-
+const journeys = categories.reduce((previousValue, currentValue) => {
+  return previousValue.concat(currentValue.journeys || []);
+}, []);
+const visibleJourneys = journeys.filter(journey => !journey.hidden);
 
 // inject last updated into the JSON
 solutions.filter((solution) => !helper.isExternalSolution(solution)).forEach((solution) => {
@@ -52,6 +55,8 @@ function writeFile(templateFile, dest, includeHidden = true) {
     lastupdated: moment().format('YYYY-MM-DD'),
     categories,
     featured,
+    journeys: journeys.length > 0 ? journeys : null,
+    hasVisibleJourneys: visibleJourneys.length > 0,
     tags: input.tags,
     includeHidden,
   }));
@@ -61,7 +66,7 @@ writeFile('./toc.yaml.tmpl', '../../toc.yaml');
 writeFile('./toc.yaml.tmpl', '../../toc-public.yaml', false);
 
 console.log('Writing ../../tutorials.json');
-input.categories = input.categories.filter((category) => !category.hidden);
+input.categories = input.categories.filter((category) => !category.hidden && !category.journey);
 input.categories.forEach((category) => {
   category.solutions = category.solutions.filter((solution) => !solution.hidden && !helper.isExternalSolution(solution));
   category.solutions.forEach((solution) => {

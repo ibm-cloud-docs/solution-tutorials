@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2021-08-11"
+          "lastUpdated": "2021-11-02"
         }
       ]
     },
@@ -103,7 +103,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-08-16"
+          "lastUpdated": "2021-10-20"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -116,7 +116,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-08-09"
+          "lastUpdated": "2021-10-20"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -128,7 +128,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-10-20"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -181,7 +181,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-10-07"
+          "lastUpdated": "2021-10-28"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -231,7 +231,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-10-11"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -281,7 +281,6 @@
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
           "tags": [
-            "Cloud Foundry",
             "IBM Watson Assistant",
             "Cloudant NoSQL DB",
             "Db2 Warehouse",
@@ -321,7 +320,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-02-16"
+          "lastUpdated": "2021-10-12"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -334,7 +333,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-09-20"
+          "lastUpdated": "2021-10-12"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -350,7 +349,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-09-27"
+          "lastUpdated": "2021-10-28"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -366,7 +365,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-09-29"
+          "lastUpdated": "2021-10-28"
         }
       ]
     },
@@ -447,7 +446,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-10-07"
+          "lastUpdated": "2021-10-08"
         }
       ]
     },
@@ -577,7 +576,7 @@
             "PHP",
             "Node.js"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-10-21"
         }
       ]
     },

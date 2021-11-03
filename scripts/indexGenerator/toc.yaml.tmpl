@@ -22,6 +22,7 @@ toc:
         topics:
 {{#each categories}}
 {{#unless tocOnly}}
+{{#unless journey}}
 {{#if (or (not hidden) @root.includeHidden)}}
 
         - topicgroup:
@@ -33,6 +34,7 @@ toc:
     {{/if}}
     {{/each}}
 {{/if}}
+{{/unless}}
 {{/unless}}
 {{/each}}
 
@@ -46,3 +48,19 @@ toc:
           topics:
 {{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}          - {{#tocLink solution}}{{/tocLink}}
 {{/hasTag}}{{/if}}{{/each}}{{/if}}{{/each}}{{/each}}
+{{#if (or hasVisibleJourneys @root.includeHidden)}}
+      - topicgroup:
+        label: Deployment Journey
+        topics:
+{{#each journeys}}
+{{#if (or (not hidden) @root.includeHidden)}}
+
+        - topicgroup:
+          label: {{name}}
+          topics:
+{{#each files}}
+          - {{ this }}
+{{/each}}
+{{/if}}
+{{/each}}
+{{/if}}

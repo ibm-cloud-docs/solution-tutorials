@@ -11,7 +11,7 @@ const destinationDir = process.argv[2] || '.'
 const input = require('../indexGenerator/input.json');
 const categories = input.categories;
 const solutions = categories.reduce((previousValue, currentValue) => {
-  return previousValue.concat(currentValue.solutions);
+  return previousValue.concat(currentValue.solutions || []);
 }, []).filter((solution) => !helper.isExternalSolution(solution));
 solutions.forEach(solution => {
   solution.mdUrl = helper.htmlTomd(solution.url);

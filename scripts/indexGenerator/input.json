@@ -406,7 +406,6 @@
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
           "tags": [
-            "Cloud Foundry",
             "IBM Watson Assistant",
             "Cloudant NoSQL DB",
             "Db2 Warehouse",
@@ -1085,145 +1084,6 @@
       ]
     },
     {
-      "name": "VMware Journey (Classic)",
-      "hidden": "hidden",
-      "anchor": "vmwarejourney",
-      "solutions": [
-        {
-          "name": "Review architecture and concepts",
-          "url": "vmware-onboarding-1-architecture-and-concepts.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Enable VRF and Service Endpoints",
-          "url": "vmware-onboarding-2-vrf-service-endpoints.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Setup resource groups and IAM policies",
-          "url": "vmware-onboarding-3-resource-groups-iam.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Setup SSL VPN Client",
-          "url": "vmware-onboarding-4-ssl-vpn-client.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Order vCenter Server cluster w/NSX-T and NFS Storage",
-          "url": "vmware-onboarding-5-order-cluster-storage.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Order vSRX Gateway",
-          "url": "vmware-onboarding-6-vsrx-gateway.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Configure the Network and vSRX routing (BGP)",
-          "url": "vmware-onboarding-7-bgp.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Setup IPsec VPN tunnel to on-prem (Optional)",
-          "url": "vmware-onboarding-8-vpn-onprem.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "Deploy initial VM workload",
-          "url": "vmware-onboarding-9-deploy-workload.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "NSX-T Backup (Day2)",
-          "url": "vmware-onboarding-10-nsx-t-backup.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        },
-        {
-          "name": "NSX-T Upgrade (Day2)",
-          "url": "vmware-onboarding-11-nsx-t-upgrade.hidden.html",
-          "description": ".",
-          "imgSrc": "images/solution-vmware-onboarding-hidden/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware"
-          ]
-        }
-      ]
-    },
-    {
       "name": "High Performance Computing",
       "anchor": "hpc",
       "solutions": [
@@ -1258,6 +1118,28 @@
             "Storage",
             "HPC",
             "Virtual Private Cloud"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deployment Journey",
+      "hidden": true,
+      "journey": true,
+      "journeys": [
+        {
+          "name": "VMware on Classic",
+          "hidden": true,
+          "files": [
+            "vmware-onboarding-1-architecture-and-concepts.hidden.md",
+            "vmware-onboarding-2-network-flows.hidden.md",
+            "vmware-onboarding-3-prepare-account.hidden.md",
+            "vmware-onboarding-4-order-cluster-storage.hidden.md",
+            "vmware-onboarding-5-vsrx-gateway.hidden.md",
+            "vmware-onboarding-6-ssl-vpn-client.hidden.md",
+            "vmware-onboarding-7-route-through-and-bgp-setup.hidden.md",
+            "vmware-onboarding-8-vsrx-bgp.hidden.md",
+            "vmware-onboarding-9-deploy-workload.hidden.md"
           ]
         }
       ]

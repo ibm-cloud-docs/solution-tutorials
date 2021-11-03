@@ -32,7 +32,7 @@ completion-time: 1h
 # Provision NFS storage and attach to cluster
 {: #vpc-bm-vmware-nfs}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions, vpc-file-storage"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
