@@ -2,13 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-04"
+lasttested: "2021-11-04"
 
-content-type: tutorial
-services: vmwaresolutions
-account-plan: paid
-completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}

@@ -2,13 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-04"
+lasttested: "2021-11-04"
 
-content-type: tutorial
-services: vmwaresolutions
-account-plan: paid
-completion-time: 1h
 ---
 
 {:step: data-tutorial-type='step'}
@@ -124,6 +120,8 @@ The steps involved in the exercise are:
      ![Architecture](images/solution-vmware-onboarding-hidden/deploy-workload/import-iso-url.png)
 
 9. Once completed your ISO image will show up as “Other Types” in the content library.
+
+
    ![Architecture](images/solution-vmware-onboarding-hidden/deploy-workload/imported-iso-other-types.png)
 
    

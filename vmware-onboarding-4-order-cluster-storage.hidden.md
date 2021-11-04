@@ -5,10 +5,6 @@ copyright:
 lastupdated: "2021-11-03"
 lasttested: "2021-11-03"
 
-content-type: tutorial
-services: vmwaresolutions
-account-plan: paid
-completion-time: 20m
 ---
 
 {:step: data-tutorial-type='step'}
