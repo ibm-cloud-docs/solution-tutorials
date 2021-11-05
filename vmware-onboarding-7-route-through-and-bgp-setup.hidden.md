@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 ---
 
@@ -21,43 +21,37 @@ lasttested: "2021-11-03"
 {:important: .important}
 {:note: .note}
 
-# Setup Route Through on vSRX
+# Configure vSRX Gateway
 {: #vmware-onboarding-route-through-and-bgp-setup}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
 
 
+## Journey Map
+{: #vmware-onboarding-route-through-and-bgp-setup-map}
 
 ![Architecture](images/solution-vmware-onboarding-hidden/vsrx-route-through/journey-map.png){: class="center"}
 
 
 
 
-## Objectives
-{: #vmware-onboarding-route-through-and-bgp-setup-objectives}
+
+## Overview
+{: #vmware-onboarding-route-through-and-bgp-setup-overview}
+
+This step of the deployment journey will cover the configuration of the gateway device. More specifically, route thru mode and BGP will be configured.  
 
 - These instructions assume that no additional configuration has been done on the vSRX.
 - The setup will route the Primary VLAN of your VCS instance only. Secondary VLANs can also be routed but an additional interface unit on the vSRX would have to be configured.
 - Rules provided are for private-to-private communication only. This configuration will allow the vSRX to supplant the Backend Customer Router (BCR) as the ‘next-hop’ for the VCS environment.
 - While firewall policies are configured, they are set as ‘allow all’. More detailed configuration is possible but outside the scope of this document. 
 
-
-<!--##istutorial#-->
-## Before you begin
-{: #vmware-onboarding-route-through-and-bgp-setup-prereqs}
-
-This tutorial requires:
-- An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
 - A configured VPN client in order to be able to connect to the IBM Cloud private network for your account. You can find information on how to download and install the standalone VPN client at https://{DomainName}/docs/iaas-vpn?topic=iaas-vpn-standalone-vpn-clients. 
 
 
-<!--#/istutorial#-->
-## Steps
-{: #vmware-onboarding-route-through-and-bgp-setup-steps}
 
-### Configuring the vSRX
-{: #vmware-onboarding-route-through-and-bgp-setup-vsrx}
+## Initial vSRX Configuration
+{: #vmware-onboarding-route-through-and-bgp-setup--init-config}
+
+
 
 The steps below will walk through the steps required in order to correctly configure the vSRX.
 
@@ -172,10 +166,14 @@ Assuming no errors commit your configuration:
 ```
 commit
 ```
-At this point your configuration is complete. The next steps are to set the vSRX into route-through mode. By setting the vSRX into route-through you will ‘move’ the VLAN to being the BCR as the next-hop to the vSRX as the next-hop. 
 
-### IBM Cloud Portal Set Route-Through:
-{: #vmware-onboarding-route-through-and-bgp-setup-portal}
+
+
+
+## Setup Route Through Mode
+{: #vmware-onboarding-route-through-and-bgp-setup-routethru}
+
+At this point initial configuration is complete. The next steps are to set the vSRX into route-through mode. By setting the vSRX into route-through you will ‘move’ the VLAN to being the BCR as the next-hop to the vSRX as the next-hop. 
 
 - click on the hamburger menu and navigate to Classic Infrastructure -> Gateway Appliances.
 - Select the VMware instance gateway cluster.
@@ -187,8 +185,15 @@ It will take a minute or two to take effect. To confirm that this configuration 
 
 
 
-### Setup of BGP on NSX
+## Configure BGP
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx}
+
+
+
+### Setup of BGP on NSX-T
+{: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx}
+
+
 
 1. Enable BGP on workload-t0.
 2. Set the Local AS to a specific number in this case 64546 is used. 
@@ -201,6 +206,8 @@ It will take a minute or two to take effect. To confirm that this configuration 
 6. Set the remote AS number to the vSRX’s local AS. 
 7. Set the Source Addresses to the uplink ips.
     ![BGP Neighbors](images/solution-vmware-onboarding-hidden/route-through-setup-and-bgp/bgp-neighbors.png){: class="center"} 
+
+
 
 ### Setup of BGP on vSRX
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-vsrx}
@@ -229,12 +236,11 @@ bgp {
 ```
 
 
+
 ### Results of BGP Setup
 {: #vmware-onboarding-route-through-and-bgp-setup-bgp-results}
 
 1. Examine the ‘show route protocol bgp’ to see the routes on the vSRX
-
-
 
 
 

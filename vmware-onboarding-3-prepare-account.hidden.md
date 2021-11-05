@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-04"
-lasttested: "2021-11-04"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 ---
 
@@ -23,23 +23,11 @@ lasttested: "2021-11-04"
 
 # Prepare Your IBM Cloud Account
 {: #vmware-onboarding-prepare-account}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
-
-<!--##istutorial#-->
-If you do not already have an IBM Cloud Account created, follow .....
-{: tip}
-
-<!--#/istutorial#-->
 
 
-## Objectives
-{: #vmware-onboarding-resource-groups-iam-objectives}
 
-ibm.biz/welcomePDF
-
-In this section ...... 
+## Journey Map
+{: #vmware-onboarding-prepare-account-map}
 
 ![Architecture](images/solution-vmware-onboarding-hidden/prepare-account/journey-map.png){: class="center"}
 

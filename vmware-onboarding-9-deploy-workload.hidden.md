@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-04"
-lasttested: "2021-11-04"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 ---
 
@@ -23,15 +23,7 @@ lasttested: "2021-11-04"
 
 # Deploy Initial VM workload
 {: #vmware-onboarding-deploy-workload}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
 
-<!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
-
-<!--#/istutorial#-->
 
 
 
@@ -51,7 +43,7 @@ The steps involved in the exercise are:
 2. Import of operating system .isos from IBM Cloud internal mirrors
 3. Use of the content library in deploying a virtual machine. 
 
-<!--##istutorial#-->
+
 
 ## Create Content Library
 {: #vmware-onboarding-deploy-workload-create-library}
@@ -80,7 +72,6 @@ The steps involved in the exercise are:
 
    ![Architecture](images/solution-vmware-onboarding-hidden/deploy-workload/add-storage.png)
    
-
 6. Select finish to complete the wizard and create the content library.
 
    ![Architecture](images/solution-vmware-onboarding-hidden/deploy-workload/ready-to-complete.png)
@@ -126,6 +117,7 @@ The steps involved in the exercise are:
 
    
 
+
 10. The last step is to use the content library image to deploy a virtual machine. To begin, provision a virtual machine as normal using the new virtual machine wizard. Upon reaching step 7 – customize hardware. Select the pull-down next to New CD/DVD drive and select content library ISO file.
     ![Architecture](images/solution-vmware-onboarding-hidden/deploy-workload/new-vm-select-iso.png)
 
@@ -141,11 +133,9 @@ The steps involved in the exercise are:
 
  
 
-<!--#/istutorial#-->
-
 
 ## Next Steps
 {: #vmware-onboarding-deploy-workload-next-steps}
 
-The next steps....
+At this point, you have successfully deployed your cluster!  Additional resources can be found within our [documentation](https://{DomainName}/vmwaresolutions?topic=vmwaresolutions-understand-responsib).
 

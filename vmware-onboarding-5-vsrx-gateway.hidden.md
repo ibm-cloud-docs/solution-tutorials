@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 ---
 
@@ -23,27 +23,20 @@ lasttested: "2021-11-03"
 
 # Order vSRX Gateway
 {: #vmware-onboarding-vsrx-gateway}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
-
-<!--##istutorial#-->
-For this deployment journey, a vSRX device is used. Other gateway devices may also be used and similar concepts will apply..
-{: tip}
-
-<!--#/istutorial#-->
 
 
-## Overview
-{: #vmware-onboarding-vsrx-gateway-objectives}
 
-In this section of the deployment journey, a gateway device is ordered. The information below will focus on one of our commonly used gateway devices, a vSRX. However, concepts can be applied to others as well.
-
-
+## Journey Map
+{: #vmware-onboarding-vsrx-gateway-map}
 
 ![Architecture](images/solution-vmware-onboarding-hidden/order-vsrx/journey-map.png){: class="center"}
 
-<!--##istutorial#-->
+
+
+
+
+The information below will focus on one of our commonly used gateway devices, a vSRX. However, concepts can be applied to others as well.
+{: tip}
 
 
 

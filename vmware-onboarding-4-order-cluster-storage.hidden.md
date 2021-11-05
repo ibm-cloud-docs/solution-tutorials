@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 ---
 
@@ -23,21 +23,17 @@ lasttested: "2021-11-03"
 
 # Order vCenter Server cluster w/NSX-T and Storage
 {: #vmware-onboarding-order-cluster-storage}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="30m"}
 
 
 
-
-## Overview
-{: #vmware-onboarding-order-cluster-storage-objectives}
-
-In this section of the deployment journey, a VCS environment ordered. The information below will focus on commonly used configuration. 
+## Journey Map
+{: #vmware-onboarding-order-cluster-storage-map}
 
 ![Architecture](images/solution-vmware-onboarding-hidden/order-cluster/journey-map.png){: class="center"}
 
 
+
+In this section of the deployment journey, a VCS environment ordered. The information below will focus on commonly used configuration. 
 
 Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud Catalog. Automated deployment will provision the required VLANs, bare metal servers, and VCS software. For the purposes of this guide, the following assumptions are being made:
 
@@ -47,13 +43,6 @@ Ordering a VCS environment is accomplished via an ordering form in the IBM Cloud
 - 5TB of NFS storage 
 
 <!--##istutorial#-->
-
-## Video Walk Through
-{: #vmware-onboarding-order-cluster-video-walkthrough}
-
-* Video Goes Here
-
-<!--#/istutorial#-->
 
 
 

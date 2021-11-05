@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-04"
-lasttested: "2021-11-04"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
 
 ---
@@ -24,19 +24,11 @@ lasttested: "2021-11-04"
 
 # Plan Network Connectivity Flows
 {: #vmware-onboarding-network-flows}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
-
-<!--##istutorial#-->
-Taking the time to understand and plan network fows is a key ingredient to successful deployment. As you review this section, consider the connectivity requirements you have today but may also need in the future.
-{: tip}
 
 
 
-
-## Objectives
-{: #vmware-onboarding-network-flows-objectives}
+## Journey Map
+{: #vmware-onboarding-network-flows-map}
 
 
 
@@ -44,7 +36,13 @@ Taking the time to understand and plan network fows is a key ingredient to succe
 
 
 
+Taking the time to understand and plan network fows is a key ingredient to successful deployment. As you review this section, consider the connectivity requirements you have today but may also need in the future.
+{: tip}
+
+
+
 ## Overview
+
 {: #vmware-onboarding-network-flows-video-walkthrough}
 
 By using NSX logical switches with your own IP addresses (BYOIP) you gain the greatest flexibility to manage and secure your workload network in the IBM Cloud. However, with BYOIP comes the additional requirement of devising a strategy for connectivity from within your instance. There are four major areas of connectivity that need to be addressed:
