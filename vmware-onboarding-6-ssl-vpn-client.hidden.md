@@ -2,13 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-03"
-lasttested: "2021-11-03"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
-content-type: tutorial
-services: vmwaresolutions
-account-plan: paid
-completion-time: 45m
 ---
 
 {:step: data-tutorial-type='step'}
@@ -27,33 +23,27 @@ completion-time: 45m
 
 # Setup SSL VPN Client
 {: #vmware-onboarding-ssl-vpn-client}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 
-In this section of the deployment journey, a SSL VPN client is configured. The SSL VPN client establishes connectivity with the IBM Cloud Classic Infra. 
+## Journey Map
+{: #vmware-onboarding-ssl-vpn-client-map}
+
+
 
 ![Architecture](images/solution-vmware-onboarding-hidden/ssl-vpn/journey-map.png){: class="center"}
 
 
-As shown in the architecute below, the SSL VPN allows you to connect to the 10.x.x.x Private IPs of the  VCS Cluster for managemenet and configuration purposes.  For production, businesses will typically establish network connectivity to the IBM Cloud Classic Infra via Direct Link or Site-to-Site VPN, but having the SSL VPN client configured is useful for initial configuration and/or to serve as a backup.
-{: tip}
 
-<!--#/istutorial#-->
+In this section of the deployment journey, a SSL VPN client is configured. The SSL VPN client establishes connectivity with the IBM Cloud Classic Infra. 
+
+As shown in the architecute below, the SSL VPN allows you to connect to the 10.x.x.x Private IPs of the  VCS Cluster for managemenet and configuration purposes.  For production, businesses will typically establish network connectivity to the IBM Cloud Classic Infra via Direct Link or Site-to-Site VPN, but having the SSL VPN client configured is useful for initial configuration and/or to serve as a backup.
+
 
 ![Architecture](images/solution-vmware-onboarding-hidden/ssl-vpn/architecture-sslvpn-callout.jpg){: class="center"}
 
 
 
 
-## Video Walk Through
-{: #vmware-onboarding-ssl-vpn-client-video-intro}
-
-
-
-<!--##istutorial#-->
 ## Detailed Instructions
 {: #vmware-onboarding-ssl-vpn-client-instructions}
 
@@ -67,7 +57,7 @@ Once connected, validate connectivity by pinging the vCenter IP and/or opening t
 
 ![Architecture](images/solution-vmware-onboarding-hidden/ssl-vpn/vcenter-ips.png){: class="center"}
 
-<!--#/istutorial#-->
+
 
 
 ## Next Steps

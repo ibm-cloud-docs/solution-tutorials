@@ -2,13 +2,10 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-29"
-lasttested: "2021-10-29"
+lastupdated: "2021-11-05"
+lasttested: "2021-11-05"
 
-content-type: tutorial
-services: vmwaresolutions
-account-plan: paid
-completion-time: 1h
+
 ---
 
 {:step: data-tutorial-type='step'}
@@ -27,40 +24,53 @@ completion-time: 1h
 
 # Deployment Journey Overview
 {: #vmware-onboarding-architecture-and-concepts}
-{: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions"}
-{: toc-completion-time="30m"}
 
-<!--##istutorial#-->
 
-<!--#/istutorial#-->
+
+## Journey Map
+{: #vmware-onboarding-architecture-and-concepts-map}
+
+![Architecture](images/solution-vmware-onboarding-hidden/intro/journeymap-1.png){: class="center"}
+
+
+
+Welcome to the Deployment Journey for VMware on IBM Cloud! Use the sidebar on the left to navigate between the journey points.
+{: tip}
 
 IBM Cloud for VMware Solutions makes it simpler for your organization to capitalize on the tremendous value of the cloud. The solution provides a path to migrate VMware workloads to the IBM Cloud while using existing tools, technologies and skills from your on-premises environment.  The information contained within this document is meant to serve as a technical guide for starting with a new IBM Cloud towards a fully configured VMware instance. 
 {: shortdesc}
 
 
 
-![Architecture](images/solution-vmware-onboarding-hidden/intro/journeymap-1.png){: class="center"}
+## Assumptions
+{: #vmware-onboarding-architecture-and-concepts-assumptions}
+
+The deployment journey will be assuming the following scenario. Please note that while your circumstance may not be exactly identical, you will still benefit from the overall journey steps and concepts covered in this guide.
+
+- Goal is to deployment VMware workload on IBM Cloud.
+- VMs will need to be able to access the Internet (source NAT) as well as certain VMs will need to be directly accessible from the Internet (destination NAT).
+- Already familiar with Juniper networking technology on-premise, and wishes to do the same on IBM Cloud (so a vSRX Gateway device will be used).
+- An initial non-prod environment to be provisioned:
+  - A single VMware instance (cluster) 
+  - vSphere 7.0 with NSX-T
+  - 6 hosts (bare metal servers) each running Intel Xeon Gold 5218 with 192GB RAM
+  - 5TB of NFS storage 
 
 
 
+IBM Cloud for VMware Solutions provides different offerings to address different client needs and the [offering comparison chart](https://{DomainName}/vmwaresolutions?topic=vmwaresolutions-inst_comp_chart) details the differences.
+{: tip}
 
-
-<!--##istutorial#-->
-## Deployment Architecture
+## Architecture
 {: #vmware-onboarding-architecture-and-concepts-prereqs}
 
-
-
-TODO: Add some description around the deployment architecture we will be walking through.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ipsum ipsum, vestibulum in odio sed, mollis ultricies felis. Suspendisse eget rutrum enim, sit amet tempus velit. Phasellus rhoncus ligula et eleifend interdum. Praesent sit amet urna ac lacus varius vehicula. Sed in quam auctor, vehicula quam sit amet, finibus ipsum. Vivamus ac sem id odio dictum tempor. Integer sollicitudin metus tellus, id vehicula nisi viverra eu. Quisque ac leo tristique, dignissim elit vel, gravida massa. Mauris quis ligula dui. Mauris dignissim, neque quis congue rhoncus, mi libero eleifend quam, et commodo urna orci sed tortor. Nam turpis justo, suscipit auctor lacus nec, bibendum aliquam lacus. Morbi commodo placerat nisi. Nam mattis, lorem quis tempor aliquet, turpis justo faucibus nisi, ut maximus leo diam id tortor. Aliquam non dui in diam finibus viverra eget sit amet justo.
-
-
+The following architecture represents the pattern this deployment journey will following.  
 
 ![Architecture](images/solution-vmware-onboarding-hidden/architecture.jpg){: class="center"}
 
 
 
-<!--#/istutorial#-->
+
 
 
 
