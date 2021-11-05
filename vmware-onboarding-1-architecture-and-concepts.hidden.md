@@ -51,10 +51,10 @@ The deployment journey will be assuming the following scenario. Please note that
 - VMs will need to be able to access the Internet (source NAT) as well as certain VMs will need to be directly accessible from the Internet (destination NAT).
 - Already familiar with Juniper networking technology on-premise, and wishes to do the same on IBM Cloud (so a vSRX Gateway device will be used).
 - An initial non-prod environment to be provisioned:
-  - A single VMware instance (cluster) 
-  - vSphere 7.0 with NSX-T
-  - 6 hosts (bare metal servers) each running Intel Xeon Gold 5218 with 192GB RAM
-  - 5TB of NFS storage 
+   - A single VMware instance (cluster) 
+   - vSphere 7.0 with NSX-T
+   - 6 hosts (bare metal servers) each running Intel Xeon Gold 5218 with 192GB RAM
+   - 5TB of NFS storage 
 
 
 
