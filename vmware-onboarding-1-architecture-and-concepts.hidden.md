@@ -35,7 +35,6 @@ lasttested: "2021-11-05"
 
 
 Welcome to the Deployment Journey for VMware on IBM Cloud! Use the sidebar on the left to navigate between the journey points.
-
 {: tip}
 
 IBM Cloud for VMware Solutions makes it simpler for your organization to capitalize on the tremendous value of the cloud. The solution provides a path to migrate VMware workloads to the IBM Cloud while using existing tools, technologies and skills from your on-premises environment.  The information contained within this document is meant to serve as a technical guide for starting with a new IBM Cloud towards a fully configured VMware instance. 
@@ -60,7 +59,6 @@ The deployment journey will be assuming the following scenario. Please note that
 
 
 IBM Cloud for VMware Solutions provides different offerings to address different client needs and the [offering comparison chart](https://{DomainName}/vmwaresolutions?topic=vmwaresolutions-inst_comp_chart) details the differences.
-
 {: tip}
 
 ## Architecture
