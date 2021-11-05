@@ -42,7 +42,6 @@ Taking the time to understand and plan network fows is a key ingredient to succe
 
 
 ## Overview
-
 {: #vmware-onboarding-network-flows-video-walkthrough}
 
 By using NSX logical switches with your own IP addresses (BYOIP) you gain the greatest flexibility to manage and secure your workload network in the IBM Cloud. However, with BYOIP comes the additional requirement of devising a strategy for connectivity from within your instance. There are four major areas of connectivity that need to be addressed:
