@@ -191,7 +191,7 @@ It will take a minute or two to take effect. To confirm that this configuration 
 
 
 ### Setup of BGP on NSX-T
-{: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx}
+{: #vmware-onboarding-route-through-and-bgp-setup-bgp-nsx-setup}
 
 
 
