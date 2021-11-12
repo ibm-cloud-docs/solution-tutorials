@@ -207,7 +207,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
 1. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Standard** plan.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select a resource group.
+   2. Set **Service name** to **satellite-nlu** and select a resource group.
    3. Select **Private Network** under Service Endpoints.
    4. Check the license agreement and click on **Create**.
 1. Under **Service credentials**, check for **Auto-generated service credentials for private endpoint**. If not found, click on **New credential**
