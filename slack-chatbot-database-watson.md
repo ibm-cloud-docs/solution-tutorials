@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-25"
+lastupdated: "2021-11-12"
 lasttested: "2020-12-22"
 
 content-type: tutorial
@@ -122,6 +122,10 @@ In this section, you are going to set up the needed services and prepare the env
 ## Load the skill / workspace
 {: #slack-chatbot-database-watson-3}
 {: step}
+
+This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
+{: tip}
+
 
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
