@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-28"
-lasttested: "2021-06-07"
+lastupdated: "2021-11-12"
+lasttested: "2021-11-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -78,7 +78,7 @@ This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-* `oc` to interact with OpenShift,
+* `oc` to interact with OpenShift
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -102,9 +102,9 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: #satellite-tour-architecture}
 {: step}
 
-In this section, you will walk through the components that make up a {{site.data.keyword.satelliteshort}} location. A {{site.data.keyword.satelliteshort}} location is the location (on-premises, edge, or other cloud provider's infrastructure) to which {{site.data.keyword.Bluemix_notm}} Services will be extended.
+In this section, you will walk through the components that make up a {{site.data.keyword.satelliteshort}} location. A {{site.data.keyword.satelliteshort}} location is the location (on-premises, edge, or other cloud provider's infrastructure) to which {{site.data.keyword.Bluemix_notm}} services will be extended.
 
-### using {{site.data.keyword.cloud_notm}} console
+### Using {{site.data.keyword.cloud_notm}} console
 {: #satellite-tour-architecture-ui}
 
 1. Navigate to [the list of locations](https://{DomainName}/satellite/locations). It lists the location you have been provided access to.
@@ -114,7 +114,7 @@ In this section, you will walk through the components that make up a {{site.data
    * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **OpenShift clusters**.
    * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 
-### using {{site.data.keyword.cloud_notm}} CLI
+### Using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
 
 `ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components.
@@ -205,16 +205,20 @@ In the following section, you will deploy an application to a {{site.data.keywor
 
 With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
 
-1. Locate the existing {{site.data.keyword.databases-for-postgresql}} service instance in the [Resource list](https://{DomainName}/resources) list.
+1. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
+   1. Select a region and select **Standard** plan.
+   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select a resource group.
+   3. Select **Private Network** under Service Endpoints.
+   4. Check the license agreement and click on **Create**.
+1. Under **Service credentials**, check for **Auto-generated service credentials for private endpoint**. If not found, click on **New credential**
+   1. Give it a name - `nlu-for-satellite` and select **Writer** as the role.
+   2. Click **Add**.
 1. In the **Service credentials**, locate the credentials that have already been created for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys:
-   * `connection` / `postgres` / `hosts` / `hostname`
-   * `connection` / `postgres` / `hosts` / `port`
-   * `connection` / `postgres` / `authentication` / `username`
-   * `connection` / `postgres` / `authentication` / `password`
-   * `connection` / `postgres` / `database`
+   * `apikey`
+   * `url`
 
-Looking at the value for `hostname`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
+Looking at the value for `url`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
 1. Go to [the list of locations](https://{DomainName}/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
 1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
@@ -222,12 +226,13 @@ Looking at the value for `hostname`, notice that this instance is using a privat
    * Select **Cloud** as destination.
    * Click **Next**.
 1. In the **Resource details** step:
-   * Set **Endpoint name** to something unique such as `<your-initials>-database`.
-   * Set **Destination FQDN or IP** to the **hostname** of the database, taken from the credentials.
-   * Set **Destination port** to the **port** of the database.
+   * Set **Endpoint name** to something unique such as `<your-initials>-nlu`.
+   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service, you can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`.
+   * Set **Destination port** to **443** (HTTPS port).
    * Click **Next**.
 1. In the **Protocol** step:
-   * Set the **Source protocol** as **TCP**
+   * Set the **Source protocol** as **HTTPS**
+   * Set **Server name indication** to the FQDN value above. 
    * Click **Next**.
 1. Click **Create endpoint**.
 1. Select the created endpoint.
@@ -244,6 +249,9 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
    {: pre}
+
+   If you see `Pull image still failed due to error: while pulling` error, follow the steps for [Storing images in the worker node empty directory](https://{DomainName}/docs/openshift?topic=openshift-registry#emptydir_internal_registry) to resolve the error.
+   {: tip}
 
 1. Wait for the first build of the application to complete by monitoring the logs:
    ```sh
@@ -265,38 +273,12 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    
 1. Open the route URL to access the application.
 
-The application allows to query a {{site.data.keyword.postgresql}} database. The form prompts you for the database credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the database over {{site.data.keyword.satelliteshort}} link.
+The application allows you to connect to {{site.data.keyword.nlushort}} service and analyze text. Click on **Switch to Natural Language Understanding**. The form prompts you for the service credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the {{site.data.keyword.nlushort}} service over {{site.data.keyword.satelliteshort}} link.
 
-1. Use the Endpoint address to set the values for `hostname`, `port`.
-1. Fill `username`, `password` and `database` from the credentials in the previous section.
-1. Click `Login`.
-1. Try out some SQL commands to verify the connection with the database:
-1. Create a table:
-   ```sql
-   CREATE TABLE <your-initials>_EMPLOYEE( FIRST_NAME CHAR(20) NOT NULL, LAST_NAME CHAR(20), AGE INT, SEX CHAR(1), INCOME FLOAT )
-   ```
-   {: codeblock}
-
-   To avoid conflicts with other users of the database, use a unique table name like `<your-initials>_EMPLOYEE`.
-   {: tip}
-   
-1. Insert a row
-   ```sql
-   INSERT INTO <your-initials>_EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Win', 30, 'M', 9000)
-   ```
-   {: codeblock}
-
-1. List all rows
-   ```sql
-   SELECT * FROM <your-initials>_EMPLOYEE
-   ```
-   {: codeblock}
-
-1. Delete the table
-   ```sql
-   DROP TABLE <your-initials>_EMPLOYEE
-   ```
-   {: codeblock}
+1. Use the {{site.data.keyword.satelliteshort}} link endpoint address to set the value for `url`.
+1. Fill `API key` from the {{site.data.keyword.nlushort}} service credentials in the previous section.
+1. Click on **Connect** to check the connection to the service.
+1. Once successfully connected, a default text is provided for the text analysis. Click on **Analyze** to see the JSON response from the {{site.data.keyword.nlushort}} service. Try out some other text for analysis.
 
 This simple application demonstrated how you can make any service running in {{site.data.keyword.Bluemix_notm}} available to your {{site.data.keyword.satelliteshort}} location over a secured connection provided by {{site.data.keyword.satelliteshort}} Link.
 
