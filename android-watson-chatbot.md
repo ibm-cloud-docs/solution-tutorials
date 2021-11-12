@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-25"
+lastupdated: "2021-11-12"
 lasttested: "2020-12-08"
 
 content-type: tutorial
@@ -112,6 +112,10 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 1. Click **Create skill**, select **Dialog skill** and **Next**.
 1. Under **Upload skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Upload**.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
+
+This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
+{: tip}
+
 
 ### Define an intent
 {: #android-watson-chatbot-define_intent}
