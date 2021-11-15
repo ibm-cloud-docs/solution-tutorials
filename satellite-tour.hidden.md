@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-12"
-lasttested: "2021-11-12"
+lastupdated: "2021-11-15"
+lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -150,32 +150,6 @@ In this section, you will walk through the components that make up a {{site.data
    ```
    {: pre}
 
-## Review the logging and monitoring dashboards for the location
-{: #satellite-tour-observe-location}
-{: step}
-
-A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
-
-Under [Logging](https://{DomainName}/observe/logging):
-1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
-1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
-1. Set the search to `host:satellite` to view only logs from {{site.data.keyword.satelliteshort}}. You can filter even more by setting the `app` attribute to the {{site.data.keyword.satelliteshort}} location CRN or using the **Sources** and **Apps** filters at the top of the window.
-   ```sh
-   host:satellite app:crn:v1:bluemix:public:satellite:us-east:a/123456:c2k1k2jw0ofn1234::
-   ```
-   {: codeblock}
-
-1. By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
-
-The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
-1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
-1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
-1. In the **Dashboards** list, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
-1. Change the time horizon to view past data.
-1. Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics.
-
-{{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
-
 ## Create a new project in the {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-project}
 {: step}
@@ -281,6 +255,31 @@ The application allows you to connect to {{site.data.keyword.nlushort}} service 
 1. Once successfully connected, a default text is provided for the text analysis. Click on **Analyze** to see the JSON response from the {{site.data.keyword.nlushort}} service. Try out some other text for analysis.
 
 This simple application demonstrated how you can make any service running in {{site.data.keyword.Bluemix_notm}} available to your {{site.data.keyword.satelliteshort}} location over a secured connection provided by {{site.data.keyword.satelliteshort}} Link.
+
+## Review the logging and monitoring dashboards for the location
+{: #satellite-tour-observe-location}
+{: step}
+
+A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
+
+Under [Logging](https://{DomainName}/observe/logging):
+1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
+1. Click on **Sources** in the top bar, select `satellite` under Hosts and click **Apply** to view only logs from {{site.data.keyword.satelliteshort}}. To check logs of a specific {{site.data.keyword.satelliteshort}} location, you can filter by setting the `Apps` to the {{site.data.keyword.satelliteshort}} location CRN.
+1. In the search box in the bottom of the view, enter `"conn_type: cloud"` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Run the application and analyze text a couple of times to see more logs._
+
+   By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
+   {: tip}
+
+The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
+1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
+1. Under the **Dashboards**, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
+1. Select the `<your-initials>-nlu` link endpoints from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics.
+1. Change the time horizon to view past data.
+
+   Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
+   {: tip}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
