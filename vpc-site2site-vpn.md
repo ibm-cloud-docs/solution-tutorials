@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2019-09-03"
+lastupdated: "2021-11-15"
+lasttested: "2021-11-15"
 
 content-type: tutorial
 services: vpc, cloud-object-storage, databases-for-postgresql
@@ -438,7 +438,7 @@ To test that the VPN connection has been successfully established, use the simul
 ### Set up a microservice for testing
 {: #vpc-site2site-vpn-setup-microservice}
 
-You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#vpc-site2site-vpn-create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
 1. Back on your local machine, change the working directory and switch to **sampleapps**:
    ```sh
