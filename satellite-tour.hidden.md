@@ -78,7 +78,7 @@ This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-* `oc` to interact with OpenShift
+* `oc` to interact with {{site.data.keyword.openshiftshort}}
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -111,7 +111,7 @@ In this section, you will walk through the components that make up a {{site.data
 2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington DC or London.
 3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
    * a set of hosts has been assigned to the location **Control plane**.
-   * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **OpenShift clusters**.
+   * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **{{site.data.keyword.openshiftshort}} clusters**.
    * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 
 ### Using {{site.data.keyword.cloud_notm}} CLI
@@ -163,7 +163,7 @@ In the following section, you will deploy an application to a {{site.data.keywor
    You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
    {: tip}
 
-1. To log in the cluster, click the **OpenShift web console** button.
+1. To log in the cluster, click the **{{site.data.keyword.openshiftshort}} web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
 1. In the window that opens, click **Display token**.
 1. Copy and paste the **Log in with this token** command in your shell window.
@@ -218,7 +218,7 @@ With these steps you enabled, over a secured link, the connectivity between {{si
 {: #satellite-tour-deploy}
 {: step}
 
-1. From the command line, create a new application in the OpenShift project:
+1. From the command line, create a new application in the {{site.data.keyword.openshiftshort}} project:
    ```sh
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
@@ -266,7 +266,7 @@ Under [Logging](https://{DomainName}/observe/logging):
 1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
 1. Click on **Sources** in the top bar, select `satellite` under Hosts and click **Apply** to view only logs from {{site.data.keyword.satelliteshort}}. To check logs of a specific {{site.data.keyword.satelliteshort}} location, you can filter by setting the `Apps` to the {{site.data.keyword.satelliteshort}} location CRN.
-1. In the search box in the bottom of the view, enter `"conn_type: cloud"` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Run the application and analyze text a couple of times to see more logs._
+1. In the search box in the bottom of the view, enter `"conn_type: cloud"` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Launch the application and analyze text a couple of times to see more logs._
 
    By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
    {: tip}
@@ -275,7 +275,7 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
 1. Under the **Dashboards**, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
-1. Select the `<your-initials>-nlu` link endpoints from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics.
+1. Select the `<your-initials>-nlu` link endpoint from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics. _Launch the application and analyze text a couple of times to see more logs._
 1. Change the time horizon to view past data.
 
    Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
@@ -285,31 +285,33 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 {: #satellite-tour-config}
 {: step}
 
-With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You define cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
+With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You can define cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
 
 ### Create a cluster group
 {: #satellite-tour-cluster-group}
 
-1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) page.
-1. Create a new cluster group with a unique name such as `<your-initials>-cluster-group`.
-1. Select the group.
-1. Under **Clusters**, click **Add clusters** and check the cluster you previously deployed your app to.
+1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) tab.
+1. Create a new cluster group by clicking on **Create cluster group**. Provide a unique name such as `<your-initials>-cluster-group`.
+1. Select the created cluster group.
+1. Under **Clusters** tab, click **Add clusters**, check the cluster you previously deployed your app to and then click on **Add**.
 
-You have now defined a set of clusters you can consistency deploy Kubernetes resources to.
+You have now defined a set of clusters to consistently deploy Kubernetes resources to.
 
 ### Create a configuration and a first version
 {: #satellite-tour-configuration}
 
+A Satellite configuration lets you upload or create Kubernetes resource YAML file versions that you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters. 
+
 The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 
 1. Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
-1. Create a new configuration:
+1. Create a new configuration by clicking on **Create configuration**:
    * Set **Configuration name** to a unique name such as `<your-initials>-config`.
-   * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location.
+   * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location and click on **Create**.
 1. Select the configuration.
-1. Under **Versions**, add a version.
-   * Set **Version name** to **V1**
-   * Set the YAML content to the following, making sure the `namespace` matches the name of the OpenShift project you created earlier:
+1. Under **Versions**, click on **Add version**.
+   * Set **Version name** to **V1**.
+   * Set the YAML content to the following, making sure the `namespace` matches the name of the {{site.data.keyword.openshiftshort}} project you created earlier:
      ```yaml
      apiVersion: v1
      kind: ConfigMap
@@ -322,19 +324,21 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
      ```
      {: pre}
 
-   * Click **Add**.
+   * Click on **Add**.
 
 ### Subscribe clusters to the version
 {: #satellite-tour-version}
 
-Finally you will map the version to a set of clusters.
+The version that you upload is not applied to your cluster until you add a subscription to your configuration.
+
+Finally, you will map the version to a set of clusters.
 
 1. Go back to the **Overview** page for the configuration.
-1. Create a Subscription.
+1. Clikc on **Create subscription**.
    * Set **Subscription name** to a unique name such as `<your-initials>-latest`.
    * Set **Version** to **V1**.
    * Select the cluster group previously created.
-1. Click **Create**.
+1. Click on **Create**.
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the clusters.
 
@@ -365,7 +369,7 @@ To deploy an update to the resources, you can create a new version.
    * Change `example.property.2` to `you` in the YAML.
 1. **Add** the version.
 1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
-1. In the OpenShift console or from the shell, watch for updates to the existing Config Map.
+1. In the {{site.data.keyword.openshiftshort}} console or from the shell, watch for updates to the existing Config Map.
 
 In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
 
