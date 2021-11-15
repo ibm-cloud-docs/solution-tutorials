@@ -68,7 +68,7 @@ The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 ![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png){: class="center"}
 {: style="text-align: center;"}
 
-The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.postgresql}} database running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
+The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.nlushort}} service running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
 
 <!--##istutorial#-->
 ## Before you begin
@@ -181,7 +181,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
 1. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Standard** plan.
-   2. Set **Service name** to **satellite-nlu** and select a resource group.
+   2. Set **Service name** to `<your-initials>-satellite-nlu` and select a resource group.
    3. Select **Private Network** under Service Endpoints.
    4. Check the license agreement and click on **Create**.
 1. Under **Service credentials**, check for **Auto-generated service credentials for private endpoint**. If not found, click on **New credential**
@@ -212,7 +212,7 @@ Looking at the value for `url`, notice that this instance is using a private end
 1. Select the created endpoint.
 1. After few seconds, the endpoint will be ready and the **Endpoint address** (`host:port`) filled. You may need to refresh the page for the endpoint address to become visible.
 
-With these steps you enabled, over a secured link, the connectivity between {{site.data.keyword.postgresql}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
+With these steps you enabled, over a secured link, the connectivity between {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
 
 ## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
@@ -349,29 +349,33 @@ Finally, you will map the version to a set of clusters.
    ```sh
    oc get configmaps
    ```
-1. The config map was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config. Retrieve its values:
+1. The config map was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config. Retrieve its values and check the **Data** section:
    ```sh
    oc describe configmap example
    ```
    {: pre}
 
 You can also use the {{site.data.keyword.openshiftshort}} console to view the config map:
-1. Switch to the **Developer** view.
+1. On the left pane, click on **Administrator** and switch to the **Developer** view.
 1. Select **Config Maps**.
-1. Make sure your project is selected.
+1. Make sure your project is selected in the top bar.
 1. Locate the config map named **example**.
 
 To deploy an update to the resources, you can create a new version.
 
 1. From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
-1. Create a new version by duplicating **V1**.
+1. Create a new version from **V1** by clicking on the action menu next to **V1** version and then on clicking on **Duplicate**,
    * Set **Version name** to **V2**.
    * Change `example.property.2` to `you` in the YAML.
-1. **Add** the version.
-1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
-1. In the {{site.data.keyword.openshiftshort}} console or from the shell, watch for updates to the existing Config Map.
+1. Click on **Add**.
+1. Back to the **Overview** page for the configuration, edit the existing subscription by clicking on the action menu, click on **Edit**, change the **Version** to **V2**, and click on **Save**.
+1. In the {{site.data.keyword.openshiftshort}} console or from the shell, watch for updates to the existing Config Map. From the shell, run the below command and look under the **Data** section for the changes
+   ```sh
+   oc describe configmap example
+   ```
+   {: pre}
 
-In this example we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
+In this example, we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
 
 ## Remove resources
 {: #satellite-tour-removeresources}
