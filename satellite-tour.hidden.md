@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-15"
+lastupdated: "2021-11-16"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -223,9 +223,11 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
    {: pre}
-
+   
+   <!--##istutorial#-->
    If you see `Pull image still failed due to error: while pulling` error, follow the steps for [Storing images in the worker node empty directory](https://{DomainName}/docs/openshift?topic=openshift-registry#emptydir_internal_registry) to resolve the error.
    {: tip}
+   <!--#/istutorial#-->
 
 1. Wait for the first build of the application to complete by monitoring the logs:
    ```sh
