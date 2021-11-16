@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-25"
-lasttested: "2019-12-07"
+lastupdated: "2021-11-16"
+lasttested: "2021-11-16"
 
 ---
 
@@ -65,7 +65,7 @@ In an active/active architecture, both locations have identical active instances
 
 This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center.
 
-When considering **recovery point objective** (RPO) in the active/active scenario, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
+When considering [**recovery point objective**](https://en.wikipedia.org/wiki/Disaster_recovery#Recovery_Point_Objective) (RPO) in the active/active scenario, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
 
 #### Active-passive configuration
 {: #strategies-for-resilient-applications-3}
@@ -75,7 +75,7 @@ An active/passive architecture relies on one active region and a second (passive
 ![Active/Passive](images/solution39/Active-passive.png){: class="center"}
 {: style="text-align: center;"}
 
-Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both [**recovery time objective**](https://en.wikipedia.org/wiki/Disaster_recovery#Recovery_Time_Objective) (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
 
 ### Disaster recovery with three regions
 {: #strategies-for-resilient-applications-4}
@@ -109,7 +109,7 @@ In a multi-region architecture, an application is deployed to different location
 
 A region is a specific geographical location where you can deploy apps, services, and other {{site.data.keyword.cloud_notm}} resources. [{{site.data.keyword.cloud_notm}} regions](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-Additionally, in a multi-region architecture, a Global load balancer like [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) ({{site.data.keyword.cis_short_notm}}) is required to distribute traffic between regions. The [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager) is integrated with {{site.data.keyword.cis_short_notm}} and allows an administrator to order - or import - SSL/TLS certificates to secure the network traffic.
+Additionally, in a multi-region architecture, a Global load balancer like [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) ({{site.data.keyword.cis_short_notm}}) is required to distribute traffic between regions. Both the [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager) and [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) are integrated with {{site.data.keyword.cis_short_notm}} and allows an administrator to order - or import - SSL/TLS certificates to secure the network traffic.
 
 Deploying a solution across multiple regions comes with the following benefits:
 - Reduce latency - improve user experience by deploying resources closer to their point of origin.
@@ -130,16 +130,6 @@ This section reviews the compute options available in {{site.data.keyword.cloud_
 
 Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#strategies-for-resilient-applications-databaseservices) and [non-database-services](#strategies-for-resilient-applications-nondatabaseservices).
 
-### Cloud Foundry
-{: #strategies-for-resilient-applications-10}
-
-Cloud Foundry offers the capability to achieve deployment of a multi-region architecture. The architecture for Cloud Foundry multi-region looks like this:
-
-![CF-Architecture](images/solution39/CF2-Architecture.png){: class="center"}
-{: style="text-align: center;"}
-
-The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture utilizing a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline service.
-
 ### Kubernetes or {{site.data.keyword.openshiftshort}}
 {: #strategies-for-resilient-applications-11}
 
@@ -158,20 +148,6 @@ By creating multiple clusters in different regions, users can also access the cl
 
 The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis) walks you through the steps to deploy a similar architecture.
 
-### {{site.data.keyword.openwhisk_short}}
-{: #strategies-for-resilient-applications-12}
-
-{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for {{site.data.keyword.openwhisk_short}} multi-region looks like this.
-
-![Functions-Architecture](images/solution39/Functions-Architecture.png){: class="center"}
-{: style="text-align: center;"}
-
-1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
-2. {{site.data.keyword.cis_full_notm}} redirects the users to the closest healthy API back-end.
-3. Certificate Manager provides the API with its SSL certificate. The traffic is encrypted end-to-end.
-4. The API is implemented with Cloud Functions.
-
-Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
 
 ### {{site.data.keyword.codeengineshort}}
 {: #strategies-for-resilient-applications-26}
@@ -191,6 +167,33 @@ The below architecture demonstrates deploying isolated workloads by provisioning
 {: style="text-align: center;"}
 
 The tutorial [**Deploy isolated workloads across multiple locations and zones**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
+
+
+### Cloud Foundry
+{: #strategies-for-resilient-applications-10}
+
+Cloud Foundry offers the capability to achieve deployment of a multi-region architecture. The architecture for Cloud Foundry multi-region looks like this:
+
+![CF-Architecture](images/solution39/CF2-Architecture.png){: class="center"}
+{: style="text-align: center;"}
+
+The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture utilizing a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline service.
+
+### {{site.data.keyword.openwhisk_short}}
+{: #strategies-for-resilient-applications-12}
+
+{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for {{site.data.keyword.openwhisk_short}} multi-region looks like this.
+
+![Functions-Architecture](images/solution39/Functions-Architecture.png){: class="center"}
+{: style="text-align: center;"}
+
+1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
+2. {{site.data.keyword.cis_full_notm}} redirects the users to the closest healthy API back-end.
+3. {{site.data.keyword.cloudcerts_full_notm}} provides the API with its SSL certificate. The traffic is encrypted end-to-end.
+4. The API is implemented with Cloud Functions.
+
+Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
+
 
 ### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} on Classic Infrastructure
 {: #strategies-for-resilient-applications-14}
@@ -230,7 +233,7 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 - Can support SQL or NoSQL databases
 - Accessed through a web interface or vendor-provided API
 
-**Prepping for multi-region architecture:**
+**Preparing for multi-region architecture:**
 
 - What are the resiliency options of the database service?
 - How is replication handled between multiple database services across regions?
@@ -249,23 +252,22 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 
 Refer to [these instructions](https://{DomainName}/docs/Cloudant?topic=Cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
 
-### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
+### {{site.data.keyword.Db2_on_Cloud_short}} and {{site.data.keyword.dashdbshort_notm}}
 {: #strategies-for-resilient-applications-17}
 
 {{site.data.keyword.cloud_notm}} offers several Db2 database services. These are:
 
 - [**{{site.data.keyword.Db2_on_Cloud_short}}**](https://{DomainName}/catalog/services/db2): A fully-managed cloud SQL database for typical operational, OLTP-like workloads.
 - [**{{site.data.keyword.dashdbshort_notm}}**](https://{DomainName}/catalog/services/db2-warehouse): A fully-managed cloud data warehouse service for high-performance, petabyte-scale analytic workloads. It offers both SMP and MPP service plans and utilizes an optimized columnar data store and in-memory processing.
-- [**{{site.data.keyword.Db2Hosted_notm}}**](https://{DomainName}/catalog/services/db2-hosted): A hosted by IBM and managed by the user database system. It provides Db2 with full administrative access to cloud infrastructure, thereby eliminating the cost, complexity, and risk of managing your own infrastructure.
 
 In the following, we will focus on {{site.data.keyword.Db2_on_Cloud_short}} as DBaaS for operational workloads. These workloads are typical for the applications discussed in this tutorial.
 
 #### Multi-region support for {{site.data.keyword.Db2_on_Cloud_short}}
 {: #strategies-for-resilient-applications-18}
 
-{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](/docs/Db2onCloud?topic=Db2onCloud-getting-started). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real-time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
+{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](/docs/Db2onCloud?topic=Db2onCloud-ha). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-dr_gen) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real-time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
-More information is available in the [High Availability documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha#ha).
+More information is available in the [High Availability documentation](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-ha).
 
 #### Backup and restore
 {: #strategies-for-resilient-applications-19}
@@ -275,7 +277,7 @@ More information is available in the [High Availability documentation](https://{
 ### {{site.data.keyword.databases-for}}
 {: #strategies-for-resilient-applications-databaseservices}
 
-{{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:
+{{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They include:
 * [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 * [{{site.data.keyword.databases-for-enterprisedb}}](https://{DomainName}/catalog/services/databases-for-enterprisedb)
 * [{{site.data.keyword.databases-for-cassandra}}](https://{DomainName}/catalog/services/databases-for-cassandra)
@@ -286,15 +288,7 @@ More information is available in the [High Availability documentation](https://{
 * [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq)
 
 All of these services share the same characteristics:
-* For high availability they are deployed in clusters. Details can be found in the documentation of each service:
-   - [{{site.data.keyword.postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
-   - [EnterpriseDB](https://{DomainName}/docs/databases-for-enterprisedb?topic=databases-for-enterprisedb-high-availability)
-   - [DataStax](https://{DomainName}/docs/databases-for-cassandra?topic=databases-for-cassandra-high-availability)
-   - [{{site.data.keyword.redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
-   - [ElasticSearch](https://{DomainName}/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-high-availability#high-availability)
-   - [etcd](https://{DomainName}/docs/databases-for-etcd?topic=databases-for-etcd-high-availability#high-availability)
-   - [{{site.data.keyword.mongodb}}](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-high-availability#high-availability)
-   - [{{site.data.keyword.rabbitmq}}](https://{DomainName}/docs/messages-for-rabbitmq?topic=messages-for-rabbitmq-high-availability)
+* For high availability they are deployed in clusters. Details can be found in the documentation of each service, e.g., [High-Availability for {{site.data.keyword.postgresql}}](https://{DomainName}/docs/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability).
 * Each cluster is spread over multiple zones.
 * Data is replicated across the zones.
 * Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/databases-for-redis?topic=databases-for-redis-resources-scaling) for details.
@@ -340,10 +334,10 @@ Many of the services provide stateless APIs and offer high availability through 
 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
-| Cloud Foundry | - Deploy applications to multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations |
 | {{site.data.keyword.containerlong_notm}}, {{site.data.keyword.openshiftlong_notm}} | - Resiliency by design with support for multi-zone clusters \n - Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}} |
-| {{site.data.keyword.openwhisk_short}} | - Available in multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Functions API to deploy actions in multiple locations |
 | {{site.data.keyword.codeengineshort}} | - Available in multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} |
+| Cloud Foundry | - Deploy applications to multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations |
+| {{site.data.keyword.openwhisk_short}} | - Available in multiple locations \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} \n - Use Cloud Functions API to deploy actions in multiple locations |
 | {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | - Provision servers in multiple locations \n - Attach servers in the same location to a local load balancer \n - Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}} |
 | {{site.data.keyword.cloudant}} | - One-shot and Continuous replication between databases \n - Automatic data redundancy within a region |
 | {{site.data.keyword.Db2_on_Cloud_short}} | - Provision a geo-replicated disaster recovery node for real-time data synchronization \n - Daily backup with paid plans |
@@ -359,6 +353,7 @@ Many of the services provide stateless APIs and offer high availability through 
 
 - [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
+- [Deploying an application across multiple regions with a custom domain name tutorial](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-multiple-regions)
 - [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp)
 - [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
 - [Kubernetes, resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis)
