@@ -185,7 +185,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    3. Select **Private Network** under Service Endpoints.
    4. Check the license agreement and click on **Create**.
 1. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `nlu-for-satellite` and select **Writer** as the role.
+   1. Set the name to `nlu-for-satellite` and select **Writer** as the role.
    2. Click **Add**.
 1. In the **Service credentials**, locate the credentials you created for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys:
