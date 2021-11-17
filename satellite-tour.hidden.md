@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-16"
+lastupdated: "2021-11-17"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -184,10 +184,10 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    2. Set **Service name** to `<your-initials>-satellite-nlu` and select a resource group.
    3. Select **Private Network** under Service Endpoints.
    4. Check the license agreement and click on **Create**.
-1. Under **Service credentials**, check for **Auto-generated service credentials for private endpoint**. If not found, click on **New credential**
+1. Under **Service credentials**, click on **New credential**
    1. Give it a name - `nlu-for-satellite` and select **Writer** as the role.
    2. Click **Add**.
-1. In the **Service credentials**, locate the credentials that have already been created for use with {{site.data.keyword.satelliteshort}}.
+1. In the **Service credentials**, locate the credentials you created for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys:
    * `apikey`
    * `url`
@@ -223,11 +223,6 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
    {: pre}
-   
-   <!--##istutorial#-->
-   If you see `Pull image still failed due to error: while pulling` error, follow the steps for [Storing images in the worker node empty directory](https://{DomainName}/docs/openshift?topic=openshift-registry#emptydir_internal_registry) to resolve the error.
-   {: tip}
-   <!--#/istutorial#-->
 
 1. Wait for the first build of the application to complete by monitoring the logs:
    ```sh
@@ -336,7 +331,7 @@ The version that you upload is not applied to your cluster until you add a subsc
 Finally, you will map the version to a set of clusters.
 
 1. Go back to the **Overview** page for the configuration.
-1. Clikc on **Create subscription**.
+1. Click on **Create subscription**.
    * Set **Subscription name** to a unique name such as `<your-initials>-latest`.
    * Set **Version** to **V1**.
    * Select the cluster group previously created.
@@ -366,11 +361,11 @@ You can also use the {{site.data.keyword.openshiftshort}} console to view the co
 To deploy an update to the resources, you can create a new version.
 
 1. From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
-1. Create a new version from **V1** by clicking on the action menu next to **V1** version and then on clicking on **Duplicate**,
+1. Create a new version by duplicating **V1**,
    * Set **Version name** to **V2**.
    * Change `example.property.2` to `you` in the YAML.
 1. Click on **Add**.
-1. Back to the **Overview** page for the configuration, edit the existing subscription by clicking on the action menu, click on **Edit**, change the **Version** to **V2**, and click on **Save**.
+1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
 1. In the {{site.data.keyword.openshiftshort}} console or from the shell, watch for updates to the existing Config Map. From the shell, run the below command and look under the **Data** section for the changes
    ```sh
    oc describe configmap example
