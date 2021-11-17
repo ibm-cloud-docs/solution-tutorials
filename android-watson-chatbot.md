@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-12"
-lasttested: "2020-12-08"
+lastupdated: "2021-11-17"
+lasttested: "2021-11-16"
 
 content-type: tutorial
 services: assistant, speech-to-text, text-to-speech
@@ -66,7 +66,12 @@ This tutorial walks you through the process of defining intents and entities and
 {: #android-watson-chatbot-setup}
 {: step}
 
-In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
+In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationfull}} to build cognitive virtual assistants that help your customers.
+
+You will also provision {{site.data.keyword.speechtotextfull}} service that transcribes audio to text to enable speech transcription capabilities for your application and {{site.data.keyword.texttospeechfull}} service that converts written text to natural-sounding speech to provide speech-synthesis capabilities for your application.
+
+### Provision {{site.data.keyword.conversationshort}} service
+{: #android-watson-chatbot-services-wa}
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant) service
    1. Select a region and **Lite** as your pricing plan
@@ -76,6 +81,9 @@ In this section, you will create the services required by the tutorial starting 
 
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
    {: tip}
+
+### Provision {{site.data.keyword.speechtotextshort}} service
+{: #android-watson-chatbot-services-stt}
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
@@ -87,6 +95,9 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 
    If you don't see an auto-generated service credential, click **New credential**, set **Name** to **for-android-app**, select **Writer** as the role, and click **Add** to create a new credential.
    {: tip}
+
+### Provision {{site.data.keyword.texttospeechshort}} service
+{: #android-watson-chatbot-services-tts}
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
@@ -108,14 +119,14 @@ A skill is a container for the artifacts that define the conversation flow.
 For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_skill.json) file with predefined intents, entities and dialog flow to your machine.
 
 1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch {{site.data.keyword.conversationshort}}** to see the {{site.data.keyword.conversationshort}} dashboard.
+
+   This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
+   {: tip}
+
 1. On the left navigation pane, Click on **Skills**.
 1. Click **Create skill**, select **Dialog skill** and **Next**.
 1. Under **Upload skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Upload**.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
-
-This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
-{: tip}
-
 
 ### Define an intent
 {: #android-watson-chatbot-define_intent}
@@ -126,8 +137,6 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 - `#weather_conditions`
 - `#pay_bill`
 - `#escalate_to_agent`
-
-
 
 1. Click on the newly created skill - **Ana**.
 
