@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-11"
+lastupdated: "2021-11-02"
 lasttested: "2020-12-17"
 
 ---
@@ -103,11 +103,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### oc
 {: #getting-started-windows_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
-
-   Replace `4.6` in the URL with the version number you wish to install
-   {: tip}
-
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
 1. Move `oc.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
@@ -217,11 +213,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### oc
 {: #getting-started-macos_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
-
-   Replace `4.6` in the URL with the version number you wish to install
-   {: tip}
-
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
 2. Extract `openshift-client-mac.tar.gz`:
    ```sh
    tar zxvf openshift-client-mac.tar.gz
@@ -316,7 +308,7 @@ Proceed to the configuration [common to all operating systems](#getting-started-
 ## Ubuntu Linux
 {: #getting-started-ubuntu}
 
-The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#getting-started-common).
+The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#getting-started-common). If you are using the Linux-based Cloud Shell, proceed to [the section on Cloud Shell](#getting-started-cloud-shell).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #getting-started-ubuntu_cli}
@@ -368,24 +360,20 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #getting-started-ubuntu_oc}
 
-1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/.
-
-   Replace `4.6` in the URL with the version number you wish to install
-   {: tip}
-
-1. Extract `openshift-client-linux.tar.gz`:
+1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
+2. Extract `openshift-client-linux.tar.gz`:
    ```sh
    tar zxvf openshift-client-linux.tar.gz
    ```
    {: pre}
 
-1. Move the `oc` binary to your PATH.
+3. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {: pre}
 
-1. Verify the installation with:
+4. Verify the installation with:
    ```sh
    oc version
    ```
@@ -509,15 +497,12 @@ To verify the configuration:
 {: #getting-started-cloud-shell_oc}
 
 Follow these steps if you need to use another version of the OpenShift CLI than the one pre-installed:
-1. Download the latest 4.x OpenShift CLI (`oc`)
+1. Download the latest stable 4.x OpenShift CLI (`oc`)
    ```sh
-   curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.6/openshift-client-linux.tar.gz --output oc.tar.gz
+   curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz --output oc.tar.gz
    ```
    {: pre}
-
-   Replace `4.6` in the URL with the version number you wish to update to
-   {: tip}
-
+   
 2. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz

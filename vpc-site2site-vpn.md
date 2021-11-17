@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2019-09-03"
+lastupdated: "2021-11-15"
+lasttested: "2021-11-15"
 
 content-type: tutorial
 services: vpc, cloud-object-storage, databases-for-postgresql
@@ -219,13 +219,8 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
-3. Make sure that your CLI environment is set up to the target generation 2. Run:
-   ```sh
-   ibmcloud is target --gen 2
-   ```
-   {: codeblock}
 
-4. To create the resources in a new VPC, run the script as follows:
+3. To create the resources in a new VPC, run the script as follows:
    ```sh
    ./vpc-site2site-vpn-baseline-create.sh
    ```
@@ -237,7 +232,7 @@ In the following, create these resources by configuring and then running a setup
    ```
    {: codeblock}
 
-5. This will result in creating the following resources, including the bastion-related resources:
+4. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
    - up to 3 public gateways, 1 per zone if not already present
    - 2 subnets within the VPC
@@ -266,20 +261,20 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
 
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.  Values that come from the **network_config.sh** file created earlier are referenced with a **$x** like **$VSI_ONPREM_IP**
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPN gateways** in the navigation tab and insure the **VPN Gateway** tab is selected and click **Create**.  The form **New VPN gateway for VPC** will be displayed.
-1. Set **VPN gateway name** to **vpns2s-gateway**
-1. Select the **Virtual Private Cloud** from the drop down created (vpns2s) or referenced earlier
-1. Select the same **Resource group**
+1. Navigate to [VPC overview](https://{DomainName}/vpc-ext/overview) page, then click on **VPNs** in the navigation tab and ensure **VPN gateways** under the **Site-to-site gateways** tab is selected. Next, click **Create**.  The form **Create VPN for VPC** will be displayed.
+1. Set **VPN gateway name** to **vpns2s-gateway**.
+1. Select the **Virtual Private Cloud** from the drop down created (vpns2s) or referenced earlier.
+1. Select the same **Resource group**.
 1. Select **vpns2s-cloud-subnet** as the subnet.
-1. Select **Policy-based** as the **Mode**
-1. Leave **New VPN connection for VPC** activated. 
+1. Select **Policy-based** as the **Mode**.
+1. Leave **Create VPN connection for VPC** activated. 
 1. Set **VPN connection name** to **vpns2s-gateway-conn**.
 1. Set **Peer gateway address** to **$VSI_ONPREM_IP** (the floating IP address of **vpns2s-onprem-vsi**).
-1. Set **Preshared key** to **20_PRESHARED_KEY_KEEP_SECRET_19**
-1. Set **Local subnets** to **$CLOUD_CIDR**
+1. Set **Preshared key** to **20_PRESHARED_KEY_KEEP_SECRET_19**.
+1. Set **Local subnets** to **$CLOUD_CIDR**.
 1. Set **Peer subnets** to **$ONPREM_CIDR**.
-1. Leave the defaults for **Dead peer detection**, IKE policy - Auto (IKEv2) and IPsec Policy - Auto
-1. Click **Create VPN gateway**
+1. Leave the defaults for **Dead peer detection** and **Policies**.
+1. Click **Create VPN gateway**.
 
 
 - Wait for the VPN gateway to become available (you may need to refresh the screen).
@@ -438,7 +433,7 @@ To test that the VPN connection has been successfully established, use the simul
 ### Set up a microservice for testing
 {: #vpc-site2site-vpn-setup-microservice}
 
-You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#vpc-site2site-vpn-create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
 1. Back on your local machine, change the working directory and switch to **sampleapps**:
    ```sh
@@ -541,6 +536,8 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {: screen}
 
+   Update `config/config.json` to include the generated unique bucket name.
+
 1. Run the app.
    ```sh
    npm run start
@@ -563,7 +560,7 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {: pre}
 
-2. Issue the following curl commands to query the API server running on the cloud VSI. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
+2. Issue the following curl commands to query the API server running on the cloud VSI. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array. First, set the environment variable by replacing **$VSI_CLOUD_IP** with the actual value.
 
    ```sh
    VSI_CLOUD_IP=$VSI_CLOUD_IP

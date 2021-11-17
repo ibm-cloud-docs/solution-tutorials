@@ -153,7 +153,6 @@ toc:
           - plan-create-update-deployments.md
           - mean-stack.md
           - sql-database.md
-          - slack-chatbot-database-watson.md
           - multi-region-webapp.md
 
         - topicgroup:
