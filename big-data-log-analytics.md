@@ -295,9 +295,7 @@ To view conditional handling in your Streams flow, you will increase the message
 1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
 2. Turn the access logs into JSON format by running:
    ```sh
-   awk -F " " '{                                                                                                          
-    print "{\"host\":\"" $1 "\",\"time_stamp\":\"" $4 " "  $5 "\",\"request\":" $6 " " $7 " " $8 ",\"responseCode\":\"" $9 "\",\"bytes\":\"" $10 "\"}"
-   }' NASA_access_log_Jul95 > NASA_logs.json
+   awk -F " " '{ print "{\"host\":\"" $1 "\",\"time_stamp\":\"" $4 " "  $5 "\",\"request\":" $6 " " $7 " " $8 ",\"responseCode\":\"" $9 "\",\"bytes\":\"" $10 "\"}" }' NASA_access_log_Jul95 > NASA_logs.json
    ```
    {: pre}
 
@@ -324,11 +322,11 @@ To view conditional handling in your Streams flow, you will increase the message
    ```
    {: pre}
 
-   You might need to change the permissions on it: `chmod 700 rate_limit.sh`. The script accepts a file name, the number of lines to output as chunk, and how many seconds to wait in between.
+   The script accepts a file name, the number of lines to output as chunk, and how many seconds to wait in between.
 
 3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines.
    ```sh
-   ./rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
+   sh rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
    ```
    {: pre}
 
