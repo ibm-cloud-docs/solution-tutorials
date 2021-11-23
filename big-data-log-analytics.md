@@ -457,7 +457,7 @@ Just as you performed queries using {{site.data.keyword.sqlquery_short}}, you ca
    ```
    {: codeblock}
 
-   The value of `<identifier>` is the instance name that you defined during the creation of {{site.data.keyword.cos_short}} initially, **log-analysis-cos**. **Note** that for Hive you need to point to a parent folder which contains the PARQUET file. In the example above, the data got written in the `jobid` folder under `logs-stream-landing/topic=webserver/`. For more information, refer [creating Hive tables in Parquet format](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-working-with-hive#creating-hive-tables-in-parquet-format)
+   The value of `<identifier>` is the instance name that you defined during the creation of {{site.data.keyword.cos_short}} initially, **log-analysis-cos**. **Note** that for Hive you need to point to a parent folder which contains the PARQUET file. In the example above, the data got written in the `jobid` folder under `logs-stream-landing/topic=webserver/`.
 4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
    ```sql
    SELECT HOST, COUNT(*)
