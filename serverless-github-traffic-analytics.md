@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-07-19"
+lastupdated: "2021-11-24"
+lasttested: "2021-11-24"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid
@@ -279,7 +279,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 Want to add to or change this tutorial? Here are some ideas:
 * Expand the app for multi-tenant support.
-* Integrate a chart for the data.
 * Use social identity providers.
 * Add a date picker to the statistics page to filter displayed data.
 * Use a custom login page for {{site.data.keyword.appid_short}}.
@@ -287,7 +286,7 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related Content
 {: #serverless-github-traffic-analytics-11}
 
-Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) 
+Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats). 
 
 Documentation:
 * [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/appid?topic=appid-getting-started)
