@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-28"
-lasttested: "2020-11-30"
+lastupdated: "2021-11-18"
+lasttested: "2021-11-18"
 
 content-type: tutorial
 services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, Monitoring-with-Sysdig
@@ -42,13 +42,13 @@ Developers do not like to write the same thing twice. The [DRY](https://en.wikip
 
 Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a Service (CaaS), Functions as a Service (FaaS) have given developers a high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, Kubernetes clusters, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, to update the configuration over time, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
+Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial, we've introduced best practices to organize users, teams and applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Objectives
 {: #plan-create-update-deployments-objectives}
 
 * Define a set of environments to deploy
-* Write scripts using the {{site.data.keyword.cloud_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the deployment of these environments
+* Write scripts using the {{site.data.keyword.cloud_notm}} CLI and Terraform to automate the deployment of these environments
 * Deploy these environments in your account
 
 
@@ -584,6 +584,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #plan-create-update-deployments-18}
 
-* [Terraform tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
-* [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
+* [Tutorial with Terraform: PHP web application on a LAMP Stack in VPC](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+* [Getting started with Terraform on {{site.data.keyword.cloud_notm}}](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-getting-started)
 * [Examples using {{site.data.keyword.cloud_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
