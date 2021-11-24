@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-27"
-lasttested: "2020-11-04"
+lastupdated: "2021-11-24"
+lasttested: "2021-11-24"
 
 content-type: tutorial
 services: CDN, cloud-object-storage
@@ -44,7 +44,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 ## Objectives
 {: #static-files-cdn-objectives}
 
-* Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
+* Upload files to an {{site.data.keyword.cos_full_notm}} bucket.
 * Make content globally available with a Content Delivery Network (CDN).
 * Expose files by using a static website application.
 
@@ -60,8 +60,8 @@ There are many reasons why you would use a Content Delivery Network in these sit
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI with the {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-* `git` to clone source code repository.
-* `jq` to query JSON files,
+* `git` to clone the source code repository,
+* `jq` to query JSON files.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -71,11 +71,10 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 <!--#/istutorial#-->
 
-In addition, contact the master user of your Infrastructure account to get the following permissions:
-* Manage CDN Account
-* Manage {{site.data.keyword.cos_full_notm}}
+In addition, you need the following permissions on Classic Infrastructure:
+* [Manage CDN Account](https://{DomainName}/docs/CDN?topic=CDN-faqs#how-do-i-use-cloud-to-give-users-permission-to-create-or-manage-cdn)
 
-These permissions are required to be able to view and use the Storage and CDN services.
+These permissions are required to be able to order and view the CDN service.
 
 ## Get the web application code
 {: #static-files-cdn-get_code}
@@ -101,22 +100,20 @@ To start, retrieve the application code:
 2. Provide a **Service Name**.
 3. Select the desired **resource group**
 4. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
-5. In the service dashboard, click **Create Bucket**.
-   * Select **Customize your bucket**
 
-In the Custom Bucket dialog:
-
+Next, create a storage bucket.
+1. In the service dashboard, click **Buckets**, then **Create bucket** followed by choosing **Custom bucket**.
 1. Set a unique bucket name such as `username-mywebsite` avoid dots (.) in the bucket name.
 1. Set the **Resiliency** to **Regional**.
-1. Set the **Location** appropriately.  Choose **us-south** or make substitutions in the instructions below when you see us-south.
-1. Scroll down to **Static website hosting** and click **Add rule**
-   * **Routing rules (individual)** should be selected
-   * Enter index.html into the **Index document** text box
-   * Click **Public access** to **On**
-   * Click **Save** above in the **Static website hosting** title
-1. Scroll down and click **Create bucket**. The bucket will be displayed after creation completes.  Identify the public endpoint.
-1. Click **Buckets** **Configuration** on the left side
-1. Notice the **Endpoint** section and take note of the **Public** endpoint which will be needed later to both configure ibmcloud CLI and the CDN. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
+1. Set the **Location** appropriately.  Choose **us-south** or make substitutions in the instructions below when you see **us-south**.
+1. Pick **Smart Tier** for **Storage class**.
+1. Scroll down to **Static website hosting** and click **Add**.
+   * **Routing rules (individual)** should be selected.
+   * Enter **index.html** into the **Index document** text box.
+   * Click **Public access** to **On**.
+   * Click **Save** above in the **Static website hosting** title.
+1. Scroll down and click **Create bucket**.
+1. The bucket will be displayed after creation completes. Click on the **Configuration** tab. Notice the **Endpoint** section and take note of the **Public** endpoint which will be needed later to both configure ibmcloud CLI and the CDN. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
 ## Upload files to a bucket
 {: #static-files-cdn-upload}
@@ -124,25 +121,25 @@ In the Custom Bucket dialog:
 
 In this section, you will use the {{site.data.keyword.cos_short}} plugin to upload files to the bucket.
 
-1. Set a variable for the COS endpoint url:
+1. Set a variable for the COS endpoint URL and a variable for the bucket name:
    ```sh
    PUBLIC_ENDPOINT=s3.us-south.cloud-object-storage.appdomain.cloud
    ```
-1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI.
-   ```sh
-   ibmcloud login
-   ```
    {: pre}
 
-1. Target the region where the bucket was created. As example for a bucket created in `us-south`:
-   ```sh
-   ibmcloud target -r us-south
-   ```
-1. Set a variable with the bucket name:
    ```sh
    BUCKET_NAME=<YOUR_BUCKET_NAME>
    ```
    {: pre}
+
+1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI and target the region where the bucket was created. As example for a bucket created in `us-south`:
+   ```sh
+   ibmcloud login -r us-south
+   ```
+   {: pre}
+
+   If you had used the cloud-object-storage (cos) plugin before, you might need to [reconfigure the crn and set it to the current service](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-cli-plugin-ic-cos-cli#ic-iam-authentication).
+   {: tip}
 
 1. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
    ```sh
@@ -175,19 +172,19 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
 {: #static-files-cdn-5}
 {: step}
 
-In this section, you will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (your bucket in {{site.data.keyword.cos_full_notm}}) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
+In this section, you will create a CDN service. The CDN service distributes content to where it is needed. The first time content is requested, it’s pulled from the host server (your bucket in {{site.data.keyword.cos_full_notm}}) to the delivery network and stays there for other users to access it quickly without the network latency to reach the host server again.
 
 ### Create a CDN instance
 {: #static-files-cdn-6}
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
-2. On the next dialog, set the **Hostname** to a subdomain in a custom domain that you can control.  For example if you own the domain `yourdomain.com` choose a Hostname something lik `static.yourdomain.com`.  If you do not control your own domain, no problem, but below you will have limited options - you must choose HTTPS with a `Wildcard` SSL certificate, and instead of accessing the CDN contents through `static.yourdomain.com` use the IBM provided CNAME.
+2. On the next dialog, set the **Hostname** to a subdomain in a custom domain that you can control.  For example, if you own the domain `yourdomain.com`, choose as Hostname something like `static.yourdomain.com`.  If you do not control your own domain, no problem, but below you will have limited options. In that case you must choose HTTPS with a `Wildcard` SSL certificate, and instead of accessing the CDN contents through `static.yourdomain.com` use the IBM provided CNAME.
 3. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
 4. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
 5. Select **Object Storage** to configure the CDN for COS.
-6. Set the **Endpoint** to your bucket API endpoint ($PUBLIC_ENDPOINT).  Above thie was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
-7. Set **Bucket name** to $BUCKET_NAME
-8. Enable HTTP (80)
+6. Set the **Endpoint** to your bucket API endpoint ($PUBLIC_ENDPOINT). Above thie was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
+7. Set **Bucket name** to the bucket name from above.
+8. Enable HTTP (80).
 9. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.
    - For **SSL certificate** select **DV SAN Certificate** to use your custom domain. If you do not have a custom domain pick the **Wildcard Certificate** option.
 10. Accept the **Master Service Agreement** and click **Create**.
@@ -196,9 +193,13 @@ In this section, you will create a CDN service. The CDN service distributes cont
 {: #static-files-cdn-7}
 
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
-2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete.  When available follow the steps shown when clicking on **View domain validation**.  Note that this can take a few hours.  If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate.  Do not forget to select a different hostname.
+2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete.  When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours.  If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate.  Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
-4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.yourdomain.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`
+4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.yourdomain.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
+   
+   Often, it takes some minutes for DNS changes to become active. You might need to wait for proceeding to the next step.
+   {: tip}
+
 5. Access your files with `http://<static.yourdomain.com>/index.html`.
 
 You can demonstrate the performance improvement.  Access via the CDN.  Check the output of the first curl to verify successful connection:
@@ -223,26 +224,26 @@ If you are using {{site.data.keyword.cloud-shell_short}} you can change the loca
 
 All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.yourdomain.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
 
-Upload cdn.html into the index.html and open the application in a browser:
+Upload **cdn.html** by replacing the file **index.html**:
 ```sh
 ibmcloud cos upload --bucket $BUCKET_NAME --key index.html --file cdn.html
 ```
+{: pre}
 
-Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configuration** panel scroll down to the **Static website hosting endpoints** section and copy the **Public** url into a browser tab.  Since you configured this earlier to redirect to `index.html` the web application will be displayed and content will be delivered through the CDN.  For me the url was fredflinstone-mywebsite.s3-web.us-south.cloud-object-storage.appdomain.cloud notice the s3-web.
+Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configuration** panel scroll down to the **Static website hosting endpoints** section and copy the **Public** URL into a browser tab.  Since you configured this earlier to redirect to `index.html` the web application will be displayed and content will be delivered through the CDN.  For me the URL was fredflinstone-mywebsite.s3-web.us-south.cloud-object-storage.appdomain.cloud notice the s3-web.
 
 ### Access the static website through custom subdomain
 {: #static-files-cdn-9}
 
-Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.yourdomain.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.yourdomain.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// url.  You can explicitly specify http://yourdomain.com or better yet insure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
+Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.yourdomain.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.yourdomain.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://yourdomain.com or better yet insure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
 
 ## Remove resources
 {: #static-files-cdn-10}
 {: step}
 
-* Delete the {{site.data.keyword.cis_short_notm}} DNS CNAME and Page Rule
-* Delete the {{site.data.keyword.cdn_full}} service
-* Delete the {{site.data.keyword.cos_full_notm}} service or bucket
-
+To clean up resource, perform the following steps:
+* Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/cdn).
+* Delete the [{{site.data.keyword.cos_full_notm}} bucket and / or service](https://{DomainName}/resources).
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
@@ -253,4 +254,3 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 * [{{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
 * [Getting Started with CDN](https://{DomainName}/docs/CDN?topic=CDN-getting-started#getting-started)
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
