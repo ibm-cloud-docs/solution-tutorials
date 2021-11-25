@@ -88,36 +88,6 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Strategies for resilient applications",
-          "url": "strategies-for-resilient-applications.html",
-          "description": "Regardless of the Compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability.",
-          "imgSrc": "images/solution39/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Cloud Foundry",
-            "Cloud Functions",
-            "Infrastructure",
-            "Virtual Servers",
-            "Bare Metal",
-            "Databases",
-            "File Storage",
-            "Watson"
-          ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "ibmcloud_cli",
-            "docker",
-            "cloudant",
-            "cloud_object_storage",
-            "cloud_internet_services",
-            "cloud_functions",
-            "cloud_foundry"
-          ],
-          "guide": true,
-          "supportsCloudShell": "not_applicable"
-        },
-        {
           "name": "Continuous Deployment to Kubernetes",
           "url": "continuous-deployment-to-kubernetes.html",
           "description": "Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.",
