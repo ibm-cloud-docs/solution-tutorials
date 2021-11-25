@@ -26,7 +26,6 @@ toc:
           topics:
           - scalable-webapp-kubernetes.md
           - vm-to-containers-and-kubernetes.md
-          - strategies-for-resilient-applications.md
           - continuous-deployment-to-kubernetes.md
           - scalable-webapp-openshift.md
           - openshift-service-mesh.md
@@ -127,7 +126,6 @@ toc:
           topics:
           - scalable-webapp-kubernetes.md
           - vm-to-containers-and-kubernetes.md
-          - strategies-for-resilient-applications.md
           - continuous-deployment-to-kubernetes.md
           - dynamic-content-cdn.md
           - pub-sub-object-storage.md
@@ -148,7 +146,6 @@ toc:
         - topicgroup:
           label: Cloud Foundry
           topics:
-          - strategies-for-resilient-applications.md
           - static-files-cdn.md
           - plan-create-update-deployments.md
           - mean-stack.md
@@ -158,7 +155,6 @@ toc:
         - topicgroup:
           label: Cloud Functions
           topics:
-          - strategies-for-resilient-applications.md
           - serverless-api-webapp.md
           - multi-region-serverless.md
           - slack-chatbot-database-watson.md
@@ -173,7 +169,6 @@ toc:
           label: Virtual Servers
           topics:
           - vm-to-containers-and-kubernetes.md
-          - strategies-for-resilient-applications.md
           - highly-available-and-scalable-web-application.md
           - vpc-public-app-private-backend.md
           - vpc-multi-region.md
