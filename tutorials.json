@@ -57,25 +57,6 @@
           "lastUpdated": "2021-10-04"
         },
         {
-          "name": "Strategies for resilient applications",
-          "url": "strategies-for-resilient-applications.html",
-          "description": "Regardless of the Compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability.",
-          "imgSrc": "images/solution39/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Cloud Foundry",
-            "Cloud Functions",
-            "Infrastructure",
-            "Virtual Servers",
-            "Bare Metal",
-            "Databases",
-            "File Storage",
-            "Watson"
-          ],
-          "guide": true,
-          "lastUpdated": "2021-08-25"
-        },
-        {
           "name": "Continuous Deployment to Kubernetes",
           "url": "continuous-deployment-to-kubernetes.html",
           "description": "Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.",
@@ -141,7 +122,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2021-09-27"
+          "lastUpdated": "2021-11-24"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -181,7 +162,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-10-28"
+          "lastUpdated": "2021-11-18"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -287,7 +268,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-11-15"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -300,7 +281,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-11-17"
         }
       ]
     },
@@ -385,7 +366,7 @@
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2021-09-23"
+          "lastUpdated": "2021-11-23"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -410,7 +391,7 @@
             "Code Engine",
             "GitHub"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-11-24"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -446,7 +427,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-10-08"
+          "lastUpdated": "2021-11-17"
         }
       ]
     },
@@ -496,7 +477,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-11-15"
         },
         {
           "name": "Install software on virtual server instances in VPC",

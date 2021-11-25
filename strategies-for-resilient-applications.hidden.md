@@ -46,7 +46,7 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions, Co
 
 To design a resilient architecture, you need to consider the individual blocks of your solution and their specific capabilities.
 
-Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. ![Architecture](images/solution39/Architecture.png)
+Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. ![Architecture](images/solution39-hidden/Architecture.png)
 
 The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections.
 
@@ -60,7 +60,7 @@ To facilitate disaster recovery, two widely accepted architectures are used: **a
 
 In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions in real-time.
 
-![Active/Active](images/solution39/Active-active.png){: class="center"}
+![Active/Active](images/solution39-hidden/Active-active.png){: class="center"}
 {: style="text-align: center;"}
 
 This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center.
@@ -72,7 +72,7 @@ When considering [**recovery point objective**](https://en.wikipedia.org/wiki/Di
 
 An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs.
 
-![Active/Passive](images/solution39/Active-passive.png){: class="center"}
+![Active/Passive](images/solution39-hidden/Active-passive.png){: class="center"}
 {: style="text-align: center;"}
 
 Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both [**recovery time objective**](https://en.wikipedia.org/wiki/Disaster_recovery#Recovery_Time_Objective) (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
@@ -87,7 +87,7 @@ Using three data centers provides greater resiliency and availability than two. 
 #### Active-active-active (3-active) configuration
 {: #strategies-for-resilient-applications-5}
 
-![Active-active-active Diagram](images/solution39/Active-active-active.png){: class="center"}
+![Active-active-active Diagram](images/solution39-hidden/Active-active-active.png){: class="center"}
 {: style="text-align: center;"}
 
 Requests are served by the application running in any of the three active data centers. A case study on the IBM.com website indicates that 3-active requires only 50% of the compute, memory, and network capacity per cluster, but 2-active requires 100% per cluster. The data layer is where the cost difference stands out. For further details, read [*Always On: Assess, Design, Implement, and Manage Continuous Availability*](http://www.redbooks.ibm.com/redpapers/pdfs/redp5109.pdf).
@@ -95,7 +95,7 @@ Requests are served by the application running in any of the three active data c
 #### Active-active-passive configuration
 {: #strategies-for-resilient-applications-6}
 
-![Active-active-passive Diagram](images/solution39/Active-active-passive.png){: class="center"}
+![Active-active-passive Diagram](images/solution39-hidden/Active-active-passive.png){: class="center"}
 {: style="text-align: center;"}
 
 In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The disaster recovery procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
@@ -137,7 +137,7 @@ When implementing a solution with {{site.data.keyword.containerlong_notm}} or {{
 
 By creating multiple clusters in different regions, users can also access the closest cluster with reduced network latency.  The Kubernetes multi-region architecture looks like this.
 
-![Kubernetes](images/solution39/Kub-Architecture.png){: class="center"}
+![Kubernetes](images/solution39-hidden/Kub-Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 1. The developer builds Docker images for the application.
@@ -174,7 +174,7 @@ The tutorial [**Deploy isolated workloads across multiple locations and zones**]
 
 Cloud Foundry offers the capability to achieve deployment of a multi-region architecture. The architecture for Cloud Foundry multi-region looks like this:
 
-![CF-Architecture](images/solution39/CF2-Architecture.png){: class="center"}
+![CF-Architecture](images/solution39-hidden/CF2-Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture utilizing a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline service.
@@ -184,7 +184,7 @@ The same application is deployed in multiple regions and a global load balancer 
 
 {{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for {{site.data.keyword.openwhisk_short}} multi-region looks like this.
 
-![Functions-Architecture](images/solution39/Functions-Architecture.png){: class="center"}
+![Functions-Architecture](images/solution39-hidden/Functions-Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
@@ -200,14 +200,14 @@ Find out how to deploy this architecture by following the tutorial [**Deploy ser
 
 {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers in multiple locations on {{site.data.keyword.cloud_notm}}.
 
-![server locations](images/solution39/ServersLocation.png){: class="center"}
+![server locations](images/solution39-hidden/ServersLocation.png){: class="center"}
 {: style="text-align: center;"}
 
 When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}}, consider the following: file storage, backups, recovery, and databases, selecting between a database as service, or installing a database on a virtual server.
 
 The below architecture demonstrates the deployment of a multi-region architecture using {{site.data.keyword.virtualmachinesshort}} in an active/passive architecture where one region is active and the second region is passive.
 
-![VM-Architecture](images/solution39/vm-Architecture2.png){: class="center"}
+![VM-Architecture](images/solution39-hidden/vm-Architecture2.png){: class="center"}
 {: style="text-align: center;"}
 
 The components required for such architecture:
@@ -247,7 +247,7 @@ The tutorial [**Use Virtual Servers to build highly available and scalable web a
 
 {{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-api#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replication between databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
 
-![active-active](images/solution39/Active-active.png){: class="center"}
+![active-active](images/solution39-hidden/Active-active.png){: class="center"}
 {: style="text-align: center;"}
 
 Refer to [these instructions](https://{DomainName}/docs/Cloudant?topic=Cloudant-configuring-ibm-cloudant-for-cross-region-disaster-recovery#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloudant-backup-and-recovery#ibm-cloudant-backup-and-recovery).
