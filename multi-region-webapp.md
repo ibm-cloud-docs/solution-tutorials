@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-12"
-lasttested: "2020-11-30"
+lastupdated: "2021-11-25"
+lasttested: "2021-11-25"
 
 content-type: tutorial
 services: cloud-foundry-public, cis, ContinuousDelivery
@@ -54,7 +54,10 @@ This tutorial involves an active/active scenario where two copies of the applica
 ## Before you begin
 {: #multi-region-webapp-prereqs}
 
-A custom domain and {{site.data.keyword.cis_full_notm}} are required for load balancing the application across multiple regions. The custom domain is needed so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
+This tutorial requires:
+* A custom domain and {{site.data.keyword.cis_full_notm}} for load balancing the application across multiple regions. The custom domain is needed so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
+* `git` to clone the source code repository,
+* Node.js and related tools to run code locally.
 
 ## Create a Node.js application
 {: #multi-region-webapp-create}
@@ -64,19 +67,19 @@ Start by creating a **SDK for Node.js** starter application that runs in a Cloud
 
 1. In the [**Catalog**](https://{DomainName}/catalog/), under the [**Compute**](https://{DomainName}/catalog?category=compute) category, select [**Cloud Foundry**](https://{DomainName}/cloudfoundry/overview), Select [**Public Applications**](https://{DomainName}/catalog/starters/cloud-foundry?runtime=sdk-for-nodejs) and choose the **{{site.data.keyword.runtime_nodejs_notm}}** runtime.
 2. Verify **SDK for Node.js** is checked.
-3. **Select a region**.  **Dallas**, us-south, is expected for the text below but any region will work if you make the appropriate substitutions.
-4. Enter a **unique name** for your application. Notice host name filled identically. for example: myusername-nodeapp.
-5. Take note of the IBM **Domain** selected.  The default for  the **Dallas** region is **us-south.cf.appdomain.cloud**.
-6. Select a **Organization** and **Space**.  The space will be named after the region: **myaccount-org** (Organization) / **us-south** (Space).  A second space will be needed in a future step.
-7. And click **Create**.
+3. **Select a region**.  **Dallas**, us-south, is expected for the text below, but any region will work if you make the appropriate substitutions.
+4. Enter a **unique name** for your application, for example: myusername-nodeapp. Notice how the host name is filled identically.
+5. Take note of the selected IBM **Domain**. The default for the **Dallas** region is **us-south.cf.appdomain.cloud**.
+6. Select an **Organization** and **Space**. The space will be named after the region: **myaccount-org** (Organization) / **us-south** (Space). A second space will be needed in a future step.
+7. Click **Create**.
 8. After the application starts, click the **Visit URL** link on the **Overview** page to see your application in a new tab.
+   
+   It might take few seconds for the app to become available because of network updates.
+   {: tip}
 
 ![HelloWorld](images/solution1/HelloWorld.png){: class="center"}
 {: style="text-align: center;"}
 
-Great start! You have your very own Node.js starter application running in {{site.data.keyword.Bluemix_notm}}
-
-Next, let's push the source code of your application to a repository and deploy your changes automatically.
 
 ## Set up source control and {{site.data.keyword.contdelivery_short}}
 {: #multi-region-webapp-devops}
@@ -97,10 +100,10 @@ In this step, you set up a git source control repository to store your code and 
    ```
    {: pre}
 
-   **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
+   **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one you created in the previous step.
 1. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
-1. Run the application locally by running the commands one after another `npm install`, `npm build`, `npm start` and visit `localhost:<port_number>` in your browser.
-   **<port_number>** as displayed on the console.
+1. Run the application locally by running the commands `npm install` and `npm start`, then visit `localhost:<port_number>` in your browser.
+   **<port_number>** is displayed on the console. You can click on the link.
 1. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
    git add public/index.html
@@ -349,6 +352,6 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 ## Related content
 {: #multi-region-webapp-11}
 
-* [Adding a Cloudant Database](https://{DomainName}/docs/Cloudant?topic=Cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
+* [Adding a Cloudant Database](https://{DomainName}/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant)
 * [Autoscaling for Cloud Foundry applications](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-autoscale_cloud_foundry_apps)
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
