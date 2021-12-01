@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-12"
-lasttested: "2020-12-09"
+lastupdated: "2021-12-01"
+lasttested: "2021-12-01"
 
 content-type: tutorial
 services: containers, Registry, cis
@@ -187,7 +187,7 @@ It will be required to have your own DNS domain name and a global load balancer 
 
 1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
    ```bash
-   apiVersion: networking.k8s.io/v1beta1
+   apiVersion: networking.k8s.io/v1
    kind: Ingress
    metadata:
     name: <glb-name>
@@ -199,9 +199,12 @@ It will be required to have your own DNS domain name and a global load balancer 
       http:
         paths:
         - path: /
+          pathType: Prefix
           backend:
-            serviceName: hello-world-service
-            servicePort: 80
+            service
+              name: hello-world-service
+              port:
+                number: 80
    ```
    {: pre}
 
@@ -239,8 +242,6 @@ Repeat the following steps for the London location:
    * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
 * In the [Deploy the application to the Kubernetes cluster](#multi-region-k8s-cis-deploy_application) replace:
    * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
-* In the [Build and push a Docker image to the location-specific registry](#multi-region-k8s-cis-push_image) replace:
-   * the registry **us.icr.io** with **uk.icr.io**.
 * [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress)
 
 ## Configure multi-location load-balancing
@@ -265,7 +266,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 1. If you do not own a domain, you can buy one from a registrar.
 2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
-4. When the service instance is provisioned, click on **Let's get Started**.
+4. When the service instance is provisioned, click on **Add domain**.
 5. Enter your domain name and click **Connect and continue**.
 6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -380,7 +381,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
 
 1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Security**, then on the **WAF**.
 1. Ensure the WAF is **On**.
-1. Click **OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
+1. Click **OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incoming request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
    1. Leave default OWASP rule sets as it is.
    1. Set **Sensitivity** to `Low`.
    1. Set **Action** to `Simulate` to log all the events.
