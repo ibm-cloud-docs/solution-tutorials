@@ -67,7 +67,6 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
 * `kubectl` to interact with Kubernetes clusters,
-* `git` to clone source code repository.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -98,27 +97,7 @@ Create the Kubernetes cluster:
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
-
 While the cluster is getting ready, you are going to prepare the application.
-
-
-### Clone the application
-{: #multi-region-k8s-cis-clone_application}
-
-This step clones the application. You can skip this step if you are configuring the second cluster.
-
-1. Clone the source code for the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: new_windows} to your user home directory.
-   ```bash
-   git clone https://github.com/IBM-Cloud/kubernetes-node-app
-   ```
-   {: pre}
-
-1. Change to the application directory,
-   ```bash
-   cd kubernetes-node-app
-   ```
-   {: pre}
-
 
 ### Deploy the application to the Kubernetes cluster
 {: #multi-region-k8s-cis-deploy_application}
@@ -132,7 +111,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ```
    {: pre}
 
-1. Create the deployment:
+1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: new_windows}.
    ```bash
    kubectl create deploy hello-world-deployment --image=ibmcom/tutorial-scalable-webapp-kubernetes
    ```
@@ -436,7 +415,6 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 * [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers)
-* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/Registry?topic=Registry-registry_overview)
 * [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
