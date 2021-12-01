@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2020-11-30"
+lastupdated: "2021-11-30"
+lasttested: "2021-11-30"
 
 content-type: tutorial
 services: cloud-object-storage, ai-openscale
@@ -75,20 +75,16 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Create a project
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
-1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
+1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/create).
+1. From the [catalog](https://{DomainName}/catalog), create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
    1. Select a **region**
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
    4. Select a **resource group** and click **Create**
-2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. Click on the **Launch in {{site.data.keyword.cpd_full_notm}}** button.
 3. Create a **project** by clicking on **Create a project** under **Work with data** and then in the subsequent page click **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Storage**, choose an **existing** Cloud Object Storage service or click on **Add** to create a **new** service. If you choose to create a **New** service
-   1. Select a **Lite** plan
-   2. Click on **Create**
-   3. Change the service name to **cloud-object-storage-tutorial** and select a resource group
-   4. Click on **Confirm**
-   5. Hit **Refresh** to see the created service
+5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -99,7 +95,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: class="center"}
 {: style="text-align: center;"}
 
-**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_initial.csv) which consists of 40 instances of each species.
+**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv) which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
 
 1. Under **Assets** in your project, click **New data asset** under **Data assets**.
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
@@ -117,6 +113,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    3. Enter `machine-learning-tutorial` as the **Service name** and select a resource group.
    4. Click **Create** to provision a {{site.data.keyword.pm_short}} service.
 4. Check the checkbox next to the {{site.data.keyword.pm_short}} service and click **Associate service**.
+1. Close the **Associate service** dialog.
 
 ## Build a machine learning model
 {: #create-deploy-retrain-machine-learning-model-build_model}
@@ -125,15 +122,18 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. On the left pane, click **+New**.
    2. Set the name to **iris_model**.
-   3. Under **Associated services**, select the **Machine learning service instance**(`machine-learning-tutorial`) created above.
+   3. Under **Machine learning service instance**, select the service previously associated.
 2. Click **Create**.
 
 Once the model is created,
 1. Add training data by clicking **Select from project**.
-   1. Choose the **iris_initial.csv** file.
+   1. Choose the **iris_initial.csv** file under **Data asset**.
    2. Click **Select asset**.
-2. Select **Species** as your What do you want to predict?.
-3. Click **Experiment settings** > Set **Holdout data split** under **Training data split** to **15%** by moving the slider.
+1. If prompted, answer **No** to **Create a time series forecast?**.
+2. Select **Species** as your **What do you want to predict?**.
+3. Click **Experiment settings**.
+1. Select **Data source**.
+1. Under **Training data split**, set **Holdout data split** to **15%** by moving the slider.
 4. On the left menu, Click on **Prediction**:
    1. Set **Prediction type** to **Multiclass classification**.
    2. Set **Optimized metric** as **Accuracy**.
@@ -164,9 +164,10 @@ The accuracy of the model will be improved in the later part of the tutorial.
 
 In this section, you will deploy the saved model and test the deployed model,
 
-1. Under the created model, click on **Promote to deployment space** and then click **New space +**. _You use deployment spaces to deploy models and manage your deployments._
+1. Under the created model, click on **Promote to deployment space**.
+1. Under **Target Space**, select **Create a new deployment space**. _You use deployment spaces to deploy models and manage your deployments._
    1. Set the **Name** to **iris_deployment_space**.
-   2. Select `cloud-object-storage-tutorial` service and `machine-learning-tutorial` service from the respective dropdowns
+   2. Select the {{site.data.keyword.cos_short}} service you use in previous steps and the `machine-learning-tutorial` service from the respective dropdowns.
    3. Click **Create**.
 2. Click on **Promote**.
 3. From the received notification, navigate to the **deployment space**.
@@ -251,8 +252,9 @@ In this section, you will create a {{site.data.keyword.aios_short}} service to m
 
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
-   2. Choose **Lite** plan
-   3. Provide a service name if you wish to and select a resource group
+   2. Choose **Lite** plan.
+   3. Set the service name to **watson-openscale-tutorial**.
+   1. Select a resource group.
    4. Click **Create**.
 2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
 3. Click on **Manual setup** to manually setup the monitors.
