@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-13"
-lasttested: "2020-11-26"
+lastupdated: "2021-12-01"
+lasttested: "2021-12-01"
 
 content-type: tutorial
 services: vpc
@@ -88,7 +88,7 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    1. Enter **vpc-pubpriv** as name for your VPC.
    2. Select a **Resource group**.
    3. Optionally, add **Tags** to organize your resources.
-1. Uncheck SSH and ping from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
+1. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 1. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
    * Enter **vpc-secure-bastion-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
@@ -245,9 +245,6 @@ The frontend instance has its software installed but it can not yet be reached.
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
 1. First, add the **inbound** rules by clicking **Add**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** below for values.
-1. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
-1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
-
 
    | Protocol | Source type| Source | Value    | Description |
    |------------|---------------|----------|-----------|------|
@@ -256,12 +253,15 @@ The frontend instance has its software installed but it can not yet be reached.
    
    {: caption="Inbound rules" caption-side="bottom"}
 
+1. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
+
    | Protocol | Destination type | Destination | Value    | Description |
    |------------|---------------|----------|-----------|----------|
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
    
    {: caption="Outbound rules" caption-side="bottom"}
 
+1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
 
 ### Test the connectivity between the frontend and the backend
 {: #vpc-public-app-private-backend-16}
