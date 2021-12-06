@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-30"
+lastupdated: "2021-12-06"
 lasttested: "2021-12-03"
 
 content-type: tutorial
@@ -393,7 +393,6 @@ The Admin team has provided them just the right amount of permissions to create 
    The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity.  Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
    ```sh
    ibmcloud target -r $(grep ibm_region terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//' -e 's/.*=//' -e 's/"//g')
-   ibmcloud is target --gen 2
    ibmcloud is subnets --all-resource-groups | grep $basename
    ```
    {: pre}
