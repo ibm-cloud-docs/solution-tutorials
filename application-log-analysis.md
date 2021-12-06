@@ -165,6 +165,7 @@ In a terminal window:
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
+
 5. Initialize the `kubectl` cli environment
 
    ```bash
