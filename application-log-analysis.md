@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-03"
+lastupdated: "2021-12-06"
 lasttested: "2021-12-03"
 
 content-type: tutorial
@@ -165,6 +165,7 @@ In a terminal window:
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
+
 5. Initialize the `kubectl` cli environment
 
    ```bash

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-29"
-lasttested: "2020-11-29"
+lastupdated: "2021-12-06"
+lasttested: "2021-12-06"
 
 content-type: tutorial
 services: vpc
