@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2020-12-30"
-lasttested: "2020-12-28"
+lastupdated: "2021-12-06"
+lasttested: "2021-12-06"
 
 content-type: tutorial
 services: openwhisk, cis, certificate-manager
@@ -92,7 +92,7 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
    2. Click **Create** and assign a source and target service. The source service is granted access to the target service based on the roles that you set in the next step.
       - Source service: {{site.data.keyword.cloudcerts_short}} > **Services based on attributes** > Source service instance and then select `mr-serverless-cert-manager` from the dropdown menu.
       - Target Service: Internet Services > **Services based on attributes** > Service instance and then select `mr-serverless-internet-services` from the dropdown menu.
-   3. Assign the **Reader** role to allow {{site.data.keyword.cloudcerts_short}} to view the CIS instance and its domains.
+   3. Assign the **Manager** role to allow {{site.data.keyword.cloudcerts_short}} to view the CIS instance, its domains and to create DNS records to order certificates using Let's Encrypt.
    4. Click **Authorize**.
 
 ### Order a certificate
@@ -196,6 +196,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
    1. Set **Domain name** to the domain you will use with the {{site.data.keyword.cis_short_notm}} Global Load Balancer such as *api.mydomain.com*.
    2. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    3. Select the certificate for the domain.
+   1. Perform the next steps before saving.
 6. Go to the dashboard of your instance of **{{site.data.keyword.cis_full_notm}}**, under **Reliability / DNS**, click on **Add** under **DNS records** to create a new **DNS TXT record**:
    1. Set **Name** to your custom subdomain, such as **api**.
    2. Set **Content** to the **Default domain / alias**.
@@ -224,7 +225,9 @@ Repeat the previous sections to configure more locations.
 
 1. Go to the dashboard of your {{site.data.keyword.cis_full_notm}} instance.
 1. Under **Reliability / Global load balancers**, create a **health check**:
+   1. Set **Name** to **API Health**.
    1. Set **Monitor type** to **HTTPS**.
+   1. Set **Port** to **443**.
    1. Set **Path** to **/api/healthz**.
    1. Click on **Create**.
 
@@ -240,7 +243,7 @@ For every location:
 1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
 1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
 1. Select the Health check created before.
-1. Click on **Create**.
+1. Click on **Save**.
 
 ### Create a global load balancer(GLB)
 {: #multi-region-serverless-12}
