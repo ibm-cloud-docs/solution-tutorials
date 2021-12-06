@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2020-12-16"
+lastupdated: "2021-12-01"
+lasttested: "2021-12-01"
 
 content-type: tutorial
 services: containers, EventStreams, cloud-object-storage, Registry
@@ -35,10 +35,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
+In this tutorial, you will learn how to use an Apache Kafka based messaging service {{site.data.keyword.messagehub}} to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
 {: shortdesc}
 
-You will simulate this pattern using a file processing example. First you will create a UI application which will be used to upload files to {{site.data.keyword.objectstorageshort}} and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
+You will simulate this pattern using a file processing example. First, you will create a UI application which will be used to upload files to {{site.data.keyword.objectstorageshort}} and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 
 ## Objectives
 {: #pub-sub-object-storage-objectives}
@@ -47,7 +47,7 @@ You will simulate this pattern using a file processing example. First you will c
 * Bind services to a Kubernetes cluster
 
 
-In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented as a Cloud Foundry application or serverless function.
+In this tutorial, the UI application is written in Node.js and the worker application is written in Java, highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented using another compute option.
 
 ![Architecture Diagram](images/solution25/Architecture.png){: class="center"}
 {: style="text-align: center;"}
@@ -73,6 +73,7 @@ This tutorial requires:
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
 <!--#/istutorial#-->
 
 ## Create a Kubernetes cluster
@@ -89,7 +90,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created. *Skip this step if you are using {{site.data.keyword.cloud-shell_short}}*
+1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```sh
    ibmcloud ks cluster config --cluster mycluster
@@ -117,11 +118,11 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    2. Select the **Standard** pricing plan
    3. Set the **Service name** to `myeventstreams`
    4. Select a resource group and Click **Create**
-2. Under **Manage**,
-   1. Provide **work-topic** as the Topic name. Click **Next**
+2. Once ready, on the service page click on **Topics** to create a new topic:
+   1. Specify **work-topic** as the Topic name. Click **Next**
    2. Select **1** partition, click **Next** and choose **a day** of Message retention.
    3. Click **Create topic**
-   4. Repeat the above steps by clicking **create topic** to create a topic named **result-topic**, with 1 partition and message retention of a day.
+   4. Repeat the above steps by clicking **Create topic** to create a topic named **result-topic**, with 1 partition and message retention of a day.
 3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myeventstreams --role Manager
@@ -138,12 +139,11 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
 
 1. From the Catalog, create a [**{{site.data.keyword.cos_short}}**](https://{DomainName}/catalog/services/cloud-object-storage) service,
-   1. Select a region
-   2. Select the Lite pricing plane
+   1. Select the **Lite** or **Standard** pricing plane
    3. Name the service `myobjectstorage`
    4. Select a resource group and click **Create**
-2. Under Buckets, Click **Create bucket**.
-3. Create a **custom bucket** by setting the bucket name to a unique name such as `username-mybucket`. _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).**Note:** PII is information that can identify any user (natural person) by name, location, or any other means._
+2. Under **Buckets** click **Create bucket**
+3. Create a **custom bucket** by setting the bucket name to a unique name such as `username-mybucket`. 
 4. Select **Cross Region** Resiliency, change the selected **location** if you wish to, **Smart-Tier** storage class, and click **Create bucket**.
 5. Click on **Endpoints**, copy and save the **public** endpoint next to `<region>-geo`. _Resiliency and location should be automatically selected._
 6. Create an {{site.data.keyword.cos_short}} service key `cos-for-pub-sub` to be used with Kubernetes secret in the next step
@@ -206,7 +206,7 @@ The worker application is a Java application which listens to the {{site.data.ke
 4. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![Files Processed](images/solution25/files_processed.png)
 
-In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=openwhisk-use_cases). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
+In this tutorial, you learned how you can use Kafka-based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load-balanced between one or more workers who subscribe to the messages.
 
 ## Remove resources
 {: #pub-sub-object-storage-7}
@@ -227,6 +227,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-about-cloud-object-storage)
-* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/EventStreams?topic=EventStreams-getting_started)
-* [Manage Access to Object Storage](https://{DomainName}/docs/cloud-object-storage-infrastructure?topic=cloud-object-storage-infrastructure-managing-access#managing-access)
+* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/EventStreams?topic=EventStreams-getting-started)
 * [{{site.data.keyword.messagehub}} data processing with {{site.data.keyword.openwhisk_short}}](https://github.com/IBM/openwhisk-data-processing-message-hub)

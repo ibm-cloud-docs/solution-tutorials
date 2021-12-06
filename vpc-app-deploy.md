@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2020-12-16"
+lastupdated: "2021-12-02"
+lasttested: "2021-12-02"
 
 content-type: tutorial
 services: vpc
@@ -81,7 +81,7 @@ You will explore how to consume these different sources.
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
 1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
-1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
+1. Add the SSH key in the **VPC console** under **Compute / SSH keys**. Make sure to create the key in the same resource group where you are going to create the other resources in this tutorial.
 
 ### Set environment variables
 {: #vpc-app-deploy-set-env}
@@ -352,7 +352,7 @@ This section uses a shell script found in the [Public frontend and private backe
 ### Before you begin
 {: #vpc-app-deploy-terraform-before-you-begin}
 
-Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
+Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/terraform) on your workstation.
 
 ### Provision a single virtual server instance
 {: #vpc-app-deploy-15}
@@ -388,7 +388,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 
 1. You could copy paste the output of the previous command or you can use `terraform output` as follow to SSH into the VSI
    ```sh
-   $(terraform output sshcommand)
+   $(terraform output -raw sshcommand)
    ```
    {: pre}
 
@@ -486,7 +486,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 
 1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
    ```sh
-   ../test_provision.bash $(terraform output FRONT_IP_ADDRESS) INTERNET hi
+   ../test_provision.bash $(terraform output -raw FRONT_IP_ADDRESS) INTERNET hi
    ```
    {: pre}
 
@@ -501,7 +501,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 
 1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
    ```sh
-   ../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
+   ../test_provision.bash $(terraform output -raw BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output -raw FRONT_NIC_IP) -o ProxyJump=root@$(terraform output -raw BASTION_IP_ADDRESS)"
    ```
    {: pre}
 
@@ -536,7 +536,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 
 This section uses both Terraform and Ansible.
 
-1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
+1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/terraform) on your workstation.
 1. Follow [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to install Ansible.
 
 ### Ansible Playbook
@@ -589,7 +589,7 @@ Ansible works against multiple systems in your infrastructure at the same time. 
        BACK_NIC_IP:
          hosts:
            %s
-   ' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
+   ' $(cd $TF; terraform output -raw FRONT_NIC_IP) $(cd $TF; terraform output -raw BACK_NIC_IP)
    ```
 
 ### Provision subnets and virtual server instances
@@ -630,7 +630,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
 1. Provision software on the frontend server:
    ```sh
    ansible-playbook -T 40 -l FRONT_NIC_IP -u root \
-     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output -raw BASTION_IP_ADDRESS)" \
      -i inventory lamp.yaml
    ```
    {: pre}
@@ -638,7 +638,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
 1. Provision software on the backend server:
    ```sh
    ansible-playbook -T 40 -l BACK_NIC_IP -u root \
-     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output -raw BASTION_IP_ADDRESS)" \
      -i inventory lamp.yaml
    ```
    {: pre}
@@ -650,7 +650,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 
 1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
    ```sh
-   ../test_provision.bash $(cd tf && terraform output FRONT_IP_ADDRESS) INTERNET hi
+   ../test_provision.bash $(cd tf && terraform output -raw FRONT_IP_ADDRESS) INTERNET hi
    ```
    {: pre}
 
@@ -665,7 +665,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 
 1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
    ```sh
-   ../test_provision.bash $(cd tf && terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output BASTION_IP_ADDRESS)"
+   ../test_provision.bash $(cd tf && terraform output -raw BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output -raw FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output -raw BASTION_IP_ADDRESS)"
    ```
    {: pre}
 

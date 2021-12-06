@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2021
 lastupdated: "2021-09-30"
-lasttested: "2020-12-28"
+lasttested: "2021-12-03"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -51,7 +51,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 ![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: class="center"}
 {: style="text-align: center;"}
 
-In the diagram above the user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
+In the diagram above the end user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 ### Concrete Architecture
 {: #vpc-tg-dns-iam-2}
@@ -78,7 +78,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.  You will also need the ability to create resource groups and IAM resources like access groups, policies, service ids, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Plan the Identity and Access Management Environment
@@ -90,7 +90,7 @@ Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
-- Network - create network resources such as {{site.data.keyword.dns_short}}, {{site.data.keyword.tg_short}} service, VPC, subnets, CIDR blocks.
+- Network - create network resources such as {{site.data.keyword.dns_short}}, {{site.data.keyword.tg_short}} service, VPC and subnets.
 - Shared - create VSI and block devices in the shared VPC. Create DNS records for shared services.
 - Application1 - create VSI and block devices in the application1 VPC
 - Application2 - create VSI and block devices in the application2 VPC.
@@ -137,13 +137,13 @@ In this example a single zone, `widgets.com` will be created and access to the z
 
 [VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the *network* team and operated by the micro-service team, like subnet. The *network* team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
 
-Service|network|shared|application
--|-|-|-|-
-{{site.data.keyword.tg_short}}|Editor, Manager||
-DNS|Editor, Manager|Viewer, Manager|
-IS: Network ACL|Editor||
-IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor
-IS: VPC, Subnet, Security Group|Editor|Operator|Operator
+|Service|network|shared|application|
+|-|-|-|-|
+|{{site.data.keyword.tg_short}}|Editor, Manager||
+|DNS|Editor, Manager|Viewer, Manager|
+|IS: Network ACL|Editor||
+|IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor|
+|IS: VPC, Subnet, Security Group|Editor|Operator|Operator|
 
 #### Resource Groups
 {: #vpc-tg-dns-iam-iam_resource_groups}

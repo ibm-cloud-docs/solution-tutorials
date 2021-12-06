@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-17"
+lastupdated: "2021-11-29"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -186,6 +186,14 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    4. Check the license agreement and click on **Create**.
 1. Under **Service credentials**, click on **New credential**
    1. Set the name to `nlu-for-satellite` and select **Writer** as the role.
+   1. Click `Advanced Options` and set the **Inline configuration parameters** to the following:
+      ```json
+      {
+        "service-endpoints": "private"
+      }
+      ```
+      {: pre}
+
    2. Click **Add**.
 1. In the **Service credentials**, locate the credentials you created for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys:
