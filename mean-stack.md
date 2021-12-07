@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2020-12-22"
+lastupdated: "2021-12-06"
+lasttested: "2021-12-06"
 
 content-type: tutorial
 services: cloud-foundry-public, databases-for-mongodb
