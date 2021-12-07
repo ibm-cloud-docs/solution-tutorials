@@ -69,7 +69,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
-* Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://cloud.ibm.com/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist).
+* Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist).
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
