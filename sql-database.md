@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-25"
-lasttested: "2020-12-17"
+lastupdated: "2021-12-07"
+lasttested: "2021-12-07"
 
 content-type: tutorial
 services: cloud-foundry-public, Db2whc
@@ -63,7 +63,7 @@ You will find instructions to download and install these tools for your operatin
    git clone https://github.com/IBM-Cloud/cloud-sql-database.git
    cd cloud-sql-database
    ```
-2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
+2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
 {: #sql-database-2}
@@ -73,9 +73,9 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
-3. Pick the **Flex One** plan and change the suggested service name to **sqldatabase** (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
+3. Pick the **Flex One** plan and change the suggested service name to **sqldatabase** (you will use that name later on). Pick a resource group and a location for the deployment of the database.
 4. Click on **Create**. The provisioning starts.
-5. In the **Resource List**, locate the new instance under **Cloud Foundry services** and wait for it to be available (sometimes you may need to refresh the page). Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
+5. In the **Resource List**, locate the new instance under **Services and software** and wait for it to be available (sometimes you may need to refresh the page). Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
 6. Click on **Open Console** to launch the database console.
 
 ## Create a table
@@ -143,6 +143,7 @@ Change back to the terminal and the directory with the cloned repository. Now yo
    ```bash
    ibmcloud login
    ibmcloud target --cf
+   ibmcloud resource service-alias-create sqldatabase --instance-name sqldatabase
    ibmcloud cf push
    ```
 1. Once the push process is finished you should be able to access the app on the route shown in the output. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named **sqldatabase** together. It also creates a random route (URI) for the app.
@@ -153,22 +154,24 @@ Change back to the terminal and the directory with the cloned repository. Now yo
 
 The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
 
-In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html). The executable Swagger interface of that API can be accessed in the menu behind the "book" icon under "Rest APIs". Some tools that can be used for monitoring and more, e.g., the IBM Data Server Manager, can even be downloaded under the "Downloads" section in that same menu.
+In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html).
 
 ## Test the App
 {: #sql-database-8}
 {: step}
 
-The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
+The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name - names are case sensitive - and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
 
 ## Cleanup
 {: #sql-database-9}
 {: step}
 
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app.
-2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app `worldcities` under **Cloud Foundry apps**.
+2. Click on the menu icon for the app and choose **Delete**. In the dialog window tick the checkmark that you want to delete the related `sqldatabase` service.
 3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
+4. Locate the database `sqldatabase` under **Services and software**
+5. Click on the menu icon for the database and click the **Delete** button. The database service is removed and you are taken back to the resource list.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
