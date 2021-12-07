@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-27"
-lasttested: "2020-12-18"
+lastupdated: "2021-12-07"
+lasttested: "2021-12-07"
 
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -94,7 +94,7 @@ In addition:
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
-This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
+This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.vip/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
 {: #dynamic-content-cdn-3}
@@ -202,7 +202,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 1. Accept the **Master Service Agreement** and click **Create**.
 
 After you have successfully created the CDN mapping:
-* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
 * You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
@@ -211,11 +211,11 @@ After you have successfully created the CDN mapping:
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
 
-The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized from the [Beego sample](https://github.com/beego/samples) to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html) made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
+The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html) made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
 
 To activate DCA:
 1. Select the **Settings** tab in the CDN configuration.
-2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
+2. Under the **Optimization settings** section, click **Edit** and select **Dynamic Content Acceleration** from the *Optimized for* drop-down list.
 3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin.
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
 
@@ -228,7 +228,7 @@ To activate DCA:
 
 You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.
 
-After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
+After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/cdn) page.
 
 ## Conclusion
 {: #dynamic-content-cdn-conclusion}
