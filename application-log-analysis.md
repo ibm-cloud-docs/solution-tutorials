@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-06"
+lastupdated: "2021-12-09"
 lasttested: "2021-12-03"
 
 content-type: tutorial
-services: containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig
+services: containers, Log-Analysis-with-LogDNA, Registry, monitoring
 account-plan: paid
 completion-time: 2h
 
@@ -23,7 +23,7 @@ completion-time: 2h
 # Analyze logs and monitor application health 
 {: #application-log-analysis}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig"}
+{: toc-services="containers, Log-Analysis-with-LogDNA, Registry, monitoring"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
