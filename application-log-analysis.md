@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-23"
-lasttested: "2020-12-22"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-03"
 
 content-type: tutorial
-services: containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig
+services: containers, log-analysis, Registry, monitoring
 account-plan: paid
 completion-time: 2h
 
@@ -23,7 +23,7 @@ completion-time: 2h
 # Analyze logs and monitor application health 
 {: #application-log-analysis}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, Log-Analysis-with-LogDNA, Registry, Monitoring-with-Sysdig"}
+{: toc-services="containers, log-analysis, Registry, monitoring"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -70,8 +70,8 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 
 In addition, make sure you:
-- [grant permissions to a user to view logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam#user_logdna)
-* and [grant permissions to a user to view monitoring metrics](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam#iam_users)
+- [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_logdna)
+* and [grant permissions to a user to view monitoring metrics](/docs/monitoring?topic=monitoring-iam#iam_users)
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -94,7 +94,7 @@ In addition, make sure you:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
    - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 <!--#/istutorial#-->
@@ -154,7 +154,7 @@ In a terminal window:
    ```
    {: pre}
 
-3. Retrieve the cluster ingress subdomain:
+3. Make sure to be logged in. Retrieve the cluster ingress subdomain:
    ```sh
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
@@ -166,14 +166,21 @@ In a terminal window:
    ```
    {: pre}
 
-5. Edit `app-log-analysis.yaml` and replace the placeholder (`$MYINGRESSSUBDOMAIN`) with the value captured in the previous step. *Check the table in this section below for more details*.
-6. Once the `yaml` is updated, deploy the app with the following command:
+5. Initialize the `kubectl` cli environment
+
+   ```bash
+   ibmcloud ks cluster config --cluster $MYCLUSTER
+   ```
+   {: pre}
+
+6. Edit `app-log-analysis.yaml` and replace the placeholder (`$MYINGRESSSUBDOMAIN`) with the value captured in the previous step. *Check the table in this section below for more details*.
+7. Once the `yaml` is updated, deploy the app with the following command:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
 
-7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+8. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
@@ -292,8 +299,8 @@ In this section, you will create a board and then add a graph with a breakdown t
 1. On the left pane, click on the **board** icon (above the settings icon) > click **NEW BOARD**.
 1. Click **Edit** on the top bar and let's name this **app-log-analysis-board**. Click **Save**.
 1. Click **Add Graph**:
-   - Enter **app** as your field in the first input box and hit enter.
-   - Choose **app-log-analysis** as your field value.
+   - Select **app** under **Graph a field**.
+   - Choose **app-log-analysis** as the field value.
    - Click **Add Graph**.
 1. Select **Counts** as your metric to see the number of lines in each interval over last 24 hours.
 1. To add a breakdown, click on the arrow below the graph:
@@ -329,7 +336,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
    sysdig-agent-q2s55   1/1     Running   0          73s
    ```
 
-Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
+Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#application-log-analysis-deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
    ```yaml
    spec:
      template:
@@ -347,7 +354,7 @@ Finally, the application includes a Prometheus library `prometheus_client`, whic
 
 To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
 
-Note: Change the interval to **1 M** on the bottom bar of the UI.
+Note: Change the interval to **5 M** or **1 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
@@ -389,7 +396,7 @@ This sample application includes code to generate **custom metrics**. These cust
 Along with the pre-defined dashboards, you can create your own custom dashboard to display the most useful/relevant views and metrics for the containers running your app in a single location. Each dashboard is comprised of a series of panels configured to display specific data in a number of different formats.
 
 To create a dashboard with a first panel:
-1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
+1. Click on **Dashboards** on the left most pane > click **+** (add dashboard).
 2. In the New Panel, set the **Metrics** to **net.http.request.time**.
 3. Set **Segmentation** to **container.id**.
 4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
@@ -430,16 +437,16 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Expand the tutorial
 {: #application-log-analysis-expand_tutorial}
 
-- Use the [{{site.data.keyword.at_full}} service](/docs/Activity-Tracker-with-LogDNA?topic=Activity-Tracker-with-LogDNA-getting-started#getting-started) to track how applications interact with IBM Cloud services.
-- [Add alerts](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-alerts#alerts) to your view.
-- [Export logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-export#export) to a local file.
+- Use the [{{site.data.keyword.at_full}} service](/docs/activity-tracker?topic=activity-tracker-getting-started) to track how applications interact with IBM Cloud services.
+- [Add alerts](/docs/activity-tracker?topic=activity-tracker-alerts) to your view.
+- [Export logs](/docs/activity-tracker?topic=activity-tracker-export) to a local file.
 - Examine `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply `app-log-analysis.yaml` to redeploy your updates.
 
 ## Related content
 {: #application-log-analysis-12}
 {: related}
 
-- [Resetting the ingestion key used by a Kubernetes cluster](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-kube_reset#kube_reset)
-- [Archiving logs to IBM Cloud Object Storage](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-archiving#archiving)
-- [Working with monitoring alerts](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-alerts)
-- [Working with monitoring notification channels](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-notifications#notifications)
+- [Resetting the ingestion key used by a Kubernetes cluster](/docs/log-analysis?topic=log-analysis-kube-reset)
+- [Archiving logs to IBM Cloud Object Storage](/docs/log-analysis?topic=log-analysis-archiving#archiving)
+- [Working with monitoring alerts](/docs/monitoring?topic=monitoring-alerts)
+- [Working with monitoring notification channels](/docs/monitoring?topic=monitoring-notifications#notifications)

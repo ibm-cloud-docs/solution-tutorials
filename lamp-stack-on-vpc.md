@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-04-08"
-lasttested: "2020-04-08"
+lastupdated: "2021-12-06"
+lasttested: "2021-12-06"
 
 content-type: tutorial
 services: vpc
@@ -84,12 +84,6 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-1. For this tutorial we will use the latest VPC generation 2.  Set the target generation for VPC
-   ```sh
-   ibmcloud is target --gen 2
-   ```
-   {: pre}
-
 ### Create SSH Key(s)
 {: #lamp-stack-on-vpc-3}
 
@@ -159,9 +153,9 @@ If you prefer to use a Terraform template to generate these resources, you can u
 ### Create Virtual Server Instance
 {: #lamp-stack-on-vpc-5}
 
-1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 18.x by running the following command.  
+1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 20.x by running the following command.  
    ```sh
-   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-18-04-1-minimal-amd64-2") | .id')
+   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-20-04-2-minimal-amd64-1") | .id')
    ```
    {: pre}
 
@@ -305,9 +299,8 @@ Experience your LAMP stack by installing an application. The following steps ins
 5. Add the following commands substituting your database password for *yourPassword* and leaving the other values unchanged. Then save the file.
    ```sql
    CREATE DATABASE wordpress;
-   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
-   TO wordpress@localhost
-   IDENTIFIED BY 'yourPassword';
+   CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'yourPassword';
+   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO 'wordpress'@'localhost';
    FLUSH PRIVILEGES;
    ```
    {: pre}
@@ -343,7 +336,7 @@ To ensure server availability and the best user experience, monitoring should be
 ### Server monitoring
 {: #lamp-stack-on-vpc-11}
 
-You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-ubuntu) documentation. 
+You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/monitoring?topic=monitoring-ubuntu) documentation. 
 
 ### Server logging
 {: #lamp-stack-on-vpc-12}
@@ -352,7 +345,7 @@ You can use {{site.data.keyword.la_full_notm}} to manage system and application 
 
 {{site.data.keyword.la_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
 
-If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-ubuntu)
+If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-ubuntu)
 
 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)

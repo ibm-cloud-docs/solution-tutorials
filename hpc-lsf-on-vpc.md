@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-26"
+lastupdated: "2021-12-06"
 lasttested: "2020-12-21"
 
 content-type: tutorial
@@ -97,14 +97,7 @@ You will also need:
    ```
    {: pre}
 
-7. Set the infrastructure (is) commands target to {{site.data.keyword.vpc_short}}:
-
-   ```sh
-   ibmcloud is target --gen 2
-   ```
-   {: pre}
-
-8. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
+7. Select the region where you would like your cloud resources to reside and set them as the target. You can use `ibmcloud is regions` to list them. If you choose the region "us-south", the command is the following:
 
    ```sh
    ibmcloud target -r us-south

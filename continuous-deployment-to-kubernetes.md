@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-16"
-lasttested: "2020-08-09"
+lastupdated: "2021-11-30"
+lasttested: "2021-11-30"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
@@ -190,7 +190,7 @@ In this step, you will clean up the resources to remove what you created above.
    - Copy the Git URL and paste into a browser
    - In the git repository: select Settings on the right then General > Advanced > Remove Project
 - Delete the toolchain.
-- Delete the images from the Kubernetes Registry
+- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).
 <!--##istutorial#-->
 - Delete the cluster.
 <!--#/istutorial#-->

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-30"
-lasttested: "2020-12-28"
+lastupdated: "2021-12-06"
+lasttested: "2021-12-06"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -20,6 +20,7 @@ completion-time: 2h
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{: note}
 
 # Team based privacy using IAM, VPC, {{site.data.keyword.tg_short}} and DNS
 {: #vpc-tg-dns-iam}
@@ -51,7 +52,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 ![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: class="center"}
 {: style="text-align: center;"}
 
-In the diagram above the user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
+In the diagram above the end user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 ### Concrete Architecture
 {: #vpc-tg-dns-iam-2}
@@ -78,7 +79,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.  You will also need the ability to create resource groups and IAM resources like access groups, policies, service ids, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Plan the Identity and Access Management Environment
@@ -90,7 +91,7 @@ Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
-- Network - create network resources such as {{site.data.keyword.dns_short}}, {{site.data.keyword.tg_short}} service, VPC, subnets, CIDR blocks.
+- Network - create network resources such as {{site.data.keyword.dns_short}}, {{site.data.keyword.tg_short}} service, VPC and subnets.
 - Shared - create VSI and block devices in the shared VPC. Create DNS records for shared services.
 - Application1 - create VSI and block devices in the application1 VPC
 - Application2 - create VSI and block devices in the application2 VPC.
@@ -133,17 +134,17 @@ An access group will be created for each team.  Access policies are added to acc
 
 The {{site.data.keyword.tg_short}} service instance is managed exclusively by the *network* team. Editor access is required for creation. Manager access to the created instance allows VPCs to be connected to the {{site.data.keyword.tg_short}}.
 
-In this example a single zone, `widgets.com` will be created and access to the zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. The IP addresses for Domain Name resolution are made available to all of the VPCs without any IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record which requires the Manager role.
+In this example a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
 [VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the *network* team and operated by the micro-service team, like subnet. The *network* team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
 
-Service|network|shared|application
--|-|-|-|-
-{{site.data.keyword.tg_short}}|Editor, Manager||
-DNS|Editor, Manager|Viewer, Manager|
-IS: Network ACL|Editor||
-IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor
-IS: VPC, Subnet, Security Group|Editor|Operator|Operator
+|Service|network|shared|application|
+|-|-|-|-|
+|{{site.data.keyword.tg_short}}|Editor, Manager||
+|DNS|Editor, Manager|Viewer, Manager|
+|IS: Network ACL|Editor||
+|IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor|
+|IS: VPC, Subnet, Security Group|Editor|Operator|Operator|
 
 #### Resource Groups
 {: #vpc-tg-dns-iam-iam_resource_groups}
@@ -159,7 +160,7 @@ Resource Group diagram:
 
 Each micro-service team will be allowed the access in the corresponding resource group.  The **network** team will have access to all of these resource groups.
 
-The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services that the team manages.
+The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services.
 
 Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console.  It is possible to filter on resource group.
 
@@ -197,9 +198,10 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
    ```
    {: pre}
 
-    - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the above prerequisites.
+    - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the **Before you begin** section above.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
     - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required.  Most resources created will use this as a name prefix.
+    - Do not uncomment the `transit_gateway` or `shared_lb` at this time.
 
 1. Windows users only: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
    ```sh
@@ -213,7 +215,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ### A Note about becoming a team member
 {: #vpc-tg-dns-iam-iam_become}
 
-It is possible to populate each team's access group with users.  In this example you are the administrator and will **become** a member of the different access groups by using the api key for the team.  The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users.  But rather then create users this tutorial will create a Service ID in each team's access group.  You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team.  The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```sh
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
@@ -227,12 +229,20 @@ Terraform will be used to create the resources.  Open `admin/main.tf` and notice
    }
    ```
 
+If you need to use the ibmcloud cli as a team member:
+   ```sh
+   ibmcloud login --apikey $TF_VAR_ibmcloud_api_key
+   ```
+
 
 ## Create the IAM-enabled resources (Admin Team)
 {: #vpc-tg-dns-iam-admin}
 {: step}
 
-The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial.  See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM-enabled resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  This is the same as a password to your account and it will be used by terraform to perform tasks on your behalf.  Keep the api key safe.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial.  See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  The api key will be used by terraform to perform tasks on your behalf.
+
+The api keys are the same as a passwords to your account. Keep the api keys safe.
+{: note}
 
 1. Initialize and verify the basename shell variable.  Verify it matches the basename in the terraform.tfvars file:
    ```sh
@@ -380,6 +390,7 @@ The Admin team has provided them just the right amount of permissions to create 
    The {{site.data.keyword.tg_short}} will have a connection to each VPC and routes traffic based on the CIDR ranges so avoiding overlaps will insure success.
 
 
+
 1. Create the resources:
    ```sh
    terraform init
@@ -393,7 +404,6 @@ The Admin team has provided them just the right amount of permissions to create 
    The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity.  Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
    ```sh
    ibmcloud target -r $(grep ibm_region terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//' -e 's/.*=//' -e 's/"//g')
-   ibmcloud is target --gen 2
    ibmcloud is subnets --all-resource-groups | grep $basename
    ```
    {: pre}
@@ -887,7 +897,7 @@ The second *application* team environment is identical to the first.  Optionally
    cd ../application1
    mkdir ../application2
    sed -e 's/application1/application2/g' main.tf > ../application2/main.tf
-   cp terraform.tfvars variables.tf ../application2
+   cp terraform.tfvars variables.tf versions.tf ../application2
    ```
    {: pre}
 

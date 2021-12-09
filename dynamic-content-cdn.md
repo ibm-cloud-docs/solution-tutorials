@@ -2,9 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-27"
-lasttested: "2020-12-18"
-
+lastupdated: "2021-12-07"
+lasttested: "2021-12-07"
 content-type: tutorial
 services: CDN, containers, Registry, dns
 account-plan: paid
@@ -38,7 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. This tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
+Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. The tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
 {: shortdesc}
 
 Applications also contain personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
@@ -85,7 +84,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 - create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
-   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
+   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
    - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 
 ## Deploy a dynamic web application to be accelerated
@@ -94,7 +93,7 @@ In addition:
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
-This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
+This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.vip/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
 {: #dynamic-content-cdn-3}
@@ -202,7 +201,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 1. Accept the **Master Service Agreement** and click **Create**.
 
 After you have successfully created the CDN mapping:
-* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
 * You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
@@ -211,11 +210,11 @@ After you have successfully created the CDN mapping:
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
 
-The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized from the [Beego sample](https://github.com/beego/samples) to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html) made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
+The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html) made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
 
 To activate DCA:
 1. Select the **Settings** tab in the CDN configuration.
-2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
+2. Under the **Optimization settings** section, click **Edit** and select **Dynamic Content Acceleration** from the *Optimized for* drop-down list.
 3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin.
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
 
@@ -228,7 +227,7 @@ To activate DCA:
 
 You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.
 
-After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
+After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/cdn) page.
 
 ## Conclusion
 {: #dynamic-content-cdn-conclusion}
