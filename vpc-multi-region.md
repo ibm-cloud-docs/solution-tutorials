@@ -372,7 +372,7 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
    - Traffic that are proxied flows through CIS.
    - Traffic that are non-proxied (DNS-only mode) flows directly from the client to the origin.
 
-For more information read through the [Proxying DNS records and global load balancers](https://cloud.ibm.com/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
+For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
 
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
