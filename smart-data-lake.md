@@ -325,9 +325,8 @@ In this section, you will visualize the previous result set using a folium heat 
     m
     ```
     {: codeblock}
-    
-![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
-{: style="text-align: center;"}
+   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   {: style="text-align: center;"}
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
@@ -342,6 +341,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 
 ## Expand the tutorial
 {: #smart-data-lake-9}
+{: step}
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
