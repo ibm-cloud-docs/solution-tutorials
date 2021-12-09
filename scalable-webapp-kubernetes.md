@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-20"
-lasttested: "2021-09-17"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-08"
 
 content-type: tutorial
 services: containers, Registry
@@ -87,7 +87,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 - Create the Kubernetes **version 1.19+** cluster:
-   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 2 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
+   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
    - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
@@ -316,14 +316,14 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
 1. Import the certificate for the subdomain and give it the name `kubernetesnodeapp`, (.e.g kubernetesnodeapp.example.com) and certificate manager certificate name `kubernetesnodeapp`.  If you are already managing your certificate with the {{site.data.keyword.cloudcerts_short}} service you can download the certificate zip file, unzip it, then import into the cluster's {{site.data.keyword.cloudcerts_short}} instance.
 1. Open the imported certificate in the cloud console and copy the Cerfificate CRN.  Create a TLS secret for the cert and the key, name the secret, &lt;secret-name&gt;, the same as the certificate name just imported (.e.g abckubeapp).
    ```sh
-   SECRET_NAME=<certificate-name>
+   export CUSTOM_SECRET_NAME=<certificate-name>
    CERT_CRN=<crn-of-the-certificate>
    DNS=<my-custom-subdomain.com>
    ```
    {: pre}
 
    ```sh
-   ibmcloud ks ingress secret create --cluster $MYCLUSTER --name $SECRET_NAME --namespace default --cert-crn $CERT_CRN
+   ibmcloud ks ingress secret create --cluster $MYCLUSTER --name $CUSTOM_SECRET_NAME --namespace default --cert-crn $CERT_CRN
    ```
    {: pre}
 
@@ -359,7 +359,7 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
 ```sh
-kubectl scale deployment <deployment-name> --replicas=2
+kubectl scale deployment kubernetesnodeapp-deployment --replicas=2
 ```
 {: pre}
 
@@ -369,7 +369,7 @@ With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.
 
 To create an autoscaler and to define your policy, run the below command
 ```sh
-kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+kubectl autoscale deployment kubernetesnodeapp-deployment --cpu-percent=5 --min=1 --max=5
 ```
 {: pre}
 
@@ -400,7 +400,7 @@ Once the autoscaler is successfully created, you should see
    <!--#/isworkshop#-->
 * Delete the Kubernetes secret:
    ```sh
-   ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $SECRET_NAME --namespace default
+   ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $CUSTOM_SECRET_NAME --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
 

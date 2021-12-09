@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-05"
-lasttested: "2020-12-23"
+lastupdated: "2021-12-08"
+lasttested: "2021-12-08"
 
 ---
 
@@ -69,6 +69,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
+* Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist).
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
@@ -85,7 +86,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 {: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
 1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
-2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
+2. In the **IaaS platforms** section, click the **VMware Solutions Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, i.e. `vmware-tutorial`.
 5. Select the **Resource group** where to create the service instance.
@@ -102,7 +103,8 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 3. Click on **Set Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
 5. Select the virtual data center and in the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
-6. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
+6. Click on the radio button next to the edge gateway name, at the top of the page, click on **Enable Distributed Routing**. You can proceed to the next steps, however come back to confirm the status of distributed routing is **enabled** prior to running the [Terraform plan](#vmware-solutions-shared-getting-started-create-schematics).
+7. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
 | Name | Description | Default |
 |----------|---------|---------|
@@ -326,14 +328,12 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 {: #vmware-solutions-shared-getting-started-create-schematics}
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
-2. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
-   - Select the resource group and location of the workspace, you can also add tags and description as needed.
-   - Click **Create** to create your workspace. Your workspace is created with a Draft state and the workspace Settings page opens.
-3. Connect your workspace to the GitHub source repository where our Terraform template for this tutorial is stored.
-   - On the workspace Settings page, enter the link to our GitHub repository, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
-   - Select `terraform_v0.13` as the **Terraform version**.
-   - Click **Save template information**. 
-4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
+2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
+3. Select `terraform_v0.15` as the **Terraform version**. Click **Next**.
+4. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
+5. Select the resource group and location of the workspace, you can also add tags and description as needed.
+6. Click **Next** and then **Create** to create your workspace. Your workspace is created and the workspace Settings page opens.
+7. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
 
    Some values have defaults which are appropriate to keep for this tutorial.
    {: tip}
@@ -341,8 +341,8 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
    Set the Sensitive flag for the **vcd-password** variable to that the value is not displayed in the workspace and/or logs.
    {: tip}
 
-5. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
-6. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 
+8. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
+9. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
 {: #vmware-solutions-shared-getting-started-access-virtual-machine}
