@@ -507,7 +507,7 @@ Follow these steps if you need to use another version of the OpenShift CLI than 
    
 2. Extract `oc.tar.gz`:
    ```sh
-   tar zxvf oc.tar.gz
+   tar zxvf oc.tar.gz oc
    ```
    {: pre}
 
