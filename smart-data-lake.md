@@ -330,8 +330,8 @@ In this section, you will visualize the previous result set using a folium heat 
     ```
     {: codeblock}
 
-![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
-{: style="text-align: center;"}
+   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   {: style="text-align: center;"}
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
