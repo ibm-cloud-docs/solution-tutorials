@@ -433,7 +433,7 @@ The wildcard certificate created will allow access to domain name like vpc-lb-re
 
 In a browser open **https://lb.mydomain.com** to verify success
 
-### Alternative 2: DNS-only mode, traffic flows directly from the client to the origin
+### Alternative 2: DNS-only mode, traffic flows directly from the client to the VPC Load Balancers
 {: #vpc-multi-region-16}
 
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
