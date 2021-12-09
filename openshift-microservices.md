@@ -6,7 +6,7 @@ lastupdated: "2021-12-09"
 lasttested: "2021-10-12"
 
 content-type: tutorial
-services: openshift, loganalysis, monitoring, containers, Cloudant
+services: openshift, log-analysis, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 3h
 ---
@@ -28,7 +28,7 @@ completion-time: 3h
 # Deploy microservices with {{site.data.keyword.openshiftshort}}
 {: #openshift-microservices}
 {: toc-content-type="tutorial"}
-{: toc-services="openshift, loganalysis, monitoring, containers, Cloudant"}
+{: toc-services="openshift, log-analysis, monitoring, containers, Cloudant"}
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->

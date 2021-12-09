@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-17"
+lastupdated: "2021-12-09"
 lasttested: "2021-11-17"
 
 ---
@@ -208,5 +208,5 @@ Congratulations, your application can now safely be deployed from dev to product
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
-* [Grant permissions to a user to view logs](/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-work_iam)
-* [Grant permissions to a user to view metrics](/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-iam)
+* [Grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam)
+* [Grant permissions to a user to view metrics](/docs/monitoring?topic=monitoring-iam)
