@@ -191,8 +191,8 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
 2. From the Notebook, install the required version of pandas by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     !pip install pandas==1.3.4
-    {: codeblock}
     ```
+    {: codeblock}
     You may see an error message relating to dependency problems which can be safely ignored for this tutorial
 
 2. From the Notebook, install folium by adding the following commands to the `In [ ]:` input prompt and then **Run**
@@ -328,7 +328,7 @@ In this section, you will visualize the previous result set using a folium heat 
     ```
     {: codeblock}
 ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
-   {: style="text-align: center;"}
+{: style="text-align: center;"}
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
 ## Share your dataset with the organization
