@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-07-13"
-lasttested: "2020-12-16"
+lastupdated: "2021-12-09"
+lasttested: "2020-12-09"
 
 content-type: tutorial
 services: vpc, cis, certificate-manager
@@ -54,7 +54,7 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 {: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
-2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
+2. The admin creates a load balancer with a backend pool of servers in different zones of region 1 and a frontend listener. Repeats the same in region 2.
 3. The admin provisions a {{site.data.keyword.cis_full_notm}} instance with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
 4. The admin enables HTTPS encryption by adding the domain SSL certificate to the {{site.data.keyword.cloudcerts_short}} service.
 5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
@@ -115,7 +115,7 @@ To allow traffic to the application you will deploy on virtual server instances,
 {: #vpc-multi-region-5}
 
 1. Navigate to **Subnets**.
-1. Verify status is available and click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **Create**.
+1. Verify status is available and click on **vpc-region1-zone1-subnet** and click **Attached resources**, then under **Attached instances** click on **Create**.
    1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name.
    2. Verify the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
 1. Set the **image** to **Ubuntu Linux** and pick any version of the image.
@@ -174,13 +174,40 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
 
+### Create a security group to allow inbound and outbound traffic through the load balancers
+{: #vpc-multi-region-lb-security-group}
+
+To allow traffic to the application, you need to enable inbound and outbound rules for HTTP (80) and HTTPS (443) ports. In later steps, when creating load balancers, you will add them to the security group defining those rules.
+
+1. Navigate to **Security groups**.
+2. Create a new security group called **vpc-lb-sg** in **vpc-region1** with a selected **Resource group** 
+3. Add the inbound rules below:
+
+   | Protocol | Source type | Source | Value    |
+   |------------|---------------|----------|-----------  |
+   | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
+   | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
+   
+   {: caption="Inbound rules" caption-side="bottom"}
+
+4. Add the outbound rules below:
+
+   | Protocol | Source type | Source | Value    |
+   |------------|---------------|----------|-----------  |
+   | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
+   | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
+   
+   {: caption="Outbound rules" caption-side="bottom"}
+
+5. **REPEAT** the steps above in **region 2**.
+
 ### Configure load balancers
 {: #vpc-multi-region-8}
 
-1. Navigate to **Load balancers** and click **New load balancer**.
+1. Navigate to **Load balancers** and click **Create**.
 2. Enter **vpc-lb-region1** as the Name, select **vpc-region1** as the Virtual Private Cloud, select the resource group, **Application load balancer** as the Load balancer and Load balancer Type: **Public**.
 3. Select the **Subnets** of **vpc-region1-zone1-subnet** and **vpc-region1-zone2-subnet**..
-4. Click **New pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the parameters with the values below and click **Save**.
+4. Click **Create pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the parameters with the values below and click **Save**.
    - **Name**:  region1-pool
    - **Protocol**: HTTP
    - **Session stickiness**: None
@@ -192,19 +219,22 @@ In this section, you will create two load balancers. One in each region to distr
    - **Interval(sec)**: 15
    - **Timeout(sec)**: 5
    - **Max retries**: 2
-5. Click **Attach** to add server instances to the pool
+5. Click **Attach server** to add server instances to the pool
    - From the Subnet dropdown, select **vpc-region1-zone1-subnet**, select the instance your created and set 80 as the port.
-   - Click on **Add**
+   - Click on **Attach server**
    - From the Subnet dropdown, select **vpc-region1-zone2-subnet**, select the instance your created and set 80 as the port.
    - Click **Save** to complete the creation of a back-end pool.
-6. Click **New listener** to create a new front-end listener; A listener is a process that checks for connection requests.
+6. Click **Create listener** to create a new front-end listener; A listener is a process that checks for connection requests.
    - **Protocol**: HTTP
    - **Proxy protocol**: not checked
    - **Port**: 80
    - **Back-end pool**: region1-pool
    - **Maxconnections**: Leave it empty and click **Save**.
-7. Click **Create load balancer** to provision a load balancer.
-8. **REPEAT** the steps 1-7 above in **region 2**.
+7. Under **Security Groups**
+   * Uncheck the default security group and check **vpc-lb-sg**.
+   * Click **Save**.
+8. Click **Create load balancer** to provision a load balancer.
+9. **REPEAT** the steps above in **region 2**.
 
 ### Test the load balancers
 {: #vpc-multi-region-9}
@@ -238,11 +268,11 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 1. If you do not own a domain, you can buy one from a registrar.
 2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
-4. When the service instance is provisioned, click on **Let's get Started**.
-5. Enter your domain name and click **Connect and continue**.
-6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
+4. When the service instance is provisioned, click on **Add domain**.
+5. Enter your domain name and click **Next**.
+6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-8. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+8. At this point you can click on **Cancel** to get back to the main page, after you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
@@ -252,11 +282,12 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 
 A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
-1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Reliability** > **Global Load Balancers**, and at the bottom of the page, click **Create**.
+1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Reliability** > **Global Load Balancers**
+1. Select **Health checks** and click **Create**.
 1. Set **Name** to **nginx**.
 1. Set **Monitor Type** to **HTTP**.
 1. Set **Path** to **/**
-1. Click **Save**.
+1. Click **Create**.
 
    When building your own applications, you could define a dedicated health endpoint such as */health* where you would report the application state.
    {: tip}
@@ -269,23 +300,23 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 #### One pool for the VPC load balancers in region 1
 {: #vpc-multi-region-13}
 
-1. Click **Create**.
-2. Set **Name** to **region-1-pool**
-3. Set **Health check** to the one created in the previous section
-4. Set **Health Check Region** to `closest to region 1`
-5. Set **Origin Name** to **region-1**
-6. Set **Origin Address** to hostname of **region1** VPC Load balancer, see the overview page of the VPC load balancer.
+1. Select **Origin pools** and click **Create**.
+2. Enter a name for the pool: `region-1-pool`.
+3. Set **Origin Name** to `region-1`.
+4. Set **Origin Address** to the hostname of region1 VPC Load balancer, see the **overview page** of the VPC load balancer.
+5. Select a **Existing health check** and select the health check created earlier.
+6. Select a **Health check region** close to the location region 1.
 7. Click **Save**.
 
 #### One pool for the VPC load balancers in region 2
 {: #vpc-multi-region-18}
 
-1. Click **Create**.
-2. Set **Name** to **region-2-pool**
-3. Set **Health check** to the one created in the previous section
-4. Set **Health Check Region** to `closest to region 2`
-5. Set **Origin Name** to **region-2**
-6. Set **Origin Address** to hostname of **region1** VPC Load balancer, see the overview page of the VPC load balancer.
+1. Select **Origin pools** and click **Create**.
+2. Enter a name for the pool: `region-2-pool`.
+3. Set **Origin Name** to `region-2`.
+4. Set **Origin Address** to the hostname of region1 VPC Load balancer, see the **overview page** of the VPC load balancer.
+5. Select a **Existing health check** and select the health check created earlier.
+6. Select a **Health check region** close to the location region 2.
 7. Click **Save**.
 
 ### Create the Global Load Balancer
@@ -293,7 +324,14 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 
 With the origin pools defined, you can complete the configuration of the load balancer.
 
-1. Click **Create Load Balancer**.
+1. Select **Load balancers** and click **Create**.
+1. Keep the defaults of **Enable**: **On** and **Proxy**: **Off**.
+1. Enter the name for the Global Load Balancer, **lb**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (http://`<gbl_name>`.`<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
+1. Click **Add route**.
+1. Select the **Region**: **Default**.
+1. Select the origin pools that you just created.
+1. Click **Create**.
+
 1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://lb.mydomain.com`), regardless of the location.
 1. Under **Default origin pools**, click **Add pool** and add the pool named **region-1-pool** and **region-2-pool**.
 1. Expand the section of **Geo routes**, you can distribute traffic based on the origin region, pick a GLB region that is close to the VPC region 1. 
@@ -315,15 +353,15 @@ HTTPS encryption requires signed certificates to be stored and accessed. Below t
 Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm}}.
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and in a resource group.
-2. Create an authorization that gives the VPC load balancer service instance access to the {{site.data.keyword.cloudcerts_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).
-   - Click **Create** and choose **VPC Infrastructure Service** as the source service
+2. Create an authorization that gives the VPC load balancer service instance access to the {{site.data.keyword.cloudcerts_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam/authorizations).
+   - Click **Create** and choose **VPC Infrastructure Services** as the source service
    - **Load Balancer for VPC** as the resource type
-   - **Certificate Manager** as the target service
+   - **{{site.data.keyword.cloudcerts_short}}** as the target service
    - Assign the **Writer** service access role.
    - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
    - Click on **Authorize**.
 3. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
-   - Click **Create** and choose **Certificate Manager** as the source service
+   - Click **Create** and choose **{{site.data.keyword.cloudcerts_short}}** as the source service
    - Choose **All instances** or just the {{site.data.keyword.cloudcerts_short}} created earlier
    - **Internet Services** as the target service
    - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
@@ -361,8 +399,10 @@ Next configure HTTPS from {{site.data.keyword.cis_short_notm}} to the VPC load b
 Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
 1. Choose **Front-end listeners**
-1. Click **New listener**
-1. Select HTTPS, Port: 443. The SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt. Click on **Save**.
+1. Click **Create**
+1. Select HTTPS and enter for **Port** a value of `443`. 
+1. Select the **Default back-end pool**: `region1-pool` or `region2-pool`
+1. Select the **{{site.data.keyword.cloudcerts_short}}** instance you created earlier, the SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt. Click on **Save**.
 
    If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**.
    {: tip}
