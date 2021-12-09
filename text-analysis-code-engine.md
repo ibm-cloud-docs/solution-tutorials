@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-09-27"
-lasttested: "2021-09-20"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-09"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, natural-language-understanding
@@ -152,7 +152,7 @@ We've already built images for the two applications and pushed them to the publi
 ### Deploy a frontend application
 {: #text-analysis-code-engine-4}
 
-1. To deploy a new {{site.data.keyword.codeengineshort}} application, you need to run the following command; providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
+1. To deploy a new {{site.data.keyword.codeengineshort}} application, run the following command; providing a service name `frontend` and the pre-built container image as a parameter to `--image` flag.
    ```sh
    ibmcloud code-engine application create --name frontend --image ibmcom/frontend
    ```
