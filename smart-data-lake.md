@@ -379,6 +379,7 @@ ibmcloud iam api-key-delete data-lake-cos-key
 ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
+
 If the deletion of **data-lake-cos** is not successful delete it from the storage section of the [Resource List](https://{DomainName}/resources).
 
 
