@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-01-13"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-09"
 
 content-type: tutorial
 services: virtual-servers, cis, loadbalancer-service, FileStorage
@@ -82,6 +82,18 @@ In this tutorial, the load balancer is the front door for the application users.
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
 
+### Adding an SSH key to your account
+{: #adding-an-ssh-key-to-your-account}
+
+You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key. Once the key is created, complete the following steps to add an SSH key to your account.
+
+1. From the **Devices** menu, select **Manage > SSH Keys**.
+2. Click **Add**.
+3. Click **Browse** to locate the public key file or enter it manually in the **Key Contents** text box.
+4. Enter a **short name** for the SSH Key in the **Label** field.
+5. Enter any applicable notes in the **Notes** field, if necessary.
+6. Click **Add** to add the SSH key. 
+
 ### Check account permissions
 {: #highly-available-and-scalable-web-application-3}
 
@@ -100,6 +112,7 @@ In this section, you configure one server to act as the master database.
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
    - Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
+   - Set **SSH keys** to the the SSH key you created earlier.
    - Select the **Ubuntu Minimal** image. You can pick any version of the image.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
@@ -109,7 +122,7 @@ In this section, you configure one server to act as the master database.
 
    - Review the other configuration options and click **Create** to provision the server.
 
-   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
+   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address.
    {: tip}
 
 ## Install and configure MySQL
@@ -127,13 +140,13 @@ The server does not come with a database. In this section, you install MySQL on 
    ```
    {: pre}
 
-   Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
+   If using the private IP remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
    {: tip}
 
 2. Install MySQL:
    ```sh
    apt-get update
-   apt-get -y install mysql-server
+   apt-get -y install mysql-server net-tools
    ```
    {: pre}
 
@@ -164,10 +177,17 @@ The server does not come with a database. In this section, you install MySQL on 
    ```
    {: pre}
 
-2. Define a username and a password to use for Wordpress (_wpuser_ and _wppassword_ as example). Grant access to the database to this user by replacing database-username and database-password with your choices.
+2. Define a username and a password to use for Wordpress (_wpuser_ and _wppassword_ as example) by replacing wpuser and wppassword with your choices. 
 
    ```sql
-   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO database-username@'%' IDENTIFIED BY 'database-password';
+   CREATE USER 'wpuser'@'%' IDENTIFIED BY 'wppassword';
+   ```
+   {: codeblock}
+
+   Grant access to the database to this user.
+
+   ```sql
+   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO 'wordpress'@'%';
    ```
    {: codeblock}
 
@@ -470,12 +490,15 @@ Repeat the following steps on each application server:
 
 3. Stop PHP service and nginx
    ```sh
-   systemctl stop php7.2-fpm
+   systemctl stop php7.4-fpm
    systemctl stop nginx
    ```
    {: pre}
 
-4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
+   The version of PHP installed on your server may be different and the command above needs to be adjusted for the installed version, run `ls /etc/php` to obtain the installed version and replace in the command above, i.e. 7.4.
+   {: tip}
+
+4. Using `nano /etc/nginx/sites-available/default` replace the content with the following:
    ```sh
    server {
           listen 80 default_server;
@@ -511,7 +534,7 @@ Repeat the following steps on each application server:
           # pass the PHP scripts to the local FastCGI server
           location ~ \.php$ {
                   include snippets/fastcgi-php.conf;
-                  fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+                  fastcgi_pass unix:/run/php/php7.4-fpm.sock;
           }
 
           location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
@@ -528,6 +551,9 @@ Repeat the following steps on each application server:
    ```
    {: codeblock}
    
+   The version of PHP installed on your server may be different and the command above needs to be adjusted for the installed version, run `ls /etc/php` to obtain the installed version and replace in the command above, i.e. 7.4.
+   {: tip}
+
 5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
    mkdir -p /mnt/www/html
@@ -621,10 +647,13 @@ On both application servers, start the web server and the PHP runtime:
 7. Start the service by running the following commands
 
    ```sh
-   systemctl start php7.2-fpm
+   systemctl start php7.4-fpm
    systemctl start nginx
    ```
    {: pre}
+
+   The version of PHP installed on your server may be different and the command above needs to be adjusted for the installed version, run `ls /etc/php` to obtain the installed version and replace in the command above, i.e. 7.4.
+   {: tip}
 
 Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*. Complete the Wordpress installation wizard.
 
@@ -656,7 +685,7 @@ At this point, we have two application servers with separate IP addresses. They 
 ### Change Wordpress configuration to use the load balancer URL
 {: #highly-available-and-scalable-web-application-24}
 
-The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to [the blog URL and injects this location in the pages](https://codex.wordpress.org/Settings_General_Screen). If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
+The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to [the blog URL and injects this location in the pages](https://wordpress.org/support/article/settings-general-screen/). If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
 
 1. Find the Load Balancer address in its detail page. You can find the Load Balancer you created under [Network / Load Balancing / Local](https://{DomainName}/classic/network/loadbalancing/cloud).
 

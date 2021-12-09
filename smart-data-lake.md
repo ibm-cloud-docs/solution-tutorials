@@ -136,7 +136,6 @@ In this section, you will convert the original, raw dataset into a targeted coho
 You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
 1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from your [Resource List](https://{DomainName}/resources).
-1. Click **Launch in IBM Cloud Pak for Data**
 2. Click **Launch SQL Query UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
@@ -185,6 +184,8 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     ```python
     !pip install ibmcloudsql
     ```
+    {: codeblock}
+
     You may see an error message relating to dependency problems which can be safely ignored for this tutorial
     
 
@@ -192,12 +193,15 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     ```python
     !pip install pandas==1.3.4
     ```
+    {: codeblock}
+
     You may see an error message relating to dependency problems which can be safely ignored for this tutorial
 
 2. From the Notebook, install folium by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     !pip install folium
     ```
+    {: codeblock}
 
 2. From the Notebook, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
@@ -325,9 +329,9 @@ In this section, you will visualize the previous result set using a folium heat 
     m
     ```
     {: codeblock}
-    
-![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
-{: style="text-align: center;"}
+
+   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   {: style="text-align: center;"}
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
@@ -342,6 +346,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 
 ## Expand the tutorial
 {: #smart-data-lake-9}
+{: step}
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
@@ -374,6 +379,7 @@ ibmcloud iam api-key-delete data-lake-cos-key
 ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
+If the deletion of **data-lake-cos** is not successful delete it from the storage section of the [Resource List](https://{DomainName}/resources).
 
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
