@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-20"
+lastupdated: "2021-12-09"
 lasttested: "2021-10-12"
 
 content-type: tutorial
-services: openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant
+services: openshift, logging, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 3h
 ---
@@ -28,7 +28,7 @@ completion-time: 3h
 # Deploy microservices with {{site.data.keyword.openshiftshort}}
 {: #openshift-microservices}
 {: toc-content-type="tutorial"}
-{: toc-services="openshift, Log-Analysis-with-LogDNA, Monitoring-with-Sysdig, containers, Cloudant"}
+{: toc-services="openshift, logging, monitoring, containers, Cloudant"}
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->
@@ -760,7 +760,7 @@ It can take a few minutes for logging and metric data to flow through the analys
 {: #openshift-microservices-use-logdna}
 {: step}
 
-{{site.data.keyword.la_full_notm}} is a cloud native service that you can include as part of your IBM Cloud architecture to add log management capabilities. You can use {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-getting-started).
+{{site.data.keyword.la_full_notm}} is a cloud native service that you can include as part of your IBM Cloud architecture to add log management capabilities. You can use {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud. [Learn more](https://{DomainName}/docs/log-analysis?topic=log-analysis-getting-started).
 
 This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfully begin the next section.
 {: note}
@@ -1070,7 +1070,7 @@ sysdig-agent-rhrgz   1/1       Running   0          1m
 {: #openshift-microservices-use-sysdig}
 {: step}
 
-{{site.data.keyword.mon_full_notm}} is a cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-getting-started).
+{{site.data.keyword.mon_full_notm}} is a cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. [Learn more](https://{DomainName}/docs/monitoring?topic=monitoring-getting-started).
 
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
 
@@ -1149,7 +1149,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 
     ![Custom Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-5.png)
 
-Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/Monitoring-with-Sysdig/index.html#getting-started).
+Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/monitoring?topic=monitoring-getting-started).
 
 ## Remove resources
 {: #openshift-microservices-cleanup}
