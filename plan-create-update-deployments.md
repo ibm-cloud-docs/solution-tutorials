@@ -6,7 +6,7 @@ lastupdated: "2021-12-09"
 lasttested: "2021-11-18"
 
 content-type: tutorial
-services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, monitoring
+services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform, activity-tracker, monitoring
 account-plan: paid
 completion-time: 2h
 ---
@@ -26,7 +26,7 @@ completion-time: 2h
 # Plan, create and update deployment environments
 {: #plan-create-update-deployments}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, virtual-servers, cloud-object-storage, Cloudant, terraform, Activity-Tracker-with-LogDNA, monitoring"}
+{: toc-services="containers, virtual-servers, cloud-object-storage, Cloudant, terraform, activity-tracker, monitoring"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->

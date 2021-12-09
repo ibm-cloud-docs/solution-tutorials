@@ -1037,7 +1037,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    If you do not save the screen, you lose all your widgets.
    {: important}
 
-Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/Log-Analysis-with-LogDNA/index.html#getting-started).
+Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/log-analysis/index.html#getting-started).
 {: note}
 
 ## Configure {{site.data.keyword.mon_short}}
