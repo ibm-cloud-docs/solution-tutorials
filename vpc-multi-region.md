@@ -368,10 +368,16 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - Assign the **Manager** service access role.
    - Click on **Authorize**.
 
-### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate
+IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, the traffic routing behavior differs as follows:
+   - Traffic that are proxied flows through CIS.
+   - Traffic that are non-proxied (DNS-only mode) flows directly from the client to the origin.
+
+For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
+
+### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
 
-This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
+This first alternative creates a wildcard certificate for `mydomain.com` and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
    - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
@@ -384,7 +390,7 @@ This first alternative creates a wildcard certificate for **mydomain.com** and t
      - **Automatic certificate renewel** - leave off
    - Switch to the **Domains** panel
      - **IBM Cloud Internet Services (CIS) instance** choose your instance
-     - **Certificate domains** check the **Add Wildccard** and leave **Add Domain** unchecked
+     - **Certificate domains** check the **Add Wildcard** and leave **Add Domain** unchecked
    - Click Order
 1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
@@ -427,12 +433,12 @@ The wildcard certificate created will allow access to domain name like vpc-lb-re
 
 In a browser open **https://lb.mydomain.com** to verify success
 
-### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
+### Alternative 2: DNS-only mode, traffic flows directly from the client to the VPC Load Balancers
 {: #vpc-multi-region-16}
 
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
 
-It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record.
+It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record when it is no longer needed.
 
 1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](https://{DomainName}/resources)
 
@@ -443,7 +449,7 @@ It is not currently possible to order a certificate directly for a {{site.data.k
     - Name: lb
     - TTL: default (Automatic)
     - Alias Domain Name: zzz.mydomain.com (remember, this is only going to be used to order a certificate)
-    - Click Add Record
+    - Click **Add Record**
 
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
    - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
@@ -458,8 +464,8 @@ It is not currently possible to order a certificate directly for a {{site.data.k
      - **IBM Cloud Internet Services (CIS) instance** choose your instance
      - **Certificate domains** click the **Subdomains** link
      - in the pop up dialog, check the **Add Domain** box next to lb.mydomain.com
-     - click Apply
-   - Notice that lb.mydomain.com has been added to the Order summary
+     - click **Apply**
+   - Notice that `lb.mydomain.com` has been added to the Order summary
    - Click **Order**
 
 1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** > **DNS**.

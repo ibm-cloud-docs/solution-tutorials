@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-02"
-lasttested: "2020-12-17"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-09"
 
 ---
 
@@ -76,6 +76,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### Docker
 {: #getting-started-windows_docker}
 
+1. Docker Desktop on Windows is one option to run container images on Windows. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement) before proceeding with the installation.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify the installation with:
@@ -179,6 +180,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### Docker
 {: #getting-started-macos_docker}
 
+1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement) before proceeding with the installation. Other options include [Podman](https://podman.io/getting-started/).
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
 1. Verify the installation with:
@@ -216,7 +218,7 @@ The following sections assume you are running macOS High Sierra or later under a
 1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
 2. Extract `openshift-client-mac.tar.gz`:
    ```sh
-   tar zxvf openshift-client-mac.tar.gz
+   tar zxvf openshift-client-mac.tar.gz oc
    ```
    {: pre}
 
@@ -363,7 +365,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
 2. Extract `openshift-client-linux.tar.gz`:
    ```sh
-   tar zxvf openshift-client-linux.tar.gz
+   tar zxvf openshift-client-linux.tar.gz oc
    ```
    {: pre}
 
@@ -505,7 +507,7 @@ Follow these steps if you need to use another version of the OpenShift CLI than 
    
 2. Extract `oc.tar.gz`:
    ```sh
-   tar zxvf oc.tar.gz
+   tar zxvf oc.tar.gz oc
    ```
    {: pre}
 

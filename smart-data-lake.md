@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-24"
-lasttested: "2021-01-07"
+lastupdated: "2021-12-09"
+lasttested: "2021-12-09"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
@@ -78,11 +78,6 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-
 2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
     ```sh
     ibmcloud resource groups
@@ -122,8 +117,8 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the storage section.
 3. Create a new bucket to store data.
     - Click **Create a bucket**.
-    - Select **Custom bucket**.
-    - Select **Regional** from the **Resiliency** drop down.
+    - Select **Custom bucket/Customize your bucket**.
+    - Select **Regional** in the **Resiliency** section.
     - Select a **Location**.
     - Provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with an unique bucket name.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
@@ -144,6 +139,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 2. Click **Launch SQL Query UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
+    - Replace `us-south` in the URL with the bucket **Location** (see Configuration tab for the bucket).
     - Enter the following SQL into the **Type SQL here ...** text area.
         ```sql
         SELECT
@@ -165,7 +161,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 
     - Click **Run**.
 4. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
-5. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
+5. The intermediate dataset is displayed below the query on the **Results** tab associated with the **Job**
 
 ## Combine Jupyter Notebooks with SQL Query
 {: #smart-data-lake-5}
@@ -175,19 +171,43 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from your [Resource List](https://{DomainName}/resources).
-    - Click **Projects** under **Quick navigation**, then **New project +** followed by **Create an empty project**.
+    - Click **Launch in IBM Cloud Pak for Data**
+    - Click **Create a Project** followed by **Create an empty project**.
     - Use **Data lake project** as **Name**.
     - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Data lake notebook** as **Name**.
-    - Leave the **Language** and **Runtime** to defaults and click **Create notebook**.
-2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
+    - Leave the **Runtime** and **Language** as default and click **Create**.
+
+2. From the Notebook, install ibmcloudsql by adding the following command to the `In [ ]:` input prompt and then **Run**
     ```python
-    !pip install --user --upgrade pixiedust
-    !pip install --user --upgrade ibmcloudsql
+    !pip install ibmcloudsql
+    ```
+    {: codeblock}
+
+    You may see an error message relating to dependency problems which can be safely ignored for this tutorial
+    
+
+2. From the Notebook, install the required version of pandas by adding the following commands to the `In [ ]:` input prompt and then **Run**
+    ```python
+    !pip install pandas==1.3.4
+    ```
+    {: codeblock}
+
+    You may see an error message relating to dependency problems which can be safely ignored for this tutorial
+
+2. From the Notebook, install folium by adding the following commands to the `In [ ]:` input prompt and then **Run**
+    ```python
+    !pip install folium
+    ```
+    {: codeblock}
+
+2. From the Notebook, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
+    ```python
+    import folium
+    from folium.plugins import HeatMap
     import ibmcloudsql
-    from pixiedust.display import *
     ```
     {: codeblock}
 
@@ -222,7 +242,7 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
         {: pre}
 
     - Paste the CRN between the single quotes, replacing **<SQL_QUERY_CRN>** and then **Run**.
-5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
+5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} location and bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
@@ -252,11 +272,11 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     ```
     {: codeblock}
 
-## Visualize data using PixieDust
+## Visualize data using folium
 {: #smart-data-lake-6}
 {: step}
 
-In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
+In this section, you will visualize the previous result set using a folium heat map to better identify patterns or hot spots for traffic incidents.
 
 1. Create a common table expression to convert the `location` column to separate `latitude` and `longitude` columns. **Run** the following from another Notebook cell.
     ```python
@@ -299,30 +319,34 @@ In this section, you will visualize the previous result set using PixieDust and 
     ```
     {: codeblock}
 
-2. In the next cell **Run** the `display` command to view the result using PixieDust.
+2. In the next cell **Run** the folium HeatMap to generate the map:
     ```python
-    display(traffic_location)
+    m = folium.Map(location=[traffic_location.latitude.mean(), traffic_location.longitude.mean()])
+    locations = []
+    for index, row in traffic_location.iterrows():
+        locations.append((row["latitude"], row["longitude"]))
+    HeatMap(locations, radius=15).add_to(m)
+    m
     ```
     {: codeblock}
-    
-3. Select the chart dropdown button; then select **Map**.
-4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
-5. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
-![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
-{: style="text-align: center;"}
+   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   {: style="text-align: center;"}
+
+3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
 ## Share your dataset with the organization
 {: #smart-data-lake-7}
 {: step}
 
-Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. The tutorial on [combining serverless and Cloud Foundry for data retrieval and analytics](https://{DomainName/docs/solution-tutorials?topic=solution-tutorials-serverless-github-traffic-analytics) uses {{site.data.keyword.dynamdashbemb_notm}} to effortless provide visualizations as part of a web app.
+Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. The tutorial on [combining serverless and Cloud Foundry for data retrieval and analytics](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-serverless-github-traffic-analytics) uses {{site.data.keyword.dynamdashbemb_notm}} to provide visualizations as part of a web app.
 
 ![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
 {: style="text-align: center;"}
 
 ## Expand the tutorial
 {: #smart-data-lake-9}
+{: step}
 
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
@@ -337,7 +361,12 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 Run the following commands to remove services, applications and keys you created and used.
 
 ```sh
-ibmcloud resource service-alias-delete dashboard-nodejs-cos
+ibmcloud resource service-instance-delete data-lake-sql
+```
+{: pre}
+
+```sh
+ibmcloud resource service-instance-delete data-lake-studio
 ```
 {: pre}
 
@@ -351,15 +380,7 @@ ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
 
-```sh
-ibmcloud resource service-instance-delete data-lake-sql
-```
-{: pre}
-
-```sh
-ibmcloud resource service-instance-delete data-lake-studio
-```
-{: pre}
+If the deletion of **data-lake-cos** is not successful delete it from the storage section of the [Resource List](https://{DomainName}/resources).
 
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
@@ -370,4 +391,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)
-- [PixieDust](https://pixiedust.github.io/pixiedust/index.html)
+- [Folium](http://python-visualization.github.io/folium/)
