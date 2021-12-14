@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-30"
+lastupdated: "2021-12-14"
 lasttested: "2021-11-30"
 
 ---
@@ -172,7 +172,7 @@ To learn how to create a PVC, follow the steps covered in the [{{site.data.keywo
 To copy data from your local machine to your persistent storage, you must mount the PVC to a pod. Then, you can copy data from your local machine to the persistent volume in your pod.
 {: shortdesc}
 
-1. To copy date, first, you would need to create a configuration that looks like something like this:
+1. To copy data, first, you would need to create a configuration that looks like something like this:
 
    ```yaml
    kind: Pod
