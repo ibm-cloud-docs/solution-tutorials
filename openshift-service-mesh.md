@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
+lastupdated: "2021-12-28"
 lasttested: "2021-10-08"
 
 content-type: tutorial
@@ -174,7 +174,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 2. Select **Operators** and then **OperatorHub**.
 3. Search for **OpenShift Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
 4. **Repeat** the above steps 2 and 3 for installing Operators,
-   1. **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**
+   1. **Red Hat {{site.data.keyword.openshiftshort}} distributed tracing platform**
    2. **Kiali Operator** (provided by Red Hat) 
    3. **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** .
 
