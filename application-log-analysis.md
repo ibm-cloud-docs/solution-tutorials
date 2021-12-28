@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
+lastupdated: "2021-12-15"
 lasttested: "2021-12-03"
 
 content-type: tutorial
@@ -90,7 +90,7 @@ In addition, make sure you:
 {: #application-log-analysis-create_cluster}
 {: step}
 
-{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
+{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available containerized applications that run in Kubernetes clusters.
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
@@ -188,7 +188,7 @@ In a terminal window:
    | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster  &lt;your\-cluster\-name&gt;\. |
 
 
-## Connect a {{site.data.keyword.la_short}} instance
+## Validate {{site.data.keyword.la_short}} instance configuration
 {: #application-log-analysis-connect_logna_instance}
 {: step}
 
@@ -196,26 +196,21 @@ Applications deployed to an {{site.data.keyword.containerlong_notm}} cluster in 
 
 By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
 
-To provision and connect a {{site.data.keyword.la_short}} service,
+During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is expected that you completed the steps to also connect to a {{site.data.keyword.la_short}} service. 
 
 1. From the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
-2. Click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
-   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
-   2. Select a region where you have your cluster created.
-   3. Select **7 day Log Search** as your plan.
-   4. Create a unique **Service name** such as `<your-initials>-logging`.
-   5. Use the resource group associated with your cluster and click **Create**.
+2. Scroll down to **Integrations** and open the {{site.data.keyword.la_short}} UI by clicking **Launch**. It may take a few minutes before you start seeing logs.
+   
+   If instead of **Launch** you see a **Connect** button, you can click on it to create the integration if it was not done during the creation of the cluster.  It simplifies the installation of *logdna-agent* pod on each node of your cluster. The logging agent reads log files from the pod where it is installed, and forwards the log data to your logging instance.
+   {: tip}
 
-   The service provides a centralized log management system where log data is hosted on IBM Cloud. Connect simplifies the installation of *logdna-agent* pod on each node of your cluster. The logging agent reads log files from the pod where it is installed, and forwards the log data to your logging instance.
-
-3. Launch the {{site.data.keyword.la_short}} UI by clicking **Launch** (*the connect button should have changed to Launch*). It may take a few minutes before you start seeing logs.
-4. To check whether the `logdna-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
+3. To check whether the `logdna-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
    ```sh
    kubectl get pods --namespace ibm-observe
    ```
    {: pre}
 
-   You should see an output similar to this
+   You should see an output similar to the one below, with one `logdna-agent` running per worker node that you have deployed in your cluster.
 
    ```sh
    NAME                 READY   STATUS    RESTARTS   AGE
@@ -269,7 +264,8 @@ In this section, you will modify what and how much is displayed and save this as
 
 1. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 1. To highlight the terms, click on **Toggle Viewer Tools** icon.
-1. Enter **error** as your highlight term in the first input box, **container** as your highlight term in the second input box and check the highlighted lines with the terms.
+1. Type **error** as your highlight term in the first input box and hit **Enter** on your keyboard. Check the highlighted lines with the terms. 
+1. Type **container** as your highlight term in the second input box and hit **Enter** on your keyboard. Check the highlighted lines with the terms.
 1. Click on **Toggle Timeline** icon to see lines with logs at a specific time of a day.
 
 ### Filter logs
@@ -277,9 +273,8 @@ In this section, you will modify what and how much is displayed and save this as
 
 You can filter logs by tags, sources, apps or levels.
 
-1. On the top bar, click **All Tags** and select the checkbox next to your cluster name to see Kubernetes related logs specific to your cluster.
-2. Click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
-3. To check container or file logs, click **All Apps** and select the checkbox(s) you are interested in seeing the logs.
+1. On the top bar, click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
+2. To check other container or file logs, click **app-log-analysis** or **All Apps** and select the checkbox(s) you are interested in seeing the logs.
 
 ### Create a view
 {: #application-log-analysis-16}
@@ -308,28 +303,24 @@ In this section, you will create a board and then add a graph with a breakdown t
    - Choose **level** as your field type.
    - Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
 
-## Connect {{site.data.keyword.mon_full_notm}} and monitor your cluster
+## Validate {{site.data.keyword.mon_full_notm}} instance configuration and monitor your cluster
 {: #application-log-analysis-monitor_cluster_sysdig}
 {: step}
 
-In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
+During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is expected that you completed the steps to also connect to a {{site.data.keyword.monitoringshort_notm}} service. In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
 1. From the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
-2. click the Monitoring **Connect** button. Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
-   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
-   2. Select a region where you have your cluster created.
-   3. Select **Graduated Tier** as your plan.
-   4. Create a unique **Service name** such as `<your-initials>-monitoring`.
-   5. Use the resource group associated with your cluster.
-   6. Leave IBM platform metrics to `Disable` and click **Create**.
-3. Click **Launch** and you should see the monitoring UI. It may take few minutes for the monitoring information to appear.
-4. To check whether the `sysdig-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
+2. Scroll down to **Integrations** and open the {{site.data.keyword.monitoringshort_notm}} UI by clicking on the **Launch** button. It may take few minutes for the monitoring information to appear.
+   If instead of **Launch** you see a **Connect** button, you can click on it to create the integration if it was not done during the creation of the cluster.  It simplifies the installation of *sysdig-agent* pod on each node of your cluster. The agent captures metrics and forwards them to your monitoring instance.
+   {: tip}
+
+3. To check whether the `sysdig-agent` pods on each node of your cluster are in **Running** status, run the below command in a shell:
    ```sh
    kubectl get pods --namespace ibm-observe
    ```
    {: pre}
 
-   You should see the `sysdig-agent` installed
+   You should see an output similar to the one below, with one `sysdig-agent` running per worker node that you have deployed in your cluster.
    ```sh
    sysdig-agent-m6k9w   1/1     Running   0          73s
    sysdig-agent-mp4d6   1/1     Running   0          73s
@@ -346,8 +337,16 @@ Note: The agent installation as provided by the IBM Cloud script includes the en
            prometheus.io/port: "8002"
    ```
 
-Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
+The application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
+
+Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
+   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
+   2. Select a region where you have your cluster created.
+   3. Select **Graduated Tier** as your plan.
+   4. Create a unique **Service name** such as `<your-initials>-monitoring`.
+   5. Use the resource group associated with your cluster.
+   6. Leave IBM platform metrics to `Disable` and click **Create**.
 
 ### Monitor your cluster
 {: #application-log-analysis-19}
@@ -358,33 +357,27 @@ Note: Change the interval to **5 M** or **1 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
-2. Back to the UI, under `Explore` choose `Deployments` for `My Groupings`
-   ![Dashboard showing deployments](images/solution12/sysdig_groupings.png)
-3. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
-4. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
-5. To monitor the latency of the application,
-   - From the Explore tab, select `Deployments`.
-   - Select `Metrics` > `Network` in the `Metrics and Dashboards` dropdown.
-   - Select **net.http.request.time**.
+2. Back to the Monitoring UI, under `Explore` choose `Deployments`.
+3. Expand your cluster name on the left pane, then expand **default** namespace and click on **app-log-analysis-deployment**.
+4. To check **default metrics** such as the HTTP request-response codes, type `HTTP` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
+   ![Dashboard showing deployments](images/solution12/monitoring_deployments.png)
+5. To monitor the latency of the application, type `net.http.request.time` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
    - Select Time: **Sum** and Group: **Average**.
    - Click **More options** and then click **Topology** icon.
    - Click **Done** and Double click the box to expand the view.
 6. To monitor the Kubernetes namespace where the application is running,
-   - From the Explore tab, select `Deployments`.
    - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
-   - Click the arrow next to `net.http.request.time`.
-   - Select `Troubleshooting Views` > `Kubernetes`.
-   - Select `Kubernetes Namespace Overview`.
+   - Type `Kubernetes Namespace Overview`  in the `Search Metrics and Dashboards` field and click on it from the dropdown.
 
-This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
+The sample application that was deployed includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
 ![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png){: class="center"}
 {: style="text-align: center;"}
 
-1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. Expand your cluster name on the left pane, then expand **default** namespace and then click on **app-log-analysis-deployment**.
 2. To monitor the calls to a given api endpoint of the application,
    - From the Explore tab, select `Deployments`.
-   - Select `Metrics` > `Prometheus` > `wolam_api_counter_total` in the `Metrics and Dashboards` dropdown.
+   - Type `wolam_api_counter_total`  in the `Search Metrics and Dashboards` field and click on it from the dropdown.
    - Select Time: **Average**, Group: **Sum**, Segment: **endpoint**
 3. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 4. To monitor the calls to a given api endpoint of the application by region,
