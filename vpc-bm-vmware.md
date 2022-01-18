@@ -85,12 +85,14 @@ Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Fol
 5. OPTIONAL STORAGE: [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 6. OPTIONAL STORAGE: [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
-After the initial VMware cluster setup, the Virtual Machine networking needs to be setup. When using {{site.data.keyword.vpc_short}} subnets for your VMware Virtual Machines, follow steps 1 to 2. When using NSX-T, follow steps 3 to 6.
+After the initial VMware cluster has been deployed and configured, the Virtual Machine networking needs to be setup. Here you have two alternatives: deploy VMware VMs integrated with your {{site.data.keyword.vpc_short}} subnets or deploy VMware VMs on VMware NSX-T overlay segments. 
+
+When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, follow steps 1 to 2. When using **NSX-T**, follow steps 3 to 6.
 
 1. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 2. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
 3.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
-4.  OPTIONAL - NSX-T: [Deploying {{site.data.keyword.vpc_short}} NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
+4.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
 5.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
 
 ## Before you begin

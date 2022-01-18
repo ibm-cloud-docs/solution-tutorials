@@ -53,7 +53,7 @@ In this tutorial, a {{site.data.keyword.vpc_short}} network interfaces are creat
 
 In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T managers. 
 
-![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-NSX-based.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
 
 ## Before you begin
@@ -77,37 +77,33 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 
-
-## Deploy NSX-T Managers
+## Review NSX-T installation requirements 
 {: #vpc-bm-vmware-nsx-t-managers-deploy}
 {: step}
-
-
-## Configure NSX-T Transport Zones
-{: #vpc-bm-vmware-nsx-t-managers-deploy}
-{: step}
-
-
-## Configure NSX-T Profiles
-{: #vpc-bm-vmware-nsx-t-managers-deploy}
-{: step}
-
-
-Follow the recommended order of procedures.
 
 1. Review the NSX Manager installation requirements. See [NSX Manager Installation](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF.html#GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF).
 2. Configure the necessary ports and protocols. See [Ports and Protocols](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-2ABB0F95-E918-43A1-B096-7401979D51AA.html#GUID-2ABB0F95-E918-43A1-B096-7401979D51AA).
-3. Install the NSX Manager. See [Install NSX Manager and Available Appliances](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E.html#GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E).
-4. Log in to the newly created NSX Manager. See [Log In to the Newly Created NSX Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5.html#GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5).
-5. Configure a compute manager. See [Add a Compute Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E.html#GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E).
-6. Deploy additional NSX Manager nodes to form a cluster. See [Deploy NSX Manager Nodes to Form a Cluster from the UI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5.html#GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5).
-7. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6).
-8. Install NSX Edges. See [Install an NSX Edge on ESXi Using the vSphere GUI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6.html#GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6).
-9. Create an NSX Edge cluster. See [Create an NSX Edge Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-898099FC-4ED2-4553-809D-B81B494B67E7.html#GUID-898099FC-4ED2-4553-809D-B81B494B67E7).
-10. Create transport zones. See [Create Transport Zones](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-F739DC79-4358-49F4-9C58-812475F33A66.html#GUID-F739DC79-4358-49F4-9C58-812475F33A66).
-11. Create host transport nodes. See [Prepare Standalone Hosts as Transport Nodes or Prepare ESXi Cluster Hosts as Transport Nodes](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D7CA778B-6554-4A23-879D-4BC336E01031.html#GUID-D7CA778B-6554-4A23-879D-4BC336E01031).
+3. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6).
+4. Collect the IPs for the provisioned {{site.data.keyword.bm_is_full_notm}} VLAN interfaces.
 
 
+## Deploy NSX-T 
+{: #vpc-bm-vmware-nsx-t-managers-deploy}
+{: step}
+
+Follow the recommended order of procedures.
+
+1. Install the NSX Manager. Use the VLAN interface IPs See [Install NSX Manager and Available Appliances](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E.html#GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E).
+2. Log in to the newly created NSX Manager using the jump box provisioned earlier. See [Log In to the Newly Created NSX Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5.html#GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5).
+3. Configure a compute manager. Add the provisioned vCenter as the compute manager. See [Add a Compute Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E.html#GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E).
+4. Deploy additional NSX Manager nodes (2 and 3) to form a cluster. See [Deploy NSX Manager Nodes to Form a Cluster from the UI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5.html#GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5).
+5. Create transport zones. You can use the default overlay and VLAN transport zones for simplicity. See [Create Transport Zones](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-F739DC79-4358-49F4-9C58-812475F33A66.html#GUID-F739DC79-4358-49F4-9C58-812475F33A66).
+6. Create host transport nodes. When configuring the host TEP IPs, configure each host individually by using the provisioned TEP IPs of the related {{site.data.keyword.bm_is_full_notm}} VLAN interfaces. See [Prepare Standalone Hosts as Transport Nodes or Prepare ESXi Cluster Hosts as Transport Nodes](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D7CA778B-6554-4A23-879D-4BC336E01031.html#GUID-D7CA778B-6554-4A23-879D-4BC336E01031).
+7. Install NSX Edges. See [Install an NSX Edge on ESXi Using the vSphere GUI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6.html#GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6).
+8. Create an NSX Edge cluster. See [Create an NSX Edge Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-898099FC-4ED2-4553-809D-B81B494B67E7.html#GUID-898099FC-4ED2-4553-809D-B81B494B67E7).
+
+Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+{: note}
 
 ## Next Steps
 {: #vpc-bm-vmware-nsx-t-managers-next-steps}
