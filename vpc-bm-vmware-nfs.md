@@ -32,13 +32,12 @@ completion-time: 1h
 # Provision NFS storage and attach to cluster
 {: #vpc-bm-vmware-nfs}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions, vpc-file-storage"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
 This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
@@ -81,7 +80,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_VPC are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 ## Create file share in {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-nfs-createfileshare}
@@ -115,7 +114,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: screen}
 
-1. Create a file share.
+2. Create a file share.
 
    In this example, a 1TB with 10IOPS/GB file share is created with using the previously created {{site.data.keyword.vpc_short}} as a targe. Record the file share's and the file share target's IDs.
 
@@ -129,7 +128,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. For mounting to the server, you need to get the defined target's NFS mount path.
+3. For mounting to the server, you need to get the defined target's NFS mount path.
 
    ```sh
    VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
@@ -153,7 +152,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
+4. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
 
 
 ## Attach {{site.data.keyword.vpc_short}} File share as a Datastore for a Compute Cluster in vCenter

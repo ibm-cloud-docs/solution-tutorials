@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vmwaresolutions, vpc
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 1h
 ---
@@ -38,11 +38,8 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -78,7 +75,7 @@ This tutorial is part of series, and requires that you have completed the relate
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC, $VMWARE_SUBNET_VM1 and $VMWARE_PUBLIC_GW are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 ## Establish Outbound Internet Access with Public Gateway
 {: #vpc-bm-vmware-pgwip-outbound}

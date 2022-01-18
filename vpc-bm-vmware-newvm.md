@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vmwaresolutions, vpc
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 1h
 ---
@@ -38,11 +38,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -79,7 +75,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_VPC, $VMWARE_VPC_ZONE, $VMWARE_BMS001 and $VMWARE_BMS001_PNIC are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 ## Create a {{site.data.keyword.vpc_short}} prefix and a subnet for VMware Virtual machines
 {: #vpc-bm-vmware-newvm-prefix}
@@ -254,7 +250,7 @@ ibmcloud is bm-nics $VMWARE_BMS001
 
 Example:
 
-```sh
+```
 ibmcloud is bm-nics $VMWARE_BMS001
 Listing network interfaces of server 02b7-18928fa3-55b7-4d63-a2bb-b0d832ea19bc under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
@@ -273,7 +269,7 @@ ibmcloud is bm-nics $VMWARE_BMS002
 
 Example:
 
-```sh
+```
 $ ibmcloud is bm-nics $VMWARE_BMS002
 Listing network interfaces of server 02b7-02890a7a-e543-4479-92d5-a9d7d5819286 under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   

@@ -32,17 +32,13 @@ completion-time: 1h
 # Provision {{site.data.keyword.dns_full_notm}} for VMware deployment
 {: #vpc-bm-vmware-dns}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions, dns-svcs"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -72,7 +68,7 @@ This tutorial is part of series, and requires that you have completed the relate
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 
 ## Provision IBM Cloud DNS service

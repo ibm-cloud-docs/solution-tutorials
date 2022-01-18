@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vmwaresolutions, vpc
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 2h
 ---
@@ -38,11 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -268,9 +264,9 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
    ```
    {: codeblock}
 
-7. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
+1. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
 
-8. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
+2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
 
    You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
    {: tip}
