@@ -44,13 +44,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, a {{site.data.keyword.vpc_short}} network interfaces are created for your NSX-T logical router, and routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, a {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for your NSX-T logical router external uplinks, which will be connected to the {{site.data.keyword.vpc_short}} subnet. After this, IP routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-routing-objectives}
 
-In this tutorial, you will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces or uplinks. These interfaces will be attached to {{site.data.keyword.vpc_short}} subnets, and two way routing is configured - in NSX-T T0 gateway and {{site.data.keyword.vpc_short}}.
+You will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces or uplinks. These interfaces will be attached to {{site.data.keyword.vpc_short}} subnets, and IP routing is configured - first in NSX-T T0 gateway and then in {{site.data.keyword.vpc_short}}.
 
 ![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -113,7 +113,7 @@ vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
 {: #vpc-bm-vmware-nsx-t-routing-vpc-uplinks}
 {: step}
 
-In this step, the following {{site.data.keyword.vpc_short}} subnets and {{site.data.keyword.bm_is_short}}VLAN interfaces will be created for the Tier 0 (T0) private uplinks. These uplinks and subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
+In this step, {{site.data.keyword.bm_is_short}}VLAN interfaces will be created for the Tier 0 (T0)  external uplinks for public and private connectivity. These uplinks and subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0 logical router.
 
 Interface name              | Interface type | VLAN ID | Subnet                       | Allow float  | Allow IP spoofing | Enable Infra NAT  | NSX-T Interface            | Segment Name
 ----------------------------|----------------|---------|------------------------------|--------------|-------------------|-------------------|----------------------------|------------------------------
@@ -125,10 +125,11 @@ vlan-nic-t0-priv-uplink-2   | vlan           | 710     | vpc-t0-private-uplink-s
 vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private Uplink VIP      | vpc-zone-t0-private-*vlanid*
 {: caption="Table 4. VLAN interfaces for T0 uplinks" caption-side="top"}
 
-Depending on your networking design, provision only the VLAN interfaces you need. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.
+Depending on your networking design, provision only the VLAN interfaces you need, for example if you do not need direct public connectivity you can skip that part. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.
 {: note}
 
-Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_notm}} where the NSX-T edge nodes are planned to run. In this setup, all three hosts are allowed to host the Edges and modifications are needed for all of them.
+When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data.keyword.bm_is_full_notm}} where the NSX-T edge nodes are planned to run. In this setup, all three hosts are allowed to host the edge nodes and modifications are needed for all of them.
+{: note}
 
 
 1. Allow the {{site.data.keyword.bm_is_full_notm}} PCI NICs to use the VLANs stated above.
@@ -256,7 +257,7 @@ Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_
    ```
    {: codeblock}
 
-When creating public and private uplinks, you may add and customize a {{site.data.keyword.vpc_short}} security group and its rules attached to the VLAN interface. Also, make sure to allow the required traffic in.
+When creating public and private uplinks, you may add a new {{site.data.keyword.vpc_short}} security group, attach that to the VLAN interface use for uplinks and configure its ruleset to permit traffic what you need. 
 {: note}
 
 ## Create NSX-T VLAN Backed Segments 
@@ -304,7 +305,7 @@ In this step, you will configure static routes in your Tier 0 logical router poi
 For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html). 
 
 
-NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or Tier 0 logical routers may discard the packets arriving from a "wrong" interface.  
+NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or otherwise Tier 0 logical routers may discard the packets arriving from a "wrong" interface.
 {: note}
 
 When creating public and private uplinks, you may customize the security group. Also make sure to allow the required traffic in.
