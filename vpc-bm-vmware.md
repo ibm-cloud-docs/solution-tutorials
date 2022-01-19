@@ -78,22 +78,22 @@ You need to plan and decide your VMware deployments storage solution before you 
 
 Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow steps 1 through 4 below for an initial setup for your base VMware Deployment. After vCenter and the base setup has been completed, you can create storage for your cluster based on your preference by following either step 5 or 6. 
 
-1. [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-2. [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
-3. [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
-4. [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
-5. OPTIONAL STORAGE: [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
-6. OPTIONAL STORAGE: [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
+1. [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+2. [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+3. [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+4. [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+5. OPTIONAL STORAGE: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+6. OPTIONAL STORAGE: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
 After the initial VMware cluster has been deployed and configured, the Virtual Machine networking needs to be setup. Here you have two alternatives: deploy VMware VMs integrated with your {{site.data.keyword.vpc_short}} subnets or deploy VMware VMs on VMware NSX-T overlay segments. 
 
 When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, follow steps 1 to 2. When using **NSX-T**, follow steps 3 to 6.
 
-1. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
-2. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
-3.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
-4.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
-5.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
+1. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+2. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+3.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
+4.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
+5.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
 
 ## Before you begin
 {: #vpc-bm-vmware-prereqs}
@@ -168,4 +168,4 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 The next step in the tutorial series is:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
