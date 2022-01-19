@@ -87,13 +87,16 @@ Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Fol
 
 After the initial VMware cluster has been deployed and configured, the Virtual Machine networking needs to be setup. Here you have two alternatives: deploy VMware VMs integrated with your {{site.data.keyword.vpc_short}} subnets or deploy VMware VMs on VMware NSX-T overlay segments. 
 
-When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, follow steps 1 to 2. When using **NSX-T**, follow steps 3 to 6.
+When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, proceed with the following steps. 
 
 1. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 2. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
-3.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
-4.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
-5.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
+
+When using **NSX-T** for your VMware Virtual Machines, proceed with the following steps. NSX-T deployment starts with provisioning {{site.data.keyword.bm_is_short}} VLAN interfaces for NSX-T components, continues with deploying NSX-T on the {{site.data.keyword.bm_is_short}} and the last step creates NSX-T Tier 0 logical router (also known as T0 gateway) to provide routed north-south traffic between NSX-T overlay networks and {{site.data.keyword.vpc_short}}.
+
+1.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
+2.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
+3.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
 
 ## Before you begin
 {: #vpc-bm-vmware-prereqs}

@@ -44,7 +44,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, {{site.data.keyword.vpc_short}} network interfaces are created for NSX-T management and edge components. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, {{site.data.keyword.bm_is_short}}  network interfaces are created for NSX-T management and edge components. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
