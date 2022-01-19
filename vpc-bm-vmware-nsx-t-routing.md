@@ -52,7 +52,7 @@ In this tutorial, a {{site.data.keyword.bm_is_short}} VLAN interfaces will be cr
 
 You will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces or uplinks. These interfaces will be attached to {{site.data.keyword.vpc_short}} subnets, and IP routing is configured - first in NSX-T T0 gateway and then in {{site.data.keyword.vpc_short}}.
 
-![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-t0.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
 
 ## Before you begin

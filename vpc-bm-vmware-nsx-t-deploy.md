@@ -55,7 +55,7 @@ In the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=so
 
 In this tutorial, you will first deploy one NSX-T manager on a {{site.data.keyword.bm_is_short}} running VMware ESXi in {{site.data.keyword.vpc_short}}. After the first NSX-T manager has been deployed, you will register the vCenter as a compute manager and you can then deploy the 2nd and 3rd NSX-T managers via the NSX Manager GUI. After the cluster formation, you can configure the NSX-T transport zones and various profiles based on your preference and add the {{site.data.keyword.bm_is_short}} hosts as transport nodes as well as create the edge transport nodes and edge cluster.
 
-![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-mgmt.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
 
 ## Before you begin
