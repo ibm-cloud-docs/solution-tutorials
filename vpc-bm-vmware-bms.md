@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2021, 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,6 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
 
 # Provision {{site.data.keyword.bm_is_short}} for VMware deployment
 {: #vpc-bm-vmware-bms}
@@ -124,7 +123,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    ```
    {: codeblock}
 
-2. During the Beta, following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
+2. The following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
 
    ```sh
    $ ibmcloud is bm-prs

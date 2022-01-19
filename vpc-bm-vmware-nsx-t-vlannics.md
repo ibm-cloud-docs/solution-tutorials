@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,7 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
+
 
 # Provision {{site.data.keyword.bm_is_short}} network interfaces for NSX-T 
 {: #vpc-bm-vmware-nsx-t-vlannics}
@@ -89,7 +89,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: #vpc-bm-vmware-nsx-t-managers-vlannic}
 {: step}
 
-In this step, the following VLAN interfaces will be created.
+In this step, the following VLAN interfaces will be created for the NSX-T Manager nodes and the virtual IP.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | Distributed Port Group Name
 ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
@@ -200,7 +200,7 @@ vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true   
 {: #vpc-bm-vmware-nsx-t-hosts-vlannic}
 {: step}
 
-In this step, the following VLAN interfaces will be created for each host.
+In this step, the following VLAN interfaces will be created for each host. These interfaces will be used for the host NSX-T TEP traffic.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | VMkernel Adapter | Distributed Port Group Name
 ----------------------|----------------|---------|---------------------|--------------|------------------|------------------------------
@@ -283,7 +283,7 @@ vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false  
 {: #vpc-bm-vmware-nsx-t-vlannics-vlannic-tep}
 {: step}
 
-In this step, the following VLAN interfaces will be created for NSX-T Edge Nodes.
+In this step, the following VLAN interfaces will be created for NSX-T Edge Nodes. It comprises on a management and TEP interfaces.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | DPG/Segment Name
 ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
