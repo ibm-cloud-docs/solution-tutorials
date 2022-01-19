@@ -128,6 +128,13 @@ Follow the recommended order of procedures to install edge transport nodes and f
 1. Install NSX Edges. When configuring the host TEP IPs, configure each host individually by using the [previously provisioned TEP IPs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics) of the related {{site.data.keyword.bm_is_full_notm}} VLAN interface for TEP. For more information, see [Install an NSX Edge on ESXi Using the vSphere GUI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6.html#GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6){: external}.
 2. Create an NSX Edge cluster. For more information, see [Create an NSX Edge Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-898099FC-4ED2-4553-809D-B81B494B67E7.html#GUID-898099FC-4ED2-4553-809D-B81B494B67E7){: external}.
 
+
+When installing NSX Edges, create two N-VDSs. One for overlay traffic and one for accessing VPC subnets.
+{: important}
+
+When configuring uplink for TEP traffic in Edges, create a VLAN based segment for the vlan transport zone using with the VLAN ID, e.g. `400`.  
+{: important}
+
 Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
