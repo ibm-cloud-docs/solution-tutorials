@@ -44,23 +44,24 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-
-In this tutorial, {{site.data.keyword.vpc_short}} network interfaces are created for various NSX-T components and resources. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, {{site.data.keyword.vpc_short}} network interfaces are created for NSX-T management and edge components. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-vlannics-objectives}
 
-In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T. For more information about the NSX-T architecture and architectural considerations in VPC, see [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
-
-![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
-
-During the NSX-T deployment, multiple components will be attached to {{site.data.keyword.vpc_short}}. Each of these require one or more {{site.data.keyword.bm_is_short}} VLAN interfaces to be created. These NSX-T components include:
+In the NSX-T deployment, multiple components will be attached to {{site.data.keyword.vpc_short}}. These NSX-T components include:
 
 * NSX-T Managers
 * NSX-T Edge Transport Nodes
 * NSX-T Host Transport Nodes (ESXi hosts)
 * NSX-T Logical Router (Tier 0) uplinks
+
+Each of these require one or more {{site.data.keyword.bm_is_short}} VLAN interfaces to be created. In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T Managers and Transport Nodes.
+
+![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+
+For more information about the NSX-T architecture and architectural considerations in VPC, see [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
 
 ## Before you begin
@@ -390,4 +391,4 @@ vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true   
 
 The next step in the tutorial series is:
 
-* todo
+* [Deploy {{site.data.keyword.vpc_short}} NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 

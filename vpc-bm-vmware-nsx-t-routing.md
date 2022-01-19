@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 {:beta: .beta}
 
-# Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T 
+# Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers
 {: #vpc-bm-vmware-nsx-t-routing}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}
@@ -44,13 +44,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, a {{site.data.keyword.vpc_short}} network interfaces are created for your NSX-T Logical Router and routing is configured between {{site.data.keyword.vpc_short}} and NSX-T overlay. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, a {{site.data.keyword.vpc_short}} network interfaces are created for your NSX-T logical router, and routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-routing-objectives}
 
-In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for your NSX-T Logical Router. 
+In this tutorial, you will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces or uplinks. These interfaces will be attached to {{site.data.keyword.vpc_short}} subnets, and two way routing is configured - in NSX-T T0 gateway and {{site.data.keyword.vpc_short}}.
 
 ![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -74,15 +74,46 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://nsx.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
-## Create VLAN NICs for NSX-T Tier 0 Logical Router Uplinks 
+## Create Tier 0 logical router uplink subnets in {{site.data.keyword.vpc_short}} 
+{: #vpc-bm-vmware-nsx-t-routing-vpc-subnets}
+{: step}
+
+In this step, the following {{site.data.keyword.vpc_short}} subnets will be created for the Tier 0 (T0) private uplinks. These subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
+
+Subnet name                   | System Traffic Type          | Subnet Sizing Guidance  
+------------------------------|------------------------------|-----------------------------------
+vpc-t0-public-uplink-subnet   | T0 public uplink subnet      | /29 or larger
+vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
+{: caption="Table 1. VPC subnets for NSX-T T0 uplinks" caption-side="top"}
+
+
+1. Provision NSX-T Uplink Prefix and Subnets.
+
+   ```sh
+   VMWARE_T0_UPLINK_PREFIX=$(ibmcloud is vpc-address-prefix-create <UNIQUE_PREFIX_NAME> $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/24)
+   ```
+   {: codeblock}
+
+   ```sh
+   VMWARE_SUBNET_T0_UPLINK_PUBLIC=$(ibmcloud is subnetc vmw-subnet-t0-uplink-public $VMWARE_VPC --ipv4-cidr-block 192.168.0.0/29 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   ```sh
+   VMWARE_SUBNET_T0_UPLINK_PRIVATE=$(ibmcloud is subnetc vmw-subnet-t0-uplink-private $VMWARE_VPC --ipv4-cidr-block 192.168.0.8/29 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+
+## Create VLAN NICs for NSX-T Tier 0 logical router uplinks 
 {: #vpc-bm-vmware-nsx-t-routing-vpc-uplinks}
 {: step}
 
-In this step, the following {{site.data.keyword.vpc_short}} subnets and VLAN interfaces will be created for Tier 0 (T0) private uplinks. These uplinks and subnets will be used as trasit networks and interfaces between NSX-T and {{site.data.keyword.vpc_short}}.
+In this step, the following {{site.data.keyword.vpc_short}} subnets and {{site.data.keyword.bm_is_short}}VLAN interfaces will be created for the Tier 0 (T0) private uplinks. These uplinks and subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
 
 Interface name              | Interface type | VLAN ID | Subnet                       | Allow float  | Allow IP spoofing | Enable Infra NAT  | NSX-T Interface            | Segment Name
 ----------------------------|----------------|---------|------------------------------|--------------|-------------------|-------------------|----------------------------|------------------------------
@@ -98,6 +129,7 @@ Depending on your networking design, provision only the VLAN interfaces you need
 {: note}
 
 Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_notm}} where the NSX-T edge nodes are planned to run. In this setup, all three hosts are allowed to host the Edges and modifications are needed for all of them.
+
 
 1. Allow the {{site.data.keyword.bm_is_full_notm}} PCI NICs to use the VLANs stated above.
    
@@ -116,25 +148,7 @@ Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_
    ```
    {: codeblock}
 
-2. Provision NSX-T Uplink Prefix and Subnets.
-
-   ```sh
-   VMWARE_T0_UPLINK_PREFIX=$(ibmcloud is vpc-address-prefix-create <UNIQUE_PREFIX_NAME> $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/24)
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_SUBNET_T0_UPLINK_PUBLIC=$(ibmcloud is subnetc vmw-subnet-t0-uplink-public $VMWARE_VPC --ipv4-cidr-block 192.168.0.0/29 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
-   ```
-   {: codeblock}
-
-   ```sh
-   VMWARE_SUBNET_T0_UPLINK_PRIVATE=$(ibmcloud is subnetc vmw-subnet-t0-uplink-private $VMWARE_VPC --ipv4-cidr-block 192.168.0.8/29 --zone $VMWARE_VPC_ZONE --output json | jq -r .id)
-   ```
-   {: codeblock}
-
-
-3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 Public Uplinks.
+2. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Public Uplinks**.
    
    **Public Uplink VIP:**
 
@@ -189,7 +203,7 @@ Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_
 
 
 
-4. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 Private Uplinks.
+3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Private Uplinks**.
    
    **Private Uplink VIP:**
 
@@ -242,42 +256,70 @@ Using new VLAN IDs require modification for each {{site.data.keyword.bm_is_full_
    ```
    {: codeblock}
 
+When creating public and private uplinks, you may add and customize a {{site.data.keyword.vpc_short}} security group and its rules attached to the VLAN interface. Also, make sure to allow the required traffic in.
+{: note}
+
 ## Create NSX-T VLAN Backed Segments 
 {: #vpc-bm-vmware-nsx-t-routing-create-t0}
 {: step}
 
+In the previous step, VLAN interfaces where created for the private and public uplinks using VLAN IDs `700` and `710`. These uplinks and {{site.data.keyword.vpc_short}} subnets will be used as transit networks, and for the T0 matching VLAN backed segments will be created in NSX-T. These VLAN backed segments will be used in the T0 external interface configurations. 
+
 1. Create VLAN backed Segments for your NSX-T deployment for public and private transit networks.
    
-2. Use the VLAN IDs used earlier in this tutorial. Name your segments so that you can identify the public and private.
+2. Use the VLAN IDs used earlier in this tutorial, e.g. `700` for the public and `710` for the private. Name your segments so that you can identify the public and private, or refer to [naming recommendations in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
-For more information on creating Segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
+For more information on creating NSX-T Segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
 
+The VLAN IDs are only local to the hosts, they are not visible in {{site.data.keyword.vpc_short}}.
+{: note}
 
-## Create NSX-T Tier-0 Logical Router 
+## Create NSX-T Tier-0 logical router 
 {: #vpc-bm-vmware-nsx-t-routing-create-t0}
 {: step}
 
-1. Create NSX-T Tier 0 Logical Router in the created NSX-T edges cluster.
+In this step, you will create the Tier 0 logical router or gateway in the NSX-T edge cluster. As the name says, this logical router is a logical construct inside the edge cluster VMs and uses virtual routing and forwarding (VRF) technology to separate routing tables etc..
+
+1. Create NSX-T Tier 0 logical router in the created NSX-T edge cluster.
 2. Set high availability (HA) mode as active-standby.
-3. Create external interfaces using the IPs for each required uplink. Use the created VLAN backed Segments.  
+3. Create external interfaces using the IPs created in the previous steps for each required uplink. Use the created VLAN backed segments as the `Connected To (Segment)`.  
 
 For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html). 
 
+NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or Tier 0 logical routers may discard the packets arriving from a "wrong" interface. See more in [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-7B0CD287-C5EB-493C-A57F-EEA8782A741A.html){: external}.
+{: note}
 
-## Create NSX-T Tier-0 Logical Router 
+When creating public and private uplinks, a recommended best practice is to [enable NSX-T Edge Gateway firewall](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-A52E1A6F-F27D-41D9-9493-E3A75EC35481.html){: external} on the interfaces and create required rule set to secure your workloads properly.
+{: note}
+
+## Create static routes in Tier-0 logical router 
 {: #vpc-bm-vmware-nsx-t-routing-create-t0-routes}
 {: step}
 
-1. Configure static routes in your Tier-0 Logical Router.
-2. Create static routes for private networks using the private uplinks, and use the 1st IP of the private uplink subnet as the next hop. This is the {{site.data.keyword.vpc_short}} implicit router.
-3. Create default route `0.0.0.0/0` using the public uplinks, and use the 1st IP of the private subnet as the next hop. The first IP of the subnet is owned by the {{site.data.keyword.vpc_short}} implicit router, and your {{site.data.keyword.vpc_short}} routes.
+In this step, you will configure static routes in your Tier 0 logical router pointing to the {{site.data.keyword.vpc_short}} implicit router IP, which is the first IP address of the {{site.data.keyword.vpc_short}} subnet used for the specific NSX-T uplink.
+
+1. Create default route `0.0.0.0/0` using the public uplinks. Use the 1st IP address of the private uplink subnet as the next hop, e.g. `192.168.0.1`. This is the {{site.data.keyword.vpc_short}} implicit router IP address.
+2. Create static routes for your private networks, e.g. `192.168.0.0/16` and `10.0.0.0/8` using the private uplinks. These prefixes are for those networks that are reachable via the {{site.data.keyword.vpc_short}}, or Transit Gateway attached to the {{site.data.keyword.vpc_short}}.  Use the 1st IP address of the private uplink subnet as the next hop, e.g. `192.168.0.9`. This is the {{site.data.keyword.vpc_short}} implicit router IP address.
 
 For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html). 
+
+
+NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or Tier 0 logical routers may discard the packets arriving from a "wrong" interface.  
+{: note}
+
+When creating public and private uplinks, you may customize the security group. Also make sure to allow the required traffic in.
+{: note}
+
+When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway firewall on the interfaces and create required rule set to secure your workloads properly.
+{: note}
 
 
 ## Create {{site.data.keyword.vpc_short}} routes
 {: #vpc-bm-vmware-nsx-t-routing-create-vpc-routes}
 {: step}
+
+In this step, you will configure static routes in your {{site.data.keyword.vpc_short}} for the subnets/prefixes
+
 
 1. Create {{site.data.keyword.vpc_short}} routes for your overlay networks. 
 
@@ -288,12 +330,16 @@ For more information on creating Tier 0 logical router, see [VMware Docs](https:
    ```
    {: codeblock}
 
+If you are using Transit Gateways or Direct Links, you need to create ingress routing table with ingress VPC routes. Ingress routes enable you to customize routes on incoming traffic to a VPC from traffic sources external to the VPC's availability zone (IBM Cloud Direct Link 2.0, IBM Cloud Transit Gateway, or another availability zone in same VPC). For more information and design considerations, refer to [Interconnectivity solutions overview for VMware Solutions in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-interconnectivity-overview) and [{{site.data.keyword.vpc_short}} routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes&interface=ui#egress-ingress-overview)].
+{: note}
+
+
 
 ## Provision {{site.data.keyword.vpc_short}} public IPs
 {: #vpc-bm-vmware-nsx-t-routing-create-vpc-ips}
 {: step}
 
-You can provision one or more `/32` public IPs for your workloads.
+You can provision `/32` public IPs (floating IPs) for your workloads. You can use this IP for e.g. NATing or as an NSX-T IPSec VPN endpoint. You can create multiple IPs, if needed. You need to order these floating IPs to be bind them to the public uplink VIP, which will make sure the ingress and egress routing works in case of edge transport node issues.
 
 1. Order a {{site.data.keyword.vpc_short}} public IP for the `$VMWARE_VNIC_T0_PUBLIC_VIP` VLAN interface.
    
@@ -302,14 +348,11 @@ You can provision one or more `/32` public IPs for your workloads.
    ```
    {: codeblock}
 
-You can use this IP for e.g. NATing or as an NSX-T IPSec VPN endpoint. You can create multiple IPs, if needed. 
-
-Ordering subnets is currently not supported.
+Ordering of subnets is currently not supported.
 {: note}
+
 
 ## Next Steps
 {: #vpc-bm-vmware-nsx-t-routing-next-steps}
 
-The next step in the tutorial series is:
-
-* todo
+After you have created your NSX-T T0 logical router/gateway and routing between NSX-T and {{site.data.keyword.vpc_short}}, you can continue adding Tier 1 (T1) logical routers and more NSX-T overlay segments into your solution based on the overlay network design. For more information, refer to [NSX-T Data Center Administration Guide](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-FBFD577B-745C-4658-B713-A3016D18CB9A.html){: external}. 
