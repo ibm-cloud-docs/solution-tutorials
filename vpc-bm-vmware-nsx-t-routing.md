@@ -149,12 +149,69 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    ```
    {: codeblock}
 
-2. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Public Uplinks**.
+2. Create Security groups for uplinks
+
+   **Public Uplink Security Group:**
+
+   ```sh
+   VMWARE_SG_T0_PUBLIC=$(ibmcloud is security-group-create sg-t0-public $VMWARE_VPC --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   **Public Uplink Security Group Rules:**
+
+   The following rules will allow inbound icmp and all outbound. You may customize the rules based on your needs.
+   {: note}
+
+   ```sh
+   ibmcloud is security-group-rule-add sg-t0-public inbound icmp 
+   ibmcloud is security-group-rule-add sg-t0-public outbound all
+   ```
+   {: codeblock}
+
+   When creating rules, remember that security groups are stateful.
+   {: note}
+
+   **Validate the created rules:**
+
+   ```sh
+   ibmcloud is security-group-rules sg-t0-public 
+   ```
+   {: codeblock}
+
+
+   **Private Uplink Security Group:**
+
+   ```sh
+   VMWARE_SG_T0_PUBLIC=$(ibmcloud is security-group-create sg-t0-private $VMWARE_VPC --output json | jq -r .id)
+   ```
+   {: codeblock}
+
+   **Private Uplink Security Group Rules:**
+
+   ```sh
+   ibmcloud is security-group-rule-add sg-t0-private inbound all
+   ibmcloud is security-group-rule-add sg-t0-private outbound all
+   ```
+   {: codeblock}
+
+   When creating rules, remember that security groups are stateful.
+   {: note}
+
+   **Validate the created rules:**
+
+   ```sh
+   ibmcloud is security-group-rules sg-t0-public 
+   ```
+   {: codeblock}
+
+
+3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Public Uplinks**.
    
    **Public Uplink VIP:**
 
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-private-vip --output json | jq -r .id)
+   VMWARE_VNIC_T0_PUBLIC_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-vip --security-groups sg-t0-public --output json | jq -r .id)
    ```
    {: codeblock}
    
@@ -171,7 +228,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    **Public Uplink 1 for Edge 1:**
    
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_1_IP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-private-1 --output json | jq -r .id)
+   VMWARE_VNIC_T0_PUBLIC_1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-1 --security-groups sg-t0-public --output json | jq -r .id)
    ```
    {: codeblock}
    
@@ -188,7 +245,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    **Public Uplink 2 for Edge 2:**
    
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-private-2 --output json | jq -r .id)
+   VMWARE_VNIC_T0_PUBLIC_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-2 --security-groups sg-t0-public --output json | jq -r .id)
    ```
    {: codeblock}
 
@@ -202,14 +259,15 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    ```
    {: codeblock}
 
+   When creating public uplinks, you may add new rules for your {{site.data.keyword.vpc_short}} security group to permit traffic what you need. The example ruleset allows all outbound and icmp inbound.
+   {: note}
 
-
-3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Private Uplinks**.
+4. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Private Uplinks**.
    
    **Private Uplink VIP:**
 
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-vip --output json | jq -r .id)
+   VMWARE_VNIC_T0_PRIVATE_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-vip --security-groups sg-t0-private --output json | jq -r .id)
    ```
    {: codeblock}
    
@@ -226,7 +284,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    **Private Uplink 1 for Edge 1:**
    
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_1_IP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-1 --output json | jq -r .id)
+   VMWARE_VNIC_T0_PRIVATE_1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-1 --security-groups sg-t0-private --output json | jq -r .id)
    ```
    {: codeblock}
    
@@ -243,7 +301,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    **Private Uplink 2 for Edge 2:**
    
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-2 --output json | jq -r .id)
+   VMWARE_VNIC_T0_PRIVATE_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-2 --security-groups sg-t0-private --output json | jq -r .id)
    ```
    {: codeblock}
 
@@ -257,8 +315,8 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    ```
    {: codeblock}
 
-When creating public and private uplinks, you may add a new {{site.data.keyword.vpc_short}} security group, attach that to the VLAN interface use for uplinks and configure its ruleset to permit traffic what you need. 
-{: note}
+   When creating private uplinks, you may create more restrictive rules for your {{site.data.keyword.vpc_short}} security group to permit only the traffic what you need. The example ruleset allows all traffic for private uplink for simplicity.
+   {: note}
 
 ## Create NSX-T VLAN Backed Segments 
 {: #vpc-bm-vmware-nsx-t-routing-create-t0}
@@ -308,10 +366,10 @@ For more information on creating Tier 0 logical router, see [VMware Docs](https:
 NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or otherwise Tier 0 logical routers may discard the packets arriving from a "wrong" interface.
 {: note}
 
-When creating public and private uplinks, you may customize the security group. Also make sure to allow the required traffic in.
+When creating public and private uplinks, you may need to customize the security group rules. For more information, see [{{site.data.keyword.vpc_short}} Security Groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
 {: note}
 
-When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway firewall on the interfaces and create required rule set to secure your workloads properly.
+When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway Firewall on the interfaces and create required rule set to secure your workloads properly. For more information for configuring Gateway Firewall, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-A52E1A6F-F27D-41D9-9493-E3A75EC35481.html).
 {: note}
 
 
@@ -331,7 +389,7 @@ In this step, you will configure static routes in your {{site.data.keyword.vpc_s
    ```
    {: codeblock}
 
-If you are using Transit Gateways or Direct Links, you need to create ingress routing table with ingress VPC routes. Ingress routes enable you to customize routes on incoming traffic to a VPC from traffic sources external to the VPC's availability zone (IBM Cloud Direct Link 2.0, IBM Cloud Transit Gateway, or another availability zone in same VPC). For more information and design considerations, refer to [Interconnectivity solutions overview for VMware Solutions in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-interconnectivity-overview) and [{{site.data.keyword.vpc_short}} routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes&interface=ui#egress-ingress-overview)].
+If you are using Transit Gateways or Direct Links, you need to create ingress routing table with ingress {{site.data.keyword.vpc_short}} routes. Ingress routes enable you to customize routes on incoming traffic to a {{site.data.keyword.vpc_short}} from traffic sources external to the {{site.data.keyword.vpc_short}}'s availability zone (IBM Cloud Direct Link 2.0, IBM Cloud Transit Gateway, or another availability zone in same {{site.data.keyword.vpc_short}}). For more information and design considerations, refer to [Interconnectivity solutions overview for VMware Solutions in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-interconnectivity-overview) and [{{site.data.keyword.vpc_short}} routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes&interface=ui#egress-ingress-overview)].
 {: note}
 
 
