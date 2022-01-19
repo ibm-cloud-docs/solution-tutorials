@@ -78,6 +78,27 @@ This tutorial is part of series, and requires that you have completed the relate
 When advised to use Web browser, use the jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
+## Order a vCenter License from IBM Cloud
+{: #vpc-bm-vmware-nsx-t-managers-license}
+
+As a customer on IBM Cloud, you can bring your own license or you can obtain a license from IBM Cloud as a monthly fee.
+
+Use the following steps to order licenses for the VMware products
+
+VMware NSX-T™ Data Center SP license editions available include:
+* NSX Data Center SP Base
+* NSX Data Center SP Professional
+* NSX Data Center SP Advanced
+* NSX Data Center SP Enterprise Plus.
+
+1. From the IBM Cloud® Portal
+2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
+3. Click the drop-down list under **Order VMware License**. to list the VMware products and number of CPUs for the licenses that you want to order.
+4. List of the VMware products and number of CPUs for the licenses that you want to order. Select **NSX Data Center SP Advanced** .
+5. Click Continue to order the licenses or you can click Add License to add more licenses.
+6. After you click Continue, you are taken back to the VMware Licenses page, which displays your VMware products and license keys.
+7. Copy the VMware vCenter license key and can be added to the vCenter after the installation.
+
 
 ## Review NSX-T installation requirements 
 {: #vpc-bm-vmware-nsx-t-managers-deploy}
