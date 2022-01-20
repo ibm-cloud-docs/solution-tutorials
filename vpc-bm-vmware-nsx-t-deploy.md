@@ -91,7 +91,7 @@ VMware NSX-T™ Data Center SP license editions available include:
 * NSX Data Center SP Advanced
 * NSX Data Center SP Enterprise Plus.
 
-1. From the IBM Cloud® Portal
+1. From the [IBM Cloud® Portal > Classic Infrastructure](https://cloud.ibm.com/classic/devices/vmwarelicenses)
 2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
 3. Click the drop-down list under **Order VMware License**. to list the VMware products and number of CPUs for the licenses that you want to order.
 4. List of the VMware products and number of CPUs for the licenses that you want to order. Select **NSX Data Center SP Advanced** .
