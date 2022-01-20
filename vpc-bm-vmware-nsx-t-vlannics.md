@@ -59,7 +59,7 @@ In the NSX-T deployment, multiple components will be attached to {{site.data.key
 
 Each of these require one or more {{site.data.keyword.bm_is_short}} VLAN interfaces to be created before you can start the actual NSX-T deployment and configurations. In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T Managers and Transport Nodes.
 
-![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+![VLAN interfaces for NSX-T deployment {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-mgmt.svg "VLAN interfaces for NSX-T deployment {{site.data.keyword.vpc_short}}"){: caption="Figure 1. VLAN interfaces for NSX-T deployment {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
 For more information about the NSX-T architecture and architectural considerations in VPC, see [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
