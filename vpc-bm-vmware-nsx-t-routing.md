@@ -413,4 +413,6 @@ Ordering of subnets is currently not supported.
 ## Next steps
 {: #vpc-bm-vmware-nsx-t-routing-next-steps}
 
-After you have created your NSX-T T0 logical router/gateway and routing between NSX-T and {{site.data.keyword.vpc_short}}, you can continue adding Tier 1 (T1) logical routers and more NSX-T overlay segments into your solution based on the overlay network design. For more information, refer to [NSX-T Data Center Administration Guide](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-FBFD577B-745C-4658-B713-A3016D18CB9A.html){: external}. 
+After you have created your NSX-T T0 logical router/gateway and routing between NSX-T and {{site.data.keyword.vpc_short}}, you can continue adding Tier 1 (T1) logical routers and NSX-T overlay segments into your solution based on the overlay network design. 
+
+For more information, refer to [NSX-T Data Center Administration Guide](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-FBFD577B-745C-4658-B713-A3016D18CB9A.html){: external}. 
