@@ -72,7 +72,7 @@ You need to plan and decide your {{site.data.keyword.vpc_short}} networking solu
 You need to plan and decide your VMware deployments storage solution before you order the bare metal servers. If you use NFS backed {{site.data.keyword.vpc_short}} file share as the primary storage, you can start with a minimum of 2 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2-`, which includes a local SATA M.2 mirrored drive. If you plan to use vSAN, you need to select a minimum of 3 bare metal servers with and select a [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile) starting with `bx2d-`, which includes a local SATA M.2 mirrored drive and a number of NVMe U.2 SSDs.  
 {: important}
 
-Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow steps 1 through 4 below for an initial setup for your base VMware Deployment. After vCenter and the base setup has been completed, you can create storage for your cluster based on your preference by following either step 5 or 6. 
+Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Follow steps 1 through 4 below for an initial setup for your base VMware deployment. After vCenter and the base setup has been completed, you can create or attach shared storage for your cluster based on your preference by following either step 5 or 6. 
 
 1. [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 2. [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
@@ -81,14 +81,21 @@ Deploying VMware on {{site.data.keyword.vpc_short}} requires multiple steps. Fol
 5. OPTIONAL STORAGE: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
 6. OPTIONAL STORAGE: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
 
-After the initial VMware cluster has been deployed and configured, the Virtual Machine networking needs to be setup. Here you have two alternatives: deploy VMware VMs integrated with your {{site.data.keyword.vpc_short}} subnets or deploy VMware VMs on VMware NSX-T overlay segments. 
+After the base VMware cluster has been deployed and configured, the Virtual Machine networking needs to be setup. Here you have two alternatives: deploy VMware VMs integrated with your {{site.data.keyword.vpc_short}} subnets or deploy VMware VMs on VMware NSX-T overlay segments. 
 
-When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, proceed with the following steps. 
+When using **{{site.data.keyword.vpc_short}} subnets** for your VMware Virtual Machines, proceed with the following steps.
 
 1. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
 2. OPTIONAL - VPC Integrated Networking: [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
 
-When using **NSX-T** for your VMware Virtual Machines, proceed with the following steps. NSX-T deployment starts with provisioning {{site.data.keyword.bm_is_short}} VLAN interfaces for NSX-T components, continues with deploying NSX-T on the {{site.data.keyword.bm_is_short}} and the last step creates NSX-T Tier 0 logical router (also known as T0 gateway) to provide routed north-south traffic between NSX-T overlay networks and {{site.data.keyword.vpc_short}}.
+vCenter and other management servers may use the connectivity patterns described in the steps above. For example, {{site.data.keyword.vpc_short}} public gateway can be used when downloading vCenter updates from Vmware.
+{: note}
+
+You have the **option** to use **NSX-T** for your VMware Virtual Machines and an overview for a NSX-T based deployment is show below. NSX-T deployment starts with provisioning {{site.data.keyword.bm_is_short}} VLAN interfaces for each NSX-T component attched to {{site.data.keyword.vpc_short}} subnet. Then you deploy NSX-T on the VMware cluster and add transport nodes to the solution. In the last step, you create NSX-T Tier 0 logical router (also known as T0 gateway) to provide routed north-south traffic between NSX-T overlay networks and {{site.data.keyword.vpc_short}}.
+
+![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 2. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
+
+If you want to use **NSX-T** in {{site.data.keyword.vpc_short}}, review [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-overview) first. Then proceed with the following steps. 
 
 1.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
 2.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
