@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,6 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
 
 # Deploy NSX-T Managers 
 {: #vpc-bm-vmware-nsx-t-managers}
@@ -76,8 +75,29 @@ This tutorial is part of series, and requires that you have completed the relate
 
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
+When advised to use Web browser, use the jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
+
+## Order a vCenter License from IBM Cloud
+{: #vpc-bm-vmware-nsx-t-managers-license}
+
+As a customer on IBM Cloud, you can bring your own license or you can obtain a license from IBM Cloud as a monthly fee.
+
+Use the following steps to order licenses for the VMware products
+
+VMware NSX-T™ Data Center SP license editions available include:
+* NSX Data Center SP Base
+* NSX Data Center SP Professional
+* NSX Data Center SP Advanced
+* NSX Data Center SP Enterprise Plus.
+
+1. From the IBM Cloud® Portal
+2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
+3. Click the drop-down list under **Order VMware License**. to list the VMware products and number of CPUs for the licenses that you want to order.
+4. List of the VMware products and number of CPUs for the licenses that you want to order. Select **NSX Data Center SP Advanced** .
+5. Click Continue to order the licenses or you can click Add License to add more licenses.
+6. After you click Continue, you are taken back to the VMware Licenses page, which displays your VMware products and license keys.
+7. Copy the VMware vCenter license key and can be added to the vCenter after the installation.
 
 
 ## Review NSX-T installation requirements 
@@ -109,6 +129,15 @@ Follow the recommended order of procedures to deploy NSX-T on {{site.data.keywor
 Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
+## Create uplink profile
+{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-uplink-profile}
+{: step}
+
+In preparation for the next step, you will need to create a new uplink profile
+
+1. Create an uplink profile, assigning the TEP vlan id e.g. `400` and assign the active uplink as uplink-1. For more information, see [Create an Uplink Profile](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-50FDFDFB-F660-4269-9503-39AE2BBA95B4.html){: external}
+
+
 ## Add host transport nodes
 {: #vpc-bm-vmware-nsx-t-managers-transport-nodes-hosts}
 {: step}
@@ -124,6 +153,14 @@ When you deploy an NSX-T edge, you can think of it as an empty container. The NS
 
 Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
+
+## Create a segment and port group for NSX-T edge deployment
+{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-prep}
+{: step}
+
+1. Create a NSX-T VLAN backed segment for the vlan transport zone using with the VLAN ID, e.g. `400`. For more information, see [Adding a Segment](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-D018DB03-0C07-4980-887D-AF3B3E93EF63.html){: external}
+2. Create a Distributed port group for the overlay transport zine using the VLAN trunk, e.g. `0-4094`. For more information, see [Configure VLAN Tagging on a Distributed Port Group or Distributed Port](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.networking.doc/GUID-D5960C77-0D19-4669-A00C-B05D58A422F8.html){: external}
+
 
 ## Add edge transport nodes and create an edge cluster
 {: #vpc-bm-vmware-nsx-t-managers-transport-nodes-edges}

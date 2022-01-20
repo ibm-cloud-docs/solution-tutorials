@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2021, 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,6 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
 
 # Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}
@@ -39,9 +38,6 @@ completion-time: 1h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 IBM Cloud™ has a number of [offerings for VMware deployments in Classic](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings). These can be classified and described as:
 

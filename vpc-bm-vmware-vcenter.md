@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2021, 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,7 @@ completion-time: 2h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
+
 
 # Provision vCenter Appliance
 {: #vpc-bm-vmware-vcenter}
