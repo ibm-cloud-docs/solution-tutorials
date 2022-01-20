@@ -190,7 +190,7 @@ Hosts:  esx-001.vmware.ibmcloud.local, esx-002.vmware.ibmcloud.local, esx-003.vm
 Your hosts will access NFS share using the ESXi hosts' management interfaces (PCI NICs) with this setup. This is for simplicity for this non-production setup.  
 {: note}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-nfs-next-steps}
 
 The next step in the tutorial series is:

@@ -271,7 +271,7 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
    You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
    {: tip}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-vpc-next-steps}
 
 The next step in the tutorial series is:

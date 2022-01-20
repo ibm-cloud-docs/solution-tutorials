@@ -168,7 +168,7 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-dns-next-steps}
 
 The next step in the tutorial series is:

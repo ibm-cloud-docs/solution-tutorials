@@ -157,7 +157,7 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 5. Select `vsanDatastore`, click **Next**.
 6. Click **Next**, then click **Finish**.
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-vsan-next-steps}
 
 The next step in the tutorial series is:

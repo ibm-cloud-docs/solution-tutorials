@@ -166,7 +166,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
    ```
    {: codeblock}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-next-steps}
 
 The next step in the tutorial series is:

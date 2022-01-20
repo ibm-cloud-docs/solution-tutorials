@@ -352,7 +352,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
    ```
    {: codeblock}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-newvm-next-steps}
 
 The next step in the tutorial series is:

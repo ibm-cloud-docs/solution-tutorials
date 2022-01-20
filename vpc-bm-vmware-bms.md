@@ -436,7 +436,7 @@ This phase is optional, if you use NFS.
    {: note}
 
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-bms-next-steps}
 
 The next step in the tutorial series is:

@@ -433,7 +433,7 @@ Delete `vSwitch0` on all hosts using the following method
 5. Expand the standard switch.
 6. Click the '...' and select **Remove**.
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-vcenter-next-steps}
 
 The next step in the tutorial series is:

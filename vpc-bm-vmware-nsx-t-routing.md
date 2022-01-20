@@ -44,13 +44,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, a {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for your NSX-T logical router external uplinks, which will be connected to the {{site.data.keyword.vpc_short}} subnet. After this, IP routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, a {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for your NSX-T Tier 0 logical router external uplinks. Tier 0 logical router or Gateway will be connected to one or more the {{site.data.keyword.vpc_short}} subnets. When the interfaces are created, IP routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-routing-objectives}
 
-You will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces or uplinks. These interfaces will be attached to {{site.data.keyword.vpc_short}} subnets, and IP routing is configured - first in NSX-T T0 gateway and then in {{site.data.keyword.vpc_short}}.
+You will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your NSX-T Tier 0 logical router (or also known as T0 gateway) external interfaces (or also called as uplinks). These interfaces will be attached to two {{site.data.keyword.vpc_short}} subnets. These IP addresses will be used as next-hops for IP routing. Static routes will be configured - first in NSX-T T0 gateway and then in {{site.data.keyword.vpc_short}}.
 
 ![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-t0.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -82,7 +82,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: #vpc-bm-vmware-nsx-t-routing-vpc-subnets}
 {: step}
 
-In this step, the following {{site.data.keyword.vpc_short}} subnets will be created for the Tier 0 (T0) private uplinks. These subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
+In this step, the following {{site.data.keyword.vpc_short}} subnets will be created for the Tier 0 (T0) private uplinks. These subnets will be used as transit networks. When the interfaces have been created, static routing will be configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
 
 Subnet name                   | System Traffic Type          | Subnet Sizing Guidance  
 ------------------------------|------------------------------|-----------------------------------
@@ -91,7 +91,7 @@ vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
 {: caption="Table 1. VPC subnets for NSX-T T0 uplinks" caption-side="top"}
 
 
-1. Provision NSX-T Uplink Prefix and Subnets.
+1. Provision NSX-T uplink Prefix and Subnets.
 
    ```sh
    VMWARE_T0_UPLINK_PREFIX=$(ibmcloud is vpc-address-prefix-create <UNIQUE_PREFIX_NAME> $VMWARE_VPC $VMWARE_VPC_ZONE 192.168.0.0/24)
@@ -117,12 +117,12 @@ In this step, {{site.data.keyword.bm_is_short}}VLAN interfaces will be created f
 
 Interface name              | Interface type | VLAN ID | Subnet                       | Allow float  | Allow IP spoofing | Enable Infra NAT  | NSX-T Interface            | Segment Name
 ----------------------------|----------------|---------|------------------------------|--------------|-------------------|-------------------|----------------------------|------------------------------
-vlan-nic-t0-pub-uplink-1    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public Uplink * Edge 1  | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-pub-uplink-2    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public Uplink * Edge 2  | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-pub-uplink-vip  | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public Uplink VIP       | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-priv-uplink-1   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private Uplink * Edge 1 | vpc-zone-t0-private-*vlanid*
-vlan-nic-t0-priv-uplink-2   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private Uplink * Edge 2 | vpc-zone-t0-private-*vlanid*
-vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private Uplink VIP      | vpc-zone-t0-private-*vlanid*
+vlan-nic-t0-pub-uplink-1    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 1  | vpc-zone-t0-public-*vlanid*
+vlan-nic-t0-pub-uplink-2    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 2  | vpc-zone-t0-public-*vlanid*
+vlan-nic-t0-pub-uplink-vip  | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink VIP       | vpc-zone-t0-public-*vlanid*
+vlan-nic-t0-priv-uplink-1   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 1 | vpc-zone-t0-private-*vlanid*
+vlan-nic-t0-priv-uplink-2   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 2 | vpc-zone-t0-private-*vlanid*
+vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink VIP      | vpc-zone-t0-private-*vlanid*
 {: caption="Table 4. VLAN interfaces for T0 uplinks" caption-side="top"}
 
 Depending on your networking design, provision only the VLAN interfaces you need, for example if you do not need direct public connectivity you can skip that part. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.
@@ -151,14 +151,14 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
 
 2. Create Security groups for uplinks
 
-   **Public Uplink Security Group:**
+   **Public uplink security group:**
 
    ```sh
    VMWARE_SG_T0_PUBLIC=$(ibmcloud is security-group-create sg-t0-public $VMWARE_VPC --output json | jq -r .id)
    ```
    {: codeblock}
 
-   **Public Uplink Security Group Rules:**
+   **Public uplink security group rules:**
 
    The following rules will allow inbound icmp and all outbound. You may customize the rules based on your needs.
    {: note}
@@ -180,14 +180,14 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
 
-   **Private Uplink Security Group:**
+   **Private uplink security group:**
 
    ```sh
    VMWARE_SG_T0_PUBLIC=$(ibmcloud is security-group-create sg-t0-private $VMWARE_VPC --output json | jq -r .id)
    ```
    {: codeblock}
 
-   **Private Uplink Security Group Rules:**
+   **Private uplink security group rules:**
 
    ```sh
    ibmcloud is security-group-rule-add sg-t0-private inbound all
@@ -206,9 +206,9 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
 
-3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Public Uplinks**.
+3. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Public uplinks**.
    
-   **Public Uplink VIP:**
+   **Public uplink VIP:**
 
    ```sh
    VMWARE_VNIC_T0_PUBLIC_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-vip --security-groups sg-t0-public --output json | jq -r .id)
@@ -221,11 +221,11 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Public Uplink VIP : "$VMWARE_VNIC_T0_PUBLIC_VIP_IP
+   echo "Public uplink VIP : "$VMWARE_VNIC_T0_PUBLIC_VIP_IP
    ```
    {: codeblock}
    
-   **Public Uplink 1 for Edge 1:**
+   **Public uplink 1 for Edge 1:**
    
    ```sh
    VMWARE_VNIC_T0_PUBLIC_1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-1 --security-groups sg-t0-public --output json | jq -r .id)
@@ -238,11 +238,11 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Public Uplink 1 for Edge 1 : "$VMWARE_VNIC_T0_PUBLIC_1_IP
+   echo "Public uplink 1 for Edge 1 : "$VMWARE_VNIC_T0_PUBLIC_1_IP
    ```
    {: codeblock}
    
-   **Public Uplink 2 for Edge 2:**
+   **Public uplink 2 for Edge 2:**
    
    ```sh
    VMWARE_VNIC_T0_PUBLIC_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PUBLIC --interface-type vlan --vlan 700 --allow-interface-to-float true --name vlan-nic-t0-public-2 --security-groups sg-t0-public --output json | jq -r .id)
@@ -255,16 +255,16 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Public Uplink 2 for Edge 2 : "$VMWARE_VNIC_T0_PUBLIC_2_IP
+   echo "Public uplink 2 for Edge 2 : "$VMWARE_VNIC_T0_PUBLIC_2_IP
    ```
    {: codeblock}
 
    When creating public uplinks, you may add new rules for your {{site.data.keyword.vpc_short}} security group to permit traffic what you need. The example ruleset allows all outbound and icmp inbound.
    {: note}
 
-4. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Private Uplinks**.
+4. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for T0 **Private uplinks**.
    
-   **Private Uplink VIP:**
+   **Private uplink VIP:**
 
    ```sh
    VMWARE_VNIC_T0_PRIVATE_VIP=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-vip --security-groups sg-t0-private --output json | jq -r .id)
@@ -277,11 +277,11 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Private Uplink VIP : "$VMWARE_VNIC_T0_PRIVATE_VIP_IP
+   echo "Private uplink VIP : "$VMWARE_VNIC_T0_PRIVATE_VIP_IP
    ```
    {: codeblock}
    
-   **Private Uplink 1 for Edge 1:**
+   **Private uplink 1 for Edge 1:**
    
    ```sh
    VMWARE_VNIC_T0_PRIVATE_1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-1 --security-groups sg-t0-private --output json | jq -r .id)
@@ -294,11 +294,11 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Private Uplink 1 for Edge 1 : "$VMWARE_VNIC_T0_PRIVATE_1_IP
+   echo "Private uplink 1 for Edge 1 : "$VMWARE_VNIC_T0_PRIVATE_1_IP
    ```
    {: codeblock}
    
-   **Private Uplink 2 for Edge 2:**
+   **Private uplink 2 for Edge 2:**
    
    ```sh
    VMWARE_VNIC_T0_PRIVATE_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_T0_UPLINK_PRIVATE --interface-type vlan --vlan 710 --allow-interface-to-float true --name vlan-nic-t0-private-2 --security-groups sg-t0-private --output json | jq -r .id)
@@ -311,24 +311,24 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   echo "Private Uplink 2 for Edge 2 : "$VMWARE_VNIC_T0_PRIVATE_2_IP
+   echo "Private uplink 2 for Edge 2 : "$VMWARE_VNIC_T0_PRIVATE_2_IP
    ```
    {: codeblock}
 
    When creating private uplinks, you may create more restrictive rules for your {{site.data.keyword.vpc_short}} security group to permit only the traffic what you need. The example ruleset allows all traffic for private uplink for simplicity.
    {: note}
 
-## Create NSX-T VLAN Backed Segments 
+## Create NSX-T VLAN backed segments 
 {: #vpc-bm-vmware-nsx-t-routing-create-t0}
 {: step}
 
 In the previous step, VLAN interfaces where created for the private and public uplinks using VLAN IDs `700` and `710`. These uplinks and {{site.data.keyword.vpc_short}} subnets will be used as transit networks, and for the T0 matching VLAN backed segments will be created in NSX-T. These VLAN backed segments will be used in the T0 external interface configurations. 
 
-1. Create VLAN backed Segments for your NSX-T deployment for public and private transit networks.
+1. Create VLAN backed segments for your NSX-T deployment for public and private transit networks.
    
 2. Use the VLAN IDs used earlier in this tutorial, e.g. `700` for the public and `710` for the private. Name your segments so that you can identify the public and private, or refer to [naming recommendations in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
-For more information on creating NSX-T Segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
+For more information on creating NSX-T segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
 
 The VLAN IDs are only local to the hosts, they are not visible in {{site.data.keyword.vpc_short}}.
 {: note}
@@ -411,7 +411,7 @@ Ordering of subnets is currently not supported.
 {: note}
 
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-nsx-t-routing-next-steps}
 
 After you have created your NSX-T T0 logical router/gateway and routing between NSX-T and {{site.data.keyword.vpc_short}}, you can continue adding Tier 1 (T1) logical routers and more NSX-T overlay segments into your solution based on the overlay network design. For more information, refer to [NSX-T Data Center Administration Guide](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-FBFD577B-745C-4658-B713-A3016D18CB9A.html){: external}. 

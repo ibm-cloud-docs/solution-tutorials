@@ -44,7 +44,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
-In this tutorial, {{site.data.keyword.bm_is_short}}  network interfaces are created for NSX-T management and edge components. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
+In this tutorial, {{site.data.keyword.bm_is_short}} VLAN network interfaces are created for NSX-T management and edge components. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.
 {: shortdesc}
 
 ## Objectives
@@ -57,7 +57,7 @@ In the NSX-T deployment, multiple components will be attached to {{site.data.key
 * NSX-T Host Transport Nodes (ESXi hosts)
 * NSX-T Logical Router (Tier 0) uplinks
 
-Each of these require one or more {{site.data.keyword.bm_is_short}} VLAN interfaces to be created. In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T Managers and Transport Nodes.
+Each of these require one or more {{site.data.keyword.bm_is_short}} VLAN interfaces to be created before you can start the actual NSX-T deployment and configurations. In this tutorial, you will create {{site.data.keyword.bm_is_short}} network interfaces for NSX-T Managers and Transport Nodes.
 
 ![NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed.svg "NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}"){: caption="Figure 1. NSX-T based VMware Solution in {{site.data.keyword.vpc_short}}" caption-side="bottom"}
 
@@ -89,7 +89,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: #vpc-bm-vmware-nsx-t-managers-vlannic}
 {: step}
 
-In this step, the following VLAN interfaces will be created.
+In this step, the following {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for NSX-T Managers and a virtual IP address (VIP) for NSX-T Managers, which provides fault tolerance and high availability to the NSX-T cluster.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | Distributed Port Group Name
 ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
@@ -98,7 +98,6 @@ vlan-nic-nsx-1        | vlan           | 100     | vpc-mgmt-subnet     | true   
 vlan-nic-nsx-2        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 3   | dpg-mgmt
 vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager VIP | dpg-mgmt
 {: caption="Table 1. VLAN interfaces for NSX-T Managers" caption-side="top"}
-
 
 
 1. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for NSX-T Managers.
@@ -200,7 +199,7 @@ vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true   
 {: #vpc-bm-vmware-nsx-t-hosts-vlannic}
 {: step}
 
-In this step, the following VLAN interfaces will be created for each host.
+In this step, the following {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for each host to be used as NSX-T Tunnel Endpoints (TEPs).
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | VMkernel Adapter | Distributed Port Group Name
 ----------------------|----------------|---------|---------------------|--------------|------------------|------------------------------
@@ -208,7 +207,7 @@ vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false  
 {: caption="Table 2. Host management networks and VMkernel adapters" caption-side="top"}
 
 
-1. Allow PCI NICs to use the VLANs stated above.
+1. Allow PCI NICs to use the VLANs stated above. Repeat for each host.
    
    ```sh
    ibmcloud is bm-nicu $VMWARE_BMS001 $VMWARE_BMS001_PNIC --allowed-vlans 100,200,300,400
@@ -225,7 +224,7 @@ vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false  
    ```
    {: codeblock}
    
-2. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for ESXi TEPs.
+2. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for ESXi TEPs. Repeat for each host.
 
    **ESXi 001:**
 
@@ -279,11 +278,11 @@ vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false  
    {: codeblock}
 
 
-## Create VLAN NICs for NSX-T Edges
+## Create VLAN NICs for NSX-T edge nodes
 {: #vpc-bm-vmware-nsx-t-vlannics-vlannic-tep}
 {: step}
 
-In this step, the following VLAN interfaces will be created for NSX-T Edge Nodes.
+In this step, the following VLAN interfaces will be created for NSX-T edge nodes. Each edge node require one IP address for management and one for TEP traffic.
 
 Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | DPG/Segment Name
 ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
@@ -291,13 +290,12 @@ vlan-nic-nsx-edge-1   | vlan           | 100     | vpc-mgmt-subnet     | true   
 vlan-nic-nsx-edge-2   | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Edge 2 Mgmt | dpg-mgmt
 vlan-nic-tep-edge-1   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 1 TEP  | vpc-zone-edge-tep
 vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 2 TEP  | vpc-zone-edge-tep
-{: caption="Table 3. Host management networks and VMkernel adapters" caption-side="top"}
+{: caption="Table 3. Edge management and TEP VLAN interfaces" caption-side="top"}
 
 
+1. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for edge management.
 
-1. Provision {{site.data.keyword.bm_is_short}} VLAN interfaces for Edge Management.
-
-   **Edge 1 Management:**
+   **Edge 1 management:**
 
    ```sh
    VMWARE_VNIC_NSX_T_EDGE_MGMT_1=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_MGMT --interface-type vlan --vlan 100 --allow-interface-to-float true --name vlan-nic-edge-mgmt-1 --output json | jq -r .id)
@@ -310,11 +308,11 @@ vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true   
    {: codeblock}
 
    ```sh
-   echo "NSX Edge 1 Management IP : "$VMWARE_VNIC_NSX_T_EDGE_MGMT_1_IP
+   echo "NSX Edge 1 management IP : "$VMWARE_VNIC_NSX_T_EDGE_MGMT_1_IP
    ```
    {: codeblock}
 
-   **Edge 2 Management:**
+   **Edge 2 management:**
 
    ```sh
    VMWARE_VNIC_NSX_T_EDGE_MGMT_2=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_MGMT --interface-type vlan --vlan 100 --allow-interface-to-float true --name vlan-nic-edge-mgmt-2 --output json | jq -r .id)
@@ -327,7 +325,7 @@ vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true   
    {: codeblock}
 
    ```sh
-   echo "NSX Edge 2 Management IP : "$VMWARE_VNIC_NSX_T_EDGE_MGMT_2_IP
+   echo "NSX Edge 2 management IP : "$VMWARE_VNIC_NSX_T_EDGE_MGMT_2_IP
    ```
    {: codeblock}
 
@@ -367,16 +365,16 @@ vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true   
    ```
    {: codeblock}
 
-3. Add NSX Edge Management IPs to DNS Zone as A records to the DNS Service.
+3. Add NSX Edge management IPs to DNS Zone as `A records` to the DNS Service.
 
-   **Edge 1 Management:**
+   **Edge 1 management:**
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name edge-1 --ipv4 $VMWARE_VNIC_NSX_T_EDGE_MGMT_1_IP
    ```
    {: codeblock}
 
-   **Edge 2 Management:**
+   **Edge 2 management:**
 
    ```sh
    ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name edge-2 --ipv4 $VMWARE_VNIC_NSX_T_EDGE_MGMT_2_IP
@@ -384,9 +382,7 @@ vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true   
    {: codeblock}
 
 
-
-
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-nsx-t-vlannics-next-steps}
 
 The next step in the tutorial series is:
