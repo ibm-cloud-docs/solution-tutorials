@@ -32,19 +32,19 @@ completion-time: 1h
 # Provision NFS storage and attach to cluster
 {: #vpc-bm-vmware-nfs}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions, vpc-file-storage"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+File Storage in {{site.data.keyword.vpc_short}} is available for customers with special approval to preview this service in the selected regions. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
 
-This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+
+This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 In this tutorial, an NFS file share is created in {{site.data.keyword.vpc_short}} and it is attached to a VMware cluster as a Datastore. This phase is optional, if you use vSAN as your preferred storage option.
@@ -81,7 +81,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_VPC are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 ## Create file share in {{site.data.keyword.vpc_short}}
 {: #vpc-bm-vmware-nfs-createfileshare}
@@ -115,7 +115,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: screen}
 
-1. Create a file share.
+2. Create a file share.
 
    In this example, a 1TB with 10IOPS/GB file share is created with using the previously created {{site.data.keyword.vpc_short}} as a targe. Record the file share's and the file share target's IDs.
 
@@ -129,7 +129,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. For mounting to the server, you need to get the defined target's NFS mount path.
+3. For mounting to the server, you need to get the defined target's NFS mount path.
 
    ```sh
    VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
@@ -153,7 +153,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
+4. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
 
 
 ## Attach {{site.data.keyword.vpc_short}} File share as a Datastore for a Compute Cluster in vCenter
@@ -190,11 +190,11 @@ Hosts:  esx-001.vmware.ibmcloud.local, esx-002.vmware.ibmcloud.local, esx-003.vm
 Your hosts will access NFS share using the ESXi hosts' management interfaces (PCI NICs) with this setup. This is for simplicity for this non-production setup.  
 {: note}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-nfs-next-steps}
 
 The next step in the tutorial series is:
 
-* OPTIONAL: [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
-* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
-* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+* OPTIONAL: [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan)
+* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

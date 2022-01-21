@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2021, 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,24 +27,20 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
+
 
 # Provision {{site.data.keyword.dns_full_notm}} for VMware deployment
 {: #vpc-bm-vmware-dns}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions, dns-svcs"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
-
-This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMware Deployment in {{site.data.keyword.vpc_short}}. {{site.data.keyword.dns_full_notm}} will be used and your {{site.data.keyword.vpc_short}} will be configured to access and use the deployed DNS serrvice.
@@ -72,7 +68,7 @@ This tutorial is part of series, and requires that you have completed the relate
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 
 ## Provision IBM Cloud DNS service
@@ -172,9 +168,9 @@ DNS records for the ESXi hosts will be created after they will be provisioned in
    ```
    {: codeblock}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-dns-next-steps}
 
 The next step in the tutorial series is:
 
-* [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)

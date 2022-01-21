@@ -1,13 +1,13 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-10"
+  years: 2021, 2022
+lastupdated: "2022-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vmwaresolutions, vpc
+services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 1h
 ---
@@ -27,7 +27,6 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
 
 # Provision {{site.data.keyword.bm_is_short}} for VMware deployment
 {: #vpc-bm-vmware-bms}
@@ -38,13 +37,9 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
-
-This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 This tutorial will show how to [provision {{site.data.keyword.bm_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-creating-bare-metal-servers) into {{site.data.keyword.vpc_short}}, and how to provision network interfaces for vSphere VMkernel adapters (VMK) adapters.
@@ -86,7 +81,7 @@ This tutorial is part of series, and requires that you have completed the relate
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
-{: note}
+{:note}
 
 
 ## Validate {{site.data.keyword.bm_is_short}} images
@@ -128,7 +123,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    ```
    {: codeblock}
 
-2. During the Beta, following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
+2. The following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
 
    ```sh
    $ ibmcloud is bm-prs
@@ -197,7 +192,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    Note: If running inside of Git sh on Windows, prefix the above command with `MSYS_NO_PATHCONV=1`. In this case insert this inside the brackets, e.g. `$(MSYS_NO_PATHCONV=1 ibmcloud is ...`).
    {: note}
 
-1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
+2. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
    ```sh
    ibmcloud is bm $VMWARE_BMS001
@@ -343,10 +338,10 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 
 Next, you need to create VLAN NICs for VMkernel adapters (VMKs).
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float
+Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
-vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
-vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
+vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
+vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
 
 
 When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
@@ -404,7 +399,7 @@ Instance management VLAN NICs e.g. for vCenter will be created later.
 {: #vpc-bm-vmware-bms-vlannic-vsan}
 
 This phase is optional, if you use NFS.
-{: note}
+{:note}
 
 1. Create vSAN VLAN NICs for each host. Record the IP addresses for later use.
 
@@ -440,9 +435,9 @@ This phase is optional, if you use NFS.
    {: note}
 
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-bms-next-steps}
 
 The next step in the tutorial series is:
 
-* [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
