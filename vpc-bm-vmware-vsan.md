@@ -32,7 +32,7 @@ completion-time: 1h
 # Provision vSAN storage cluster
 {: #vpc-bm-vmware-vsan}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 
-This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 You need to have a minimum of three {{site.data.keyword.bm_is_short}} with local SSDs. Make sure you provisioned your {{site.data.keyword.bm_is_short}} with a compatible [profile](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-profile#bare-metal-servers-profile-list).  
@@ -162,6 +162,6 @@ If vSAN is your primary shared storage, migrate vCenter into your vSAN cluster. 
 
 The next step in the tutorial series is:
 
-* OPTIONAL: [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
-* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)
+* OPTIONAL: [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
+* [Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-newvm#vpc-bm-vmware-newvm)
+* [Provision {{site.data.keyword.vpc_short}} Public Gateways and Floating IPs for VMware Virtual Machines](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-pgwip#vpc-bm-vmware-pgwip)

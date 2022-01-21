@@ -31,7 +31,7 @@ completion-time: 1h
 # Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="8h"}
 
 <!--##istutorial#-->
@@ -174,4 +174,4 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 The next step in the tutorial series is:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)

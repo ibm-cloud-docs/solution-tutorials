@@ -31,7 +31,7 @@ completion-time: 1h
 # Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers
 {: #vpc-bm-vmware-nsx-t-routing}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 
-This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 In this tutorial, a {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for your NSX-T Tier 0 logical router external uplinks. Tier 0 logical router or Gateway will be connected to one or more the {{site.data.keyword.vpc_short}} subnets. When the interfaces are created, IP routing is configured between {{site.data.keyword.vpc_short}} and the NSX-T overlay networks. This phase is optional, if you plan to use NSX-T for your Virtual Machine networking.

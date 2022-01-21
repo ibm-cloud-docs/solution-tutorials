@@ -32,7 +32,7 @@ completion-time: 2h
 # Provision {{site.data.keyword.vpc_short}} for a VMware Deployment
 {: #vpc-bm-vmware-vpc}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 {: tip}
 <!--#/istutorial#-->
 
-This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 In this tutorial, you will deploy a {{site.data.keyword.vpc_short}} for a VMware Deployment and a jump machine for configuration tasks.
@@ -276,4 +276,4 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
 
 The next step in the tutorial series is:
 
-* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)

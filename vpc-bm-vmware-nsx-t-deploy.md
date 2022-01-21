@@ -31,7 +31,7 @@ completion-time: 1h
 # Deploy NSX-T Managers 
 {: #vpc-bm-vmware-nsx-t-managers}
 {: toc-content-type="tutorial"}
-{: toc-services="vmwaresolutions, vpc"}
+{: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 <!--#/istutorial#-->
 
 
-This tutorial is part of [series](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
+This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
 
 
@@ -192,4 +192,4 @@ Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](htt
 
 The next step in the tutorial series is:
 
-* [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
+* [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
