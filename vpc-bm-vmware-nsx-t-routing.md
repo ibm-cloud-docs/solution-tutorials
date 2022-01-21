@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-19"
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -318,7 +318,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: note}
 
 ## Create NSX-T VLAN backed segments 
-{: #vpc-bm-vmware-nsx-t-routing-create-t0}
+{: #vpc-bm-vmware-nsx-t-routing-create-segments}
 {: step}
 
 In the previous step, VLAN interfaces where created for the private and public uplinks using VLAN IDs `700` and `710`. These uplinks and {{site.data.keyword.vpc_short}} subnets will be used as transit networks, and for the T0 matching VLAN backed segments will be created in NSX-T. These VLAN backed segments will be used in the T0 external interface configurations. 

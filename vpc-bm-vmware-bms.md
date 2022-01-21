@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-01-19"
+  years: 2022
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -81,7 +81,7 @@ This tutorial is part of series, and requires that you have completed the relate
 [Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
-{:note}
+{: note}
 
 
 ## Validate {{site.data.keyword.bm_is_short}} images

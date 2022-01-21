@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-19"
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -91,7 +91,7 @@ VMware NSX-T™ Data Center SP license editions available include:
 * NSX Data Center SP Advanced
 * NSX Data Center SP Enterprise Plus.
 
-1. From the [IBM Cloud® Portal > Classic Infrastructure](https://cloud.ibm.com/classic/devices/vmwarelicenses)
+1. From the [{{site.data.keyword.cloud_notm}} Portal > Classic Infrastructure](https://{DomainName}/classic/devices/vmwarelicenses)
 2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
 3. Click the drop-down list under **Order VMware License**. to list the VMware products and number of CPUs for the licenses that you want to order.
 4. List of the VMware products and number of CPUs for the licenses that you want to order. Select **NSX Data Center SP Advanced** .
@@ -101,7 +101,7 @@ VMware NSX-T™ Data Center SP license editions available include:
 
 
 ## Review NSX-T installation requirements 
-{: #vpc-bm-vmware-nsx-t-managers-deploy}
+{: #vpc-bm-vmware-nsx-t-review}
 {: step}
 
 Before you start the actual NSX-T deployment, review the following requirements: 

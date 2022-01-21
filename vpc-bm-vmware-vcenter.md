@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-01-19"
+  years: 2022
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -74,7 +74,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 {: note}
 
 The used variables e.g. $VMWARE_SUBNET_MGMT, $VMWARE_BMS001 and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
-{:note}
+{: note}
 
 ## Provision VLAN NIC for vCenter
 {: #vpc-bm-vmware-vcenter-vlannic}
