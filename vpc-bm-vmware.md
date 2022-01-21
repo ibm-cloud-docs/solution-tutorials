@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vpc, vmwaresolutions
+services: vmwaresolutions, vpc
 account-plan: paid
 completion-time: 1h
 ---
@@ -31,7 +31,7 @@ completion-time: 1h
 # Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="8h"}
 
 <!--##istutorial#-->

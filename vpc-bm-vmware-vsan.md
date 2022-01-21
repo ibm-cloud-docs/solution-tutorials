@@ -7,7 +7,7 @@ lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
-services: vpc, vmwaresolutions
+services: vmwaresolutions, vpc
 account-plan: paid
 completion-time: 1h
 ---
@@ -32,7 +32,7 @@ completion-time: 1h
 # Provision vSAN storage cluster
 {: #vpc-bm-vmware-vsan}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions"}
+{: toc-services="vmwaresolutions, vpc"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
