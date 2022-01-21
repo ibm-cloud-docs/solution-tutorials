@@ -338,10 +338,10 @@ Before provisioning VLAN interfaces, configure each host's PCI NIC to allow VLAN
 
 Next, you need to create VLAN NICs for VMkernel adapters (VMKs).
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float
+Interface name        | Interface type | VLAN ID | Subnet              | Allow float
 ----------------------|----------------|---------|---------------------|--------------
-vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
-vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
+vlan-nic-vmotion-vmk2 | vlan           | 200     | $VMWARE_SUBNET_VMOT | false
+vlan-nic-vsan-vmk3    | vlan           | 300     | $VMWARE_SUBNET_VSAN | false
 
 
 When creating the VLAN NICs for VMware VMKs, they are not allowed to float between hosts.
@@ -399,7 +399,7 @@ Instance management VLAN NICs e.g. for vCenter will be created later.
 {: #vpc-bm-vmware-bms-vlannic-vsan}
 
 This phase is optional, if you use NFS.
-{:note}
+{: note}
 
 1. Create vSAN VLAN NICs for each host. Record the IP addresses for later use.
 
