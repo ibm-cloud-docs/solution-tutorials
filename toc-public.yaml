@@ -93,7 +93,7 @@ toc:
           - web-app-private-network.md
 
         - topicgroup:
-          label: VMware on Bare metal VPC (Beta)
+          label: VMware on VPC Bare metal servers
           topics:
           - vpc-bm-vmware.md
           - vpc-bm-vmware-vpc.md
@@ -104,6 +104,9 @@ toc:
           - vpc-bm-vmware-nfs.md
           - vpc-bm-vmware-newvm.md
           - vpc-bm-vmware-pgwip.md
+          - vpc-bm-vmware-nsx-t-vlannics.md
+          - vpc-bm-vmware-nsx-t-deploy.md
+          - vpc-bm-vmware-nsx-t-routing.md
 
         - topicgroup:
           label: VMware Solutions

@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2021-11-02"
+          "lastUpdated": "2021-12-09"
         }
       ]
     },
@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-09-20"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -54,7 +54,7 @@
             "Virtual Servers"
           ],
           "guide": true,
-          "lastUpdated": "2021-10-04"
+          "lastUpdated": "2021-12-14"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -70,7 +70,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2021-08-16"
+          "lastUpdated": "2021-11-30"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -84,7 +84,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-10-20"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -97,7 +97,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-10-20"
+          "lastUpdated": "2021-12-28"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -109,7 +109,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-10-20"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -135,7 +135,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2021-09-27"
+          "lastUpdated": "2021-12-07"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -149,7 +149,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-12-01"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -162,7 +162,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2021-11-18"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -176,7 +176,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -188,7 +188,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -200,7 +200,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2021-08-25"
+          "lastUpdated": "2021-12-07"
         },
         {
           "name": "Serverless web application and API",
@@ -224,7 +224,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2020-12-30"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -237,7 +237,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-09-23"
+          "lastUpdated": "2021-12-15"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -248,7 +248,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-09-27"
+          "lastUpdated": "2021-12-09"
         }
       ]
     },
@@ -301,7 +301,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-10-12"
+          "lastUpdated": "2021-11-25"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -314,7 +314,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-10-12"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -330,7 +330,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-10-28"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -346,7 +346,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-10-28"
+          "lastUpdated": "2021-12-09"
         }
       ]
     },
@@ -378,7 +378,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -405,7 +405,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-11-30"
         }
       ]
     },
@@ -427,7 +427,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-11-17"
+          "lastUpdated": "2021-12-09"
         }
       ]
     },
@@ -449,7 +449,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-07-13"
+          "lastUpdated": "2021-12-01"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -463,7 +463,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2021-07-13"
+          "lastUpdated": "2021-12-09"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -490,7 +490,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-08-24"
+          "lastUpdated": "2021-12-02"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -504,7 +504,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2021-01-08"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
@@ -521,7 +521,7 @@
             "PHP",
             "WordPress"
           ],
-          "lastUpdated": "2021-04-08"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
@@ -539,7 +539,7 @@
             "Linux",
             "Security"
           ],
-          "lastUpdated": "2021-09-30"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",
@@ -653,7 +653,7 @@
       ]
     },
     {
-      "name": "VMware on Bare metal VPC (Beta)",
+      "name": "VMware on VPC Bare metal servers",
       "anchor": "vmwarebmsvpc",
       "solutions": [
         {
@@ -665,7 +665,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware VPC",
@@ -676,7 +676,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware DNS",
@@ -687,7 +687,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware BMS",
@@ -698,7 +698,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-10"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware vCenter",
@@ -709,7 +709,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-10-04"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware VSAN",
@@ -720,7 +720,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware NFS",
@@ -731,7 +731,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware NewVM",
@@ -742,7 +742,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
         },
         {
           "name": "VMware PGWIP",
@@ -753,7 +753,40 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-09-09"
+          "lastUpdated": "2022-01-21"
+        },
+        {
+          "name": "VMware VLANs and NICs",
+          "url": "vpc-bm-vmware-nsx-t-vlannics.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-mgmt.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2022-01-21"
+        },
+        {
+          "name": "VMware Deploy NSX-T Managers",
+          "url": "vpc-bm-vmware-nsx-t-deploy.html",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210924v1-NSX-self-managed-mgmt.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2022-01-21"
+        },
+        {
+          "name": "VMware Routing",
+          "url": "vpc-bm-vmware-nsx-t-routing.md",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/vpc-ryo-diagrams-nsx-t-vpc-routing.svg",
+          "tags": [
+            "VMware",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2022-01-21"
         }
       ]
     },
@@ -769,7 +802,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2021-11-05"
+          "lastUpdated": "2021-12-08"
         }
       ]
     },
@@ -787,7 +820,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-10-07"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
@@ -799,7 +832,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-08-26"
+          "lastUpdated": "2021-12-06"
         },
         {
           "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
@@ -811,7 +844,7 @@
             "HPC",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2021-08-26"
+          "lastUpdated": "2021-12-06"
         }
       ]
     }
