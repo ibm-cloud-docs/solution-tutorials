@@ -29,7 +29,7 @@ completion-time: 1h
 {:preview: .preview}
 
 # Deploy NSX-T Managers 
-{: #vpc-bm-vmware-nsx-t-managers}
+{: #vpc-bm-vmware-nsx-t-deploy}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, vmwaresolutions"}
 {: toc-completion-time="1h"}
@@ -48,7 +48,7 @@ In this tutorial, NSX-T will be deployed on the VMware Cluster. This includes de
 {: shortdesc}
 
 ## Objectives
-{: #vpc-bm-vmware-nsx-t-managers-objectives}
+{: #vpc-bm-vmware-nsx-t-deploy-objectives}
 
 In the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics), you deployed required {{site.data.keyword.bm_is_short}} VLAN interfaces. The management IPs were registered to the DNS Service, so that these can be resolved with a name. These IP addresses and FQDNs will be used throughout this tutorial.
 
@@ -58,7 +58,7 @@ In this tutorial, you will first deploy one NSX-T manager on a {{site.data.keywo
 
 
 ## Before you begin
-{: #vpc-bm-vmware-nsx-t-managers-prereqs}
+{: #vpc-bm-vmware-nsx-t-deploy-prereqs}
 
 This tutorial requires:
 
@@ -79,7 +79,7 @@ When advised to use Web browser, use the jump machine provisioned in the [{{site
 {: note}
 
 ## Order a vCenter License from IBM Cloud
-{: #vpc-bm-vmware-nsx-t-managers-license}
+{: #vpc-bm-vmware-nsx-t-deploy-license}
 
 As a customer on IBM Cloud, you can bring your own license or you can obtain a license from IBM Cloud as a monthly fee.
 
@@ -114,7 +114,7 @@ Before you start the actual NSX-T deployment, review the following requirements:
 
 
 ## Deploy NSX-T managers and for a cluster
-{: #vpc-bm-vmware-nsx-t-managers-deploy}
+{: #vpc-bm-vmware-nsx-t-deploy-deploy}
 {: step}
 
 Follow the recommended order of procedures to deploy NSX-T on {{site.data.keyword.bm_is_full_notm}} with VMware ESXi.
@@ -130,7 +130,7 @@ Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](htt
 {: note}
 
 ## Create uplink profile
-{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-uplink-profile}
+{: #vpc-bm-vmware-nsx-t-deploy-transport-nodes-uplink-profile}
 {: step}
 
 In preparation for the next step, you will need to create a new uplink profile
@@ -139,7 +139,7 @@ In preparation for the next step, you will need to create a new uplink profile
 
 
 ## Add host transport nodes
-{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-hosts}
+{: #vpc-bm-vmware-nsx-t-deploy-transport-nodes-hosts}
 {: step}
 
 An NSX Edge Node is a transport node that runs the local control plane daemons and forwarding engines implementing the NSX-T data plane. It runs an instance of the NSX-T virtual switch called the NSX Virtual Distributed Switch, or N-VDS. The Edge Nodes are service appliances dedicated to running centralized network services that cannot be distributed to the hypervisors. An NSX Edge can belong to one overlay transport zone and multiple VLAN transport zones. In this example, the NSX edge belongs to one VLAN transport zone which represents the physical connectivity to provide the uplink access to {{site.data.keyword.vpc_short}}.
@@ -155,7 +155,7 @@ Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](htt
 {: note}
 
 ## Create a segment and port group for NSX-T edge deployment
-{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-prep}
+{: #vpc-bm-vmware-nsx-t-deploy-transport-nodes-prep}
 {: step}
 
 1. Create a NSX-T VLAN backed segment for the vlan transport zone using with the VLAN ID, e.g. `400`. For more information, see [Adding a Segment](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-D018DB03-0C07-4980-887D-AF3B3E93EF63.html){: external}
@@ -163,7 +163,7 @@ Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](htt
 
 
 ## Add edge transport nodes and create an edge cluster
-{: #vpc-bm-vmware-nsx-t-managers-transport-nodes-edges}
+{: #vpc-bm-vmware-nsx-t-deploy-transport-nodes-edges}
 {: step}
 
 Edge nodes are grouped in one or several clusters, representing a pool of capacity.
@@ -188,8 +188,8 @@ Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](htt
 
 
 ## Next steps
-{: #vpc-bm-vmware-nsx-t-managers-next-steps}
+{: #vpc-bm-vmware-nsx-t-deploy-next-steps}
 
 The next step in the tutorial series is:
 
-* [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
+* [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-routing#vpc-bm-vmware-nsx-t-routing)
