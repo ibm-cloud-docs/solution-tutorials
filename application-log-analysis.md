@@ -94,7 +94,7 @@ In addition, make sure you:
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
 - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
-  - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
+- Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 <!--#/istutorial#-->
 
@@ -132,7 +132,7 @@ In a terminal window:
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
-   
+
 1. Change to the application directory
    ```sh
    cd application-log-analysis
@@ -417,10 +417,10 @@ To focus the dashboard on your cluster:
 - Remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
-  ```sh
-  ibmcloud ks cluster rm --cluster $MYCLUSTER -f
-  ```
-  {: pre}
+   ```sh
+   ibmcloud ks cluster rm --cluster $MYCLUSTER -f
+   ```
+   {: pre}
 
 <!--#/istutorial#-->
 
