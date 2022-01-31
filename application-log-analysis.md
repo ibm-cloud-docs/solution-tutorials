@@ -132,6 +132,7 @@ In a terminal window:
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
+   
 1. Change to the application directory
    ```sh
    cd application-log-analysis
