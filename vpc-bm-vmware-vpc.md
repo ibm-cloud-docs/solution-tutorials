@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2022
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,7 @@ completion-time: 2h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
+
 
 # Provision {{site.data.keyword.vpc_short}} for a VMware Deployment
 {: #vpc-bm-vmware-vpc}
@@ -38,11 +38,7 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -268,14 +264,14 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
    ```
    {: codeblock}
 
-7. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
+1. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
 
-8. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
+2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
 
    You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
    {: tip}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-vpc-next-steps}
 
 The next step in the tutorial series is:

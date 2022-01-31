@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-10"
+  years: 2022
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -27,7 +27,6 @@ completion-time: 1h
 {:note: .note}
 {:tip: .tip}
 {:preview: .preview}
-{:beta: .beta}
 
 # Provision {{site.data.keyword.bm_is_short}} for VMware deployment
 {: #vpc-bm-vmware-bms}
@@ -38,11 +37,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
-
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
-{: beta}
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -128,7 +123,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    ```
    {: codeblock}
 
-2. During the Beta, following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
+2. The following images are available. The `bx2` profile provides minimal local storage and this profile would be used with File Storage based environments. The `bxd2` comes with more local disk which can be used to form a vSAN Storage.
 
    ```sh
    $ ibmcloud is bm-prs
@@ -197,7 +192,7 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    Note: If running inside of Git sh on Windows, prefix the above command with `MSYS_NO_PATHCONV=1`. In this case insert this inside the brackets, e.g. `$(MSYS_NO_PATHCONV=1 ibmcloud is ...`).
    {: note}
 
-1. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
+2. To show details for each BMS, you can use the following commands, swapping out the bare metal variable:
 
    ```sh
    ibmcloud is bm $VMWARE_BMS001
@@ -440,7 +435,7 @@ This phase is optional, if you use NFS.
    {: note}
 
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-bms-next-steps}
 
 The next step in the tutorial series is:

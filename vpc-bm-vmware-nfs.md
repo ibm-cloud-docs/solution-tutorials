@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-09-09"
+  years: 2022
+lastupdated: "2022-01-21"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -38,11 +38,11 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
-This is a Beta feature that requires special approval. Contact your IBM Sales representative if you are interested in getting access.
+File Storage in {{site.data.keyword.vpc_short}} is available for customers with special approval to preview this service in the selected regions. Contact your IBM Sales representative if you are interested in getting access.
 {: beta}
+
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -115,7 +115,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: screen}
 
-1. Create a file share.
+2. Create a file share.
 
    In this example, a 1TB with 10IOPS/GB file share is created with using the previously created {{site.data.keyword.vpc_short}} as a targe. Record the file share's and the file share target's IDs.
 
@@ -129,7 +129,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. For mounting to the server, you need to get the defined target's NFS mount path.
+3. For mounting to the server, you need to get the defined target's NFS mount path.
 
    ```sh
    VMWARE_DATASTORE01_TARGET01_MOUNTPATH=$(ibmcloud is share-target $VMWARE_DATASTORE01 $VMWARE_DATASTORE01_TARGET01 --output json | jq -r .mount_path)
@@ -153,7 +153,7 @@ To Create a file share in {{site.data.keyword.vpc_short}} you can use either CLI
    ```
    {: codeblock}
 
-1. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
+4. Use the **Server** and **Folder** values when configuring the datastore in vCenter.
 
 
 ## Attach {{site.data.keyword.vpc_short}} File share as a Datastore for a Compute Cluster in vCenter
@@ -190,7 +190,7 @@ Hosts:  esx-001.vmware.ibmcloud.local, esx-002.vmware.ibmcloud.local, esx-003.vm
 Your hosts will access NFS share using the ESXi hosts' management interfaces (PCI NICs) with this setup. This is for simplicity for this non-production setup.  
 {: note}
 
-## Next Steps
+## Next steps
 {: #vpc-bm-vmware-nfs-next-steps}
 
 The next step in the tutorial series is:
