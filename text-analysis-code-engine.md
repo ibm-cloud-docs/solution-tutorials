@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
+lastupdated: "2022-02-01"
 lasttested: "2021-12-09"
 
 content-type: tutorial
@@ -154,7 +154,7 @@ We've already built images for the two applications and pushed them to the publi
 
 1. To deploy a new {{site.data.keyword.codeengineshort}} application, run the following command; providing a service name `frontend` and the pre-built container image as a parameter to `--image` flag.
    ```sh
-   ibmcloud code-engine application create --name frontend --image ibmcom/frontend
+   ibmcloud code-engine application create --name frontend --image icr.io/solution-tutorials/tutorial-text-analysis-code-engine-frontend
    ```
    {: pre}
 
@@ -225,7 +225,7 @@ Most of these values have a default set if nothing is provided as an option when
 
 1. To deploy a new backend application to store your text files into {{site.data.keyword.cos_full_notm}}, run this command
    ```sh
-   ibmcloud code-engine application create --name backend --image ibmcom/backend --cluster-local
+   ibmcloud code-engine application create --name backend --image icr.io/solution-tutorials/tutorial-text-analysis-code-engine-backend --cluster-local
    ```
    {: pre}
 
@@ -370,7 +370,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 
 1. On a terminal, run the following command to create a job,
    ```sh
-   ibmcloud code-engine job create --name backend-job --image ibmcom/backend-job --env-from-configmap backend-configuration
+   ibmcloud code-engine job create --name backend-job --image icr.io/solution-tutorials/tutorial-text-analysis-code-engine-backend-job --env-from-configmap backend-configuration
    ```
    {: pre}
 
