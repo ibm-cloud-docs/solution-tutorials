@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
-lasttested: "2021-12-09"
+lastupdated: "2022-02-02"
+lasttested: "2022-02-02"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
@@ -60,6 +60,9 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
+
 Optionally:
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/) for high-speed data upload to {{site.data.keyword.cos_short}}.
 
@@ -95,7 +98,7 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-4. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query). Replace **us-south** by your region, if needed.
+4. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query). Replace **us-south** by your region, if needed. If you already have {{site.data.keyword.sqlquery_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
@@ -104,6 +107,12 @@ This section uses the command line to create service instances. Alternatively, y
 5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
     ibmcloud resource service-instance-create data-lake-studio data-science-experience free-v1 us-south
+    ```
+    {: pre}
+    
+6. Create an API key for service access. Copy the output to a secure, permanent location for later use.
+    ```sh
+    ibmcloud iam api-key-create data-lake-cos-key --output json
     ```
     {: pre}
 
@@ -120,7 +129,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Select **Custom bucket/Customize your bucket**.
     - Select **Regional** in the **Resiliency** section.
     - Select a **Location**.
-    - Provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with an unique bucket name.
+    - Close to the top of the form, provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with a unique bucket name.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
     - From your bucket, click **Upload** > **Files**.
     - Select **Standard Upload** to use regular http file transfer or select the **Aspera high-speed transfer. Requires installation.** radio button.
@@ -169,41 +178,37 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 
 In this section, you will use the {{site.data.keyword.sqlquery_short}} client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be accessed by applications and tools serving line of business users.
 
-1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
-    - Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from your [Resource List](https://{DomainName}/resources).
+First, create a new Jupyter Notebook and service connections in {{site.data.keyword.DSX}}.
+1. Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from your [Resource List](https://{DomainName}/resources).
     - Click **Launch in IBM Cloud Pak for Data**
     - Click **Create a Project** followed by **Create an empty project**.
     - Use **Data lake project** as **Name**.
     - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
-    - In the resulting project, click **Add to project** and **Notebook**.
+2. In the resulting project, click **Add to project** and **Connection**.
+    - From the list of services select {{site.data.keyword.sqlquery_short}}.
+    - In the dialog enter **SQLQuery** as **Name**.
+    - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](https://{DomainName}/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
+    - Fill in `cos://us-south/<your-bucket-name>` as **Target**. Replace `us-south` and `<your-bucket-name>` similar to how you did it earlier.
+    - As **Password** under **Credentials** use the API key which you created earlier. The value is from the field **apikey**.
+    - Finally, click **Create**.
+3.  Now create the notebook. Click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Data lake notebook** as **Name**.
     - Leave the **Runtime** and **Language** as default and click **Create**.
 
-2. From the Notebook, install ibmcloudsql by adding the following command to the `In [ ]:` input prompt and then **Run**
+Once the notebook is available, follow these steps.
+1. On the top right of the notebook click on the three dot menu and pick **Insert project token**. It inserts a code snippet into the first cell. **Run** that cell.
+2. Install ibmcloudsql, the required version of pandas and folium by adding the following commands to the next `In [ ]:` input prompt (cell) and then **Run**.
     ```python
     !pip install ibmcloudsql
+    !pip install pandas==1.3.4
+    !pip install folium
     ```
     {: codeblock}
 
     You may see an error message relating to dependency problems which can be safely ignored for this tutorial
     
-
-2. From the Notebook, install the required version of pandas by adding the following commands to the `In [ ]:` input prompt and then **Run**
-    ```python
-    !pip install pandas==1.3.4
-    ```
-    {: codeblock}
-
-    You may see an error message relating to dependency problems which can be safely ignored for this tutorial
-
-2. From the Notebook, install folium by adding the following commands to the `In [ ]:` input prompt and then **Run**
-    ```python
-    !pip install folium
-    ```
-    {: codeblock}
-
-2. From the Notebook, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
+3. In the next cell, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     import folium
     from folium.plugins import HeatMap
@@ -211,48 +216,16 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     ```
     {: codeblock}
 
-3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow {{site.data.keyword.sqlquery_short}} results to be stored in {{site.data.keyword.cos_short}}.
-    - Add the following in the next cell, the `In [ ]:` prompt, and then **Run**.
-        ```python
-        import getpass
-        cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
-        ```
-        {: codeblock}
-
-    - From the terminal, create an API key.
-        ```sh
-        ibmcloud iam api-key-create data-lake-cos-key
-        ```
-        {: pre}
-
-    - Copy the **API Key** to the clipboard.
-    - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
-    - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-4. Add the {{site.data.keyword.sqlquery_short}} instance's CRN (Cloud Resource Name) to the Notebook.
-    - In the next cell, assign the CRN to a variable in your Notebook. Copy the following into it, but do not run it yet.
-        ```python
-        sql_crn = '<SQL_QUERY_CRN>'
-        ```
-        {: codeblock}
-
-    - From the terminal, copy the CRN from the **ID** property to your clipboard.
-        ```sh
-        ibmcloud resource service-instance data-lake-sql
-        ```
-        {: pre}
-
-    - Paste the CRN between the single quotes, replacing **<SQL_QUERY_CRN>** and then **Run**.
-5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} location and bucket and **Run**.
+4. Enter the following commands into the next cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
-    sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
-    ```
-    {: codeblock}
 
-6. Enter the following commands in another cell and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
-    ```python
-    sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
+    sqlquery_config=project.get_connection(name="SQLQuery")
 
-    data_source = sql_cos_endpoint + "/Traffic_Collision_Data_from_2010_to_Present.csv"
+    sqlClient = ibmcloudsql.SQLQuery(sqlquery_config['password'], sqlquery_config['crn'], sqlquery_config['target_cos_url'] + '/accidents')
+
+    data_source = sqlquery_config['target_cos_url'] + "/Traffic_Collision_Data_from_2010_to_Present.csv"
+
+    
 
     query = """
     SELECT
@@ -271,6 +244,8 @@ In this section, you will use the {{site.data.keyword.sqlquery_short}} client wi
     traffic_collisions.head()
     ```
     {: codeblock}
+
+    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp) retrieves the previously configured connection properties.
 
 ## Visualize data using folium
 {: #smart-data-lake-6}
@@ -339,7 +314,7 @@ In this section, you will visualize the previous result set using a folium heat 
 {: #smart-data-lake-7}
 {: step}
 
-Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. The tutorial on [combining serverless and Cloud Foundry for data retrieval and analytics](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-serverless-github-traffic-analytics) uses {{site.data.keyword.dynamdashbemb_notm}} to provide visualizations as part of a web app.
+Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
 
 ![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
 {: style="text-align: center;"}
