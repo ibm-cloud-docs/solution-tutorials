@@ -109,6 +109,7 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-instance-create data-lake-studio data-science-experience free-v1 us-south
     ```
     {: pre}
+    
 6. Create an API key for service access. Copy the output to a secure, permanent location for later use.
     ```sh
     ibmcloud iam api-key-create data-lake-cos-key --output json
