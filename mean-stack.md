@@ -183,7 +183,7 @@ We've already built a container image for the application and pushed it to the p
 3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository.  If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
    
    ```sh
-   ibmcloud code-engine application create --name mean-stack --image icr.io/solution-tutorials/mean-stack --env-from-secret mean-stack-secrets
+   ibmcloud code-engine application create --name mean-stack --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
    ```
    {: codeblock}
 
