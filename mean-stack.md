@@ -187,7 +187,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-stack.<randome_name>.ca-tor.codeengine.appdomain.cloud/`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
+4. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-stack.<random_name>.ca-tor.codeengine.appdomain.cloud/`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
 
 ## Scaling MongoDB database resources
 {: #mean-stack-scaledatabase}
