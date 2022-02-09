@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
+lastupdated: "2022-02-01"
 lasttested: "2021-12-01"
 
 content-type: tutorial
@@ -113,7 +113,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
 
 1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: new_windows}.
    ```bash
-   kubectl create deploy hello-world-deployment --image=ibmcom/tutorial-scalable-webapp-kubernetes
+   kubectl create deploy hello-world-deployment --image=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
    ```
    {: pre}
 

@@ -1,15 +1,14 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-15"
+  years: 2022
+lastupdated: "2022-02-09"
 lasttested: "2021-12-03"
 
 content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
 account-plan: paid
 completion-time: 2h
-
 ---
 
 {:step: data-tutorial-type='step'}
@@ -95,7 +94,7 @@ In addition, make sure you:
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
 - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
-   - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
+- Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 <!--#/istutorial#-->
 
@@ -133,7 +132,7 @@ In a terminal window:
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
-   
+
 1. Change to the application directory
    ```sh
    cd application-log-analysis
@@ -264,7 +263,7 @@ In this section, you will modify what and how much is displayed and save this as
 
 1. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 1. To highlight the terms, click on **Toggle Viewer Tools** icon.
-1. Type **error** as your highlight term in the first input box and hit **Enter** on your keyboard. Check the highlighted lines with the terms. 
+1. Type **error** as your highlight term in the first input box and hit **Enter** on your keyboard. Check the highlighted lines with the terms.
 1. Type **container** as your highlight term in the second input box and hit **Enter** on your keyboard. Check the highlighted lines with the terms.
 1. Click on **Toggle Timeline** icon to see lines with logs at a specific time of a day.
 
@@ -328,32 +327,33 @@ During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is e
    ```
 
 Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#application-log-analysis-deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
-   ```yaml
-   spec:
-     template:
-       metadata:
-         annotations:
-           prometheus.io/scrape: "true"
-           prometheus.io/port: "8002"
-   ```
+```yaml
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8002"
+```
 
-The application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
+The application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics. You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
 {: tip}
 
 Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
-   1. Leave **Use private endpoint** checked if possible and click **Create and connect**.
-   2. Select a region where you have your cluster created.
-   3. Select **Graduated Tier** as your plan.
-   4. Create a unique **Service name** such as `<your-initials>-monitoring`.
-   5. Use the resource group associated with your cluster.
-   6. Leave IBM platform metrics to `Disable` and click **Create**.
+
+1.  Leave **Use private endpoint** checked if possible and click **Create and connect**.
+2.  Select a region where you have your cluster created.
+3.  Select **Graduated Tier** as your plan.
+4.  Create a unique **Service name** such as `<your-initials>-monitoring`.
+5.  Use the resource group associated with your cluster.
+6.  Leave IBM platform metrics to `Disable` and click **Create**.
 
 ### Monitor your cluster
 {: #application-log-analysis-19}
 
 To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
 
-Note: Change the interval to **5 M** or **1 M** on the bottom bar of the UI.
+Note: Change the interval to **5 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
@@ -367,7 +367,7 @@ Note: Change the interval to **5 M** or **1 M** on the bottom bar of the UI.
    - Click **Done** and Double click the box to expand the view.
 6. To monitor the Kubernetes namespace where the application is running,
    - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
-   - Type `Kubernetes Namespace Overview`  in the `Search Metrics and Dashboards` field and click on it from the dropdown.
+   - Type `Kubernetes Namespace Overview` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
 
 The sample application that was deployed includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
@@ -377,11 +377,11 @@ The sample application that was deployed includes code to generate **custom metr
 1. Expand your cluster name on the left pane, then expand **default** namespace and then click on **app-log-analysis-deployment**.
 2. To monitor the calls to a given api endpoint of the application,
    - From the Explore tab, select `Deployments`.
-   - Type `wolam_api_counter_total`  in the `Search Metrics and Dashboards` field and click on it from the dropdown.
-   - Select Time: **Average**, Group: **Sum**, Segment: **endpoint**
+   - Type `wolam_api_counter_total` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
+   - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
 3. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 4. To monitor the calls to a given api endpoint of the application by region,
-   - Select Time: **Average**, Group: **Sum**, Segment: **region**
+   - Select Time: **Sum**, Group: **Average**, Segment: **region**
 
 ### Create a custom dashboard
 {: #application-log-analysis-20}
@@ -392,7 +392,7 @@ To create a dashboard with a first panel:
 1. Click on **Dashboards** on the left most pane > click **+** (add dashboard).
 2. In the New Panel, set the **Metrics** to **net.http.request.time**.
 3. Set **Segmentation** to **container.id**.
-4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
 5. Save the dashboard.
 
 To add another panel:
@@ -401,7 +401,7 @@ To add another panel:
 3. Set the **Metric** to **net.http.request.count**.
 4. Set the **Time Aggregation** to **Rate**.
 5. Set the **Group Rollup** to **Sum**.
-6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
 7. Enable **Compare To** and set the value to **1 Hour ago**.
 8. Save the dashboard.
 
