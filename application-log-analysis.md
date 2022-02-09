@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-31"
+lastupdated: "2022-02-09"
 lasttested: "2021-12-03"
 
 content-type: tutorial
@@ -392,7 +392,7 @@ To create a dashboard with a first panel:
 1. Click on **Dashboards** on the left most pane > click **+** (add dashboard).
 2. In the New Panel, set the **Metrics** to **net.http.request.time**.
 3. Set **Segmentation** to **container.id**.
-4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
 5. Save the dashboard.
 
 To add another panel:
@@ -401,7 +401,7 @@ To add another panel:
 3. Set the **Metric** to **net.http.request.count**.
 4. Set the **Time Aggregation** to **Rate**.
 5. Set the **Group Rollup** to **Sum**.
-6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `us.icr.io/<namespace>/initials-app-log-analysis-latest`.
+6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
 7. Enable **Compare To** and set the value to **1 Hour ago**.
 8. Save the dashboard.
 
