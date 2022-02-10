@@ -64,6 +64,9 @@ This tutorial requires:
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
 <!--#/istutorial#-->
 
 In addition, make sure you [install Node.js](https://nodejs.org/).
@@ -74,7 +77,7 @@ In addition, make sure you [install Node.js](https://nodejs.org/).
 
 {: #createdatabase}
 
-In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [IBM cloud catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
+In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
 
 {: shortdesc}
 
@@ -86,9 +89,9 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
    ```
    {: codeblock}
 
-   You can find more CLI commands [here](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli).
+   You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](https://{DomainName}/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://cloud.ibm.com/docs/databases-for-mongodb?topic=cloud-databases-provisioning#use-cli). This can also be done using the [console UI](https://{DomainName}/catalog/services/databases-for-mongodb). The service name must be named **mean-starter-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
+2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=cloud-databases-provisioning#use-cli) or use the [console UI](https://{DomainName}/catalog/services/databases-for-mongodb). The service name must be named **mean-starter-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
 
    ```sh
    ibmcloud resource service-instance-create mean-starter-mongodb databases-for-mongodb standard ca-tor
@@ -173,7 +176,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-2. Create a secret in the project that contains the keys/values from the `.env` file.
+2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Setting up and using secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret).
    
    ```sh
    ibmcloud ce secret create --name mean-stack-secrets --from-env-file .env
@@ -187,7 +190,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-stack.<random_name>.ca-tor.codeengine.appdomain.cloud/`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
 
 ## Scaling MongoDB database resources
 {: #mean-stack-scaledatabase}
@@ -215,8 +218,11 @@ To remove resource, follow these steps:
    ```
    {: pre}
    
-2. Visit the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources). Locate your app.
 2. Delete the {{site.data.keyword.databases-for-mongodb}} service.
+   ```sh
+   ibmcloud resource service-instance-delete mean-starter-mongodb
+   ```
+   {: pre}
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
