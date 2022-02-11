@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
-lasttested: "2021-10-12"
+  years: 2022
+lastupdated: "2022-02-11"
+lasttested: "2022-02-11"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
@@ -95,7 +95,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.8.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -138,7 +138,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -155,7 +155,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.8.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.9.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
@@ -197,7 +197,7 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 
 1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **+Add** on the left and **Project: example-health** on the top.
    ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png)
-2. Let's build and deploy the application by selecting **From Git**.
+2. Let's build and deploy the application by selecting **Import from Git**.
 3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend.git` in the Git Repo URL field.
    * Note the `Validated` indication.
    * Note that the builder image automatically detected the language Node.js. If not detected, select `Node.js` from the provided list.
@@ -332,32 +332,35 @@ Almost all actions in {{site.data.keyword.openshiftshort}} result in an event be
 {: #openshift-microservices-metrics}
 {: step}
 
-In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
+In this section explore the monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
 
-### Grafana
+### Dashboards with Grafana
 {: #openshift-microservices-14}
 
 Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](https://grafana.com/) preinstalled.
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
-2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
-   - If inline, select **Kubernetes / Compute Resources / Namespace (Pods)** from the dropdown and Namespace to **example-health**
-   - If you have clicked **Grafana UI** link, You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
+2. Navigate to **Observe > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
+1. Select **Kubernetes / Compute Resources / Namespace (Pods)** from the dropdown and Namespace to **example-health**.
 3. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
+4. To access the full Grafana experience:
+   1. Navigate to **Networking > Routes**
+   1. In the **Project** dropdown, check *Show default projects*
+   1. Select the **openshift-monitoring** project.
+   1. Open the link associated with the *grafana* route.
+   1. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
    ![Grafana CPU view](images/solution55-openshift-microservices/ocp45-grafana-cpu.png)
-   
 
-### Prometheus
+### Metrics with Prometheus
 {: #openshift-microservices-15}
 
-Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch:
-
-* [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
-* [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
+Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch **Metrics** and **Alerting**. They are embedded the following open-source monitoring solutions:
+   * [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
+   * [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
 
 {{site.data.keyword.openshiftshort}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
 
-1. The Metrics page is accessible in the **Administrator** perspective by clicking **Monitoring → Metrics**.
+1. The Metrics page is accessible in the **Administrator** perspective by clicking **Observe → Metrics**.
 2. You can either view the metrics inline or access the Prometheus UI by clicking on the **Platform Prometheus UI** link next to `Metrics` in the top.
 3. If you are using the inline metrics view, in the `Expression` box, enter the below query and click **Run queries**. You should see the value and the graph associated with the query.
 
@@ -366,12 +369,15 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    ```
    {: codeblock}
 
-4. Navigate through the **Prometheus UI** by clicking the link. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
+4. To access the full **Prometheus** experience:
+   1. Navigate to **Networking > Routes**
+   1. In the **Project** dropdown, check *Show default projects*
+   1. Select the **openshift-monitoring** project.
+   1. Open the link associated with the *prometheus* route.
+   1. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Prometheus dashboard.
 5. In the top box a query expression can be entered. Paste the above query to look into your frontend.
 6. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp48.png)
-
-7. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
 {: #openshift-microservices-scaling}
@@ -387,7 +393,10 @@ Before autoscaling maximum CPU and memory resource limits must be established.
 Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deploymentConfig
 
 1. Make sure the script to generate traffic is running. 
-1. Switch to the **Administrator** perspective and then navigate to **Workloads > DeploymentConfigs** in the left-hand bar. Choose the `patient-health-frontend` Deployment Configs, then choose **Actions menu (three vertical dots) > Edit DeploymentConfig**.
+1. Switch to the **Administrator** perspective.
+1. Navigate to **Workloads > DeploymentConfigs**.
+1. Select the **example-health** project.
+1. From the **Actions** menu (the three vertical dots) of `patient-health-frontend`, choose **Edit DeploymentConfig**.
    ![Deployments](images/solution55-openshift-microservices/ocp48-deploymentconfigs.png)
 1. Under the **YAML view**, find the section **spec > template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
@@ -416,7 +425,7 @@ Grafana earlier showed you that the load was consuming anywhere between ".002" t
               memory: 40Mi
           terminationMessagePath: /dev/termination-log
    ```
-1. **Save** and **Reload** to see the new version.
+1. **Save** to apply the changes.
 1. Verify that the replication controller has been changed by navigating to **Events** tab:
    ![Resource Limits](images/solution55-openshift-microservices/ocp48-dc-events.png)
 
@@ -742,13 +751,13 @@ It can take a few minutes for logging and metric data to flow through the analys
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift)
 2. Click on your cluster and verify the **Overview** tab on the left is selected
-3. Click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
+3. Scroll to **Integrations** and if **Logging** is not connected, click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
    1. Click **Create an instance**.
    2. Select same location as to where your cluster is created.
    3. Select **7 day Log Search** as your plan.
    4. Enter a unique **Service name** such as `<your-initials>-logging`.
    5. Use the resource group associated with your cluster and click **Create**.
-4. Back on the cluster **Overview** tab, click the Monitoring **Connect** button. Use an existing {{site.data.keyword.mon_short}} instance or create a new instance as shown below:
+4. Back on the cluster **Overview** tab, follow the same procedure to **Connect** Monitoring. Use an existing {{site.data.keyword.mon_short}} instance or create a new instance as shown below:
    1. Click **Create an instance**.
    2. Select the same location as to where your cluster is created.
    3. Select **Graduated Tier** as your plan.
@@ -871,10 +880,9 @@ With the application now connected to a database for its data, to simulate load 
 ### Customize your default view
 {: #openshift-microservices-32}
 
-In the **USER PREFERENCES** section, you can modify the order of the data fields that are displayed per line.
+In the **User Preferences**, you can modify the order of the data fields that are displayed per line.
 
-1. Select the **Configuration** icon ![Admin icon](images/solution55-openshift-microservices/admin.png).
-2. Select **USER PREFERENCES**. A new window opens.
+1. Click your profile icon in the bottom left and select **User Preferences**.
 3. Select **Log Format**.
 4. Modify the _Line Format_ section to match your requirements. Drag boxes around. Click **Done**.
    For example, add **%app** after the timestamp.
@@ -1121,7 +1129,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
 
-2. Select the **Kubernetes > Cluster and Node Capacity** template:
+2. Select the **Kubernetes > Node Status & Performance** template:
    - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
    - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons.
    - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster.
@@ -1131,14 +1139,14 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 ### Explore the Network
 {: #openshift-microservices-45}
 
-1. Select **Dashboards** and the template **Host Infrastructure > Network Traffic & Bandwidth**.
+1. Select **Dashboards** and the template **Host Infrastructure > Network**.
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
-   ![Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-2.png)
+   ![Network](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Create a customized dashboard and then scope it to a specific namespace.
-   - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network Traffic & Bandwidth`
+   - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network`
    - Click **Create and Open**.
    - Edit the dashboard scope.
    - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`.
@@ -1197,4 +1205,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.8/nodes/pods/nodes-pods-autoscaling.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html)
