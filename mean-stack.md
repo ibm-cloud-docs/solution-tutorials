@@ -195,7 +195,7 @@ We've already built a container image for the application and pushed it to the p
 {: #mean-stack-scalecompute}
 {: step}
 
-{{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](https://{DomainName}/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resorces, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
+{{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](https://{DomainName}/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resources, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
 {: shortdesc}
 
 1. Navigate to the Code Engine [Projects page](https://{DomainName}/codeengine/projects).
