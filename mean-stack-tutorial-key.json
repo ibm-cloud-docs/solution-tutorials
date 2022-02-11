@@ -1,0 +1,14 @@
+{
+	"id": "ApiKey-c611970f-4539-497d-9a66-7b357ca5a459",
+	"crn": "crn:v1:bluemix:public:iam-identity::a/00bbecaae6a8c4b4fdc16531663a1aecF-1793421F::apikey:ApiKey-c611970f-4539-497d-9a66-7b357ca5a459",
+	"iam_id": "IBMid-1200007M5V",
+	"account_id": "00bbecaae6a8c4b4fdc16531663a1aec",
+	"name": "mean-stack-tutorial-key",
+	"description": "API key for MEAN Stack tutorial",
+	"apikey": "uQFGu2oTB7xW6Gml7wIRe1HJq85hwNJrh5jDN9AGbOtP",
+	"locked": false,
+	"entity_tag": "1-c681ed950bfa95c6061c5e90f6c39606",
+	"created_at": "2022-02-02T15:16+0000",
+	"created_by": "IBMid-1200007M5V",
+	"modified_at": "2022-02-02T15:16+0000"
+}
