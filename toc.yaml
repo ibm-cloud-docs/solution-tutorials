@@ -157,7 +157,6 @@ toc:
           topics:
           - static-files-cdn.md
           - plan-create-update-deployments.md
-          - mean-stack.md
           - sql-database.md
           - multi-region-webapp.md
 
@@ -171,6 +170,7 @@ toc:
         - topicgroup:
           label: Code Engine
           topics:
+          - mean-stack.md
           - text-analysis-code-engine.md
           - serverless-github-traffic-analytics.md
 

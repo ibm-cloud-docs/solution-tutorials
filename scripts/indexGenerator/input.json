@@ -274,12 +274,12 @@
           "description": "Build a web application using the popular MEAN stack - Mongo DB, Express, Angular, Node.js. Run the app locally, create and use a database-as-a-service, deploy the app and monitor the application.",
           "imgSrc": "images/solution7/Architecture.png",
           "tags": [
-            "Cloud Foundry",
+            "Code Engine",
             "Node.js",
-            "Compose for MongoDB"
+            "Databases for MongoDB"
           ],
           "requirements": [
-            "cloud_foundry",
+            "code_engine",
             "databases_for_mongodb"
           ],
           "supportsCloudShell": "yes_with_modifications"
