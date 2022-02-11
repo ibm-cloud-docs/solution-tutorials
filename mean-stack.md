@@ -165,7 +165,7 @@ In this section, you will clone a MEAN sample code and run the application local
 
 {{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
 
-We've already built a container image for the application and pushed it to the public {{{site.data.keyword.registryfull_notm}}. You will use this pre-built container image to deploy the application.
+We've already built a container image for the application and pushed it to the public {{site.data.keyword.registryfull_notm}}. You will use this pre-built container image to deploy the application.
 {: shortdesc}
 
 1. Create a project in {{site.data.keyword.codeenginefull_notm}}.
