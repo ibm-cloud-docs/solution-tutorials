@@ -38,7 +38,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-01"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -184,11 +184,11 @@
           "description": "Build a web application using the popular MEAN stack - Mongo DB, Express, Angular, Node.js. Run the app locally, create and use a database-as-a-service, deploy the app and monitor the application.",
           "imgSrc": "images/solution7/Architecture.png",
           "tags": [
-            "Cloud Foundry",
+            "Code Engine",
             "Node.js",
-            "Compose for MongoDB"
+            "Databases for MongoDB"
           ],
-          "lastUpdated": "2021-12-06"
+          "lastUpdated": "2022-02-11"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -237,7 +237,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2021-12-15"
+          "lastUpdated": "2022-02-09"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -248,7 +248,7 @@
             "Code Engine",
             "Knative"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-01"
         }
       ]
     },
@@ -314,7 +314,7 @@
             "Cloud Internet Services",
             "Security"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-01"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -330,7 +330,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-01"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -378,7 +378,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-02"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -665,7 +665,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-01-31"
         },
         {
           "name": "VMware VPC",
@@ -764,7 +764,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-01-27"
         },
         {
           "name": "VMware Deploy NSX-T Managers",
@@ -775,7 +775,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-01-27"
         },
         {
           "name": "VMware Routing",
@@ -802,7 +802,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2021-12-08"
+          "lastUpdated": "2022-01-31"
         }
       ]
     },
