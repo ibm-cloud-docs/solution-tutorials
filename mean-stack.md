@@ -32,7 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale the database resources.
+This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale both the runtime and database resources.
 {: shortdesc}
 
 ## Objectives
@@ -41,9 +41,10 @@ This tutorial walks you through the creation of a web application using the popu
 {: #objectives}
 
 - Create and run a starter Node.js app locally.
-- Create a managed database-as-a-service (DBasS).
+- Create a managed {{site.data.keyword.databases-for-mongodb}} instance.
 - Deploy the Node.js app to the cloud using {{site.data.keyword.codeengineshort}}.
-- Scale MongoDB memory and disk resources.
+- Scale runtime CPU and memory resources.
+- Scale database memory and disk resources.
 
 {: #architecture}
 
@@ -53,6 +54,7 @@ This tutorial walks you through the creation of a web application using the popu
 1. The user accesses the application using a web browser.
 2. The Node.js app running in {{site.data.keyword.codeengineshort}} accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
+<!--##istutorial#-->
 ## Before you begin
 {: #mean-stack-prereqs}
 
@@ -61,15 +63,13 @@ This tutorial requires:
    * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 * `git` to clone source code repository.
+* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 <!--#/istutorial#-->
-
-Optionally, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
 
 ## Create an instance of MongoDB database in the cloud
 {: #mean-stack-2}
@@ -77,7 +77,7 @@ Optionally, if you want to test running the app locally you will need to [instal
 
 {: #createdatabase}
 
-In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
+In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is easy to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
 
 {: shortdesc}
 
@@ -105,7 +105,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
    ```
    {: codeblock}
 
-4.Once you have verified the service status changed to "create succeeded", you may proceed to create a service key.
+4. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key.
   
    ```sh
    ibmcloud resource service-key-create mean-starter-mongodb-key --instance-name mean-starter-mongodb
@@ -150,14 +150,12 @@ In this section, you will clone a MEAN sample code and run the application local
    ```
    {: codeblock}
    
-1. Optional - Run the application locally.
+1. Optional - Run the application locally. Access the app using the URL provided in the output, create a new user and log in.
   
    ```sh
    node server.js
    ```
    {: codeblock}
-
-1. Access your application, create a new user and log in.
 
 ## Deploy app to the cloud
 {: #mean-stack-4}
@@ -165,22 +163,22 @@ In this section, you will clone a MEAN sample code and run the application local
 
 {: #deployapp}
 
-{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the cloud to contain these same keys/values that will be read by the application when running in the cloud.
+{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
 
-We've already built a container image for the application and pushed it to the public {{site.data.keyword.registryshort_notm}}. You will use this pre-built container image to deploy the application.
+We've already built a container image for the application and pushed it to the public {{{site.data.keyword.registryfull_notm}}. You will use this pre-built container image to deploy the application.
 {: shortdesc}
 
 1. Create a project in {{site.data.keyword.codeenginefull_notm}}.
    
    ```sh
-   ibmcloud ce project create --name mean-stack
+   ibmcloud code-engine project create --name mean-stack
    ```
    {: codeblock}
 
 2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Setting up and using secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret).
    
    ```sh
-   ibmcloud ce secret create --name mean-stack-secrets --from-env-file .env
+   ibmcloud code-engine secret create --name mean-stack-secrets --from-env-file .env
    ```
    {: codeblock}
 
@@ -191,7 +189,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
 
 ## Scaling the compute resources in {{site.data.keyword.codeengineshort}}
 {: #mean-stack-scalecompute}
@@ -204,7 +202,7 @@ We've already built a container image for the application and pushed it to the p
 2. Click on the **mean-stack** project created earlier.
 2. Under **Summary**, click on **Applications**. 
 3. Click on the **mean-stack-application** created earlier. 
-4. Click on **Configuration** and then **Runtime** to view the currnet configuration.
+4. Click on **Configuration** and then **Runtime** to view the current configuration.
 
    ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png)
 5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**. 
