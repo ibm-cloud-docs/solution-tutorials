@@ -252,3 +252,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 - Set up source control and [continuous delivery](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp-devops).
 - Secure web application across [multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp).
 - Create, secure and manage [REST APIs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-manage-secure-apis#create-manage-secure-apis).
+- [Text analysis with Code Engine](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine)
