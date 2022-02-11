@@ -69,7 +69,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 <!--#/istutorial#-->
 
-In addition, make sure you [install Node.js](https://nodejs.org/).
+Optionally, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
 
 ## Create an instance of MongoDB database in the cloud
 {: #mean-stack-2}
@@ -127,13 +127,6 @@ In this section, you will clone a MEAN sample code and run the application local
    ```
    {: codeblock}
 
-1. Install the required packages.
-  
-   ```sh
-   npm install
-   ```
-   {: codeblock}
-
 1. Copy .env.example file to .env.
   
    ```sh
@@ -149,7 +142,15 @@ In this section, you will clone a MEAN sample code and run the application local
    {: codeblock}
 
    You can find the value required for **MONGODB_URL** under `credentials -> connection -> mongodb -> composed` and the value for **CERTIFICATE_BASE64** under `credentials -> connection -> mongodb -> certificate -> certificate_base64` in the returned JSON output.
-1. Run node server.js to start your app.
+
+1. Optional - Install the required packages.
+  
+   ```sh
+   npm install
+   ```
+   {: codeblock}
+   
+1. Optional - Run the application locally.
   
    ```sh
    node server.js
@@ -164,7 +165,7 @@ In this section, you will clone a MEAN sample code and run the application local
 
 {: #deployapp}
 
-{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the cloud to contain these same keys/values that will be read by the application when running in the cloud.
+{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the cloud to contain these same keys/values that will be read by the application when running in the cloud.
 
 We've already built a container image for the application and pushed it to the public {{site.data.keyword.registryshort_notm}}. You will use this pre-built container image to deploy the application.
 {: shortdesc}
@@ -186,13 +187,31 @@ We've already built a container image for the application and pushed it to the p
 3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository.  If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
    
    ```sh
-   ibmcloud code-engine application create --name mean-stack --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
+   ibmcloud code-engine application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
    ```
    {: codeblock}
 
 4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
 
-## Scaling MongoDB database resources
+## Scaling the compute resources in {{site.data.keyword.codeengineshort}}
+{: #mean-stack-scalecompute}
+{: step}
+
+{{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](https://{DomainName}/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resorces, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
+{: shortdesc}
+
+1. Navigate to the Code Engine [Projects page](https://{DomainName}/codeengine/projects).
+2. Click on the **mean-stack** project created earlier.
+2. Under **Summary**, click on **Applications**. 
+3. Click on the **mean-stack-application** created earlier. 
+4. Click on **Configuration** and then **Runtime** to view the currnet configuration.
+
+   ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png)
+5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**. 
+6. Click on **Save and create** to trigger the changes. It will indicate that the application is `Deploying` and `Ready` when complete.
+
+
+## Scaling the database resources in {{site.data.keyword.databases-for-mongodb}}
 {: #mean-stack-scaledatabase}
 {: step}
 
@@ -203,7 +222,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 2. Click on the **Resources** panel.
    ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
-4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the  rescaling is in progress.
+4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the rescaling is in progress.
 5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.
 
 ## Remove resources
