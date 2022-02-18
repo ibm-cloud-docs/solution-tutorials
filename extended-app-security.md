@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-09"
+lastupdated: "2022-02-18"
 lasttested: "2021-10-28"
 
 ---
@@ -82,7 +82,7 @@ In most cases, an application consists of the app itself and one or many (micro-
 
 When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=vpn%20label%3Aibm_created#search_results). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
 
-It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-about-certificate-manager), the [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
+It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.secrets-manager_short}} allows you to order certificates.
 
 Consider to implement more stringent access rules to resources. [Context-based restrictions](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis) allow to define access restrictions based on network zones and endpoint types. Thus, it is possible to isolate teams, users and resources by location.
 
