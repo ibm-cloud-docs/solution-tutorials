@@ -346,7 +346,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-18"
         }
       ]
     },
@@ -709,7 +709,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-02-17"
         },
         {
           "name": "VMware VSAN",
@@ -802,7 +802,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2022-01-31"
+          "lastUpdated": "2022-02-15"
         }
       ]
     },

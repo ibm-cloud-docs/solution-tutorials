@@ -894,6 +894,33 @@
       ]
     },
     {
+      "name": "Observability in Virtual Private Cloud",
+      "hidden": true,
+      "solutions": [
+        {
+          "name": "Discover the built-in capabilities of IBM Cloud observability suite",
+          "url": "vpc-observability-tour.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "name": "Custom logging, metrics, application tracing",
+          "url": "vpc-observability-custom.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "name": "Troubleshooting problems, debugging common issues",
+          "url": "vpc-observability-troubleshooting.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        }
+      ]
+    },
+    {
       "name": "VMware on VPC Bare metal servers",
       "anchor": "vmwarebmsvpc",
       "solutions": [

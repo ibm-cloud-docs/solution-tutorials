@@ -22,7 +22,7 @@ toc:
         topics:
 
         - topicgroup:
-          label: Work In Progress
+          label: (Hidden) Work In Progress
           topics:
           - solution-template.md
           - satellite-tour.hidden.md
@@ -97,6 +97,13 @@ toc:
           - configuring-IPSEC-VPN.md
           - linking-secure-network-enclosures.md
           - web-app-private-network.md
+
+        - topicgroup:
+          label: (Hidden) Observability in Virtual Private Cloud
+          topics:
+          - vpc-observability-tour.hidden.md
+          - vpc-observability-custom.hidden.md
+          - vpc-observability-troubleshooting.hidden.md
 
         - topicgroup:
           label: VMware on VPC Bare metal servers
