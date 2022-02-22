@@ -72,3 +72,84 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 
 <!--#/istutorial#-->
+
+## Get ready with a few prereqs
+{: #vpc-observability-tour-minimum}
+{: step}
+
+* Ensure the user has platform logging, monitoring, activity tracker setup
+* Create an SSH key for VPC
+
+## Deploy a sample advanced 3-tier web application using Schematics
+{: #vpc-observability-tour-deploy}
+{: step}
+
+* Use terraform / Schematics to deploy the application
+* Automatically deploy a typical VPC / VSI / LB / VPN / Block Storage / flow logs setup, using terraform/schematics
+* Automatically configure VSI with Log Analysis and Monitoring agents
+
+## Walk through architecture and highlight observability in the sample
+{: #vpc-observability-tour-walkthrough}
+{: step}
+
+* All configuration was achieved with terraform
+* Highlight the specificities of the configuration
+* Show how the agent was configured for logdna and sysdig
+  * point to blog post showing how to build a custom image with logdna and sysdig
+
+## View platform logs
+{: #vpc-observability-tour-pl}
+{: step}
+
+* This will not be a tutorial on all the capabilities of LogDNA.
+* It should tell what the user should expect to see in the platform logs
+  * which services in the architecture are sending data and maybe the right queries
+  * terraform could have created default view in LogDNA to view these logs!
+* Link to specific Log Analysis doc for details on how to configure
+
+## View platform metrics
+{: #vpc-observability-tour-pm}
+{: step}
+
+Same approach for monitoring
+
+## View activity tracker
+{: #vpc-observability-tour-atracker}
+{: step}
+
+Same approach for activity tracker
+
+## Generate real-time data
+{: #vpc-observability-tour-realtime}
+{: step}
+
+With the architecture logging and monitoring dashboard opened, generate some logs/metrics in the application. See the data in real-time.
+
+## Configure alerts in Log Analysis and Monitoring
+{: #vpc-observability-tour-alerts}
+{: step}
+
+* can this be configured in terraform and email be sent to the user?
+
+## View flow logs
+{: #vpc-observability-tour-flow}
+{: step}
+
+* Confirm flow logs is working properly by looking at the COS bucket
+* Run some basic queries in SQL Query
+
+## View logs where it happens
+{: #vpc-observability-tour-shell}
+{: step}
+
+* Use KVM / serial console to 
+* SSH to host through bastion?
+* Client VPN and ssh to host?
+
+## Observability Best Practices Checklist
+{: #vpc-observability-tour-checklist}
+
+A growing list of tips taken from the tutorial - may turn into its own tutorial/blog:
+* create platform logging, monitoring and activity tracker instances in all regions where you plan to deploy workload and in the GLOBAL region for global events
+* use logdna/system teams to isolate logs
+* use terraform to pre-configure logging/monitoring views and notifications
