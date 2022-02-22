@@ -905,8 +905,8 @@
           ]
         },
         {
-          "name": "Custom logging, metrics, application tracing",
-          "url": "vpc-observability-custom.hidden.html",
+          "name": "Advanced logging, metrics, application tracing",
+          "url": "vpc-observability-advanced.hidden.html",
           "tags": [
             "Virtual Private Cloud"
           ]

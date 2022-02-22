@@ -119,18 +119,6 @@ Same approach for monitoring
 
 Same approach for activity tracker
 
-## Generate real-time data
-{: #vpc-observability-tour-realtime}
-{: step}
-
-With the architecture logging and monitoring dashboard opened, generate some logs/metrics in the application. See the data in real-time.
-
-## Configure alerts in Log Analysis and Monitoring
-{: #vpc-observability-tour-alerts}
-{: step}
-
-* can this be configured in terraform and email be sent to the user?
-
 ## View flow logs
 {: #vpc-observability-tour-flow}
 {: step}

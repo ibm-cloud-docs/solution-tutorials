@@ -14,8 +14,8 @@ completion-time: 2h
 
 {{site.data.keyword.attribute-definition-list}}
 
-# Custom logging, metrics, application tracing
-{: #vpc-observability-custom}
+# Advanced logging, metrics, application tracing
+{: #vpc-observability-advanced}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, log-analysis, activity-tracker, monitoring"}
 {: toc-completion-time="2h"}
@@ -30,7 +30,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 {: shortdesc}
 
 ## Objectives
-{: #vpc-observability-custom-objectives}
+{: #vpc-observability-advanced-objectives}
 
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
@@ -44,7 +44,7 @@ This template shows how to structure a tutorial but also some writing tips and g
 
 
 ## Before you begin
-{: #vpc-observability-custom-prereqs}
+{: #vpc-observability-advanced-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
@@ -72,3 +72,32 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 
 <!--#/istutorial#-->
+
+## Generate real-time data
+{: #vpc-observability-advanced-realtime}
+{: step}
+
+With the architecture logging and monitoring dashboard opened, generate some logs/metrics in the application. See the data in real-time.
+
+## Configure alerts in Log Analysis and Monitoring
+{: #vpc-observability-advanced-alerts}
+{: step}
+
+* can this be configured in terraform and email be sent to the user?
+
+## Custom metrics from an app
+{: #vpc-observability-advanced-metrics}
+{: step}
+
+* embed example from application-log-analysis showing custom metrics with prometheus
+* pre-configure https://github.com/prometheus/node_exporter and show filesystem read/write?
+* pre-configure https://github.com/slanatech/swagger-stats?
+* Show custom metrics sent by one VSI (network ping to other hosts)
+
+## Application tracing
+{: #vpc-observability-advanced-tracing}
+{: step}
+
+* Custom logs from an app? How to import logs produced by your app.Things not in stdout/stderr but in other files on disk
+* Application call tracing (OpenTracing?)
+* Application and System Level Observability (like New Relic, Instana for apps)

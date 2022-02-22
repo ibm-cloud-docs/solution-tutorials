@@ -71,3 +71,30 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 {: tip}
 
 <!--#/istutorial#-->
+
+## Use flow logs to detect unexpected activity
+{: #vpc-observability-troubleshooting-flowlogs}
+{: step}
+
+* use SQL Query
+   * view all incoming ports that are not _expected_
+   * view all incoming SSH connection
+* find a missing security group rule preventing access to an app
+
+## Use metrics to detect a performance problem
+{: #vpc-observability-troubleshooting-performances}
+{: step}
+
+## View bandwidth usage
+{: #vpc-observability-troubleshooting-bandwidth}
+{: step}
+
+## Correlate logs and metrics
+{: #vpc-observability-troubleshooting-correlate}
+{: step}
+
+## App is crashing
+{: #vpc-observability-troubleshooting-crash}
+{: step}
+
+bug in an app?
