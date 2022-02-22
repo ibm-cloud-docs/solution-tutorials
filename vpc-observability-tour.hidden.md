@@ -95,7 +95,7 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 * All configuration was achieved with terraform
 * Highlight the specificities of the configuration
 * Show how the agent was configured for logdna and sysdig
-  * point to blog post showing how to build a custom image with logdna and sysdig
+   * point to blog post showing how to build a custom image with logdna and sysdig
 
 ## View platform logs
 {: #vpc-observability-tour-pl}
@@ -103,8 +103,8 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 * This will not be a tutorial on all the capabilities of LogDNA.
 * It should tell what the user should expect to see in the platform logs
-  * which services in the architecture are sending data and maybe the right queries
-  * terraform could have created default view in LogDNA to view these logs!
+   * which services in the architecture are sending data and maybe the right queries
+   * terraform could have created default view in LogDNA to view these logs!
 * Link to specific Log Analysis doc for details on how to configure
 
 ## View platform metrics
