@@ -126,14 +126,6 @@ Same approach for activity tracker
 * Confirm flow logs is working properly by looking at the COS bucket
 * Run some basic queries in SQL Query
 
-## View logs where it happens
-{: #vpc-observability-tour-shell}
-{: step}
-
-* Use KVM / serial console to 
-* SSH to host through bastion?
-* Client VPN and ssh to host?
-
 ## Observability Best Practices Checklist
 {: #vpc-observability-tour-checklist}
 

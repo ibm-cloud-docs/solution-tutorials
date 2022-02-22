@@ -72,6 +72,15 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 <!--#/istutorial#-->
 
+
+## View logs where it happens
+{: #vpc-observability-troubleshooting-shell}
+{: step}
+
+* Use KVM / serial console to 
+* SSH to host through bastion?
+* Client VPN and ssh to host?
+
 ## Use flow logs to detect unexpected activity
 {: #vpc-observability-troubleshooting-flowlogs}
 {: step}
