@@ -14,7 +14,7 @@ completion-time: 2h
 
 {{site.data.keyword.attribute-definition-list}}
 
-# Discover the built-in capabilities of IBM Cloud observability suite using a non-trivial example
+# Basics of observability in Virtual Private Cloud
 {: #vpc-observability-tour}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, log-analysis, activity-tracker, monitoring"}
