@@ -155,7 +155,7 @@
           "tags": [
             "OpenShift",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
           ],
           "requirements": [
             "openshift_on_ibm_cloud",
@@ -343,7 +343,7 @@
             "Kubernetes",
             "Python",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
           ],
           "requirements": [
             "container_registry",
@@ -927,7 +927,7 @@
         {
           "name": "VMware",
           "url": "vpc-bm-vmware.html",
-          "description": "",
+          "description": "VMware on VPC Bare metal servers",
           "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
           "tags": [
             "VMware",
@@ -972,8 +972,8 @@
         {
           "name": "VMware BMS",
           "url": "vpc-bm-vmware-bms.html",
-          "description": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
-          "imgSrc": "",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
