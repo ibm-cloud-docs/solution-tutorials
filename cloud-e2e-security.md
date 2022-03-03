@@ -189,7 +189,7 @@ Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} s
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. Switch to **Resources based on selected attributes**, check **Source service instance** and select the {{site.data.keyword.cos_short}} service instance previously created.
-5. In the **Target service** menu, select {{site.data.keyword.keymanagementserviceshort}}.
+5. In the **Target service** menu, select **{{site.data.keyword.keymanagementserviceshort}}**.
 6. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
@@ -244,7 +244,7 @@ Before creating the {{site.data.keyword.appid_short}} service, grant service acc
 
 1. Go to [Manage > Access IAM > Authorizations](https://{DomainName}/iam/authorizations) and click **Create**.
 2. Select the {{site.data.keyword.appid_short}} service as your source service.
-3. Select {{site.data.keyword.keymanagementserviceshort}} as your target service.
+3. Select **{{site.data.keyword.keymanagementserviceshort}}** as your target service.
 4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 5. Assign the **Reader** role under Service access.
 6. Click **Authorize** to confirm the delegated authorization.
@@ -394,13 +394,19 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
+5. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
+    ```sh
+    kubectl edit cm ibm-k8s-controller-config -n kube-system
+    ```
+    {: pre}
+
+6. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
 
-6. Deploy the app.
+7. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -434,13 +440,19 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+4. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
+    ```sh
+    kubectl edit cm ibm-k8s-controller-config -n kube-system
+    ```
+    {: pre}
+
+5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
    ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service YOUR-INITIALS-secure-file-storage-appid
    ```
    {: codeblock}
 
-5. Deploy the app.
+6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -482,14 +494,14 @@ Now that the application and its services have been successfully deployed, you c
 
 By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will either upload an existing certificate or order a new certificate in the {{site.data.keyword.cloudcerts_short}} and deploy it to the cluster. You will also update the app configuration to use the custom domain.
 
-For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates).
+For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui#order-certificates).
 {: tip}
 
 Before creating the {{site.data.keyword.cloudcerts_short}} service, grant service access to {{site.data.keyword.keymanagementserviceshort}} service.
 
 1. Go to [Manage > Access IAM > Authorizations](https://{DomainName}/iam/authorizations) and click **Create**.
-2. Select the {{site.data.keyword.cloudcerts_short}} service as your source service.
-3. Select {{site.data.keyword.keymanagementserviceshort}} as your target service.
+2. Select the **{{site.data.keyword.secrets-manager_short}}** service as your source service.
+3. Select **{{site.data.keyword.keymanagementserviceshort}}** as your target service.
 4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 5. Assign the **Reader** role under Service access.
 6. Click **Authorize** to confirm the delegated authorization.
@@ -511,12 +523,68 @@ Now, create an instance of {{site.data.keyword.cloudcerts_short}} service.
 4. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
    ```sh
    ibmcloud ks alb cert deploy --secret-name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn <the copied crn from previous step>
+   
+   <Note: above command is deprecated>
+
+   ibmcloud ks ingress secret create --name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn <the copied crn from previous step>
+   
+   ibmcloud ks ingress secret create --name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn crn:v1:bluemix:public:cloudcerts:us-east:a/00bbecaae6a8c4b4fdc16531663a1aec:809f323a-9ada-4e1c-a3c8-464889bdca24:certificate:1a7004d8cfc12cf79f5be54d6ae515ec
    ```
    {: codeblock}
 
    Verify that the cluster knows about the certificate by executing the following command.
    ```sh
    ibmcloud ks alb certs --cluster $MYCLUSTER
+   
+   <Note: above command is deprecated>
+
+   ibmcloud ks ingress secret ls --cluster $MYCLUSTER
+   ```
+   {: codeblock}
+
+   ```sh
+   export SERVICE_ID=`ibmcloud iam service-id-create kubernetes-secrets-tutorial --description "A service ID for testing Secrets Manager and Kubernetes Service." --output json | jq -r ".id"`; echo $SERVICE_ID
+   ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
+   export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create kubernetes-secrets-tutorial $SERVICE_ID --description "An API key for testing Secrets Manager." --output json | jq -r ".apikey"`
+   
+   kubectl -n default create secret generic secret-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
+
+   helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+   helm install secrets-manager-tutorial external-secrets/kubernetes-external-secrets
+   --> $ helm install secrets-manager-tutorial external-secrets/kubernetes-external-secrets
+         WARNING: This chart is deprecated
+         NAME: secrets-manager-tutorial
+         LAST DEPLOYED: Tue Mar  1 09:36:53 2022
+         NAMESPACE: default
+         STATUS: deployed
+         REVISION: 1
+         TEST SUITE: None
+         NOTES:
+         The kubernetes external secrets has been installed. Check its status by running:
+         kubectl --namespace default get pods -l "app.kubernetes.io/name=kubernetes-external-secrets,app.kubernetes.io/instance=secrets-manager-tutorial"
+
+         Visit https://github.com/external-secrets/kubernetes-external-secrets for instructions on how to use kubernetes external secrets
+   helm delete secrets-manager-tutorial
+
+   helm repo add external-secrets https://charts.external-secrets.io
+   helm install external-secrets external-secrets/external-secrets
+   --> $ helm install external-secrets external-secrets/external-secrets
+         NAME: external-secrets
+         LAST DEPLOYED: Tue Mar  1 09:39:29 2022
+         NAMESPACE: default
+         STATUS: deployed
+         REVISION: 1
+         TEST SUITE: None
+         NOTES:
+         external-secrets has been deployed successfully!
+
+         In order to begin using ExternalSecrets, you will need to set up a SecretStore
+         or ClusterSecretStore resource (for example, by creating a 'vault' SecretStore).
+
+         More information on the different types of SecretStores and how to configure them
+         can be found in our Github: https://github.com/external-secrets/external-secrets
+
+   helm delete external-secrets
    ```
    {: codeblock}
 
@@ -533,7 +601,8 @@ Now, create an instance of {{site.data.keyword.cloudcerts_short}} service.
    {: codeblock}
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
-   * Go to **Manage** under the **Identity Providers**, then to **Settings**.
+   * 
+   * Under **Manage Authentication**, in the **Authentication Settings** tab.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 <!--#/istutorial#-->
