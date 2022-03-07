@@ -506,13 +506,13 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 3. Click **Add** and then **TLS certificates**.
 4. Click on the **Import certificate** tile.
    * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
-   * Upload the certificatem private key and intermediate certificate files using the **Add file** button for each.
+   * Upload the certificate private key and intermediate certificate files using the **Add file** button for each.
    * Click **Import** to complete the import process.
-5. Locate the entry for the imported certificate and lick on it
+5. Locate the entry for the imported certificate and click on it.
    * Verify the type is **Imported certificate**
    * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
    * Click the **copy** symbol next to the certificate's **CRN**.
-6. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
+6. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the CRN from the previous step.
    ```sh
    ibmcloud ks ingress secret create --name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn <the copied crn from previous step>
    ```
