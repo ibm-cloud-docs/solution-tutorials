@@ -37,3 +37,13 @@ solutions.sort((s1, s2) => s1.mdUrl.localeCompare(s2.mdUrl));
     categories,
   }));
 }
+
+{
+  const templateSource = fs.readFileSync('./solution-to-services.md.tmpl');
+  const template = Handlebars.compile(`${templateSource}`);
+  const destination = destinationDir + './solution-to-services.md';
+  console.log('Writing to', destination);
+  fs.writeFileSync(destination, template({
+    categories,
+  }));
+}

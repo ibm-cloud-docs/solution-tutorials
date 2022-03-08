@@ -155,7 +155,7 @@
           "tags": [
             "OpenShift",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
           ],
           "requirements": [
             "openshift_on_ibm_cloud",
@@ -199,29 +199,6 @@
             "kubernetes_service",
             "content_delivery_network",
             "ibmcloud_cli",
-            "docker",
-            "container_registry"
-          ],
-          "supportsCloudShell": false
-        },
-        {
-          "name": "Asynchronous data processing using object storage and pub/sub messaging",
-          "url": "pub-sub-object-storage.html",
-          "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
-          "imgSrc": "images/solution25/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Node.js",
-            "Java",
-            "Message hub",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "kubernetes_service",
-            "cloud_object_storage",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "event_stream",
             "docker",
             "container_registry"
           ],
@@ -343,7 +320,7 @@
             "Kubernetes",
             "Python",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
           ],
           "requirements": [
             "container_registry",
@@ -894,13 +871,40 @@
       ]
     },
     {
+      "name": "Observability in Virtual Private Cloud",
+      "hidden": true,
+      "solutions": [
+        {
+          "name": "Discover the built-in capabilities of IBM Cloud observability suite",
+          "url": "vpc-observability-tour.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "name": "Advanced logging, metrics, application tracing",
+          "url": "vpc-observability-advanced.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        },
+        {
+          "name": "Troubleshooting problems, debugging common issues",
+          "url": "vpc-observability-troubleshooting.hidden.html",
+          "tags": [
+            "Virtual Private Cloud"
+          ]
+        }
+      ]
+    },
+    {
       "name": "VMware on VPC Bare metal servers",
       "anchor": "vmwarebmsvpc",
       "solutions": [
         {
           "name": "VMware",
           "url": "vpc-bm-vmware.html",
-          "description": "",
+          "description": "VMware on VPC Bare metal servers",
           "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
           "tags": [
             "VMware",
@@ -945,8 +949,8 @@
         {
           "name": "VMware BMS",
           "url": "vpc-bm-vmware-bms.html",
-          "description": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
-          "imgSrc": "",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
