@@ -138,20 +138,6 @@
           "lastUpdated": "2021-12-07"
         },
         {
-          "name": "Asynchronous data processing using object storage and pub/sub messaging",
-          "url": "pub-sub-object-storage.html",
-          "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
-          "imgSrc": "images/solution25/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Node.js",
-            "Java",
-            "Message hub",
-            "Cloud Object Storage"
-          ],
-          "lastUpdated": "2021-12-01"
-        },
-        {
           "name": "Plan, create and update deployment environments",
           "url": "plan-create-update-deployments.html",
           "description": "Automate the creation and maintenance of multiple deployment environments with IBM Cloud CLI and Terraform.",
@@ -463,7 +449,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-02-23"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",

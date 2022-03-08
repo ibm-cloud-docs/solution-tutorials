@@ -205,29 +205,6 @@
           "supportsCloudShell": false
         },
         {
-          "name": "Asynchronous data processing using object storage and pub/sub messaging",
-          "url": "pub-sub-object-storage.html",
-          "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
-          "imgSrc": "images/solution25/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Node.js",
-            "Java",
-            "Message hub",
-            "Cloud Object Storage"
-          ],
-          "requirements": [
-            "kubernetes_service",
-            "cloud_object_storage",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "event_stream",
-            "docker",
-            "container_registry"
-          ],
-          "supportsCloudShell": false
-        },
-        {
           "name": "Plan, create and update deployment environments",
           "url": "plan-create-update-deployments.html",
           "description": "Automate the creation and maintenance of multiple deployment environments with IBM Cloud CLI and Terraform.",
