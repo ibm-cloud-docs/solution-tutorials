@@ -325,6 +325,7 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    export CERTIFICATE_ID=<certificate ID>
    ```
    {: pre}
+
 6. Click on **Endpoints** in the left navigation.
 7. Locate the **Public** endpoint for the **Vault API**.
    * Create an environment variable pointing to the endpoint:
@@ -332,7 +333,6 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    export SECRETS_MANAGER_URL=<public endpoint>
    ```
    {: pre}
-
 
 In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
 
