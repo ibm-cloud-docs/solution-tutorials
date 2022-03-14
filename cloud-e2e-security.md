@@ -1,12 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-02-01"
-lasttested: "2021-12-07"
+  years: 2022
+lastupdated: "2022-03-14"
+lasttested: "2022-03-07"
 
 content-type: tutorial
-services: containers, cloud-object-storage, activity-tracker, Registry, certificate-manager, appid, Cloudant, key-protect, log-analysis
+services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
 account-plan: paid
 completion-time: 2h
 
@@ -23,7 +23,7 @@ completion-time: 2h
 # Apply end to end security to a cloud application
 {: #cloud-e2e-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, certificate-manager, appid, Cloudant, key-protect, log-analysis"}
+{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -58,11 +58,11 @@ This tutorial will work with a Kubernetes cluster running in Classic Infrastruct
 
 
 1. User connects to the application.
-2. If using a custom domain and a TLS certificate, the certificate is managed by and deployed from the {{site.data.keyword.cloudcerts_short}}.
+2. If using a custom domain and a TLS certificate, the certificate is managed by and deployed from the {{site.data.keyword.secrets-manager_short}}.
 3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can also sign up.
 4. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. This image is automatically scanned for vulnerabilities.
 5. Uploaded files are stored in {{site.data.keyword.cos_short}} with accompanying metadata stored in {{site.data.keyword.cloudant_short_notm}}.
-6. Object storage buckets, {{site.data.keyword.appid_short}}, and {{site.data.keyword.cloudcerts_short}} services leverage a user-provided key to encrypt data.
+6. Object storage buckets, {{site.data.keyword.appid_short}}, and {{site.data.keyword.secrets-manager_short}} services leverage a user-provided key to encrypt data.
 7. Application management activities are logged by {{site.data.keyword.at_full_notm}}.
 
 <!--##istutorial#-->
@@ -189,7 +189,7 @@ Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} s
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. Switch to **Resources based on selected attributes**, check **Source service instance** and select the {{site.data.keyword.cos_short}} service instance previously created.
-5. In the **Target service** menu, select {{site.data.keyword.keymanagementserviceshort}}.
+5. In the **Target service** menu, select **{{site.data.keyword.keymanagementserviceshort}}**.
 6. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
@@ -244,7 +244,7 @@ Before creating the {{site.data.keyword.appid_short}} service, grant service acc
 
 1. Go to [Manage > Access IAM > Authorizations](https://{DomainName}/iam/authorizations) and click **Create**.
 2. Select the {{site.data.keyword.appid_short}} service as your source service.
-3. Select {{site.data.keyword.keymanagementserviceshort}} as your target service.
+3. Select **{{site.data.keyword.keymanagementserviceshort}}** as your target service.
 4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 5. Assign the **Reader** role under Service access.
 6. Click **Authorize** to confirm the delegated authorization.
@@ -394,13 +394,19 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
+5. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
+    ```sh
+    kubectl edit cm ibm-k8s-controller-config -n kube-system
+    ```
+    {: pre}
+
+6. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
 
-6. Deploy the app.
+7. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -434,13 +440,19 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+4. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
+    ```sh
+    kubectl edit cm ibm-k8s-controller-config -n kube-system
+    ```
+    {: pre}
+
+5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
    ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service YOUR-INITIALS-secure-file-storage-appid
    ```
    {: codeblock}
 
-5. Deploy the app.
+6. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -480,50 +492,69 @@ Now that the application and its services have been successfully deployed, you c
 {: #cloud-e2e-security-19}
 {: step}
 
-By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will either upload an existing certificate or order a new certificate in the {{site.data.keyword.cloudcerts_short}} and deploy it to the cluster. You will also update the app configuration to use the custom domain.
+By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will upload an existing certificate and deploy it to the cluster. You will also update the app configuration to use the custom domain.
 
-For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates).
+If you don't already have a certificate for your custom domain, you can obtain one from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates).
 {: tip}
 
-Before creating the {{site.data.keyword.cloudcerts_short}} service, grant service access to {{site.data.keyword.keymanagementserviceshort}} service.
+You need to have an instance of the {{site.data.keyword.secrets-manager_short}} service, you can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a Secrets Manager service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, you can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
 
-1. Go to [Manage > Access IAM > Authorizations](https://{DomainName}/iam/authorizations) and click **Create**.
-2. Select the {{site.data.keyword.cloudcerts_short}} service as your source service.
-3. Select {{site.data.keyword.keymanagementserviceshort}} as your target service.
-4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
-5. Assign the **Reader** role under Service access.
-6. Click **Authorize** to confirm the delegated authorization.
+Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
 
-Now, create an instance of {{site.data.keyword.cloudcerts_short}} service.
-
-1. Navigate to the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager) service creation page.
-   1. Use the same **location** as for the other services. 
-   2. Set the name to **secure-file-storage-certmgr** and select a **resource group** same as the previous services.
-   3. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
-   4. Click **Create**.
-2. Click on **Import Certificate** to import your existing certificate.
+1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Services and software**.
+2. Click on **Secrets** in the left navigation.
+3. Click **Add** and then **TLS certificates**.
+4. Click on the **Import certificate** tile.
    * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
-   * Upload the certificate file using the **Browse** button.
+   * Upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
    * Click **Import** to complete the import process.
-3. Locate the entry for the imported certificate and expand it
-   * Verify the certificate entry, e.g., that the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** symbol next to the certificate's **crn**.
-4. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
+5. Locate the entry for the imported certificate and click on it.
+   * Verify the type is **Imported certificate**
+   * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
+   * Click the **copy** symbol next to the certificate's **ID** and save it for later.
+
+In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
+
+1. Create a service ID and set it as an environment variable.
    ```sh
-   ibmcloud ks alb cert deploy --secret-name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn <the copied crn from previous step>
+   export SERVICE_ID=`ibmcloud iam service-id-create secure-file-storage-tutorial --description "A service ID for e2e security tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
    ```
    {: codeblock}
 
-   Verify that the cluster knows about the certificate by executing the following command.
+2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}.
    ```sh
-   ibmcloud ks alb certs --cluster $MYCLUSTER
+   ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
+   ```
+   {: codeblock}
+
+3. Create an API key for your service ID.
+   ```sh
+   export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create secure-file-storage-tutorial $SERVICE_ID --description "An API key for e2e security tutorial." --output json | jq -r ".apikey"`
+   ```
+   {: codeblock}
+
+4. Create a secret in your cluster for that API key.
+   ```sh
+   kubectl -n default create secret generic secure-file-storage-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
+   ```
+   {: codeblock}
+   
+5. Run the following commands to install the External Secrets Operator.
+   ```sh
+   helm repo add external-secrets https://charts.external-secrets.io
+   ```
+   {: codeblock}
+
+   ```sh   
+   helm install external-secrets external-secrets/external-secrets
    ```
    {: codeblock}
 
 5. Edit the file `secure-file-storage.yaml`.
    * Find the section for **Ingress**.
-   * Uncomment and edit the lines covering custom domains and fill in your domain and host name.
-   The CNAME entry for your custom domain needs to point to the cluster. Check this [guide on mapping custom domains](https://{DomainName}/docs/containers?topic=containers-ingress#private_3) in the documentation for details.
+   * Uncomment and edit the lines covering custom domains. Making sure to fill in the values for **your custom domain**, **{{site.data.keyword.secrets-manager_short}} API URL** and **certificate ID**.
+   
+   The CNAME entry in DNS for your custom domain needs to point to the URL for your cluster, i.e. `https://mycluster-1234-d123456789.us-south.containers.appdomain.cloud`.
    {: tip}
 
 6. Apply the configuration changes to the deployed:
@@ -533,7 +564,8 @@ Now, create an instance of {{site.data.keyword.cloudcerts_short}} service.
    {: codeblock}
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
-   * Go to **Manage** under the **Identity Providers**, then to **Settings**.
+   * 
+   * Under **Manage Authentication**, in the **Authentication Settings** tab.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 <!--#/istutorial#-->
@@ -574,7 +606,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-iam)
 * [{{site.data.keyword.at_short}}](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-iam)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-manage-access#service-access-roles)
-* [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-managing-service-access-roles)
+* [{{site.data.keyword.secrets-manager_short}}](https://{DomainName/}docs/secrets-manager?topic=secrets-manager-iam)
 
 To get started, check out the [best practices for access management and how to define access groups](https://{DomainName}/docs/account?topic=account-account_setup#resource-group-strategy).
 <!--#/istutorial#-->
