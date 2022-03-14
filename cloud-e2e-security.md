@@ -531,21 +531,25 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    export SERVICE_ID=`ibmcloud iam service-id-create secure-file-storage-tutorial --description "A service ID for e2e security tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
    ```
    {: codeblock}
+
 2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}.
    ```sh
    ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
    ```
    {: codeblock}
+
 3. Create an API key for your service ID.
    ```sh
    export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create secure-file-storage-tutorial $SERVICE_ID --description "An API key for e2e security tutorial." --output json | jq -r ".apikey"`
    ```
-   {: codeblock}   
+   {: codeblock}
+
 4. Create a secret in your cluster for that API key.
    ```sh
    kubectl -n default create secret generic secure-file-storage-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
    ```
    {: codeblock}
+   
 5. Run the following commands to install the External Secrets Operator.
    ```sh
    helm repo add external-secrets https://charts.external-secrets.io
