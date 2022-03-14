@@ -506,23 +506,12 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 3. Click **Add** and then **TLS certificates**.
 4. Click on the **Import certificate** tile.
    * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
-   * Upload the certificate private key and intermediate certificate files using the **Add file** button for each.
+   * Upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
    * Click **Import** to complete the import process.
 5. Locate the entry for the imported certificate and click on it.
    * Verify the type is **Imported certificate**
    * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** symbol next to the certificate's **CRN**.
-6. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the CRN from the previous step.
-   ```sh
-   ibmcloud ks ingress secret create --name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn <the copied crn from previous step>
-   ```
-   {: codeblock}
-
-   Verify that the cluster knows about the certificate by executing the following command.
-   ```sh
-   ibmcloud ks ingress secret ls --cluster $MYCLUSTER
-   ```
-   {: codeblock}
+   * Click the **copy** symbol next to the certificate's **ID** and save it for later.
 
 In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
 
@@ -563,7 +552,8 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 
 5. Edit the file `secure-file-storage.yaml`.
    * Find the section for **Ingress**.
-   * Uncomment and edit the lines covering custom domains and fill in your custom domain, {{site.data.keyword.secrets-manager_short}} API URL and certificate ID.
+   * Uncomment and edit the lines covering custom domains. Making sure to fill in the values for **your custom domain**, **{{site.data.keyword.secrets-manager_short}} API URL** and **certificate ID**.
+   
    The CNAME entry in DNS for your custom domain needs to point to the URL for your cluster, i.e. `https://mycluster-1234-d123456789.us-south.containers.appdomain.cloud`.
    {: tip}
 
