@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-02-14"
+lastupdated: "2022-03-14"
 lasttested: "2022-02-11"
 
 content-type: tutorial
@@ -697,9 +697,9 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 ### With HTTPS
 {: #scalable-webapp-openshift-21}
 
-1. To create a secured HTTPS route, you can either use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-ordering-certificates). Pass them with the `create route` command
+1. To create a secured HTTPS route, you can use your own certificate and key files from a CA like [Let's Encrypt](https://letsencrypt.org/) or order through [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui). Pass them with the `create route` command
    ```sh
-   oc create route edge $MYPROJECT-httpsca --service=$MYPROJECT --cert=example.pem --key=example.key --ca-cert=ca.pem --hostname=<www.HOSTNAME> --port=3000
+   oc create route edge $MYPROJECT-httpsca --service=$MYPROJECT --cert=example.pem --key=example.key --hostname=<www.HOSTNAME> --port=3000
    ```
    {: pre}
 

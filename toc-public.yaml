@@ -32,7 +32,6 @@ toc:
           - openshift-microservices.md
           - static-files-cdn.md
           - dynamic-content-cdn.md
-          - pub-sub-object-storage.md
           - plan-create-update-deployments.md
           - highly-available-and-scalable-web-application.md
           - mean-stack.md
@@ -131,7 +130,6 @@ toc:
           - vm-to-containers-and-kubernetes.md
           - continuous-deployment-to-kubernetes.md
           - dynamic-content-cdn.md
-          - pub-sub-object-storage.md
           - plan-create-update-deployments.md
           - application-log-analysis.md
           - multi-region-k8s-cis.md
@@ -151,7 +149,6 @@ toc:
           topics:
           - static-files-cdn.md
           - plan-create-update-deployments.md
-          - mean-stack.md
           - sql-database.md
           - multi-region-webapp.md
 
@@ -165,6 +162,7 @@ toc:
         - topicgroup:
           label: Code Engine
           topics:
+          - mean-stack.md
           - text-analysis-code-engine.md
           - serverless-github-traffic-analytics.md
 

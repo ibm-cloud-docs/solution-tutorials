@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
+  years: 2022
+lastupdated: "2022-03-14"
 lasttested: "2020-12-09"
 
 content-type: tutorial
@@ -120,7 +120,7 @@ To allow traffic to the application you will deploy on virtual server instances,
    2. Verify the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
 1. Set the **image** to **Ubuntu Linux** and pick any version of the image.
 1. CLick on **View all profiles** and select **Compute** with 2vCPUs and 4 GB RAM as your profile.
-1. Set **SSH keys** to the the SSH key you created earlier.
+1. Set **SSH keys** to the SSH key you created earlier.
 1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-region1-zone1-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-region1-sg**.
@@ -207,7 +207,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
 1. Navigate to **Load balancers** and click **Create**.
 2. Enter **vpc-lb-region1** as the Name, select **vpc-region1** as the Virtual Private Cloud, select the resource group, **Application load balancer** as the Load balancer and Load balancer Type: **Public**.
 3. Select the **Subnets** of **vpc-region1-zone1-subnet** and **vpc-region1-zone2-subnet**..
-4. Click **Create pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the parameters with the values below and click **Save**.
+4. Click **Create pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the parameters with the values below and click **Create**.
    - **Name**:  region1-pool
    - **Protocol**: HTTP
    - **Session stickiness**: None
@@ -229,10 +229,9 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Proxy protocol**: not checked
    - **Port**: 80
    - **Back-end pool**: region1-pool
-   - **Maxconnections**: Leave it empty and click **Save**.
+   - **Maxconnections**: Leave it empty and click **Create**.
 7. Under **Security Groups**
    * Uncheck the default security group and check **vpc-lb-sg**.
-   * Click **Save**.
 8. Click **Create load balancer** to provision a load balancer.
 9. **REPEAT** the steps above in **region 2**.
 
@@ -286,6 +285,7 @@ A health check helps gain insight into the availability of pools so that traffic
 1. Select **Health checks** and click **Create**.
 1. Set **Name** to **nginx**.
 1. Set **Monitor Type** to **HTTP**.
+1. Set **Port** to **80**.
 1. Set **Path** to **/**
 1. Click **Create**.
 
@@ -329,11 +329,8 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Enter the name for the Global Load Balancer, **lb**, (`<glb_name>`) this name will be the initial characters in the subdomain to access the application. (http://`<gbl_name>`.`<your_domain_name>`).  From this one URL both the origins will be accessed optimally.
 1. Click **Add route**.
 1. Select the **Region**: **Default**.
-1. Select the origin pools that you just created.
-1. Click **Create**.
-
-1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://lb.mydomain.com`), regardless of the location.
-1. Under **Default origin pools**, click **Add pool** and add the pool named **region-1-pool** and **region-2-pool**.
+1. Select the origin pools that you just created, i.e. **region-1-pool** and **region-2-pool**.
+1. Click **Add**.
 1. Expand the section of **Geo routes**, you can distribute traffic based on the origin region, pick a GLB region that is close to the VPC region 1. 
    1. You can add additional routes if desired based on geographies and direct traffic to the closest pool.  Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
 

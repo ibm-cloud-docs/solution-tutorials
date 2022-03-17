@@ -1,12 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-02-01"
-lasttested: "2021-12-08"
+  years: 2022
+lastupdated: "2022-03-17"
+lasttested: "2022-03-14"
 
 content-type: tutorial
-services: containers, Registry
+services: containers, Registry, secrets-manager
 account-plan: paid
 completion-time: 2h
 ---
@@ -22,7 +22,7 @@ completion-time: 2h
 # Scalable web application on Kubernetes
 {: #scalable-webapp-kubernetes}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, Registry"}
+{: toc-services="containers, Registry, secrets-manager"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -154,7 +154,7 @@ Note: If you wish to build and push the application to your own container regist
 1. Initialize the variable with the cluster name
 
    ```bash
-   MYCLUSTER=<CLUSTER_NAME>
+   export MYCLUSTER=<CLUSTER_NAME>
    ```
    {: pre}
 
@@ -305,27 +305,73 @@ This section requires you to own a custom domain. You will need to create a `CNA
 
 If you were to try to access your application with HTTPS at this time `https://<my-custom-subdomain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
-See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers?topic=containers-ingress-types#manage_certs) for more information.  The basic steps are:
-1. Navigate to the [resource list](https://{DomainName}/resources) and then open the {{site.data.keyword.cloudcerts_short}} created for the cluster.  The cluster ID displayed in the get command is in the name of the service instance:
+In this section we will use {{site.data.keyword.secrets-manager_short}}.  With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, we will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret.
 
+You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, you can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
+
+Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
+
+1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Services and software**.
+2. Click on **Secrets** in the left navigation.
+3. Click **Add** and then **TLS certificates**.
+4. Click on the **Import certificate** tile.
+   * Set name to **KubernetesNodeApp** and description to **Certificate for scalable-webapp-kubernetes tutorial**.
+   * Upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
+   * Click **Import** to complete the import process.
+5. Locate the entry for the imported certificate and click on it.
+   * Verify the type is **Imported certificate**
+   * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
+   * Click the **copy** symbol next to the certificate's **ID**.
+   * Create an environment variable pointing to the certificate ID:
    ```sh
-   ibmcloud ks cluster get --cluster $MYCLUSTER
+   export CERTIFICATE_ID=<certificate ID>
    ```
    {: pre}
 
-1. Import the certificate for the subdomain and give it the name `kubernetesnodeapp`, (.e.g kubernetesnodeapp.example.com) and certificate manager certificate name `kubernetesnodeapp`.  If you are already managing your certificate with the {{site.data.keyword.cloudcerts_short}} service you can download the certificate zip file, unzip it, then import into the cluster's {{site.data.keyword.cloudcerts_short}} instance.
-1. Open the imported certificate in the cloud console and copy the Cerfificate CRN.  Create a TLS secret for the cert and the key, name the secret, &lt;secret-name&gt;, the same as the certificate name just imported (.e.g abckubeapp).
+6. Click on **Endpoints** in the left navigation.
+7. Locate the **Public** endpoint for the **Vault API**.
+   * Create an environment variable pointing to the endpoint:
    ```sh
-   export CUSTOM_SECRET_NAME=<certificate-name>
-   CERT_CRN=<crn-of-the-certificate>
-   DNS=<my-custom-subdomain.com>
+   export SECRETS_MANAGER_URL=<public endpoint>
    ```
    {: pre}
 
+In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
+
+1. Create a service ID and set it as an environment variable.
    ```sh
-   ibmcloud ks ingress secret create --cluster $MYCLUSTER --name $CUSTOM_SECRET_NAME --namespace default --cert-crn $CERT_CRN
+   export SERVICE_ID=`ibmcloud iam service-id-create kubernetesnodeapp-tutorial --description "A service ID for scalable-webapp-kubernetes tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
    ```
-   {: pre}
+   {: codeblock}
+
+2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}.
+   ```sh
+   ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
+   ```
+   {: codeblock}
+
+3. Create an API key for your service ID.
+   ```sh
+   export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create kubernetesnodeapp-tutorial $SERVICE_ID --description "An API key for scalable-webapp-kubernetes tutorial." --output json | jq -r ".apikey"`
+   ```
+   {: codeblock}
+
+4. Create a secret in your cluster for that API key.
+   ```sh
+   kubectl -n $KUBERNETES_NAMESPACE create secret generic kubernetesnodeapp-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
+   ```
+   {: codeblock}
+   
+5. Run the following commands to install the External Secrets Operator.
+   ```sh
+   helm repo add external-secrets https://charts.external-secrets.io
+   ```
+   {: codeblock}
+
+   ```sh   
+   helm install external-secrets external-secrets/external-secrets
+   ```
+   {: codeblock}
 
 1. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
    ```sh
@@ -338,7 +384,13 @@ See [Managing TLS certificates and secrets](https://{DomainName}/docs/containers
    kubectl apply -f ingress-customdomain-https.yaml
    ```
    {: pre}
-   
+
+1. Validate the secret was created:
+   ```sh
+   kubectl get secret kubernetesnodeapp-certificate -n $KUBERNETES_NAMESPACE
+   ```
+   {: pre}
+
 1. Access your application at `https://<my-custom-subdomain.com>/`.
 <!--#/istutorial#-->
 
@@ -400,7 +452,7 @@ Once the autoscaler is successfully created, you should see
    <!--#/isworkshop#-->
 * Delete the Kubernetes secret:
    ```sh
-   ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $CUSTOM_SECRET_NAME --namespace $KUBERNETES_NAMESPACE
+   kubectl -n $KUBERNETES_NAMESPACE delete secret kubernetesnodeapp-api-key 
    ```
    {: pre}
 
@@ -409,7 +461,22 @@ Once the autoscaler is successfully created, you should see
    helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> uninstall $MYPROJECT --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
-   
+
+<!--##istutorial#-->  
+* Delete the External Secrets Operator:
+   ```sh
+   helm uninstall external-secrets
+   ```
+   {: pre}
+
+* Delete the service ID:
+   ```sh
+   ibmcloud iam service-id-delete $SERVICE_ID
+   ```
+   {: pre}
+
+<!--#/istutorial#-->
+
 <!--##istutorial#-->
 * Delete the cluster.
 <!--#/istutorial#-->
