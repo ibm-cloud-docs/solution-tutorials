@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-03-14"
+lastupdated: "2022-03-17"
 lasttested: "2022-03-14"
 
 content-type: tutorial
@@ -305,7 +305,9 @@ This section requires you to own a custom domain. You will need to create a `CNA
 
 If you were to try to access your application with HTTPS at this time `https://<my-custom-subdomain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
-You need to have an instance of the {{site.data.keyword.secrets-manager_short}} service, you can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a Secrets Manager service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, you can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
+In this section we will use {{site.data.keyword.secrets-manager_short}}.  With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, we will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret.
+
+You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, you can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
 
 Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
 
@@ -356,7 +358,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 
 4. Create a secret in your cluster for that API key.
    ```sh
-   kubectl -n default create secret generic kubernetesnodeapp-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
+   kubectl -n $KUBERNETES_NAMESPACE create secret generic kubernetesnodeapp-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
    ```
    {: codeblock}
    
@@ -382,7 +384,13 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    kubectl apply -f ingress-customdomain-https.yaml
    ```
    {: pre}
-   
+
+1. Validate the secret was created:
+   ```sh
+   kubectl get secret kubernetesnodeapp-certificate -n $KUBERNETES_NAMESPACE
+   ```
+   {: pre}
+
 1. Access your application at `https://<my-custom-subdomain.com>/`.
 <!--#/istutorial#-->
 
@@ -444,7 +452,7 @@ Once the autoscaler is successfully created, you should see
    <!--#/isworkshop#-->
 * Delete the Kubernetes secret:
    ```sh
-   ibmcloud ks ingress secret rm --cluster $MYCLUSTER --name $CUSTOM_SECRET_NAME --namespace $KUBERNETES_NAMESPACE
+   kubectl -n $KUBERNETES_NAMESPACE delete secret kubernetesnodeapp-api-key 
    ```
    {: pre}
 
@@ -453,7 +461,22 @@ Once the autoscaler is successfully created, you should see
    helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> uninstall $MYPROJECT --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
-   
+
+<!--##istutorial#-->  
+* Delete the External Secrets Operator:
+   ```sh
+   helm uninstall external-secrets
+   ```
+   {: pre}
+
+* Delete the service ID:
+   ```sh
+   ibmcloud iam service-id-delete $SERVICE_ID
+   ```
+   {: pre}
+
+<!--#/istutorial#-->
+
 <!--##istutorial#-->
 * Delete the cluster.
 <!--#/istutorial#-->
