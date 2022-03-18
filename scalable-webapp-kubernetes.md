@@ -462,6 +462,7 @@ Once the autoscaler is successfully created, you should see
    kubectl -n $KUBERNETES_NAMESPACE delete secret kubernetesnodeapp-api-key 
    ```
    {: pre}
+
 * Delete the External Secrets Operator:
    ```sh
    helm uninstall external-secrets
