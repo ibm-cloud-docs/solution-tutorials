@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-01-31"
+lastupdated: "2022-02-15"
 lasttested: "2021-12-08"
 
 content-type: tutorial
@@ -391,3 +391,7 @@ Want to add to or change this tutorial? Here are some ideas:
 * [{{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
 * [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware)
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)
+
+Veeam and Zerto services are ready-to-use in all virtual data centers. For more details, see the following topics in the documentation:
+* [Managing Veeam for VMware Solutions Shared](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_veeam)
+* [Accessing the Zerto Self-Service Portal](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_zerto-portal)

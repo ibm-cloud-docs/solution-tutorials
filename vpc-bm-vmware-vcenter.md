@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2022-02-17"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -115,6 +115,19 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
    ```
    {: codeblock}
 
+3. Add vCenter PTR record to DNS Zone
+
+   ```sh
+   ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type PTR --name $VMWARE_VCENTER_IP --ptrdname vcenter.$VMWARE_DNS_ZONE_NAME
+   ```
+   {: codeblock}
+
+4. Verification of vCenter DNS reverse lookup 
+
+   ```sh
+   nslookup -type=PTR $VMWARE_VCENTER_IP
+   ```
+   {: codeblock}
 
 ## Add Port Group for VLAN 100 for Standard switch
 {: #vpc-bm-vmware-vcenter-portgroup}
@@ -185,7 +198,7 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
    Host name | vcenter.vmware.ibmcloud.local
    Subnet mask or prefix length | 25
    Default gateway | 10.97.0.129
-   DNS servers | 161.26.0.10, 161.26.0.11
+   DNS servers | 161.26.0.7, 161.26.0.8
    HTTP Port | 80
    HTTPS Port | 443
 
@@ -207,7 +220,7 @@ After the previous step, vCenter installation continues with Phase 2.
    Subnet mask | 25
    Host name | vcenter.vmware.ibmcloud.local
    Gateway | 10.97.0.129
-   DNS servers | 161.26.0.10, 161.26.0.11
+   DNS servers | 161.26.0.7, 161.26.0.8
    Time synchronization mode | Synchronize time with the NTP servers
    NTP Servers | 161.26.0.6
    SSH access | Disabled

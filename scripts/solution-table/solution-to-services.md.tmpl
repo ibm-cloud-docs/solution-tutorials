@@ -1,0 +1,50 @@
+---
+copyright:
+  years: 2022
+lastupdated: "2022-03-01"
+
+---
+
+# Mapping solution tutorials to services
+{: solution-to-services}
+
+| Tutorial | Description | Areas/Services |
+| -------- | ----------- | ------------- |
+{{#each categories}}
+{{#unless tocOnly}}
+{{#if (not hidden)}}
+{{#each solutions as |solution|}}
+{{#if (and solution.name (not hidden))}}
+{{#if solution.description }}
+| [{{solution.name}}](https://cloud.ibm.com{{#htmlLink solution}}{{/htmlLink}}) | {{solution.description}} | {{join solution.tags ', ' }}  |
+{{/if}}
+{{/if}}
+{{/each}}
+{{/if}}
+{{/unless}}
+{{/each}}
+
+# Blog Posts
+
+| Blog | Areas/Services |
+| ---- | -------------- |
+| [Understanding and Selecting Storage for IBM Cloud](https://www.ibm.com/cloud/blog/understanding-and-selecting-storage-for-ibm-cloud) | Storage, Virtual Private Cloud, Object Storage |
+| [Ready for the Job: Twitterbot Recoded](https://www.ibm.com/cloud/blog/ready-for-the-job-twitterbot-recoded) | Code Engine |
+| [Bulk Creation of Users in IBM Cloud App ID](https://www.ibm.com/cloud/blog/bulk-creation-of-users-in-ibm-cloud-app-id) | App ID |
+| [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons) | App ID |
+| [Using Instance Metadata and Trusted Profiles for Managing SSH Keys](https://www.ibm.com/cloud/blog/using-instance-metadata-and-trusted-profiles-for-managing-ssh-keys) | Virtual Private Cloud |
+| [Use IBM Code Engine to Push IBM VPC Flow Logs to IBM Log Analysis](https://www.ibm.com/cloud/blog/use-ibm-code-engine-to-push-ibm-vpc-flow-logs-to-ibm-log-analysis) | Code Engine, Log Analysis, Virtual Private Cloud |
+| [Stream Landing Kafka Data to Object Storage using Terraform](https://www.ibm.com/cloud/blog/stream-landing-kafka-data-to-object-storage-using-terraform) | Event Streams, Cloud Object Storage |
+| [Use Terraform to Define Custom Views for Your Log Analysis and Activity Tracker Instances](https://www.ibm.com/cloud/blog/use-terraform-to-define-custom-views-for-your-log-analysis-and-activity-tracker-instances) | Log Analysis, Terraform |
+| [Manage Your Cloud Object Storage Data with the MinIO Client and rclone](https://www.ibm.com/cloud/blog/manage-your-cloud-object-storage-data-with-the-minio-client-and-rclone) | Cloud Object Storage |
+| [Data Scraping Made Easy Thanks to IBM Code Engine Jobs](https://www.ibm.com/cloud/blog/data-scraping-made-easy-thanks-to-ibm-code-engine-jobs) | Code Engine |
+| [Deploy RAPIDs on GPU-Enabled Virtual Servers on IBM Cloud Virtual Private Cloud](https://www.ibm.com/cloud/blog/deploy-rapids-on-gpu-enabled-virtual-servers-on-ibm-cloud-virtual-private-cloud) | Virtual Private Cloud, GPU |
+| [IBM Cloud Backup and Restore Options](https://www.ibm.com/cloud/blog/ibm-cloud-backup-and-restore-options) | Backup and Restor |
+| [Terraform Template for Activity Tracker, Monitoring and Log Analysis with Team Controls](https://www.ibm.com/cloud/blog/terraform-template-for-activity-tracker-monitoring-and-log-analysis-with-team-controls) | Log Analysis, Monitoring, IAM |
+| [Automate the Backup and Restore of Cloud Instances with Snapshots](https://www.ibm.com/cloud/blog/automate-the-backup-and-restore-of-cloud-instances-with-snapshots) | Virtual Private Cloud |
+| [Automate the Configuration of Instance Storage on a Linux-Based VSI](https://www.ibm.com/cloud/blog/automate-the-configuration-of-instance-storage-on-a-linux-based-vsi) | Virtual Private Cloud |
+| [Migrating Cloud Functions Code to Code Engine](https://www.ibm.com/cloud/blog/migrating-cloud-functions-code-to-code-engine) | Cloud Functions, Code Engine |
+| [Migrating from Cloud Foundry to Code Engine](https://www.ibm.com/cloud/blog/migrating-from-cloud-foundry-to-code-engine) | Cloud Foundry, Code Engine |
+| [A To-Do List for Every New IBM Cloud Project](https://www.ibm.com/cloud/blog/a-to-do-list-for-every-new-ibm-cloud-project) | Account, IAM |
+| [Creating Virtual Private Endpoint Gateways with Terraform](https://www.ibm.com/cloud/blog/creating-virtual-private-endpoint-gateways-with-terraform) | Virtual Private Cloud, terraform |
+| [Kubernetes Persistent Volumes Backed by IBM Cloud Object Storage Buckets](https://www.ibm.com/cloud/blog/kubernetes-persistent-volumes-backed-by-ibm-cloud-object-storage-buckets) | Cloud Object Storage |
