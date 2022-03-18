@@ -474,9 +474,7 @@ Once the autoscaler is successfully created, you should see
    ibmcloud iam service-id-delete $SERVICE_ID
    ```
    {: pre}
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 * Delete the cluster.
 <!--#/istutorial#-->
 
