@@ -97,7 +97,7 @@ Both {{site.data.keyword.at_short}} and {{site.data.keyword.la_short}} support f
 - {{site.data.keyword.la_short}}: [Using groups to control data access](https://{DomainName}/docs/log-analysis?topic=log-analysis-group_data_access)
 - {{site.data.keyword.at_short}}: [Using groups to control data access](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-group_data_access)
 
-You can also enable integration of select services with {{site.data.keyword.en_full_notm}}. Define topics related to service events, then create topic-specific subscriptions for destinations such as emails, webhooks and others. When an event occurs, a message with or without the event payload is then send out and could be directly reacted upon.
+You can also enable integration of select services with {{site.data.keyword.en_full_notm}}. Define topics related to service events, then create topic-specific subscriptions for destinations such as emails, webhooks and others. When an event occurs, a message with or without the event payload is then sent out and could be directly reacted upon.
 
 ## Control encryption keys
 {: #extended-app-security-control_encryption}
