@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-02-18"
+  years: 2022
+lastupdated: "2022-03-21"
 lasttested: "2021-10-28"
 
 ---
@@ -96,6 +96,8 @@ By sending both application logs, such as general diagnostics and security-relat
 Both {{site.data.keyword.at_short}} and {{site.data.keyword.la_short}} support further restriction on the data captured using IAM-based groups.  You can have users access the same instances, but only see data that is relevant to the application or services they are responsible for, you can review:
 - {{site.data.keyword.la_short}}: [Using groups to control data access](https://{DomainName}/docs/log-analysis?topic=log-analysis-group_data_access)
 - {{site.data.keyword.at_short}}: [Using groups to control data access](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-group_data_access)
+
+You can also enable integration of select services with {{site.data.keyword.en_full_notm}}. Define topics related to service events, then create topic-specific subscriptions for destinations such as emails, webhooks and others. When an event occurs, a message with or without the event payload is then send out and could be directly reacted upon.
 
 ## Control encryption keys
 {: #extended-app-security-control_encryption}
