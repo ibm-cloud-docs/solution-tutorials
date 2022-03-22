@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-02-02"
-lasttested: "2022-02-02"
+lastupdated: "2022-03-22"
+lasttested: "2022-03-22"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
@@ -185,7 +185,13 @@ First, create a new Jupyter Notebook and service connections in {{site.data.keyw
     - Use **Data lake project** as **Name**.
     - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
-2. In the resulting project, click **Add to project** and **Connection**.
+1. In the resulting project, add an access token to the project.
+    - Click the **Manage** tab.
+    - Click **Access control** on the left
+    - Click the **Access tokens** tab
+    - Click **New access token**
+    - Enter name and **Editor** role
+2. Click the **Assets** tab and then click **New asset** and **Connection**.
     - From the list of services select {{site.data.keyword.sqlquery_short}}.
     - In the dialog enter **SQLQuery** as **Name**.
     - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](https://{DomainName}/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
@@ -198,16 +204,13 @@ First, create a new Jupyter Notebook and service connections in {{site.data.keyw
 
 Once the notebook is available, follow these steps.
 1. On the top right of the notebook click on the three dot menu and pick **Insert project token**. It inserts a code snippet into the first cell. **Run** that cell.
-2. Install ibmcloudsql, the required version of pandas and folium by adding the following commands to the next `In [ ]:` input prompt (cell) and then **Run**.
+2. Install ibmcloudsql and folium by adding the following commands to the next `In [ ]:` input prompt (cell) and then **Run**.
     ```python
     !pip install ibmcloudsql
-    !pip install pandas==1.3.4
     !pip install folium
     ```
     {: codeblock}
 
-    You may see an error message relating to dependency problems which can be safely ignored for this tutorial
-    
 3. In the next cell, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     import folium
