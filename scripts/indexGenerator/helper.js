@@ -51,3 +51,20 @@ exports.registerHelpers = function(Handlebars) {
     return (solution.tags && solution.tags.indexOf(tag) >= 0) ? string : null;
   });
 }
+
+exports.getSolutions = function(categories, includeHidden = true) {
+  const solutions = categories.reduce((previousValue, category) => {
+    if (category.hidden && !includeHidden) {
+      return previousValue;
+    } else {
+      return previousValue.concat(category.solutions || []);
+    }
+  }, []).filter((solution) => {
+    if (solution.hidden && !includeHidden) {
+      return false;
+    } else {
+      return !isExternalSolution(solution);
+    }
+  });
+  return solutions;
+}

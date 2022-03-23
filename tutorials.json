@@ -32,13 +32,16 @@
           "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
-            "Docker",
             "Kubernetes",
             "Container Service",
             "Container Registry",
+            "Docker",
             "Java"
           ],
-          "lastUpdated": "2022-02-01"
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ],
+          "lastUpdated": "2022-03-18"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -54,6 +57,9 @@
             "Virtual Servers"
           ],
           "guide": true,
+          "repos": [
+            "https://github.com/IBM-Cloud/jpetstore-kubernetes"
+          ],
           "lastUpdated": "2021-12-14"
         },
         {
@@ -84,7 +90,10 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-12-09"
+          "repos": [
+            "https://github.com/IBM-Cloud/openshift-node-app"
+          ],
+          "lastUpdated": "2022-03-18"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -97,7 +106,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-12-28"
+          "lastUpdated": "2022-02-14"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -109,7 +118,11 @@
             "Log Analysis",
             "Monitoring"
           ],
-          "lastUpdated": "2021-12-09"
+          "repos": [
+            "https://github.com/IBM-Cloud/patient-health-backend",
+            "https://github.com/IBM-Cloud/patient-health-frontend"
+          ],
+          "lastUpdated": "2022-02-11"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -121,6 +134,9 @@
             "Node.js",
             "Content Delivery Network",
             "Cloud Object Storage"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
           ],
           "lastUpdated": "2021-11-24"
         },
@@ -135,6 +151,9 @@
             "Container Service",
             "Docker"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
+          ],
           "lastUpdated": "2021-12-07"
         },
         {
@@ -147,6 +166,9 @@
             "Kubernetes",
             "Cloud Foundry",
             "Identity and Access Management"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/multiple-environments-as-code"
           ],
           "lastUpdated": "2021-12-09"
         },
@@ -174,6 +196,9 @@
             "Node.js",
             "Databases for MongoDB"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
+          ],
           "lastUpdated": "2022-02-11"
         },
         {
@@ -186,6 +211,9 @@
             "Python",
             "Db2 Warehouse"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/cloud-sql-database"
+          ],
           "lastUpdated": "2021-12-07"
         },
         {
@@ -197,6 +225,9 @@
             "Cloud Functions",
             "API Gateway",
             "Cloudant NoSQL DB"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
           "lastUpdated": "2021-10-11"
         },
@@ -223,6 +254,9 @@
             "Log Analysis",
             "Monitoring"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/application-log-analysis"
+          ],
           "lastUpdated": "2022-02-09"
         },
         {
@@ -233,6 +267,9 @@
           "tags": [
             "Code Engine",
             "Knative"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/code-engine-text-analysis"
           ],
           "lastUpdated": "2022-02-01"
         }
@@ -254,6 +291,9 @@
             "Cloud Functions",
             "Slack"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
+          ],
           "lastUpdated": "2021-11-15"
         },
         {
@@ -266,6 +306,9 @@
             "Speech to Text",
             "Text to Speech",
             "Android"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/chatbot-watson-android"
           ],
           "lastUpdated": "2021-11-17"
         }
@@ -300,6 +343,9 @@
             "Cloud Internet Services",
             "Security"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ],
           "lastUpdated": "2022-02-01"
         },
         {
@@ -316,7 +362,10 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2022-02-01"
+          "repos": [
+            "https://github.com/IBM-Cloud/secure-file-storage"
+          ],
+          "lastUpdated": "2022-03-14"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -332,7 +381,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2022-02-18"
+          "lastUpdated": "2022-03-21"
         }
       ]
     },
@@ -364,7 +413,10 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2022-02-02"
+          "repos": [
+            "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
+          ],
+          "lastUpdated": "2022-03-22"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -376,6 +428,9 @@
             "App ID",
             "Code Engine",
             "GitHub"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/github-traffic-stats"
           ],
           "lastUpdated": "2021-11-24"
         },
@@ -390,6 +445,9 @@
             "Watson Studio",
             "Cloud Object Storage",
             "Db2 Warehouse"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/ml-iris-classification"
           ],
           "lastUpdated": "2021-11-30"
         }
@@ -435,6 +493,9 @@
             "Virtual Private Cloud",
             "Network"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend"
+          ],
           "lastUpdated": "2021-12-01"
         },
         {
@@ -449,7 +510,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2022-02-23"
+          "lastUpdated": "2022-03-14"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -463,6 +524,9 @@
             "Virtual Private Cloud",
             "Network"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
+          ],
           "lastUpdated": "2021-11-15"
         },
         {
@@ -475,6 +539,9 @@
             "Virtual Servers",
             "Virtual Private Cloud",
             "Network"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
           "lastUpdated": "2021-12-02"
         },
@@ -507,6 +574,9 @@
             "PHP",
             "WordPress"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp"
+          ],
           "lastUpdated": "2021-12-06"
         },
         {
@@ -525,6 +595,9 @@
             "Linux",
             "Security"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
+          ],
           "lastUpdated": "2021-12-06"
         },
         {
@@ -542,6 +615,9 @@
             "Dedicated",
             "PHP",
             "Node.js"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
           ],
           "lastUpdated": "2021-10-21"
         }
@@ -788,6 +864,9 @@
           "tags": [
             "VMware"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vmware-solutions-shared"
+          ],
           "lastUpdated": "2022-02-15"
         }
       ]
@@ -806,6 +885,9 @@
             "HPC",
             "Virtual Private Cloud"
           ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
+          ],
           "lastUpdated": "2021-12-06"
         },
         {
@@ -818,6 +900,9 @@
             "HPC",
             "Virtual Private Cloud"
           ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
+          ],
           "lastUpdated": "2021-12-06"
         },
         {
@@ -829,6 +914,9 @@
             "Storage",
             "HPC",
             "Virtual Private Cloud"
+          ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
           ],
           "lastUpdated": "2021-12-06"
         }
