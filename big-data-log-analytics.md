@@ -239,7 +239,7 @@ You now see the status `Queued` for your topic. It may take up to 5 minutes unti
 ### Using kcat with {{site.data.keyword.messagehub}}
 {: #big-data-log-analytics-kafkatools}
 
-The streaming job is currently idle and awaiting messages. In this section, you will configure the tool [kcat](https://github.com/edenhill/kcat) to work with {{site.data.keyword.messagehub}}. kcat allows you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}. You can persist your Kafka message feed over longer periods of time in a cloud data lake on {{site.data.keyword.cos_full_notm}} .
+The streaming job is currently idle and awaiting messages. In this section, you will configure the tool [kcat](https://github.com/edenhill/kcat) to work with {{site.data.keyword.messagehub}}. kcat allows you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}. Below the Kafka message feed will be persisted in your data lake on {{site.data.keyword.cos_full_notm}} .
 
 1. Either [install kcat](https://github.com/edenhill/kcat) on your machine or use it via Docker.
 2. Change into a new directory and create a text file named `kcat.config` with the following contents. The value for `bootstrap.servers` is the comma-separated list of brokers from the **es-for-log-analysis** service credentials created earlier in the {{site.data.keyword.messagehub}} service without any quotes, brackets, or newline characters.
@@ -308,7 +308,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 ### Increasing message load
 {: #big-data-log-analytics-streamsload}
 
-To view conditional handling in your Streams flow, you will increase the message volume sent to {{site.data.keyword.messagehub}}. The provided script simulates a flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
+For later analysis purposes increase the message volume sent to {{site.data.keyword.messagehub}}. The provided script simulates a flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
 
 1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
 2. Turn the access logs into JSON format by running:
@@ -468,7 +468,8 @@ Target the region and resource group you have been using:
 ```
 region=us-south; #<REGION>
 rg=Default; # <RESOURCE-GROUP>
-ibmcloud login -r $region -g $rg
+ibmcloud login
+ibmcloud target -r $region -g $rg
 ```
 {: codeblock}
 
@@ -534,11 +535,11 @@ Then upload hello.py to your bucket `ABC-log-analysis`
 
 To run the hello.py application just uploaded to the bucket locate the **HMAC** credentials associated with the {{site.data.keyword.cos_short}} instance created earlier.  Click on the **Service credentials** tab and open the **cos-for-log-analysis** credentials.  Create corresponding shell variables for the cos_hmac_keys and your bucket name.  Learn more about the service variable in the [stocator](https://github.com/CODAIT/stocator#stocator-and-ibm-cloud-object-storage-ibm-cos) project.
 
-While in your **Bucket** open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint.  Fill in these shell variables
+Click **Buckets** on the left, and select your bucket.  Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint.  Fill in these shell variables.  Something like the following:
 
 ```
 # GUID= set earlier
-service=solution
+service=hello
 access_key_id="0012345678901234567899550cfa9a60"
 secret_access_key="00f02d12345678948bc82602c123456789963849c68c0f19"
 endpoint=s3.direct.us-south.cloud-object-storage.appdomain.cloud
@@ -546,7 +547,7 @@ bucket=ABC-log-analysis
 ```
 {: codeblock}
 
-Submit the spark application.  Notice the single and double quotes, it is a little tricky:
+Submit the hello application.  Notice the single and double quotes, it is a little tricky:
 ```
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "cos://$bucket.$service/hello.py" \
@@ -557,6 +558,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
         }' 
 ```
 {: codeblock}
+Again verify the results in the platform log.
 
 The final step is to submit the spark application that accesses the data in the same bucket.  Create a file, solution.py, with the following contents and upload it to the bucket.  Notice the COS_PARQUET environment variable that will be initialized in the next step.
 
@@ -607,7 +609,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
         "spark.hadoop.fs.cos.'$service'.secret.key": "'$secret_access_key'"
         }' \
   --env '{
-        "COS_PARQUET": "cos://'$bucket'.'$service'/topic=webserver/jobid=48914a16-1d33-4d3e-93e3-7efb855b662e/"
+        "COS_PARQUET": "cos://'$bucket'.'$service'/logs-stream-landing/topic=webserver/jobid='$jobid'/"
         }'
 ```
 {: codeblock}
@@ -662,4 +664,3 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 * [Apache Kafka](https://kafka.apache.org/)
-* [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)
