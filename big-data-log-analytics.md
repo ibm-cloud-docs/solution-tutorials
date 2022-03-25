@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-02-28"
-lasttested: "2022-02-28"
+lastupdated: "2022-03-25"
+lasttested: "2022-03-25"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect
