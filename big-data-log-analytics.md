@@ -14,11 +14,11 @@ completion-time: 3h
 {:step: data-tutorial-type='step'}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
 {:note: .note}
+{:codeblock: .codeblock}
 
 # Process big data logs with SQL
 {: #big-data-log-analytics}
@@ -559,6 +559,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
         }' 
 ```
 {: codeblock}
+
 Again verify the results in the platform log.
 
 The final step is to submit the spark application that accesses the data in the same bucket.  Create a file, solution.py, with the following contents and upload it to the bucket.  Notice the COS_PARQUET environment variable that will be initialized in the next step.
