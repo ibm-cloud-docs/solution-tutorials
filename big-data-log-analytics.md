@@ -64,10 +64,9 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
+* {{site.data.keyword.cloud_notm}} CLI plugin: `ibmcloud plugin install analytics-engine-v3`
 * `git` to clone a code repository that contains some example data.
 * Optionally, a Docker client.
-
-To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -90,7 +89,7 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances, howe
 {: important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging**, look for any existing log analysis services with `Platform logs` enabled.  If there is a platform logging instance in the region no further configuration is required.
-2. To create a new {{site.data.keyword.loganalysislong_notm}} click the **Options** then **Create**. Continue to create a logging instance with 7-day plan.
+2. To create a new {{site.data.keyword.loganalysislong_notm}} click the **Options** then **Create**. Continue to create a logging instance with 7-day plan.  If not visible hit the **refresh** button.
 3. Back in the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
    1. Click on **Options > Edit platform** and **select** the region.
    2. Select the log analysis service instance created for platform logs **Select**.
@@ -114,7 +113,7 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
 3. Under **Service credentials**, click on **New credential**.
    1. Provide a name for the credential - `es-for-log-analysis`.
    2. select **Writer** as the role and click **Add**.
-4. Make note of the values or remember where they can be located. They will be used in the `event-streams.config` file in the next section.
+4. Make note of the values or remember where they can be located. They will be used in the `kcat.config` file in the next section.
 
 ### Encrypt your data and secure your keys
 {: #big-data-log-analytics-new-kp}
@@ -143,7 +142,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will b
 2. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
    2. Expand the **Advanced options** then set Include HMAC Credential to **On** and click **Add**.
-   3. Make note of the **access_key_id** and **secret_access_key** value or remember where they can be located.
+   3. Make note of the **access_key_id** and **secret_access_key** values or remember where they can be located.
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
@@ -163,12 +162,10 @@ Finally create the bucket.
    * Click **Regional** resiliency
    * Enter a  unique name, like `<your-initial>-log-analysis`.
    * Select the region for the **Location**
-   * default for the rest
-   * Click **Create bucket**
-3. For this bucketUnder **Service integrations (optional) / Encryption**, enable **Key management**
+3. Click to enable **Service integrations (optional) / Encryption** - **Key management enabled**
    1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier by clicking on **Use existing instance**
    2. Select **log-analysis-root-enckey** as the key and click **Associate key**.
-4. CLick **Create bucket**
+4. Click **Create bucket**
 
 The bucket will be referenced below as ABC-log-analysis
 
@@ -266,9 +263,9 @@ The streaming job is currently idle and awaiting messages. In this section, you 
 
    The command will connect as event producer to the topic **webserver**. Remember the command for later.
 
-4. The kcat tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
+4. The kcat tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` then `CTRL-d` to send the log message to {{site.data.keyword.messagehub}}.
     ```json
-    { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
+    { "host": "199.72.81.55", "time_stamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": "200", "bytes": "6245" }
     ```
     {: codeblock}
 
@@ -310,7 +307,11 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 
 For later analysis purposes increase the message volume sent to {{site.data.keyword.messagehub}}. The provided script simulates a flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
 
-1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
+1. Download and unzip the Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed log file from NASA.
+```sh
+curl ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz -o NASA_access_log_Jul95.gz
+gunzip NASA_access_log_Jul95.gz
+```
 2. Turn the access logs into JSON format by running:
    ```sh
    awk -F " " '{ print "{\"host\":\"" $1 "\",\"time_stamp\":\"" $4 " "  $5 "\",\"request\":" $6 " " $7 " " $8 ",\"responseCode\":\"" $9 "\",\"bytes\":\"" $10 "\"}" }' NASA_access_log_Jul95 > NASA_logs.json
@@ -344,15 +345,15 @@ For later analysis purposes increase the message volume sent to {{site.data.keyw
 
 3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines.
    ```sh
-   sh rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
+   ./rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
    ```
    {: pre}
 
    If you are using Docker, replace the part after the `|` accordingly.
 
-4. Stop the script after a desired number of messages have been streamed using `control+C`.
+4. The script configuration above pushes about 10 lines/second. Stop the script after the desired number of messages have been streamed using `control+C`.
 5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and the **Details** tab. There, click on **Query the result** and then click **Run** to see some of the received messages under the `Results` tab of the batch job. 
-6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the number of lines value.
+6. You can experiment with {{site.data.keyword.messagehub}} by increasing or decreasing the number of lines value.
 
 ## Investigating log data using {{site.data.keyword.sqlquery_short}}
 {: #big-data-log-analytics-sqlquery}
@@ -362,7 +363,7 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
 
 
 1. Back in the **Details** view edit the SQL Query.
-   * Select the **Jobs** to **Streaming**.
+   * Click on the drop down next to **Jobs** and select **Streaming**.
    * Open the **Details** and click on the **Query the result**
    * Notice the query editor, above, is populated with a query.
    * Notice the **FROM** clause does not specify a specific parquet object in the bucket but references the job id, which means all of the objects in the job.  Perfect!
@@ -377,7 +378,7 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
    * Observe the results when it is complete in the **Result** tab
    * Now lets do some investigation by modifying this basic query
 
-2. In the {{site.data.keyword.sqlquery_short}} UI, edit the SQL in the **Type SQL here ...** text area to look more like this, keeep the FROM statement as is. 
+2. In the {{site.data.keyword.sqlquery_short}} UI, edit the SQL in the text area to look more like this, keep the FROM statement as is. 
    ```sql
    -- What are the top 10 web pages on NASA from July 1995?
    -- Which mission might be significant?
@@ -462,9 +463,9 @@ Open the analytics engine service:
 2. Click the **Applications** tab
 
 
-Try the following from your own shell or the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+Try the following:
 
-Target the region and resource group you have been using:
+Target the region and resource group you have been using (edit for your specifics):
 ```
 region=us-south; #<REGION>
 rg=Default; # <RESOURCE-GROUP>
@@ -488,7 +489,7 @@ ibmcloud ae-v3 log-config update --instance-id $GUID --enable=true
 ```
 {: codeblock}
 
-Run a program that is built into the IBM spark runtime:
+Run a program that is built into the IBM spark runtime to print some output:
 ```
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "/opt/ibm/spark/examples/src/main/python/wordcount.py" \
