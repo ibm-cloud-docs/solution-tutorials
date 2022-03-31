@@ -21,7 +21,7 @@ completion-time: 1h
 
 
 # Serverless web application and API with database backend
-{: #serverless-api-webapp}
+{: #serverless-webapp}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, Cloudant, cloud-object-storage"}
 {: toc-completion-time="1h"}
@@ -39,7 +39,7 @@ Static websites are great for performance and security. Their architectural mode
 
 
 ## Objectives
-{: #serverless-api-webapp-0}
+{: #serverless-webapp-0}
 
 * Deploy a serverless backend and a database
 * Expose a REST API as serverless app
@@ -61,7 +61,7 @@ The application shown in this tutorial is a simple guestbook website where users
 5. The backend uses {{site.data.keyword.cloudant_short_notm}} to store and retrieve guestbook entries.
 
 ## Create the Guestbook database
-{: #serverless-api-webapp-2}
+{: #serverless-webapp-2}
 {: step}
 
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. It is built upon and compatible with Apache CouchDB.
@@ -83,14 +83,14 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}} service inst
    4. Expand the newly created credentials and review them. We will need these credentials later to allow the {{site.data.keyword.codeengine_short}} app to read/write to your Cloudant service.
 
 ## Create serverless backend
-{: #serverless-api-webapp-3}
+{: #serverless-webapp-3}
 {: step}
 
 In this section, you will create the serverless backend app with {{site.data.keyword.codeengine_short}}. Serverless apps only incur charges for the execution time which is ideal for infrequently accessed solutions like a guestbook.
 
 
 ### Create a {{site.data.keyword.codeengine_short}} project
-{: #serverless-api-webapp-4
+{: #serverless-webapp-4
 
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
@@ -102,7 +102,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 
 
 ### Create the {{site.data.keyword.codeengine_short}} app
-{: #serverless-api-webapp-5}
+{: #serverless-webapp-5}
 {: step}
 
 1. Within the project dashboard, click on **Applications**, then **Create**.
@@ -120,7 +120,7 @@ Instead of using the pre-built container image, you could build the image on you
 {: tip}
 
 ## Deploy the web app
-{: #serverless-api-webapp-6}
+{: #serverless-webapp-6}
 {: step}
 
 Create a {{site.data.keyword.cos_short}} bucket configured with static website hosting containing the files for the guestbook JavaScript application that uses the {{site.data.keyword.cloudant_short_notm}} database.
@@ -159,7 +159,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 
 <!--##istutorial#-->
 ## Optionally configure a custom domain
-{: #serverless-api-webapp-custom-domain}
+{: #serverless-webapp-custom-domain}
 {: step}
 
 You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
@@ -168,7 +168,7 @@ A custom domain can also be assigned to the static website bucket. Follow the in
 <!--#/istutorial#-->
 
 ## Remove resources
-{: #serverless-api-webapp-cleanup}
+{: #serverless-webapp-cleanup}
 {: step}
 
 To delete the created bucket and {{site.data.keyword.openwhisk_short}} service:
@@ -192,7 +192,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: tip}
 
 ## Related content
-{: #serverless-api-webapp-8}
+{: #serverless-webapp-8}
 
 * [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
