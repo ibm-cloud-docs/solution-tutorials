@@ -51,7 +51,7 @@ Static websites are great for performance and security. Their architectural mode
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-![Architecture](./images/solution-serverless-api-webapp-hidden/architecture-serverless-api-webapp.svg){: class="center"}
+![Architecture](./images/solution64-serverless-webapp-hidden/architecture-serverless-api-webapp.svg){: class="center"}
 {: style="text-align: center;"}
 
 
@@ -154,7 +154,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
-![Guestbook Screenshot](images/solution-serverless-api-webapp-hidden//Guestbook.png){: class="center"}
+![Guestbook Screenshot](images/solution64-serverless-webapp-hidden//Guestbook.png){: class="center"}
 {: style="text-align: center;"}
 
 <!--##istutorial#-->
