@@ -40,6 +40,26 @@
           "repos": [
             "https://github.com/IBM/satellite-link-example"
           ]
+        },
+        {
+          "name": "Serverless web application and API with database backend",
+          "url": "serverless-api-webapp-database.hidden.html",
+          "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
+          "imgSrc": "images/solution-serverless-api-webapp-hidden/architecture-serverless-api-webapp.svg",
+          "tags": [
+            "Code Engine",
+            "Cloud Object Storage",
+            "Cloudant NoSQL DB"
+          ],
+          "requirements": [
+            "code_engine",
+            "cloudant",
+            "cloud_object_storage"
+          ],
+          "supportsCloudShell": "yes",
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ]
         }
       ]
     },

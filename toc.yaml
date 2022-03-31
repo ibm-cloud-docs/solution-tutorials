@@ -26,6 +26,7 @@ toc:
           topics:
           - solution-template.md
           - satellite-tour.hidden.md
+          - serverless-api-webapp-database.hidden.md
 
         - topicgroup:
           label: Websites and Web Apps
@@ -175,6 +176,7 @@ toc:
         - topicgroup:
           label: Code Engine
           topics:
+          - serverless-api-webapp-database.hidden.md
           - mean-stack.md
           - text-analysis-code-engine.md
           - serverless-github-traffic-analytics.md
