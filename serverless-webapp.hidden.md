@@ -101,7 +101,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 3. Click on the project name to enter the project dashboard.
 
 
-### Create the {{site.data.keyword.codeengine_short}} app
+### Create and deploy backend app
 {: #serverless-webapp-5}
 {: step}
 
