@@ -57,7 +57,7 @@ The application shown in this tutorial is a simple guestbook website where users
 
 1. The user accesses the application hosted on the bucket in {{site.data.keyword.cos_short}}
 2. The web application calls a backend API.
-3. The app with the backend API is deployed to {{site.data.keyword.codeengine_short}}.
+3. The app with the backend API is deployed to {{site.data.keyword.codeengineshort}}.
 5. The backend uses {{site.data.keyword.cloudant_short_notm}} to store and retrieve guestbook entries.
 
 ## Create the Guestbook database
@@ -73,24 +73,24 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}} service inst
    1. Select **IAM and legacy credentials** as authentication method.
    1. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
    1. Click **Create**.
-2. Back in the [{{site.data.keyword.cloud_short}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
+2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
 4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and do **not** select **Partitioned** under **Partitioning**. Click **Create** to create the database.
 5. Switch back to the browser tab with the service dashboard page. Go to **Service credentials**, then:
    1. Click **New credential**.
    2. Set the name to **for-guestbook**. Leave the role as **Manager**.
    3. Click **Add** to add the new credentials.
-   4. Expand the newly created credentials and review them. We will need these credentials later to allow the {{site.data.keyword.codeengine_short}} app to read/write to your Cloudant service.
+   4. Expand the newly created credentials and review them. We will need these credentials later to allow the {{site.data.keyword.codeengineshort}} app to read/write to your Cloudant service.
 
 ## Create serverless backend
 {: #serverless-webapp-3}
 {: step}
 
-In this section, you will create the serverless backend app with {{site.data.keyword.codeengine_short}}. Serverless apps only incur charges for the execution time which is ideal for infrequently accessed solutions like a guestbook.
+In this section, you will create the serverless backend app with {{site.data.keyword.codeengineshort}}. Serverless apps only incur charges for the execution time which is ideal for infrequently accessed solutions like a guestbook.
 
 
-### Create a {{site.data.keyword.codeengine_short}} project
-{: #serverless-webapp-4
+### Create a {{site.data.keyword.codeengineshort}} project
+{: #serverless-webapp-4}
 
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
@@ -116,7 +116,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 7. Click **Create** to deploy the new backend app for the guestbook.
 8. Wait for it to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
 
-Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengine_short}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private).
+Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private).
 {: tip}
 
 ## Deploy the web app
@@ -183,8 +183,8 @@ To delete the created {{site.data.keyword.cloudant_short_notm}} service,
 2. Under **Services**, click on the action menu next to `<yourinitials>-guestbook-db` service
 3. Click **Delete**
 
-To delete the application and project {{site.data.keyword.codeengine_short}},
-1. Navigate to [{{site.data.keyword.codeengine_short}}](https://{DomainName}/codeengine/) landing page.
+To delete the application and project {{site.data.keyword.codeengineshort}},
+1. Navigate to [{{site.data.keyword.codeengineshort}}](https://{DomainName}/codeengine/) landing page.
 2. On the left pane, click on **Projects**.
 3. In the list of projects, check the guestbook project, then click **Delete**.
 
