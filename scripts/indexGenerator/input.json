@@ -42,7 +42,7 @@
           ]
         },
         {
-          "name": "Serverless web application and API with database backend",
+          "name": "Serverless web application and API with Code Engine",
           "url": "serverless-webapp.hidden.html",
           "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
           "imgSrc": "images/solution64-serverless-webapp-hidden/architecture-serverless-api-webapp.svg",

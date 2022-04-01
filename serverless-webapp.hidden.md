@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-03-31"
-lasttested: "2022-03-31"
+lastupdated: "2022-04-01"
+lasttested: "2022-04-01"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -20,7 +20,7 @@ completion-time: 1h
 {:pre: .pre}
 
 
-# Serverless web application and API with database backend
+# Serverless web application and API with {{site.data.keyword.codeengineshort}}
 {: #serverless-webapp}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, Cloudant, cloud-object-storage"}
@@ -70,7 +70,7 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}} service inst
    1. Under **Multitenant** select a region.
    1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a resource group.
-   1. Select **IAM and legacy credentials** as authentication method.
+   1. Select **IAM** as authentication method.
    1. Select the **Lite** plan. If you already have a Lite plan in your account, select another service plan.
    1. Click **Create**.
 2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
@@ -95,7 +95,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create project**,
    - Select a location.
-   - Provide `guestbook` as project name and select the same resource group as before.
+   - Use `<yourinitials>-guestbook` as project name and select the same resource group as before.
    - Click on **Create**.
    - Wait until the project `status` changes to **Active**.
 3. Click on the project name to enter the project dashboard.
@@ -116,7 +116,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 7. Click **Create** to deploy the new backend app for the guestbook.
 8. Wait for it to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
 
-Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private).
+Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private). You can find the source at https://github.com/IBM-Cloud/serverless-guestbook
 {: tip}
 
 ## Deploy the web app
