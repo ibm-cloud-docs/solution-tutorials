@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-01"
-lasttested: "2022-04-01"
+lastupdated: "2022-04-04"
+lasttested: "2022-04-04"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -44,10 +44,6 @@ Static websites are great for performance and security. Their architectural mode
 * Deploy a serverless backend and a database
 * Expose a REST API as serverless app
 * Host a static website
-<!--##istutorial#-->
-* Optional: Use a custom domain for the REST API
-<!--#/istutorial#-->
-
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
@@ -133,7 +129,7 @@ Create a {{site.data.keyword.cos_short}} instance:
 
 Create a bucket configured for static website hosting:
 1. Click **Create a bucket**.
-1. Click **Custom bucket**.
+1. Click **Customize your bucket**.
 1. Enter a bucket name that is unique across all IBM accounts. Try `<yourinitials>-guestbook`.
 1. Select resiliency as **Regional**.
 1. Select a **Location** and choose a region consistent with the {{site.data.keyword.cloudant_short_notm}} instance.
@@ -148,24 +144,15 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. Open https://github.com/IBM-Cloud/serverless-guestbook in a new tab.
 1. Download a zip file by clicking **Code** then **Download ZIP**.
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
-1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section..
+1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section. Make sure that the URI does not end on a slash (`/`).
 1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
-1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab.
-1. You should see the `test` guestbook entry created earlier.
-1. Add new entries.
+1. Navigate to the **Configuration** tab for the bucket. In the endpoints section locate the **Static website hosting endpoints** section. Copy the **Public** endpoint into a browser tab.
+1. You should see the guestbook page.
+1. Add new entries to the guestbook.
 
 ![Guestbook Screenshot](images/solution64-serverless-webapp-hidden//Guestbook.png){: class="center"}
 {: style="text-align: center;"}
 
-<!--##istutorial#-->
-## Optionally configure a custom domain
-{: #serverless-webapp-custom-domain}
-{: step}
-
-You can optionally create a custom domain for the API.  Earlier you made note of the custom route and copied it into **guestbook.js**.  A CNAME record can be added to your custom domain in a DNS provider. Instructions to create a custom domain for an API using {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} can be found in [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless).
-
-A custom domain can also be assigned to the static website bucket. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos). Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint that will be used for the CNAME target.
-<!--#/istutorial#-->
 
 ## Remove resources
 {: #serverless-webapp-cleanup}
