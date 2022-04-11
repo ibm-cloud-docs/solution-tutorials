@@ -37,6 +37,7 @@ toc:
           - mean-stack.md
           - sql-database.md
           - serverless-api-webapp.md
+          - serverless-webapp.md
           - multi-region-serverless.md
           - application-log-analysis.md
           - text-analysis-code-engine.md
@@ -163,6 +164,7 @@ toc:
           label: Code Engine
           topics:
           - mean-stack.md
+          - serverless-webapp.md
           - text-analysis-code-engine.md
           - serverless-github-traffic-analytics.md
 

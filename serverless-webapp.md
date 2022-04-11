@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-04"
+lastupdated: "2022-04-11"
 lasttested: "2022-04-04"
 
 content-type: tutorial
@@ -47,7 +47,7 @@ Static websites are great for performance and security. Their architectural mode
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-![Architecture](./images/solution64-serverless-webapp-hidden/architecture-serverless-api-webapp.svg){: class="center"}
+![Architecture](./images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: class="center"}
 {: style="text-align: center;"}
 
 
@@ -112,7 +112,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 7. Click **Create** to deploy the new backend app for the guestbook.
 8. Wait for it to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
 
-Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private). You can find the source at https://github.com/IBM-Cloud/serverless-guestbook
+Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](https://{DomainName}/docs/codeengine?topic=codeengine-deploy-app-private). You can find the source at https://github.com/IBM-Cloud/serverless-guestbook/tree/ce
 {: tip}
 
 ## Deploy the web app
@@ -140,8 +140,8 @@ Create a bucket configured for static website hosting:
 1. Click **Save**
 1. Scroll to the bottom and click **Create bucket**
 
-Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverless-guestbook into the bucket:
-1. Open https://github.com/IBM-Cloud/serverless-guestbook in a new tab.
+Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverless-guestbook/tree/ce into the bucket:
+1. Open https://github.com/IBM-Cloud/serverless-guestbook/tree/ce in a new tab.
 1. Download a zip file by clicking **Code** then **Download ZIP**.
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
 1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section. Make sure that the URI does not end on a slash (`/`).
@@ -150,7 +150,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the guestbook page.
 1. Add new entries to the guestbook.
 
-![Guestbook Screenshot](images/solution64-serverless-webapp-hidden//Guestbook.png){: class="center"}
+![Guestbook Screenshot](images/solution64-serverless-webapp/Guestbook.png){: class="center"}
 {: style="text-align: center;"}
 
 
