@@ -32,7 +32,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-In this tutorial, you will create a serverless web application using a bucket in {{site.data.keyword.cos_short}} and implementing the application backend using {{site.data.keyword.codeenginefull_notm}} and {{site.data.keyword.cloudant_short_notm}} as JSON document database.
+In this tutorial, you will create a serverless web application using a bucket in {{site.data.keyword.cos_short}} and implementing the application backend using {{site.data.keyword.codeenginefull_notm}} and [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant) as JSON document database.
 {: shortdesc}
 
 Static websites are great for performance and security. Their architectural model is sometimes referred to as [Jamstack](https://jamstack.org/) in reference to JavaScript, API, and Markup. In this tutorial, you will create a static website hosted on {{site.data.keyword.cos_short}}. The website has a guestbook which uses JavaScript to access an API for retrieving entries or to add a new entry. The API for interaction with the backing database is implemented using a serverless approach. It is deployed as backend app or microservice to [{{site.data.keyword.codeenginefull_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started). The backend only runs when required and thereby occurs charges when in use. 
@@ -60,7 +60,7 @@ The application shown in this tutorial is a simple guestbook website where users
 {: #serverless-webapp-2}
 {: step}
 
-Let's start by creating a {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. It is built upon and compatible with Apache CouchDB.
+Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant) service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. It is built upon and compatible with Apache CouchDB.
 
 1. In the [Catalog](https://{DomainName}/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.
