@@ -229,7 +229,22 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2021-10-11"
+          "lastUpdated": "2022-04-05"
+        },
+        {
+          "name": "Serverless web application and API with Code Engine",
+          "url": "serverless-webapp.html",
+          "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
+          "imgSrc": "images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg",
+          "tags": [
+            "Code Engine",
+            "Cloud Object Storage",
+            "Cloudant NoSQL DB"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ],
+          "lastUpdated": "2022-04-11"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -401,7 +416,7 @@
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2021-11-23"
+          "lastUpdated": "2022-03-25"
         },
         {
           "name": "Build a data lake with Object Storage",

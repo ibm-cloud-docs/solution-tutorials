@@ -329,6 +329,26 @@
           ]
         },
         {
+          "name": "Serverless web application and API with Code Engine",
+          "url": "serverless-webapp.html",
+          "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
+          "imgSrc": "images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg",
+          "tags": [
+            "Code Engine",
+            "Cloud Object Storage",
+            "Cloudant NoSQL DB"
+          ],
+          "requirements": [
+            "code_engine",
+            "cloudant",
+            "cloud_object_storage"
+          ],
+          "supportsCloudShell": "yes",
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ]
+        },
+        {
           "name": "Deploy serverless apps across multiple regions",
           "url": "multi-region-serverless.html",
           "description": "Use Cloud Functions and Internet Services to build globally available and secure serverless applications.",
