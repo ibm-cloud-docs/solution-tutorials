@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-04-05"
+lastupdated: "2022-04-11"
 lasttested: "2021-10-11"
 
 content-type: tutorial
@@ -66,7 +66,7 @@ The application shown in this tutorial is a simple guestbook website where users
 {: #serverless-api-webapp-2}
 {: step}
 
-Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
+Let's start by creating an [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant) service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
 
 1. In the [Catalog](https://{DomainName}/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.

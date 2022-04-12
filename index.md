@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
+  years: 2022
+lastupdated: "2022-04-12"
 lasttested: "2021-12-09"
 
 ---
@@ -136,7 +136,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/terraform?topic=terraform-setup_cli#install_cli) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-windows_jq}
@@ -274,7 +274,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/terraform?topic=terraform-setup_cli#install_cli) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-macos_jq}
@@ -415,7 +415,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/terraform?topic=terraform-setup_cli#install_cli) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-ubuntu_jq}
