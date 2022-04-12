@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-11-24"
+  years: 2022
+lastupdated: "2022-04-12"
 lasttested: "2021-11-24"
 
 content-type: tutorial
@@ -182,7 +182,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 3. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
 4. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
 5. Select **Object Storage** to configure the CDN for COS.
-6. Set the **Endpoint** to your bucket API endpoint ($PUBLIC_ENDPOINT). Above thie was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
+6. Set the **Endpoint** to your bucket public endpoint ($PUBLIC_ENDPOINT). Above this was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
 7. Set **Bucket name** to the bucket name from above.
 8. Enable HTTP (80).
 9. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.
