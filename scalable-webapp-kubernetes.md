@@ -48,7 +48,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-![Architecture](images/solution2/Architecture.png){: class="center"}
+![Architecture](images/solution2/Architecture.png){: caption="Architecture diagram" caption-side="bottom" class="center" }
 {: style="text-align: center;"}
 
 1. A developer downloads or clones a starter web application.
@@ -319,6 +319,7 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
    * Click the **copy** symbol next to the certificate's **ID**.
    * Create an environment variable pointing to the certificate ID:
+
    ```sh
    export CERTIFICATE_ID=<certificate ID>
    ```
@@ -340,6 +341,7 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 7. Click on **Endpoints** in the left navigation.
 8. Locate the **Public** endpoint for the **Vault API**.
    * Create an environment variable pointing to the endpoint:
+
    ```sh
    export SECRETS_MANAGER_URL=<public endpoint>
    ```
@@ -382,25 +384,25 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: codeblock}
 
-1. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
+6. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
    ```sh
    ./ingress.sh customdomain_https
    ```
    {: pre}
 
-1. Deploy the Ingress:
+7. Deploy the Ingress:
    ```sh
    kubectl apply -f ingress-customdomain-https.yaml
    ```
    {: pre}
 
-1. Validate the secret was created:
+8. Validate the secret was created:
    ```sh
    kubectl get secret kubernetesnodeapp-certificate -n $KUBERNETES_NAMESPACE
    ```
    {: pre}
 
-1. Access your application at `https://<my-custom-subdomain.com>/`.
+9. Access your application at `https://<my-custom-subdomain.com>/`.
 <!--#/istutorial#-->
 
 ## Monitor application health
@@ -479,6 +481,7 @@ Once the autoscaler is successfully created, you should see
    {: pre}
 
 * Delete the service ID:
+
    ```sh
    ibmcloud iam service-id-delete $SERVICE_ID
    ```
