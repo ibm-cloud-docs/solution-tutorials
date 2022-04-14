@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-03-18"
+lastupdated: "2022-04-14"
 lasttested: "2022-03-14"
 
 content-type: tutorial
@@ -314,12 +314,8 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Services and software**.
 2. Click on **Secrets** in the left navigation.
 3. Click **Add** and then **TLS certificates**.
-4. Click on the **Import certificate** tile.
-   * Set name to **KubernetesNodeApp** and description to **Certificate for scalable-webapp-kubernetes tutorial**.
-   * Upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
-   * Click **Import** to complete the import process.
-5. Locate the entry for the imported certificate and click on it.
-   * Verify the type is **Imported certificate**
+4. You can select either **Import certificate** or **Order certificate**. Detailed steps are available in the [Adding SSL or TLS certificates](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) topic.  If you selected to import a ceritificate, make sure to upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
+5. Locate the entry for the imported or ordered certificate and click on it.
    * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
    * Click the **copy** symbol next to the certificate's **ID**.
    * Create an environment variable pointing to the certificate ID:
@@ -328,8 +324,21 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    ```
    {: pre}
 
-6. Click on **Endpoints** in the left navigation.
-7. Locate the **Public** endpoint for the **Vault API**.
+6. In {{site.data.keyword.secrets-manager_short}}, certificates that you import to the service are imported certificates (imported_cert). Certificates that you order through {{site.data.keyword.secrets-manager_short}} from a third-party certificate authority are public certificates (public_cert). This information is needed in the helm chart you will be using later on to configure the ingress.  Select and run the command that is appropriate for your selection in the previous step.  
+   ```sh
+   export CERTIFICATE_TYPE=imported_cert
+   ```
+   {: pre}
+
+   or 
+
+   ```sh
+   export CERTIFICATE_TYPE=public_cert
+   ```
+   {: pre}
+
+7. Click on **Endpoints** in the left navigation.
+8. Locate the **Public** endpoint for the **Vault API**.
    * Create an environment variable pointing to the endpoint:
    ```sh
    export SECRETS_MANAGER_URL=<public endpoint>
