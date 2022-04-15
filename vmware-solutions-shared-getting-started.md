@@ -107,9 +107,9 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 2. Click on the newly created instance `vmware-tutorial`.
 3. Click on **Set Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
-5. Select the virtual data center and in the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
+5. Note the tabs at the top and click **Networking** then click the **Edge Gateways** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. Click on the radio button next to the edge gateway name, at the top of the page, click on **Enable Distributed Routing**. You can proceed to the next steps, however come back to confirm the status of distributed routing is **enabled** prior to running the [Terraform plan](#vmware-solutions-shared-getting-started-create-schematics).
-7. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
+7. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization name below (`vcd_org`).
 
 | Name | Description | Default |
 |----------|---------|---------|
@@ -334,7 +334,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
 2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
-3. Select `terraform_v0.15` as the **Terraform version**. Click **Next**.
+3. Select `terraform_v1.1` as the **Terraform version**. Click **Next**.
 4. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
 5. Select the resource group and location of the workspace, you can also add tags and description as needed.
 6. Click **Next** and then **Create** to create your workspace. Your workspace is created and the workspace Settings page opens.
