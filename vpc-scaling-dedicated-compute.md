@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-21"
-lasttested: "2021-10-21"
+lastupdated: "2022-04-19"
+lasttested: "2022-04-19"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -142,7 +142,7 @@ An instance template is required before you can create an instance group for aut
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
 
-If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) in the same resource group and set `ssh_keyname` to the name of the VPC SSH Key.
+If you want to access the VSIs directly later, you can optionally [create an SSH key](https://{DomainName}/vpc-ext/compute/sshKeys) and set `ssh_keyname` to the name of the VPC SSH Key.
 
 1. Go to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, click the action menu for `step2_create_vpc`,uncheck **Use default**, change the override value to **true** and **Save** the setting.
 2. Click on **Apply plan** to provision the VPC resources.
@@ -278,7 +278,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```
    {: pre}
 
-   Typically, you won't set a public IP (floating IP) for an instance. In this case, a floating IP is set only to simply the use of the app deployed to the instance.
+   Typically, you won't set a public IP (floating IP) for an instance. In this case, a floating IP is set allow curl to the app deployed on the instance.
    {: tip} 
 
 4. Issue the following curl command to query the database. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
