@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
+  years: 2022
+lastupdated: "2022-04-21"
 lasttested: "2021-12-09"
 
 content-type: tutorial
@@ -187,7 +187,7 @@ The server does not come with a database. In this section, you install MySQL on 
    Grant access to the database to this user.
 
    ```sql
-   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO 'wordpress'@'%';
+   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO 'wpuser'@'%';
    ```
    {: codeblock}
 
