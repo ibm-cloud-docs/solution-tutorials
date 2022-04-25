@@ -36,7 +36,10 @@
           "name": "Introduction to Satellite locations, clusters, link and config",
           "url": "satellite-tour.hidden.html",
           "description": "Get familiar with Satellite architecture and capabilities.",
-          "imgSrc": "images/solution-satellite-tour-hidden/architecture.png"
+          "imgSrc": "images/solution-satellite-tour-hidden/architecture.png",
+          "repos": [
+            "https://github.com/IBM/satellite-link-example"
+          ]
         }
       ]
     },
@@ -50,10 +53,10 @@
           "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
-            "Docker",
             "Kubernetes",
             "Container Service",
             "Container Registry",
+            "Docker",
             "Java"
           ],
           "requirements": [
@@ -63,7 +66,10 @@
             "ibmcloud_plugin_dev",
             "docker"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ]
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -85,7 +91,10 @@
             "docker"
           ],
           "guide": true,
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/jpetstore-kubernetes"
+          ]
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -130,7 +139,10 @@
             "ibmcloud_plugin_dev",
             "docker"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/openshift-node-app"
+          ]
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -162,6 +174,10 @@
             "docker",
             "logdna",
             "sysdig"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/patient-health-backend",
+            "https://github.com/IBM-Cloud/patient-health-frontend"
           ]
         },
         {
@@ -182,7 +198,10 @@
             "ibmcloud_plugin_dev",
             "cloud_foundry"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
+          ]
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -202,7 +221,10 @@
             "docker",
             "container_registry"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
+          ]
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -221,7 +243,10 @@
             "cloudant",
             "terraform"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/multiple-environments-as-code"
+          ]
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -259,7 +284,10 @@
             "code_engine",
             "databases_for_mongodb"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
+          ]
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -275,7 +303,10 @@
             "cloud_foundry",
             "db2_warehouse"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/cloud-sql-database"
+          ]
         },
         {
           "name": "Serverless web application and API",
@@ -292,7 +323,30 @@
             "cloudant",
             "api_gateway"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ]
+        },
+        {
+          "name": "Serverless web application and API with Code Engine",
+          "url": "serverless-webapp.html",
+          "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
+          "imgSrc": "images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg",
+          "tags": [
+            "Code Engine",
+            "Cloud Object Storage",
+            "Cloudant NoSQL DB"
+          ],
+          "requirements": [
+            "code_engine",
+            "cloudant",
+            "cloud_object_storage"
+          ],
+          "supportsCloudShell": "yes",
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ]
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -329,7 +383,10 @@
             "logdna",
             "sysdig"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/application-log-analysis"
+          ]
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -339,6 +396,9 @@
           "tags": [
             "Code Engine",
             "Knative"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/code-engine-text-analysis"
           ]
         }
       ]
@@ -363,7 +423,10 @@
             "cloud_functions",
             "db2_on_cloud"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
+          ]
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -382,7 +445,10 @@
             "text_to_speech",
             "android_studio"
           ],
-          "supportsCloudShell": "not_applicable"
+          "supportsCloudShell": "not_applicable",
+          "repos": [
+            "https://github.com/IBM-Cloud/chatbot-watson-android"
+          ]
         }
       ]
     },
@@ -426,7 +492,10 @@
             "kubernetes_service",
             "docker"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ]
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -452,7 +521,10 @@
             "key_protect",
             "logdna"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/secure-file-storage"
+          ]
         },
         {
           "name": "Enhance security of your deployed application",
@@ -520,7 +592,10 @@
             "cognos_dashboard",
             "ibmcloud_cli"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
+          ]
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -539,7 +614,10 @@
             "code_engine",
             "app_id"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/github-traffic-stats"
+          ]
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -560,7 +638,10 @@
             "watson_openscale",
             "db2_warehouse"
           ],
-          "supportsCloudShell": "not_applicable"
+          "supportsCloudShell": "not_applicable",
+          "repos": [
+            "https://github.com/IBM-Cloud/ml-iris-classification"
+          ]
         }
       ]
     },
@@ -608,7 +689,10 @@
           "requirements": [
             "vpc"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend"
+          ]
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -652,7 +736,10 @@
             "bash",
             "jq"
           ],
-          "supportsCloudShell": "yes_with_modifications"
+          "supportsCloudShell": "yes_with_modifications",
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
+          ]
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -669,7 +756,10 @@
             "vpc",
             "ansible"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": false,
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
+          ]
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -706,7 +796,10 @@
           "requirements": [
             "vpc"
           ],
-          "supportsCloudShell": "yes"
+          "supportsCloudShell": "yes",
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp"
+          ]
         },
         {
           "url": "/containers/containers-vpc_ks_tutorial",
@@ -730,6 +823,9 @@
             "Network",
             "Linux",
             "Security"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ]
         },
         {
@@ -755,7 +851,10 @@
             "terraform",
             "schematics"
           ],
-          "supportsCloudShell": "yes"
+          "supportsCloudShell": "yes",
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
+          ]
         }
       ]
     },
@@ -1098,6 +1197,9 @@
           "requirements": [
             "vmware",
             "schematics"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vmware-solutions-shared"
           ]
         }
       ]
@@ -1115,6 +1217,9 @@
             "Storage",
             "HPC",
             "Virtual Private Cloud"
+          ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
           ]
         },
         {
@@ -1126,6 +1231,9 @@
             "Storage",
             "HPC",
             "Virtual Private Cloud"
+          ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
           ]
         },
         {
@@ -1137,6 +1245,9 @@
             "Storage",
             "HPC",
             "Virtual Private Cloud"
+          ],
+          "repos": [
+            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
           ]
         }
       ]

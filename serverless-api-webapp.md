@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-10-11"
+lastupdated: "2022-04-11"
 lasttested: "2021-10-11"
 
 content-type: tutorial
@@ -66,7 +66,7 @@ The application shown in this tutorial is a simple guestbook website where users
 {: #serverless-api-webapp-2}
 {: step}
 
-Let's start by creating an {{site.data.keyword.cloudant_short_notm}} service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
+Let's start by creating an [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant) service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB.
 
 1. In the [Catalog](https://{DomainName}/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.
@@ -253,7 +253,7 @@ Create a {{site.data.keyword.cos_short}} instance:
 
 Create a bucket configured for static website hosting:
 1. Click **Create a bucket**
-1. Click Custom bucket
+1. Click **Customize your bucket**
 1. Enter a bucket name that is unique is across all IBM accounts.  Try `<yourinitials>-guestbook`.
 1. Select Resiliency **Regional**
 1. Select a Location, choose a region consistent with the {{site.data.keyword.cloudant_short_notm}} instance
@@ -270,7 +270,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
 1. Edit **guestbook.js** - replace the value of **apiUrl** with the route you made a note of earlier when creating the API.
 1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
-1. Navigate to the **Configuration** tab for the bucket and scroll down to the **Static website hosting endpoints** section to copy the **Public** endpoint into a browser tab.
+1. Navigate to the **Configuration** tab for the bucket. In the endpoints section locate the **Static website hosting endpoints** section. Copy the **Public** endpoint into a browser tab.
 1. You should see the `test` guestbook entry created earlier.
 1. Add new entries.
 
