@@ -70,7 +70,7 @@ Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](https://{D
    <!--#/istutorial#-->
 
    1. Select **IAM** as authentication method.
-   1. Select the <!--##istutorial#-->**Lite**<!--#/istutorial#--><!--##isworkshop#-->**Standard**<!--#/isworkshop#--> plan. <!--##istutorial#-->If you already have a Lite plan in your account, select another service plan.<!--#/istutorial#-->
+   1. Select the <!--##istutorial#-->**Lite**<!--#/istutorial#--><!--##isworkshop#--><!--**Standard**--><!--#/isworkshop#--> plan. <!--##istutorial#-->If you already have a Lite plan in your account, select another service plan.<!--#/istutorial#-->
    1. Click **Create**.
 2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
