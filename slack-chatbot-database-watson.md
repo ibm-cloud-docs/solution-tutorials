@@ -123,7 +123,7 @@ In this section, you are going to set up the needed services and prepare the env
 {: #slack-chatbot-database-watson-3}
 {: step}
 
-This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You can either [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant) or [activate dialog skills in the new experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-activate-dialog).
+This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You can either [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant) or [activate dialog skills in the new experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-activate-dialog). The steps below use the new experience.
 {: tip}
 
 
