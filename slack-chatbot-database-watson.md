@@ -123,10 +123,6 @@ In this section, you are going to set up the needed services and prepare the env
 {: #slack-chatbot-database-watson-3}
 {: step}
 
-This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You can either [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant) or [activate dialog skills in the new experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-activate-dialog). The steps below use the new experience.
-{: tip}
-
-
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
@@ -148,15 +144,14 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 
 9. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
-## Create an assistant and integrate with Slack
+## Integrate with Slack
 {: #slack-chatbot-database-watson-4}
 {: step}
 
 Now, you will create an assistant associated with the skill from before and integrate it with Slack.
-1. Click on **Assistants** in the top left navigation, then click on **Create assistant**.
-2. In the dialog, fill in **TutorialAssistant** as name, then click **Create assistant**. On the next screen, choose **Add dialog skill**. Thereafter, choose **Add existing skill**, pick **TutorialSlackbot** from the list and add it.
-3. After adding the skill, click **Add integration**, then from the list of **Third-party integrations** select **Slack**.
-4. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/assistant?topic=assistant-deploy-slack).
+1. On the lower left, click on the **Integrations** icon.
+2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
+3. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 
 ## Test the Slackbot and learn
 {: #slack-chatbot-database-watson-5}
