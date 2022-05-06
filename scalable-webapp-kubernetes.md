@@ -455,7 +455,7 @@ Once the autoscaler is successfully created, you should see
    <!--#/istutorial#-->
    <!--##isworkshop#-->
    <!--
-    ```sh
+   ```sh
    kubectl delete -f ingress-ibmdomain.yaml
    ```
    {: pre}
