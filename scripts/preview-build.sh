@@ -69,7 +69,7 @@ marked-it-cli \
   --extension-file=builddocs/markdown/generateSectionsExt.js \
   --extension-file=builddocs/markdown/accessibilityExt.js \
   --extension-file=builddocs/markdown/jsonTocExt.js \
-  --conref-file=builddocs/markdown/cloudoeconkeyrefs.yml \
+  --conref-file=builddocs/markdown/cloudoekeyrefs.yml \
   --overwrite --verbose --toc-json \
   --extension-file=builddocs/markdown/videoExt.js \
   --extension-file=builddocs/markdown/terraformExt.js \
