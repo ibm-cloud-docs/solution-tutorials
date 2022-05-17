@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-14"
+lastupdated: "2022-05-06"
 lasttested: "2022-03-14"
 
 content-type: tutorial
@@ -455,10 +455,11 @@ Once the autoscaler is successfully created, you should see
    <!--#/istutorial#-->
    <!--##isworkshop#-->
    <!--
-    ```sh
+   ```sh
    kubectl delete -f ingress-ibmdomain.yaml
    ```
    {: pre}
+
    -->
    <!--#/isworkshop#-->
 * Delete the Kubernetes artifacts created for this application:

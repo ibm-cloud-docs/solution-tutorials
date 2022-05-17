@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-03-25"
+  years: 2022
+lastupdated: "2022-05-16"
 lasttested: "2022-03-25"
 
 content-type: tutorial
@@ -32,12 +32,12 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A script and tool will assist you to simulate the transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
+In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}} (previously SQL Query), {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.iae_full_notm}}. A script and tool will assist you to simulate the transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 {: shortdesc}
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
 
-While this tutorial focuses on log analysis, it is applicable to other scenarios: storage-limited IoT devices can similarly stream messages to {{site.data.keyword.cos_short}} or marketing professionals can segment and analyze customer events across digital properties with SQL Query.
+While this tutorial focuses on log analysis, it is applicable to other scenarios: storage-limited IoT devices can similarly stream messages to {{site.data.keyword.cos_short}} or marketing professionals can segment and analyze customer events across digital properties with {{site.data.keyword.sqlquery_short}}.
 {: shortdesc}
 
 ## Objectives
@@ -55,7 +55,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 1. Application generates log events to {{site.data.keyword.messagehub}}.
 2. To persist the log events, they are stream landed into {{site.data.keyword.cos_short}} through {{site.data.keyword.sqlquery_short}}.
-3. The storage bucket and the SQL query jobs are encrypted with {{site.data.keyword.keymanagementserviceshort}} service. Also, the stream landing job executes in {{site.data.keyword.sqlquery_short}} by securely retrieving the service ID from {{site.data.keyword.keymanagementserviceshort}}. 
+3. The storage bucket and the {{site.data.keyword.sqlquery_short}} jobs are encrypted with {{site.data.keyword.keymanagementserviceshort}} service. Also, the stream landing job executes in {{site.data.keyword.sqlquery_short}} by securely retrieving the service ID from {{site.data.keyword.keymanagementserviceshort}}. 
 4. Auditor or support staff use {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_short}} to perform requests.
 5. Requests are executed against the data stored in {{site.data.keyword.cos_short}}.
 
@@ -120,7 +120,7 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
 
 {{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.cloud_notm}} services. 
 
-In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will be used to encrypt the storage bucket, stored SQL query jobs and securely store the service ID for stream landing.
+In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will be used to encrypt the storage bucket, stored {{site.data.keyword.sqlquery_short}} jobs and securely store the service ID for stream landing.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    1. Select a **location**.
@@ -186,7 +186,7 @@ The {{site.data.keyword.sqlquery_short}} service instance needs **Reader** autho
 
 1. Go to [Manage > Access (IAM) > Authorizations](https://{DomainName}/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
    1. Click the **Create** button.
-   1. In the **Source service** menu, select **SQL Query**.
+   1. In the **Source service** menu, select **{{site.data.keyword.sqlquery_short}} (previously SQL Query)**.
    1. Switch to **Resources based on selected attributes**, check **Source service instance** and select the **log-analysis-sql** {{site.data.keyword.sqlquery_short}} service instance just created.
    1. In the **Target service** menu, select {{site.data.keyword.keymanagementserviceshort}}.
    1. Switch to **Resources based on selected attributes**, check **Instance ID**, select the **log-analysis-kp** {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
@@ -277,7 +277,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 1. Navigate to the [resource list](https://{DomainName}/resources) and under **Services and software**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
-   ![SQL Query console](images/solution31/sql_query_console.png)
+   ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png)
 
    The Select statement would looks like 
    ```sql
@@ -362,7 +362,7 @@ gunzip NASA_access_log_Jul95.gz
 Depending on how long you ran the transfer, the number of files on {{site.data.keyword.cos_short}} has certainly grown. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
 
-1. Back in the **Details** view edit the SQL Query.
+1. Back in the **Details** view edit the {{site.data.keyword.sqlquery_short}}.
    * Click on the drop down next to **Jobs** and select **Streaming**.
    * Open the **Details** and click on the **Query the result**
    * Notice the query editor, above, is populated with a query.

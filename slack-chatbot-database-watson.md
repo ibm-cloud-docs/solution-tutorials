@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-11-15"
-lasttested: "2021-11-15"
+  years: 2022
+lastupdated: "2022-05-02"
+lasttested: "2022-05-02"
 
 content-type: tutorial
 services: cloud-foundry-public, assistant, openwhisk, Db2onCloud
@@ -123,16 +123,14 @@ In this section, you are going to set up the needed services and prepare the env
 {: #slack-chatbot-database-watson-3}
 {: step}
 
-This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
-{: tip}
-
-
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. On the left navigation select **Skills**, then click **Create skill**, select **Dialog skill** and continue with **Next**, finally click on **Upload skill**.
-4. In the dialog, after clicking **Choose JSON file**, select the file **skill-TutorialSlackbot.json** from the local directory. Click **Upload**. This creates a new skill named **TutorialSlackbot**.
-5. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
+3. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then clicking **Create assistant**.
+4. Click on the **Settings** icon in the lower left, then on **Activate dialog** to [activate the dialog skill support](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-activate-dialog).
+5. Once activated, on the upper left click on the **Dialog** icon. Next, in the menu, pick **Upload / Download**.
+6. In the dialog, upload the file **skill-TutorialSlackbot.json** from the local directory by **Drag or drop file here or click to select a file**. Click **Upload** and confirm.
+7. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
    The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** gathers the necessary input and then invokes the webhook to insert a new event record into Db2. It uses the entity **eventLocation** to detect the location for an event in the user-provided answer. The entity is modeled as [contextual entity](https://{DomainName}/docs/assistant?topic=assistant-entities#entities-annotations-overview) and uses annotations in intent examples to enhance the defition.
 
@@ -140,21 +138,20 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 
    Details will be explained later below once everything is set up.
    ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
-6. On the left, click on **Options** and then on **Webhooks**. 
+8. On the left, click on **Options** and then on **Webhooks**. 
 
    Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=openwhisk-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
 
-7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
+9. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
-## Create an assistant and integrate with Slack
+## Integrate with Slack
 {: #slack-chatbot-database-watson-4}
 {: step}
 
 Now, you will create an assistant associated with the skill from before and integrate it with Slack.
-1. Click on **Assistants** in the top left navigation, then click on **Create assistant**.
-2. In the dialog, fill in **TutorialAssistant** as name, then click **Create assistant**. On the next screen, choose **Add dialog skill**. Thereafter, choose **Add existing skill**, pick **TutorialSlackbot** from the list and add it.
-3. After adding the skill, click **Add integration**, then from the list of **Third-party integrations** select **Slack**.
-4. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/assistant?topic=assistant-deploy-slack).
+1. On the lower left, click on the **Integrations** icon.
+2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
+3. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 
 ## Test the Slackbot and learn
 {: #slack-chatbot-database-watson-5}

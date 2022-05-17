@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-03-22"
+  years: 2022
+lastupdated: "2022-05-16"
 lasttested: "2022-03-22"
 
 content-type: tutorial
@@ -31,21 +31,21 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
+Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the {{site.data.keyword.sqlquery_short}} (previously SQL Query) service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
 {: shortdesc}
 
 ## Objectives
 {: #smart-data-lake-0}
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
-- Query data directly from {{site.data.keyword.cos_short}} using SQL Query
+- Query data directly from {{site.data.keyword.cos_short}} using {{site.data.keyword.sqlquery_short}} (previously SQL Query)
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
 ![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
-2. Data is reduced, enhanced or refined with SQL Query.
+2. Data is reduced, enhanced or refined with {{site.data.keyword.sqlquery_short}}.
 3. Data analysis occurs in {{site.data.keyword.DSX}}.
 4. Non-technical users access data through application(s).
 5. Refined data is pulled from {{site.data.keyword.cos_short}}.
@@ -142,10 +142,10 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
 
-You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
+You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
 1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from your [Resource List](https://{DomainName}/resources).
-2. Click **Launch SQL Query UI** under **Manage**.
+2. Click **Launch {{site.data.keyword.sqlquery_short}} UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
     - Replace `us-south` in the URL with the bucket **Location** (see Configuration tab for the bucket).
@@ -172,7 +172,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 4. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
 5. The intermediate dataset is displayed below the query on the **Results** tab associated with the **Job**
 
-## Combine Jupyter Notebooks with SQL Query
+## Combine Jupyter Notebooks with {{site.data.keyword.sqlquery_short}}
 {: #smart-data-lake-5}
 {: step}
 
