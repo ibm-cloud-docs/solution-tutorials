@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-15"
-lasttested: "2021-11-15"
+lastupdated: "2022-05-19"
+lasttested: "2022-05-19"
 
 content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
@@ -67,16 +67,16 @@ This tutorial requires:
    * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
 * `jq` to query JSON files,
 * `git` to clone source code repository to optionally deploy an example microservice application,
-* `Terraform CLI` to optionally run Terraform on your desktop instead of the schematics service
-
-The on-premises data center in this tutorial will be simulated using a VSI within a VPC.
-
-The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit). Simulation of an on premises environment with VPC, VSI and VPN is used only for illustration.
-{: note}
+* `Terraform CLI` to optionally run Terraform on your desktop instead of the Schematics service
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
+
+The on-premises data center in this tutorial will be simulated using a VSI within a VPC.
+
+The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit). Simulation of an on-premises environment with VPC, VSI and VPN is used only for illustration.
+{: note}
 
 In addition:
 - check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
@@ -86,7 +86,7 @@ In addition:
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
    1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn` under GitHub or GitLab repository URL. 
-   1. Select **terraform_v1.1** as the Terraform version and click *Next.
+   1. Select **terraform_v1.1** as the Terraform version and click **Next**.
 2. Under **Workspace details**,
    1. Provide a workspace name : **vpnsts**.
    2. Choose a `Resource Group` and a `Location`.
@@ -96,86 +96,94 @@ In addition:
 7. Scroll to the top of the page and click **Apply plan**. Check the logs to see the status of the services created.
 
 ## Verify connectivity
-The schematics workspace output contains a script that you can use to verify the VPN connectivity.
+The schematics workspace output contains variables that can be used to verify the VPN connectivity.
 
+Get the list of workspaces, note the ID column, set the shell variable:
+   ```sh
+   ibmcloud schematics workspace list
+   ```
+
+Set the WORKSPACE_ID variable:
+
+   ```sh
+   WORKSPACE_ID=YOUR_WORKSPACE_ID
+   ```
+
+Get the environment variables for the cloud resources:
+   ```sh
+   ibmcloud schematics output --id $WORKSPACE_ID --output json | jq -r '.[0].output_values[].environment_variables.value'
+   ```
 ```
-# get the list of workspaces, note the ID column, set the shell variable:
-ibmcloud schematics workspace list
-WORKSPACE_ID=YOUR_WORKSPACE_ID
-...
 
-# get the example script
-ibmcloud schematics output --id $WORKSPACE_ID --output json | jq -r '.[0].output_values[].connectivity_verification.value'
-```
+The output will look something like the following.  Copy/paste into your shell:
+   ```sh
+   IP_FIP_ONPREM=169.48.154.224
+   IP_PRIVATE_ONPREM=10.0.0.4
+   IP_PRIVATE_CLOUD=10.1.1.4
+   IP_FIP_BASTION=52.118.190.142
+   IP_PRIVATE_BASTION=10.1.0.4
+   IP_DNS_SERVER_0=10.1.0.5
+   IP_DNS_SERVER_1=10.1.1.6
+   IP_ENDPOINT_GATEWAY_POSTGRESQL=10.1.1.9
+   IP_ENDPOINT_GATEWAY_COS=10.1.1.5
+   HOSTNAME_POSTGRESQL=a43ddb63-dcb1-430a-a2e4-5d87a0dd12a6.6131b73286f34215871dfad7254b4f7d.private.databases.appdomain.cloud
+   HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
+   PORT_POSTGRESQL=32525
+   ```
+You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.
 
-The output will look something like the following.  You can now follow the instructions and verify the connectivity:
+Test access to on-premises VSI:
+   ```sh
+   ssh root@$IP_FIP_ONPREM
+   exit
+   ```
 
-```
-# if the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option
+Test access to cloud bastion:
+   ```sh
+   ssh root@$IP_FIP_BASTION
+   exit
+   ```
 
-#-----------------------------------
-# IP and hostname variables
-#-----------------------------------
-IP_FIP_ONPREM=150.240.65.214
-IP_PRIVATE_ONPREM=10.0.0.4
-IP_PRIVATE_CLOUD=10.1.1.4
-IP_FIP_BASTION=52.116.143.204
-IP_PRIVATE_BASTION=10.1.0.4
-IP_DNS_SERVER_0=10.1.0.5
-IP_DNS_SERVER_1=10.1.1.7
-IP_ENDPOINT_GATEWAY_POSTGRESQL=10.1.1.6
-IP_ENDPOINT_GATEWAY_COS=10.1.1.5
-HOSTNAME_POSTGRESQL=1d054183-4def-40c8-ba19-36430a4742a2.b2b5a92ee2df47d58bad0fa448c15585.private.databases.appdomain.cloud
-HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
+Test access to cloud VSI through bastion:
+   ```sh
+   ssh -J root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
+   exit
+   ```
 
-#-----------------------------------
-# Test access
-#-----------------------------------
-# onprem VSI
-ssh root@$IP_FIP_ONPREM
-exit
+Test access to cloud VSI through on-premises, through the VPN tunnel, through bastion:
+   ```sh
+   ssh -J root@$IP_FIP_ONPREM,root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
+   exit
+   ```
 
-#-----------------------------------
-# cloud bastion
-ssh root@$IP_FIP_BASTION
-exit
+Test access to on-premises VSI through bastion, through cloud VSI, through VPN tunnel:
+   ```sh
+   ssh -J root@$IP_FIP_BASTION,root@$IP_PRIVATE_CLOUD root@$IP_PRIVATE_ONPREM
+   exit
+   ```
 
-#-----------------------------------
-# cloud VSI through bastion
-ssh -J root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
-exit
+The on-premises DNS resolution has been configured to use the VPC DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
-#-----------------------------------
-# cloud VSI through onprem, through the VPN tunnel, through bastion
-ssh -J root@$IP_FIP_ONPREM,root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
-exit
+Test DNS resolution to postgresql and object storage through the Virtual Endpoint Gateway
+   ```sh
+   ssh root@$IP_FIP_ONPREM
+   <copy/paste variables from above>
+   HOSTNAME_POSTGRESQL=...
+   HOSTNAME_COS=...
+   PORT_POSTGRESQL=...
+   
+   # should resolve to $IP_ENDPOINT_GATEWAY_POSTGRESQL
+   dig $HOSTNAME_POSTGRESQL
+   # the telnet should display "connected" (postgresql not a telent server and will not provide a prompt)
+   telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
+   # <control><c>
+   
+   # Test DNS resolution to cloud object storage through the Virtual Endpoint Gateway
+   dig $HOSTNAME_COS
+   telnet $HOSTNAME_COS 443
+   # <control><c>
+   exit
 
-#-----------------------------------
-# onprem VSI through bastion, through cloud VSI, through VPN tunnel
-ssh -J root@$IP_FIP_BASTION,root@$IP_PRIVATE_CLOUD root@$IP_PRIVATE_ONPREM
-exit
-
-#-----------------------------------
-# Test DNS resolution to postgresql and object storage through the Virtual Endpoint Gateway
-#-----------------------------------
-ssh root@$IP_FIP_ONPREM
-HOSTNAME_POSTGRESQL=1d054183-4def-40c8-ba19-36430a4742a2.b2b5a92ee2df47d58bad0fa448c15585.private.databases.appdomain.cloud
-HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
-# should resolve to $IP_ENDPOINT_GATEWAY_POSTGRESQL
-dig $HOSTNAME_POSTGRESQL
-# the telnet should display "connected" but ths is postgresql not a telent server so telnet is not going to work
-telnet $HOSTNAME_POSTGRESQL 32610
-# <control><c>
-
-# Test DNS resolution to cloud object storage through the Virtual Endpoint Gateway
-dig $HOSTNAME_COS
-telnet $HOSTNAME_COS 443
-# <control><c>
-exit
-
-...
-
-```
 
 Using the ibm cloud console you can visit the resources created
 - [Resource list](https://{DomainName}/resources)
@@ -184,105 +192,14 @@ Using the ibm cloud console you can visit the resources created
    - Storage - Cloud object storage
 - [Virtual private endpoint gateways for VPC](https://{DomainName}/vpc-ext/network/endpointGateways)
 
-## Optionally deploy a virtual app server in a virtual private cloud
-{: #vpc-site2site-vpn-deploy}
-{: step}
-
-Automated deployment of an application with associated credentials and certificates is beyond the scope of this tutorial but here is an example with manual steps that need to be automated:
-
-1. Get the application's code:
-   ```sh
-   git clone https://github.com/IBM-Cloud/vpc-tutorials
-   ```
-   {: codeblock}
-
-2. Go to the directory for the sample application.
-   ```sh
-   cd vpc-tutorials/sampleapps/nodejs-graphql
-   ```
-   {: codeblock}
-
-3 get the script to deploy application and test.
-   ```sh
-   ibmcloud schematics output --id $WORKSPACE_ID --output json | jq -r '.[0].output_values[].application_deploy_test.value'
-   ```
-   {: codeblock}
-
-   The output will look something like the following.  Follow the instructions. Be careful not to share the credentials to the data stores.
-   ```sh
-   #-----------------------------------
-   # Configure the microservice by adding credentials and certificates
-   #-----------------------------------
-   # verify you are in the .../vpc-tutorials/sampleapps/nodejs-graphql directory
-   pwd
-   # create credentials
-   ibmcloud resource service-key 4f37f39b-db7d-49a8-859a-51475064f7fa --output json > config/pg_credentials.json
-   ibmcloud resource service-key a65f4239-e6ed-43a1-8ce3-73ff59a5abbb --output json > config/cos_credentials.json
-   # create postgresql certificates
-   ibmcloud cdb deployment-cacert crn:v1:bluemix:public:databases-for-postgresql:us-south:a/123:456:: -e private -c . -s
-   
-   #-----------------------------------
-   # copy the application to the cloud and onprem VSIs
-   #-----------------------------------
-   scp -J root@$IP_FIP_BASTION -r ../nodejs-graphql root@$IP_PRIVATE_CLOUD:
-   scp -r ../nodejs-graphql root@$IP_FIP_ONPREM:
-   
-   #-----------------------------------
-   # run microservice on the cloud VSI
-   #-----------------------------------
-   ssh -J root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
-   cd nodejs-graphql
-   npm install
-   npm run build
-   # copy and optionally touch up a little (not required)
-   cp config/config.template.json config/config.json
-   node ./build/createTables.js
-   node ./build/createBucket.js
-   # notice the unique bucket name
-   vi config/config.json; # change the bucketName
-   # start the application
-   npm start
-   
-   #-----------------------------------
-   # Test the microservice from the onprem VSI (over the VPN), on a different terminal
-   #-----------------------------------
-   IP_FIP_ONPREM=150.240.65.214
-   ssh root@$IP_FIP_ONPREM
-   IP_PRIVATE_CLOUD=10.1.1.4
-   # exect empty array from postgresql
-   curl -X POST -H "Content-Type: application/json" --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' http://$IP_PRIVATE_CLOUD/api/bank
-   # expect empty array from object storage
-   curl -X POST -H "Content-Type: application/json" --data '{ "query": "query read_items { read_items { key size modified } }" }' http://$IP_PRIVATE_CLOUD/api/bank
-   # add a record to postgresql and object storage
-   curl -X POST -H "Content-Type: application/json" --data '{ "query": "mutation add_to_database_and_storage_bucket { add(balance: 10, item_content: \"Payment for movie, popcorn and drink...\") { id status } }" }' http://$IP_PRIVATE_CLOUD/api/bank
-   # read the records in postgresql and object storage
-   curl -X POST -H "Content-Type: application/json" --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' http://$IP_PRIVATE_CLOUD/api/bank
-   
-   # test access to postgresql over the private endpoint gateway
-   cd ~/nodejs-graphql
-   PGPASSWORD=abc PGSSLROOTCERT=xyz psql 'host=hhh.private.databases.appdomain.cloud port=32610 dbname=ibmclouddb user=ibm_cloud_123 sslmode=verify-full'
-   exit
-
-#-----------------------------------
-# Back in the cloud VSI terminal session
-#-----------------------------------
-# <control><c>
-exit
-   ```
-   {: codeblock}
-
-
-4. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it.
-
-
 ## Optionally expand the tutorial
 {: #vpc-site2site-vpn-expand-tutorial}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- You already have a DNS Service, [add a DNS zone](https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-getting-started) for the application you deployed
+- In the github repository there is an application that can be deployed that uses the database and Object storage.  Instructions on how to deploy are in the README.
+- If you deployed the application [add a DNS zone](https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
 - Add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic across multiple instances.
-- Deploy the [application on a public server, your data and services on a private host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 ## Remove resources
 {: #vpc-site2site-vpn-remove-resources}
