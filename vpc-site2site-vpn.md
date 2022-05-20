@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-05-19"
+lastupdated: "2022-05-20"
 lasttested: "2022-05-19"
 
 content-type: tutorial
@@ -105,24 +105,20 @@ Explore the resources that were created:
 ## Verify connectivity
 The schematics workspace output contains variables that can be used to verify the VPN connectivity.
 
-Get the list of workspaces, note the ID column, set the shell variable:
+1. Get the list of workspaces, note the ID column, set the shell variable:
    ```sh
    ibmcloud schematics workspace list
    ```
-
-Set the WORKSPACE_ID variable:
+1. Set the WORKSPACE_ID variable:
 
    ```sh
    WORKSPACE_ID=YOUR_WORKSPACE_ID
    ```
-
-Get the environment variables for the cloud resources:
+1. Get the environment variables for the cloud resources:
    ```sh
    ibmcloud schematics output --id $WORKSPACE_ID --output json | jq -r '.[0].output_values[].environment_variables.value'
    ```
-```
-
-The output will look something like the following.  Copy/paste into your shell:
+1. The output will look something like the following.  Copy/paste into your shell:
    ```sh
    IP_FIP_ONPREM=169.48.154.224
    IP_PRIVATE_ONPREM=10.0.0.4
@@ -137,42 +133,38 @@ The output will look something like the following.  Copy/paste into your shell:
    HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
    PORT_POSTGRESQL=32525
    ```
-You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.
+1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.
 
-Test access to on-premises VSI:
-   ```sh
-   ssh root@$IP_FIP_ONPREM
-   exit
-   ```
-
-Test access to cloud bastion:
-   ```sh
-   ssh root@$IP_FIP_BASTION
-   exit
-   ```
-
-Test access to cloud VSI through bastion:
-   ```sh
-   ssh -J root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
-   exit
-   ```
-
-Test access to cloud VSI through on-premises, through the VPN tunnel, through bastion:
-   ```sh
-   ssh -J root@$IP_FIP_ONPREM,root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
-   exit
-   ```
-
-Test access to on-premises VSI through bastion, through cloud VSI, through VPN tunnel:
-   ```sh
-   ssh -J root@$IP_FIP_BASTION,root@$IP_PRIVATE_CLOUD root@$IP_PRIVATE_ONPREM
-   exit
-   ```
+   1. Test access to on-premises VSI:
+      ```sh
+      ssh root@$IP_FIP_ONPREM
+      exit
+      ```
+   1. Test access to cloud bastion:
+      ```sh
+      ssh root@$IP_FIP_BASTION
+      exit
+      ```
+   1. Test access to cloud VSI through bastion:
+      ```sh
+      ssh -J root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
+      exit
+      ```
+   1. Test access to cloud VSI through on-premises, through the VPN tunnel, through bastion:
+      ```sh
+      ssh -J root@$IP_FIP_ONPREM,root@$IP_FIP_BASTION root@$IP_PRIVATE_CLOUD
+      exit
+      ```
+   1. Test access to on-premises VSI through bastion, through cloud VSI, through VPN tunnel:
+      ```sh
+      ssh -J root@$IP_FIP_BASTION,root@$IP_PRIVATE_CLOUD root@$IP_PRIVATE_ONPREM
+      exit
+      ```
 
 # Verify DNS resolution
 The on-premises DNS resolution has been configured to use the VPC DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
-Test DNS resolution to postgresql and object storage through the Virtual Endpoint Gateway
+Test DNS resolution to Postgresql and object storage through the Virtual Endpoint Gateway
    ```sh
    ssh root@$IP_FIP_ONPREM
    <copy/paste variables from above>
