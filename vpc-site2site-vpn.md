@@ -134,7 +134,6 @@ The schematics workspace output contains variables that can be used to verify th
    PORT_POSTGRESQL=32525
    ```
 1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.
-
    1. Test access to on-premises VSI:
       ```sh
       ssh root@$IP_FIP_ONPREM
@@ -162,7 +161,7 @@ The schematics workspace output contains variables that can be used to verify th
       ```
 
 # Verify DNS resolution
-The on-premises DNS resolution has been configured to use the VPC DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
+The on-premises DNS resolution has been configured to use the {{site.data.keyword.vpc_short}} DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
 Test DNS resolution to Postgresql and object storage through the Virtual Endpoint Gateway
    ```sh
@@ -192,9 +191,9 @@ If there a problems see the [troubleshoot](https://github.com/powellquiring/vpc-
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- In the github repository there is an application that can be deployed that uses the database and Object storage.  Instructions on how to deploy are in the README.
+- In the [github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn) there is an application that can be deployed that uses the database and Object storage.  Instructions on how to deploy are in the README.
 - If you deployed the application [add a DNS zone](https://(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
-- Add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic across multiple instances.
+- Run the application on multipls {{site.data.keyword.vsi_is_short}} and add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic.
 
 ## Remove resources
 {: #vpc-site2site-vpn-remove-resources}
@@ -203,7 +202,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on your workspace
 1. Click **Actions... > Destroy resources**
 1. Click **Actions... > Delete workspace**
-
 
 ## Related content
 {: #vpc-site2site-vpn-related}
