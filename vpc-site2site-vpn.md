@@ -94,13 +94,13 @@ In addition:
 4. Under **Variables**, provide the required values (**resource_group_name**, **ssh_key_name**) by clicking the edit for each row.  The variable **maintenance** must be true.
 7. Scroll to the top of the page and click **Apply plan**. Check the logs to see the status of the services created.
 
-Explore the resources that were created:
+Explore the resources that were created by clicking below and selecting the instance with matching prefix:
 - [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc-ext/network/vpcs)
 - [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc-ext/compute/vs)
 - [{{site.data.keyword.vpn_short}}](https://{DomainName}/vpc-ext/network/vpngateways)
 - [{{site.data.keyword.vpe_short}}](https://{DomainName}/vpc-ext/network/endpointGateways)
-- [{{site.data.keyword.postgresql} instance in Services and software](https://{DomainName}/resources)
-- [{{site.data.keyword.cos_short}} in Storage](https://{DomainName}/resources)
+- [{{site.data.keyword.databases-for-postgresql}} instance in Services and software](https://{DomainName}/resources)
+- [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/)
 
 ## Verify connectivity
 The schematics workspace output contains variables that can be used to verify the VPN connectivity.
@@ -160,7 +160,7 @@ The schematics workspace output contains variables that can be used to verify th
       exit
       ```
 
-# Verify DNS resolution
+## Verify DNS resolution
 The on-premises DNS resolution has been configured to use the {{site.data.keyword.vpc_short}} DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
 Test DNS resolution to Postgresql and object storage through the Virtual Endpoint Gateway
