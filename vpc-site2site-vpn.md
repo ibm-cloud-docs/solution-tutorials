@@ -43,7 +43,7 @@ This tutorial provides the automation to create resources that demonstrate Virtu
 {: #vpc-site2site-vpn-objectives}
 
 * Access a virtual private cloud environment from an on-premises data center.
-* Securely reach cloud services using private service endpoints.
+* Securely reach cloud services using private endpoint gateways.
 * Use DNS on-premises to access cloud resources over VPN
 
 The following diagram shows the resources created by this tutorial
@@ -57,14 +57,14 @@ A terraform configuration will create the following resources:
 2. The {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} private endpoint gateways to data services.
 3. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 4. A VPC/VPN Gateway is provisioned to allow private connectivity between on-premises resources and cloud resources.
-6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow tls access to cloud resources including [access to service endpoints using VPN](https://{DomainName}/docs/vpc?topic=vpc-build-se-connectivity-using-vpn)
+6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow tls access to cloud resources including [access to virtual private endpoint gateways](https://{DomainName}/cloud/blog/creating-virtual-private-endpoint-gateways-with-terraform) through a VPN.
 
 ## Before you begin
 {: #vpc-site2site-vpn-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
+   * {{site.data.keyword.vpc_short}} plugin (`schematics`),
 * `jq` to query JSON files,
 * `git` to clone source code repository to optionally deploy an example microservice application,
 * `Terraform CLI` to optionally run Terraform on your desktop instead of the Schematics service
@@ -81,7 +81,6 @@ The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](http
 In addition:
 - check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started#prereqs).
-- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
@@ -94,6 +93,14 @@ In addition:
 3. Verify the details and then click on **Create**.
 4. Under **Variables**, provide the required values (**resource_group_name**, **ssh_key_name**) by clicking the edit for each row.  The variable **maintenance** must be true.
 7. Scroll to the top of the page and click **Apply plan**. Check the logs to see the status of the services created.
+
+Explore the resources that were created:
+- [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc-ext/network/vpcs)
+- [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc-ext/compute/vs)
+- [{{site.data.keyword.vpn_short}}](https://{DomainName}/vpc-ext/network/vpngateways)
+- [{{site.data.keyword.vpe_short}}](https://{DomainName}/vpc-ext/network/endpointGateways)
+- [{{site.data.keyword.postgresql} instance in Services and software](https://{DomainName}/resources)
+- [{{site.data.keyword.cos_short}} in Storage](https://{DomainName}/resources)
 
 ## Verify connectivity
 The schematics workspace output contains variables that can be used to verify the VPN connectivity.
@@ -162,6 +169,7 @@ Test access to on-premises VSI through bastion, through cloud VSI, through VPN t
    exit
    ```
 
+# Verify DNS resolution
 The on-premises DNS resolution has been configured to use the VPC DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
 Test DNS resolution to postgresql and object storage through the Virtual Endpoint Gateway
@@ -183,14 +191,9 @@ Test DNS resolution to postgresql and object storage through the Virtual Endpoin
    telnet $HOSTNAME_COS 443
    # <control><c>
    exit
+   ```
 
-
-Using the ibm cloud console you can visit the resources created
-- [Resource list](https://{DomainName}/resources)
-   - Services and software - Databases for postgresql
-   - Services and software - DNS services (check out the Custom resolver)
-   - Storage - Cloud object storage
-- [Virtual private endpoint gateways for VPC](https://{DomainName}/vpc-ext/network/endpointGateways)
+If there a problems see the [troubleshoot](https://github.com/powellquiring/vpc-tutorials/tree/master/vpc-site2site-vpn#troubleshoot) section in the github repository.
 
 ## Optionally expand the tutorial
 {: #vpc-site2site-vpn-expand-tutorial}
@@ -198,7 +201,7 @@ Using the ibm cloud console you can visit the resources created
 Want to add to or extend this tutorial? Here are some ideas:
 
 - In the github repository there is an application that can be deployed that uses the database and Object storage.  Instructions on how to deploy are in the README.
-- If you deployed the application [add a DNS zone](https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
+- If you deployed the application [add a DNS zone](https://(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
 - Add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic across multiple instances.
 
 ## Remove resources
