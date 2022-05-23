@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-02"
-lasttested: "2022-05-02"
+lastupdated: "2022-05-23"
+lasttested: "2022-05-23"
 
 content-type: tutorial
-services: cloud-foundry-public, assistant, openwhisk, Db2onCloud
+services: assistant, codeengine, Db2onCloud
 account-plan: paid
 completion-time: 2h
 ---
@@ -22,7 +22,7 @@ completion-time: 2h
 # Build a database-driven Slackbot
 {: #slack-chatbot-database-watson}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-foundry-public, assistant, openwhisk, Db2onCloud"}
+{: toc-services="codeengine, assistant, Db2onCloud"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -31,27 +31,33 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration.
+In this tutorial, you are going to build a Slackbot which allows to search and create entries in a backend {{site.data.keyword.Db2_on_Cloud_short}} database. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration. {{site.data.keyword.Db2_on_Cloud_short}} is made available to {{site.data.keyword.conversationshort}} as custom extension.
 {: shortdesc}
 
-The Slack integration channels messages between Slack and {{site.data.keyword.conversationshort}}. There, some server-side dialog actions perform SQL queries against a Db2 database. All (but not much) code is written in Node.js.
+The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. There, a custom extension provides a REST API to perform SQL queries against a database. The custom extension is written in Python. It exposes a REST API against the database backend and is deployed as serverless {{site.data.keyword.codeengineshort}} app.
 
 ## Objectives
 {: #slack-chatbot-database-watson-objectives}
 
-* Connect {{site.data.keyword.conversationfull}} to Slack using an integration
-* Create, deploy and bind Node.js actions in {{site.data.keyword.openwhisk_short}}
-* Access a Db2 database from {{site.data.keyword.openwhisk_short}} using Node.js
+* Build a chatbot using {{site.data.keyword.conversationshort}} which interacts with a database backend
+* Connect {{site.data.keyword.conversationshort}} to Slack using an integration
+* Create and deploy a Python database app to {{site.data.keyword.codeengineshort}}
+* Access a {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
 
-![Architecture](images/solution19/SlackbotArchitecture.png){: class="center"}
+![Architecture](images/solution19/SlackbotArchitecture.svg){: class="center"}
 {: style="text-align: center;"}
+
+1. The user interacts with {{site.data.keyword.conversationfull}}
+2. The chatbot utilizes a custom extension with REST API deployed as Python app on {{site.data.keyword.codeengineshort}}
+3. The custom extension app retrieves data from and inserts data into a {{site.data.keyword.Db2_on_Cloud_short}} database
+
 
 ## Before you begin
 {: #slack-chatbot-database-watson-prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
+   * {{site.data.keyword.codeengineshort}} plugin,
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
@@ -88,129 +94,140 @@ In this section, you are going to set up the needed services and prepare the env
    
    You can also use another than the **free** (lite) plan. The free plan is not available in all locations.
 
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:
+4. To access the database service from the {{site.data.keyword.codeengineshort}} app later on, it needs the proper authorization. Thus, you create service credentials and label them **slackbotkey**:
    ```sh
-   ibmcloud resource service-key-create slackbotkey Manager --instance-name eventDB
+   ibmcloud resource service-key-create slackbotkey Manager --instance-name eventDB --output json > slackbotkey.json
    ```
    {: pre}
 
-5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan. Adapt **us-south** to your location.
+   The output is stored in the file `slackbotkey.json`. It is used at a later step.
+
+5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventAssistant** as name and the free Lite plan. Adapt **us-south** to your location.
    ```sh
-   ibmcloud resource service-instance-create eventConversation conversation free us-south
+   ibmcloud resource service-instance-create eventAssistant conversation free us-south
    ```
    {: pre}
 
-6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. The **dispatch** action is enabled as web action and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
-
-   One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** script. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
-
+6. Deploy the pre-built container image with the custom extension as {{site.data.keyword.codeengineshort}} app. First, create a project:
    ```sh
-   sh setup.sh YOURSECRET "dashdb-for-transactions"
+   ibmcloud ce project create --name slackbot
    ```
    {: pre}
 
-   **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
-
-7.  Obtain the URI for the deployed **dispatch** action.
+   Then, deploy the app.
    ```sh
-   ibmcloud fn action get slackdemo/dispatch --url
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="MY_SECRET"
    ```
    {: pre}
 
-   Keep this information available for the next section.
+   Note the reported URI for the app. It is needed in the next steps.
 
-## Load the skill / workspace
+7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.
+   ```sh
+   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   ```
+   The above request should return an error message that the confirmation is missing. Now try again with a query parameter:
+   ```sh
+   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate?confirmation=True' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   ```
+   The request should succeed and indicate that the database was recreated. Time for another test:
+   ```sh
+   curl 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/events' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   ```
+
+
+
+
+## Build a Slackbot in {{site.data.keyword.conversationshort}}
 {: #slack-chatbot-database-watson-3}
 {: step}
 
-In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
-1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
-2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then clicking **Create assistant**.
-4. Click on the **Settings** icon in the lower left, then on **Activate dialog** to [activate the dialog skill support](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-activate-dialog).
-5. Once activated, on the upper left click on the **Dialog** icon. Next, in the menu, pick **Upload / Download**.
-6. In the dialog, upload the file **skill-TutorialSlackbot.json** from the local directory by **Drag or drop file here or click to select a file**. Click **Upload** and confirm.
-7. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
+In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
 
-   The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** gathers the necessary input and then invokes the webhook to insert a new event record into Db2. It uses the entity **eventLocation** to detect the location for an event in the user-provided answer. The entity is modeled as [contextual entity](https://{DomainName}/docs/assistant?topic=assistant-entities#entities-annotations-overview) and uses annotations in intent examples to enhance the defition.
-
-   The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
-
-   Details will be explained later below once everything is set up.
-   ![Dialog tree for the Slackbot](images/solution19/SlackBot_Dialog.png)   
-8. On the left, click on **Options** and then on **Webhooks**. 
-
-   Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=openwhisk-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
-
-9. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
-
-## Integrate with Slack
+### Create an assistent
 {: #slack-chatbot-database-watson-4}
 {: step}
 
-Now, you will create an assistant associated with the skill from before and integrate it with Slack.
-1. On the lower left, click on the **Integrations** icon.
-2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
-3. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
+1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry and then the service alias to open the service details.
+2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then clicking **Create assistant**. 
+   
+   The new page includes a guided tour which you might want to complete if you are new to {{site.data.keyword.conversationshort}}.
+   {: tip}
 
-## Test the Slackbot and learn
+
+### Add and configure custom extension
 {: #slack-chatbot-database-watson-5}
 {: step}
 
-Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
+1. On the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
+2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next** again.
+3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
+4. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistent.
+5. The new dialog starts with a short overview. Click **Next** to get to the actual configuration. In the dropdown for **Authentication type** select **API key auth** and enter your chosen **API key** (**MY_SECRET** replacement).
+6. For the **Server variables** use your deployment **region**, **slackbot-backend** as **appname**, and the {{site.data.keyword.codeengineshort}} **projectid** of your app. Thereafter, the **generated URL** should match that of your {{site.data.keyword.codeengineshort}} app. When done, click **Next** to get to the review page, then **Finish** and **Close** to get back to the **Integrations** page.
 
-1. Type **help** into the messaging form. The bot should respond with some guidance.
-2. Now enter **new event** to start gathering data for a new event record. You will use {{site.data.keyword.conversationshort}} slots to collect all the necessary input.
-3. First up is the event identifier or name. Quotes are required. They allow entering more complex names. Enter **"Meetup: IBM Cloud"** as the event name. The event name is defined as a pattern-based entity **eventName**. It supports different kinds of double quotes at the beginning and ending.
-4. Next is the event location. The related entity is based on synonyms, i.e., a list of city names has been provided and {{site.data.keyword.conversationshort}} is expecting something similar as inpit. Try **Friedrichshafen** as a city.
-5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. You will use a pattern-based entity for that field.
-6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, use the exact date of next Thursday, e.g., **2019-05-09** and **22:00** for the end date and time.
-7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case, the user choice is acknowledged and the environment cleaned up.   
-   ![Sample chat in the Slack app](images/solution19/SlackSampleChat.png)
-
-With some sample data in it is time to search.
-1. Type in **show event information**. Next is a question whether to search by identifier or by date. Enter a **name** and for the next question **"Think 2019"**. Now, the chatbot should display information about that event. The dialog has multiple responses to choose from.
-2. With {{site.data.keyword.conversationshort}} as a backend, it is possible to enter more complex phrases and thereby skipping parts of the dialog. Use **show event by the name "Think 2019"** as input. The chatbot directly returns the event record.
-3. Now you are going to search by date. A search is defined by a pair of dates, the event start date has to be between. With **search conference by date in February 2019** as input, the result should be the **Think 2019** event again. The entity **February** is interpreted as two dates, February 1st, and February 28th, thereby providing input for the start and end of the date range. [If no year 2019 would be specified, a February looking ahead would be identified](https://{DomainName}/docs/assistant?topic=assistant-system-entities#system-entities-sys-date-time).
-
-After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/assistant?topic=assistant-logs).
-
-## Share resources
+### Create the first action
 {: #slack-chatbot-database-watson-6}
 {: step}
 
-If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/account?topic=account-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/account?topic=account-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/account?topic=account-groups). Details on how you can set up access control is discussed in the blog [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project).
+First, you are going to create an action to retrieve information about a single event identified by its name.
+1. On the upper left, click on **Actions** and on the welcome page on **Create a new action**. 
+2. In the **New action** dialog, enter **show me event details** as example and click **Save**.
+3. The next screen shows the step editor for the action with **Step 1** open. Type **What is the event name?** for **Assistant says**. Then, pick **Free text** as option for **Define customer response**. Leave **And then** as **Continue to next step**.
+4. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistent says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
+5. Add a **New step**. At the top change the selection so that **Step 3 is taken with condition**. Under **Conditions** and **If** select **2 Ran successfully**. It refers to a result from using the extension in step 2.
+6. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Starts**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
+7. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
+
+  For the sake of simplicity, not all errors and conditions like empty results are handled.
+  {:note }
+
+8. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. On the left select **Preview** to get to the **Assistent preview**. In the webchat, click on the **show me event details** button. The bot should respond **What is the event name?**. Now enter **Think**. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screenshot below).
+
+![Webchat preview showing event details](images/solution19/Slackbot_preview.png)
+
+### Action to gather data and insert a new record
+{: #slack-chatbot-database-watson-7}
+{: step}
+
+Similar to retrieving a record it is possible to gather input about an event and add that data via the custom extension.
+1. Switch to **Actions** and **Created by you**. Click **New action**, then enter **add new event** and **Save**. Use **How do you want to name the event?** for **Assistant says**. The customer responds with **Free text** again.
+2. Add a **New step** and have the Assistant say **Where is the event?**. Again, the customer may respond with **Free text**. Add another step and ask **When does the event begin?**, but use **Date** for **Define customer response**. Repeat the same but with **When does the event end?**. Last, in a new step, ask **What is the URL (web address) for the event?** and let the customer respond with **Free text**.
+3. Now, to confirm the input, create a new step. Use **Is this correct?** and as bulleted list show the gathered data. Add an item for **Name**, **Location**, **Begin**, **End**, and **Contact** and use Action variables relating to the input steps for the data (see screenshot below). Use **Confirmation** as customer response type.
+   ![confirmation step](images/solution19/Slackbot_confirmation.png)
+
+4. Add a new step with the condition the previous confirmation being **No**. The Assistant could say **Ok, let's start over**. Set **And then** to **Re-ask previous step(s)** and select all previous steps.
+5. In a new step, which should be step 8, react to the confirmation being **Yes**. Under **And then** select **Use an extension**. Configure the events extension with **Insert a new event record** as operation. Match the parameters to the Action variables for the steps, e.g., **shortname** to **1. How do you want to name the event?**
+6. Last, it requires another two steps to react to either a successful or unsuccessful call to the extension. Create the first step with a condition **8 Ran successfully** being true. Let the Assistant say **A new record with ID VARIABLE was created**. For **VARIABLE** select **8 body.eid** from **events (Step 8)**. End the action under **And then**. Create the second step with the condition for **8 Ran successfully** being false. Use something like **It seems there was a problem creating the new event record** for the Assistant to say and end the action under **And then**. Save and close the action with the icons in the upper right.
+7. Test the new action by clicking on **Preview** on the left and using the webchat. Click on the **add new event** option. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
+
+
+## Integrate with Slack
+{: #slack-chatbot-database-watson-8}
+{: step}
+
+Now, you will integrate the chatbot with Slack.
+1. On the lower left, click on **Integrations**.
+2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
+3. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
+4. Once done, open up your Slack workspace. Begin a direct chat with the bot and **say show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
+
+![Slack with the eventbot](images/solution19/Slackbot_event.png)
+
 
 
 ## Remove resources
-{: #slack-chatbot-database-watson-7}
+{: #slack-chatbot-database-watson-9}
 {: removeresources}
 {: step}
 
-Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.Db2_on_Cloud_short}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
-```sh
-sh cleanup.sh
-```
-{: pre}
-
-In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service, then delete it.
+To clean up the resources for this tutorial, go to the [{{site.data.keyword.notm}} Resource List](https://{DomainName}/resources). Locate the service instances of {{site.data.keyword.conversationshort}} and {{site.data.keyword.Db2_on_Cloud_short}} and delete them. Similarly, locate the {{site.data.keyword.codeengineshort}} project and delete it.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
 
-## Expand the tutorial
-{: #slack-chatbot-database-watson-8}
-
-Want to add to or change this tutorial? Here are some ideas:
-1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
-2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.Db2_on_Cloud_short}}.
-3. Add a weather service and retrieve forecast data for the event date and location.
-4. [Control the encryption keys for your database by adding {{site.data.keyword.keymanagementservicelong_notm}}](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-key-protect-v2).
-5. Export event data as iCalendar **.ics** file.
-
-
 ## Related content
-{: #slack-chatbot-database-watson-9}
+{: #slack-chatbot-database-watson-10}
 {: related}
 
 Here are links to additional information on the topics covered in this tutorial.
