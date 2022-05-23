@@ -202,6 +202,9 @@ Similar to retrieving a record it is possible to gather input about an event and
 7. Test the new action by clicking on **Preview** on the left and using the webchat. Click on the **add new event** option. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 
 
+When creating a chatbot, you may want [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of version which allows to roll back changes and to continue with development without impacting the chatbot interacting with real customers.
+{: tip}
+
 ## Integrate with Slack
 {: #slack-chatbot-database-watson-8}
 {: step}
