@@ -204,7 +204,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 ## Remove resources
 {: #vpc-site2site-vpn-remove-resources}
-{: step}
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on your workspace
 1. Click **Actions... > Destroy resources**
