@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-05-20"
+lastupdated: "2022-05-23"
 lasttested: "2022-05-19"
 
 content-type: tutorial
@@ -83,6 +83,8 @@ In addition:
 - you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started#prereqs).
 
 ## Use {{site.data.keyword.bpshort}}  to create the resources
+{: #vpc-site2site-vpn-create-ressources}
+{: step}
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
    1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn` under GitHub or GitLab repository URL. 
    1. Select **terraform_v1.1** as the Terraform version and click **Next**.
@@ -103,6 +105,8 @@ Explore the resources that were created by clicking below and selecting the inst
 - [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/)
 
 ## Verify connectivity
+{: #vpc-site2site-vpn-verify-connectivity}
+{: step}
 The schematics workspace output contains variables that can be used to verify the VPN connectivity.
 
 1. Get the list of workspaces, note the ID column, set the shell variable:
@@ -161,6 +165,8 @@ The schematics workspace output contains variables that can be used to verify th
       ```
 
 ## Verify DNS resolution
+{: #vpc-site2site-vpn-verify-dns-resolution}
+{: step}
 The on-premises DNS resolution has been configured to use the {{site.data.keyword.vpc_short}} DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
 Test DNS resolution to Postgresql and object storage through the Virtual Endpoint Gateway
@@ -173,7 +179,7 @@ Test DNS resolution to Postgresql and object storage through the Virtual Endpoin
    
    # should resolve to $IP_ENDPOINT_GATEWAY_POSTGRESQL
    dig $HOSTNAME_POSTGRESQL
-   # the telnet should display "connected" (postgresql not a telent server and will not provide a prompt)
+   # the telnet should display "connected" (postgresql not a telnet server and will not provide a prompt)
    telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
    # <control><c>
    
@@ -188,6 +194,7 @@ If there a problems see the [troubleshoot](https://github.com/powellquiring/vpc-
 
 ## Optionally expand the tutorial
 {: #vpc-site2site-vpn-expand-tutorial}
+{: step}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
@@ -197,7 +204,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 ## Remove resources
 {: #vpc-site2site-vpn-remove-resources}
-{: step}
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on your workspace
 1. Click **Actions... > Destroy resources**
