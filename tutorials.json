@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-04-12"
         }
       ]
     },
@@ -41,7 +41,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-03-18"
+          "lastUpdated": "2022-05-06"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -138,7 +138,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
           ],
-          "lastUpdated": "2021-11-24"
+          "lastUpdated": "2022-04-12"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -184,7 +184,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-04-21"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -199,7 +199,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
           ],
-          "lastUpdated": "2022-02-11"
+          "lastUpdated": "2022-04-13"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -229,7 +229,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2022-04-05"
+          "lastUpdated": "2022-04-11"
         },
         {
           "name": "Serverless web application and API with Code Engine",
@@ -244,7 +244,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2022-04-11"
+          "lastUpdated": "2022-04-26"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -309,7 +309,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2021-11-15"
+          "lastUpdated": "2022-05-02"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -413,25 +413,27 @@
             "Cloud Object Storage",
             "Event Streams",
             "SQL Query",
+            "Data Engine",
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2022-03-25"
+          "lastUpdated": "2022-05-19"
         },
         {
           "name": "Build a data lake with Object Storage",
           "url": "smart-data-lake.html",
-          "description": "Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
+          "description": "Provide tools to data scientists to query data using Data Engine (formerly SQL Query) and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
           "imgSrc": "images/solution29/architecture.png",
           "tags": [
             "Cloud Object Storage",
             "SQL Query",
+            "Data Engine",
             "Watson Studio"
           ],
           "repos": [
             "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
           ],
-          "lastUpdated": "2022-03-22"
+          "lastUpdated": "2022-05-19"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -542,7 +544,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2021-11-15"
+          "lastUpdated": "2022-05-19"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -558,7 +560,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2021-12-02"
+          "lastUpdated": "2022-04-14"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -634,7 +636,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
           ],
-          "lastUpdated": "2021-10-21"
+          "lastUpdated": "2022-04-19"
         }
       ]
     },
@@ -882,7 +884,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vmware-solutions-shared"
           ],
-          "lastUpdated": "2022-02-15"
+          "lastUpdated": "2022-04-21"
         }
       ]
     },
