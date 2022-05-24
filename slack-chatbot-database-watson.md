@@ -36,6 +36,9 @@ In this tutorial, you are going to build a Slackbot which allows to search and c
 
 The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. There, a custom extension provides a REST API to perform SQL queries against a database. The custom extension is written in Python. It exposes a REST API against the database backend and is deployed as serverless {{site.data.keyword.codeengineshort}} app.
 
+This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written inNode.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
+{: note}
+
 ## Objectives
 {: #slack-chatbot-database-watson-objectives}
 
@@ -116,7 +119,7 @@ In this section, you are going to set up the needed services and prepare the env
 
    Then, deploy the app.
    ```sh
-   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="MY_SECRET"
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="MY_SECRET"
    ```
    {: pre}
 
