@@ -34,7 +34,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 In this tutorial, you are going to build a Slackbot which allows to search and create entries in a backend {{site.data.keyword.Db2_on_Cloud_short}} database. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration. {{site.data.keyword.Db2_on_Cloud_short}} is made available to {{site.data.keyword.conversationshort}} as custom extension.
 {: shortdesc}
 
-The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. There, a custom extension provides a REST API to perform SQL queries against a database. The custom extension is written in Python. It exposes a REST API against the database backend and is deployed as serverless {{site.data.keyword.codeengineshort}} app.
+The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. A custom extension, written in Python and deployed as serverless {{site.data.keyword.codeengineshort}} app, exposes a REST API against the database backend.
 
 This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written inNode.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
 {: note}
@@ -50,7 +50,7 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 ![Architecture](images/solution19/SlackbotArchitecture.svg){: class="center"}
 {: style="text-align: center;"}
 
-1. The user interacts with {{site.data.keyword.conversationfull}}
+1. The user interacts with {{site.data.keyword.conversationfull}}, either through Slack or using a web chat client
 2. The chatbot utilizes a custom extension with REST API deployed as Python app on {{site.data.keyword.codeengineshort}}
 3. The custom extension app retrieves data from and inserts data into a {{site.data.keyword.Db2_on_Cloud_short}} database
 
