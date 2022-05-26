@@ -119,7 +119,7 @@ In this section, you are going to set up the needed services and prepare the env
 
    Then, deploy the app. For **DB2_URI** replace the parts with the information found in the file **slackbotkey.json** from the earlier step. Replace the value for the **API_TOKEN** with your own secret. It is used to secure the calls to the REST API.
    ```sh
-   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="MY_SECRET"
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="{'MY_SECRET':'appuser'}"
    ```
    {: pre}
 
