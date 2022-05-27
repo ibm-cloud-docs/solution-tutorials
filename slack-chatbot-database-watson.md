@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-25"
-lasttested: "2022-05-23"
+lastupdated: "2022-05-27"
+lasttested: "2022-05-27"
 
 content-type: tutorial
 services: assistant, codeengine, Db2onCloud
@@ -61,7 +61,8 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.codeengineshort}} plugin,
-* `git` to clone source code repository.
+* `git` to clone source code repository,
+* `jq` to query JSON data.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -95,7 +96,13 @@ In this section, you are going to set up the needed services and prepare the env
    ```
    {: pre}
    
-   You can also use another than the **free** (lite) plan. The free plan is not available in all locations.
+   You can also use another than the **free** (lite) plan. The free plan is not available in all locations. Wait for the service to be provisioned. See the output from the above command for instructions. You can also run the next command to check the status:
+
+   ```sh
+   ibmcloud resource service-instance eventDB
+   ```
+   {: pre}
+
 
 4. To access the database service from the {{site.data.keyword.codeengineshort}} app later on, it needs the proper authorization. Thus, you create service credentials and label them **slackbotkey**:
    ```sh
@@ -103,7 +110,13 @@ In this section, you are going to set up the needed services and prepare the env
    ```
    {: pre}
 
-   The output is stored in the file `slackbotkey.json`. It is used at a later step.
+   The output is stored in the file `slackbotkey.json` and needed at a later step. Run this command to extract the database connection URL:
+   ```sh
+   cat slackbotkey.json | jq '.[].credentials.connection.db2 | (.authentication.username + ":" + .authentication.password + "@" + .hosts[0].hostname + ":" + (.hosts[0].port | tostring) + "/" + .database + "?Security=SSL")'
+   ```
+   {: pre}
+
+   The output should be of the following format: `ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;`.
 
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventAssistant** as name and the free Lite plan. Adapt **us-south** to your location.
    ```sh
@@ -117,9 +130,9 @@ In this section, you are going to set up the needed services and prepare the env
    ```
    {: pre}
 
-   Then, deploy the app. For **DB2_URI** replace the parts with the information found in the file **slackbotkey.json** from the earlier step. Replace the value for the **API_TOKEN** with your own secret. It is used to secure the calls to the REST API.
+   Then, deploy the app. Replace the value for the **API_TOKEN** with your own secret. It is used to secure the calls to the REST API. For **DB2_URI** replace the parts with the database connection URL from above.
    ```sh
-   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" -e API_TOKEN="{'MY_SECRET':'appuser'}"
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" 
    ```
    {: pre}
 
@@ -127,15 +140,15 @@ In this section, you are going to set up the needed services and prepare the env
 
 7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.
    ```sh
-   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
    The above request should return an error message that the confirmation is missing. Now try again with a query parameter:
    ```sh
-   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate?confirmation=True' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate?confirmation=True' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
    The request should succeed and indicate that the database was recreated. Time for another test:
    ```sh
-   curl 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/events' -H 'accept: application/json' -H 'X-API-Key: MY_SECRET'
+   curl -X 'GET' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/events' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
 
 
@@ -151,7 +164,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 {: #slack-chatbot-database-watson-4}
 {: step}
 
-1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry and then the service alias to open the service details.
+1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then clicking **Create assistant**. 
    
    The new page includes a guided tour which you might want to complete if you are new to {{site.data.keyword.conversationshort}}.
@@ -176,10 +189,10 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 First, you are going to create an action to retrieve information about a single event identified by its name.
 1. On the upper left, click on **Actions** and on the welcome page on **Create a new action**. 
 2. In the **New action** dialog, enter **show me event details** as example and click **Save**.
-3. The next screen shows the step editor for the action with **Step 1** open. Type **What is the event name?** for **Assistant says**. Then, pick **Free text** as option for **Define customer response**. Leave **And then** as **Continue to next step**.
+3. The next screen shows the step editor for the action with **Step 1** open. In **Assistant says** type **What is the event name?**. Then, for **Define customer response** pick **Free text** as option. Leave **And then** as **Continue to next step**.
 4. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistent says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
 5. Add a **New step**. At the top change the selection so that **Step 3 is taken with condition**. Under **Conditions** and **If** select **2 Ran successfully**. It refers to a result from using the extension in step 2.
-6. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Starts**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
+6. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
 7. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
 
   For the sake of simplicity, not all errors and conditions like empty results are handled.
@@ -214,8 +227,8 @@ When creating a chatbot, you may want [publish a chatbot](https://{DomainName}/d
 
 Now, you will integrate the chatbot with Slack.
 1. On the lower left, click on **Integrations**.
-2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
-3. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
+2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Open**.
+3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 4. Once done, open up your Slack workspace. Begin a direct chat with the bot and **say show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
 
 ![Slack with the eventbot](images/solution19/Slackbot_event.png)
