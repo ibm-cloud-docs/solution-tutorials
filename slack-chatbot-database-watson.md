@@ -165,7 +165,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 {: step}
 
 1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry to open the service details.
-2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then clicking **Create assistant**. 
+2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing. For the first question on deployment pick **Web**. For the other questions answer for your role or with **Other** / **Not sure at this time**. Click **Next** for the opportunity to customize the chat UI. Leave it as is and click **Next** again. Finalize by clicking **Create**.
    
    The new page includes a guided tour which you might want to complete if you are new to {{site.data.keyword.conversationshort}}.
    {: tip}
@@ -227,7 +227,7 @@ When creating a chatbot, you may want [publish a chatbot](https://{DomainName}/d
 
 Now, you will integrate the chatbot with Slack.
 1. On the lower left, click on **Integrations**.
-2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Open**.
+2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
 3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 4. Once done, open up your Slack workspace. Begin a direct chat with the bot and **say show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
 
