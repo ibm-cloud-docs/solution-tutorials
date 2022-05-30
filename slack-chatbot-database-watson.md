@@ -16,6 +16,7 @@ completion-time: 2h
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
+{:note: .note}
 {:tip: .tip}
 {:pre: .pre}
 
