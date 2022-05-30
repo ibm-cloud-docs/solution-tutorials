@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-29"
-lasttested: "2022-05-29"
+lastupdated: "2022-05-30"
+lasttested: "2022-05-30"
 
 content-type: tutorial
-services: assistant, codeengine, Db2onCloud
+services: watson-assistant, codeengine, Db2onCloud
 account-plan: paid
 completion-time: 2h
 ---
@@ -22,7 +22,7 @@ completion-time: 2h
 # Build a database-driven Slackbot
 {: #slack-chatbot-database-watson}
 {: toc-content-type="tutorial"}
-{: toc-services="codeengine, assistant, Db2onCloud"}
+{: toc-services="codeengine, watson-assistant, Db2onCloud"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
