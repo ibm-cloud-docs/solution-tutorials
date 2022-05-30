@@ -196,7 +196,7 @@ First, you are going to create an action to retrieve information about a single 
 7. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
 
   For the sake of simplicity, not all errors and conditions like empty results are handled.
-  {:note }
+  {: note}
 
 8. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. On the left select **Preview** to get to the **Assistent preview**. In the webchat, click on the **show me event details** button. The bot should respond **What is the event name?**. Now enter **Think**. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screenshot below).
 
