@@ -297,19 +297,18 @@
         {
           "name": "Build a database-driven Slackbot",
           "url": "slack-chatbot-database-watson.html",
-          "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
-          "imgSrc": "images/solution19/SlackbotArchitecture.png",
+          "description": "Build a database-driven Slackbot with IBM Watson Assistant, Db2 and Code Engine.",
+          "imgSrc": "images/solution19/SlackbotArchitecture.svg",
           "tags": [
             "IBM Watson Assistant",
-            "Cloudant NoSQL DB",
-            "Db2 Warehouse",
-            "Cloud Functions",
+            "Db2",
+            "Code Engine",
             "Slack"
           ],
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2022-05-02"
+          "lastUpdated": "2022-05-30"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -544,7 +543,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2022-05-19"
+          "lastUpdated": "2022-05-30"
         },
         {
           "name": "Install software on virtual server instances in VPC",

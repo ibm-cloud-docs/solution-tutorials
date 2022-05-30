@@ -410,20 +410,20 @@
             {
                "name": "Build a database-driven Slackbot",
                "url": "slack-chatbot-database-watson.html",
-               "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
-               "imgSrc": "images/solution19/SlackbotArchitecture.png",
+               "description": "Build a database-driven Slackbot with IBM Watson Assistant, Db2 and Code Engine.",
+               "imgSrc": "images/solution19/SlackbotArchitecture.svg",
                "tags": [
                   "IBM Watson Assistant",
-                  "Cloudant NoSQL DB",
-                  "Db2 Warehouse",
-                  "Cloud Functions",
+                  "Db2",
+                  "Code Engine",
                   "Slack"
                ],
                "requirements": [
-                  "cloud_functions",
+                  "watson_assistant",
+                  "code_engine",
                   "db2_on_cloud"
                ],
-               "supportsCloudShell": "yes_with_modifications",
+               "supportsCloudShell": "yes",
                "repos": [
                   "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
                ]
