@@ -154,16 +154,11 @@ In this section, you are going to set up the needed services and prepare the env
 
 
 
-
-## Build a Slackbot in {{site.data.keyword.conversationshort}}
-{: #slack-chatbot-database-watson-3}
-{: step}
-
-In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
-
-### Create an assistent
+## Create an assistent
 {: #slack-chatbot-database-watson-4}
 {: step}
+In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
+
 
 1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing. For the first question on deployment pick **Web**. For the other questions answer for your role or with **Other** / **Not sure at this time**. Click **Next** for the opportunity to customize the chat UI. Leave it as is and click **Next** again. Finalize by clicking **Create**.
@@ -172,7 +167,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
    {: tip}
 
 
-### Add and configure custom extension
+## Add and configure custom extension
 {: #slack-chatbot-database-watson-5}
 {: step}
 
@@ -183,7 +178,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 5. The new dialog starts with a short overview. Click **Next** to get to the actual configuration. In the dropdown for **Authentication type** select **API key auth** and enter your chosen **API key** (**MY_SECRET** replacement).
 6. For the **Server variables** use your deployment **region**, **slackbot-backend** as **appname**, and the {{site.data.keyword.codeengineshort}} **projectid** of your app. Thereafter, the **generated URL** should match that of your {{site.data.keyword.codeengineshort}} app. When done, click **Next** to get to the review page, then **Finish** and **Close** to get back to the **Integrations** page.
 
-### Create the first action
+## Create the first action
 {: #slack-chatbot-database-watson-6}
 {: step}
 
@@ -203,7 +198,7 @@ First, you are going to create an action to retrieve information about a single 
 
 ![Webchat preview showing event details](images/solution19/Slackbot_preview.png)
 
-### Action to gather data and insert a new record
+## Action to gather data and insert a new record
 {: #slack-chatbot-database-watson-7}
 {: step}
 
