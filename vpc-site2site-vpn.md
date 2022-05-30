@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-05-23"
+  years: 2022
+lastupdated: "2022-05-30"
 lasttested: "2022-05-19"
 
 content-type: tutorial
@@ -179,7 +179,7 @@ Test DNS resolution to Postgresql and object storage through the Virtual Endpoin
    
    # should resolve to $IP_ENDPOINT_GATEWAY_POSTGRESQL
    dig $HOSTNAME_POSTGRESQL
-   # the telnet should display "connected" (postgresql not a telent server and will not provide a prompt)
+   # the telnet should display "connected" (postgresql not a telnet server and will not provide a prompt)
    telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
    # <control><c>
    
