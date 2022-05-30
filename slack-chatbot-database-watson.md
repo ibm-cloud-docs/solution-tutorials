@@ -65,15 +65,18 @@ This tutorial requires:
 * `git` to clone source code repository,
 * `jq` to query JSON data.
 
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
+
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
-## Service and Environment Setup
+## Set up services and deploy backend
 {: #slack-chatbot-database-watson-2}
 {: step}
 
-In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on GitHub.
+In this section, you are going to set up the needed services and deploy the backend app. All of this can be accomplished from the command line interface (CLI) in a terminal.
 
 1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
    ```sh
@@ -167,11 +170,12 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
    {: tip}
 
 
-## Add and configure custom extension
+## Add and configure a custom extension
 {: #slack-chatbot-database-watson-5}
 {: step}
 
-1. On the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
+Next, you are going to add and configure a custom extension to {{site.data.keyword.conversationshort}} and the newly created assistant.
+1. In the dashboard on the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
 2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next** again.
 3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
 4. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistent.
