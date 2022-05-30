@@ -16,6 +16,7 @@ completion-time: 2h
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
+{:note: .note}
 {:tip: .tip}
 {:pre: .pre}
 
@@ -64,15 +65,18 @@ This tutorial requires:
 * `git` to clone source code repository,
 * `jq` to query JSON data.
 
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
+
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
-## Service and Environment Setup
+## Set up services and deploy backend
 {: #slack-chatbot-database-watson-2}
 {: step}
 
-In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on GitHub.
+In this section, you are going to set up the needed services and deploy the backend app. All of this can be accomplished from the command line interface (CLI) in a terminal.
 
 1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
    ```sh
@@ -153,16 +157,11 @@ In this section, you are going to set up the needed services and prepare the env
 
 
 
-
-## Build a Slackbot in {{site.data.keyword.conversationshort}}
-{: #slack-chatbot-database-watson-3}
-{: step}
-
-In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
-
-### Create an assistent
+## Create an assistent
 {: #slack-chatbot-database-watson-4}
 {: step}
+In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
+
 
 1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing. For the first question on deployment pick **Web**. For the other questions answer for your role or with **Other** / **Not sure at this time**. Click **Next** for the opportunity to customize the chat UI. Leave it as is and click **Next** again. Finalize by clicking **Create**.
@@ -171,18 +170,19 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
    {: tip}
 
 
-### Add and configure custom extension
+## Add and configure a custom extension
 {: #slack-chatbot-database-watson-5}
 {: step}
 
-1. On the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
+Next, you are going to add and configure a custom extension to {{site.data.keyword.conversationshort}} and the newly created assistant.
+1. In the dashboard on the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
 2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next** again.
 3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
 4. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistent.
 5. The new dialog starts with a short overview. Click **Next** to get to the actual configuration. In the dropdown for **Authentication type** select **API key auth** and enter your chosen **API key** (**MY_SECRET** replacement).
 6. For the **Server variables** use your deployment **region**, **slackbot-backend** as **appname**, and the {{site.data.keyword.codeengineshort}} **projectid** of your app. Thereafter, the **generated URL** should match that of your {{site.data.keyword.codeengineshort}} app. When done, click **Next** to get to the review page, then **Finish** and **Close** to get back to the **Integrations** page.
 
-### Create the first action
+## Create the first action
 {: #slack-chatbot-database-watson-6}
 {: step}
 
@@ -195,14 +195,14 @@ First, you are going to create an action to retrieve information about a single 
 6. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
 7. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
 
-For the sake of simplicity, not all errors and conditions like empty results are handled.
-{: note}
+   For the sake of simplicity, not all errors and conditions like empty results are handled.
+   {: note}
 
 8. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. On the left select **Preview** to get to the **Assistent preview**. In the webchat, click on the **show me event details** button. The bot should respond **What is the event name?**. Now enter **Think**. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screenshot below).
 
 ![Webchat preview showing event details](images/solution19/Slackbot_preview.png)
 
-### Action to gather data and insert a new record
+## Action to gather data and insert a new record
 {: #slack-chatbot-database-watson-7}
 {: step}
 
@@ -218,7 +218,7 @@ Similar to retrieving a record it is possible to gather input about an event and
 7. Test the new action by clicking on **Preview** on the left and using the webchat. Click on the **add new event** option. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 
 
-When creating a chatbot, you may want [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of version which allows to roll back changes and to continue with development without impacting the chatbot interacting with real customers.
+When creating a chatbot, you may want to [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows to roll back changes and to continue with development without impacting the chatbot interacting with real customers.
 {: tip}
 
 ## Integrate with Slack

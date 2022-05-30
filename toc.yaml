@@ -171,7 +171,6 @@ toc:
           topics:
           - serverless-api-webapp.md
           - multi-region-serverless.md
-          - slack-chatbot-database-watson.md
 
         - topicgroup:
           label: Code Engine
@@ -179,6 +178,7 @@ toc:
           - mean-stack.md
           - serverless-webapp.md
           - text-analysis-code-engine.md
+          - slack-chatbot-database-watson.md
           - serverless-github-traffic-analytics.md
 
         - topicgroup:
