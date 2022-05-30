@@ -37,7 +37,7 @@ In this tutorial, you are going to build a Slackbot which allows to search and c
 
 The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. A custom extension, written in Python and deployed as serverless {{site.data.keyword.codeengineshort}} app, exposes a REST API against the database backend.
 
-This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written inNode.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
+This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
 {: note}
 
 ## Objectives
@@ -134,7 +134,7 @@ In this section, you are going to set up the needed services and deploy the back
    ```
    {: pre}
 
-   Then, deploy the app. Replace the value for the **API_TOKEN** with your own secret. It is used to secure the calls to the REST API. For **DB2_URI** replace the parts with the database connection URL from above.
+   Then, deploy the app naming it **slackbot-backend**. Replace the value for the **API_TOKEN** (**MY_SECRET**) with your own secret. It is used to secure the calls to the REST API. For **DB2_URI** replace the parts with the database connection URL from above.
    ```sh
    ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" 
    ```
@@ -174,7 +174,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 {: #slack-chatbot-database-watson-5}
 {: step}
 
-Next, you are going to add and configure a custom extension to {{site.data.keyword.conversationshort}} and the newly created assistant.
+Next, you are going to add and then configure a custom extension to {{site.data.keyword.conversationshort}} and the newly created assistant.
 1. In the dashboard on the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
 2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next** again.
 3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
