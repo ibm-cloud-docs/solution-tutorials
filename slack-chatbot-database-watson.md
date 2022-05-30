@@ -240,7 +240,7 @@ Now, you will integrate the chatbot with Slack.
 {: removeresources}
 {: step}
 
-To clean up the resources for this tutorial, go to the [{{site.data.keyword.notm}} Resource List](https://{DomainName}/resources). Locate the service instances of {{site.data.keyword.conversationshort}} and {{site.data.keyword.Db2_on_Cloud_short}} and delete them. Similarly, locate the {{site.data.keyword.codeengineshort}} project and delete it.
+To clean up the resources for this tutorial, go to the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources). Locate the service instances of {{site.data.keyword.conversationshort}} and {{site.data.keyword.Db2_on_Cloud_short}} and delete them. Similarly, locate the {{site.data.keyword.codeengineshort}} project and delete it.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
