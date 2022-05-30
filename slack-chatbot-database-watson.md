@@ -229,7 +229,7 @@ Now, you will integrate the chatbot with Slack.
 1. On the lower left, click on **Integrations**.
 2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
 3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
-4. Once done, open up your Slack workspace. Begin a direct chat with the bot and **say show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
+4. Once done, open up your Slack workspace. Begin a direct chat with the bot and say **show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
 
 ![Slack with the eventbot](images/solution19/Slackbot_event.png)
 
@@ -249,16 +249,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #slack-chatbot-database-watson-10}
 {: related}
 
-Here are links to additional information on the topics covered in this tutorial.
-
-Chatbot-related blog posts:
-* [Chatbots: Some tricks with slots in IBM Watson Conversation](https://www.ibm.com/cloud/blog/chatbots-some-tricks-with-slots-in-ibm-watson-conversation)
-* [Add Watson Discovery News to your Chatbot](https://www.ibm.com/cloud/blog/add-watson-discovery-news-to-your-chatbot)
-* [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)
-
-Documentation and SDKs:
-* GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk)
-* Documentation: [IBM Knowledge Center for {{site.data.keyword.Db2_on_Cloud_short}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
-* Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
+Here are additional resources on the topics covered in this tutorial.
+* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast)
+* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli)
