@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-30"
+lastupdated: "2022-06-01"
 lasttested: "2022-05-30"
 
 content-type: tutorial
@@ -51,9 +51,9 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 ![Architecture](images/solution19/SlackbotArchitecture.svg){: class="center"}
 {: style="text-align: center;"}
 
-1. The user interacts with {{site.data.keyword.conversationfull}}, either through Slack or using a web chat client
-2. The chatbot utilizes a custom extension with REST API deployed as Python app on {{site.data.keyword.codeengineshort}}
-3. The custom extension app retrieves data from and inserts data into a {{site.data.keyword.Db2_on_Cloud_short}} database
+1. The user interacts with [{{site.data.keyword.conversationfull}}](https://{DomainName}/docs/watson-assistant), either through Slack or using a web chat client
+2. The chatbot utilizes a custom extension with REST API deployed as Python app on [{{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started)
+3. The custom extension app retrieves data from and inserts data into a [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/docs/Db2onCloud) database
 
 
 ## Before you begin
@@ -94,7 +94,7 @@ In this section, you are going to set up the needed services and deploy the back
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
+3. Create a [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/docs/Db2onCloud) instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
    ```sh
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
@@ -157,10 +157,10 @@ In this section, you are going to set up the needed services and deploy the back
 
 
 
-## Create an assistent
+## Create an assistant
 {: #slack-chatbot-database-watson-4}
 {: step}
-In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistent. Then, you create the custom extension and add it to the assistent. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
+In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistant. Then, you create the custom extension and add it to the assistant. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
 
 
 1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service. Click on its entry to open the service details.
@@ -178,7 +178,7 @@ Next, you are going to add and then configure a custom extension to {{site.data.
 1. In the dashboard on the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
 2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next** again.
 3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
-4. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistent.
+4. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistant.
 5. The new dialog starts with a short overview. Click **Next** to get to the actual configuration. In the dropdown for **Authentication type** select **API key auth** and enter your chosen **API key** (**MY_SECRET** replacement).
 6. For the **Server variables** use your deployment **region**, **slackbot-backend** as **appname**, and the {{site.data.keyword.codeengineshort}} **projectid** of your app. Thereafter, the **generated URL** should match that of your {{site.data.keyword.codeengineshort}} app. When done, click **Next** to get to the review page, then **Finish** and **Close** to get back to the **Integrations** page.
 
@@ -190,7 +190,7 @@ First, you are going to create an action to retrieve information about a single 
 1. On the upper left, click on **Actions** and on the welcome page on **Create a new action**. 
 2. In the **New action** dialog, enter **show me event details** as example and click **Save**.
 3. The next screen shows the step editor for the action with **Step 1** open. In **Assistant says** type **What is the event name?**. Then, for **Define customer response** pick **Free text** as option. Leave **And then** as **Continue to next step**.
-4. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistent says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
+4. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistant says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
 5. Add a **New step**. At the top change the selection so that **Step 3 is taken with condition**. Under **Conditions** and **If** select **2 Ran successfully**. It refers to a result from using the extension in step 2.
 6. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
 7. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
@@ -198,7 +198,7 @@ First, you are going to create an action to retrieve information about a single 
    For the sake of simplicity, not all errors and conditions like empty results are handled.
    {: note}
 
-8. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. On the left select **Preview** to get to the **Assistent preview**. In the webchat, click on the **show me event details** button. The bot should respond **What is the event name?**. Now enter **Think**. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screenshot below).
+8. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. On the left select **Preview** to get to the **Assistant preview**. In the webchat, click on the **show me event details** button. The bot should respond **What is the event name?**. Now enter **Think**. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screenshot below).
 
 ![Webchat preview showing event details](images/solution19/Slackbot_preview.png)
 
