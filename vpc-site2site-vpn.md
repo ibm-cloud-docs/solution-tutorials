@@ -85,9 +85,10 @@ In addition:
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 {: #vpc-site2site-vpn-create-ressources}
 {: step}
-1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
-   1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn` under GitHub or GitLab repository URL. 
-   1. Select **terraform_v1.1** as the Terraform version and click **Next**.
+1. Log in to [{{site.data.keyword.cloud_notm}}](https://{DomainName}]
+1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces}[https://{DomainName}/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.1] Under the **Specify Template** section, verify:
+   1.  **Repository URL** is `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn`
+   1. **Terriform version** is **terraform_v1.1**
 2. Under **Workspace details**,
    1. Provide a workspace name : **vpnsts**.
    2. Choose a `Resource Group` and a `Location`.
@@ -96,7 +97,7 @@ In addition:
 4. Under **Variables**, provide the required values (**resource_group_name**, **ssh_key_name**) by clicking the edit for each row.  The variable **maintenance** must be true.
 7. Scroll to the top of the page and click **Apply plan**. Check the logs to see the status of the services created.
 
-Explore the resources that were created by clicking below and selecting the instance with matching prefix:
+Explore the resources that were created by clicking below and selecting the instance with matching prefix.  Locate all of the resources in the diagram above.
 - [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc-ext/network/vpcs)
 - [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc-ext/compute/vs)
 - [{{site.data.keyword.vpn_short}}](https://{DomainName}/vpc-ext/network/vpngateways)
@@ -107,7 +108,7 @@ Explore the resources that were created by clicking below and selecting the inst
 ## Verify connectivity
 {: #vpc-site2site-vpn-verify-connectivity}
 {: step}
-The schematics workspace output contains variables that can be used to verify the VPN connectivity.
+The {{site.data.keyword.bpshort}} workspace output contains variables that can be used to verify the VPN connectivity.
 
 1. Get the list of workspaces, note the ID column, set the shell variable:
    ```sh
@@ -137,7 +138,10 @@ The schematics workspace output contains variables that can be used to verify th
    HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
    PORT_POSTGRESQL=32525
    ```
-1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.
+1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.  The diagram shows the communication paths exercised by the steps.
+
+![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-verifyconnectivity.png){: class="center"}
+{: style="text-align: center;"}
    1. Test access to on-premises VSI:
       ```sh
       ssh root@$IP_FIP_ONPREM
@@ -169,7 +173,11 @@ The schematics workspace output contains variables that can be used to verify th
 {: step}
 The on-premises DNS resolution has been configured to use the {{site.data.keyword.vpc_short}} DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
-Test DNS resolution to Postgresql and object storage through the Virtual Endpoint Gateway
+Test DNS resolution to Postgresql and Object storage through the Virtual Endpoint Gateway.  The two paths being verified are shown in the diagram below:
+
+![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-verifydns.png){: class="center"}
+{: style="text-align: center;"}
+
    ```sh
    ssh root@$IP_FIP_ONPREM
    <copy/paste variables from above>
