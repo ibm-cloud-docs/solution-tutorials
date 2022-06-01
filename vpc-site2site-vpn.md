@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2022
 lastupdated: "2022-05-30"
-lasttested: "2022-05-19"
+lasttested: "2022-06-01"
 
 content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
