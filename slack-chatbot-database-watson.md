@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-01"
+lastupdated: "2022-06-02"
 lasttested: "2022-05-30"
 
 content-type: tutorial
@@ -141,6 +141,9 @@ In this section, you are going to set up the needed services and deploy the back
    {: pre}
 
    Note the reported URI for the app. It is needed in the next steps.
+
+   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. See the {{site.data.keyword.codeengineshort}} documentation on [building a container image](https://{DomainName}/docs/codeengine?topic=codeengine-build-image) or [deploying your application code from local source](https://{DomainName}/docs/codeengine?topic=codeengine-migrate-cf-ce-local) for details.
+   {: tip}
 
 7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.
    ```sh
