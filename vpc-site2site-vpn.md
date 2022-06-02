@@ -207,7 +207,7 @@ If there a problems see the [troubleshoot](https://github.com/powellquiring/vpc-
 Want to add to or extend this tutorial? Here are some ideas:
 
 - In the [github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn) there is an application that can be deployed that uses the database and Object storage.  Instructions on how to deploy are in the README.
-- If you deployed the application [add a DNS zone](https://(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
+- If you deployed the application [add a DNS zone](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
 - Run the application on multipls {{site.data.keyword.vsi_is_short}} and add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic.
 
 ## Remove resources
