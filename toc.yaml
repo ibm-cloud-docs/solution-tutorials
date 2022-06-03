@@ -127,7 +127,7 @@ toc:
           - vmware-solutions-shared-getting-started.md
 
         - topicgroup:
-          label: High Performance Computing
+          label: (Hidden) High Performance Computing
           topics:
           - hpc-eda.md
           - hpc-lsf-on-vpc.md

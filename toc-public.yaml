@@ -113,13 +113,6 @@ toc:
           topics:
           - vmware-solutions-shared-getting-started.md
 
-        - topicgroup:
-          label: High Performance Computing
-          topics:
-          - hpc-eda.md
-          - hpc-lsf-on-vpc.md
-          - hpc-lsf-vpc-auto-scale.md
-
       - topicgroup:
         label: By Compute Options
         topics:

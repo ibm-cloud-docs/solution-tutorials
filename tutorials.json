@@ -308,7 +308,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2022-05-30"
+          "lastUpdated": "2022-06-02"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -543,7 +543,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2022-05-30"
+          "lastUpdated": "2022-06-02"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -884,57 +884,6 @@
             "https://github.com/IBM-Cloud/vmware-solutions-shared"
           ],
           "lastUpdated": "2022-04-21"
-        }
-      ]
-    },
-    {
-      "name": "High Performance Computing",
-      "anchor": "hpc",
-      "solutions": [
-        {
-          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
-          "url": "hpc-eda.html",
-          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
-          "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ],
-          "repos": [
-            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
-          ],
-          "lastUpdated": "2021-12-06"
-        },
-        {
-          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
-          "url": "hpc-lsf-on-vpc.html",
-          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
-          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ],
-          "repos": [
-            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
-          ],
-          "lastUpdated": "2021-12-06"
-        },
-        {
-          "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
-          "url": "hpc-lsf-vpc-auto-scale.html",
-          "description": "Enabling and configure the LSF resource connector on an existing VPC-based LSF cluster",
-          "imgSrc": "images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ],
-          "repos": [
-            "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
-          ],
-          "lastUpdated": "2021-12-06"
         }
       ]
     }
