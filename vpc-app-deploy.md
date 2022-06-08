@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-02"
+lastupdated: "2022-04-14"
 lasttested: "2021-12-02"
 
 content-type: tutorial
@@ -125,6 +125,18 @@ It will walk you through example steps on a terminal using the shell, `terraform
 
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
 
+   * `TF_VAR_region` is a region where resources will be created. This command will display the regions:
+      ```sh
+      ibmcloud is regions
+      ```
+      {: pre}
+
+   * `TF_VAR_zone` is a zone where resources will be created. This command will display the zones:
+      ```sh
+      ibmcloud is zones
+      ```
+      {: pre}
+
 6. Load the variables into the environment:
    ```sh
    source export
@@ -226,19 +238,20 @@ This section uses a shell script found in the [Public frontend and private backe
    ```
    {: pre}
 
-1. Set the current resource group:
+1. Set the current resource group and region:
    ```sh
-   ibmcloud target -g $TF_VAR_resource_group_name
+   ibmcloud target -g $TF_VAR_resource_group_name -r $TF_VAR_region
    ```
    {: pre}
 
 1. Run the provisioning script:
    ```sh
-   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh $TF_VAR_zone $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
    ```
    {: pre}
 
    In the command above,
+      - `$TF_VAR_zone` is the example zone
       - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
       - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
       - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.

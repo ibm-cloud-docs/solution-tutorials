@@ -32,12 +32,12 @@ toc:
           - openshift-microservices.md
           - static-files-cdn.md
           - dynamic-content-cdn.md
-          - pub-sub-object-storage.md
           - plan-create-update-deployments.md
           - highly-available-and-scalable-web-application.md
           - mean-stack.md
           - sql-database.md
           - serverless-api-webapp.md
+          - serverless-webapp.md
           - multi-region-serverless.md
           - application-log-analysis.md
           - text-analysis-code-engine.md
@@ -113,13 +113,6 @@ toc:
           topics:
           - vmware-solutions-shared-getting-started.md
 
-        - topicgroup:
-          label: High Performance Computing
-          topics:
-          - hpc-eda.md
-          - hpc-lsf-on-vpc.md
-          - hpc-lsf-vpc-auto-scale.md
-
       - topicgroup:
         label: By Compute Options
         topics:
@@ -131,7 +124,6 @@ toc:
           - vm-to-containers-and-kubernetes.md
           - continuous-deployment-to-kubernetes.md
           - dynamic-content-cdn.md
-          - pub-sub-object-storage.md
           - plan-create-update-deployments.md
           - application-log-analysis.md
           - multi-region-k8s-cis.md
@@ -159,13 +151,14 @@ toc:
           topics:
           - serverless-api-webapp.md
           - multi-region-serverless.md
-          - slack-chatbot-database-watson.md
 
         - topicgroup:
           label: Code Engine
           topics:
           - mean-stack.md
+          - serverless-webapp.md
           - text-analysis-code-engine.md
+          - slack-chatbot-database-watson.md
           - serverless-github-traffic-analytics.md
 
         - topicgroup:

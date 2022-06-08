@@ -14,7 +14,7 @@ function getValue(key) {
   return replacements[`{{site.data.keyword.${key}}}`];
 }
 
-const conref = require('read-yaml').sync('../../builddocs/markdown/cloudoeconkeyrefs.yml');
+const conref = require('read-yaml').sync('../../builddocs/markdown/cloudoekeyrefs.yml');
 const replacements = {};
 const keywords = Object.keys(conref.keyword);
 Object.keys(conref.keyword).forEach(key => {

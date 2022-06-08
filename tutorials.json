@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-04-12"
         }
       ]
     },
@@ -32,13 +32,16 @@
           "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
           "imgSrc": "images/solution2/Architecture.png",
           "tags": [
-            "Docker",
             "Kubernetes",
             "Container Service",
             "Container Registry",
+            "Docker",
             "Java"
           ],
-          "lastUpdated": "2022-02-01"
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ],
+          "lastUpdated": "2022-05-06"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -54,6 +57,9 @@
             "Virtual Servers"
           ],
           "guide": true,
+          "repos": [
+            "https://github.com/IBM-Cloud/jpetstore-kubernetes"
+          ],
           "lastUpdated": "2021-12-14"
         },
         {
@@ -84,7 +90,10 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2021-12-09"
+          "repos": [
+            "https://github.com/IBM-Cloud/openshift-node-app"
+          ],
+          "lastUpdated": "2022-03-18"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -97,7 +106,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2021-12-28"
+          "lastUpdated": "2022-02-14"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -107,9 +116,13 @@
           "tags": [
             "OpenShift",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
           ],
-          "lastUpdated": "2021-12-09"
+          "repos": [
+            "https://github.com/IBM-Cloud/patient-health-backend",
+            "https://github.com/IBM-Cloud/patient-health-frontend"
+          ],
+          "lastUpdated": "2022-02-11"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -122,7 +135,10 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2021-11-24"
+          "repos": [
+            "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
+          ],
+          "lastUpdated": "2022-04-12"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -135,21 +151,10 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2021-12-07"
-        },
-        {
-          "name": "Asynchronous data processing using object storage and pub/sub messaging",
-          "url": "pub-sub-object-storage.html",
-          "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
-          "imgSrc": "images/solution25/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Node.js",
-            "Java",
-            "Message hub",
-            "Cloud Object Storage"
+          "repos": [
+            "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
           ],
-          "lastUpdated": "2021-12-01"
+          "lastUpdated": "2021-12-07"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -161,6 +166,9 @@
             "Kubernetes",
             "Cloud Foundry",
             "Identity and Access Management"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/multiple-environments-as-code"
           ],
           "lastUpdated": "2021-12-09"
         },
@@ -176,7 +184,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-04-21"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -188,7 +196,10 @@
             "Node.js",
             "Databases for MongoDB"
           ],
-          "lastUpdated": "2022-02-11"
+          "repos": [
+            "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
+          ],
+          "lastUpdated": "2022-04-13"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -199,6 +210,9 @@
             "Cloud Foundry",
             "Python",
             "Db2 Warehouse"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/cloud-sql-database"
           ],
           "lastUpdated": "2021-12-07"
         },
@@ -212,7 +226,25 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2021-10-11"
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ],
+          "lastUpdated": "2022-04-11"
+        },
+        {
+          "name": "Serverless web application and API with Code Engine",
+          "url": "serverless-webapp.html",
+          "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
+          "imgSrc": "images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg",
+          "tags": [
+            "Code Engine",
+            "Cloud Object Storage",
+            "Cloudant NoSQL DB"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/serverless-guestbook"
+          ],
+          "lastUpdated": "2022-04-26"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -235,7 +267,10 @@
             "Kubernetes",
             "Python",
             "Log Analysis",
-            "Availability Monitoring"
+            "Monitoring"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/application-log-analysis"
           ],
           "lastUpdated": "2022-02-09"
         },
@@ -248,6 +283,9 @@
             "Code Engine",
             "Knative"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/code-engine-text-analysis"
+          ],
           "lastUpdated": "2022-02-01"
         }
       ]
@@ -259,16 +297,18 @@
         {
           "name": "Build a database-driven Slackbot",
           "url": "slack-chatbot-database-watson.html",
-          "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
-          "imgSrc": "images/solution19/SlackbotArchitecture.png",
+          "description": "Build a database-driven Slackbot with IBM Watson Assistant, Db2 and Code Engine.",
+          "imgSrc": "images/solution19/SlackbotArchitecture.svg",
           "tags": [
             "IBM Watson Assistant",
-            "Cloudant NoSQL DB",
-            "Db2 Warehouse",
-            "Cloud Functions",
+            "Db2",
+            "Code Engine",
             "Slack"
           ],
-          "lastUpdated": "2021-11-15"
+          "repos": [
+            "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
+          ],
+          "lastUpdated": "2022-06-02"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -280,6 +320,9 @@
             "Speech to Text",
             "Text to Speech",
             "Android"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/chatbot-watson-android"
           ],
           "lastUpdated": "2021-11-17"
         }
@@ -314,6 +357,9 @@
             "Cloud Internet Services",
             "Security"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/kubernetes-node-app"
+          ],
           "lastUpdated": "2022-02-01"
         },
         {
@@ -330,7 +376,10 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2022-02-01"
+          "repos": [
+            "https://github.com/IBM-Cloud/secure-file-storage"
+          ],
+          "lastUpdated": "2022-03-14"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -346,7 +395,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2022-02-18"
+          "lastUpdated": "2022-03-21"
         }
       ]
     },
@@ -363,22 +412,27 @@
             "Cloud Object Storage",
             "Event Streams",
             "SQL Query",
+            "Data Engine",
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2021-11-23"
+          "lastUpdated": "2022-05-19"
         },
         {
           "name": "Build a data lake with Object Storage",
           "url": "smart-data-lake.html",
-          "description": "Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
+          "description": "Provide tools to data scientists to query data using Data Engine (formerly SQL Query) and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
           "imgSrc": "images/solution29/architecture.png",
           "tags": [
             "Cloud Object Storage",
             "SQL Query",
+            "Data Engine",
             "Watson Studio"
           ],
-          "lastUpdated": "2022-02-02"
+          "repos": [
+            "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
+          ],
+          "lastUpdated": "2022-05-19"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -390,6 +444,9 @@
             "App ID",
             "Code Engine",
             "GitHub"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/github-traffic-stats"
           ],
           "lastUpdated": "2021-11-24"
         },
@@ -404,6 +461,9 @@
             "Watson Studio",
             "Cloud Object Storage",
             "Db2 Warehouse"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/ml-iris-classification"
           ],
           "lastUpdated": "2021-11-30"
         }
@@ -449,6 +509,9 @@
             "Virtual Private Cloud",
             "Network"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend"
+          ],
           "lastUpdated": "2021-12-01"
         },
         {
@@ -463,7 +526,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-03-14"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -477,7 +540,10 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-11-15"
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
+          ],
+          "lastUpdated": "2022-06-02"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -490,7 +556,10 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2021-12-02"
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials"
+          ],
+          "lastUpdated": "2022-04-14"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -521,6 +590,9 @@
             "PHP",
             "WordPress"
           ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp"
+          ],
           "lastUpdated": "2021-12-06"
         },
         {
@@ -538,6 +610,9 @@
             "Network",
             "Linux",
             "Security"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ],
           "lastUpdated": "2021-12-06"
         },
@@ -557,7 +632,10 @@
             "PHP",
             "Node.js"
           ],
-          "lastUpdated": "2021-10-21"
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
+          ],
+          "lastUpdated": "2022-04-19"
         }
       ]
     },
@@ -659,7 +737,7 @@
         {
           "name": "VMware",
           "url": "vpc-bm-vmware.html",
-          "description": "",
+          "description": "VMware on VPC Bare metal servers",
           "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-Non-NSX-based.svg",
           "tags": [
             "VMware",
@@ -692,8 +770,8 @@
         {
           "name": "VMware BMS",
           "url": "vpc-bm-vmware-bms.html",
-          "description": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
-          "imgSrc": "",
+          "description": "",
+          "imgSrc": "images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-hosts.svg",
           "tags": [
             "VMware",
             "Virtual Private Cloud"
@@ -802,49 +880,10 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2022-02-15"
-        }
-      ]
-    },
-    {
-      "name": "High Performance Computing",
-      "anchor": "hpc",
-      "solutions": [
-        {
-          "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
-          "url": "hpc-eda.html",
-          "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
-          "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
+          "repos": [
+            "https://github.com/IBM-Cloud/vmware-solutions-shared"
           ],
-          "lastUpdated": "2021-12-06"
-        },
-        {
-          "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
-          "url": "hpc-lsf-on-vpc.html",
-          "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
-          "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ],
-          "lastUpdated": "2021-12-06"
-        },
-        {
-          "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
-          "url": "hpc-lsf-vpc-auto-scale.html",
-          "description": "Enabling and configure the LSF resource connector on an existing VPC-based LSF cluster",
-          "imgSrc": "images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg",
-          "tags": [
-            "Storage",
-            "HPC",
-            "Virtual Private Cloud"
-          ],
-          "lastUpdated": "2021-12-06"
+          "lastUpdated": "2022-04-21"
         }
       ]
     }

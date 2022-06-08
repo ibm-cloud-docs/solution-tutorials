@@ -7,3 +7,5 @@ npm-debug.log
 [._]*.sw[a-p]
 scripts/conref/conref.md
 scripts/conref/vscodesnippets.json
+*.drawio.bkp
+*.drawio.dtmp

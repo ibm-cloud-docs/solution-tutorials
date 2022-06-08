@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-02-11"
+lastupdated: "2022-04-13"
 lasttested: "2022-02-08"
 
 content-type: tutorial
@@ -60,7 +60,7 @@ This tutorial walks you through the creation of a web application using the popu
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
-   * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
+   * code-engine/ce plugin (`code-engine/ce`) v 1.29.1 or higher - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 * `git` to clone source code repository.
 * **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
@@ -141,7 +141,7 @@ In this section, you will clone a MEAN sample code and run the application local
    ```
    {: codeblock}
 
-   You can find the value required for **MONGODB_URL** under `credentials -> connection -> mongodb -> composed` and the value for **CERTIFICATE_BASE64** under `credentials -> connection -> mongodb -> certificate -> certificate_base64` in the returned JSON output.
+   You can find the value required for **MONGODB_URL** under `credentials -> connection -> mongodb -> composed` and the value for **CERTIFICATE_BASE64** under `credentials -> connection -> mongodb -> certificate -> certificate_base64` in the returned JSON output. Make sure the values added to the `.env` do not include any quotation or space.
 
 1. Optional - Install the required packages.
   

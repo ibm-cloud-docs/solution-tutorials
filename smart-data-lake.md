@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-02-02"
-lasttested: "2022-02-02"
+  years: 2022
+lastupdated: "2022-05-19"
+lasttested: "2022-03-22"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
@@ -31,21 +31,21 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
+Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the {{site.data.keyword.sqlquery_short}} (previously SQL Query) service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
 {: shortdesc}
 
 ## Objectives
 {: #smart-data-lake-0}
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
-- Query data directly from {{site.data.keyword.cos_short}} using SQL Query
+- Query data directly from {{site.data.keyword.cos_short}} using {{site.data.keyword.sqlquery_short}} (previously SQL Query)
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
 ![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
-2. Data is reduced, enhanced or refined with SQL Query.
+2. Data is reduced, enhanced or refined with {{site.data.keyword.sqlquery_short}}.
 3. Data analysis occurs in {{site.data.keyword.DSX}}.
 4. Non-technical users access data through application(s).
 5. Refined data is pulled from {{site.data.keyword.cos_short}}.
@@ -142,10 +142,10 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 
 In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
 
-You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
+You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
 1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from your [Resource List](https://{DomainName}/resources).
-2. Click **Launch SQL Query UI** under **Manage**.
+2. Click **Launch {{site.data.keyword.sqlquery_short}} UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
     - Replace `us-south` in the URL with the bucket **Location** (see Configuration tab for the bucket).
@@ -172,7 +172,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
 4. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
 5. The intermediate dataset is displayed below the query on the **Results** tab associated with the **Job**
 
-## Combine Jupyter Notebooks with SQL Query
+## Combine Jupyter Notebooks with {{site.data.keyword.sqlquery_short}}
 {: #smart-data-lake-5}
 {: step}
 
@@ -185,7 +185,13 @@ First, create a new Jupyter Notebook and service connections in {{site.data.keyw
     - Use **Data lake project** as **Name**.
     - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
-2. In the resulting project, click **Add to project** and **Connection**.
+1. In the resulting project, add an access token to the project.
+    - Click the **Manage** tab.
+    - Click **Access control** on the left
+    - Click the **Access tokens** tab
+    - Click **New access token**
+    - Enter name and **Editor** role
+2. Click the **Assets** tab and then click **New asset** and **Connection**.
     - From the list of services select {{site.data.keyword.sqlquery_short}}.
     - In the dialog enter **SQLQuery** as **Name**.
     - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](https://{DomainName}/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
@@ -198,16 +204,13 @@ First, create a new Jupyter Notebook and service connections in {{site.data.keyw
 
 Once the notebook is available, follow these steps.
 1. On the top right of the notebook click on the three dot menu and pick **Insert project token**. It inserts a code snippet into the first cell. **Run** that cell.
-2. Install ibmcloudsql, the required version of pandas and folium by adding the following commands to the next `In [ ]:` input prompt (cell) and then **Run**.
+2. Install ibmcloudsql and folium by adding the following commands to the next `In [ ]:` input prompt (cell) and then **Run**.
     ```python
     !pip install ibmcloudsql
-    !pip install pandas==1.3.4
     !pip install folium
     ```
     {: codeblock}
 
-    You may see an error message relating to dependency problems which can be safely ignored for this tutorial
-    
 3. In the next cell, import folium and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     import folium

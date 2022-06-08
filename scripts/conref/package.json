@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "handlebars": "^4.0.11",
-    "read-yaml": "^1.1.0"
+    "handlebars": "4.7.7",
+    "read-yaml": "1.1.0"
   }
 }
