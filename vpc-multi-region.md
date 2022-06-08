@@ -40,7 +40,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in two different regions with subnets and virtual server instances (VSIs). You will create VSIs in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer to provide high availability between regions and reduce network latency for users in different geographies.
 {: shortdesc}
 
-For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, you will use the {{site.data.keyword.cloudcerts_long_notm}} service.
+For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, you will use the {{site.data.keyword.secrets-manager_full_notm}} service.
 
 ## Objectives
 {: #vpc-multi-region-objectives}
@@ -342,7 +342,7 @@ With this configuration, a request does not match any of the defined route, it w
 {: #vpc-multi-region-6}
 {: step}
 
-HTTPS encryption requires signed certificates to be accessible from the load balacer service. Below the {{site.data.keyword.secrets-manager_full_notm}} will be used to order or import and then manage the certificate.  Identity and Access Management (IAM) service authorization is then configured to allow read access from the load balancer service.
+HTTPS encryption requires signed certificates to be accessible from the load balancer service. Below the {{site.data.keyword.secrets-manager_full_notm}} will be used to order or import and then manage the certificate.  Identity and Access Management (IAM) service authorization is then configured to allow read access from the load balancer service.
 
 ### Create and authorize a {{site.data.keyword.cloudcerts_short}} instance
 {: #vpc-multi-region-14}
