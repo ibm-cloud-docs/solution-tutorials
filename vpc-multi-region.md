@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-03-14"
-lasttested: "2020-12-09"
+lastupdated: "2022-06-08"
+lasttested: "2022-06-08"
 
 content-type: tutorial
 services: vpc, cis, certificate-manager
@@ -80,14 +80,14 @@ To create your own {{site.data.keyword.vpc_short}} in region 1 with a subnet in 
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
 3. The default access control list (ACL) **(Allow all)** is appropriate for your VPC
-4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
+4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server. Ping access is not required for this tutorial.
 5. Leave **Create a default prefix for each zone** checked.
-6. Under **Subnets** change the name of the Zone 1 subnet.  Click the pencil icon:
+6. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-7. Under **Subnets** change the name of the Zone 2 subnet.  Click the pencil icon:
+7. Under **Subnets** change the name of the Zone 2 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
@@ -132,13 +132,13 @@ To allow traffic to the application you will deploy on virtual server instances,
 {: #vpc-multi-region-20}
 {: step}
 
-Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Franfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
+Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Frankfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
 
 ## Install and configure web server on the VSIs
 {: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group. One bastion host in each VPC will be required.
 {: tip}
 
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
@@ -332,7 +332,7 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Select the origin pools that you just created, i.e. **region-1-pool** and **region-2-pool**.
 1. Click **Add**.
 1. Expand the section of **Geo routes**, you can distribute traffic based on the origin region, pick a GLB region that is close to the VPC region 1. 
-   1. You can add additional routes if desired based on geographies and direct traffic to the closest pool.  Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
+   1. You can add additional routes if desired based on geographies and direct traffic to the closest pool. Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
 
 With this configuration, a request does not match any of the defined route, it will be redirected to the **Default origin pools**, users in the GLB region you have define will be directed to the closest Load Balancers/VSIs.
 
@@ -342,16 +342,16 @@ With this configuration, a request does not match any of the defined route, it w
 {: #vpc-multi-region-6}
 {: step}
 
-HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
+HTTPS encryption requires signed certificates to be accessible from the load balacer service. Below the {{site.data.keyword.secrets-manager_full_notm}} will be used to order or import and then manage the certificate.  Identity and Access Management (IAM) service authorization is then configured to allow read access from the load balancer service.
 
 ### Create and authorize a {{site.data.keyword.cloudcerts_short}} instance
 {: #vpc-multi-region-14}
 
 Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm}}.
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and in a resource group.
-2. Create an authorization that gives the VPC load balancer service instance access to the {{site.data.keyword.cloudcerts_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam/authorizations).
-   - Click **Create** and choose **VPC Infrastructure Services** as the source service
+1. If you have an existing [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/catalog/services/secrets-manager) instance, you can use it for this tutorial or create a new one if needed.
+2. Create an authorization that gives the VPC load balancer service access to the {{site.data.keyword.secrets-manager_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam/authorizations).
+   - Click **Create** and select **VPC Infrastructure Services** as the source service
    - **Load Balancer for VPC** as the resource type
    - **{{site.data.keyword.cloudcerts_short}}** as the target service
    - Assign the **Writer** service access role.
@@ -365,6 +365,9 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - Assign the **Manager** service access role.
    - Click on **Authorize**.
 
+   If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains) topic.
+   {: tip}
+
 IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, the traffic routing behavior differs as follows:
    - Traffic that are proxied flows through CIS.
    - Traffic that are non-proxied (DNS-only mode) flows directly from the client to the origin.
@@ -376,10 +379,14 @@ For more information read through the [Proxying DNS records and global load bala
 
 This first alternative creates a wildcard certificate for `mydomain.com` and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
-1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
-   - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
-   - Click **IBM Cloud Internet Services (CIS)** then **Continue**
-   - The **Certificate details** panel is displayed
+   Currently ordering certificates is through **Let's Encrypt**, you may check the topic [Supported certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account, follow the steps outlined in the [Connecting third-party certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to register your existing or create a new account.
+   {: tip}
+
+1. Order a certificate in {{site.data.keyword.secrets-manager_short}}
+   - Open the {{site.data.keyword.secrets-manager_short}} service and select **Secrets** on the left.
+   - Click **Add** and then **TLS certificates**.
+   - Click on the **Order certificate** tile.
+   - The **Provide details** panel is displayed
      - **Name** - choose a name you can remember to reference this certificate in a later step
      - **Description** - more text
      - **Certificate authority** choose  **Let's Encrypt**
@@ -412,7 +419,7 @@ Add an HTTPS listener to the VPC load balancers:
 
 1. Repeat for the **vpc-lb-region2** load balancer.
 
-The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
+The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**. Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
 1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-REGION.lb.appdomain.cloud.
    - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**
