@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-09"
-lasttested: "2022-06-09"
+lastupdated: "2022-06-10"
+lasttested: "2022-06-10"
 
 content-type: tutorial
 services: vpc, cis, certificate-manager
@@ -70,30 +70,26 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 {: #vpc-multi-region-create-infrastructure}
 {: step}
 
-In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by provisioning of VSIs.
+In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by the provisioning of VSIs.
 
-To create your own {{site.data.keyword.vpc_short}} in region 1 with a subnet in each zone,
-
-1. Navigate to [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**
-2. Under **New virtual private cloud** section:
-   * Enter **vpc-region1** as name for your VPC.
-   * Select a **Resource group**.
-   * Optionally, add **Tags** to organize your resources.
-3. The default access control list (ACL) **(Allow all)** is appropriate for your VPC
-4. Uncheck SSH and ping from the **Default security group** and leave **Enable access to classic resources** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server. Ping access is not required for this tutorial.
-5. Leave **Create a default prefix for each zone** checked.
-6. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
+1. Navigate to [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**.
+2. Enter **vpc-region1** for the name of your VPC.
+3. Select a **Resource group**.
+4. Optionally, add **Tags** to organize your resources.
+5. Uncheck SSH and ping from the **Default security group** and leave **Enable access to classic resources** unchecked. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
+6. Leave **Create a default prefix for each zone** checked.
+7. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-7. Under **Subnets** change the name of the Zone 2 subnet. Click the pencil icon:
+8. Under **Subnets** change the name of the Zone 2 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-8. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
-9. Click **Create virtual private cloud** to provision the instance.
+9. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
+10. Click **Create virtual private cloud** to provision the instance.
 
 ### Create a security group to allow inbound traffic to your application
 {: #vpc-multi-region-4}
@@ -138,7 +134,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 {: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group. One bastion host in each VPC will be required.
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group to the VSIs previously provisioned. One bastion host in each VPC is required.
 {: tip}
 
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
@@ -180,7 +176,7 @@ In this section, you will create two load balancers. One in each region to distr
 To allow traffic to the application, you need to enable inbound and outbound rules for HTTP (80) and HTTPS (443) ports. In later steps, when creating load balancers, you will add them to the security group defining those rules.
 
 1. Navigate to **Security groups**.
-2. Create a new security group called **vpc-lb-sg** in **vpc-region1** with a selected **Resource group** 
+2. Create a new security group called **vpc-lb-sg** in **vpc-region1** with a selected **Resource group**.
 3. Add the inbound rules below:
 
    | Protocol | Source type | Source | Value    |
@@ -219,9 +215,9 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Interval(sec)**: 15
    - **Timeout(sec)**: 5
    - **Max retries**: 2
-5. Click **Attach server** to add server instances to the pool
+5. Click **Attach server** to add server instances to the pool.
    - From the Subnet dropdown, select **vpc-region1-zone1-subnet**, select the instance your created and set 80 as the port.
-   - Click on **Attach server**
+   - Click on **Attach server**.
    - From the Subnet dropdown, select **vpc-region1-zone2-subnet**, select the instance your created and set 80 as the port.
    - Click **Save** to complete the creation of a back-end pool.
 6. Click **Create listener** to create a new front-end listener; A listener is a process that checks for connection requests.
@@ -230,8 +226,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Port**: 80
    - **Back-end pool**: region1-pool
    - **Maximum connections**: Leave it empty and click **Create**.
-7. Under **Security Groups**
-   * Uncheck the default security group and check **vpc-lb-sg**.
+7. Under **Security Groups** uncheck the default security group and check **vpc-lb-sg**.
 8. Click **Create load balancer** to provision a load balancer.
 9. **REPEAT** the steps above in **region 2**.
 
@@ -251,7 +246,7 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 Your application is now running in two regions, but it is missing one component for the users to access it transparently from a single entry point.
 
-In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two regions. {{site.data.keyword.cis_short_notm}} is a one stop-shop service providing _Global Load Balancer (GLB)_, _Caching_, _Web Application Firewall (WAF)_ and _Page rule_ to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two regions. {{site.data.keyword.cis_short_notm}} is a one-stop shop service providing _Global Load Balancer (GLB)_, _Caching_, _Web Application Firewall (WAF)_ and _Page rule_ to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
@@ -269,7 +264,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, click on **Add domain**.
 5. Enter your domain name and click **Next**.
-6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**
+6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**.
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 8. At this point you can click on **Cancel** to get back to the main page, after you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
@@ -281,12 +276,12 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 
 A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
-1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Reliability** > **Global Load Balancers**
+1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Reliability** > **Global Load Balancers**.
 1. Select **Health checks** and click **Create**.
 1. Set **Name** to **nginx**.
 1. Set **Monitor Type** to **HTTP**.
 1. Set **Port** to **80**.
-1. Set **Path** to **/**
+1. Set **Path** to **/**.
 1. Click **Create**.
 
    When building your own applications, you could define a dedicated health endpoint such as */health* where you would report the application state.
@@ -297,7 +292,7 @@ A health check helps gain insight into the availability of pools so that traffic
 
 A pool is a group of origin VSIs or load balancers that traffic is intelligently routed to when attached to a GLB. With VPC load balancers in two regions, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest VPC load balancer based on the geographical location of the user requests.
 
-#### One pool for the VPC load balancers in region 1
+#### One pool for the VPC load balancer in region 1
 {: #vpc-multi-region-13}
 
 1. Select **Origin pools** and click **Create**.
@@ -308,7 +303,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 6. Select a **Health check region** close to the location region 1.
 7. Click **Save**.
 
-#### One pool for the VPC load balancers in region 2
+#### One pool for the VPC load balancer in region 2
 {: #vpc-multi-region-18}
 
 1. Select **Origin pools** and click **Create**.
@@ -347,21 +342,19 @@ HTTPS encryption requires signed certificates to be accessible from the load bal
 ### Create and authorize a {{site.data.keyword.secrets-manager_short}} instance
 {: #vpc-multi-region-14}
 
-Manage the SSL certificates through the {{site.data.keyword.secrets-manager_short}}.
-
 1. If you have an existing [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/catalog/services/secrets-manager) instance, you can use it for this tutorial or create a new one if needed by following the steps outlined in [Creating a Secrets Manager service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
 2. Create an authorization that gives the VPC load balancer service access to the {{site.data.keyword.secrets-manager_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam/authorizations).
-   - Click **Create** and select **VPC Infrastructure Services** as the source service
-   - **Load Balancer for VPC** as the resource type
-   - **{{site.data.keyword.secrets-manager_short}}** as the target service
+   - Click **Create** and select **VPC Infrastructure Services** as the source service.
+   - **Load Balancer for VPC** as the resource type.
+   - **{{site.data.keyword.secrets-manager_short}}** as the target service.
    - Assign the **Writer** service access role.
    - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.secrets-manager_short}} instance.
    - Click on **Authorize**.
 3. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.secrets-manager_short}} access to {{site.data.keyword.cis_short_notm}}:
-   - Click **Create** and choose **{{site.data.keyword.secrets-manager_short}}** as the source service
-   - Choose **All instances** or just the {{site.data.keyword.secrets-manager_short}} created earlier
-   - **Internet Services** as the target service
-   - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
+   - Click **Create** and choose **{{site.data.keyword.secrets-manager_short}}** as the source service.
+   - Choose **All instances** or just the {{site.data.keyword.secrets-manager_short}} created earlier.
+   - **Internet Services** as the target service.
+   - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier.
    - Assign the **Manager** service access role.
    - Click on **Authorize**.
 
@@ -386,7 +379,7 @@ This first alternative creates a wildcard certificate for `mydomain.com` and the
    - Open the {{site.data.keyword.secrets-manager_short}} service and select **Secrets** on the left.
    - Click **Add** and then **TLS certificates**.
    - Click on the **Order a public certificate** tile.
-   - Complete the form
+   - Complete the form:
      - **Name** - type a name you can remember.
      - **Description** - enter a description of your choice.
      - Under **Certificate authority** select your configured **Let's Encrypt** certificate authority engine.
@@ -395,23 +388,23 @@ This first alternative creates a wildcard certificate for `mydomain.com` and the
      - **Automatic certificate rotation** - leave off
      - Under **DNS provider** select your configured DNS provider instance
      - Click on **Select domains** check the **Select with wildcard** and leave the domain itself unchecked and click on **Done**.
-   - Click **Order**
+   - Click **Order**.
 1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
 1. In the {{site.data.keyword.cis_short_notm}} configure the Global Load Balancer to use TLS:
-   - Open **Reliability** panel and choose **Global Load Balancer**
-   - Locate the Global Load Balancer created earlier and turn on Proxy
-1. In a browser open **https://lb.mydomain.com** to verify success
+   - Open **Reliability** panel and choose **Global Load Balancer**.
+   - Locate the Global Load Balancer created earlier and turn on Proxy.
+1. In a browser open **https://lb.mydomain.com** to verify success.
 
 Next configure HTTPS from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
 
 Add an HTTPS listener to the VPC load balancers:
-1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
-1. Choose **Front-end listeners**
-1. Click **Create listener**
+1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**.
+1. Choose **Front-end listeners**.
+1. Click **Create listener**.
 1. Select HTTPS and enter for **Port** a value of `443`. 
-1. Select the **Default back-end pool**: `region1-pool` or `region2-pool`
+1. Select the **Default back-end pool**: `region1-pool` or `region2-pool`.
 1. Select the **{{site.data.keyword.secrets-manager_short}}** instance you created earlier, the SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.secrets-manager_short}} instance earlier from Let's Encrypt. Click on **Create**.
 
    If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.secrets-manager_short}} service. Verify that the {{site.data.keyword.secrets-manager_short}} service has a certificate for **mydomain.com**.
@@ -422,16 +415,16 @@ Add an HTTPS listener to the VPC load balancers:
 The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**. Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
 1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-REGION.lb.appdomain.cloud.
-   - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**
-   - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**
-   - Add a DNS CNAME record for **vpc-lb-region2**
+   - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**.
+   - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**.
+   - Add a DNS CNAME record for **vpc-lb-region2**.
 
-1. Now adjust the Global load balancer to use the new CNAME records:
-   - Open **Reliability** panel and choose **Global Load Balancers**
+1. Now adjust the Global load balancer to use the new CNAME records.
+   - Open **Reliability** panel and choose **Global Load Balancers**.
    - Find and edit the **Origin Pools** to change the **Origins** **Origin Address** to **vpc-lb-region1.mydomain.com**.
    - Repeat for **vpc-lb-region2.mydomain.com**.
 
-1. Turn on end to end security
+1. Turn on end to end security.
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **End-to-end CA signed**.  This will terminate https connections at the Global Load Balancer and use https connections to the VPC load balancer.
 
