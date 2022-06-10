@@ -6,7 +6,7 @@ lastupdated: "2022-06-10"
 lasttested: "2022-06-10"
 
 content-type: tutorial
-services: vpc, cis, certificate-manager
+services: vpc, cis, secrets-manager
 account-plan: paid
 completion-time: 2h
 ---
@@ -28,7 +28,7 @@ completion-time: 2h
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, cis, certificate-manager"}
+{: toc-services="vpc, cis, secrets-manager"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
