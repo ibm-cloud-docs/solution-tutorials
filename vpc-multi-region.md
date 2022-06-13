@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-10"
-lasttested: "2022-06-10"
+lastupdated: "2022-06-13"
+lasttested: "2022-06-13"
 
 content-type: tutorial
 services: vpc, cis, secrets-manager
@@ -50,7 +50,7 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-![Architecture](images/solution41-vpc-multi-region/Architecture.png){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
@@ -366,6 +366,9 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
    - Traffic that are non-proxied (DNS-only mode) flows directly from the client to the origin.
 
 For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
+
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.png){: class="center"}
+{: style="text-align: center;"}
 
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
