@@ -367,7 +367,7 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
 
 For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives-50.png){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.png){: class="center"}
 {: style="text-align: center;"}
 
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
