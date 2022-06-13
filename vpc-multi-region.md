@@ -162,7 +162,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 5. `curl localhost` again to notice the changes
-6. **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+6. **REPEAT** the above steps to install and configure the web server on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Distribute traffic between zones with load balancers
 {: #vpc-multi-region-distribute-traffic-with-load-balancers}
