@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-13"
-lasttested: "2022-06-13"
+lastupdated: "2022-06-14"
+lasttested: "2022-06-14"
 
 content-type: tutorial
 services: vpc, cis, secrets-manager
@@ -298,7 +298,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 1. Select **Origin pools** and click **Create**.
 2. Enter a name for the pool: `region-1-pool`.
 3. Set **Origin Name** to `region-1`.
-4. Set **Origin Address** to the hostname of region1 VPC Load balancer, see the **overview page** of the VPC load balancer.
+4. Set **Origin Address** to the hostname of region1 VPC load balancer, see the **overview page** of the VPC load balancer.
 5. Select a **Existing health check** and select the health check created earlier.
 6. Select a **Health check region** close to the location region 1.
 7. Click **Save**.
@@ -309,7 +309,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 1. Select **Origin pools** and click **Create**.
 2. Enter a name for the pool: `region-2-pool`.
 3. Set **Origin Name** to `region-2`.
-4. Set **Origin Address** to the hostname of region1 VPC Load balancer, see the **overview page** of the VPC load balancer.
+4. Set **Origin Address** to the hostname of region1 VPC load balancer, see the **overview page** of the VPC load balancer.
 5. Select a **Existing health check** and select the health check created earlier.
 6. Select a **Health check region** close to the location region 2.
 7. Click **Save**.
@@ -337,7 +337,7 @@ With this configuration, a request does not match any of the defined route, it w
 {: #vpc-multi-region-6}
 {: step}
 
-HTTPS encryption requires signed certificates to be accessible from the load balancer service. Below the {{site.data.keyword.secrets-manager_full_notm}} will be used to order or import and then manage the certificate.  Identity and Access Management (IAM) service authorization is then configured to allow read access from the load balancer service.
+HTTPS encryption requires signed certificates to be accessible from the load balancer service. Below the {{site.data.keyword.secrets-manager_full_notm}} will be used to order or import and then manage the certificate for your domain.  Identity and Access Management (IAM) service authorization is then configured to allow read access from the load balancer service.
 
 ### Create and authorize a {{site.data.keyword.secrets-manager_short}} instance
 {: #vpc-multi-region-14}
@@ -361,14 +361,14 @@ HTTPS encryption requires signed certificates to be accessible from the load bal
    If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains) topic.
    {: tip}
 
-IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, the traffic routing behavior differs as follows:
-   - Traffic that are proxied flows through CIS.
-   - Traffic that are non-proxied (DNS-only mode) flows directly from the client to the origin.
-
-For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic. Consider which of the two alternatives below best match your use case before proceeding.
+IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, consider which of the two alternatives below best match your use case before proceeding as the traffic routing behavior differs as follows:
+   - Alternative 1: Traffic that is proxied flows through CIS. 
+   - Alternative 2: Traffic that is non-proxied (DNS-only mode) flows directly from the client to the origin. In DNS-only mode, none of the CIS security, performance, and reliability features is applied.
 
 ![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.png){: class="center"}
 {: style="text-align: center;"}
+
+For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic.
 
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
@@ -378,6 +378,7 @@ This first alternative creates a wildcard certificate for `mydomain.com` and the
    Currently ordering certificates is by using **Let's Encrypt**, you may follow the topic [Supported certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account, follow the steps outlined in the [Connecting third-party certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to create a new or register your existing account. In addition, you are required to add a DNS provider following the steps in the [Connecting DNS providers](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui#add-dns-provider-ui) topic. For this tutorial, you must add {{site.data.keyword.cis_short_notm}} as your DNS provider.
    {: tip}
 
+Initially HTTPS is configured from the user to {{site.data.keyword.secrets-manager_short}} only. 
 1. Order a certificate in {{site.data.keyword.secrets-manager_short}}
    - Open the {{site.data.keyword.secrets-manager_short}} service and select **Secrets** on the left.
    - Click **Add** and then **TLS certificates**.
@@ -392,9 +393,9 @@ This first alternative creates a wildcard certificate for `mydomain.com` and the
      - Under **DNS provider** select your configured DNS provider instance
      - Click on **Select domains** check the **Select with wildcard** and leave the domain itself unchecked and click on **Done**.
    - Click **Order**.
-1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
+1. Configure HTTPS from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
-   - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
+   - For the **Mode** choose **Client-to-edge**.  This will terminate HTTPS connections at the Global Load Balancer and will switch to HTTP connections to the VPC load balancer.
 1. In the {{site.data.keyword.cis_short_notm}} configure the Global Load Balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**.
    - Locate the Global Load Balancer created earlier and turn on Proxy.
@@ -429,7 +430,7 @@ The wildcard certificate created will allow access to domain name like vpc-lb-re
 
 1. Turn on end to end security.
    - Open the **Security** panel and choose **TLS**.
-   - For the **Mode** choose **End-to-end CA signed**.  This will terminate https connections at the Global Load Balancer and use https connections to the VPC load balancer.
+   - For the **Mode** choose **End-to-end CA signed**.  This will terminate HTTPS connections at the Global Load Balancer and use HTTPS connections to the VPC load balancer.
 
 In a browser open **https://lb.mydomain.com** to verify success
 
@@ -444,29 +445,28 @@ It is not currently possible to order a certificate directly for a {{site.data.k
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **DNS**.
 
-1. In the DNS Records section:
-    - Type: CNAME
-    - Name: lb
-    - TTL: default (Automatic)
-    - Alias Domain Name: zzz.mydomain.com (remember, this is only going to be used to order a certificate)
+1.  Scroll down to DNS Records and create a record section:
+    - Type: `CNAME`
+    - Name: `lb`
+    - TTL: `default (Automatic)`
+    - Alias Domain Name: `zzz.mydomain.com`
     - Click **Add Record**
 
 1. Order a certificate in {{site.data.keyword.secrets-manager_short}}
-   - Open the {{site.data.keyword.secrets-manager_short}} service and select **Order certificate** on the left.
-   - Click **IBM Cloud Internet Services (CIS)** then **Continue**
-   - On the **Order certificate** the **Certificate details** panel is displayed
-     - **Name** - choose an order name you can remember to reference this certificate in a later step
-     - **Description** - more text
-     - **Certificate authority** choose  **Let's Encrypt**
-     - Leave the defaults for **Signature algorithm**, **Key algorithm**
-     - **Automatic certificate renewel** - leave off
-   - On the **Order certificate** select the **Domains** panel
-     - **IBM Cloud Internet Services (CIS) instance** choose your instance
-     - **Certificate domains** click the **Subdomains** link
-     - in the pop up dialog, check the **Add Domain** box next to lb.mydomain.com
-     - click **Apply**
-   - Notice that `lb.mydomain.com` has been added to the Order summary
-   - Click **Order**
+   - Open the {{site.data.keyword.secrets-manager_short}} service and select **Secrets** on the left.
+   - Click **Add** and then **TLS certificates**.
+   - Click on the **Order a public certificate** tile.
+   - Complete the form:
+     - **Name** - type a name you can remember.
+     - **Description** - enter a description of your choice.
+     - Under **Certificate authority** select your configured **Let's Encrypt** certificate authority engine.
+     - Under **Key algorithm**, pick your preferred algorithm,
+     - **Bundle certificates** - leave off
+     - **Automatic certificate rotation** - leave off
+     - Under **DNS provider** select your configured DNS provider instance
+     - Click on **Select domains**
+     - Expand the domain listed to view the list of subdomains and select the check box next to the lb.domain.com and click on **Done**.
+   - Click **Order**.
 
 1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** > **DNS**.
 
