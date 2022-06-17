@@ -57,7 +57,7 @@ You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.c
 2. The admin creates a load balancer with a backend pool of servers in different zones of region 1 and a frontend listener. Repeats the same in region 2.
 3. The admin provisions a {{site.data.keyword.cis_full_notm}} instance with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
 4. The admin enables HTTPS encryption by adding the domain SSL certificate to the {{site.data.keyword.secrets-manager_short}} service.
-5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
+5. The user makes an HTTP/HTTPS request and the global load balancer handles the request.
 6. The request is routed to the load balancers both on the global and local level. The request is then fulfilled by the available server instance.
 
 ## Before you begin
@@ -66,35 +66,34 @@ You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.c
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
-## Create VPCs, subnets and VSIs
+## Create virtual private clouds, subnets and virtual server instances
 {: #vpc-multi-region-create-infrastructure}
 {: step}
 
 In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by the provisioning of VSIs.
 
-1. Navigate to [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**.
-2. Enter **vpc-region1** for the name of your VPC.
-3. Select a **Resource group**.
-4. Optionally, add **Tags** to organize your resources.
-5. Uncheck SSH and ping from the **Default security group** and leave **Enable access to classic resources** unchecked. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
-6. Leave **Create a default prefix for each zone** checked.
-7. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
+### Create a VPC
+1. Navigate to [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**.
+2. Enter **vpc-region1** for the name of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
+3. Uncheck **Allow SSH** and **Allow ping** from the **Default security group** and leave **Enable access to classic resources** unchecked. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
+4. Leave **Create a default prefix for each zone** checked.
+5. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-8. Under **Subnets** change the name of the Zone 2 subnet. Click the pencil icon:
+6. Under **Subnets** change the name of the Zone 2 subnet. Click the pencil icon:
    * Enter **vpc-region1-zone2-subnet** as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
    * Leave the defaults in the other values.
    * Click **Save**
-9. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
-10. Click **Create virtual private cloud** to provision the instance.
+7. Under **Subnets** delete the subnet in Zone 3.  Click the minus icon.
+8. Click **Create virtual private cloud** to provision the instance.
 
 ### Create a security group to allow inbound traffic to your application
 {: #vpc-multi-region-4}
 
-To allow traffic to the application you will deploy on virtual server instances, you need to enable inbound rules for HTTP (80) and HTTPS (443) ports. In later steps, when creating virtual server instances, you will add these instances to the security group defining those rules.
+Enable inbound rules for HTTP (80) and HTTPS (443) ports to the application by defining rules in a security group. In later steps, you will add VSIs to the security group.
 
 1. Navigate to **Security groups**.
 2. Create a new security group called **vpc-region1-sg** in **vpc-region1** with a selected **Resource group** and with the below inbound rules:
@@ -107,30 +106,30 @@ To allow traffic to the application you will deploy on virtual server instances,
    
    {: caption="Inbound rules" caption-side="bottom"}
 
-### Provision VSIs
+### Provision virtual server instances
 {: #vpc-multi-region-5}
 
 1. Navigate to **Subnets**.
-1. Verify status is available and click on **vpc-region1-zone1-subnet** and click **Attached resources**, then under **Attached instances** click on **Create**.
+1. Verify status is available. Then click on **vpc-region1-zone1-subnet** followed by **Attached resources**, then under **Attached instances** click on **Create**.
    1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name.
-   2. Verify the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
+   2. Verify the VPC you created earlier, resource group and the **Location** along with the **zone** as before.
 1. Set the **image** to **Ubuntu Linux** and pick any version of the image.
-1. CLick on **View all profiles** and select **Compute** with 2vCPUs and 4 GB RAM as your profile.
+1. Click on **View all profiles** and select **Compute** with 2 vCPUs and 4 GB RAM as your profile.
 1. Set **SSH keys** to the SSH key you created earlier.
-1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+1. Under **Network interfaces**, click on the **Edit** icon next to the **Security Groups**.
    * Select **vpc-region1-zone1-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-region1-sg**.
    * Click **Save**.
 1. Click **Create virtual server instance**.
-1. **REPEAT** the above steps to provision a **vpc-region1-zone2-vsi** VSI in **zone 2** of **region 1**.
+1. Repeat the above steps to provision a **vpc-region1-zone2-vsi** VSI in **zone 2** of **region 1**.
 
 ## And then to another location
 {: #vpc-multi-region-20}
 {: step}
 
-Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Frankfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
+Navigate to **VPC** and **Subnets** under **Network** on the left pane and repeat the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Frankfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
 
-## Install and configure web server on the VSIs
+## Install and configure web server on the virtual server instances
 {: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
 
@@ -162,7 +161,7 @@ Once you successfully SSH into the server provisioned in subnet of **zone 1** of
 
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 5. `curl localhost` again to notice the changes
-6. **REPEAT** the above steps to install and configure the web server on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+6. Repeat the above steps to install and configure the web server on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Distribute traffic between zones with load balancers
 {: #vpc-multi-region-distribute-traffic-with-load-balancers}
@@ -195,7 +194,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    
    {: caption="Outbound rules" caption-side="bottom"}
 
-5. **REPEAT** the steps above in **region 2**.
+5. Repeat the steps above in **region 2**.
 
 ### Configure load balancers
 {: #vpc-multi-region-8}
@@ -228,7 +227,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Maximum connections**: Leave it empty and click **Create**.
 7. Under **Security Groups** uncheck the default security group and check **vpc-lb-sg**.
 8. Click **Create load balancer** to provision a load balancer.
-9. **REPEAT** the steps above in **region 2**.
+9. Repeat the steps above in **region 2**.
 
 ### Test the load balancers
 {: #vpc-multi-region-9}
@@ -365,7 +364,7 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
    - Alternative 1: Traffic that is proxied flows through CIS. 
    - Alternative 2: Traffic that is non-proxied (DNS-only mode) flows directly from the client to the origin. In DNS-only mode, none of the CIS security, performance, and reliability features is applied.
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.png){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.svg){: class="center"}
 {: style="text-align: center;"}
 
 For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic.
@@ -484,7 +483,7 @@ Create a HTTPS listener:
 
 1. Click **Save** to configure an HTTPS listener
 
-**REPEAT** the above steps in the load balancer of **region 2**.
+Repeat the above steps in the load balancer of **region 2**.
 
 In a browser open https://**lb.mydomain.com** to verify success
 
@@ -496,7 +495,7 @@ By now, you should have seen that most of the time you are hitting the servers i
 
 1. Navigate to the list of **virtual server instances**.
 2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
-3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
+3. Repeat the same for server(s) running in **zone 2** of **region 1**.
 4. Return to GLB under {{site.data.keyword.cis_short_notm}} service and wait until the health status changes to **Critical**.
 5. Now, when you refresh your domain url, you should always be hitting the servers in **region 2**.
 
