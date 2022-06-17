@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-14"
-lasttested: "2022-06-14"
+lastupdated: "2022-06-17"
+lasttested: "2022-06-17"
 
 content-type: tutorial
 services: vpc, cis, secrets-manager
@@ -37,10 +37,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in two different regions with subnets and virtual server instances (VSIs). You will create VSIs in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer to provide high availability between regions and reduce network latency for users in different geographies.
+This tutorial walks you through steps for setting up highly available and isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs). You will create virtual server instances (VSIs) in multiple zones within one region to ensure the high availability of the application.  You will create additional VSIs in a second region and configure a global load balancer (GLB) to provide high availability between regions and reduce network latency for users in different geographies.
 {: shortdesc}
 
-For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, you will use the {{site.data.keyword.secrets-manager_full_notm}} service.
+You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service as the GLB from the catalog, and an {{site.data.keyword.secrets-manager_full_notm}} service from the catalog to manage the Transport Layer Security (TLS) certificate for all incoming HTTPS requests.
 
 ## Objectives
 {: #vpc-multi-region-objectives}
@@ -50,7 +50,7 @@ For the global load balancer, you will provision an {{site.data.keyword.cis_full
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.png){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.svg){: class="center"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
