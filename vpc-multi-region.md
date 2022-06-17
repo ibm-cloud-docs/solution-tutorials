@@ -293,7 +293,7 @@ A health check helps gain insight into the availability of pools so that traffic
 
 A pool is a group of origin VSIs or load balancers that traffic is intelligently routed to when attached to a GLB. With VPC load balancers in two regions, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest VPC load balancer based on the geographical location of the user requests.
 
-#### One pool for the VPC load balancer in region 1
+#### Origin pool for the VPC load balancer
 {: #vpc-multi-region-13}
 
 1. Select **Origin pools** and click **Create**.
@@ -303,17 +303,7 @@ A pool is a group of origin VSIs or load balancers that traffic is intelligently
 5. Select a **Existing health check** and select the health check created earlier.
 6. Select a **Health check region** close to the location region 1.
 7. Click **Save**.
-
-#### One pool for the VPC load balancer in region 2
-{: #vpc-multi-region-18}
-
-1. Select **Origin pools** and click **Create**.
-2. Enter a name for the pool: `region-2-pool`.
-3. Set **Origin Name** to `region-2`.
-4. Set **Origin Address** to the hostname of region1 VPC load balancer, see the **overview page** of the VPC load balancer.
-5. Select a **Existing health check** and select the health check created earlier.
-6. Select a **Health check region** close to the location region 2.
-7. Click **Save**.
+8. Repeat the above steps for region 2.
 
 ### Create the global load balancer
 {: #vpc-multi-region-19}
