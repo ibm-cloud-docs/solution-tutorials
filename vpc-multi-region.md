@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-17"
+lastupdated: "2022-06-20"
 lasttested: "2022-06-17"
 
 content-type: tutorial
@@ -208,7 +208,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Name**:  `region1-pool`
    - **Protocol**: `HTTP`
    - **Session stickiness**: `None`
-   - **Proxy protocol**: Dis`abled
+   - **Proxy protocol**: `Disabled`
    - **Method**: `Round robin`
    - **Health check path**: `/`
    - **Health protocol**: `HTTP`
