@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-01-05"
+  years: 2022
+lastupdated: "2022-06-24"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -97,7 +97,8 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers.
 
-The [VLAN spanning]( https://{DomainName}/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets that are **NOT** associated with VRAs. It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate.
+The [VLAN spanning]( https://{DomainName}/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets. By enabling VLAN spanning, all of your routed traffic can travel between all private subnets, across all private VLANs on your account.
+It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate.
 
 VLANs not associated with the secure private networks created by the VRAs, are ‘spanned’ allowing interconnection of these ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. Hence allowing VRAs to communicate across data centers when VLAN spanning is enabled. With VRA to VRA connectivity, the VRA firewall and routing configuration enable servers within the secure networks to connect.
 
