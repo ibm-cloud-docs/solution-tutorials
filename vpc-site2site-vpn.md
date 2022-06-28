@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-02"
+lastupdated: "2022-06-28"
 lasttested: "2022-06-01"
 
 content-type: tutorial
@@ -85,8 +85,8 @@ In addition:
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 {: #vpc-site2site-vpn-create-ressources}
 {: step}
-1. Log in to [{{site.data.keyword.cloud_notm}}](https://{DomainName}]
-1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces}[https://{DomainName}/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.1] Under the **Specify Template** section, verify:
+1. Log in to [{{site.data.keyword.cloud_notm}}](https://{DomainName})
+1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces}](https://{DomainName}/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.1) Under the **Specify Template** section, verify:
    1.  **Repository URL** is `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn`
    1. **Terriform version** is **terraform_v1.1**
 2. Under **Workspace details**,
