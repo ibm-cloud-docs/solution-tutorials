@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-02"
+lastupdated: "2022-06-30"
 lasttested: "2022-05-30"
 
 content-type: tutorial
-services: watson-assistant, codeengine, Db2onCloud
+services: codeengine, watson-assistant, Db2onCloud
 account-plan: paid
 completion-time: 2h
 ---
