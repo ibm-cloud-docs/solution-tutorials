@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-20"
+lastupdated: "2022-06-30"
 lasttested: "2022-06-17"
 
 content-type: tutorial
@@ -125,11 +125,11 @@ Enable inbound rules for HTTP (80) and HTTPS (443) ports to the application by d
 1. Click **Create virtual server instance**.
 1. Repeat the above steps to provision a **vpc-region1-zone2-vsi** VSI in **zone 2** of **region 1**.
 
-## And then to another location
+##  Create resources in another location
 {: #vpc-multi-region-20}
 {: step}
 
-Navigate to **VPC** and **Subnets** under **Network** on the left pane and repeat the above steps for provisioning a new VPC with subnets and VSIs in another region, form example, **Frankfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
+Navigate to **VPC** and **Subnets** under **Network** on the left pane and repeat the above steps from Step 1 for provisioning a new VPC with subnets and VSIs in another region, for example, **Frankfurt**.  Follow the same naming conventions as above while substituting region2 for region1.
 
 ## Install and configure web server on the virtual server instances
 {: #vpc-multi-region-install-configure-web-server-vsis}
@@ -163,7 +163,7 @@ Once you successfully SSHed into the server provisioned in subnet of **zone 1** 
 
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 5. `curl localhost` again to notice the changes
-6. Repeat the above steps to install and configure the web server on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+6. Repeat the above steps to install and configure the web server on the VSIs in subnets of all the zones and don't forget to update the html to include the zone information.
 
 ## Distribute traffic between zones with load balancers
 {: #vpc-multi-region-distribute-traffic-with-load-balancers}
@@ -354,7 +354,7 @@ HTTPS encryption requires signed certificates to be accessible from both the {{s
 
 IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, consider which of the two alternatives below best match your use case before proceeding as the traffic routing behavior differs as follows:
    - Alternative 1: Traffic that is proxied flows through CIS. 
-   - Alternative 2: Traffic that is non-proxied (DNS-only mode) flows directly from the client to the origin. In DNS-only mode, none of the CIS security, performance, and reliability features is applied.
+   - Alternative 2: Traffic that is non-proxied (DNS-only mode) flows directly from the client to the origin. In DNS-only mode, none of the CIS security, performance, and reliability features are applied.
 
 ![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.svg){: class="center"}
 {: style="text-align: center;"}
@@ -430,7 +430,7 @@ In a browser open **https://lb.mydomain.com** to verify success
 
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
 
-It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So create one of these, order the certificate, then delete the CNAME record when it is no longer needed.
+It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So we will create a CNAME to order the certificate.
 
 1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](https://{DomainName}/resources)
 
@@ -457,8 +457,6 @@ It is not currently possible to order a certificate directly for a {{site.data.k
      - Click on **Select domains**
      - Expand the domain listed to view the list of subdomains and select the check box next to the lb.domain.com and click on **Done**.
    - Click **Order**.
-
-1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** > **DNS**.
 
 Create a HTTPS listener:
 
