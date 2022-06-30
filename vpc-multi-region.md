@@ -430,7 +430,7 @@ In a browser open **https://lb.mydomain.com** to verify success
 
 In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
 
-It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So create one of these, order the certificate, then delete the CNAME record when it is no longer needed.
+It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So we will create a CNAME to order the certificate.
 
 1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](https://{DomainName}/resources)
 
@@ -457,8 +457,6 @@ It is not currently possible to order a certificate directly for a {{site.data.k
      - Click on **Select domains**
      - Expand the domain listed to view the list of subdomains and select the check box next to the lb.domain.com and click on **Done**.
    - Click **Order**.
-
-1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** > **DNS**.
 
 Create a HTTPS listener:
 
