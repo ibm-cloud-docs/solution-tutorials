@@ -122,7 +122,7 @@ The data has been loaded into the relational database. There were no errors, but
    ```
    {: codeblock}
 
-   then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
+   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```sql
    select countrycode, count(name) from cities
@@ -130,8 +130,14 @@ The data has been loaded into the relational database. There were no errors, but
    order by 2 desc
    ```
    {: codeblock}
-
-4. In the editor select the text of the above statement. Click the **Run selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
+  
+   Mark the text of the above statement and click the **Run selected** button. Only this statement is executed, returning some by country statistics in the results section.
+4. Finally, run the following statement similarly to retrieve details about San Francisco in California:
+   ```sql
+   select * from cities
+   where name='San Francisco'
+   and countrycode='US'
+   ```
 
 ## Deploy the application code
 {: #sql-database-6}
