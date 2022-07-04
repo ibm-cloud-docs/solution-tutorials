@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-12-07"
-lasttested: "2021-12-07"
+lastupdated: "2022-07-04"
+lasttested: "2022-07-04"
 
 content-type: tutorial
 services: cloud-foundry-public, Db2whc
@@ -152,9 +152,9 @@ Change back to the terminal and the directory with the cloned repository. Now yo
 {: #sql-database-7}
 {: step}
 
-The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
+The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](https://{DomainName}/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](https://{DomainName}/docs/Db2whc?topic=Db2whc-key-protect). 
 
-In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html).
+In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://{DomainName}/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction).
 
 ## Test the App
 {: #sql-database-8}
