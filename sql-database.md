@@ -188,7 +188,6 @@ Want to extend this app? Here are some ideas:
 ## Related Content
 {: #sql-database-11}
 
-* Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort_notm}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
-* Documentation: [API Description of ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
+* Documentation: [API Description for the ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
 * [Db2 Data Management Console](https://www.ibm.com/products/db2-data-management-console)
+* [Db2 on Cloud](https://{DomainName}/catalog/services/db2)
