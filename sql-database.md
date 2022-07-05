@@ -174,7 +174,7 @@ Change back to the terminal. Now you are going to deploy the application code, u
 
 1. Then, deploy the app naming it **worldcities**. 
    ```sh
-   ibmcloud ce app create --name worldcities --image icr.io/solution-tutorials/tutorial-sql-database:latest --min-scale 1
+   ibmcloud ce app create --name worldcities --image icr.io/solution-tutorials/tutorial-cloud-sql-database:latest --min-scale 1
    ```
    {: pre}
 
