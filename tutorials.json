@@ -18,7 +18,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2022-04-12"
+          "lastUpdated": "2022-06-21"
         }
       ]
     },
@@ -205,16 +205,16 @@
           "name": "SQL Database for Cloud Data",
           "url": "sql-database.html",
           "description": "Provision a SQL relational database service, create a table, and load a large data set into the database. Deploy a web app to make use of that data and show how to access the cloud database.",
-          "imgSrc": "images/solution5/Architecture.png",
+          "imgSrc": "images/solution5/cloud-sql-database.svg",
           "tags": [
-            "Cloud Foundry",
+            "Code Engine",
             "Python",
             "Db2 Warehouse"
           ],
           "repos": [
             "https://github.com/IBM-Cloud/cloud-sql-database"
           ],
-          "lastUpdated": "2021-12-07"
+          "lastUpdated": "2022-07-05"
         },
         {
           "name": "Serverless web application and API",
@@ -308,7 +308,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2022-06-02"
+          "lastUpdated": "2022-07-05"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -526,7 +526,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2022-03-14"
+          "lastUpdated": "2022-06-30"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -543,7 +543,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2022-06-02"
+          "lastUpdated": "2022-06-28"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -711,7 +711,7 @@
             "VLAN Spanning",
             "Virtual Servers"
           ],
-          "lastUpdated": "2021-01-05"
+          "lastUpdated": "2022-06-24"
         },
         {
           "name": "Hosting web applications from a secure private network",

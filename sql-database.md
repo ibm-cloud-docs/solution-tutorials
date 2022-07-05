@@ -31,20 +31,20 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
+This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](https://{DomainName}/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
-![Architecture diagram](images/solution5/Architecture.png){: class="center"}
+![Architecture diagram](images/solution5/cloud-sql-database.svg){: class="center"}
 {: style="text-align: center;"}
 
 ## Objectives
 {: #sql-database-0}
 
 * Provision a SQL database
-* Create the database schema (table)
-* Load data
+* Create the database schema (table) and load data
+* Deploy a pre-built containerized app to {{site.data.keyword.codeengineshort}}
 * Connect the app and database service (share credentials)
-* Monitoring, Security, Backups & Recovery
+* Monitoring, Security, Backups & Recovery of cloud databases
 
 ## Before you begin
 {: #sql-database-prereqs}
