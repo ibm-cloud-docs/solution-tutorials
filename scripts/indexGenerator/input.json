@@ -293,17 +293,17 @@
                "name": "SQL Database for Cloud Data",
                "url": "sql-database.html",
                "description": "Provision a SQL relational database service, create a table, and load a large data set into the database. Deploy a web app to make use of that data and show how to access the cloud database.",
-               "imgSrc": "images/solution5/Architecture.png",
+               "imgSrc": "images/solution5/cloud-sql-database.svg",
                "tags": [
-                  "Cloud Foundry",
+                  "Code Engine",
                   "Python",
                   "Db2 Warehouse"
                ],
                "requirements": [
-                  "cloud_foundry",
+                  "code_engine",
                   "db2_warehouse"
                ],
-               "supportsCloudShell": "yes_with_modifications",
+               "supportsCloudShell": "yes",
                "repos": [
                   "https://github.com/IBM-Cloud/cloud-sql-database"
                ]

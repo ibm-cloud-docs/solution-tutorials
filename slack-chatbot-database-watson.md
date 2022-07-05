@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-30"
+lastupdated: "2022-07-05"
 lasttested: "2022-05-30"
 
 content-type: tutorial
@@ -131,6 +131,12 @@ In this section, you are going to set up the needed services and deploy the back
 6. Deploy the pre-built container image with the custom extension as {{site.data.keyword.codeengineshort}} app. First, create a project:
    ```sh
    ibmcloud ce project create --name slackbot
+   ```
+   {: pre}
+
+   Then select the project as the active one:
+   ```sh
+   ibmcloud ce project select --name slackbot
    ```
    {: pre}
 

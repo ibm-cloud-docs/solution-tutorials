@@ -61,7 +61,7 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 2. The {{site.data.keyword.loadbalancer_short}} selects one of the healthy servers to handle the request.
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
-5. At a regular interval, the database content is backed up. A stand-by database server is available in case the master fails.
+5. At a regular interval, the database content is backed up. A stand-by database server is available in case the primary server fails.
 
 ## Before you begin
 {: #highly-available-and-scalable-web-application-prereqs}
@@ -104,7 +104,7 @@ Contact your Infrastructure master user to get the following permissions:
 {: #highly-available-and-scalable-web-application-database_server}
 {: step}
 
-In this section, you configure one server to act as the master database.
+In this section, you configure one server to act as the primary database.
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog, select [**Virtual Server**](https://{DomainName}/gen1/infrastructure/provision/vs) from the **Compute** section.
 2. For the type of virtual server, select Public. 

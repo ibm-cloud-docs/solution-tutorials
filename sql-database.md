@@ -1,12 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-07"
-lasttested: "2021-12-07"
+  years: 2022
+lastupdated: "2022-07-05"
+lasttested: "2022-07-05"
 
 content-type: tutorial
-services: cloud-foundry-public, Db2whc
+services: codeengine, Db2whc
 account-plan: paid
 completion-time: 2h
 ---
@@ -22,7 +22,7 @@ completion-time: 2h
 # SQL Database for Cloud data
 {: #sql-database}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-foundry-public, Db2whc"}
+{: toc-services="codeengine, Db2whc"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -31,34 +31,37 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
+This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](https://{DomainName}/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
-![Architecture diagram](images/solution5/Architecture.png){: class="center"}
+![Architecture diagram](images/solution5/cloud-sql-database.svg){: class="center"}
 {: style="text-align: center;"}
 
 ## Objectives
 {: #sql-database-0}
 
 * Provision a SQL database
-* Create the database schema (table)
-* Load data
+* Create the database schema (table) and load data
+* Deploy a pre-built containerized app to {{site.data.keyword.codeengineshort}}
 * Connect the app and database service (share credentials)
-* Monitoring, Security, Backups & Recovery
+* Monitoring, Security, Backups & Recovery of cloud databases
 
 ## Before you begin
 {: #sql-database-prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-* `git` to clone source code repository.
+* {{site.data.keyword.cloud_notm}} CLI with the Code Engine plugin,
+* `git` to clone the source code repository.
+
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 
-1. Clone the Github repository and change into its directory. In a terminal, execute the following lines:
+1. Clone the [Github repository for this tutorial](https://github.com/IBM-Cloud/cloud-sql-database) and change into its directory. In a terminal, execute the following lines:
    ```bash
    git clone https://github.com/IBM-Cloud/cloud-sql-database.git
    cd cloud-sql-database
@@ -85,7 +88,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 You need a table to hold the sample data. Create it using the console.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar and start **From file**.
-2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) and open it.
+2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) from your local directory and open it.
 3. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
@@ -122,7 +125,7 @@ The data has been loaded into the relational database. There were no errors, but
    ```
    {: codeblock}
 
-   then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
+   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```sql
    select countrycode, count(name) from cities
@@ -130,31 +133,73 @@ The data has been loaded into the relational database. There were no errors, but
    order by 2 desc
    ```
    {: codeblock}
-
-4. In the editor select the text of the above statement. Click the **Run selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
+  
+   Mark the text of the above statement and click the **Run selected** button. Only this statement is executed, returning some by country statistics in the results section.
+4. Finally, run the following statement similarly to retrieve details about San Francisco in California:
+   ```sql
+   select * from cities
+   where name='San Francisco'
+   and countrycode='US'
+   ```
 
 ## Deploy the application code
 {: #sql-database-6}
 {: step}
 
-Change back to the terminal and the directory with the cloned repository. Now you are going to deploy the application code.
+Change back to the terminal. Now you are going to deploy the application code, using a pre-built container image. You can modify the application code and build the container image on your own. See the [instructions in the GitHub repository](https://github.com/IBM-Cloud/cloud-sql-database) for details.
 
-1. Push the application to the IBM Cloud. You need to be logged in to the location, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
-   ```bash
+1. Log in to IBM Cloud and set the region and resource group to where the database has been provisioned. Replace **RESOURCE_GROUP** and **REGION** accordingly.
+   ```sh
    ibmcloud login
-   ibmcloud target --cf
-   ibmcloud resource service-alias-create sqldatabase --instance-name sqldatabase
-   ibmcloud cf push
    ```
-1. Once the push process is finished you should be able to access the app on the route shown in the output. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named **sqldatabase** together. It also creates a random route (URI) for the app.
+   {: pre}
+
+   ```sh
+   ibmcloud target -g RESOURCE_GROUP -r REGION
+   ```
+   {: pre}
+
+1. Create a new {{site.data.keyword.codeengineshort}} project named **sqldatabase**:
+   ```sh
+   ibmcloud ce project create --name sqldatabase
+   ```
+   {: pre}
+
+   Select the new project as the active one:
+   ```sh
+   ibmcloud ce project select --name sqldatabase
+   ```
+   {: pre}
+
+
+1. Then, deploy the app naming it **worldcities**. 
+   ```sh
+   ibmcloud ce app create --name worldcities --image icr.io/solution-tutorials/tutorial-cloud-sql-database:latest --min-scale 1
+   ```
+   {: pre}
+
+1. Last, create a service binding between the existing {{site.data.keyword.dashdbshort_notm}} database and the app:
+   ```sh
+   ibmcloud ce application bind --name worldcities --service-instance sqldatabase
+   ```
+   {: pre}
+   
+   Once the binding is created, a new app revision is started.
+1. Now you can check the app details for its status and to retrieve its URL:
+   ```sh
+   ibmcloud ce app get --name worldcities 
+   ```
+   {: pre}
+   
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](https://{DomainName}/codeengine).
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}
 {: step}
 
-The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
+The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](https://{DomainName}/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](https://{DomainName}/docs/Db2whc?topic=Db2whc-key-protect). 
 
-In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html).
+In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://{DomainName}/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction).
 
 ## Test the App
 {: #sql-database-8}
@@ -167,11 +212,9 @@ The app to display city information based on the loaded data set is reduced to a
 {: step}
 
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app `worldcities` under **Cloud Foundry apps**.
-2. Click on the menu icon for the app and choose **Delete**. In the dialog window tick the checkmark that you want to delete the related `sqldatabase` service.
-3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
-4. Locate the database `sqldatabase` under **Services and software**
-5. Click on the menu icon for the database and click the **Delete** button. The database service is removed and you are taken back to the resource list.
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). 
+2. In the {{site.data.keyword.codeengineshort}} section locate the project **sqldatabase**. Click on the three dots and select **Delete** to delete the project and its app.
+3. Locate the database `sqldatabase` under **Services and software**. Again, click on the three dots and select **Delete** to delete the database.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
@@ -188,7 +231,6 @@ Want to extend this app? Here are some ideas:
 ## Related Content
 {: #sql-database-11}
 
-* Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort_notm}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
-* Documentation: [API Description of ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
+* Documentation: [API Description for the ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
 * [Db2 Data Management Console](https://www.ibm.com/products/db2-data-management-console)
+* [Db2 on Cloud](https://{DomainName}/catalog/services/db2)
