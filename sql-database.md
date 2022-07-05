@@ -1,12 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-07-04"
-lasttested: "2022-07-04"
+  years: 2022
+lastupdated: "2022-07-05"
+lasttested: "2022-07-05"
 
 content-type: tutorial
-services: cloud-foundry-public, Db2whc
+services: codeengine, Db2whc
 account-plan: paid
 completion-time: 2h
 ---
@@ -22,7 +22,7 @@ completion-time: 2h
 # SQL Database for Cloud data
 {: #sql-database}
 {: toc-content-type="tutorial"}
-{: toc-services="cloud-foundry-public, Db2whc"}
+{: toc-services="codeengine, Db2whc"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -50,15 +50,18 @@ This tutorial shows how to provision a SQL (relational) database service, create
 {: #sql-database-prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-* `git` to clone source code repository.
+* {{site.data.keyword.cloud_notm}} CLI with the Code Engine plugin,
+* `git` to clone the source code repository.
+
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 
-1. Clone the Github repository and change into its directory. In a terminal, execute the following lines:
+1. Clone the [Github repository for this tutorial](https://github.com/IBM-Cloud/cloud-sql-database) and change into its directory. In a terminal, execute the following lines:
    ```bash
    git clone https://github.com/IBM-Cloud/cloud-sql-database.git
    cd cloud-sql-database
@@ -85,7 +88,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 You need a table to hold the sample data. Create it using the console.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar and start **From file**.
-2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) and open it.
+2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) from your local directory and open it.
 3. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
@@ -143,16 +146,52 @@ The data has been loaded into the relational database. There were no errors, but
 {: #sql-database-6}
 {: step}
 
-Change back to the terminal and the directory with the cloned repository. Now you are going to deploy the application code.
+Change back to the terminal. Now you are going to deploy the application code, using a pre-built container image. You can modify the application code and build the container image on your own. See the [instructions in the GitHub repository](https://github.com/IBM-Cloud/cloud-sql-database) for details.
 
-1. Push the application to the IBM Cloud. You need to be logged in to the location, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
-   ```bash
+1. Log in to IBM Cloud and set the region and resource group to where the database has been provisioned. Replace **RESOURCE_GROUP** and **REGION** accordingly.
+   ```sh
    ibmcloud login
-   ibmcloud target --cf
-   ibmcloud resource service-alias-create sqldatabase --instance-name sqldatabase
-   ibmcloud cf push
    ```
-1. Once the push process is finished you should be able to access the app on the route shown in the output. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named **sqldatabase** together. It also creates a random route (URI) for the app.
+   {: pre}
+
+   ```sh
+   ibmcloud target -g RESOURCE_GROUP -r REGION
+   ```
+   {: pre}
+
+1. Create a new {{site.data.keyword.codeengineshort}} project named **sqldatabase**:
+   ```sh
+   ibmcloud ce project create --name sqldatabase
+   ```
+   {: pre}
+
+   Select the new project as the active one:
+   ```sh
+   ibmcloud ce project select --name sqldatabase
+   ```
+   {: pre}
+
+
+1. Then, deploy the app naming it **worldcities**. 
+   ```sh
+   ibmcloud ce app create --name worldcities --image icr.io/solution-tutorials/tutorial-sql-database:latest --min-scale 1
+   ```
+   {: pre}
+
+1. Last, create a service binding between the existing {{site.data.keyword.dashdbshort_notm}} database and the app:
+   ```sh
+   ibmcloud ce application bind --name worldcities --service-instance sqldatabase
+   ```
+   {: pre}
+   
+   Once the binding is created, a new app revision is started.
+1. Now you can check the app details for its status and to retrieve its URL:
+   ```sh
+   ibmcloud ce app get --name worldcities 
+   ```
+   {: pre}
+   
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](https://{DomainName}/codeengine).
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}
@@ -173,11 +212,9 @@ The app to display city information based on the loaded data set is reduced to a
 {: step}
 
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app `worldcities` under **Cloud Foundry apps**.
-2. Click on the menu icon for the app and choose **Delete**. In the dialog window tick the checkmark that you want to delete the related `sqldatabase` service.
-3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
-4. Locate the database `sqldatabase` under **Services and software**
-5. Click on the menu icon for the database and click the **Delete** button. The database service is removed and you are taken back to the resource list.
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). 
+2. In the {{site.data.keyword.codeengineshort}} section locate the project **sqldatabase**. Click on the three dots and select **Delete** to delete the project and its app.
+3. Locate the database `sqldatabase` under **Services and software**. Again, click on the three dots and select **Delete** to delete the database.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
