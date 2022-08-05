@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-29"
+lastupdated: "2022-08-05"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -163,7 +163,7 @@ In the following section, you will deploy an application to a {{site.data.keywor
    You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
    {: tip}
 
-1. To log in the cluster, click the **{{site.data.keyword.openshiftshort}} web console** button.
+1. To log in the cluster, click the **OpenShift web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
 1. In the window that opens, click **Display token**.
 1. Copy and paste the **Log in with this token** command in your shell window.
@@ -280,7 +280,22 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
 1. Under the **Dashboards**, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
-1. Select the `<your-initials>-nlu` link endpoint from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics. _Launch the application and analyze text a couple of times to see more logs._
+1. Select the `<your-initials>-nlu` link endpoint from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics. Launch the application and analyze text a couple of times to generate more load on the endpoint or use the following script to call the application over and over:
+
+   ```sh
+   NLU_ENDPOINT_URL=<host:port>
+   NLU_API_KEY=<api key>
+   APP_URL=<route URL to access the application>
+
+   curl -X POST \
+     -F "host=$NLU_ENDPOINT_URL" \
+     -F "password=$NLU_API_KEY" \
+     $APP_URL/login-nlu
+
+   while sleep 1; do curl -X POST --max-time 2 -s -F 'nlu=IBM is an American multinational technology company headquartered in Armonk, New York, United States, with operations in over 170 countries.' $APP_URL/nlu ; done
+   ```
+   {: pre}
+
 1. Change the time horizon to view past data.
 
    Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
