@@ -80,17 +80,13 @@ In this section, you will create the following cloud services required for the a
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
    1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. 
-   2. Select **terraform_v0.14** as the Terraform version and click *Next.
+   2. Select **terraform_v1.1** as the Terraform version and click **Next**.
 2. Under **Workspace details**,
    1. Provide a workspace name : **vpc-scaling-workspace**.
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Next**.
 3. Verify the details and then click on **Create**.
-4. Under **Variables**, provide the [{{site.data.keyword.Bluemix_notm}} API key](https://{DomainName}/docs/account?topic=account-userapikey#create_user_key) by clicking the action menu (three vertical dots) in the row and then **Edit**.
-   1. Enter your {{site.data.keyword.Bluemix_notm}} API key.
-   2. Check **Sensitive**.
-   3. Click on **Save**.
-5. Set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
+4. Under **Variables**, set `step1_create_services` to **true** by clicking the action menu in the row > Edit, uncheck **Use default**, choose **true** from the `Override Value` dropdown, and click on **Save**.
 6. Set any additional variables you would like to override, the most typical ones are `region`, `resource_group_name`.
 7. Scroll to the top of the page and click **Generate plan**. This is the same as `terraform plan` command.
 8. Click on **Show more** to check the resources to be provisioned.
@@ -132,7 +128,7 @@ As the load increases, you may need more instances to serve the traffic. You may
 
 ![multiple vsi](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg)
 
-An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet.
+An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet. This example does not require data volumes so they are commented out in the [modules/create_vpc/autoscale/main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/autoscale/main.tf#L20) ibm_is_instance_group resource.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {: tip}
@@ -302,7 +298,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    ```
    {: pre}
 
-6.  Issue the following curl command to query the database and COS bucket at once. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+6. Issue the following curl command to query the database and COS bucket at once. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
    -X POST \
