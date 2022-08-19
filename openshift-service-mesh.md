@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-02-14"
+lastupdated: "2022-08-19"
 lasttested: "2022-02-11"
 
 content-type: tutorial
@@ -31,17 +31,17 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
+This tutorial walks you through how to install {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {: shortdesc}
 
-Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftshort}} Service Mesh adds a transparent layer on existing distributed applications. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With Red Hat {{site.data.keyword.openshiftshort}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
+Based on the open source Istio project, {{site.data.keyword.openshiftshort}} Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftshort}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftshort}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
 
 [Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
 
 ## Objectives
 {: #openshift-service-mesh-objectives}
 
-- Install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh in your cluster
+- Install {{site.data.keyword.openshiftshort}} Service Mesh in your cluster
 - Deploy the BookInfo sample app
 - Use metrics, logging and tracing to observe services
 - Set up the Istio Ingress Gateway
@@ -84,21 +84,21 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Log into your {{site.data.keyword.cloud_notm}} account and create an {{site.data.keyword.openshiftshort}} cluster from the [Red Hat {{site.data.keyword.openshiftshort}} cluster create page](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+1. Log into your {{site.data.keyword.cloud_notm}} account and create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-   - For Openshift on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
    - Select the desired VPC
    - Select an existing **Cloud Object Storage** service or create one if required and then select
 5. Under **Location**
-   - For Openshift on VPC infrastructure
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For Openshift on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -140,7 +140,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 2. On the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) to start a new session. Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**.
-5. Check the version of the OpenShift CLI:
+5. Check the version of the {{site.data.keyword.openshiftshort}} CLI:
    ```sh
    oc version
    ```
@@ -165,7 +165,7 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 
 **Kiali** - Based on the open source Kiali project, provides observability for your service mesh. By using Kiali you can view configurations, monitor traffic, and view and analyze traces in a single console.
 
-**Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** - Based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
+**{{site.data.keyword.openshiftshort}} Service Mesh** - Based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
 
 ### Install the Operators
 {: #openshift-service-mesh-5}
@@ -174,23 +174,23 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 2. Select **Operators** and then **OperatorHub**.
 3. Search for **OpenShift Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
 4. **Repeat** the above steps 2 and 3 for installing Operators,
-   1. **Red Hat {{site.data.keyword.openshiftshort}} distributed tracing platform**
+   1. **{{site.data.keyword.openshiftshort}} distributed tracing platform**
    2. **Kiali Operator** (provided by Red Hat) 
-   3. **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** .
+   3. **{{site.data.keyword.openshiftshort}} Service Mesh** .
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
 {: tip}
 
-### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
+### Deploying the {{site.data.keyword.openshiftshort}} Service Mesh control plane
 {: #openshift-service-mesh-6}
 
-The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
+The {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
 
 1.  Create a new project by going to **Home** on the left pane of the web console, click **Projects** and then **Create Project**.
 2.  Enter `istio-system` in the **Name** and click **Create**.
 3.  Navigate to **Operators** and click **Installed Operators**.
 4.  Select `istio-system` from the Project menu on the top bar.
-5.  Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
+5.  Click on **{{site.data.keyword.openshiftshort}} Service Mesh**. If you don't see it, wait a couple of minutes and refresh.
 6.  On the Details tab, under **Istio Service Mesh Control Plane** tile, click **Create Instance** or **Create ServiceMeshControlPlane**.
 7.  Then, click **Create**. _The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters._
 8. To make sure that the Service Mesh Control Plane is installed properly, click on **basic** under `Name` in the list. On the subsequent page, you should see `9/9` readiness components and also when you scroll to the **Conditions** section of the page, you should see the reason `ComponentsReady` and a message `All component deployments are Available`.
@@ -201,7 +201,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
 1. Navigate to **Operators** → **Installed Operators** again.
-2. Click on **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh**.
+2. Click on **{{site.data.keyword.openshiftshort}} Service Mesh**.
 3. On the Details tab, under **Istio Service Mesh Member Roll** tile, click **Create Instance** or **Create ServiceMeshMemberRoll** and then select **YAML View**
 4. Change `your-project` to `bookinfo` and delete the last line(`- another-of-your-projects`).  After the edits, the YAML should look something like this:
    ```yaml
@@ -244,7 +244,7 @@ The end-to-end architecture of the application is shown below.
 ![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: class="center"}
 {: style="text-align: center;"}
 
-Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
+{{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
 1. From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command
    ```sh
@@ -261,9 +261,9 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
    ```
    {: pre}
 
-   The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
+   The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.9/service_mesh/v2x/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+   An installation of {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.9/service_mesh/v2x/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
    {: tip}
 
 3. Verify that the pods are up and running.
@@ -333,7 +333,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    1. On the left pane, under **Networking**, click on **Routes**
    2. Select Project: **istio-system** from the top bar
    3. Click the URL(Location) next to **grafana**
-   4. Log into OpenShift and allow the requested permissions to see the Grafana dashboard.
+   4. Log into {{site.data.keyword.openshiftshort}} and allow the requested permissions to see the Grafana dashboard.
 2. Click the **Dashboard** menu in the left navigation panel, select the **Manage** tab, then **istio** and **Istio Service Dashboard**.
 3. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
 4. Go to your {{site.data.keyword.cloud-shell_notm}} tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
@@ -524,7 +524,7 @@ You can either gradually remove individual resources or skip those steps and dir
 {: #openshift-service-mesh-21}
 
 1. Navigate to the **Operators** → **Installed Operators** page of the web console.
-2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **Red Hat OpenShift Service Mesh** Operator.
+2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **{{site.data.keyword.openshiftshort}} Service Mesh** Operator.
 3. Click **Uninstall** on the prompt.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
@@ -543,7 +543,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 ## Related content
 {: #openshift-service-mesh-0}
 
-- [Understanding Red Hat {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.9/service_mesh/v2x/ossm-architecture.html)
+- [Understanding {{site.data.keyword.openshiftshort}} Service Mesh](https://docs.openshift.com/container-platform/4.9/service_mesh/v2x/ossm-architecture.html)
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
 - [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.9/service_mesh/v2x/ossm-architecture.html)- [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
 - [Istio Observability](https://istio.io/docs/concepts/observability/)
