@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-19"
+lastupdated: "2022-08-22"
 lasttested: "2022-02-11"
 
 content-type: tutorial
@@ -337,7 +337,7 @@ In this section explore the monitoring and metrics dashboards included in {{site
 ### Dashboards with Grafana
 {: #openshift-microservices-14}
 
-{{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](https://grafana.com/) preinstalled.
+{{site.data.keyword.openshiftshort}} comes with [Grafana](https://grafana.com/) preinstalled.
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
 2. Navigate to **Observe > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
