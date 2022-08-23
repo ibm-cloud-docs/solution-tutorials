@@ -1202,7 +1202,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #openshift-microservices-13}
 
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
-* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
+- [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
+- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html)
+- [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html)
