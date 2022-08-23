@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-22"
+lastupdated: "2022-08-23"
 lasttested: "2022-02-11"
 
 content-type: tutorial
@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 {: shortdesc}
 
 ## Objectives
@@ -57,8 +57,8 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 {: style="text-align: center;"}
 
 
-1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
-1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.openshiftshort}} registry for **DeploymentConfig** provisioning.
+1. A developer initializes an {{site.data.keyword.redhat_openshift_notm}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
+1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.redhat_openshift_notm}} registry for **DeploymentConfig** provisioning.
 1. Users access the frontend application.
 1. The {{site.data.keyword.cloudant_short_notm}} database instance is provisioned through an IBM Cloud Operator Service.
 1. The backend application is connected to the database with an IBM Cloud Operator Binding.
@@ -90,7 +90,7 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 {: #openshift-microservices-create_openshift_cluster}
 {: step}
 
-With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
+With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.redhat_openshift_notm}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
@@ -98,16 +98,16 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
    - Select an existing **Cloud Object Storage** service or create one if required
 5. Under **Location**
-   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
+   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.redhat_openshift_notm}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -138,7 +138,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -180,14 +180,14 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
 {: #openshift-microservices-deploy}
 {: step}
 
-In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
+In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.redhat_openshift_notm}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
 ### Create Project
 {: #openshift-microservices-5}
 
 A project is a collection of resources managed by a DevOps team.  An administrator will create the project and the developers can create applications that can be built and deployed.
 
-1. Navigate to the {{site.data.keyword.openshiftshort}} web console by clicking the **{{site.data.keyword.openshiftshort}} web console** button in the selected **Cluster**.
+1. Navigate to the {{site.data.keyword.redhat_openshift_notm}} web console by clicking the **{{site.data.keyword.redhat_openshift_notm}} web console** button in the selected **Cluster**.
 1. On the left navigation pane, under the **Administrator** perspective, select **Home** > **Projects** view to display all the projects.
 1. Create a new project by clicking **Create Project**. In the pop up **Name** the project `example-health`, leave **Display Name** and **Description** blank, click **Create**.
 1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project details** > **example-health** on the top.
@@ -216,10 +216,10 @@ A project is a collection of resources managed by a DevOps team.  An administrat
    ![App Details](images/solution55-openshift-microservices/ocp45-topo-app-details.png)
 
    * **Pods**: Your Node.js application containers
-   * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the {{site.data.keyword.openshiftshort}} container registry, and kicked off your deployment config
-   * **Services**: Tells {{site.data.keyword.openshiftshort}} how to access your Pods by grouping them together as a service and defining the port to listen to
+   * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the {{site.data.keyword.redhat_openshift_notm}} container registry, and kicked off your deployment config
+   * **Services**: Tells {{site.data.keyword.redhat_openshift_notm}} how to access your Pods by grouping them together as a service and defining the port to listen to
    * **Routes**: Exposes your services to the outside world using the LoadBalancer provided by the IBM Cloud network
-1. Click on **View Logs** next to your completed Build. This shows you the process that {{site.data.keyword.openshiftshort}} took to install the dependencies for your Node.js application and build/push a Docker image.  The last entry should looks like this:
+1. Click on **View Logs** next to your completed Build. This shows you the process that {{site.data.keyword.redhat_openshift_notm}} took to install the dependencies for your Node.js application and build/push a Docker image.  The last entry should looks like this:
    ```sh
    Successfully pushed image-registry.openshift-image-registry.svc:5000/example-health/patient-health-frontend@sha256:f9385e010144f36353a74d16b6af10a028c12d005ab4fc0b1437137f6bd9e20a
    Push successful
@@ -229,7 +229,7 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 1. Click back to the **Topology** and select your app again.
 1. Click on the URL under **Routes** to visit your application. Enter any string for username and password, for instance `test:test` because the app is running in demonstration mode.
 
-The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Container Platform. To recap:
+The `Node.js` app has been deployed to {{site.data.keyword.redhat_openshift_notm}} Container Platform. To recap:
 * The "Example Health" Node.js application was deployed directly from GitHub into your cluster.
 * The application was examined in the {{site.data.keyword.openshiftshort}} console.
 * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
@@ -306,7 +306,7 @@ Since there is only one pod, viewing the application logs will be straight forwa
 ### {{site.data.keyword.openshiftshort}} Terminal
 {: #openshift-microservices-11}
 
-One of the great things about Kubernetes is the ability to quickly debug your application pods with SSH terminals. This is great for development, but generally is not recommended in production environments. {{site.data.keyword.openshiftshort}} makes it even easier by allowing you to launch a terminal directly in the dashboard.
+One of the great things about Kubernetes is the ability to quickly debug your application pods with SSH terminals. This is great for development, but generally is not recommended in production environments. {{site.data.keyword.redhat_openshift_notm}} makes it even easier by allowing you to launch a terminal directly in the dashboard.
 
 1. Switch from the **Logs** tab to the **Terminal** tab.
 1. Run the following Shell commands:
@@ -326,18 +326,18 @@ When deploying new apps, making configuration changes, or simply inspecting the 
 1. Access the dashboard in the **Developer** perspective by clicking **Project** on the left side menu.
 2. You can also dive in a bit deeper by clicking the **View events** under the **Activity** tile. **Events** are useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
 
-Almost all actions in {{site.data.keyword.openshiftshort}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
+Almost all actions in {{site.data.keyword.redhat_openshift_notm}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
 ## Metrics and dashboards
 {: #openshift-microservices-metrics}
 {: step}
 
-In this section explore the monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
+In this section explore the monitoring and metrics dashboards included in {{site.data.keyword.redhat_openshift_notm}}.
 
 ### Dashboards with Grafana
 {: #openshift-microservices-14}
 
-{{site.data.keyword.openshiftshort}} comes with [Grafana](https://grafana.com/) preinstalled.
+{{site.data.keyword.redhat_openshift_notm}} comes with [Grafana](https://grafana.com/) preinstalled.
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
 2. Navigate to **Observe > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
@@ -348,7 +348,7 @@ In this section explore the monitoring and metrics dashboards included in {{site
    1. In the **Project** dropdown, check *Show default projects*
    1. Select the **openshift-monitoring** project.
    1. Open the link associated with the *grafana* route.
-   1. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
+   1. You'll be asked to log in with {{site.data.keyword.openshiftshort}} and then click through some permissions. You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
    ![Grafana CPU view](images/solution55-openshift-microservices/ocp45-grafana-cpu.png)
 
 ### Metrics with Prometheus
@@ -358,7 +358,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    * [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
    * [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
 
-{{site.data.keyword.openshiftshort}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
+{{site.data.keyword.redhat_openshift_notm}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
 
 1. The Metrics page is accessible in the **Administrator** perspective by clicking **Observe → Metrics**.
 2. You can either view the metrics inline or access the Prometheus UI by clicking on the **Platform Prometheus UI** link next to `Metrics` in the top.
@@ -374,7 +374,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
    1. In the **Project** dropdown, check *Show default projects*
    1. Select the **openshift-monitoring** project.
    1. Open the link associated with the *prometheus* route.
-   1. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.You should then see your Prometheus dashboard.
+   1. You'll be asked to log in with {{site.data.keyword.openshiftshort}} and then click through some permissions. You should then see your Prometheus dashboard.
 5. In the top box a query expression can be entered. Paste the above query to look into your frontend.
 6. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
    ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp48.png)
@@ -479,7 +479,7 @@ If you're not running the script to simulate load, the number of pods should sta
    It can take a few minutes for the autoscaler to make adjustments.
    {: note}
 
-That's it! You now have a highly available and automatically scaled front-end Node.js application. {{site.data.keyword.openshiftshort}} is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
+That's it! You now have a highly available and automatically scaled front-end Node.js application. {{site.data.keyword.redhat_openshift_notm}} is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
 
 ### Autoscaling from the command line
 {: #openshift-microservices-20}
@@ -521,7 +521,7 @@ Currently, the Example Health `patient-health-frontend` app is using a dummy in-
 ### Enable the IBM Cloud Operator
 {: #openshift-microservices-22}
 
-Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.openshiftshort}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
+Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.redhat_openshift_notm}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
 2. Find the **IBM Cloud Operator**, and click **Install**.
@@ -567,7 +567,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {: pre}
 
-4. Back in the {{site.data.keyword.openshiftshort}} web console, click the **Create Service** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
+4. Back in the {{site.data.keyword.redhat_openshift_notm}} web console, click the **Create Service** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
 5. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account). Replace `<your-initials>`:
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1
@@ -598,7 +598,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {: codeblock}
 
-9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
+9. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.redhat_openshift_notm}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the cloud shell:
 
    ```sh
    ibmcloud resource service-instances --service-name cloudantnosqldb
@@ -733,9 +733,9 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your `services` in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
 2. Launch the Cloudant dashboard by clicking on **Launch Dashboard** button and then click the `patients` db.
-3. Click through the different patients you can log-in as.
+3. Click through the different patients you can log in as.
 
-## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}} to the {{site.data.keyword.openshiftshort}}  cluster
+## Connect both {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}} to the {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-microservices-connect-logging-metrics}
 {: step}
 
@@ -1052,7 +1052,7 @@ Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](
 {: #openshift-microservices-configure-sysdig}
 {: step}
 
-The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.mon_short}} agent.
+The IBM Cloud provides a fully managed monitoring service. Let's create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.mon_short}} agent.
 
 
 ### Verify that the {{site.data.keyword.mon_short}} agent is deployed successfully
@@ -1100,7 +1100,7 @@ The following table lists the different types of pre-defined dashboards:
 ### View the {{site.data.keyword.mon_short}} dashboard
 {: #openshift-microservices-43}
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.openshiftshort}} clusters
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.redhat_openshift_notm}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Next to **Monitoring**, click the **Launch** button.
 
@@ -1182,7 +1182,7 @@ Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentat
 <!--##istutorial#-->
 In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
-* To delete the {{site.data.keyword.openshiftshort}} resources without deleting the cluster, run the below commands:
+* To delete the {{site.data.keyword.redhat_openshift_notm}} resources without deleting the cluster, run the below commands:
    ```sh
    oc delete all --all --namespace example-health
    oc delete project/example-health
