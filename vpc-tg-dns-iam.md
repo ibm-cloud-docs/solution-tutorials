@@ -692,7 +692,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```sh
    curl 52.116.140.202:3000/info
    ```
-   {: codeblock}
+   {: pre}
 
    The first one results in something like what was captured below:
    ```sh
@@ -712,7 +712,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```sh
    curl 52.116.140.202:3000/remote
    ```
-   {: codeblock}
+   {: pre}
 
    Wait, that second curl command did not work! let's fix that in the next step. Remember these curl commands, you will use them again shortly.
 
