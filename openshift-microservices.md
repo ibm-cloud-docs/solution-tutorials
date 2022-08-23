@@ -37,14 +37,14 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). {{site.data.keyword.openshiftshort}} provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 {: shortdesc}
 
 ## Objectives
 {: #openshift-microservices-objectives}
 
 <!--##istutorial#-->
-* Deploy an {{site.data.keyword.openshiftshort}} cluster
+* Deploy a {{site.data.keyword.openshiftshort}} cluster
 <!--#/istutorial#-->
 * Deploy a microservice
 * Scale the microservice
@@ -57,7 +57,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 {: style="text-align: center;"}
 
 
-1. A developer initializes an {{site.data.keyword.redhat_openshift_notm}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
+1. A developer initializes a {{site.data.keyword.redhat_openshift_notm}} application with a repository URL resulting in a **Builder**, **DeploymentConfig**, and **Service**.
 1. The **Builder** clones the source, creates an image, pushes it to {{site.data.keyword.redhat_openshift_notm}} registry for **DeploymentConfig** provisioning.
 1. Users access the frontend application.
 1. The {{site.data.keyword.cloudant_short_notm}} database instance is provisioned through an IBM Cloud Operator Service.
@@ -86,15 +86,15 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
-## Create an {{site.data.keyword.openshiftshort}} cluster
+## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-microservices-create_openshift_cluster}
 {: step}
 
-With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.redhat_openshift_notm}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
+With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in clusters. {{site.data.keyword.redhat_openshift_notm}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+1. Create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
@@ -116,7 +116,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
-8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+8. Click **Create** to provision a {{site.data.keyword.openshiftshort}} cluster.
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
 
@@ -187,7 +187,7 @@ In this section, you'll deploy a Node.js Express application named `patient-heal
 
 A project is a collection of resources managed by a DevOps team.  An administrator will create the project and the developers can create applications that can be built and deployed.
 
-1. Navigate to the {{site.data.keyword.redhat_openshift_notm}} web console by clicking the **{{site.data.keyword.redhat_openshift_notm}} web console** button in the selected **Cluster**.
+1. Navigate to the {{site.data.keyword.redhat_openshift_notm}} web console by clicking the **OpenShift web console** button in the selected **Cluster**.
 1. On the left navigation pane, under the **Administrator** perspective, select **Home** > **Projects** view to display all the projects.
 1. Create a new project by clicking **Create Project**. In the pop up **Name** the project `example-health`, leave **Display Name** and **Description** blank, click **Create**.
 1. The new project's **Project Details** page is displayed.  Observe that your context is **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project details** > **example-health** on the top.

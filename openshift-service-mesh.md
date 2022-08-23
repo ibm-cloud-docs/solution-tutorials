@@ -51,7 +51,7 @@ Based on the open source Istio project, {{site.data.keyword.redhat_openshift_not
 ![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
-1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
+1. The admin provisions a {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
 3. Admin creates a `bookinfo` namespace with automatic sidecar injection enabled and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
 4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
@@ -76,15 +76,15 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 
 <!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
-## Create an {{site.data.keyword.openshiftshort}} cluster
+## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-service-mesh-create_openshift_cluster}
 {: step}
 
-With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
+With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Log into your {{site.data.keyword.cloud_notm}} account and create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+1. Log into your {{site.data.keyword.cloud_notm}} account and create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
@@ -107,7 +107,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
-8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+8. Click **Create** to provision a {{site.data.keyword.openshiftshort}} cluster.
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
 
@@ -136,11 +136,11 @@ To avoid installing the command line tools, the recommended approach is to use t
 
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
-1. When the cluster is ready, on the cluster overview page click on **{{site.data.keyword.openshiftshort}} web console** to open the console. **_Make sure you don't close this window/tab_**
+1. When the cluster is ready, on the cluster overview page click on **OpenShift web console** to open the console. **_Make sure you don't close this window/tab_**
 2. On the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) to start a new session. Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**.
-5. Check the version of the {{site.data.keyword.openshiftshort}} CLI:
+5. Check the version of the OpenShift CLI:
    ```sh
    oc version
    ```
@@ -174,9 +174,9 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 2. Select **Operators** and then **OperatorHub**.
 3. Search for **OpenShift Elasticsearch Operator**, click on the tile, click on **Install**, leave the default selection and click on **Install**.
 4. **Repeat** the above steps 2 and 3 for installing Operators,
-   1. **{{site.data.keyword.openshiftshort}} distributed tracing platform**
+   1. **Red Hat OpenShift distributed tracing platform**
    2. **Kiali Operator** (provided by Red Hat) 
-   3. **{{site.data.keyword.redhat_openshift_notm}} Service Mesh** .
+   3. **Red Hat OpenShift Service Mesh** .
 
 This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
 {: tip}
@@ -534,7 +534,7 @@ You can either gradually remove individual resources or skip those steps and dir
 
 Delete the cluster to delete everything in one-go. This action is irreversible.
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
+1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
 2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
 4. Click on **Delete**
