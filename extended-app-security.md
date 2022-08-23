@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-03-21"
+lastupdated: "2022-08-23"
 lasttested: "2021-10-28"
 
 ---
@@ -142,7 +142,7 @@ Many solutions are based on services with artificial intelligence (AI). At IBM t
 - [**Access groups with access policies**](https://{DomainName}/docs/account?topic=account-groups): To simplify management of privileges (authorization), you can group user IDs and service IDs into access groups. You create an access group for a purpose, e.g., to administrate the application or a component. Then, you create access policies for that group to assign privileges and add the related user IDs and service IDs. 
 - [**Trusted profiles**](https://{DomainName}/docs/account?topic=account-create-trusted-profile): Using a trusted profile, you can automatically grant access to your account in a defined context and with a set of defined privileges. You can define such a context for either **federated users** based on properties in the enterprise directory, e.g., for users labeled as administrators or project members. Or you can allow access for [**compute identities**](https://{DomainName}/docs/account?topic=account-create-trusted-profile#create-profile-compute-ui), i.e., specific computing resources like a virtual server instance (VSI).
 
-To learn more about the above concepts and how to use them in your development project, see the tutorial [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications).
+To learn more about the above concepts and how to use them in your development project, see the tutorial [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications). Moreover, regularly cleaning up inactive identities is important to reduce security risks. The blog post [Cloud Security: Identify Inactive Identities](https://www.ibm.com/cloud/blog/cloud-security-identify-inactive-identities) discusses your options available on {{site.data.keyword.cloud_notm}}.
 
 ## Conclusions
 {: #extended-app-security-5}
