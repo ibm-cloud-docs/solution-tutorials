@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-28"
+lastupdated: "2022-08-18"
 lasttested: "2022-06-01"
 
 content-type: tutorial
@@ -80,7 +80,7 @@ The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](http
 
 In addition:
 - check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started#prereqs).
+- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-managing-ssh-keys&interface=ui).
 
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 {: #vpc-site2site-vpn-create-ressources}

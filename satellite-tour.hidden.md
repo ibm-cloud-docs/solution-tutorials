@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-08-05"
+lastupdated: "2022-08-23"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -78,7 +78,7 @@ This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-* `oc` to interact with {{site.data.keyword.openshiftshort}}
+* `oc` to interact with {{site.data.keyword.redhat_openshift_notm}}.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -111,7 +111,7 @@ In this section, you will walk through the components that make up a {{site.data
 2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington DC or London.
 3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
    * a set of hosts has been assigned to the location **Control plane**.
-   * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **{{site.data.keyword.openshiftshort}} clusters**.
+   * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **{{site.data.keyword.redhat_openshift_notm}} clusters**.
    * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 
 ### Using {{site.data.keyword.cloud_notm}} CLI
@@ -158,16 +158,16 @@ In the following section, you will deploy an application to a {{site.data.keywor
 
 1. Go to [the list of {{site.data.keyword.satelliteshort}} clusters](https://{DomainName}/satellite/clusters).
 1. Select a cluster from your location.
-1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.openshiftshort}} cluster.
+1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.redhat_openshift_notm}} cluster.
 
-   You can also find the cluster directly from [the list of {{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+   You can also find the cluster directly from [the list of OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
    {: tip}
 
 1. To log in the cluster, click the **OpenShift web console** button.
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
 1. In the window that opens, click **Display token**.
 1. Copy and paste the **Log in with this token** command in your shell window.
-1. Create a new {{site.data.keyword.openshiftshort}} project:
+1. Create a new OpenShift project:
    ```sh
    oc new-project <your-initials>-tour
    ```
@@ -226,7 +226,7 @@ With these steps you enabled, over a secured link, the connectivity between {{si
 {: #satellite-tour-deploy}
 {: step}
 
-1. From the command line, create a new application in the {{site.data.keyword.openshiftshort}} project:
+1. From the command line, create a new application in the OpenShift project:
    ```sh
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
@@ -298,7 +298,7 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 
 1. Change the time horizon to view past data.
 
-   Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.openshiftshort}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
+   Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.redhat_openshift_notm}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
    {: tip}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
@@ -331,7 +331,7 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 1. Select the configuration.
 1. Under **Versions**, click on **Add version**.
    * Set **Version name** to **V1**.
-   * Set the YAML content to the following, making sure the `namespace` matches the name of the {{site.data.keyword.openshiftshort}} project you created earlier:
+   * Set the YAML content to the following, making sure the `namespace` matches the name of the OpenShift project you created earlier:
      ```yaml
      apiVersion: v1
      kind: ConfigMap
@@ -375,7 +375,7 @@ Finally, you will map the version to a set of clusters.
    ```
    {: pre}
 
-You can also use the {{site.data.keyword.openshiftshort}} console to view the config map:
+You can also use the {{site.data.keyword.redhat_openshift_notm}} console to view the config map:
 1. On the left pane, click on **Administrator** and switch to the **Developer** view.
 1. Select **Config Maps**.
 1. Make sure your project is selected in the top bar.
@@ -389,7 +389,7 @@ To deploy an update to the resources, you can create a new version.
    * Change `example.property.2` to `you` in the YAML.
 1. Click on **Add**.
 1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
-1. In the {{site.data.keyword.openshiftshort}} console or from the shell, watch for updates to the existing Config Map. From the shell, run the below command and look under the **Data** section for the changes
+1. In the {{site.data.keyword.redhat_openshift_notm}} console or from the shell, watch for updates to the existing Config Map. From the shell, run the below command and look under the **Data** section for the changes
    ```sh
    oc describe configmap example
    ```
@@ -401,7 +401,7 @@ In this example, we deployed a simple ConfigMap but you could be deploying a ful
 {: #satellite-tour-removeresources}
 {: step}
 
-* In the {{site.data.keyword.openshiftshort}} console, delete the project or use `oc delete project <your-initials>-tour`.
+* In the {{site.data.keyword.redhat_openshift_notm}} console, delete the project or use `oc delete project <your-initials>-tour`.
 * Select the [{{site.data.keyword.satelliteshort}} configuration](https://{DomainName}/satellite/configuration) your created.
 * Delete the subscription.
 * Delete the {{site.data.keyword.satelliteshort}} configuration.

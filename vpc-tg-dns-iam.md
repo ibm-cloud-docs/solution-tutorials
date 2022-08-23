@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-06"
+  years: 2022
+lastupdated: "2022-08-22"
 lasttested: "2021-12-06"
 
 content-type: tutorial
@@ -34,7 +34,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver.  This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro-service architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared micro-services is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared micro-service.
+Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro-service architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared micro-services is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared micro-service.
 {: shortdesc}
 
 ## Objectives
@@ -57,7 +57,7 @@ In the diagram above the end user is accessing the applications. The application
 ### Concrete Architecture
 {: #vpc-tg-dns-iam-2}
 
-The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs.  The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
+The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs. The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png){: class="center"}
 {: style="text-align: center;"}
@@ -87,7 +87,7 @@ In addition:
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
-Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions.  For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
+Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
@@ -102,7 +102,7 @@ Teams:
 #### Network Team
 {: #vpc-tg-dns-iam-6}
 
-A conceptual team ownership model was implemented.  The *network* team administers a lot of the diagram.
+A conceptual team ownership model was implemented. The *network* team administers a lot of the diagram.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/network.png){: class="center"}
 {: style="text-align: center;"}
@@ -130,13 +130,13 @@ If you have a good understanding of resource groups and IAM Access Groups you ca
 #### Access Groups
 {: #vpc-tg-dns-iam-iam_access_groups}
 
-An access group will be created for each team.  Access policies are added to access groups, and then users (team members) are added to the access group to grant access.
+An access group will be created for each team. Access policies are added to access groups, and then users (team members) are added to the access group to grant access.
 
 The {{site.data.keyword.tg_short}} service instance is managed exclusively by the *network* team. Editor access is required for creation. Manager access to the created instance allows VPCs to be connected to the {{site.data.keyword.tg_short}}.
 
 In this example a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the micro-service teams, like VSI instances.  But some are edited by the *network* team and operated by the micro-service team, like subnet. The *network* team will create the subnet and a micro-service team will create an instance in a subnet.  For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the micro-service teams, like VSI instances. But some are edited by the *network* team and operated by the micro-service team, like subnet. The *network* team will create the subnet and a micro-service team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
 
 |Service|network|shared|application|
 |-|-|-|-|
@@ -149,7 +149,7 @@ In this example a single DNS zone, `widgets.com` will be created and access to t
 #### Resource Groups
 {: #vpc-tg-dns-iam-iam_resource_groups}
 
-The *shared* team and the *network* team are now nicely separated.  But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
+The *shared* team and the *network* team are now nicely separated. But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
 This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group. 
 
@@ -158,7 +158,7 @@ Resource Group diagram:
 ![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png){: class="center"}
 {: style="text-align: center;"}
 
-Each micro-service team will be allowed the access in the corresponding resource group.  The **network** team will have access to all of these resource groups.
+Each micro-service team will be allowed the access in the corresponding resource group. The **network** team will have access to all of these resource groups.
 
 The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services.
 
@@ -215,13 +215,13 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ### A Note about becoming a team member
 {: #vpc-tg-dns-iam-iam_become}
 
-It is possible to populate each team's access group with users.  But rather then create users this tutorial will create a Service ID in each team's access group.  You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team.  The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users. But rather then create users this tutorial will create a Service ID in each team's access group. You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team. The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```sh
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
 In each step when you cd into a team directory you will be reminded to execute: `source local.env`
 
-Terraform will be used to create the resources.  Open `admin/main.tf` and notice the `provider ibm` clause and the reference to the `ibmcloud_api_key` initialized from the environment variable:
+Terraform will be used to create the resources. Open `admin/main.tf` and notice the `provider ibm` clause and the reference to the `ibmcloud_api_key` initialized from the environment variable:
 
    ```terraform
    provider ibm {
@@ -239,19 +239,19 @@ If you need to use the ibmcloud cli as a team member:
 {: #vpc-tg-dns-iam-admin}
 {: step}
 
-The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial.  See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin.  The api key will be used by terraform to perform tasks on your behalf.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin. The api key will be used by terraform to perform tasks on your behalf.
 
 The api keys are the same as a passwords to your account. Keep the api keys safe.
 {: note}
 
-1. Initialize and verify the basename shell variable.  Verify it matches the basename in the terraform.tfvars file:
+1. Initialize and verify the basename shell variable. Verify it matches the basename in the terraform.tfvars file:
    ```sh
    eval $(grep basename terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//')
    echo basename=$basename
    ```
    {: pre}
 
-1. Change directory, generate and source your personal API key in local.env.  When terraform is invoked it will become you.  Terraform will be the administrator:
+1. Change directory, generate and source your personal API key in local.env. When terraform is invoked it will become you. Terraform will be the administrator:
    ```sh
    cd admin
    echo export TF_VAR_ibmcloud_api_key=$(ibmcloud iam api-key-create $basename-admin --output json | jq .apikey) > local.env
@@ -341,7 +341,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
 {: #vpc-tg-dns-iam-network}
 {: step}
 
-The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances.  It is likely that the number of applications, size of computers, DNS records for micro-services etc will be in constant flux and not a concern of the *network* team.
+The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for micro-services etc will be in constant flux and not a concern of the *network* team.
 
 The Admin team has provided them just the right amount of permissions to create the VPC **is** resources, the {{site.data.keyword.dns_short}} and the {{site.data.keyword.tg_short}} service.
 
@@ -455,7 +455,7 @@ The Admin team has provided them just the right amount of permissions to create 
    
    ```
 
-1. List the DNS configuration.  A {{site.data.keyword.dns_short}} instance was created.  The **widgets.com** zone was created.   Finally the zone was added to all of the VPCs.
+1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created.  The **widgets.com** zone was created.   Finally the zone was added to all of the VPCs.
 
    ```sh
    ibmcloud dns instances
@@ -583,9 +583,9 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   The application1 team resources are very similar to the *shared* team's.  In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
+   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
 
-1. Optionally investigate the source code that initializes the CentOS instance.  It is has been captured in a terraform module shared by all the teams during this exploratory stage.
+1. Optionally investigate the source code that initializes the CentOS instance. It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
    **../common/user_data_app/main.tf**:
    ```terraform
@@ -615,7 +615,7 @@ The Admin team has provided them just the right amount of permissions to create 
      - A systemctl service is created for app.js
      - The service is started
 
-1. Optionally investigate the app.js contents.  It has two particularly interesting sections.  First there is a /info link that returns a description of the instance running the app.
+1. Optionally investigate the app.js contents. It has two particularly interesting sections. First there is a /info link that returns a description of the instance running the app.
    **../common/user_data_app/app.js**:
    ```js
    const server = http.createServer((req, res) => {
@@ -687,11 +687,15 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-   Try the curl commands suggested.  See something like what was captured below:
+   Try the two curl commands suggested below: 
 
    ```sh
-   $ curl 52.116.140.202:3000/info
+   curl 52.116.140.202:3000/info
+   ```
+   {: pre}
 
+   The first one results in something like what was captured below:
+   ```sh
    {
       "req_url": "/info",
       "os_hostname": "widget0-application1-vsi",
@@ -701,12 +705,16 @@ The Admin team has provided them just the right amount of permissions to create 
          ]
       ]
    }
-
-   $ curl 52.116.140.202:3000/remote # DOES NOT WORK
    ```
    {: screen}
 
-   Wait, that second curl command did not work! let's fix that in the next step.  Remember these curl commands, you will use them again shortly
+
+   ```sh
+   curl 52.116.140.202:3000/remote
+   ```
+   {: pre}
+
+   Wait, that second curl command did not work! let's fix that in the next step. Remember these curl commands, you will use them again shortly.
 
 ## Create {{site.data.keyword.tg_short}}
 {: #vpc-tg-dns-iam-transit_gateway}
@@ -722,7 +730,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform files.  Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in no resource.  For example:
+1. Optionally investigate the terraform files. Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in no resource. For example:
 
    ```terraform
    resource "ibm_tg_gateway" "tgw"{
@@ -757,7 +765,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   Notice the three VPC connections in the output.  It will resemble this:
+   Notice the three VPC connections in the output. It will resemble this:
 
    ```sh
    $ ibmcloud tg gateways
@@ -836,7 +844,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform configuration files.  The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC.  The *shared* team can balance load between multiple instances.  For now the load balancer pool will only have the single instance created earlier.  See the lb.tf for the implementation.  The dns record is this snippet:
+1. Optionally investigate the terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC.  The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the lb.tf for the implementation. The dns record is this snippet:
 
    ```terraform
    # shared.widgets.com
@@ -851,7 +859,7 @@ The Admin team has provided them just the right amount of permissions to create 
    }
    ```
 
-   The same `count = var.shared_lb ? 1 : 0` is a used.  Notice a CNAME record is initialized with the load balancer hostname: `ibm_is_lb.shared_lb[0].hostname`
+   The same `count = var.shared_lb ? 1 : 0` is a used. Notice a CNAME record is initialized with the load balancer hostname: `ibm_is_lb.shared_lb[0].hostname`
 
 1. Edit the terraform.tfvars file and uncomment `shared_lb = true`
 
@@ -865,7 +873,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance.  Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```sh
    $ curl 169.48.152.220:3000/remote
@@ -926,7 +934,7 @@ The second *application* team environment is identical to the first.  Optionally
 {: #vpc-tg-dns-iam-remove_resource}
 {: step}
 
-1. Destroy the resources.  You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
+1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
 
    ```sh
    cd ..
@@ -940,7 +948,7 @@ The second *application* team environment is identical to the first.  Optionally
 ### Other Considerations
 {: #vpc-tg-dns-iam-expand_other}
 
-- The *Application* team is providing access to the application via a floating IP address.  Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
+- The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a a load balancer like the *shared* team.
 - The *shared* team can add additional instances to the load balancer by adding instances to the shared/main.tf 
 - The *shared* team could switch their implementation platform to Kubernetes
@@ -948,20 +956,20 @@ The second *application* team environment is identical to the first.  Optionally
 ### Continuous Delivery
 {: #vpc-tg-dns-iam-expand_cd}
 
-- Installation of software is currently done when the VPC instance is created.  The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
+- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
 - For shared micro-services, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
 {: #vpc-tg-dns-iam-expand_automation}
 
-- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace.  With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
+- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace. With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
 - The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.
-- A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production.  Is roll back needed?  How would this be accomplished?
+- A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production. Is roll back needed? How would this be accomplished?
 
 ## Conclusions
 {: #vpc-tg-dns-iam-conclusions}
 
-The architecture of a system is influenced by the containment and ownership of cloud resources.  It is important for architects from all aspects of the system contribute their concerns to the architecture.  Each team needs the ability to control the resources they produce and release.  Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
+The architecture of a system is influenced by the containment and ownership of cloud resources. It is important for architects from all aspects of the system contribute their concerns to the architecture. Each team needs the ability to control the resources they produce and release. Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
 
 ## Related content
 {: #vpc-tg-dns-iam-related}

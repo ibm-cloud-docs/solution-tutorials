@@ -249,41 +249,41 @@
 	"atracker_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; Activity Tracker",
-			"ibm.IBM Cloud&reg; Activity Tracker",
-			"site.IBM Cloud&reg; Activity Tracker",
+			"IBM Cloud&reg; Activity Tracker Event Routing",
+			"ibm.IBM Cloud&reg; Activity Tracker Event Routing",
+			"site.IBM Cloud&reg; Activity Tracker Event Routing",
       "{{site.data.keyword.atracker_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.atracker_full}}"
 		],
-    "description": "IBM Cloud&reg; Activity Tracker"
+    "description": "IBM Cloud&reg; Activity Tracker Event Routing"
 	},
 	"atracker_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Activity Tracker",
-			"ibm.IBM Cloud Activity Tracker",
-			"site.IBM Cloud Activity Tracker",
+			"IBM Cloud Activity Tracker Event Routing",
+			"ibm.IBM Cloud Activity Tracker Event Routing",
+			"site.IBM Cloud Activity Tracker Event Routing",
       "{{site.data.keyword.atracker_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.atracker_full_notm}}"
 		],
-    "description": "IBM Cloud Activity Tracker"
+    "description": "IBM Cloud Activity Tracker Event Routing"
 	},
 	"atracker_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Activity Tracker",
-			"ibm.Activity Tracker",
-			"site.Activity Tracker",
+			"Activity Tracker Event Routing",
+			"ibm.Activity Tracker Event Routing",
+			"site.Activity Tracker Event Routing",
       "{{site.data.keyword.atracker_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.atracker_short}}"
 		],
-    "description": "Activity Tracker"
+    "description": "Activity Tracker Event Routing"
 	},
 	"activedeployshort": {
 	  "scope": "markdown",
@@ -2390,6 +2390,58 @@
 			"{{site.data.keyword.la_short}}"
 		],
     "description": "Log Analysis"
+	},
+	"logs_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Logs",
+			"ibm.IBM&reg; Cloud Logs",
+			"site.IBM&reg; Cloud Logs",
+      "{{site.data.keyword.logs_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.logs_full}}"
+		],
+    "description": "IBM&reg; Cloud Logs"
+	},
+	"logs_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Logs",
+			"ibm.IBM Cloud Logs",
+			"site.IBM Cloud Logs",
+      "{{site.data.keyword.logs_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.logs_full_notm}}"
+		],
+    "description": "IBM Cloud Logs"
+	},
+	"logs_routing_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Logs Routing",
+			"ibm.IBM&reg; Cloud Logs Routing",
+			"site.IBM&reg; Cloud Logs Routing",
+      "{{site.data.keyword.logs_routing_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.logs_routing_full}}"
+		],
+    "description": "IBM&reg; Cloud Logs Routing"
+	},
+	"logs_routing_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Logs Routing",
+			"ibm.IBM Cloud Logs Routing",
+			"site.IBM Cloud Logs Routing",
+      "{{site.data.keyword.logs_routing_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.logs_routing_full_notm}}"
+		],
+    "description": "IBM Cloud Logs Routing"
 	},
 	"cosdimshort": {
 	  "scope": "markdown",
@@ -6473,6 +6525,32 @@
 		],
     "description": "Mobile Message Connect"
 	},
+	"metrics_router_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Metrics Routing",
+			"ibm.IBM Cloud&reg; Metrics Routing",
+			"site.IBM Cloud&reg; Metrics Routing",
+      "{{site.data.keyword.metrics_router_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.metrics_router_full}}"
+		],
+    "description": "IBM Cloud&reg; Metrics Routing"
+	},
+	"metrics_router_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Metrics Routing",
+			"ibm.IBM Cloud Metrics Routing",
+			"site.IBM Cloud Metrics Routing",
+      "{{site.data.keyword.metrics_router_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.metrics_router_full_notm}}"
+		],
+    "description": "IBM Cloud Metrics Routing"
+	},
 	"mobileanalytics_short": {
 	  "scope": "markdown",
 		"prefix": [
@@ -7643,6 +7721,45 @@
 		],
     "description": "IBM&reg; Operations Analytics"
 	},
+	"pag_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Privileged Access Gateway",
+			"ibm.IBM Cloud&reg; Privileged Access Gateway",
+			"site.IBM Cloud&reg; Privileged Access Gateway",
+      "{{site.data.keyword.pag_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.pag_full}}"
+		],
+    "description": "IBM Cloud&reg; Privileged Access Gateway"
+	},
+	"pag_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Privileged Access Gateway",
+			"ibm.IBM Cloud Privileged Access Gateway",
+			"site.IBM Cloud Privileged Access Gateway",
+      "{{site.data.keyword.pag_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.pag_full_notm}}"
+		],
+    "description": "IBM Cloud Privileged Access Gateway"
+	},
+	"pag_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Privileged Access Gateway",
+			"ibm.Privileged Access Gateway",
+			"site.Privileged Access Gateway",
+      "{{site.data.keyword.pag_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.pag_short}}"
+		],
+    "description": "Privileged Access Gateway"
+	},
 	"PEshort": {
 	  "scope": "markdown",
 		"prefix": [
@@ -8787,6 +8904,45 @@
 		],
     "description": "IBM Cloud Security Advisor"
 	},
+	"security_broker_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Data Security Broker",
+			"ibm.IBM Cloud&reg; Data Security Broker",
+			"site.IBM Cloud&reg; Data Security Broker",
+      "{{site.data.keyword.security_broker_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.security_broker_full}}"
+		],
+    "description": "IBM Cloud&reg; Data Security Broker"
+	},
+	"security_broker_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Data Security Broker",
+			"ibm.IBM Cloud Data Security Broker",
+			"site.IBM Cloud Data Security Broker",
+      "{{site.data.keyword.security_broker_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.security_broker_full_notm}}"
+		],
+    "description": "IBM Cloud Data Security Broker"
+	},
+	"security_broker_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Data Security Broker",
+			"ibm.Data Security Broker",
+			"site.Data Security Broker",
+      "{{site.data.keyword.security_broker_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.security_broker_short}}"
+		],
+    "description": "Data Security Broker"
+	},
 	"security-groups_full_reg": {
 	  "scope": "markdown",
 		"prefix": [
@@ -9904,6 +10060,45 @@
 			"{{site.data.keyword.visualizationrenderingshort}}"
 		],
     "description": "Visualization Rendering"
+	},
+	"vmware-service_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; for VMware as a Service",
+			"ibm.IBM Cloud&reg; for VMware as a Service",
+			"site.IBM Cloud&reg; for VMware as a Service",
+      "{{site.data.keyword.vmware-service_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.vmware-service_full}}"
+		],
+    "description": "IBM Cloud&reg; for VMware as a Service"
+	},
+	"vmware-service_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud for VMware as a Service",
+			"ibm.IBM Cloud for VMware as a Service",
+			"site.IBM Cloud for VMware as a Service",
+      "{{site.data.keyword.vmware-service_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.vmware-service_notm}}"
+		],
+    "description": "IBM Cloud for VMware as a Service"
+	},
+	"vmware-service_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"VMware as a Service",
+			"ibm.VMware as a Service",
+			"site.VMware as a Service",
+      "{{site.data.keyword.vmware-service_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.vmware-service_short}}"
+		],
+    "description": "VMware as a Service"
 	},
 	"vmwaresolutions_short": {
 	  "scope": "markdown",
