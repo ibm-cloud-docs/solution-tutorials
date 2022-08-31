@@ -106,7 +106,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2022-02-14"
+          "lastUpdated": "2022-08-23"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -122,7 +122,7 @@
             "https://github.com/IBM-Cloud/patient-health-backend",
             "https://github.com/IBM-Cloud/patient-health-frontend"
           ],
-          "lastUpdated": "2022-02-11"
+          "lastUpdated": "2022-08-23"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -395,7 +395,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2022-03-21"
+          "lastUpdated": "2022-08-23"
         }
       ]
     },
@@ -543,7 +543,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2022-06-28"
+          "lastUpdated": "2022-08-18"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -614,7 +614,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ],
-          "lastUpdated": "2021-12-06"
+          "lastUpdated": "2022-08-22"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",
@@ -635,7 +635,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
           ],
-          "lastUpdated": "2022-04-19"
+          "lastUpdated": "2022-08-17"
         }
       ]
     },
@@ -682,7 +682,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2021-01-21"
+          "lastUpdated": "2022-07-13"
         },
         {
           "name": "VPN into a secure private network",

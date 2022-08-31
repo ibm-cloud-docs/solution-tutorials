@@ -10,192 +10,192 @@ toc:
 
   entries:
     - navgroup:
-      id: learn
-      topics:
-      - index.md
+        id: learn
+        topics:
+        - index.md
 
     - navgroup:
-      id: tutorial
-      topics:
-      - topicgroup:
-        label: By Category
+        id: tutorial
         topics:
+        - topicgroup:
+            label: By Category
+            topics:
+
+            - topicgroup:
+                label: (Hidden) Work In Progress
+                topics:
+                - solution-template.md
+                - satellite-tour.hidden.md
+
+            - topicgroup:
+                label: Websites and Web Apps
+                topics:
+                - scalable-webapp-kubernetes.md
+                - vm-to-containers-and-kubernetes.md
+                - continuous-deployment-to-kubernetes.md
+                - scalable-webapp-openshift.md
+                - openshift-service-mesh.md
+                - openshift-microservices.md
+                - static-files-cdn.md
+                - dynamic-content-cdn.md
+                - plan-create-update-deployments.md
+                - highly-available-and-scalable-web-application.md
+                - mean-stack.md
+                - sql-database.md
+                - serverless-api-webapp.md
+                - serverless-webapp.md
+                - multi-region-serverless.md
+                - application-log-analysis.md
+                - text-analysis-code-engine.md
+
+            - topicgroup:
+                label: Chatbots
+                topics:
+                - slack-chatbot-database-watson.md
+                - android-watson-chatbot.md
+
+            - topicgroup:
+                label: Security
+                topics:
+                - multi-region-webapp.md
+                - multi-region-k8s-cis.md
+                - cloud-e2e-security.md
+                - extended-app-security.md
+
+            - topicgroup:
+                label: Machine Learning and Analytics
+                topics:
+                - big-data-log-analytics.md
+                - smart-data-lake.md
+                - serverless-github-traffic-analytics.md
+                - create-deploy-retrain-machine-learning-model.md
+
+            - topicgroup:
+                label: Identity and Access Management
+                topics:
+                - users-teams-applications.md
+
+            - topicgroup:
+                label: Virtual Private Cloud
+                topics:
+                - vpc-public-app-private-backend.md
+                - vpc-multi-region.md
+                - vpc-site2site-vpn.md
+                - vpc-app-deploy.md
+                - vpc-secure-management-bastion-server.md
+                - lamp-stack-on-vpc.md
+                - /containers/containers-vpc_ks_tutorial
+                - vpc-tg-dns-iam.md
+                - vpc-scaling-dedicated-compute.md
+
+            - topicgroup:
+                label: Classic Infrastructure
+                topics:
+                - secure-network-enclosure.md
+                - nat-config-private.md
+                - byoip.md
+                - configuring-IPSEC-VPN.md
+                - linking-secure-network-enclosures.md
+                - web-app-private-network.md
+
+            - topicgroup:
+                label: (Hidden) Observability in Virtual Private Cloud
+                topics:
+                - vpc-observability-tour.hidden.md
+                - vpc-observability-advanced.hidden.md
+                - vpc-observability-troubleshooting.hidden.md
+
+            - topicgroup:
+                label: VMware on VPC Bare metal servers
+                topics:
+                - vpc-bm-vmware.md
+                - vpc-bm-vmware-vpc.md
+                - vpc-bm-vmware-dns.md
+                - vpc-bm-vmware-bms.md
+                - vpc-bm-vmware-vcenter.md
+                - vpc-bm-vmware-vsan.md
+                - vpc-bm-vmware-nfs.md
+                - vpc-bm-vmware-newvm.md
+                - vpc-bm-vmware-pgwip.md
+                - vpc-bm-vmware-nsx-t-vlannics.md
+                - vpc-bm-vmware-nsx-t-deploy.md
+                - vpc-bm-vmware-nsx-t-routing.md
+
+            - topicgroup:
+                label: VMware Solutions
+                topics:
+                - vmware-solutions-shared-getting-started.md
+
+            - topicgroup:
+                label: (Hidden) High Performance Computing
+                topics:
+                - hpc-eda.md
+                - hpc-lsf-on-vpc.md
+                - hpc-lsf-vpc-auto-scale.md
 
         - topicgroup:
-          label: (Hidden) Work In Progress
-          topics:
-          - solution-template.md
-          - satellite-tour.hidden.md
+            label: By Compute Options
+            topics:
 
-        - topicgroup:
-          label: Websites and Web Apps
-          topics:
-          - scalable-webapp-kubernetes.md
-          - vm-to-containers-and-kubernetes.md
-          - continuous-deployment-to-kubernetes.md
-          - scalable-webapp-openshift.md
-          - openshift-service-mesh.md
-          - openshift-microservices.md
-          - static-files-cdn.md
-          - dynamic-content-cdn.md
-          - plan-create-update-deployments.md
-          - highly-available-and-scalable-web-application.md
-          - mean-stack.md
-          - sql-database.md
-          - serverless-api-webapp.md
-          - serverless-webapp.md
-          - multi-region-serverless.md
-          - application-log-analysis.md
-          - text-analysis-code-engine.md
+            - topicgroup:
+                label: Kubernetes
+                topics:
+                - scalable-webapp-kubernetes.md
+                - vm-to-containers-and-kubernetes.md
+                - continuous-deployment-to-kubernetes.md
+                - dynamic-content-cdn.md
+                - plan-create-update-deployments.md
+                - application-log-analysis.md
+                - multi-region-k8s-cis.md
+                - cloud-e2e-security.md
+                - users-teams-applications.md
+                - /containers/containers-vpc_ks_tutorial
 
-        - topicgroup:
-          label: Chatbots
-          topics:
-          - slack-chatbot-database-watson.md
-          - android-watson-chatbot.md
+            - topicgroup:
+                label: OpenShift
+                topics:
+                - scalable-webapp-openshift.md
+                - openshift-service-mesh.md
+                - openshift-microservices.md
 
-        - topicgroup:
-          label: Security
-          topics:
-          - multi-region-webapp.md
-          - multi-region-k8s-cis.md
-          - cloud-e2e-security.md
-          - extended-app-security.md
+            - topicgroup:
+                label: Cloud Foundry
+                topics:
+                - static-files-cdn.md
+                - plan-create-update-deployments.md
+                - multi-region-webapp.md
 
-        - topicgroup:
-          label: Machine Learning and Analytics
-          topics:
-          - big-data-log-analytics.md
-          - smart-data-lake.md
-          - serverless-github-traffic-analytics.md
-          - create-deploy-retrain-machine-learning-model.md
+            - topicgroup:
+                label: Cloud Functions
+                topics:
+                - serverless-api-webapp.md
+                - multi-region-serverless.md
 
-        - topicgroup:
-          label: Identity and Access Management
-          topics:
-          - users-teams-applications.md
+            - topicgroup:
+                label: Code Engine
+                topics:
+                - mean-stack.md
+                - sql-database.md
+                - serverless-webapp.md
+                - text-analysis-code-engine.md
+                - slack-chatbot-database-watson.md
+                - serverless-github-traffic-analytics.md
 
-        - topicgroup:
-          label: Virtual Private Cloud
-          topics:
-          - vpc-public-app-private-backend.md
-          - vpc-multi-region.md
-          - vpc-site2site-vpn.md
-          - vpc-app-deploy.md
-          - vpc-secure-management-bastion-server.md
-          - lamp-stack-on-vpc.md
-          - /containers/containers-vpc_ks_tutorial
-          - vpc-tg-dns-iam.md
-          - vpc-scaling-dedicated-compute.md
-
-        - topicgroup:
-          label: Classic Infrastructure
-          topics:
-          - secure-network-enclosure.md
-          - nat-config-private.md
-          - byoip.md
-          - configuring-IPSEC-VPN.md
-          - linking-secure-network-enclosures.md
-          - web-app-private-network.md
-
-        - topicgroup:
-          label: (Hidden) Observability in Virtual Private Cloud
-          topics:
-          - vpc-observability-tour.hidden.md
-          - vpc-observability-advanced.hidden.md
-          - vpc-observability-troubleshooting.hidden.md
-
-        - topicgroup:
-          label: VMware on VPC Bare metal servers
-          topics:
-          - vpc-bm-vmware.md
-          - vpc-bm-vmware-vpc.md
-          - vpc-bm-vmware-dns.md
-          - vpc-bm-vmware-bms.md
-          - vpc-bm-vmware-vcenter.md
-          - vpc-bm-vmware-vsan.md
-          - vpc-bm-vmware-nfs.md
-          - vpc-bm-vmware-newvm.md
-          - vpc-bm-vmware-pgwip.md
-          - vpc-bm-vmware-nsx-t-vlannics.md
-          - vpc-bm-vmware-nsx-t-deploy.md
-          - vpc-bm-vmware-nsx-t-routing.md
-
-        - topicgroup:
-          label: VMware Solutions
-          topics:
-          - vmware-solutions-shared-getting-started.md
-
-        - topicgroup:
-          label: (Hidden) High Performance Computing
-          topics:
-          - hpc-eda.md
-          - hpc-lsf-on-vpc.md
-          - hpc-lsf-vpc-auto-scale.md
-
-      - topicgroup:
-        label: By Compute Options
-        topics:
-
-        - topicgroup:
-          label: Kubernetes
-          topics:
-          - scalable-webapp-kubernetes.md
-          - vm-to-containers-and-kubernetes.md
-          - continuous-deployment-to-kubernetes.md
-          - dynamic-content-cdn.md
-          - plan-create-update-deployments.md
-          - application-log-analysis.md
-          - multi-region-k8s-cis.md
-          - cloud-e2e-security.md
-          - users-teams-applications.md
-          - /containers/containers-vpc_ks_tutorial
-
-        - topicgroup:
-          label: OpenShift
-          topics:
-          - scalable-webapp-openshift.md
-          - openshift-service-mesh.md
-          - openshift-microservices.md
-
-        - topicgroup:
-          label: Cloud Foundry
-          topics:
-          - static-files-cdn.md
-          - plan-create-update-deployments.md
-          - multi-region-webapp.md
-
-        - topicgroup:
-          label: Cloud Functions
-          topics:
-          - serverless-api-webapp.md
-          - multi-region-serverless.md
-
-        - topicgroup:
-          label: Code Engine
-          topics:
-          - mean-stack.md
-          - sql-database.md
-          - serverless-webapp.md
-          - text-analysis-code-engine.md
-          - slack-chatbot-database-watson.md
-          - serverless-github-traffic-analytics.md
-
-        - topicgroup:
-          label: Virtual Servers
-          topics:
-          - vm-to-containers-and-kubernetes.md
-          - highly-available-and-scalable-web-application.md
-          - vpc-public-app-private-backend.md
-          - vpc-multi-region.md
-          - vpc-site2site-vpn.md
-          - vpc-app-deploy.md
-          - vpc-secure-management-bastion-server.md
-          - vpc-tg-dns-iam.md
-          - vpc-scaling-dedicated-compute.md
-          - secure-network-enclosure.md
-          - nat-config-private.md
-          - configuring-IPSEC-VPN.md
-          - linking-secure-network-enclosures.md
-          - web-app-private-network.md
+            - topicgroup:
+                label: Virtual Servers
+                topics:
+                - vm-to-containers-and-kubernetes.md
+                - highly-available-and-scalable-web-application.md
+                - vpc-public-app-private-backend.md
+                - vpc-multi-region.md
+                - vpc-site2site-vpn.md
+                - vpc-app-deploy.md
+                - vpc-secure-management-bastion-server.md
+                - vpc-tg-dns-iam.md
+                - vpc-scaling-dedicated-compute.md
+                - secure-network-enclosure.md
+                - nat-config-private.md
+                - configuring-IPSEC-VPN.md
+                - linking-secure-network-enclosures.md
+                - web-app-private-network.md
 
