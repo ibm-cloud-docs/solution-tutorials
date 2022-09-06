@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-22"
+lastupdated: "2022-09-06"
 lasttested: "2021-12-06"
 
 content-type: tutorial
@@ -387,7 +387,7 @@ The Admin team has provided them just the right amount of permissions to create 
         ...
    ```
 
-   The {{site.data.keyword.tg_short}} will have a connection to each VPC and routes traffic based on the CIDR ranges so avoiding overlaps will insure success.
+   The {{site.data.keyword.tg_short}} will have a connection to each VPC and routes traffic based on the CIDR ranges so avoiding overlaps will ensure success.
 
 
 

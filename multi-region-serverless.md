@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-06"
+  years: 2022
+lastupdated: "2022-09-06"
 lasttested: "2021-12-06"
 
 content-type: tutorial
@@ -193,7 +193,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 3. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 4. Make note of the **Default domain / alias** value.
 5. Check **Assign custom domain**
-   1. Set **Domain name** to the domain you will use with the {{site.data.keyword.cis_short_notm}} Global Load Balancer such as *api.mydomain.com*.
+   1. Set **Domain name** to the domain you will use with the {{site.data.keyword.cis_short_notm}} Global Load Balancer such as *api.example.com*.
    2. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    3. Select the certificate for the domain.
    1. Perform the next steps before saving.
@@ -249,11 +249,11 @@ For every location:
 {: #multi-region-serverless-12}
 
 1. Click **Create** under **Load balancers**.
-2. Set **Name** to **api.mydomain.com**.
+2. Set **Name** to **api.example.com**.
 3. Click on **Add route** to add the regional origin pools.
 4. Once the origin pools are added, click on **Create**.
 
-After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
+After a short while, go to `https://api.example.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
 ### Test fail over
 {: #multi-region-serverless-13}
@@ -265,7 +265,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Click **Save**.
 1. Wait for the health check to run for this origin pool.
-1. Get `https://api.mydomain.com/api/do?name=John&place=Earth` again, it should now redirect to the other healthy origin.
+1. Get `https://api.example.com/api/do?name=John&place=Earth` again, it should now redirect to the other healthy origin.
 1. Revert the code changes to get back to a healthy origin.
 
 ## Remove resources

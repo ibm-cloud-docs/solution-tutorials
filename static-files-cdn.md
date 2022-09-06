@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-12"
+lastupdated: "2022-09-06"
 lasttested: "2021-11-24"
 
 content-type: tutorial
@@ -178,7 +178,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 {: #static-files-cdn-6}
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
-2. On the next dialog, set the **Hostname** to a subdomain in a custom domain that you can control.  For example, if you own the domain `yourdomain.com`, choose as Hostname something like `static.yourdomain.com`.  If you do not control your own domain, no problem, but below you will have limited options. In that case you must choose HTTPS with a `Wildcard` SSL certificate, and instead of accessing the CDN contents through `static.yourdomain.com` use the IBM provided CNAME.
+2. On the next dialog, set the **Hostname** to a subdomain in a custom domain that you can control.  For example, if you own the domain `example.com`, choose as Hostname something like `static.example.com`.  If you do not control your own domain, no problem, but below you will have limited options. In that case you must choose HTTPS with a `Wildcard` SSL certificate, and instead of accessing the CDN contents through `static.example.com` use the IBM provided CNAME.
 3. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
 4. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
 5. Select **Object Storage** to configure the CDN for COS.
@@ -195,16 +195,16 @@ In this section, you will create a CDN service. The CDN service distributes cont
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
 2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete.  When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours.  If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate.  Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
-4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.yourdomain.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
+4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.example.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
    
    Often, it takes some minutes for DNS changes to become active. You might need to wait for proceeding to the next step.
    {: tip}
 
-5. Access your files with `http://<static.yourdomain.com>/index.html`.
+5. Access your files with `http://<static.example.com>/index.html`.
 
 You can demonstrate the performance improvement.  Access via the CDN.  Check the output of the first curl to verify successful connection:
 ```sh
-SUBDOMAIN=static.yourdomain.com
+SUBDOMAIN=static.example.com
 curl http://$SUBDOMAIN/index.html
 while sleep 1; do curl --output /tmp/fast http://$SUBDOMAIN/a-video.mp4; done
 ```
@@ -222,7 +222,7 @@ If you are using {{site.data.keyword.cloud-shell_short}} you can change the loca
 ### Access index.html through COS and other content through CDN
 {: #static-files-cdn-8}
 
-All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.yourdomain.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
+All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.example.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
 
 Upload **cdn.html** by replacing the file **index.html**:
 ```sh
@@ -235,7 +235,7 @@ Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configurati
 ### Access the static website through custom subdomain
 {: #static-files-cdn-9}
 
-Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.yourdomain.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.yourdomain.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://yourdomain.com or better yet insure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
+Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.example.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.example.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://example.com or better yet ensure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
 
 ## Remove resources
 {: #static-files-cdn-10}
