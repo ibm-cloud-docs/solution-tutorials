@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-30"
+lastupdated: "2022-09-06"
 lasttested: "2022-06-17"
 
 content-type: tutorial
@@ -364,7 +364,7 @@ For more information read through the [Proxying DNS records and global load bala
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
 
-This first alternative creates a wildcard certificate for `mydomain.com` and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
+This first alternative creates a wildcard certificate for `example.com` and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
    Currently ordering certificates is by using **Let's Encrypt**, you may follow the topic [Supported certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account. Follow the steps outlined in the [Connecting third-party certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to create or register your account. In addition, you are required to add a DNS provider following the steps in the [Connecting DNS providers](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui#add-dns-provider-ui) topic. For this tutorial, you must add {{site.data.keyword.cis_short_notm}} as your DNS provider.
    {: tip}
@@ -390,7 +390,7 @@ Initially HTTPS is configured from the user to {{site.data.keyword.secrets-manag
 1. In the {{site.data.keyword.cis_short_notm}} configure the global load balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**.
    - Locate the global load balancer created earlier and turn on Proxy.
-1. In a browser open **https://lb.mydomain.com** to verify success.
+1. In a browser open **https://lb.example.com** to verify success.
 
 Next configure HTTPS from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
 
@@ -402,33 +402,33 @@ Add an HTTPS listener to the VPC load balancers:
 1. Select the **Default back-end pool**: `region1-pool` or `region2-pool`.
 1. Select the **{{site.data.keyword.secrets-manager_short}}** instance you created earlier, the SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.secrets-manager_short}} instance earlier from Let's Encrypt. Click on **Create**.
 
-   If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.secrets-manager_short}} service. Verify that the {{site.data.keyword.secrets-manager_short}} service has a certificate for **mydomain.com**.
+   If the SSL Certificate drop down does not have **example.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.secrets-manager_short}} service. Verify that the {{site.data.keyword.secrets-manager_short}} service has a certificate for **example.com**.
    {: tip}
 
 1. Repeat the above steps for the **vpc-lb-region2** load balancer.
 
-The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**. Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
+The wildcard certificate created will allow access to domain name like vpc-lb-region1.**example.com**. Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-REGION.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
-1. A DNS CNAME record can be created to allow clients to look up vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-REGION.lb.appdomain.cloud.
+1. A DNS CNAME record can be created to allow clients to look up vpc-lb-region1.**example.com** and resolve xxxxxxx-REGION.lb.appdomain.cloud.
    - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**.
    - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**.
    - Add a DNS CNAME record for **vpc-lb-region2**.
 
 1. Now adjust the global load balancer to use the new CNAME records.
    - Open **Reliability** panel and choose **Global Load Balancers**.
-   - Find and edit the **Origin Pools** to change the **Origins** **Origin Address** to **vpc-lb-region1.mydomain.com**.
-   - Repeat the above steps for **vpc-lb-region2.mydomain.com**.
+   - Find and edit the **Origin Pools** to change the **Origins** **Origin Address** to **vpc-lb-region1.example.com**.
+   - Repeat the above steps for **vpc-lb-region2.example.com**.
 
 1. Turn on end-to-end security.
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **End-to-end CA signed**.  This will terminate HTTPS connections at the global load balancer and use HTTPS connections to the VPC load balancer.
 
-In a browser open **https://lb.mydomain.com** to verify success
+In a browser open **https://lb.example.com** to verify success
 
 ### Alternative 2: DNS-only mode, traffic flows directly from the client to the VPC Load Balancers
 {: #vpc-multi-region-16}
 
-In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
+In this alternative you will order an SSL certificate for `lb.example.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
 
 It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So we will create a CNAME to order the certificate.
 
@@ -440,7 +440,7 @@ It is not currently possible to order a certificate directly for a {{site.data.k
     - Type: `CNAME`
     - Name: `lb`
     - TTL: `default (Automatic)`
-    - Alias Domain Name: `zzz.mydomain.com`
+    - Alias Domain Name: `zzz.example.com`
     - Click **Add Record**
 
 1. Order a certificate in {{site.data.keyword.secrets-manager_short}}
@@ -455,7 +455,7 @@ It is not currently possible to order a certificate directly for a {{site.data.k
      - **Automatic certificate rotation** - leave off
      - Under **DNS provider** select your configured DNS provider instance
      - Click on **Select domains**
-     - Expand the domain listed to view the list of subdomains and select the check box next to the lb.domain.com and click on **Done**.
+     - Expand the domain listed to view the list of subdomains and select the check box next to the lb.example.com and click on **Done**.
    - Click **Order**.
 
 Create a HTTPS listener:
@@ -468,13 +468,13 @@ Create a HTTPS listener:
    -  **Port**: 443
    -  **Back-end pool**: POOL in the same region
    - Choose the current region as your SSL region
-   - Choose the SSL certificate order name you just created for **lb.mydomain.com**
+   - Choose the SSL certificate order name you just created for **lb.example.com**
 
 1. Click **Save** to configure an HTTPS listener
 
 Repeat the above steps in the load balancer of **region 2**.
 
-In a browser open https://**lb.mydomain.com** to verify success
+In a browser open https://**lb.example.com** to verify success
 
 
 ### Failover test
