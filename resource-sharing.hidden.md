@@ -94,15 +94,18 @@ resource types:
 {: step}
 
 ### Network
+{: #network}
 
 DNS, Direct Link, Transit Gateway
 
 
 ### Security
+{: #security}
 
 SCC, key management, scoping, reduction of attack surface
 
 ### Disaster recovery
+{: #disaster-recovery}
 
 data replication, backup and restore
 
