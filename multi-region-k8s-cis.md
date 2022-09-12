@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-06"
+lastupdated: "2022-09-12"
 lasttested: "2021-12-01"
 
 content-type: tutorial
@@ -284,7 +284,7 @@ Health Checks monitor responses to HTTP/HTTPS requests from origin pools on a se
 
 A pool is a group of origin servers that traffic is intelligently routed to when attached to a GLB. With clusters in the United Kingdom and United States, you can define location-based pools and configure {{site.data.keyword.cis_short_notm}} to redirect users to the closest clusters based on the geographical location of the user requests.
 
-#### One pool for the cluster in London
+#### One pool for the cluster in Dallas
 {: #multi-region-k8s-cis-14}
 
 1. Select the **Origin pools** tab and click **Create**.
@@ -295,7 +295,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 1. Set **Health Check Region** to **Western North America**
 1. Click **Save**
 
-#### One pool for the cluster in Dallas
+#### One pool for the cluster in London
 {: #multi-region-k8s-cis-15}
 
 1. Select the **Origin pools** tab and click **Create**.

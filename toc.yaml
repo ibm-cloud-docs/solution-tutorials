@@ -25,6 +25,7 @@ toc:
                 label: (Hidden) Work In Progress
                 topics:
                 - solution-template.md
+                - resource-sharing.hidden.md
                 - satellite-tour.hidden.md
 
             - topicgroup:
