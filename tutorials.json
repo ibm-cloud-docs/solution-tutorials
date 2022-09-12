@@ -41,7 +41,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-05-06"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -138,7 +138,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
           ],
-          "lastUpdated": "2022-04-12"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -256,7 +256,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2021-12-06"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -360,7 +360,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-02-01"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -526,7 +526,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2022-06-30"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -573,7 +573,7 @@
             "Network",
             "Security"
           ],
-          "lastUpdated": "2021-12-06"
+          "lastUpdated": "2022-09-09"
         },
         {
           "name": "PHP web application on a LAMP Stack in VPC Gen2",
@@ -614,7 +614,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ],
-          "lastUpdated": "2022-08-22"
+          "lastUpdated": "2022-09-06"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",
