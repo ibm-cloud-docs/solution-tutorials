@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-06"
+lastupdated: "2022-09-06"
 lasttested: "2022-03-14"
 
 content-type: tutorial
@@ -282,7 +282,7 @@ This section requires you to own a custom domain. You will need to create a `CNA
 
 1. Create an environment variable pointing to your custom subdomain:
    ```sh
-   export CUSTOM_SUBDOMAIN=<my-custom-subdomain.com>
+   export CUSTOM_SUBDOMAIN=<example.com>
    ```
    {: pre}
 
@@ -298,12 +298,12 @@ This section requires you to own a custom domain. You will need to create a `CNA
    ```
    {: pre}
 
-1. Access your application at `http://<my-custom-subdomain.com>/`
+1. Access your application at `http://<example.com>/`
 
 ### with HTTPS
 {: #scalable-webapp-kubernetes-16}
 
-If you were to try to access your application with HTTPS at this time `https://<my-custom-subdomain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
+If you were to try to access your application with HTTPS at this time `https://<example.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 In this section we will use {{site.data.keyword.secrets-manager_short}}.  With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, we will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret.
 
@@ -402,7 +402,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-9. Access your application at `https://<my-custom-subdomain.com>/`.
+9. Access your application at `https://<example.com>/`.
 <!--#/istutorial#-->
 
 ## Monitor application health

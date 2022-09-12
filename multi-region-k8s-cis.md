@@ -162,7 +162,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 ### Configure the Ingress for your DNS subdomain
 {: #multi-region-k8s-cis-ingress}
 
-It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.your-domain.com `<glb_name> = hello-world-service` and `<your_domain_name> = your-domain.com`
+It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.example.com `<glb_name> = hello-world-service` and `<your_domain_name> = example.com`
 
 1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
    ```bash

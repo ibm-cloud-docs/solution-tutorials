@@ -10,27 +10,27 @@ toc:
 
   entries:
     - navgroup:
-      id: learn
-      topics:
-      - index.md
+        id: learn
+        topics:
+        - index.md
 
     - navgroup:
-      id: tutorial
-      topics:
-      - topicgroup:
-        label: By Category
+        id: tutorial
         topics:
+        - topicgroup:
+            label: By Category
+            topics:
 {{#each categories}}
 {{#unless tocOnly}}
 {{#unless journey}}
 {{#if (or (not hidden) @root.includeHidden)}}
 
-        - topicgroup:
-          label: {{#if hidden}}(Hidden) {{/if}}{{name}}
-          topics:
+            - topicgroup:
+                label: {{#if hidden}}(Hidden) {{/if}}{{name}}
+                topics:
     {{#each solutions as |solution|}}
     {{#if (or (not hidden) @root.includeHidden)}}
-          - {{#tocLink solution}}{{/tocLink}}
+                - {{#tocLink solution}}{{/tocLink}}
     {{/if}}
     {{/each}}
 {{/if}}
@@ -38,13 +38,13 @@ toc:
 {{/unless}}
 {{/each}}
 
-      - topicgroup:
-        label: By Compute Options
-        topics:
+        - topicgroup:
+            label: By Compute Options
+            topics:
 {{#each tags as |tag|}}
 
-        - topicgroup:
-          label: {{tag}}
-          topics:
-{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}          - {{#tocLink solution}}{{/tocLink}}
+            - topicgroup:
+                label: {{tag}}
+                topics:
+{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}                - {{#tocLink solution}}{{/tocLink}}
 {{/hasTag}}{{/if}}{{/each}}{{/if}}{{/each}}{{/each}}
