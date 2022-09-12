@@ -80,13 +80,13 @@ resource types:
 
 
 ^ examples:
-- Cloudant data replication across accounts: https://cloud.ibm.com/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
-- SCC is able to scane multiple accounts: https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
-- Transit Gateway: connect across accounts https://cloud.ibm.com/docs/transit-gateway?topic=transit-gateway-about#use-case-5
-- Direct Link: https://cloud.ibm.com/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
-- DNS service cross-account access https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-cross-account-about
-- IBM Cloud Databases allow backup / restore across accounts via API: https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-dashboard-backups
-- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://cloud.ibm.com/docs/account?topic=account-manapikey#ibm-cloud-api-keys
+- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
+- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
+- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
+- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
+- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
+- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
+- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
 
 
 ## Resource sharing categories
