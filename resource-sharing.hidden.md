@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-12"
+lastupdated: "2022-09-13"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -93,11 +93,6 @@ resource types:
 {: #resource-sharing-categories}
 {: step}
 
-### Network
-{: #network}
-
-DNS, Direct Link, Transit Gateway
-
 
 ### Security
 {: #security}
@@ -109,6 +104,38 @@ SCC, key management, scoping, reduction of attack surface
 
 data replication, backup and restore
 
+IBM Cloud Databases
+> Backups are restorable across accounts, but only through the API and only if the user that is running the restore has access to both the source and destination accounts.
+Details:
+- a new DB is provisioned through the standard resource controller, but with extra ICD-specific parameters
+- the backup CRN has to be provided to create from a backup image
+- if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
+
+### Network
+{: #network}
+
+DNS, Direct Link, Transit Gateway
 
 
 
+## Implementation strategies
+{: #resource-sharing-implementation}
+{: step}
+
+
+- service to service authorizations
+- discuss Terraform for multi-account setup
+- service ID (account, including their API keys) vs. user (multiple accounts, including their API keys)
+- Trusted Profiles as possible solution?
+
+
+service to service:
+for the examples, here are typical service to service authorizations. Target services are
+- COS: store something in a bucket, e.g., archive logs or monitoring data, or retrieve data from it for analysis, or (CE) receive notifications about bucket updates
+- KP and HPCS: obtain root key to encrypt data
+- Event Notifications: push out some event data to subscribers
+- Secrets Manager: obtain a secret 
+- Satellite: ?
+- Catalog Management: ?
+- App Configuration: ?
+- Internet Services: SM has it, maybe for certificates and domain validation?
