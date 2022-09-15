@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-21"
+lastupdated: "2022-09-15"
 lasttested: "2021-12-08"
 
 content-type: tutorial
@@ -78,6 +78,12 @@ This tutorial requires:
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
+
+| Task | Description | Environment |
+|------|-------------|-------------|
+| ![Checkbox icon](images/solution58-vmware-solutions-getting-started/checklist.svg) An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)  | {{site.data.keyword.cloud_notm}} console | 
+| ![Checkbox icon](images/solution58-vmware-solutions-getting-started/checklist.svg) Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist) | {{site.data.keyword.cloud_notm}} console |
+{: caption="Table 1. Before you begin" caption-side="top"} 
 
 <!--#/istutorial#-->
 
