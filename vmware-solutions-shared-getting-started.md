@@ -79,9 +79,11 @@ This tutorial requires:
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
 
+
+
 | Task | Description | Environment |
 |------|-------------|-------------|
-| ![Checkbox icon](images/solution58-vmware-solutions-getting-started/checklist.svg) | An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)  | {{site.data.keyword.cloud_notm}} console | 
+| <?xml version="1.0" encoding="utf-8"?><svg id="checklist_icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 317.641 317.642" style="enable-background:new 0 0 32 32;" xml:space="preserve"> <path id="checkbox" d="M317.641,33.159l-8.279-8.28l-33.188,33.188V20.733H0v276.175h276.174V74.626L317.641,33.159z M264.464,285.191H11.71V32.438h252.754v37.333L135.889,198.347l-60.508-60.514l-8.28,8.279l68.793,68.794l128.57-128.57V285.191z" visibility="hidden" onclick="rectangle2.style.visibility='visible'; checkbox.style.visibility='hidden';"/> <rect id="rectangle1" width="270px" height="280px" onclick="checkbox.style.visibility='hidden'; rectangle2.style.visibility='visible';" stroke="black" stroke-width="35" fill="rgba(255, 255, 255, 0.1)"/> <rect id="rectangle2" width="270px" height="280px" onclick="checkbox.style.visibility='visible'; rectangle2.style.visibility='hidden';" stroke="black" stroke-width="35" fill="rgba(255, 255, 255, 1)"/></svg> | An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts)  | {{site.data.keyword.cloud_notm}} console | 
 | ![Checkbox icon](images/solution58-vmware-solutions-getting-started/checklist.svg) | Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist) | {{site.data.keyword.cloud_notm}} console |
 {: caption="Table 1. Before you begin" caption-side="top"} 
 
