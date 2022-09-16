@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-14"
+lastupdated: "2022-09-16"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through different options on how to share cloud-based resources across accounts.
 {: shortdesc}
 
-An uncountable number of services is offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user ID and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building native cloud applications with a microservices-based architecture, the individual services can use the same techniques to access each other for collaboration. Often, however, automatic service binding with an even tighter integration is the desired form, usually combining authentication and authorization into a single, automated setup. Typically, the service binding requires the microservices to be in the same cloud account. That grouping is logically and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean to separate out some services and maintain them in central accounts. Thus, applications have to share resources across accounts.
+An uncountable number of services is offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user ID and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building native cloud applications with a microservices-based architecture, the individual services can use the same techniques to access each other for collaboration. Often, however, automatic service binding with an even tighter integration is the desired form, usually combining authentication and authorization into a single, automated setup. Typically, the service binding requires the microservices to be in the same cloud account. That grouping is logically and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean to separate out some services and maintain them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [IBM Cloud Enterprise environment](https://{DomainName}/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
 
 This tutorial walks you through typical use cases and benefits of sharing cloud resources across accounts. Then, it helps you learn how to implement those common sharing scenarios, either manually or fully automated with Terraform.
 
@@ -70,11 +70,44 @@ Some typical use cases of resource sharing are:
 - Central management of security-related infrastructure. Monitor security from a dedicated account, aggregate security logs in a single place.
 - Control costs by sharing more expensive services where possible.
 - Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
-- 
+- Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
+
+
+### Security
+{: #security}
+
+Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance.
+
+#### Key management
+{: #security-kms}
+
+Only a centralized key management service (KMS) like Key Protect and Hyper Protect Crypto Services is used. It manages encryption keys for other corporate cloud accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
+
+#### {{site.data.keyword.compliance_short}}
+{: #security-scc}
+
+The {{site.data.keyword.compliance_short}} features Posture Management and Configuration Governance functionality. It helps to monitor deployed environments for security and assess them against compliance goals. Moreover, it can provide configuration defaults or even enforce settings of newly deployed resources. While the latter only applies to the current account, you can [utilize {{site.data.keyword.compliance_short}} to monitor and assess multiple accounts](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) from a central instance.
+
+
+it requires a custom collector
+
+key management, scoping, reduction of attack surface
 
 
 
 - Central management: An example is key management service (KMS) like Key Protect and Hyper Protect Crypto Services to monitor usage and invalidate encryption keys when needed.
+- Central management: Use the Security and Compliance Center to actively monitor other accounts for compliance. Govern resources from one account across other accounts.
+- Central management: 
+- Cost reduction: Only allow specific services to be provisioned by setting up custom catalogs. Offer more expensive or restricted services as shared resource from a central account.
+- 
+
+
+
+
+
+### Cost-oriented resource management
+{: #cost-management}
+
 
 
 
