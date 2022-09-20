@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2022-09-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -231,19 +231,19 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
 1. Get the IP addresses of the servers and record them for future use into a variable.
 
    ```sh
-   VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   VMWARE_BMS001_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS001 -output json | jq -r '.primary_network_interface.primary_ip.address')
    echo "VMWARE_BMS001 IP : "$VMWARE_BMS001_MGMT_IP
    ```
    {: codeblock}
 
    ```sh
-   VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   VMWARE_BMS002_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS002 -output json | jq -r '.primary_network_interface.primary_ip.address')
    echo "VMWARE_BMS002 IP : "$VMWARE_BMS002_MGMT_IP
    ```
    {: codeblock}
 
    ```sh
-   VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r '.primary_network_interface.primary_ipv4_address')
+   VMWARE_BMS003_MGMT_IP=$(ibmcloud is bm $VMWARE_BMS003 -output json | jq -r '.primary_network_interface.primary_ip.address')
    echo "VMWARE_BMS003 IP : "$VMWARE_BMS003_MGMT_IP
    ```
    {: codeblock}
@@ -372,21 +372,21 @@ Instance management VLAN NICs e.g. for vCenter will be created later.
 
    ```sh
    VMWARE_BMS001_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS001_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VMOT --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS001_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VMOT --output json | jq -r .primary_ip.address)
    echo "vMotion IP for BMS001 : "$VMWARE_BMS001_VMOT_IP
    ```
    {: codeblock}
 
    ```sh
    VMWARE_BMS002_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS002_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VMOT --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS002_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VMOT --output json | jq -r .primary_ip.address)
    echo "vMotion IP for BMS002 : "$VMWARE_BMS002_VMOT_IP
    ```
    {: codeblock}
 
    ```sh
    VMWARE_BMS003_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS003_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VMOT --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS003_VMOT_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VMOT --output json | jq -r .primary_ip.address)
    echo "vMotion IP for BMS003 : "$VMWARE_BMS003_VMOT_IP
    ```
    {: codeblock}
@@ -412,21 +412,21 @@ This phase is optional, if you use NFS.
 
    ```sh
    VMWARE_BMS001_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS001_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VSAN --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS001_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS001 $VMWARE_BMS001_VSAN --output json | jq -r .primary_ip.address)
    echo "vSAN IP for BMS001 : "$VMWARE_BMS001_VSAN_IP
    ```
    {: codeblock}
 
    ```sh
    VMWARE_BMS002_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS002 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS002_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VSAN --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS002_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS002 $VMWARE_BMS002_VSAN --output json | jq -r .primary_ip.address)
    echo "vSAN IP for BMS002 : "$VMWARE_BMS002_VSAN_IP
    ```
    {: codeblock}
 
    ```sh
    VMWARE_BMS003_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS003 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)
-   VMWARE_BMS003_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VSAN --output json | jq -r .primary_ipv4_address)
+   VMWARE_BMS003_VSAN_IP=$(ibmcloud is bare-metal-server-network-interface $VMWARE_BMS003 $VMWARE_BMS003_VSAN --output json | jq -r .primary_ip.address)
    echo "vSAN IP for BMS003 : "$VMWARE_BMS003_VSAN_IP
    ```
    {: codeblock}

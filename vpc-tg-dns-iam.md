@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-06"
+lastupdated: "2022-09-20"
 lasttested: "2021-12-06"
 
 content-type: tutorial
@@ -548,7 +548,7 @@ The Admin team has provided them just the right amount of permissions to create 
      zone_id     = local.network_context.dns.zone_id
      type        = "A"
      name        = "shared"
-     rdata       = ibm_is_instance.vsishared.primary_network_interface[0].primary_ipv4_address
+     rdata       = ibm_is_instance.vsishared.primary_network_interface[0].primary_ip.address
      ttl         = 3600
    }
    ```

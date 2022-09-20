@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-02-17"
+lastupdated: "2022-09-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -98,7 +98,7 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
    {: codeblock}
 
    ```sh
-   VMWARE_VCENTER_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VCENTER --output json | jq -r .primary_ipv4_address)
+   VMWARE_VCENTER_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VCENTER --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
