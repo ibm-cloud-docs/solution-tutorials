@@ -181,6 +181,8 @@ In the following section, you will deploy an application to a {{site.data.keywor
 {: #satellite-tour-link}
 {: step}
 
+In this section, you will create an instance of {{site.data.keyword.nlushort}} and expose it to your location with {{site.data.keyword.satelliteshort}} Link.
+
 ### Create an instance of {{site.data.keyword.nlushort}}
 {: #satellite-tour-create-nlu}
 
@@ -231,11 +233,13 @@ Looking at the value for `url`, notice that this instance is using a private end
 1. After few seconds, the endpoint will be ready and the **Endpoint address** (`host:port`) filled. You may need to refresh the page for the endpoint address to become visible.
 1. Make note of the **Endpoint address** as you will need it in a later step.
 
-With these steps you enabled, over a secured link, the connectivity between {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
+With these steps you enabled, over a secured link, the connectivity between the {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
 
 ## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
+
+In this section, you will deploy a simple application to test the connectivity between the {{site.data.keyword.nlufull}} service instance and the {{site.data.keyword.satelliteshort}} location.
 
 ### Deploy the application
 {: #satellite-tour-deploy-deploy}
