@@ -17,7 +17,7 @@ completion-time: 2h
 # Resource sharing across accounts
 {: #resource-sharing}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, log-analysis, activity-tracker, Ssecrets-manager, appid, key-protect, cloud-object-storage"}
+{: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, cloud-object-storage"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
