@@ -122,9 +122,14 @@ DNS, Direct Link, Transit Gateway
 
 
 
+<<<<<<< HEAD
 ## Disaster recovery
 {: #resource-sharing-disaster-recovery}
 {: step}
+=======
+### Cost-oriented resource management
+{: #resource-sharing-cost-management}
+>>>>>>> f141fdc83301a61593c8d8bd70e9bcc5a9f40669
 
 data replication, backup and restore
 
@@ -177,6 +182,30 @@ resource types:
 
 
 
+<<<<<<< HEAD
+=======
+### Security
+{: #resource-sharing-security-scc}
+
+SCC, key management, scoping, reduction of attack surface
+
+### Disaster recovery
+{: #resource-sharing-disaster-recovery}
+
+data replication, backup and restore
+
+IBM Cloud Databases
+> Backups are restorable across accounts, but only through the API and only if the user that is running the restore has access to both the source and destination accounts.
+Details:
+- a new DB is provisioned through the standard resource controller, but with extra ICD-specific parameters
+- the backup CRN has to be provided to create from a backup image
+- if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
+
+### Network
+{: #resource-sharing-network}
+
+DNS, Direct Link, Transit Gateway
+>>>>>>> f141fdc83301a61593c8d8bd70e9bcc5a9f40669
 
 
 

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2022-09-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -153,7 +153,7 @@ Next you will create a new VLAN NIC in the subnet `192.168.0.0/24`, which is all
 2. Get the IP address allocated by {{site.data.keyword.vpc_short}}.
 
    ```sh
-   VMWARE_VM1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .primary_ipv4_address)
+   VMWARE_VM1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM1 --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
    
@@ -322,7 +322,7 @@ This time you will deploy a 2nd Virtual machine to the cluster, but using a new 
 3. Get the IP address allocated by {{site.data.keyword.vpc_short}}, by using the following commands:
 
    ```sh
-   VMWARE_VM2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM2 --output json | jq -r .primary_ipv4_address)
+   VMWARE_VM2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_VM2 --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
    

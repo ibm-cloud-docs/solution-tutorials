@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2022-09-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -215,7 +215,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
    
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_VIP_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_VIP --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PUBLIC_VIP_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_VIP --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
@@ -232,7 +232,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
    
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_1_IP --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PUBLIC_1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_1_IP --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
@@ -249,7 +249,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   VMWARE_VNIC_T0_PUBLIC_2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_2 --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PUBLIC_2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PUBLIC_2 --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
@@ -271,7 +271,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
    
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_VIP_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_VIP --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PRIVATE_VIP_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_VIP --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
@@ -288,7 +288,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
    
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_1_IP --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PRIVATE_1_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_1_IP --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
@@ -305,7 +305,7 @@ When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data
    {: codeblock}
 
    ```sh
-   VMWARE_VNIC_T0_PRIVATE_2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_2 --output json | jq -r .primary_ipv4_address)
+   VMWARE_VNIC_T0_PRIVATE_2_IP=$(ibmcloud is bm-nic $VMWARE_BMS001 $VMWARE_VNIC_T0_PRIVATE_2 --output json | jq -r .primary_ip.address)
    ```
    {: codeblock}
 
