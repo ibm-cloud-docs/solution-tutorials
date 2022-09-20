@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-16"
+lastupdated: "2022-09-20"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -70,45 +70,79 @@ Some typical use cases of resource sharing are:
 - Central management of security-related infrastructure. Monitor security from a dedicated account, aggregate security logs in a single place.
 - Control costs by sharing more expensive services where possible.
 - Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
+- Central management of resources for disaster recovery, including backup services. Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case.
 - Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
 
-### Security
-{: #security}
+## Security
+{: #resource-sharing-security}
+{: step}
 
-Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance.
+Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. By scoping privileges to the required minimum, restricting resources to 
 
-#### Key management
-{: #security-kms}
+### Encryption key management
+{: #resource-sharing-security-kms}
 
-Only a centralized key management service (KMS) like Key Protect and Hyper Protect Crypto Services is used. It manages encryption keys for other corporate cloud accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
+In almost all environments, data is stored encrypted. By default, encryption is system-managed which means the encryption key is provided and maintained by the cloud provider. To increase security, customers can use their own keys by utilizing a key management service (KMS). In {{site.data.keyword.cloud_notm}}, the KMS can be either located in the same or in another account as the service using an encryption key. This allows to centrally manage encryption keys for all corporate accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
 
-#### {{site.data.keyword.compliance_short}}
-{: #security-scc}
+[{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) support this deployment pattern. Access to them can be configured to allow central key management and thereby resource sharing across {{site.data.keyword.cloud_notm}} accounts.
 
-The {{site.data.keyword.compliance_short}} features Posture Management and Configuration Governance functionality. It helps to monitor deployed environments for security and assess them against compliance goals. Moreover, it can provide configuration defaults or even enforce settings of newly deployed resources. While the latter only applies to the current account, you can [utilize {{site.data.keyword.compliance_short}} to monitor and assess multiple accounts](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) from a central instance.
+### {{site.data.keyword.compliance_short}}
+{: #resource-sharing-security-scc}
 
-
-it requires a custom collector
-
-key management, scoping, reduction of attack surface
+The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compliance/overview) features Posture Management and Configuration Governance functionality. It helps to monitor deployed environments for security and assess them against compliance goals. Moreover, it can provide configuration defaults or even enforce settings of newly deployed resources. While the latter only applies to the current account, you can [utilize {{site.data.keyword.compliance_short}} to monitor and assess multiple accounts](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) from a central instance. With custom collectors in place, the current security posture of multiple cloud accounts can be assessed and necessary actions taken.
 
 
+### {{site.data.keyword.at_short}}
+{: #resource-sharing-security-at}
 
-- Central management: An example is key management service (KMS) like Key Protect and Hyper Protect Crypto Services to monitor usage and invalidate encryption keys when needed.
-- Central management: Use the Security and Compliance Center to actively monitor other accounts for compliance. Govern resources from one account across other accounts.
-- Central management: 
-- Cost reduction: Only allow specific services to be provisioned by setting up custom catalogs. Offer more expensive or restricted services as shared resource from a central account.
-- 
+All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilzing {{site.data.keyword.atracker_short}} Event Routing, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
 
 
+## Cost-oriented resource management
+{: #resource-sharing-cost-management}
+{: step}
+
+
+## Network
+{: #resource-sharing-network}
+{: step}
+
+Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
+DNS, Direct Link, Transit Gateway
+
+
+### {{site.data.keyword.dns_short}}
+{: #resource-sharing-network-dns}
 
 
 
-### Cost-oriented resource management
-{: #cost-management}
+### {{site.data.keyword.tg_short}}
+{: #resource-sharing-network-transit-gateway}
 
 
+
+## Disaster recovery
+{: #resource-sharing-disaster-recovery}
+{: step}
+
+data replication, backup and restore
+
+IBM Cloud Databases
+> Backups are restorable across accounts, but only through the API and only if the user that is running the restore has access to both the source and destination accounts.
+Details:
+- a new DB is provisioned through the standard resource controller, but with extra ICD-specific parameters
+- the backup CRN has to be provided to create from a backup image
+- if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
+
+
+
+## Resource sharing categories
+{: #resource-sharing-categories}
+{: step}
+
+
+SCC, key management, scoping, reduction of attack surface
 
 
 resource sharing from loose to tightly coupled
@@ -142,32 +176,7 @@ resource types:
 - Container Registry, manage container images centrally, use service IDs to access them
 
 
-## Resource sharing categories
-{: #resource-sharing-categories}
-{: step}
 
-
-### Security
-{: #security}
-
-SCC, key management, scoping, reduction of attack surface
-
-### Disaster recovery
-{: #disaster-recovery}
-
-data replication, backup and restore
-
-IBM Cloud Databases
-> Backups are restorable across accounts, but only through the API and only if the user that is running the restore has access to both the source and destination accounts.
-Details:
-- a new DB is provisioned through the standard resource controller, but with extra ICD-specific parameters
-- the backup CRN has to be provided to create from a backup image
-- if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
-
-### Network
-{: #network}
-
-DNS, Direct Link, Transit Gateway
 
 
 
@@ -192,3 +201,13 @@ for the examples, here are typical service to service authorizations. Target ser
 - Catalog Management: ?
 - App Configuration: ?
 - Internet Services: SM has it, maybe for certificates and domain validation?
+
+
+- Central management: An example is key management service (KMS) like Key Protect and Hyper Protect Crypto Services to monitor usage and invalidate encryption keys when needed.
+- Central management: Use the Security and Compliance Center to actively monitor other accounts for compliance. Govern resources from one account across other accounts.
+- Central management: 
+- Cost reduction: Only allow specific services to be provisioned by setting up custom catalogs. Offer more expensive or restricted services as shared resource from a central account.
+- 
+
+## Related resources
+{: #resource-sharing-related_resources}
