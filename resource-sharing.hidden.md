@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-19"
+lastupdated: "2022-09-20"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -74,25 +74,25 @@ Some typical use cases of resource sharing are:
 
 
 ### Security
-{: #security}
+{: #resource-sharing-security}
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance.
 
 #### Encryption key management
-{: #security-kms}
+{: #resource-sharing-security-kms}
 
 In almost all environments, data is stored encrypted. By default, encryption is system-managed which means the encryption key is provided and maintained by the cloud provider. To increase security, customers can use their own keys by utilizing a key management service (KMS). In {{site.data.keyword.cloud_notm}}, the KMS can be either located in the same or in another account as the service using an encryption key. This allows to centrally manage encryption keys for all corporate accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
 
 [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) support this deployment pattern. Access to them can be configured to allow central key management and thereby resource sharing across {{site.data.keyword.cloud_notm}} accounts.
 
 #### {{site.data.keyword.compliance_short}}
-{: #security-scc}
+{: #resource-sharing-security-scc}
 
 The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compliance/overview) features Posture Management and Configuration Governance functionality. It helps to monitor deployed environments for security and assess them against compliance goals. Moreover, it can provide configuration defaults or even enforce settings of newly deployed resources. While the latter only applies to the current account, you can [utilize {{site.data.keyword.compliance_short}} to monitor and assess multiple accounts](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) from a central instance. With custom collectors in place, the current security posture of multiple cloud accounts can be assessed and necessary actions taken.
 
 
 #### {{site.data.keyword.at_short}}
-{: #security-at}
+{: #resource-sharing-security-at}
 
 All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilizing {{site.data.keyword.atracker_short}}, the [security records can be centralized to one or few instances](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-about) with either event search or {{site.data.keyword.cos_short}} as storage options.
 
@@ -114,7 +114,7 @@ key management, scoping, reduction of attack surface
 
 
 ### Cost-oriented resource management
-{: #cost-management}
+{: #resource-sharing-cost-management}
 
 
 
@@ -156,12 +156,12 @@ resource types:
 
 
 ### Security
-{: #security}
+{: #resource-sharing-security-scc}
 
 SCC, key management, scoping, reduction of attack surface
 
 ### Disaster recovery
-{: #disaster-recovery}
+{: #resource-sharing-disaster-recovery}
 
 data replication, backup and restore
 
@@ -173,7 +173,7 @@ Details:
 - if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
 
 ### Network
-{: #network}
+{: #resource-sharing-network}
 
 DNS, Direct Link, Transit Gateway
 
