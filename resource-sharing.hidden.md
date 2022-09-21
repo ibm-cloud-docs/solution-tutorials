@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-20"
+lastupdated: "2022-09-21"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -62,7 +62,6 @@ Note: To avoid the installation of these tools you can use the [{{site.data.keyw
 
 ## Resource sharing overview
 {: #resource-sharing-overview}
-{: step}
 
 When resources are shared, possibly multiple applications access and use the same resource or parts of it. This might be for various reasons including that applications and compute environments have to live in the same corporate network, or that security logs are collected in a central storage service. It requires that services in a microservice architecture can be configured to access and use external services, that the shared service authorizes access, and that the network between the services is configured to support such collaboration, but not more.
 
@@ -76,7 +75,6 @@ Some typical use cases of resource sharing are:
 
 ## Security
 {: #resource-sharing-security}
-{: step}
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. By scoping privileges to the required minimum, restricting resources to 
 
@@ -99,14 +97,9 @@ The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compl
 All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilzing {{site.data.keyword.atracker_short}} Event Routing, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
 
 
-## Cost-oriented resource management
-{: #resource-sharing-cost-management}
-{: step}
-
-
-## Network
+## Network resources
 {: #resource-sharing-network}
-{: step}
+
 
 Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
 DNS, Direct Link, Transit Gateway
@@ -115,6 +108,12 @@ DNS, Direct Link, Transit Gateway
 ### {{site.data.keyword.dns_short}}
 {: #resource-sharing-network-dns}
 
+You can use {{site.data.keyword.dns_short}} to resolve private addresses from resources deployed in {{site.data.keyword.cloud_notm}}. A DNS zone is a collection of domain names and consists of DNS resource records.
+
+Create private DNS zones that are collections for holding domain names.
+Create DNS resource records under these DNS zones.
+Specify access controls used for the DNS resolution of resource records on a zone-wide level.
+https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-cross-account-about
 
 
 ### {{site.data.keyword.tg_short}}
@@ -122,9 +121,8 @@ DNS, Direct Link, Transit Gateway
 
 
 
-## Disaster recovery
+## Central disaster recovery resources
 {: #resource-sharing-disaster-recovery}
-{: step}
 
 data replication, backup and restore
 
@@ -139,16 +137,11 @@ Details:
 
 ## Resource sharing categories
 {: #resource-sharing-categories}
-{: step}
+
 
 
 SCC, key management, scoping, reduction of attack surface
 
-
-resource sharing from loose to tightly coupled
-* user ID / password to access internet / cloud service
-* API key or some form of access token, sometimes with additional properties
-* access automatically negotiated and established between services after initial setup ("introduction" and authorization)
 
 benefits:
 * sharing of scarce resources
@@ -182,10 +175,20 @@ resource types:
 
 ## Implementation strategies
 {: #resource-sharing-implementation}
-{: step}
 
 
-- service to service authorizations
+
+resource sharing from loose to tightly coupled
+* user ID / password to access internet / cloud service
+* API key or some form of access token, sometimes with additional properties
+* access automatically negotiated and established between services after initial setup ("introduction" and authorization)
+
+
+
+
+
+
+- service to service authorizations (API, Terraform, CLI)
 - discuss Terraform for multi-account setup
 - service ID (account, including their API keys) vs. user (multiple accounts, including their API keys)
 - Trusted Profiles as possible solution?
