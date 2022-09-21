@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2022-08-23"
+lastupdated: "2022-09-20"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -119,7 +119,7 @@ In this section, you will walk through the components that make up a {{site.data
 
 `ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components.
 
-1. From the CLI (in [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) as example), view available commands:
+1. From [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), view available commands:
    ```sh
    ibmcloud sat
    ```
@@ -133,13 +133,15 @@ In this section, you will walk through the components that make up a {{site.data
 
 1. To view the details of a location, use:
    ```sh
-   ibmcloud sat location get --location <name-or-id>
+   ibmcloud sat location get --location <location-name-or-location-id>
    ```
    {: pre}
 
+   as example `ibmcloud sat location get --location my-example-location`.
+
 1. Retrieve all hosts attached to a location with:
    ```sh
-   ibmcloud sat host ls --location <name-or-id>
+   ibmcloud sat host ls --location <location-name-or-location-id>
    ```
    {: pre}
 
@@ -167,15 +169,22 @@ In the following section, you will deploy an application to a {{site.data.keywor
 1. In the web console, click the drop-down under your name in the right corner of your screen and select **Copy Login Command**.
 1. In the window that opens, click **Display token**.
 1. Copy and paste the **Log in with this token** command in your shell window.
-1. Create a new OpenShift project:
+1. Create a new OpenShift project by replacing `<your-initials>` with your own initials in order to create a unique project name:
    ```sh
    oc new-project <your-initials>-tour
    ```
    {: pre}
 
+   as example `oc new-project js-tour`.
+
 ## Use {{site.data.keyword.satelliteshort}} link to expose {{site.data.keyword.cloud_notm}} services
 {: #satellite-tour-link}
 {: step}
+
+In this section, you will create an instance of {{site.data.keyword.nlushort}} and expose it to your location with {{site.data.keyword.satelliteshort}} Link.
+
+### Create an instance of {{site.data.keyword.nlushort}}
+{: #satellite-tour-create-nlu}
 
 With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
 
@@ -196,9 +205,12 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
    2. Click **Add**.
 1. In the **Service credentials**, locate the credentials you created for use with {{site.data.keyword.satelliteshort}}.
-1. Make note of the values for the following keys:
+1. Make note of the values for the following keys as you will need them in a later step:
    * `apikey`
    * `url`
+
+### Create an endpoint in {{site.data.keyword.satelliteshort}} Link
+{: #satellite-tour-create-endpoint}
 
 Looking at the value for `url`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
@@ -209,24 +221,30 @@ Looking at the value for `url`, notice that this instance is using a private end
    * Click **Next**.
 1. In the **Resource details** step:
    * Set **Endpoint name** to something unique such as `<your-initials>-nlu`.
-   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service, you can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`.
+   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service. You can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`. Make sure you do not include any protocol specification (`https://`) or trailing slash (`/`) but only keep the FQDN.
    * Set **Destination port** to **443** (HTTPS port).
    * Click **Next**.
 1. In the **Protocol** step:
    * Set the **Source protocol** as **HTTPS**
-   * Set **Server name indication** to the FQDN value above. 
+   * Set **Server name indication** to the same value as the **Destination FQDN** above. 
    * Click **Next**.
 1. Click **Create endpoint**.
 1. Select the created endpoint.
 1. After few seconds, the endpoint will be ready and the **Endpoint address** (`host:port`) filled. You may need to refresh the page for the endpoint address to become visible.
+1. Make note of the **Endpoint address** as you will need it in a later step.
 
-With these steps you enabled, over a secured link, the connectivity between {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
+With these steps you enabled, over a secured link, the connectivity between the {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
 
 ## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
 {: step}
 
-1. From the command line, create a new application in the OpenShift project:
+In this section, you will deploy a simple application to test the connectivity between the {{site.data.keyword.nlufull}} service instance and the {{site.data.keyword.satelliteshort}} location.
+
+### Deploy the application
+{: #satellite-tour-deploy-deploy}
+
+1. From {{site.data.keyword.cloud-shell_short}}, create a new application in the OpenShift project:
    ```sh
    oc new-app python~https://github.com/IBM/satellite-link-example.git --name link-example
    ```
@@ -250,12 +268,16 @@ With these steps you enabled, over a secured link, the connectivity between {{si
    ```
    {: pre}
    
-1. Open the route URL to access the application.
+1. Open the route URL to access the application in a new browser tab. You may need to refresh the tab until the application becomes fully available.
+
+### Test the application
+{: #satellite-tour-deploy-test}
 
 The application allows you to connect to {{site.data.keyword.nlushort}} service and analyze text. Click on **Switch to Natural Language Understanding**. The form prompts you for the service credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the {{site.data.keyword.nlushort}} service over {{site.data.keyword.satelliteshort}} link.
 
-1. Use the {{site.data.keyword.satelliteshort}} link endpoint address to set the value for `url`.
-1. Fill `API key` from the {{site.data.keyword.nlushort}} service credentials in the previous section.
+1. Using the {{site.data.keyword.satelliteshort}} link endpoint address and {{site.data.keyword.nlushort}} credentials obtained in previous sections:
+   1. Set the value for `url` to the endpoint address. It should be of the form `host:port`.
+   1. Set the `API key` to the {{site.data.keyword.nlushort}} API key.
 1. Click on **Connect** to check the connection to the service.
 1. Once successfully connected, a default text is provided for the text analysis. Click on **Analyze** to see the JSON response from the {{site.data.keyword.nlushort}} service. Try out some other text for analysis.
 
@@ -312,8 +334,8 @@ With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/
 
 1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) tab.
 1. Create a new cluster group by clicking on **Create cluster group**. Provide a unique name such as `<your-initials>-cluster-group`.
-1. Select the created cluster group.
-1. Under **Clusters** tab, click **Add clusters**, check the cluster you previously deployed your app to and then click on **Add**.
+1. Check the cluster you previously deployed your app to.
+1. Click on **Create**.
 
 You have now defined a set of clusters to consistently deploy Kubernetes resources to.
 
@@ -356,7 +378,7 @@ Finally, you will map the version to a set of clusters.
 1. Go back to the **Overview** page for the configuration.
 1. Click on **Create subscription**.
    * Set **Subscription name** to a unique name such as `<your-initials>-latest`.
-   * Set **Version** to **V1**.
+   * Set **Version** to **V1**. If the version does not appear in the list, refresh the browser page.
    * Select the cluster group previously created.
 1. Click on **Create**.
 
