@@ -79,14 +79,14 @@ Some typical use cases of resource sharing are:
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
 
-Need to change: By scoping privileges to the required minimum, restricting resources to few accounts and aggregating security logs in a central location
+![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg){: class="center"}
+{: style="text-align: center;"}
 
-![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg)
 
 The above diagram shows the scenarios which are discussed in the following:
-- Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
-- {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts.
-- Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account**.
+- Dotted lines: Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
+- Black lines: {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
+- Blue lines: Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
 
 ### Encryption key management
 {: #resource-sharing-security-kms}
@@ -110,25 +110,18 @@ All {{site.data.keyword.cloud_notm}} services produce events for security-relate
 ## Network resources
 {: #resource-sharing-network}
 
-
-Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
-DNS, Direct Link, Transit Gateway
+Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
 
 
 ### {{site.data.keyword.dns_short}}
 {: #resource-sharing-network-dns}
 
-You can use {{site.data.keyword.dns_short}} to resolve private addresses from resources deployed in {{site.data.keyword.cloud_notm}}. A DNS zone is a collection of domain names and consists of DNS resource records.
-
-Create private DNS zones that are collections for holding domain names.
-Create DNS resource records under these DNS zones.
-Specify access controls used for the DNS resolution of resource records on a zone-wide level.
-https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-cross-account-about
-
+You can use {{site.data.keyword.dns_short}} to resolve private addresses (domain names) from resources deployed in {{site.data.keyword.cloud_notm}}. The domain names cannot be resolved from the public internet. A DNS zone is a collection of domain names and consists of DNS resource records. [DNS zones and their records can be used by other accounts](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about), thus establishing linked zones.
 
 ### {{site.data.keyword.tg_short}}
 {: #resource-sharing-network-transit-gateway}
 
+The {{site.data.keyword.tg_short}} service allows to establish connectivity between {{site.data.keyword.cloud_notm}} environments, including classic infrastructure and Virtual Private Clouds (VPC). You can even [connect environments hosted in different accounts](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-adding-cross-account-connections&interface=ui). Data flowing through {{site.data.keyword.tg_short}} stays within the {{site.data.keyword.cloud_notm}} private network and is not exposed to the public internet.
 
 
 ## Central disaster recovery resources
