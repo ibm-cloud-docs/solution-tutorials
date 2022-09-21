@@ -39,26 +39,6 @@ This tutorial walks you through typical use cases and benefits of sharing cloud 
 * Understand the benefits of sharing resources across accounts
 * Learn about different techniques to share resources across accounts
 
-![Architecture](images/solution1/Architecture.png){: class="center"}
-{: style="text-align: center;"}
-
-1. The user does this
-2. Then that
-
-
-## Before you begin
-{: #resource-sharing-prereqs}
-
-This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{: tip}
-
-<!--#/istutorial#-->
 
 ## Resource sharing overview
 {: #resource-sharing-overview}
@@ -84,9 +64,9 @@ Often, security is managed on a corporate level with company-wide rules in place
 
 
 The above diagram shows the scenarios which are discussed in the following:
-- Dotted lines: Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
-- Black lines: {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
-- Blue lines: Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
+1. Dotted lines: Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
+2. Black lines: {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
+3. Blue lines: Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
 
 ### Encryption key management
 {: #resource-sharing-security-kms}
