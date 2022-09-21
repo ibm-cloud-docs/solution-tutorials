@@ -70,13 +70,23 @@ Some typical use cases of resource sharing are:
 - Control costs by sharing more expensive services where possible.
 - Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
 - Central management of resources for disaster recovery, including backup services. Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case.
+- Central management of resources on a corporate level or for a business unit. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more.
 - Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
 
 ## Security
 {: #resource-sharing-security}
 
-Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. By scoping privileges to the required minimum, restricting resources to 
+Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
+
+Need to change: By scoping privileges to the required minimum, restricting resources to few accounts and aggregating security logs in a central location
+
+![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg)
+
+The above diagram shows the scenarios which are discussed in the following:
+- Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
+- {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts.
+- Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account**.
 
 ### Encryption key management
 {: #resource-sharing-security-kms}
@@ -145,6 +155,7 @@ SCC, key management, scoping, reduction of attack surface
 
 benefits:
 * sharing of scarce resources
+* sharing of corporate resources
 * sharing of expensive / costly resources, could help optimize overall costs
 * sharing of not often used resources, maybe with unwarranted setup costs
 * data replication
