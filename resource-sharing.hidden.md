@@ -47,9 +47,9 @@ When resources are shared, possibly multiple applications access and use the sam
 
 Some typical use cases of resource sharing are:
 - Central management of security-related infrastructure. Monitor security from a dedicated account, aggregate security logs in a single place.
-- Control costs by sharing more expensive services where possible.
 - Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
 - Central management of resources for disaster recovery, including backup services. Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case.
+- Control costs by sharing more expensive services where possible. Not every development project including tests needs to have all services deployed as dedicated instances. Often, it is enough to share service instances - within accounts or across. Even for production environments, service instances might be shared depending on their cost / value factor and technical feasability.
 - Central management of resources on a corporate level or for a business unit. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more.
 - Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
@@ -112,6 +112,12 @@ The {{site.data.keyword.tg_short}} service allows to establish connectivity betw
 
 ## Central disaster recovery resources
 {: #resource-sharing-disaster-recovery}
+
+
+- usually backup to COS buckets
+- data replication for database services, possible across accounts
+- {{site.data.keyword.backup_notm}} as service to backup and restore Windows bare metal systems, databases and more
+- 
 
 data replication, backup and restore
 
@@ -194,13 +200,28 @@ for the examples, here are typical service to service authorizations. Target ser
 - Catalog Management: ?
 - App Configuration: ?
 - Internet Services: SM has it, maybe for certificates and domain validation?
+ 
 
+service to service authorization for cross-account access is an extension of the regular s2s authorization: the source account needs to be added
+- source 
 
-- Central management: An example is key management service (KMS) like Key Protect and Hyper Protect Crypto Services to monitor usage and invalidate encryption keys when needed.
-- Central management: Use the Security and Compliance Center to actively monitor other accounts for compliance. Govern resources from one account across other accounts.
-- Central management: 
-- Cost reduction: Only allow specific services to be provisioned by setting up custom catalogs. Offer more expensive or restricted services as shared resource from a central account.
-- 
+```hcl
+resource "ibm_iam_authorization_policy" "cross_account_policy" {
+  source_service_account = data.ibm_iam_account_settings.account_a_settings.account_id
+  source_service_name = "servicename"
+  
+  target_resource_instance_id = data.ibm_resource_instance.kms_resource_instance.guid
+  target_service_name = "kms"
+
+  roles               = ["Reader"]
+  description         = "read access on Key Protect in Main Account for Account A"
+}
+```
+{: code}
+
 
 ## Related resources
 {: #resource-sharing-related_resources}
+
+- List IBM Cloud documentation links
+- 
