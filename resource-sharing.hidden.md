@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-21"
+lastupdated: "2022-09-22"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -92,6 +92,12 @@ All {{site.data.keyword.cloud_notm}} services produce events for security-relate
 
 Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
 
+
+![Sharing of network resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-network.svg){: class="center"}
+{: style="text-align: center;"}
+
+1. The {{site.data.keyword.tg_short}} service is used to interconnect VPC environments and classic infrastructure across the three accounts.
+2. Each account has a {{site.data.keyword.dns_short}} instance to manage private domain names. The instances are connected to share DNS zones.
 
 ### {{site.data.keyword.dns_short}}
 {: #resource-sharing-network-dns}
