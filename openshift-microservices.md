@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-23"
-lasttested: "2022-02-11"
+lastupdated: "2022-09-22"
+lasttested: "2022-09-22"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
