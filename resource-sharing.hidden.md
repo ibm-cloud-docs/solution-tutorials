@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-22"
+lastupdated: "2022-09-23"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -48,9 +48,9 @@ When resources are shared, possibly multiple applications access and use the sam
 Some typical use cases of resource sharing are:
 - Central management of security-related infrastructure. Monitor security from a dedicated account, aggregate security logs in a single place.
 - Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
-- Central management of resources for disaster recovery, including backup services. Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case.
-- Control costs by sharing more expensive services where possible. Not every development project including tests needs to have all services deployed as dedicated instances. Often, it is enough to share service instances - within accounts or across. Even for production environments, service instances might be shared depending on their cost / value factor and technical feasability.
-- Central management of resources on a corporate level or for a business unit. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more.
+- Central management of resources for disaster recovery, including backup services like [{{site.data.keyword.backup_notm}}](https://{DomainName}/docs/Backup?topic=Backup-getting-started). Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case. This includes holding multiple resource copies available world wide, e.g., stored in [replicated {{site.data.keyword.cos_short}} buckets](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-replication-overview).
+- Control costs by sharing more expensive services where possible. Not every development project including tests needs to have all services deployed as dedicated instances. Often, it is enough to share service instances - within accounts or across. Even for production environments, service instances might be shared depending on their cost / value factor and technical feasability. This can be organized by restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account), then centrally providing instances of restricted services.
+- Central management of resources on a corporate level or for a business unit. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more. Again, private catalogs and the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/Registry?topic=Registry-registry_access).
 - Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
 
@@ -110,68 +110,22 @@ You can use {{site.data.keyword.dns_short}} to resolve private addresses (domain
 The {{site.data.keyword.tg_short}} service allows to establish connectivity between {{site.data.keyword.cloud_notm}} environments, including classic infrastructure and Virtual Private Clouds (VPC). You can even [connect environments hosted in different accounts](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-adding-cross-account-connections&interface=ui). Data flowing through {{site.data.keyword.tg_short}} stays within the {{site.data.keyword.cloud_notm}} private network and is not exposed to the public internet.
 
 
-## Central disaster recovery resources
-{: #resource-sharing-disaster-recovery}
-
-
-- usually backup to COS buckets
-- data replication for database services, possible across accounts
-- {{site.data.keyword.backup_notm}} as service to backup and restore Windows bare metal systems, databases and more
-- 
-
-data replication, backup and restore
-
-IBM Cloud Databases
-> Backups are restorable across accounts, but only through the API and only if the user that is running the restore has access to both the source and destination accounts.
-Details:
-- a new DB is provisioned through the standard resource controller, but with extra ICD-specific parameters
-- the backup CRN has to be provided to create from a backup image
-- if the user has access to both accounts, the backup image from a different account be read and used to provision the new database
-
-
-
-## Resource sharing categories
-{: #resource-sharing-categories}
-
-
-
-SCC, key management, scoping, reduction of attack surface
-
-
-benefits:
-* sharing of scarce resources
-* sharing of corporate resources
-* sharing of expensive / costly resources, could help optimize overall costs
-* sharing of not often used resources, maybe with unwarranted setup costs
-* data replication
-
-custom catalogs
-
-
-resource types:
-* network resources like VPN, direct link, subnets and IP ranges
-* KMS resources like Key Protect and Hyper Protect CS
-
-
-^ examples:
-- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
-- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
-- Activity Tracker, consolidate events in another account's COS, see https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2
-- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
-- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
-- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
-- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
-- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
-- Container Registry, manage container images centrally, use service IDs to access them
-
-
-
-
-
-
 ## Implementation strategies
 {: #resource-sharing-implementation}
 
+As stated in the introduction, it is common practice to access services outside the own (cloud) account. Depending on the level of integration, there are different ways of how to authorize service access and implement authentication. In the following, we are going to discuss the available options.
+
+
+### Passwords and API keys
+{: #resource-sharing-implementation-apikey}
+
+discuss how user ID / password or API key allows loosely coupled sharing, just configure and access
+
+does it need a diagram? likely no
+
+
+### Service to service authorization
+{: #resource-sharing-implementation-s2sauth}
 
 
 resource sharing from loose to tightly coupled
@@ -180,7 +134,7 @@ resource sharing from loose to tightly coupled
 * access automatically negotiated and established between services after initial setup ("introduction" and authorization)
 
 
-
+refer to or create improved flow diagram, similar to [this doc page](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui)
 
 
 
@@ -190,7 +144,7 @@ resource sharing from loose to tightly coupled
 - Trusted Profiles as possible solution?
 
 
-service to service:
+typical service to service:
 for the examples, here are typical service to service authorizations. Target services are
 - COS: store something in a bucket, e.g., archive logs or monitoring data, or retrieve data from it for analysis, or (CE) receive notifications about bucket updates
 - KP and HPCS: obtain root key to encrypt data
@@ -203,7 +157,8 @@ for the examples, here are typical service to service authorizations. Target ser
  
 
 service to service authorization for cross-account access is an extension of the regular s2s authorization: the source account needs to be added
-- source 
+
+**Terraform code:** 
 
 ```hcl
 resource "ibm_iam_authorization_policy" "cross_account_policy" {
@@ -224,4 +179,15 @@ resource "ibm_iam_authorization_policy" "cross_account_policy" {
 {: #resource-sharing-related_resources}
 
 - List IBM Cloud documentation links
-- 
+
+
+**examples**
+- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
+- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
+- Activity Tracker, consolidate events in another account's COS, see https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2
+- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
+- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
+- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
+- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
+- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
+- Container Registry, manage container images centrally, use service IDs to access them
