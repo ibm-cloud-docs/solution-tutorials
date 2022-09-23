@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-23"
-lasttested: "2022-02-11"
+lastupdated: "2022-09-23"
+lasttested: "2022-09-23"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
@@ -95,7 +95,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.9.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.11.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
    - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -138,7 +138,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.11/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -155,7 +155,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.9.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.11.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
@@ -272,20 +272,21 @@ Create a script to simulate load.
 
 1. Verify access to the application. It outputs patient information:
    ```sh
-   curl -s http://$HOST/info
+   curl -s -L http://$HOST/info
    ```
    {: pre}
 
    Output should look like:
    ```sh
-   $ curl http://$HOST/info
+   $ curl -s -L http://$HOST/info
    {"personal":{"name":"Ralph DAlmeida","age":38,"gender":"male","street":"34 Main Street","city":"Toronto","zipcode":"M5H 1T1"},"medications":["Metoprolol","ACE inhibitors","Vitamin D"],"appointments":["2018-01-15 1:00 - Dentist","2018-02-14 4:00 - Internal Medicine","2018-09-30 8:00 - Pediatry"]}
    ```
    {: screen}
 
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info >/dev/null; done
+   while sleep 0.2; do curl --max-time 2 -s -L http://$HOST/info >/dev/null; echo -n "."
+   done
    ```
    {: pre}
 
@@ -334,50 +335,30 @@ Almost all actions in {{site.data.keyword.redhat_openshift_notm}} result in an e
 
 In this section explore the monitoring and metrics dashboards included in {{site.data.keyword.redhat_openshift_notm}}.
 
-### Dashboards with Grafana
+### Dashboards
 {: #openshift-microservices-14}
 
-{{site.data.keyword.redhat_openshift_notm}} comes with [Grafana](https://grafana.com/) preinstalled.
+{{site.data.keyword.redhat_openshift_notm}} comes with predefined dashboards to monitor your projects.
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
-2. Navigate to **Observe > Dashboards** in the left-hand bar. You can either view the dashboard inline or access the Grafana web UI following the instructions in this [OpenShift tutorial](/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift-monitor_application)
+2. Navigate to **Observe > Dashboards** in the left-hand bar.
 1. Select **Kubernetes / Compute Resources / Namespace (Pods)** from the dropdown and Namespace to **example-health**.
 3. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
-4. To access the full Grafana experience:
-   1. Navigate to **Networking > Routes**
-   1. In the **Project** dropdown, check *Show default projects*
-   1. Select the **openshift-monitoring** project.
-   1. Open the link associated with the *grafana* route.
-   1. You'll be asked to log in with {{site.data.keyword.openshiftshort}} and then click through some permissions. You should then see your Grafana dashboard. Hit **Home** on the top left, click on **Default** and choose **Kubernetes / Compute Resources / Namespace (Pods)**. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
-   ![Grafana CPU view](images/solution55-openshift-microservices/ocp45-grafana-cpu.png)
 
-### Metrics with Prometheus
+### Metrics
 {: #openshift-microservices-15}
 
-Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch **Metrics** and **Alerting**. They are embedded the following open-source monitoring solutions:
-   * [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
-   * [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
+{{site.data.keyword.redhat_openshift_notm}} provides a web interface to run queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems.
 
-{{site.data.keyword.redhat_openshift_notm}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
-
-1. The Metrics page is accessible in the **Administrator** perspective by clicking **Observe → Metrics**.
-2. You can either view the metrics inline or access the Prometheus UI by clicking on the **Platform Prometheus UI** link next to `Metrics` in the top.
-3. If you are using the inline metrics view, in the `Expression` box, enter the below query and click **Run queries**. You should see the value and the graph associated with the query.
+1. Navigate to **Observe > Metrics**.
+2. Enter the following expression and click **Run queries**. You should see the value and the graph associated with the query.
 
    ```sh
    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
    ```
    {: codeblock}
 
-4. To access the full **Prometheus** experience:
-   1. Navigate to **Networking > Routes**
-   1. In the **Project** dropdown, check *Show default projects*
-   1. Select the **openshift-monitoring** project.
-   1. Open the link associated with the *prometheus* route.
-   1. You'll be asked to log in with {{site.data.keyword.openshiftshort}} and then click through some permissions. You should then see your Prometheus dashboard.
-5. In the top box a query expression can be entered. Paste the above query to look into your frontend.
-6. Click on the **Graph** tab.  Run the traffic generator script on for a while and then stop it.  Note that the times are GMT:
-   ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01-ocp48.png)
+   ![Metrics Graph](images/solution55-openshift-microservices/metrics.png)
 
 ## Scaling the application
 {: #openshift-microservices-scaling}
@@ -390,7 +371,7 @@ In this section, the metrics observed in the previous section can be used to sca
 
 Before autoscaling maximum CPU and memory resource limits must be established.
 
-Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deploymentConfig
+The dashboards earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, the data showed that the app consumes about `25`-`65` MB of RAM. The following steps will set the resource limits in the deploymentConfig
 
 1. Make sure the script to generate traffic is running. 
 1. Switch to the **Administrator** perspective.
@@ -443,7 +424,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. Pods are 
    Replace the contents of the editor with this yaml:
 
    ```yaml
-   apiVersion: autoscaling/v2beta2
+   apiVersion: autoscaling/v2
    kind: HorizontalPodAutoscaler
    metadata:
      name: patient-hpa
@@ -850,20 +831,21 @@ With the application now connected to a database for its data, to simulate load 
 
 1. Verify access to the application. It outputs patient information:
    ```sh
-   curl -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
+   curl -s -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
    ```
    {: pre}
 
    Output should look like:
    ```sh
-   $ curl http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
+   $ curl -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
    {"personal":{"name":"Opal Larkin","age":22,"street":"805 Bosco Vale","city":"Lincoln","zipcode":"68336"},"medications":["Cefaclor ","Amoxicillin ","Ibuprofen ","Trinessa ","Mirena ","Naproxen sodium "],"appointments":["2009-01-29 10:46 - GENERAL PRACTICE","1999-07-01 10:46 - GENERAL PRACTICE","2001-12-27 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2004-01-01 10:46 - GENERAL PRACTICE","1999-09-30 10:46 - GENERAL PRACTICE","2018-10-29 10:46 - GENERAL PRACTICE","2012-02-16 10:46 - GENERAL PRACTICE","2015-11-23 10:46 - GENERAL PRACTICE","2000-03-30 10:46 - GENERAL PRACTICE","1999-04-29 10:46 - GENERAL PRACTICE","2015-01-07 10:46 - GENERAL PRACTICE","1999-02-25 10:46 - GENERAL PRACTICE","2010-07-23 10:46 - GENERAL PRACTICE","2008-01-24 10:46 - GENERAL PRACTICE","2004-05-24 10:46 - GENERAL PRACTICE","1999-01-21 10:46 - GENERAL PRACTICE","2015-03-05 10:46 - GENERAL PRACTICE","2002-06-27 10:46 - GENERAL PRACTICE","2000-06-29 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2015-01-10 10:46 - GENERAL PRACTICE","2000-12-28 10:46 - GENERAL PRACTICE","2016-06-02 10:46 - GENERAL PRACTICE","2016-03-10 10:46 - GENERAL PRACTICE","2013-09-08 10:46 - GENERAL PRACTICE","2011-02-10 10:46 - GENERAL PRACTICE","2013-02-21 10:46 - GENERAL PRACTICE","2003-04-30 10:46 - GENERAL PRACTICE","2004-07-23 10:46 - GENERAL PRACTICE","2006-01-12 10:46 - GENERAL PRACTICE","2002-12-26 10:46 - GENERAL PRACTICE","1999-12-30 10:46 - GENERAL PRACTICE","2017-01-04 10:46 - GENERAL PRACTICE","2018-03-22 10:46 - GENERAL PRACTICE","2010-02-04 10:46 - GENERAL PRACTICE","2009-11-29 10:46 - GENERAL PRACTICE","2013-02-26 10:46 - GENERAL PRACTICE","2003-02-04 10:46 - GENERAL PRACTICE","2003-03-01 10:46 - GENERAL PRACTICE","2000-04-15 10:46 - GENERAL PRACTICE","2001-06-28 10:46 - GENERAL PRACTICE","2007-01-18 10:46 - GENERAL PRACTICE","2018-08-30 10:46 - GENERAL PRACTICE","2017-03-16 10:46 - GENERAL PRACTICE","2014-02-27 10:46 - GENERAL PRACTICE","2000-09-27 10:46 - GENERAL PRACTICE"]}
    ```
    {: screen}
 
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 0.2; do curl --max-time 2 -s http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06 >/dev/null; done
+   while sleep 0.2; do curl --max-time 2 -s -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06 >/dev/null; echo -n "."
+   done
    ```
    {: pre}
 
@@ -1052,7 +1034,7 @@ Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](
 {: #openshift-microservices-configure-sysdig}
 {: step}
 
-The IBM Cloud provides a fully managed monitoring service. Let's create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.mon_short}} agent.
+{{site.data.keyword.cloud_notm}} provides a fully managed monitoring service. Let's create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.mon_short}} agent.
 
 
 ### Verify that the {{site.data.keyword.mon_short}} agent is deployed successfully
@@ -1091,11 +1073,9 @@ The following table lists the different types of pre-defined dashboards:
 
 | Type | Description |
 | :--- | :--- |
-| Applications | Dashboards that you can use to monitor your applications and infrastructure components. |
-| Host and containers | Dashboards that you can use to monitor resource utilization and system activity on your hosts and in your containers. |
+| Workload Status and Performance | Dashboards that you can use to monitor your pods. |
+| Node Status and Performance | Dashboards that you can use to monitor resource utilization and system activity on your hosts and in your containers. |
 | Network | Dashboards that you can use to monitor your network connections and activity. |
-| Service | Dashboards that you can use to monitor the performance of your services, even if those services are deployed in orchestrated containers. |
-| Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. |
 
 ### View the {{site.data.keyword.mon_short}} dashboard
 {: #openshift-microservices-43}
@@ -1108,19 +1088,9 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 - After a few minutes, raw data will be displayed
 - After about an hour, indexing will provides the detail required to proceed with this tutorial
 
-1. Under the **Explore** section, select **Hosts & Containers** to view raw metrics for all workloads running on the cluster.
-
-   If the drop down is not fully populated and indicates some inapplicable items double check that you have chosen **Explore** on the upper left and clicked on the **Hosts & Containers** drop down.  If so you will need to wait until the indexing step mentioned above is complete before continuing
-   {: note}
-
-   ![Hosts and Containers](images/solution55-openshift-microservices/sysdig-select-app.png)
-1. Under **Explore**, select **Nodes**, search `patient-health-frontend` in the **Search environment**. Look for the patient-health-frontend pod entry by navigating through the cluster and Node IPs. You may have to select **Overview by Host** (under Troubleshooting Views > Hosts & Containers) from the Top dropdown
-   ![Explore Nodes](images/solution55-openshift-microservices/sysdig-explore-node.png)
+1. Under the **Dashboards** section, select **Kubernetes > Pod Status & Performance** to view raw metrics for all workloads running on the cluster.
+1. Set the **namespace** filter to **example-health** to focus on the pods of your application.
 1. Under **Dashboards** on the left pane, expand **Applications** in **Dashboard Templates**. Then select **HTTP** to get a global view of the cluster HTTP load.
-1. From the **Explore** tab, select **Replication Controllers**.
-1. Search for `example-health` namespace.
-1. Select the `patient-health-frontend` to select all pods for the frontend.
-   ![Overview by Host](images/solution55-openshift-microservices/explore-img-9.png)
 
 ### Explore the cluster and the node capacity
 {: #openshift-microservices-44}
@@ -1129,12 +1099,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
 
-2. Select the **Kubernetes > Node Status & Performance** template:
-   - Check the **CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
-   - Check the **Allocatable CPU**. This is the CPU which is available for pods excluding system daemons.
-   - Check the **CPU Limits (for all pods)**. It should be less than the allocatable CPU of the node or cluster.
-   - Check the **CPU Requests (for all pods)**. It is the amount of CPU that will be guaranteed for pods on the node or cluster.
-   - Check the **CPU Core Used (by all pods)**. It is the total amount of CPU that is used by all Pods on the node or cluster.
+2. Select the **Pod Rightsizing & Workload Capacity Optimization** template. This dashboard helps you to optimize your infrastructure and better control cluster spend by ensure pods are sized correctly. Understand if you can free up resources by reducing memory and/or CPU requests.
 
 ### Explore the Network
 {: #openshift-microservices-45}
@@ -1149,7 +1114,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network`
    - Click **Create and Open**.
    - Edit the dashboard scope.
-   - Set the filter to `kubernetes.namespace.name`, `is`, `ibm-observe`.
+   - Set the filter to `kube.namespace.name`, `is`, `ibm-observe`.
    ![Configure Filter](images/solution55-openshift-microservices/explore-img-10.png)
    - Click **Save**.
 
@@ -1205,4 +1170,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 - [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
 - [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-- [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html)
+- [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.11/nodes/pods/nodes-pods-autoscaling.html)
