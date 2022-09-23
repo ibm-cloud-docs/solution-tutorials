@@ -54,7 +54,7 @@ Some typical use cases of resource sharing are:
 - Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
 
-## Security
+## Sharing of security resources
 {: #resource-sharing-security}
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
@@ -87,7 +87,7 @@ The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compl
 All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilzing {{site.data.keyword.atracker_short}} Event Routing, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
 
 
-## Network resources
+## Sharing of network resources
 {: #resource-sharing-network}
 
 Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
@@ -110,13 +110,13 @@ You can use {{site.data.keyword.dns_short}} to resolve private addresses (domain
 The {{site.data.keyword.tg_short}} service allows to establish connectivity between {{site.data.keyword.cloud_notm}} environments, including classic infrastructure and Virtual Private Clouds (VPC). You can even [connect environments hosted in different accounts](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-adding-cross-account-connections&interface=ui). Data flowing through {{site.data.keyword.tg_short}} stays within the {{site.data.keyword.cloud_notm}} private network and is not exposed to the public internet.
 
 
-## Implementation strategies
+## Implementing resource sharing
 {: #resource-sharing-implementation}
 
 As stated in the introduction, it is common practice to access services outside the own (cloud) account. Depending on the level of integration, there are different ways of how to authorize service access and implement authentication. In the following, we are going to discuss the available options.
 
 
-### Passwords and API keys
+### Authentication with passwords or API keys
 {: #resource-sharing-implementation-apikey}
 
 discuss how user ID / password or API key allows loosely coupled sharing, just configure and access
