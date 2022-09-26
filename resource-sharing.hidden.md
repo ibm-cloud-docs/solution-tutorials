@@ -129,6 +129,9 @@ Within {{site.data.keyword.cloud_notm}}, some compute services including [{{site
 
 A tighter integrated approach for one service accessing another one is to [establish service to service authorizations (s2s authorization)](https://{DomainName}/docs/account?topic=account-serviceauth). You create an {{site.data.keyword.cloud_notm}} Identity and Access Management (IAM) policy that authorizes a source service to access a target service. Because the authentication is accomplished by identifying the source service requesting access, no credentials in the form of passwords or API keys are needed. Both authentication and authorization are handled automatically because of the created IAM policy.
 
+#### Cross-account authorizations
+{: #resource-sharing-implementation-s2sauth-cross-account}
+
 IAM supports to establish a service to service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows to easily share resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including in the browser console, utilizing the CLI or by Terraform code. The following shows the Terraform code to create a [resource with such an IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
 
 
@@ -150,6 +153,31 @@ resource "ibm_iam_authorization_policy" "cross_account_policy" {
 
 In the code above, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for a specific {{site.data.keyword.keymanagementserviceshort}} instance in the current account. With the policy in place, an encrypted storage bucket using a root key from the specified {{site.data.keyword.keymanagementserviceshort}} instance could be created.
 
+A similar authorization policy can be created using the [{{site.data.keyword.cloud_notm}} CLI with the **iam service-policy-create** command](https://{DomainName}/docs/cli?topic=cli-ibmcloud_commands_iam#ibmcloud_iam_service_policy_create):
+
+```sh
+authorization-policy-create cos kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
+```
+{: code}
+
+
+#### Typical service to service authorizations
+{: #resource-sharing-implementation-s2sauth-services}
+
+A dependency on a key management service (KMS) like [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-getting-started-tutorial) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) is typical for cloud-based solution. A KMS instance holds the root keys for customer-managed encryption. Most services support customer-controlled encryption keys. Instead of **cos** ({{site.data.keyword.cos_short}}), many other can use a KMS instance shared across accounts.
+
+Other typical (target) services for service to service authorization and candidates for resource sharing are:
+- [{{site.data.keyword.cos_short}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage): Several services require or are able to store data and log files in a storage bucket. This includes archival of access logs and monitoring data. Other services like {{site.data.keyword.sqlquery_short}} need to access buckets to perform data analysis. And yet another category of services need access to subscribe to change notifications to trigger the execution of actions.
+- [{{site.data.keyword.en_short}}](https://{DomainName}/docs/event-notifications?topic=event-notifications-getting-started): To push out information about events to subscribers, service instances need to access an {{site.data.keyword.en_short}} instance.
+- [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) stores and provides to other services IAM API keys, SSL/TLS certificates, and other secrets. Hence, the dependent (source) services need to access {{site.data.keyword.secrets-manager_short}}.
+- [{{site.data.keyword.cis_short}}](https://{DomainName}/docs/cis?topic=cis-getting-started): It manages domain names and other network data and, therefore, can be used for, e.g., certificate validation.
+
+Note that the above list is not complete.
+
+
+
+## Summary
+{: #resource-sharing-summary}
 
 ## Related resources
 {: #resource-sharing-related_resources}
@@ -175,16 +203,3 @@ In the code above, a specific {{site.data.keyword.cos_short}} instance in the so
 - Trusted Profiles as possible solution?
 
 
-typical service to service:
-for the examples, here are typical service to service authorizations. Target services are
-- COS: store something in a bucket, e.g., archive logs or monitoring data, or retrieve data from it for analysis, or (CE) receive notifications about bucket updates
-- KP and HPCS: obtain root key to encrypt data
-- Event Notifications: push out some event data to subscribers
-- Secrets Manager: obtain a secret 
-- Satellite: ?
-- Catalog Management: ?
-- App Configuration: ?
-- Internet Services: SM has it, maybe for certificates and domain validation?
- 
-
-service to service authorization for cross-account access is an extension of the regular s2s authorization: the source account needs to be added
