@@ -9,7 +9,7 @@ lasttested: "2022-09-12"
 content-type: tutorial
 services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, cloud-object-storage
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 ---
 
 {{site.data.keyword.attribute-definition-list}}
@@ -132,7 +132,13 @@ A tighter integrated approach for one service accessing another one is to [estab
 #### Cross-account authorizations
 {: #resource-sharing-implementation-s2sauth-cross-account}
 
-IAM supports to establish a service to service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows to easily share resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including in the browser console, utilizing the CLI or by Terraform code. The following shows the Terraform code to create a [resource with such an IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
+IAM supports to establish a service to service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows to easily share resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including [in the browser console](https://{DomainName}/iam/authorizations/grant) as shown below, utilizing the CLI or by Terraform code. 
+
+![Grant a service to service authorization](images/solution-resource-sharing-hidden/grant_service_authorization.png){: class="center"}
+{: style="text-align: center;"}
+
+
+The following shows the Terraform code to create a [resource with the same IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
 
 
 ```hcl
@@ -156,7 +162,7 @@ In the code above, a specific {{site.data.keyword.cos_short}} instance in the so
 A similar authorization policy can be created using the [{{site.data.keyword.cloud_notm}} CLI with the **iam service-policy-create** command](https://{DomainName}/docs/cli?topic=cli-ibmcloud_commands_iam#ibmcloud_iam_service_policy_create):
 
 ```sh
-authorization-policy-create cos kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
+ibmcloud iam authorization-policy-create cos kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
 ```
 {: code}
 
@@ -178,6 +184,8 @@ Note that the above list is not complete.
 
 ## Summary
 {: #resource-sharing-summary}
+
+
 
 ## Related resources
 {: #resource-sharing-related_resources}
