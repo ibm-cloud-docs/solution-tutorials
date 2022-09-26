@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-23"
+lastupdated: "2022-09-26"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -29,7 +29,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through different options on how to share cloud-based resources across accounts.
 {: shortdesc}
 
-An uncountable number of services is offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user ID and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building native cloud applications with a microservices-based architecture, the individual services can use the same techniques to access each other for collaboration. Often, however, automatic service binding with an even tighter integration is the desired form, usually combining authentication and authorization into a single, automated setup. Typically, the service binding requires the microservices to be in the same cloud account. That grouping is logically and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean to separate out some services and maintain them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [IBM Cloud Enterprise environment](https://{DomainName}/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
+An uncountable number of services is offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user identity (ID) and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building native cloud applications with a microservices-based architecture, the individual services can use the same techniques to access each other for collaboration. Often, however, automatic service binding with an even tighter integration is the desired form, usually combining authentication and authorization into a single, automated setup. Typically, the service binding requires the microservices to be in the same cloud account. That grouping is logically and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean to separate out some services and maintain them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [IBM Cloud Enterprise environment](https://{DomainName}/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
 
 This tutorial walks you through typical use cases and benefits of sharing cloud resources across accounts. Then, it helps you learn how to implement those common sharing scenarios, either manually or fully automated with Terraform.
 
@@ -119,23 +119,54 @@ As stated in the introduction, it is common practice to access services outside 
 ### Authentication with passwords or API keys
 {: #resource-sharing-implementation-apikey}
 
-discuss how user ID / password or API key allows loosely coupled sharing, just configure and access
+Many internet services allow to generate multiple sets of credentials. Usually, they either consist of a combination of user identity (ID) and password or just a single API key. Often, it is possible to specific the set of privileges for the credentials, e.g., to allow read-only access or scope what can be accessed, modified, or even created and deleted. The credentials are then imported or configured for a depending (micro-) service or application to access that service. Even though access is possible, set up requires some (manual) work and overall they are only loosely coupled or integrated.
 
-does it need a diagram? likely no
+Within {{site.data.keyword.cloud_notm}}, some compute services including [{{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-service-binding) and [{{site.data.keyword.containershort}}](https://{DomainName}/docs/containers?topic=containers-service-binding) allow the automatic creation and configuration of credentials, the so-called *service binding*.
 
 
 ### Service to service authorization
 {: #resource-sharing-implementation-s2sauth}
 
+A tighter integrated approach for one service accessing another one is to [establish service to service authorizations (s2s authorization)](https://{DomainName}/docs/account?topic=account-serviceauth). You create an {{site.data.keyword.cloud_notm}} Identity and Access Management (IAM) policy that authorizes a source service to access a target service. Because the authentication is accomplished by identifying the source service requesting access, no credentials in the form of passwords or API keys are needed. Both authentication and authorization are handled automatically because of the created IAM policy.
 
-resource sharing from loose to tightly coupled
-* user ID / password to access internet / cloud service
-* API key or some form of access token, sometimes with additional properties
-* access automatically negotiated and established between services after initial setup ("introduction" and authorization)
+IAM supports to establish a service to service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows to easily share resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including in the browser console, utilizing the CLI or by Terraform code. The following shows the Terraform code to create a [resource with such an IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
 
 
-refer to or create improved flow diagram, similar to [this doc page](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui)
+```hcl
+resource "ibm_iam_authorization_policy" "cross_account_policy" {
+  source_service_account = data.ibm_iam_account_settings.account_a_settings.account_id
+  source_service_name = "cos"
+  source_resource_instance_id = data.ibm_resource_instance.cos_resource_instance.guid
+  
+  target_service_name = "kms"
+  target_resource_instance_id = data.ibm_resource_instance.kms_resource_instance.guid
 
+  roles               = ["Reader"]
+  description         = "read access on Key Protect in Main Account for Account A"
+}
+```
+{: code}
+
+
+In the code above, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for a specific {{site.data.keyword.keymanagementserviceshort}} instance in the current account. With the policy in place, an encrypted storage bucket using a root key from the specified {{site.data.keyword.keymanagementserviceshort}} instance could be created.
+
+
+## Related resources
+{: #resource-sharing-related_resources}
+
+- List IBM Cloud documentation links
+
+
+**examples and additional text**
+- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
+- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
+- Activity Tracker, consolidate events in another account's COS, see https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2
+- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
+- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
+- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
+- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
+- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
+- Container Registry, manage container images centrally, use service IDs to access them
 
 
 - service to service authorizations (API, Terraform, CLI)
@@ -157,37 +188,3 @@ for the examples, here are typical service to service authorizations. Target ser
  
 
 service to service authorization for cross-account access is an extension of the regular s2s authorization: the source account needs to be added
-
-**Terraform code:** 
-
-```hcl
-resource "ibm_iam_authorization_policy" "cross_account_policy" {
-  source_service_account = data.ibm_iam_account_settings.account_a_settings.account_id
-  source_service_name = "servicename"
-  
-  target_resource_instance_id = data.ibm_resource_instance.kms_resource_instance.guid
-  target_service_name = "kms"
-
-  roles               = ["Reader"]
-  description         = "read access on Key Protect in Main Account for Account A"
-}
-```
-{: code}
-
-
-## Related resources
-{: #resource-sharing-related_resources}
-
-- List IBM Cloud documentation links
-
-
-**examples**
-- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
-- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
-- Activity Tracker, consolidate events in another account's COS, see https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2
-- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
-- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
-- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
-- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
-- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
-- Container Registry, manage container images centrally, use service IDs to access them
