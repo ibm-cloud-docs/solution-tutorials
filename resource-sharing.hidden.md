@@ -156,7 +156,7 @@ resource "ibm_iam_authorization_policy" "cross_account_policy" {
   description         = "read access on Key Protect in Main Account for Account A"
 }
 ```
-{: code}
+{: codeblock}
 
 
 The same authorization policy can be created using the [{{site.data.keyword.cloud_notm}} CLI with the **iam service-policy-create** command](https://{DomainName}/docs/cli?topic=cli-ibmcloud_commands_iam#ibmcloud_iam_service_policy_create):
@@ -164,7 +164,7 @@ The same authorization policy can be created using the [{{site.data.keyword.clou
 ```sh
 ibmcloud iam authorization-policy-create cloud-object-storage kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
 ```
-{: code}
+{: codeblock}
 
 The console, the Terraform provider and the CLI all use the [IAM policy management API](https://{DomainName}/apidocs/iam-policy-management#create-policy) to create the policy.
 
@@ -179,7 +179,7 @@ resource "ibm_cos_bucket" "cos_bucket" {
   storage_class        = "smart"
 }
 ```
-{: code}
+{: codeblock}
 
 #### Typical service to service authorizations
 {: #resource-sharing-implementation-s2sauth-services}
@@ -209,15 +209,17 @@ Accessing resources in different accounts, even sharing resources is common prac
 
 
 **examples and additional text**
-- Cloudant data replication across accounts: https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts
-- SCC is able to scan multiple accounts: https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account
-- Activity Tracker, consolidate events in another account's COS, see https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2
-- Transit Gateway: connect across accounts https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5
+- [{{site.data.keyword.cloudant_short_notm}} data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)
+- [Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account)
+- [Route your {{site.data.keyword.at_short}} events to another account](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)
+- [Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)
 - Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
 - DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
-- IBM Cloud Databases allow backup / restore across accounts via API: https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups
+- [Restore {{site.data.keyword.databases-for}} backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)
 - IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
-- Container Registry, manage container images centrally, use service IDs to access them
+
+
+
 
 
 - service to service authorizations (API, Terraform, CLI)
