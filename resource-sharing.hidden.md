@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-26"
+lastupdated: "2022-09-27"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -134,6 +134,8 @@ A tighter integrated approach for one service accessing another one is to [estab
 
 IAM supports to establish a service to service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows to easily share resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including [in the browser console](https://{DomainName}/iam/authorizations/grant) as shown below, utilizing the CLI or by Terraform code. 
 
+In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account. 
+
 ![Grant a service to service authorization](images/solution-resource-sharing-hidden/grant_service_authorization.png){: class="center"}
 {: style="text-align: center;"}
 
@@ -144,7 +146,7 @@ The following shows the Terraform code to create a [resource with the same IAM a
 ```hcl
 resource "ibm_iam_authorization_policy" "cross_account_policy" {
   source_service_account = data.ibm_iam_account_settings.account_a_settings.account_id
-  source_service_name = "cos"
+  source_service_name = "cloud-object-storage"
   source_resource_instance_id = data.ibm_resource_instance.cos_resource_instance.guid
   
   target_service_name = "kms"
@@ -157,15 +159,27 @@ resource "ibm_iam_authorization_policy" "cross_account_policy" {
 {: code}
 
 
-In the code above, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for a specific {{site.data.keyword.keymanagementserviceshort}} instance in the current account. With the policy in place, an encrypted storage bucket using a root key from the specified {{site.data.keyword.keymanagementserviceshort}} instance could be created.
-
-A similar authorization policy can be created using the [{{site.data.keyword.cloud_notm}} CLI with the **iam service-policy-create** command](https://{DomainName}/docs/cli?topic=cli-ibmcloud_commands_iam#ibmcloud_iam_service_policy_create):
+The same authorization policy can be created using the [{{site.data.keyword.cloud_notm}} CLI with the **iam service-policy-create** command](https://{DomainName}/docs/cli?topic=cli-ibmcloud_commands_iam#ibmcloud_iam_service_policy_create):
 
 ```sh
-ibmcloud iam authorization-policy-create cos kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
+ibmcloud iam authorization-policy-create cloud-object-storage kms Reader --source-service-account source_account_id --source-service-instance-id cos_instance_id --target-service-instance-id kms_instance_id
 ```
 {: code}
 
+The console, the Terraform provider and the CLI all use the [IAM policy management API](https://{DomainName}/apidocs/iam-policy-management#create-policy) to create the policy.
+
+As a next step, with the authorization policy in place, an encrypted storage bucket using a {{site.data.keyword.keymanagementserviceshort}} root key could then be created. The following shows the Terraform code utilizing [**resource ibm_cos_bucket**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket#example-usage-2). The attribute **key_protect** holds the CRN of the root key.
+
+```hcl
+resource "ibm_cos_bucket" "cos_bucket" {
+  bucket_name          = "cos-bucket"
+  resource_instance_id = data.ibm_resource_instance.cos_resource_instance.id
+  region_location      = var.region
+  key_protect          = data.ibm_kms_key.central_kms_root_key.id
+  storage_class        = "smart"
+}
+```
+{: code}
 
 #### Typical service to service authorizations
 {: #resource-sharing-implementation-s2sauth-services}
@@ -185,6 +199,7 @@ Note that the above list is not complete.
 ## Summary
 {: #resource-sharing-summary}
 
+Accessing resources in different accounts, even sharing resources is common practice. There are several use case where users benefit from resource sharing. We have discussed them in the overview. A combination of user identity and password or an API key to access a resource often serves as authentication. Access can be scoped to a set of privileges, e.g., only allowing read access or some other restricted actions. Sometimes, these type of credentials can be created and managed by the accessing resource like an application or compute environment ("service binding"). An even tighter integration which does not require credentials is the concept of {{site.data.keyword.cloud_notm}} service to service authorization. The accessing resource (source) and the accessed resource (target) are identified by their properties (authentication) and an access role is assigned (authorization). Such a relationship can be even established across account boundaries. This allows for a simple to configure, but yet secure cross-account resource sharing.
 
 
 ## Related resources
@@ -211,3 +226,4 @@ Note that the above list is not complete.
 - Trusted Profiles as possible solution?
 
 
+mention CLI env variable for holding "home", it could be used with two terminal windows - one for each account involved
