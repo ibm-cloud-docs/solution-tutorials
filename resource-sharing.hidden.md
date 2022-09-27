@@ -18,7 +18,7 @@ completion-time: 1h
 {: #resource-sharing}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, cloud-object-storage"}
-{: toc-completion-time="2h"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
