@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-27"
+lastupdated: "2022-09-28"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -205,27 +205,17 @@ Accessing resources in different accounts, even sharing resources is common prac
 ## Related resources
 {: #resource-sharing-related_resources}
 
-- List IBM Cloud documentation links
-
-
-**examples and additional text**
+The following document provides details on some cross-account scenarios:
 - [{{site.data.keyword.cloudant_short_notm}} data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)
 - [Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account)
 - [Route your {{site.data.keyword.at_short}} events to another account](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)
 - [Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)
-- Direct Link: https://{DomainName}/docs/vpc-journey?topic=vpc-journey-vpc-directlink#vpc-directlink-patterns
-- DNS service cross-account access https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about
+- [Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)
 - [Restore {{site.data.keyword.databases-for}} backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)
-- IBM Cloud API keys for a user have a scope that may be across multiple accounts, the same as the user has: https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys
+- [{{site.data.keyword.cloud_notm}} API keys for a user may have a scope across multiple accounts](https://{DomainName}/docs/account?topic=account-manapikey#ibm-cloud-api-keys)
 
 
+Blog posts related to sharing resource across multiple accounts:
+- [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html)
+- [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli) discusses [**IBMCLOUD_HOME**](https://{DomainName}/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
 
-
-
-- service to service authorizations (API, Terraform, CLI)
-- discuss Terraform for multi-account setup
-- service ID (account, including their API keys) vs. user (multiple accounts, including their API keys)
-- Trusted Profiles as possible solution?
-
-
-mention CLI env variable for holding "home", it could be used with two terminal windows - one for each account involved
