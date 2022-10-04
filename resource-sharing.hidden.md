@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-28"
+lastupdated: "2022-10-04"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -46,12 +46,12 @@ This tutorial walks you through typical use cases and benefits of sharing cloud 
 When resources are shared, possibly multiple applications access and use the same resource or parts of it. This might be for various reasons including that applications and compute environments have to live in the same corporate network, or that security logs are collected in a central storage service. It requires that services in a microservice architecture can be configured to access and use external services, that the shared service authorizes access, and that the network between the services is configured to support such collaboration, but not more.
 
 Some typical use cases of resource sharing are:
-- Central management of security-related infrastructure. Monitor security from a dedicated account, aggregate security logs in a single place.
-- Coordination of network addresses and subnets. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
-- Central management of resources for disaster recovery, including backup services like [{{site.data.keyword.backup_notm}}](https://{DomainName}/docs/Backup?topic=Backup-getting-started). Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case. This includes holding multiple resource copies available world wide, e.g., stored in [replicated {{site.data.keyword.cos_short}} buckets](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-replication-overview).
-- Control costs by sharing more expensive services where possible. Not every development project including tests needs to have all services deployed as dedicated instances. Often, it is enough to share service instances - within accounts or across. Even for production environments, service instances might be shared depending on their cost / value factor and technical feasability. This can be organized by restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account), then centrally providing instances of restricted services.
-- Central management of resources on a corporate level or for a business unit. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more. Again, private catalogs and the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/Registry?topic=Registry-registry_access).
-- Make scarce resources available to more users. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
+- **Central management of security-related infrastructure**. Monitor security from a dedicated account, aggregate security logs in a single place.
+- **Coordination of network addresses and subnets**. Accounts and their applications and compute environments need to fit into the corporate network. This requires sharing of address ranges and domain names.
+- **Central management of resources for disaster recovery**, including backup services like [{{site.data.keyword.backup_notm}}](https://{DomainName}/docs/Backup?topic=Backup-getting-started). Applications and their services may be designed for high availability, but additional centrally organized resources might be available to fall back to in the worst case. This includes holding multiple resource copies available worldwide, e.g., stored in [replicated {{site.data.keyword.cos_short}} buckets](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-replication-overview).
+- **Control costs by sharing more expensive services** where possible. Not every development project including tests needs to have all services deployed as dedicated instances. Often, it is enough to share service instances - within accounts or across. Even for production environments, service instances might be shared depending on their cost / value factor and technical feasability. This can be organized by restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account), then centrally providing instances of restricted services.
+- **Central management of resources on a corporate level or for a business unit**. This could be assets needed for branding or centrally managed templates, base images (virtual machines, containers), and more. Again, private catalogs and the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/Registry?topic=Registry-registry_access) are typical services.
+- **Make scarce resources available to more users**. Sometimes, a resource type is only available in limited quantity. By sharing, more applications can benefit from it. This may require rate limiting.
 
 
 ## Sharing of security resources
@@ -64,14 +64,16 @@ Often, security is managed on a corporate level with company-wide rules in place
 
 
 The above diagram shows the scenarios which are discussed in the following:
-1. Dotted lines: Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
-2. Black lines: {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
-3. Blue lines: Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
+1. Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
+2. {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
+3. Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
+
+Sharing can be between accounts in an [IBM Cloud Enterprise environment](https://{DomainName}/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
 
 ### Encryption key management
 {: #resource-sharing-security-kms}
 
-In almost all environments, data is stored encrypted. By default, encryption is system-managed which means the encryption key is provided and maintained by the cloud provider. To increase security, customers can use their own keys by utilizing a key management service (KMS). In {{site.data.keyword.cloud_notm}}, the KMS can be either located in the same or in another account as the service using an encryption key. This allows to centrally manage encryption keys for all corporate accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
+In almost all environments, data is stored encrypted. By default, encryption is provider-managed which means the encryption key is provided and maintained by the cloud provider. To increase security, customers can use their own keys by utilizing a key management service (KMS). In {{site.data.keyword.cloud_notm}}, the KMS can be either located in the same or in another account as the service using an encryption key. This allows to centrally manage encryption keys for all corporate accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
 
 [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) support this deployment pattern. Access to them can be configured to allow central key management and thereby resource sharing across {{site.data.keyword.cloud_notm}} accounts.
 
@@ -84,7 +86,7 @@ The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compl
 ### {{site.data.keyword.at_short}}
 {: #resource-sharing-security-at}
 
-All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilzing {{site.data.keyword.atracker_short}} Event Routing, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
+All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilizing {{site.data.keyword.atracker_short}}, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
 
 
 ## Sharing of network resources
@@ -113,7 +115,7 @@ The {{site.data.keyword.tg_short}} service allows to establish connectivity betw
 ## Implementing resource sharing
 {: #resource-sharing-implementation}
 
-As stated in the introduction, it is common practice to access services outside the own (cloud) account. Depending on the level of integration, there are different ways of how to authorize service access and implement authentication. In the following, we are going to discuss the available options.
+As stated in the introduction, it is common practice to access services outside the own (cloud) account. Depending on the level of integration, there are different ways of how to authorize service access and implement authentication. Those available options are discussed in following.
 
 
 ### Authentication with passwords or API keys
@@ -145,15 +147,15 @@ The following shows the Terraform code to create a [resource with the same IAM a
 
 ```hcl
 resource "ibm_iam_authorization_policy" "cross_account_policy" {
-  source_service_account = data.ibm_iam_account_settings.account_a_settings.account_id
-  source_service_name = "cloud-object-storage"
+  source_service_account      = data.ibm_iam_account_settings.account_a_settings.account_id
+  source_service_name         = "cloud-object-storage"
   source_resource_instance_id = data.ibm_resource_instance.cos_resource_instance.guid
   
-  target_service_name = "kms"
+  target_service_name         = "kms"
   target_resource_instance_id = data.ibm_resource_instance.kms_resource_instance.guid
 
-  roles               = ["Reader"]
-  description         = "read access on Key Protect in Main Account for Account A"
+  roles                       = ["Reader"]
+  description                 = "read access on Key Protect in Main Account for Account A"
 }
 ```
 {: codeblock}
@@ -184,7 +186,7 @@ resource "ibm_cos_bucket" "cos_bucket" {
 #### Typical service to service authorizations
 {: #resource-sharing-implementation-s2sauth-services}
 
-A dependency on a key management service (KMS) like [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-getting-started-tutorial) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) is typical for cloud-based solution. A KMS instance holds the root keys for customer-managed encryption. Most services support customer-controlled encryption keys. Instead of **cos** ({{site.data.keyword.cos_short}}), many other can use a KMS instance shared across accounts.
+A dependency on a key management service (KMS) like [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-getting-started-tutorial) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) is typical for cloud-based solution. A KMS instance holds the root keys for customer-managed encryption. Most services support customer-controlled encryption keys. Instead of **cloud-object-storage** ({{site.data.keyword.cos_short}}) in the example above, many other services can use a KMS instance shared across accounts.
 
 Other typical (target) services for service to service authorization and candidates for resource sharing are:
 - [{{site.data.keyword.cos_short}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage): Several services require or are able to store data and log files in a storage bucket. This includes archival of access logs and monitoring data. Other services like {{site.data.keyword.sqlquery_short}} need to access buckets to perform data analysis. And yet another category of services need access to subscribe to change notifications to trigger the execution of actions.
@@ -199,7 +201,7 @@ Note that the above list is not complete.
 ## Summary
 {: #resource-sharing-summary}
 
-Accessing resources in different accounts, even sharing resources is common practice. There are several use case where users benefit from resource sharing. We have discussed them in the overview. A combination of user identity and password or an API key to access a resource often serves as authentication. Access can be scoped to a set of privileges, e.g., only allowing read access or some other restricted actions. Sometimes, these type of credentials can be created and managed by the accessing resource like an application or compute environment ("service binding"). An even tighter integration which does not require credentials is the concept of {{site.data.keyword.cloud_notm}} service to service authorization. The accessing resource (source) and the accessed resource (target) are identified by their properties (authentication) and an access role is assigned (authorization). Such a relationship can be even established across account boundaries. This allows for a simple to configure, but yet secure cross-account resource sharing.
+Accessing resources in different accounts, even sharing resources is common practice. There are several use cases where users benefit from resource sharing. They were discussed in the overview. A combination of user identity and password or an API key to access a resource often serves as authentication. Access can be scoped to a set of privileges, e.g., only allowing read access or some other restricted actions. Sometimes, these type of credentials can be created and managed by the accessing resource like an application or compute environment ("service binding"). An even tighter integration which does not require credentials is the concept of {{site.data.keyword.cloud_notm}} service to service authorization. The accessing resource (source) and the accessed resource (target) are identified by their properties (authentication) and an access role is assigned (authorization). Such a relationship can be even established across account boundaries. This allows for a simple to configure, but yet secure cross-account resource sharing.
 
 
 ## Related resources
