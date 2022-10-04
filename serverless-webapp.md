@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-04-26"
+lastupdated: "2022-10-04"
 lasttested: "2022-04-04"
 
 content-type: tutorial
@@ -187,7 +187,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #serverless-webapp-8}
 
-* [Deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless)
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started)

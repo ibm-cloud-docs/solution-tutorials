@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-11-30"
+  years: 2021, 2022
+lastupdated: "2022-10-04"
 lasttested: "2021-11-30"
 
 content-type: tutorial
@@ -203,7 +203,6 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Add a 3rd environment dedicated to testing.
-- Deploy the production app [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 
 ## Related Content
 {: #continuous-deployment-to-kubernetes-related}
