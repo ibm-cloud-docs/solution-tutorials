@@ -60,7 +60,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/jpetstore-kubernetes"
           ],
-          "lastUpdated": "2021-12-14"
+          "lastUpdated": "2022-10-04"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -76,7 +76,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2021-11-30"
+          "lastUpdated": "2022-10-04"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -93,7 +93,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/openshift-node-app"
           ],
-          "lastUpdated": "2022-03-18"
+          "lastUpdated": "2022-09-22"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -106,7 +106,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2022-08-23"
+          "lastUpdated": "2022-09-22"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -122,7 +122,7 @@
             "https://github.com/IBM-Cloud/patient-health-backend",
             "https://github.com/IBM-Cloud/patient-health-frontend"
           ],
-          "lastUpdated": "2022-08-23"
+          "lastUpdated": "2022-09-23"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -199,7 +199,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
           ],
-          "lastUpdated": "2022-04-13"
+          "lastUpdated": "2022-10-04"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -217,21 +217,6 @@
           "lastUpdated": "2022-07-05"
         },
         {
-          "name": "Serverless web application and API",
-          "url": "serverless-api-webapp.html",
-          "description": "Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.",
-          "imgSrc": "images/solution8/Architecture.png",
-          "tags": [
-            "Cloud Functions",
-            "API Gateway",
-            "Cloudant NoSQL DB"
-          ],
-          "repos": [
-            "https://github.com/IBM-Cloud/serverless-guestbook"
-          ],
-          "lastUpdated": "2022-04-11"
-        },
-        {
           "name": "Serverless web application and API with Code Engine",
           "url": "serverless-webapp.html",
           "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
@@ -244,19 +229,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2022-04-26"
-        },
-        {
-          "name": "Deploy serverless apps across multiple regions",
-          "url": "multi-region-serverless.html",
-          "description": "Use Cloud Functions and Internet Services to build globally available and secure serverless applications.",
-          "imgSrc": "images/solution44-multi-region-serverless/Architecture.png",
-          "tags": [
-            "Internet Services",
-            "Cloud Functions",
-            "Certificate Manager"
-          ],
-          "lastUpdated": "2022-09-06"
+          "lastUpdated": "2022-10-04"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -333,20 +306,6 @@
       "anchor": "security",
       "solutions": [
         {
-          "name": "Secure web application across multiple regions",
-          "url": "multi-region-webapp.html",
-          "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
-          "imgSrc": "images/solution1/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "Continuous Delivery",
-            "Cloud Internet Services",
-            "Security"
-          ],
-          "lastUpdated": "2021-11-25"
-        },
-        {
           "name": "Resilient and secure multi-region Kubernetes clusters",
           "url": "multi-region-k8s-cis.html",
           "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
@@ -360,7 +319,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-09-06"
+          "lastUpdated": "2022-09-12"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -422,7 +381,7 @@
           "name": "Build a data lake with Object Storage",
           "url": "smart-data-lake.html",
           "description": "Provide tools to data scientists to query data using Data Engine (formerly SQL Query) and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
-          "imgSrc": "images/solution29/architecture.png",
+          "imgSrc": "images/solution29/Smart-Data-Lake-Architecture.png",
           "tags": [
             "Cloud Object Storage",
             "SQL Query",
@@ -614,7 +573,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ],
-          "lastUpdated": "2022-09-06"
+          "lastUpdated": "2022-09-20"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",
@@ -776,7 +735,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-09-20"
         },
         {
           "name": "VMware vCenter",
@@ -787,7 +746,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-02-17"
+          "lastUpdated": "2022-09-20"
         },
         {
           "name": "VMware VSAN",
@@ -820,7 +779,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-09-20"
         },
         {
           "name": "VMware PGWIP",
@@ -842,7 +801,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-27"
+          "lastUpdated": "2022-09-20"
         },
         {
           "name": "VMware Deploy NSX-T Managers",
@@ -864,7 +823,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2022-09-20"
         }
       ]
     },
@@ -883,7 +842,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vmware-solutions-shared"
           ],
-          "lastUpdated": "2022-04-21"
+          "lastUpdated": "2022-09-15"
         }
       ]
     }
