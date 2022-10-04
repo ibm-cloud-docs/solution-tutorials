@@ -530,7 +530,7 @@
                "name": "Build a data lake with Object Storage",
                "url": "smart-data-lake.html",
                "description": "Provide tools to data scientists to query data using Data Engine (formerly SQL Query) and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
-               "imgSrc": "images/solution29/architecture.png",
+               "imgSrc": "images/solution29/Smart-Data-Lake-Architecture.png",
                "tags": [
                   "Cloud Object Storage",
                   "SQL Query",
