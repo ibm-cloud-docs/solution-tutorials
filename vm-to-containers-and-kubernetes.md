@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-14"
+  years: 2021, 2022
+lastupdated: "2022-10-04"
 lasttested: "2021-11-30"
 
 ---
@@ -354,6 +354,5 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - [Best practices solution guide](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
 - [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
-- Deploy the production cluster [across multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 - Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) for high availability.
 - Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://konveyor.io/move2kube/).

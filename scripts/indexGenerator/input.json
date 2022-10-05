@@ -315,26 +315,6 @@
                ]
             },
             {
-               "name": "Serverless web application and API",
-               "url": "serverless-api-webapp.html",
-               "description": "Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.",
-               "imgSrc": "images/solution8/Architecture.png",
-               "tags": [
-                  "Cloud Functions",
-                  "API Gateway",
-                  "Cloudant NoSQL DB"
-               ],
-               "requirements": [
-                  "cloud_functions",
-                  "cloudant",
-                  "api_gateway"
-               ],
-               "supportsCloudShell": "yes_with_modifications",
-               "repos": [
-                  "https://github.com/IBM-Cloud/serverless-guestbook"
-               ]
-            },
-            {
                "name": "Serverless web application and API with Code Engine",
                "url": "serverless-webapp.html",
                "description": "Create a serverless web application by hosting static website content in Cloud Object Storage and using Code Engine and Cloudant to implement the application backend.",
@@ -353,23 +333,6 @@
                "repos": [
                   "https://github.com/IBM-Cloud/serverless-guestbook"
                ]
-            },
-            {
-               "name": "Deploy serverless apps across multiple regions",
-               "url": "multi-region-serverless.html",
-               "description": "Use Cloud Functions and Internet Services to build globally available and secure serverless applications.",
-               "imgSrc": "images/solution44-multi-region-serverless/Architecture.png",
-               "tags": [
-                  "Internet Services",
-                  "Cloud Functions",
-                  "Certificate Manager"
-               ],
-               "requirements": [
-                  "cloud_functions",
-                  "cloud_internet_services",
-                  "certificate_manager"
-               ],
-               "supportsCloudShell": "not_applicable"
             },
             {
                "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -462,25 +425,6 @@
          "name": "Security",
          "anchor": "security",
          "solutions": [
-            {
-               "name": "Secure web application across multiple regions",
-               "url": "multi-region-webapp.html",
-               "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
-               "imgSrc": "images/solution1/Architecture.png",
-               "tags": [
-                  "Cloud Foundry",
-                  "Node.js",
-                  "Continuous Delivery",
-                  "Cloud Internet Services",
-                  "Security"
-               ],
-               "requirements": [
-                  "cloud_internet_services",
-                  "continuous_delivery"
-               ],
-               "supportsCloudShell": "yes_with_modifications",
-               "cloudShellComments": "do not modify now, wait for future cloud shell IDE support"
-            },
             {
                "name": "Resilient and secure multi-region Kubernetes clusters",
                "url": "multi-region-k8s-cis.html",
@@ -586,7 +530,7 @@
                "name": "Build a data lake with Object Storage",
                "url": "smart-data-lake.html",
                "description": "Provide tools to data scientists to query data using Data Engine (formerly SQL Query) and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
-               "imgSrc": "images/solution29/architecture.png",
+               "imgSrc": "images/solution29/Smart-Data-Lake-Architecture.png",
                "tags": [
                   "Cloud Object Storage",
                   "SQL Query",

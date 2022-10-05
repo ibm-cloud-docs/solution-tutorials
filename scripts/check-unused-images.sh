@@ -4,8 +4,8 @@ errorCount=0
 
 echo "Checking for unused images..."
 for image in $(find images -type f \( -iname \*.jpg -o -iname \*.png -o -iname \*.svg \)); do
-  if ! grep -q $image *.md; then
-    echo $image not found in markdown files
+  if ! grep -q $image *.md scripts/indexGenerator/input.json; then
+    echo rm $image
     errorCount=$((errorCount+1))
     errorCode=1
   fi
@@ -17,5 +17,4 @@ else
   echo "Detected $errorCount unused images"
 fi
 
-# don't fail the build just yet
-# exit $errorCode
+exit $errorCode
