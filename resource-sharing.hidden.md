@@ -63,7 +63,7 @@ Often, security is managed on a corporate level with company-wide rules in place
 {: style="text-align: center;"}
 
 
-The above diagram shows the scenarios which are discussed in the following:
+The above diagram shows the following scenarios:
 1. Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
 2. {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
 3. Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
@@ -88,7 +88,7 @@ The [{{site.data.keyword.compliance_short}}](https://{DomainName}/security-compl
 
 All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilizing {{site.data.keyword.atracker_short}}, the security records can be centralized to one or few instances with either event search (logdna) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an earlier detection.
 
-## {{site.data.keyword.la_short}}
+### {{site.data.keyword.la_short}}
 {: #resource-sharing-security-la}
 
 {{site.data.keyword.la_full}} allows managing operating system logs, application logs, and platform logs and provides search and filtering capabilities. Logs can be streamed from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure-l2l). Thus, by streaming to a central instance, logs can be consolidated for analysis in greater context, thereby improving (security) insights.
@@ -217,7 +217,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 |{{site.data.keyword.keymanagementserviceshort}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys|
 |{{site.data.keyword.hscrypto}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys|
 |**Network**||
-|{{site.data.keyword.tg_short}}|Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
+|{{site.data.keyword.tg_short}}|[Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
 |{{site.data.keyword.dns_short}}|[Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)|
 |**Account settings**||
 |Catalog|Restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account)|
