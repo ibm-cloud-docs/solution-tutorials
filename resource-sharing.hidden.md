@@ -59,7 +59,7 @@ Some typical use cases of resource sharing are:
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
 
-![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg){: class="center"}{: caption="Sharing of security-related resources" caption-side="bottom"}
+![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}{: class="center"}
 {: style="text-align: center;"}
 
 
