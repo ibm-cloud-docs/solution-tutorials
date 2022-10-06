@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-05"
+lastupdated: "2022-10-06"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -75,7 +75,7 @@ Sharing can be between accounts in an [IBM Cloud Enterprise environment](https:/
 
 In almost all environments, data is stored encrypted. By default, encryption is provider-managed which means the encryption key is provided and maintained by the cloud provider. To increase security, customers can use their own keys by utilizing a key management service (KMS). In {{site.data.keyword.cloud_notm}}, the KMS can be either located in the same or in another account as the service using an encryption key. This allows to centrally manage encryption keys for all corporate accounts. That way, it is possible to monitor usage and invalidate encryption keys when needed.
 
-[{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) support this deployment pattern. Access to them can be configured to allow central key management and thereby resource sharing across {{site.data.keyword.cloud_notm}} accounts.
+[{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) support this deployment pattern. You can configure access to an entire instance or, for enhanced security, to individual [key rings - a collection of keys](https://{DomainName}/docs/key-protect?topic=key-protect-grouping-keys). [{{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui) even enables you to orchestrate encryption keys across key stores at different cloud providers.
 
 ### {{site.data.keyword.compliance_short}}
 {: #resource-sharing-security-scc}
@@ -214,8 +214,9 @@ Accessing resources in different accounts, even sharing resources is common prac
 |{{site.data.keyword.compliance_short}}|[Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account)|
 |{{site.data.keyword.at_short}}|[Route your {{site.data.keyword.at_short}} events to another account](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)|
 |{{site.data.keyword.la_short}}| Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
-|{{site.data.keyword.keymanagementserviceshort}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys|
-|{{site.data.keyword.hscrypto}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys|
+|{{site.data.keyword.keymanagementserviceshort}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
+|{{site.data.keyword.hscrypto}}| Use [service to service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
+|{{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
 |**Network**||
 |{{site.data.keyword.tg_short}}|[Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
 |{{site.data.keyword.dns_short}}|[Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)|
