@@ -189,7 +189,7 @@ resource "ibm_cos_bucket" "cos_bucket" {
 {: codeblock}
 
 You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
-{: note}
+{: tip}
 
 
 #### Typical service to service authorizations
@@ -230,8 +230,8 @@ Accessing resources in different accounts, even sharing resources is common prac
 |{{site.data.keyword.cloudant_short_notm}}|[Data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)|
 |{{site.data.keyword.databases-for}}|[Restore backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)|
 
-You can find code examples for some of those service in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
-{: note}
+You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
+{: tip}
 
 ## Related resources
 {: #resource-sharing-related_resources}
