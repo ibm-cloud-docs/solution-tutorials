@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-06"
+lastupdated: "2022-10-12"
 lasttested: "2022-09-12"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -187,6 +187,10 @@ resource "ibm_cos_bucket" "cos_bucket" {
 }
 ```
 {: codeblock}
+
+You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
+{: note}
+
 
 #### Typical service to service authorizations
 {: #resource-sharing-implementation-s2sauth-services}
