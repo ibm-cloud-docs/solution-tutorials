@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-13"
-lasttested: "2022-10-13"
+lastupdated: "2022-10-14"
+lasttested: "2022-10-14"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -190,7 +190,7 @@ resource "ibm_cos_bucket" "cos_bucket" {
 ```
 {: codeblock}
 
-You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
+You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing).
 {: tip}
 
 
@@ -199,10 +199,10 @@ You can find more examples in the GitHub repository [cross-account-resource-shar
 
 A dependency on a key management service (KMS) like [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-getting-started-tutorial) and [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) is typical for cloud-based solution. A KMS instance holds the root keys for customer-managed encryption. Most services support customer-controlled encryption keys. Instead of **cloud-object-storage** ({{site.data.keyword.cos_short}}) in the example above, many other services can use a KMS instance shared across accounts.
 
-Other typical (target) services for service to service authorization and candidates for resource sharing are:
+Other typical (target) services for service to service authorization and candidates for resource sharing include:
 - [{{site.data.keyword.cos_short}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage): Several services require or are able to store data and log files in a storage bucket. This includes archival of access logs and monitoring data. Other services like {{site.data.keyword.sqlquery_short}} need to access buckets to perform data analysis. And yet another category of services need access to subscribe to change notifications to trigger the execution of actions.
 - [{{site.data.keyword.en_short}}](https://{DomainName}/docs/event-notifications?topic=event-notifications-getting-started): To push out information about events to subscribers, service instances need to access an {{site.data.keyword.en_short}} instance.
-- [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) stores and provides to other services IAM API keys, SSL/TLS certificates, and other secrets. Hence, the dependent (source) services need to access {{site.data.keyword.secrets-manager_short}}.
+- [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started): This service stores and provides to other services IAM API keys, SSL/TLS certificates, and other secrets. Hence, the dependent (source) services need to access {{site.data.keyword.secrets-manager_short}}.
 - [{{site.data.keyword.cis_short}}](https://{DomainName}/docs/cis?topic=cis-getting-started): It manages domain names and other network data and, therefore, can be used for, e.g., certificate validation.
 
 Note that the above list is not complete.
@@ -232,7 +232,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 |{{site.data.keyword.cloudant_short_notm}}|[Data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)|
 |{{site.data.keyword.databases-for}}|[Restore backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)|
 
-You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/data-henrik/cross-account-resource-sharing).
+You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing).
 {: tip}
 
 ## Related resources
