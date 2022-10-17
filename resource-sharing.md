@@ -145,7 +145,7 @@ IAM supports to establish a service to service authorizations between a source s
 
 In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account. 
 
-![Grant a service to service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: class="center"}
+![Grant a service to service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: caption="Grant a service to service authorization" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
