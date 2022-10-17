@@ -447,6 +447,13 @@
           ],
           "guide": true,
           "lastUpdated": "2021-12-09"
+        },
+        {
+          "name": "Resource sharing across accounts",
+          "url": "resource-sharing.html",
+          "description": "Benefits and implementation of sharing cloud resources across accounts.",
+          "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg",
+          "lastUpdated": "2022-10-17"
         }
       ]
     },

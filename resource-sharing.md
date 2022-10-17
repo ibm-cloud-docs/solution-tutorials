@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-14"
-lasttested: "2022-10-14"
+lastupdated: "2022-10-17"
+lasttested: "2022-10-17"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -61,7 +61,7 @@ Some typical use cases of resource sharing are:
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
 
-![Sharing of security-related resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}{: class="center"}
+![Sharing of security-related resources](images/solution65-resource-sharing/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}{: class="center"}
 {: style="text-align: center;"}
 
 
@@ -102,7 +102,7 @@ All {{site.data.keyword.cloud_notm}} services produce events for security-relate
 Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
 
 
-![Sharing of network resources](images/solution-resource-sharing-hidden/resource-sharing-architecture-network.svg){: class="center"}{: caption="Sharing of network resources" caption-side="bottom"}
+![Sharing of network resources](images/solution65-resource-sharing/resource-sharing-architecture-network.svg){: class="center"}{: caption="Sharing of network resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The {{site.data.keyword.tg_short}} service is used to interconnect VPC environments and classic infrastructure across the three accounts.
@@ -145,7 +145,7 @@ IAM supports to establish a service to service authorizations between a source s
 
 In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account. 
 
-![Grant a service to service authorization](images/solution-resource-sharing-hidden/grant_service_authorization.png){: class="center"}
+![Grant a service to service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: class="center"}
 {: style="text-align: center;"}
 
 
