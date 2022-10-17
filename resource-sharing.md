@@ -61,8 +61,7 @@ Some typical use cases of resource sharing are:
 
 Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
 
-![Sharing of security-related resources](images/solution65-resource-sharing/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}{: class="center"}
-{: style="text-align: center;"}
+![Sharing of security-related resources](images/solution65-resource-sharing/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}
 
 
 The above diagram shows the following scenarios:
@@ -102,8 +101,7 @@ All {{site.data.keyword.cloud_notm}} services produce events for security-relate
 Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
 
 
-![Sharing of network resources](images/solution65-resource-sharing/resource-sharing-architecture-network.svg){: caption="Sharing of network resources" caption-side="bottom"}{: class="center"}
-{: style="text-align: center;"}
+![Sharing of network resources](images/solution65-resource-sharing/resource-sharing-architecture-network.svg){: caption="Sharing of network resources" caption-side="bottom"}
 
 1. The {{site.data.keyword.tg_short}} service is used to interconnect VPC environments and classic infrastructure across the three accounts.
 2. Each account has a {{site.data.keyword.dns_short}} instance to manage private domain names. The instances are connected to share DNS zones.
