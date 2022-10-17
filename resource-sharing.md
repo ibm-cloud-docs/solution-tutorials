@@ -102,7 +102,7 @@ All {{site.data.keyword.cloud_notm}} services produce events for security-relate
 Designing and developing cloud native apps in an enterprise context often involves coordinating regarding network resources like address ranges and subnets, domain names, and routing of traffic. The different accounts and their applications and compute environments need to fit into the corporate network and its structure. This requires sharing of network resources.
 
 
-![Sharing of network resources](images/solution65-resource-sharing/resource-sharing-architecture-network.svg){: class="center"}{: caption="Sharing of network resources" caption-side="bottom"}
+![Sharing of network resources](images/solution65-resource-sharing/resource-sharing-architecture-network.svg){: caption="Sharing of network resources" caption-side="bottom"}{: class="center"}
 {: style="text-align: center;"}
 
 1. The {{site.data.keyword.tg_short}} service is used to interconnect VPC environments and classic infrastructure across the three accounts.
@@ -146,7 +146,6 @@ IAM supports to establish a service to service authorizations between a source s
 In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account. 
 
 ![Grant a service to service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: caption="Grant a service to service authorization" caption-side="bottom"}
-{: style="text-align: center;"}
 
 
 The following shows the Terraform code to create a [resource with the same IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
