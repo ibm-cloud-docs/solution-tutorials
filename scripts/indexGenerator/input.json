@@ -33,12 +33,6 @@
                "imgSrc": ""
             },
             {
-               "name": "Resource sharing across accounts",
-               "url": "resource-sharing.hidden.html",
-               "description": "Benefits and implementation of sharing cloud resources across accounts.",
-               "imgSrc": ""
-            },
-            {
                "name": "Introduction to Satellite locations, clusters, link and config",
                "url": "satellite-tour.hidden.html",
                "description": "Get familiar with Satellite architecture and capabilities.",
@@ -617,7 +611,14 @@
                "requirements": [],
                "guide": true,
                "supportsCloudShell": "not_applicable"
+            },
+            {
+               "name": "Resource sharing across accounts",
+               "url": "resource-sharing.html",
+               "description": "Benefits and implementation of sharing cloud resources across accounts.",
+               "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg"
             }
+
          ]
       },
       {

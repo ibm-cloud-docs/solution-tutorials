@@ -25,7 +25,6 @@ toc:
                 label: (Hidden) Work In Progress
                 topics:
                 - solution-template.md
-                - resource-sharing.hidden.md
                 - satellite-tour.hidden.md
 
             - topicgroup:
@@ -72,6 +71,7 @@ toc:
                 label: Identity and Access Management
                 topics:
                 - users-teams-applications.md
+                - resource-sharing.md
 
             - topicgroup:
                 label: Virtual Private Cloud
