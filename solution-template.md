@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-02-22"
+lastupdated: "2022-10-18"
 lasttested: "2022-02-22"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -53,7 +53,6 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
    * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
    * `dev` plugin,
 * a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,

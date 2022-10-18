@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-06-21"
+lastupdated: "2022-10-18"
 lasttested: "2021-12-09"
 
 ---
@@ -462,7 +462,6 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
 1. Install the following plugins:
    ```sh
    ibmcloud plugin install container-registry
-   ibmcloud plugin install cloud-functions
    ibmcloud plugin install cloud-object-storage
    ibmcloud plugin install kubernetes-service
    ibmcloud cf install
