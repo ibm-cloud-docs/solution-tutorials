@@ -143,10 +143,6 @@ toc:
                 - plan-create-update-deployments.md
 
             - topicgroup:
-                label: Cloud Functions
-                topics:
-
-            - topicgroup:
                 label: Code Engine
                 topics:
                 - mean-stack.md

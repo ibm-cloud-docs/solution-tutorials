@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-04"
+lastupdated: "2022-10-18"
 lasttested: "2022-04-04"
 
 content-type: tutorial
@@ -164,7 +164,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 {: #serverless-webapp-cleanup}
 {: step}
 
-To delete the created bucket and {{site.data.keyword.openwhisk_short}} service:
+To delete the created bucket and {{site.data.keyword.cos_short}} service:
 1. Navigate to the {{site.data.keyword.cos_short}} bucket objects
 1. Check the box in the title row to select all objects in the bucket
 1. Click **Delete objects**

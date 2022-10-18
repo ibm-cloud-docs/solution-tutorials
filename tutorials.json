@@ -3,7 +3,6 @@
     "Kubernetes",
     "OpenShift",
     "Cloud Foundry",
-    "Cloud Functions",
     "Code Engine",
     "Virtual Servers"
   ],
@@ -453,7 +452,7 @@
           "url": "resource-sharing.html",
           "description": "Benefits and implementation of sharing cloud resources across accounts.",
           "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg",
-          "lastUpdated": "2022-10-17"
+          "lastUpdated": "2022-10-18"
         }
       ]
     },
