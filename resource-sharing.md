@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-18"
+lastupdated: "2022-10-19"
 lasttested: "2022-10-17"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -220,6 +220,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 |{{site.data.keyword.keymanagementserviceshort}}| Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
 |{{site.data.keyword.hscrypto}}| Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
 |{{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
+|{{site.data.keyword.secrets-manager_short}}|[Integrations for {{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-integrations)|
 |**Network**||
 |{{site.data.keyword.tg_short}}|[Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
 |{{site.data.keyword.dns_short}}|[Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)|
