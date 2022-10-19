@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-09-20"
+  years: 2022
+lastupdated: "2022-10-19"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -112,7 +112,7 @@ In this section, you will walk through the components that make up a {{site.data
 3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
    * a set of hosts has been assigned to the location **Control plane**.
    * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **{{site.data.keyword.redhat_openshift_notm}} clusters**.
-   * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-hosts#host-autoassign-ov) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
+   * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-assigning-hosts#host-autoassign) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 
 ### Using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
@@ -234,6 +234,7 @@ Looking at the value for `url`, notice that this instance is using a private end
 1. Make note of the **Endpoint address** as you will need it in a later step.
 
 With these steps you enabled, over a secured link, the connectivity between the {{site.data.keyword.nlufull}} service instance and the applications running in the {{site.data.keyword.satelliteshort}} location.
+{: tip}
 
 ## Deploy a test application to a {{site.data.keyword.satelliteshort}} cluster
 {: #satellite-tour-deploy}
@@ -268,20 +269,21 @@ In this section, you will deploy a simple application to test the connectivity b
    ```
    {: pre}
    
-1. Open the route URL to access the application in a new browser tab. You may need to refresh the tab until the application becomes fully available.
+1. Open the route URL to access the application in a new browser tab. Wait a few seconds for the application to become ready. You may need to refresh the tab until the application becomes fully available.
 
 ### Test the application
 {: #satellite-tour-deploy-test}
 
 The application allows you to connect to {{site.data.keyword.nlushort}} service and analyze text. Click on **Switch to Natural Language Understanding**. The form prompts you for the service credentials. These credentials will be sent to the application running in the cluster and the connection will be made to the {{site.data.keyword.nlushort}} service over {{site.data.keyword.satelliteshort}} link.
 
-1. Using the {{site.data.keyword.satelliteshort}} link endpoint address and {{site.data.keyword.nlushort}} credentials obtained in previous sections:
-   1. Set the value for `url` to the endpoint address. It should be of the form `host:port`.
-   1. Set the `API key` to the {{site.data.keyword.nlushort}} API key.
+1. Retrieve the {{site.data.keyword.satelliteshort}} link endpoint address and {{site.data.keyword.nlushort}} credentials that you took note of in the previous sections.
+1. Set the value for `url` to the endpoint address. It should be of the form `host:port`.
+1. Set the `API key` to the {{site.data.keyword.nlushort}} API key from the credentials.
 1. Click on **Connect** to check the connection to the service.
 1. Once successfully connected, a default text is provided for the text analysis. Click on **Analyze** to see the JSON response from the {{site.data.keyword.nlushort}} service. Try out some other text for analysis.
 
 This simple application demonstrated how you can make any service running in {{site.data.keyword.Bluemix_notm}} available to your {{site.data.keyword.satelliteshort}} location over a secured connection provided by {{site.data.keyword.satelliteshort}} Link.
+{: tip}
 
 ## Review the logging and monitoring dashboards for the location
 {: #satellite-tour-observe-location}
@@ -334,10 +336,11 @@ With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/
 
 1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) tab.
 1. Create a new cluster group by clicking on **Create cluster group**. Provide a unique name such as `<your-initials>-cluster-group`.
-1. Check the cluster you previously deployed your app to.
+1. Select the cluster you previously deployed your app to.
 1. Click on **Create**.
 
-You have now defined a set of clusters to consistently deploy Kubernetes resources to.
+You have now defined set of clusters to consistently deploy Kubernetes resources to.
+{: tip}
 
 ### Create a configuration and a first version
 {: #satellite-tour-configuration}
@@ -383,6 +386,7 @@ Finally, you will map the version to a set of clusters.
 1. Click on **Create**.
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the clusters.
+{: tip}
 
 ### Check the deployed resources
 {: #satellite-tour-deployed}
@@ -418,6 +422,7 @@ To deploy an update to the resources, you can create a new version.
    {: pre}
 
 In this example, we deployed a simple ConfigMap but you could be deploying a full solution stack using {{site.data.keyword.satelliteshort}} Config and manage your fleet of clusters centrally.
+{: tip}
 
 ## Remove resources
 {: #satellite-tour-removeresources}
