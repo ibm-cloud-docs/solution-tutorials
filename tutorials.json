@@ -17,7 +17,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2022-06-21"
+          "lastUpdated": "2022-10-18"
         }
       ]
     },
@@ -228,7 +228,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2022-10-04"
+          "lastUpdated": "2022-10-18"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -452,7 +452,7 @@
           "url": "resource-sharing.html",
           "description": "Benefits and implementation of sharing cloud resources across accounts.",
           "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg",
-          "lastUpdated": "2022-10-18"
+          "lastUpdated": "2022-10-19"
         }
       ]
     },

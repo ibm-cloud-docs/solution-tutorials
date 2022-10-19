@@ -39,6 +39,12 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
+            },
+            {
+               "name": " Getting started on IBM Cloud checklist",
+               "url": "checklist-get-started-cloud.hidden.html",
+               "description": "Get started with IBM Cloud.",
+               "imgSrc": ""
             }
          ]
       },
@@ -617,7 +623,6 @@
                "description": "Benefits and implementation of sharing cloud resources across accounts.",
                "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg"
             }
-
          ]
       },
       {
