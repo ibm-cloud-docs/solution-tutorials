@@ -98,9 +98,6 @@ For additional resources on related topics, please see below:
 | ![Checklist](images/checklist-hidden/checklist.svg)  | **Setup Multi-factor Authentication**. \n Multifactor authentication (MFA) adds an extra layer of security to your account by requiring all users to authenticate by using an additional authentication factor beyond an ID and password. This is also commonly known as two-factor authentication (2FA). \n Review the [types of multifactor authentication](/docs/account?topic=account-types&interface=ui){: external} that can be enabled for your account. \n Follow the steps in [enabling MFA for your account](/docs/account?topic=account-enablemfa&interface=ui){: external} to configure the setting that is most appropriate for your company.|
 {: caption="Table 3. Getting started tasks for securing your account and resources" caption-side="top"} 
 
-For additional resources on related topics, please see the table below:
-* Configuring the IAM credentials engine in {{site.data.keyword.keymanagementserviceshort}}
-
 
 ## Billing and Usage
 {: #billing-usage}
@@ -118,6 +115,7 @@ For additional resources on related topics, please see below:
 * [Usage Reports API/SDK](/apidocs/metering-reporting){: external}
 * [Enterprise Billing Units API/SDK](/apidocs/enterprise-apis/billing-unit){: external}.
 * [Enterprise Usage Reports API/SDK](/apidocs/enterprise-apis/resource-usage-reports){: external}.
+
 
 ## Connecting your network to {{site.data.keyword.cloud_notm}}
 {: #network}
@@ -167,6 +165,7 @@ For additional resources on related topics, please see below:
 
 For additional resources on related topics, please see below:
 * [User Management API/SDK](/apidocs/user-management){: external}.
+
 
 ## Getting support
 {: #support}
