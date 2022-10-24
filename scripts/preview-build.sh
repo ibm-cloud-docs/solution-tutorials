@@ -91,8 +91,8 @@ done
 # revert the "?topic" links to plain html files
 sed -i 's/"\/cloud-docs\/solution-tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
-# check that there is no "{{site" not replaced in the output, ignoring binaries
-if grep -rI "{{site" --exclude=conref-table.html --exclude=index.html --exclude vscodesnippets.json builddocs/output
+# check that there is no "{site" not replaced in the output, ignoring binaries
+if grep -rI "{site" --exclude=conref-table.html --exclude=index.html --exclude vscodesnippets.json builddocs/output
 then
   echo "Found incorrect references"
   exit 1
