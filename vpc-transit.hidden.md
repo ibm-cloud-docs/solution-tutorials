@@ -50,7 +50,7 @@ This tutorial walks you through a complete example demonstrating the network con
 There is a companion GitHub repository with instructions on how to build and test the architecture.  If follows the layers defined in this tutorial.  It allows you to demonstrate connectivity problems and solutions as layers are added.
 
 ## Architecture:
-![vpc-transit-overview](./images/solution-satellite-tour-hidden/vpc-transit-overview.png){: class="center"}
+![vpc-transit-overview](./images/vpc-transit-hidden/vpc-transit-overview.png){: class="center"}
 {: style="text-align: center;"}
 
 The diagram above shows an enterprise data center connected to the IBM cloud.  The VPCs are arranged in a hub and spoke model.  All enterprise traffic flows through the transit VPC.  A separate DNS instance and cloud service instances are associated and managed by a spoke team. Each spoke could be implemented in an account of an IBM Enterperise Account todo link.  This solution tutorial will demonstrate the architecture in a single account.
@@ -60,7 +60,7 @@ The diagram above shows an enterprise data center connected to the IBM cloud.  T
 {: step}
 
 todo layer-background 
-![vpc-transit-vpc-layout](./images/solution-satellite-tour-hidden/vpc-transit-vpc-layout.png){: class="center"}
+![vpc-transit-vpc-layout](./images/vpc-transit-hidden/vpc-transit-vpc-layout.png){: class="center"}
 {: style="text-align: center;"}
 
 The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in a multi zone region (todo link mzr definition) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
