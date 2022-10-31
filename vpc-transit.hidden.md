@@ -6,7 +6,7 @@ lastupdated: "2022-10-31"
 lasttested: "2022-10-31"
 
 content-type: tutorial
-services: vpc, dns-svcs
+services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
 account-plan: paid
 completion-time: 2h
 ---
@@ -24,7 +24,7 @@ completion-time: 2h
 # Build VPC Hub and Spoke and extended to On Premises via a Transit VPC
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, account, transit-gateway, dns-svcs", "todo"}
+{: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -64,10 +64,60 @@ todo layer-background
 The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in a multi zone region (todo link mzr definition) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
 
 There are a few subnets in the the transit and spokes:
-- worker - Worker instances, load balancers, ROCS todo can be added into this subnet
-- firewall - firewall router
-- vpe - all of the Virtual Endpoint Gateways for cloud services
+- workers - Worker subnets for load balancers, ROCS todo, VPC instances that each spoke group will be producing.
+- firewall - firewall router.
+- vpe - all of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
 - dns - For DNS locations (todo link).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
+
+There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) that can be used to follow along as the resources are created.  Clone and initialize the files **local.env** and **config_tf/terraform.tfvars**.  The APIKEY in local.env is a secret that should not be shared.  The config_tf/terraform.tfvars has an initial section that requires modification.
+
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-transit
+   cd vpc-transit
+   cp template.local.env local.env
+   vi local.env; # make the suggested change
+   source local.env
+   ```
+   {: codeblock}
+
+   ```
+   cp config_tf/template.terraform.tfvars config_tf/terraform.tfvars
+   vi config_tf/terraform.tfvars; # make the initial changes suggested
+   ```
+   {: codeblock}
+
+Each section will apply one or more layers to the diagram.  You could cd into the directory and execute the terraform commands as shown for **config_tf**:
+
+   ```sh
+   cd config_tf
+   terraform init
+   terraform apply 
+   cd ..
+   ```
+   {: codeblock}
+
+Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  Try it out:
+
+   ```sh
+   ./apply.sh -p; # print only do not apply any changes
+   ```
+   {: codeblock}
+
+Results will look something like this indicating the order of execution.  You could apply all of the layers configured by execting `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_spokes_tf).
+
+   ```sh
+   $ ./apply.sh : : -p
+   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf spokes_egress_tf all_firewall_tf dns_tf vpe_transit_tf vpe_spokes_tf
+   >>> success
+   ```
+   {: codeblock}
+
+In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf, to verify this and then do it try the following:
+
+   ```sh
+   ./apply.sh -p : spokes_tf
+   ./apply.sh : spokes_tf
+   ```
 
 ## STEP Testing
 {: #vpc-transit-testing}
