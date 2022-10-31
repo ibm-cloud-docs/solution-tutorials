@@ -45,6 +45,12 @@
                "url": "checklist-get-started-cloud.hidden.html",
                "description": "Get started with IBM Cloud.",
                "imgSrc": ""
+            },
+            {
+               "name": " Build a VPC and Spoke extended to On Premises via a Transit VPC",
+               "url": "vpc-transit.hidden.html",
+               "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
+               "imgSrc": "images/solution-satellite-tour-hidden/vpc-transit-overview.png"
             }
          ]
       },
