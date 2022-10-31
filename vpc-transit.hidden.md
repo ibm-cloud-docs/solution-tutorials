@@ -6,8 +6,6 @@ lastupdated: "2022-10-31"
 lasttested: "2022-10-31"
 subcollection: overview
 
-
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vpc, transit-gateway, dns-svcs, todo
 account-plan: paid
