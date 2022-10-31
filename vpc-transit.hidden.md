@@ -4,7 +4,6 @@ copyright:
   years: 2022
 lastupdated: "2022-10-31"
 lasttested: "2022-10-31"
-subcollection: overview
 
 content-type: tutorial
 services: vpc, transit-gateway, dns-svcs, todo
@@ -22,7 +21,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Build VPC Hub and Spoke extended to On Premises via a Transit VPC
+# Build VPC Hub and Spoke and extended to On Premises via a Transit VPC
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, account, transit-gateway, dns-svcs", "todo"}
