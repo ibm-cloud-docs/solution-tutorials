@@ -30,9 +30,28 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-{{site.data.keyword.vpc_full}} (VPC) is private blahblah.
+The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the cloud.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other using Transit Gateway.
 
-A hub and spoke model connects multiple VPCs via transit gateway.  Each VPC can be managed by a different team. ...
+A hub and spoke model connects multiple VPCs via transit gateway.  Each VPC could be managed by a different team. The isolation and connectivity support a number of scenarios:
+
+- The hub can be the respository for shared microservices used by some spokes
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by some spokes.
+- The hub can be a central point of traffic routing between on premises and the cloud.
+- Enterprise to cloud traffic can be routed, monitored, and logged through a Virtual Network Function, VNF, appliance in the hub
+- The hub can also can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterperise.
+- The hub can hold the VPN resources that are shared by the spokes.
+
+This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the possible paths. The thin layers help the reader modify or eliminate layers in order to model an environment.
+
+
+ During the journey we will explore:
+- VPC egress and ingress routing
+- Virtual private endpoint gateways
+- Transit Gateway
+- DNS resolution
+- Virtual Network Functions with optional Network Load Balancers to support high availability
+
+A layered architecture will introduce resources and allow connectivity to be provided.  Each layer will add connectivity. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
 This tutorial walks you through a complete example demonstrating the network connectivity, routing, DNS name resolution and other details that potentially need to be considered when stiching together multi VPC architectures.  A layered presentation approach allows you to pick and choose parts of this tutorial that might be applicable in your environment.
 {: shortdesc}
