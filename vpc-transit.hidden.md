@@ -138,45 +138,78 @@ In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf, 
    ./apply.sh : spokes_tf
    ```
 
-## STEP Testing
+## Testing
 {: #vpc-transit-testing}
 {: step}
 VPC Virtual Server Instances, VSIs, can be provisioned to test the network connectivity. A test instance will be added to each of the worker subnets or one per zone in the enterprise, transit and each of the spokes.  If the default configuratio of 2 zones and 2 spokes is used then 8 instances will be provisioned.
 
-```
-./apply.sh test_instances_tf
-```
+   ```sh
+   ./apply.sh test_instances_tf
+   ```
+   {: codeblock}
 
-The python py/test_transit.py pytest script tests the connectivity of the test instances.  Each test will ssh to one of the instances and perform different types of connectitiby tests to the instances.
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
+{: style="text-align: center;"}
+
+
+The python py/test_transit.py pytest script tests the connectivity of the test instances.  Each test will ssh to one of the instances and perform different types of connectitiby tests using the instances.
 
 Validation was done with python 3.10.7.  You can install and activate a virtual environment using the following steps.
 
-```
-python -m venv venv --prompt transit_vpc
-source venv/bin/activate; # now pip and python will come from the virtual environment
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+   ```sh
+   python -m venv venv --prompt transit_vpc; # install a python virtual environment with activiation prompt of transit_vpc
+   source venv/bin/activate; # now pip and python will come from the virtual environment
+   pip install --upgrade pip; # upgrade to latest version of pip
+   pip install -r requirements.txt; #install dependencies
+   ```
 
-Now (and each time a fresh shell is initialized) remember to activate the python virtual environment:
-```
-source venv/bin/activate
-```
+Each time a fresh shell is initialized remember to activate the python virtual environment.  Do this now:
+   ```sh
+   source venv/bin/activate
+   ```
+   {: codeblock}
 
 Run the test suite and notice that connectivity within a VPC is working but no cross VPC connectivity is working. 
 
-```
-pytest -v
-```
+   ```sh
+   pytest -v
+   ```
+   {: codeblock}
+   ```sh
 
-## STEP Transit to Spokes via Transit Gateway
+Your output will resemble:
+   ```sh
+   ...
+   py/test_transit.py::test_curl[tvpc-transit-z1-s0 (52.118.204.173) 10.1.0.4       -> tvpc-transit-z1-s0 10.1.0.4] PASSED              [ 11%]
+py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z0-s0 10.0.0.4] FAILED              [ 13%]
+py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z1-s0 10.1.0.4] FAILED              [ 14%]
+   ...
+   ... lots of stack traces
+   ...
+   FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z0-s0 10.0.1.4] - assert False
+FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
+=================================== 48 failed, 16 passed, 3 skipped, 18223 warnings in 203.68s (0:03:23) ===================================
+   ```
+   {: codeblock}
+
+## Transit to Spokes via Transit Gateway
 {: #vpc-transit-transit-to-spokes}
 {: step}
-The Transit Gateway todo link will connect the 
 
-todo image layer-spokegateway 
+Connect the spokes to each other and to the transit:
 
-The diagram has been enhanced to include the Transit Gateway between the transit vpc and the spoke vpcs.  Running the tests will now demonstrate passing tests between the transit and the spokes.
+   ```sh
+   ./apply.sh transit_spoke_tgw_tf
+   ```
+
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-transit-spoke-tgw.png){: class="center"}
+{: style="text-align: center;"}
+
+The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs.  Running the tests will now demonstrate passing tests between the transit and the spokes.
+
+   ```sh
+   pytest -v
+   ```
 
 ## STEP Enterprise to Transit via Direct Link and Transit Gateway
 {: #vpc-transit-enterprise-to-transit}
@@ -293,3 +326,6 @@ The architecture of a system is influenced by the containment and ownership of c
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-.svg){: class="center"}
+{: style="text-align: center;"}
