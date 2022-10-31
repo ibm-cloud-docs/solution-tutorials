@@ -6,7 +6,7 @@ lastupdated: "2022-10-31"
 lasttested: "2022-10-31"
 
 content-type: tutorial
-services: vpc, transit-gateway, dns-svcs, todo
+services: vpc, dns-svcs
 account-plan: paid
 completion-time: 2h
 ---
