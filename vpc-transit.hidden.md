@@ -48,13 +48,14 @@ This tutorial walks you through a complete example demonstrating the network con
 There is a companion GitHub repository with instructions on how to build and test the architecture.  If follows the layers defined in this tutorial.  It allows you to demonstrate connectivity problems and solutions as layers are added.
 
 ## Architecture:
+{: #vpc-transit-architecture}
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
 The diagram above shows an enterprise data center connected to the IBM cloud.  The VPCs are arranged in a hub and spoke model.  All enterprise traffic flows through the transit VPC.  A separate DNS instance and cloud service instances are associated and managed by a spoke team. Each spoke could be implemented in an account of an IBM Enterperise Account todo link.  This solution tutorial will demonstrate the architecture in a single account.
 
 ## VPC Layout
-{: #vpc-transit-vpc-layout}
+{: #vpc-transit-layout}
 {: step}
 
 todo layer-background 
@@ -70,6 +71,7 @@ There are a few subnets in the the transit and spokes:
 - dns - For DNS locations (todo link).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
 
 ## STEP Testing
+{: #vpc-transit-testing}
 {: step}
 VPC Virtual Server Instances, VSIs, can be provisioned to test the network connectivity. A test instance will be added to each of the worker subnets or one per zone in the enterprise, transit and each of the spokes.  If the default configuratio of 2 zones and 2 spokes is used then 8 instances will be provisioned.
 
@@ -100,6 +102,7 @@ pytest -v
 ```
 
 ## STEP Transit to Spokes via Transit Gateway
+{: #vpc-transit-transit-to-spokes}
 {: step}
 The Transit Gateway todo link will connect the 
 
@@ -108,6 +111,7 @@ todo image layer-spokegateway
 The diagram has been enhanced to include the Transit Gateway between the transit vpc and the spoke vpcs.  Running the tests will now demonstrate passing tests between the transit and the spokes.
 
 ## STEP Enterprise to Transit via Direct Link and Transit Gateway
+{: #vpc-transit-enterprise-to-transit}
 {: step}
 The enterprise to cloud tests are failing. Customers often use [Direct Link](todo) for connecting enterprise to the IBM cloud.  Direct Link is great blah blah. Direct link can also be connected to a Transit Gateway for distribution.
 
@@ -119,6 +123,7 @@ The diagram had been enhanced to include the Direct Link simulation using Transi
 
 
 ## STEP Enterprise to Spoke via Transit NFV Router
+{: #vpc-transit-router}
 {: step}
 
 Network Function Virtualization
@@ -143,7 +148,8 @@ This ingress route table applies to traffic into the transit VPC from any transi
 
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone.
 
-## STEP Cross Zone and Asymetric Routing
+## STEP Cross Zone and Asymmetric Routing
+{: #vpc-transit-asymmetric}
 {: step}
 
 The cross zone tests are failing. If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should be avoided.  The following diagram shows the working fows in green.
@@ -153,25 +159,30 @@ todo image asymmetric
 The blue flow shows a tcp connection request flowing cross zone.  yada yada
 
 ## STEP Firewall
+{: #vpc-transit-firewall}
 {: step}
 Currently enterprise <-> spoke traffic is flowing through the transit router/firewall.  Some architectures require some spoke to spoke traffic to flow through the firewall.  The following additional routing tables are required:
 
 ## STEP DNS
+{: #vpc-transit-dns}
 {: step}
 The DNS service is used to provie names to IP addresses.
 If a single DNS service for the cloud would meet your isolation needs it is a simpler solution.
 In this example a DNS service is created for the transit and each of the spokes to provide isolation between teams.  DNS ....
 
 ## STEP Virtual Private Endpoint Gateways
+{: #vpc-transit-VPE}
 {: step}
 VPC allows private access through ...
 
 ## STEP Routing Considerations for Virtual Private Endpoint Gateways
+{: #vpc-transit-VPE-routing}
 {: step}
 
 
 
 ## Production Notes
+{: #vpc-transit-production-notes}
 More detailed notes for production environments can be found in the todo link.
 
 Some obvious changes to make:
@@ -185,6 +196,7 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 
 
 ## Remove resources
+{: #vpc-transit-remove-resources}
 {: #vpc-tg-dns-iam-remove_resource}
 
 1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
@@ -196,15 +208,18 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
    {: pre}
 
 ## Expand the tutorial
+{: #vpc-transit-expand-tutorial}
 {: #vpc-tg-dns-iam-12}
 
 
 ## Conclusions
+{: #vpc-transit-conclusions}
 {: #vpc-tg-dns-iam-conclusions}
 
 The architecture of a system is influenced by the containment and ownership of cloud resources. It is important for architects from all aspects of the system contribute their concerns to the architecture. Each team needs the ability to control the resources they produce and release. Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
 
 ## Related content
+{: #vpc-transit-related}
 {: #vpc-tg-dns-iam-related}
 
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
