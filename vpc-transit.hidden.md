@@ -181,7 +181,7 @@ Some obvious changes to make:
 - 
 
 DNS
-  The appliances are used as both DNS resolvers used by remote DNS servers and DNS forwarders.
+The appliances are used as both DNS resolvers used by remote DNS servers and DNS forwarders.
 
 
 ## Remove resources
