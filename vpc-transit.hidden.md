@@ -24,7 +24,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Build VPC  Hub and Spoke model extended to On Premises via Transit VPC
+# Build VPC Hub and Spoke extended to On Premises via a Transit VPC
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, account, transit-gateway, dns-svcs", "todo"}
