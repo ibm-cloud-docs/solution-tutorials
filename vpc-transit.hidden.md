@@ -103,9 +103,7 @@ pytest -v
 {: step}
 The Transit Gateway todo link will connect the 
 
-todo layer-spokegateway 
-![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png){: class="center"}
-{: style="text-align: center;"}
+todo image layer-spokegateway 
 
 The diagram has been enhanced to include the Transit Gateway between the transit vpc and the spoke vpcs.  Running the tests will now demonstrate passing tests between the transit and the spokes.
 
@@ -115,8 +113,7 @@ The enterprise to cloud tests are failing. Customers often use [Direct Link](tod
 
 The enterprise in this simulation is a VPC. The enterprise to VPC connection uses a Transit Gateway that will closely match a Direct Link connection.
 
-![Architecture](images/SOLUTION/architecture-directlink.png){: class="center"}
-{: style="text-align: center;"}
+todo image directink
 
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway Running the tests will now demonstrate passing tests between the enterprise and the transit.
 
@@ -131,9 +128,7 @@ https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-rou
 The enterprise to spoke tests are failing.  Connectivity from the enterprise to a spoke can only be achieved through a Virtual Network Function router in the transit VPC.  Choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image with a iptables set up to forward all packets from the source to destination.  No firewall inspection.
 
 
-![Architecture](images/SOLUTION/architecture-firewall.png){: class="center"}
-{: style="text-align: center;"}
-
+todo image firewal
 
 The diagram had been enhanced to include a firewall routing appliance.  In addition an ingress route table has been added to the transit VPC as indicated by the dotted line.
 
@@ -153,8 +148,7 @@ Running the tests will demonstrate passing tests between the enterprise and the 
 
 The cross zone tests are failing. If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should be avoided.  The following diagram shows the working fows in green.
 
-![Architecture](images/SOLUTION/architecture-asymmetric.png){: class="center"}
-{: style="text-align: center;"}
+todo image asymmetric
 
 The blue flow shows a tcp connection request flowing cross zone.  yada yada
 
