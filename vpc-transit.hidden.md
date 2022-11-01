@@ -257,30 +257,62 @@ Traffic reaches the firewall routing appliance through routing tables.  Visit th
 
 The next_hop firewall routers in the table below are 10.0.0.196 (Dallas 1) and 10.1.0.196 (Dallas 2). All ingress traffic for the transit VPC will simply remain in the same zone.
 
+Zone is the transit zone determined by the Transit Gateway. The destination CIDR block will be in the enterprise range (192.168.*.*) when the source is a spoke or the cloud range (10.*.*.*) when the source is the enterprise.
+
 zone|destination|next_hop|note
 --|--|--|--
-Dallas 1|192.168.0.0/16|10.0.0.196|destine to enterprise
-Dallas 2|192.168.0.0/16|10.1.0.196|destine to enterprise
-Dallas 1|10.0.1.0/24|10.0.0.0.196|destine to spoke
-Dallas 1|10.0.2.0/24|10.0.0.0.196|destine to spoke
-Dallas 2|10.1.1.0/24|10.1.0.0.196|destine to spoke
-Dallas 2|10.1.2.0/24|10.1.0.0.196|destine to spoke
+Dallas 1|192.168.0.0/16|10.0.0.196|spoke to enterprise
+Dallas 2|192.168.0.0/16|10.1.0.196|spoke to enterprise
+Dallas 1|10.0.1.0/24|10.0.0.0.196|enterprise to spoke
+Dallas 1|10.0.2.0/24|10.0.0.0.196|enterprise to spoke
+Dallas 2|10.1.1.0/24|10.1.0.0.196|enterprise to spoke
+Dallas 2|10.1.2.0/24|10.1.0.0.196|enterprise to spoke
 
 ### VPC Address Prefixes
-This ingress route table applies to traffic into the transit VPC from any transit gateway.  Zone is the transit zone determined by the Transit Gateway. The destination CIDR block will be in the enterprise range (192.168.*.*) when the source is a spoke or the cloud range (10.*.*.*) when the source is the enterprise.
+The Transit Gateways learn routes to the attached VPCs through [VPC Address Prefixes](https://cloud.ibm.com/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does the spoke learn the route to the enterprise (192.168.0.0/16)?  By adding phantom VPC address prefixes to the transit VPC.
 
+The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 and 10.0.1.0/24.  Open the [VPCs](https://cloud.ibm.com/vpc-ext/network/vpcs) in the Cloud Console and select the **transit VPC** and notice the Address prefixes disaplayed and find the additional address prefixes that have been added.
+
+With these additional address prefixes the spoke VPCs learn that traffic destined to 192.168.0.0/16 should pass through the connected transit gateway.  Similary the enterprise learn that traffic destined to 10.*.1.0/24 should pass through its connected transit gateway.
+
+
+### Transit Gateway Prefix Filters
+Additional address prefixes are required for routes to be advertised by the VPC but the transit gateway will report that there are conflicting routes.  For example the enterprise transit gateway sees 192.168.0.0/16 routes on both sides.  How does it know which ones to choose?
+
+Clearly the desire is all traffic destined to 192.168.0.0/16 to flow to the enterprise.  [Prefix filters](https://cloud.ibm.com/docs/transit-gateway?topic=transit-gateway-adding-prefix-filters are added to hide the routes.  
+ 
+Open [Transit Gateway](https://cloud.ibm.com/interconnectivity/transit) in the IBM Cloud Console and select the enterprise transit gateway. Notice the filter icon next to the transit VPC connection and click to open.  Click the **View** in the **Prefix filters** row.  Notice the **Deny** action for 192.168.0.0/16 that is shown in the diagram.  You can visit the other transit gateway if you wish.
+
+
+### Testing enterprise <-> spoke
 
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone.
 
-## STEP Cross Zone and Asymmetric Routing
+## Cross Zone and Asymmetric Routing
 {: #vpc-transit-asymmetric}
 {: step}
 
-The cross zone tests are failing. If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should be avoided.  The following diagram shows the working fows in green.
+The enterperprise <-> spoke cross zone tests are failing.
+
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
+{: style="text-align: center;"}
+
+The green connections are working. The blue line represents a TCP connection request flowing from an on premise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  In this case the server is 10.1.1.4 and the selected address prefix is 10.1.1.0/24 in the lower zone.
+
+The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC with the matching address prefix 192.168.0.0/24.  The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  If you were to manually attempt to ping using the ICMP protocol it would be clear that connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 is possible.
+
+This limitation of TCP connectivity is referred to as the "Asymmetric Routing Limitation".
+
+If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should be avoided. 
+
+
+Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid
+
+
+The following diagram shows the working fows in green.
 
 todo image asymmetric
 
-The blue flow shows a tcp connection request flowing cross zone.  yada yada
 
 ## STEP Firewall
 {: #vpc-transit-firewall}
