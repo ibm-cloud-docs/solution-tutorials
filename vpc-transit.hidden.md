@@ -335,11 +335,18 @@ Currently enterprise <-> spoke traffic is flowing through the transit router/fir
 ## DNS
 {: step}
 {: #vpc-transit-dns}
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
+{: style="text-align: center;"}
+
 The DNS service is used to provie names to IP addresses.
 If a single DNS service for the cloud would meet your isolation needs it is a simpler solution.
 In this example a DNS service is created for the transit and each of the spokes to provide isolation between teams.  DNS ....
 
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
+{: style="text-align: center;"}
+
 ### Microservices DNS
+
    ```sh
    ./apply.sh dns_tf
    ```
@@ -404,6 +411,3 @@ Network Function Virtualization
 https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing
 
   See [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vnf-ha) for some additional information.
-
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-.svg){: class="center"}
-{: style="text-align: center;"}
