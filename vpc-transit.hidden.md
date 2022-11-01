@@ -193,8 +193,8 @@ FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.
    {: codeblock}
 
 ## Transit to Spokes via Transit Gateway
-{: #vpc-transit-transit-to-spokes}
 {: step}
+{: #vpc-transit-transit-to-spokes}
 
 Connect the spokes to each other and to the transit:
 
@@ -212,8 +212,8 @@ The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs
    ```
 
 ## Enterprise to Transit via Direct Link and Transit Gateway
-{: #vpc-transit-enterprise-to-transit}
 {: step}
+{: #vpc-transit-enterprise-to-transit}
 The enterprise to cloud tests are failing. [Direct Link](todo) is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
 
 The enterprise in this simulation is a VPC. The enterprise to VPC connection uses a Transit Gateway that will closely match a Direct Link connection.
@@ -228,8 +228,8 @@ The enterprise in this simulation is a VPC. The enterprise to VPC connection use
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway. Running the tests will now demonstrate passing tests between the enterprise and the transit.
 
 ## Enterprise to Spoke via Transit NFV Router
-{: #vpc-transit-router}
 {: step}
+{: #vpc-transit-router}
 
 The incentive for a transit vpc for enterprise <-> cloud traffic is to have a central place to monitor, inspect, route and log traffic.  A firewall/routing appliance can be installed in the transit VPC. 
 
@@ -289,42 +289,60 @@ Open [Transit Gateway](https://cloud.ibm.com/interconnectivity/transit) in the I
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone.
 
 ## Cross Zone and Asymmetric Routing
-{: #vpc-transit-asymmetric}
 {: step}
+{: #vpc-transit-asymmetric}
 
 The enterperprise <-> spoke cross zone tests are failing.
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green connections are working. The blue line represents a TCP connection request flowing from an on premise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  In this case the server is 10.1.1.4 and the selected address prefix is 10.1.1.0/24 in the lower zone.
+### Asymmetric Routing Limitation
+The green connections are working. The blue line represents a TCP connection request flowing from an on premise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
 
-The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC with the matching address prefix 192.168.0.0/24.  The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  If you were to manually attempt to ping using the ICMP protocol it would be clear that connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 is possible.
+The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone.  The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connection pass through the same firewall in both directions. This limitation of TCP routing is referred to as the "Asymmetric Routing Limitation".
 
-This limitation of TCP connectivity is referred to as the "Asymmetric Routing Limitation".
-
-If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should be avoided. 
-
-
-Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid
+It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  Connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 via ICMP is possible.
 
 
-The following diagram shows the working fows in green.
+If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.
 
-todo image asymmetric
+### Spoke Egress routing
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-.svg){: class="center"}
+{: style="text-align: center;"}
+
+It is possible to work around this limiation by using egress routing in the spokes.  In the diagram this is represented by the egress dashed line.
+
+   ```sh
+   ./apply.sh spokes_egress_tf
+   ```
+
+Visit the [VPCs](https://cloud.ibm.com/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table directing all egress traffic in Dallas 1 should be directed to 10.0.0.196 in Dallas 1.  With this change spoke traffic originating in Dallas 2 remains in Dallas 2 in the transit VPC.
+
+zone|destination|next_hop|note
+--|--|--|--
+Dallas 1|192.168.0.0/16|10.0.0.196|spoke to enterprise
+Dallas 2|192.168.0.0/16|10.1.0.196|spoke to enterprise
+
+Run `pytest -v` and verify that all tests are now passing.
 
 
-## STEP Firewall
-{: #vpc-transit-firewall}
+## Firewall
 {: step}
+{: #vpc-transit-firewall}
 Currently enterprise <-> spoke traffic is flowing through the transit router/firewall.  Some architectures require some spoke to spoke traffic to flow through the firewall.  The following additional routing tables are required:
 
-## STEP DNS
-{: #vpc-transit-dns}
+## DNS
 {: step}
+{: #vpc-transit-dns}
 The DNS service is used to provie names to IP addresses.
 If a single DNS service for the cloud would meet your isolation needs it is a simpler solution.
 In this example a DNS service is created for the transit and each of the spokes to provide isolation between teams.  DNS ....
+
+### Microservices DNS
+   ```sh
+   ./apply.sh dns_tf
+   ```
 
 ## STEP Virtual Private Endpoint Gateways
 {: #vpc-transit-VPE}
