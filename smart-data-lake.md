@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-19"
+lastupdated: "2022-11-01"
 lasttested: "2022-03-22"
 
 content-type: tutorial
@@ -75,11 +75,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
 
 2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
     ```sh
@@ -92,7 +88,7 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
+3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```

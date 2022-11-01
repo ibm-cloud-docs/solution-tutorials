@@ -93,16 +93,7 @@ In addition, make sure you have:
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
     
 2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
     ```sh

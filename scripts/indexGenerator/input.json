@@ -2,7 +2,6 @@
    "tags": [
       "Kubernetes",
       "OpenShift",
-      "Cloud Foundry",
       "Code Engine",
       "Virtual Servers"
    ],
@@ -197,7 +196,6 @@
                "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
                "imgSrc": "images/solution3/Architecture.png",
                "tags": [
-                  "Cloud Foundry",
                   "Node.js",
                   "Content Delivery Network",
                   "Cloud Object Storage"
@@ -206,8 +204,7 @@
                   "cloud_object_storage",
                   "content_delivery_network",
                   "ibmcloud_cli",
-                  "ibmcloud_plugin_dev",
-                  "cloud_foundry"
+                  "ibmcloud_plugin_dev"
                ],
                "supportsCloudShell": "yes_with_modifications",
                "repos": [
@@ -245,7 +242,6 @@
                "tags": [
                   "Terraform",
                   "Kubernetes",
-                  "Cloud Foundry",
                   "Identity and Access Management"
                ],
                "requirements": [

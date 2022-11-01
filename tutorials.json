@@ -2,7 +2,6 @@
   "tags": [
     "Kubernetes",
     "OpenShift",
-    "Cloud Foundry",
     "Code Engine",
     "Virtual Servers"
   ],
@@ -129,7 +128,6 @@
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
           "imgSrc": "images/solution3/Architecture.png",
           "tags": [
-            "Cloud Foundry",
             "Node.js",
             "Content Delivery Network",
             "Cloud Object Storage"
@@ -163,13 +161,12 @@
           "tags": [
             "Terraform",
             "Kubernetes",
-            "Cloud Foundry",
             "Identity and Access Management"
           ],
           "repos": [
             "https://github.com/IBM-Cloud/multiple-environments-as-code"
           ],
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-11-01"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
