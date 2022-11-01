@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-31"
-lasttested: "2022-10-31"
+lastupdated: "2022-11-01"
+lasttested: "2022-11-01"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
