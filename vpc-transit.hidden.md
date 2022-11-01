@@ -211,39 +211,62 @@ The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs
    pytest -v
    ```
 
-## STEP Enterprise to Transit via Direct Link and Transit Gateway
+## Enterprise to Transit via Direct Link and Transit Gateway
 {: #vpc-transit-enterprise-to-transit}
 {: step}
-The enterprise to cloud tests are failing. Customers often use [Direct Link](todo) for connecting enterprise to the IBM cloud.  Direct Link is great blah blah. Direct link can also be connected to a Transit Gateway for distribution.
+The enterprise to cloud tests are failing. [Direct Link](todo) is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
 
 The enterprise in this simulation is a VPC. The enterprise to VPC connection uses a Transit Gateway that will closely match a Direct Link connection.
 
-todo image directink
+   ```sh
+   ./apply.sh enterprise_link_tf
+   ```
 
-The diagram had been enhanced to include the Direct Link simulation using Transit Gateway Running the tests will now demonstrate passing tests between the enterprise and the transit.
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-transit-spoke-tgw.png){: class="center"}
+{: style="text-align: center;"}
 
+The diagram had been enhanced to include the Direct Link simulation using Transit Gateway. Running the tests will now demonstrate passing tests between the enterprise and the transit.
 
-## STEP Enterprise to Spoke via Transit NFV Router
+## Enterprise to Spoke via Transit NFV Router
 {: #vpc-transit-router}
 {: step}
 
-Network Function Virtualization
-https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing
+The incentive for a transit vpc for enterprise <-> cloud traffic is to have a central place to monitor, inspect, route and log traffic.  A firewall/routing appliance can be installed in the transit VPC. 
+
+An off the shelf appliance can be used for a router.  There are many to choose from in the IBM Catalog.  A subnet has been created in each of the zones of the transit VPC to hold the firewall. 
+
+### NFV Router
+The enterprise to spoke tests are failing.  Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vnf), router in the transit VPC.  Choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image with a iptables set up to forward all packets from the source to destination.  No firewall inspection is performed.
+
+The terraform configuration will be configure the firewall instance with [allow_ip_spoofing](https://cloud.ibm.com/docs/vpc?topic=vpc-ip-spoofing-about).  You must [enable IP spoofing checks](https://cloud.ibm.com/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
+{: note}
 
 
-The enterprise to spoke tests are failing.  Connectivity from the enterprise to a spoke can only be achieved through a Virtual Network Function router in the transit VPC.  Choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image with a iptables set up to forward all packets from the source to destination.  No firewall inspection.
+   ```sh
+   ./apply.sh firewall_tf
+   ```
+
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
+{: style="text-align: center;"}
+
+The diagram shows the firewall routing appliance.  An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines.
 
 
-todo image firewal
+### Ingress Routing
+Traffic reaches the firewall routing appliance through routing tables.  Visit the [VPCs](https://cloud.ibm.com/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select the transit VPC and then click on **Manage routing tables** click on the **Ingress** routing table.
 
-The diagram had been enhanced to include a firewall routing appliance.  In addition an ingress route table has been added to the transit VPC as indicated by the dotted line.
+The next_hop firewall routers in the table below are 10.0.0.196 (Dallas 1) and 10.1.0.196 (Dallas 2). All ingress traffic for the transit VPC will simply remain in the same zone.
 
-Fire
-
-zone|destination|next_hop|name
+zone|destination|next_hop|note
 --|--|--|--
-us-south-1|192.168.0.0/16|10.0.0.196|zone-0
+Dallas 1|192.168.0.0/16|10.0.0.196|destine to enterprise
+Dallas 2|192.168.0.0/16|10.1.0.196|destine to enterprise
+Dallas 1|10.0.1.0/24|10.0.0.0.196|destine to spoke
+Dallas 1|10.0.2.0/24|10.0.0.0.196|destine to spoke
+Dallas 2|10.1.1.0/24|10.1.0.0.196|destine to spoke
+Dallas 2|10.1.2.0/24|10.1.0.0.196|destine to spoke
 
+### VPC Address Prefixes
 This ingress route table applies to traffic into the transit VPC from any transit gateway.  Zone is the transit zone determined by the Transit Gateway. The destination CIDR block will be in the enterprise range (192.168.*.*) when the source is a spoke or the cloud range (10.*.*.*) when the source is the enterprise.
 
 
@@ -326,6 +349,11 @@ The architecture of a system is influenced by the containment and ownership of c
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+
+Network Function Virtualization
+https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing
+
+  See [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vnf-ha) for some additional information.
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-.svg){: class="center"}
 {: style="text-align: center;"}
