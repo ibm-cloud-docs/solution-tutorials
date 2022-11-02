@@ -17,6 +17,11 @@ for source in *.md; do
     continue
   fi
 
+  # skip hidden tutorials
+  if [[ "$source" == *"hidden.md" ]]; then
+    continue
+  fi
+
   # get last modified from git
   gitDate=$(git log -1 --format="%ad" --date=format:'%Y-%m-%d' -- $source)
 
