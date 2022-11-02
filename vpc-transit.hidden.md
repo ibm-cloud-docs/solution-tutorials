@@ -193,8 +193,8 @@ FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.
    {: codeblock}
 
 ## Transit to Spokes via Transit Gateway
-{: step}
 {: #vpc-transit-transit-to-spokes}
+{: step}
 
 Connect the spokes to each other and to the transit:
 
@@ -212,8 +212,8 @@ The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs
    ```
 
 ## Enterprise to Transit via Direct Link and Transit Gateway
-{: step}
 {: #vpc-transit-enterprise-to-transit}
+{: step}
 The enterprise to cloud tests are failing. [Direct Link](todo) is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
 
 The enterprise in this simulation is a VPC. The enterprise to VPC connection uses a Transit Gateway that will closely match a Direct Link connection.
@@ -228,14 +228,15 @@ The enterprise in this simulation is a VPC. The enterprise to VPC connection use
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway. Running the tests will now demonstrate passing tests between the enterprise and the transit.
 
 ## Enterprise to Spoke via Transit NFV Router
-{: step}
 {: #vpc-transit-router}
+{: step}
 
 The incentive for a transit vpc for enterprise <-> cloud traffic is to have a central place to monitor, inspect, route and log traffic.  A firewall/routing appliance can be installed in the transit VPC. 
 
 An off the shelf appliance can be used for a router.  There are many to choose from in the IBM Catalog.  A subnet has been created in each of the zones of the transit VPC to hold the firewall. 
 
 ### NFV Router
+{: #vpc-transit-nfv-router}
 The enterprise to spoke tests are failing.  Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), router in the transit VPC.  Choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image with a iptables set up to forward all packets from the source to destination.  No firewall inspection is performed.
 
 The terraform configuration will be configure the firewall instance with [allow_ip_spoofing](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about).  You must [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
@@ -253,6 +254,7 @@ The diagram shows the firewall routing appliance.  An ingress route table for Tr
 
 
 ### Ingress Routing
+{: #vpc-transit-ingress-routing}
 Traffic reaches the firewall routing appliance through routing tables.  Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select the transit VPC and then click on **Manage routing tables** click on the **Ingress** routing table.
 
 The next_hop firewall routers in the table below are 10.0.0.196 (Dallas 1) and 10.1.0.196 (Dallas 2). All ingress traffic for the transit VPC will simply remain in the same zone.
@@ -269,6 +271,7 @@ Dallas 2|10.1.1.0/24|10.1.0.0.196|enterprise to spoke
 Dallas 2|10.1.2.0/24|10.1.0.0.196|enterprise to spoke
 
 ### VPC Address Prefixes
+{: #vpc-transit-vpc-address-prefixes}
 The Transit Gateways learn routes to the attached VPCs through [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does the spoke learn the route to the enterprise (192.168.0.0/16)?  By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 and 10.0.1.0/24.  Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the Cloud Console and select the **transit VPC** and notice the Address prefixes disaplayed and find the additional address prefixes that have been added.
@@ -277,6 +280,7 @@ With these additional address prefixes the spoke VPCs learn that traffic destine
 
 
 ### Transit Gateway Prefix Filters
+{: #vpc-transit-transit-gateway-prefix-filters}
 Additional address prefixes are required for routes to be advertised by the VPC but the transit gateway will report that there are conflicting routes.  For example the enterprise transit gateway sees 192.168.0.0/16 routes on both sides.  How does it know which ones to choose?
 
 Clearly the desire is all traffic destined to 192.168.0.0/16 to flow to the enterprise.  [Prefix filters](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-adding-prefix-filters are added to hide the routes.  
@@ -285,12 +289,13 @@ Open [Transit Gateway](https://{DomainName}/interconnectivity/transit) in the IB
 
 
 ### Testing enterprise <-> spoke
+{: #vpc-transit-testing-enterperise-spoke}
 
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone.
 
 ## Cross Zone and Asymmetric Routing
-{: step}
 {: #vpc-transit-asymmetric}
+{: step}
 
 The enterperprise <-> spoke cross zone tests are failing.
 
@@ -298,6 +303,7 @@ The enterperprise <-> spoke cross zone tests are failing.
 {: style="text-align: center;"}
 
 ### Asymmetric Routing Limitation
+{: #vpc-transit-asymmeteric-routing-limitation}
 The green connections are working. The blue line represents a TCP connection request flowing from an on premise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
 
 The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone.  The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connection pass through the same firewall in both directions. This limitation of TCP routing is referred to as the "Asymmetric Routing Limitation".
@@ -308,6 +314,7 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.
 
 ### Spoke Egress routing
+{: #vpc-transit-spoke-egress-routing}
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
 {: style="text-align: center;"}
 
@@ -328,13 +335,13 @@ Run `pytest -v` and verify that all tests are now passing.
 
 
 ## Firewall
-{: step}
 {: #vpc-transit-firewall}
+{: step}
 Currently enterprise <-> spoke traffic is flowing through the transit router/firewall.  Some architectures require some spoke to spoke traffic to flow through the firewall.  The following additional routing tables are required:
 
 ## DNS
-{: step}
 {: #vpc-transit-dns}
+{: step}
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
 
@@ -346,6 +353,7 @@ In this example a DNS service is created for the transit and each of the spokes 
 {: style="text-align: center;"}
 
 ### Microservices DNS
+{: #vpc-transit-microservices-dns}
 
    ```sh
    ./apply.sh dns_tf
@@ -390,18 +398,15 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 
 ## Expand the tutorial
 {: #vpc-transit-expand-tutorial}
-{: #vpc-tg-dns-iam-12}
 
 
 ## Conclusions
 {: #vpc-transit-conclusions}
-{: #vpc-tg-dns-iam-conclusions}
 
 The architecture of a system is influenced by the containment and ownership of cloud resources. It is important for architects from all aspects of the system contribute their concerns to the architecture. Each team needs the ability to control the resources they produce and release. Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
 
 ## Related content
 {: #vpc-transit-related}
-{: #vpc-tg-dns-iam-related}
 
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
