@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-23"
-lasttested: "2021-10-28"
+lastupdated: "2022-11-02"
+lasttested: "2021-11-02"
 
 ---
 
@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
+You already developed and deployed an application on {{site.data.keyword.cloud_notm}}. You already followed the [introductory tutorial on how to apply end to end security to an application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). Following "security by design", you now start to look into the design of a new application, or you need to adapt an older application to new security requirements. This tutorial walks you through options for applications with advanced security requirements. It looks into enhanced data encryption, isolation of compute runtimes and network traffic, and by using activity logs to look for suspicious activities. 
 {: shortdesc}
 
 ## Objectives
@@ -50,10 +50,10 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 * to isolate the application, its services, the network traffic and stored data from those of other applications,
 * to encrypt data and have control over the management of encryption keys,
 * to log all kind of events, regularly analyze logs and keep them for audits or incident forensics,
-* to organize devops activities and the related teams with more fine-grained privileges,
+* to organize DevOps activities and the related teams with more fine-grained privileges,
 * and much more.
 
-To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [getting started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
+To assess your application and its resources, consider the [{{site.data.keyword.compliance_full}}](https://www.ibm.com/cloud/security-and-compliance-center). It allows to govern resource configurations. You can set up and manage security and compliance controls. Checks can be automated. Results are directly compared against defined controls, can be exported and integrated into a customized dashboard. Read how to [get started with {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-getting-started) for the first steps.
 
 ## Isolate runtime environments, networks traffic and data
 {: #extended-app-security-isolate_environments}
@@ -63,7 +63,7 @@ One of the fundamental principles of Cloud Computing is the sharing of resources
 ### Use dedicated resources and virtual private clouds
 {: #extended-app-security-isolate_runtimes}
 
-To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some of the compute options.
+To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some compute options.
 
 Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc-ext) to benefit from isolation of compute and network resources.
 
@@ -84,7 +84,7 @@ When your application does not serve public users, but is only accessed from cor
 
 It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.secrets-manager_short}} allows you to order certificates.
 
-Consider to implement more stringent access rules to resources. [Context-based restrictions](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis) allow to define access restrictions based on network zones and endpoint types. Thus, it is possible to isolate teams, users and resources by location.
+Consider implementing more stringent access rules to resources. [Context-based restrictions](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis) allow defining access restrictions based on network zones and endpoint types. Thus, it is possible to isolate teams, users and resources by location.
 
 ## Evaluate and monitor app security
 {: #extended-app-security-evaluate_security}
@@ -162,7 +162,7 @@ The following resources provide additional insights to security on {{site.data.k
 * Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2)
 * Blog: [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)
 * Blog: [Increase Information Security for Db2 on IBM Cloud](https://www.ibm.com/cloud/blog/increase-information-security-for-db2-on-ibm-cloud)
-* IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/devops/method/content/architecture/securityArchitecture)
+* IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/architecture/architectures/securityArchitecture)
 * [{{site.data.keyword.cloud_notm}} platform service CLIs and APIs](https://{DomainName}/docs/overview?topic=overview-platform-svc-cli-api)
 * [IBM Cloud Compliance Programs](https://www.ibm.com/cloud/compliance)
 
