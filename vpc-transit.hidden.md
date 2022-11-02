@@ -222,7 +222,7 @@ The enterprise in this simulation is a VPC. The enterprise to VPC connection use
    ./apply.sh enterprise_link_tf
    ```
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-transit-spoke-tgw.png){: class="center"}
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
 {: style="text-align: center;"}
 
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway. Running the tests will now demonstrate passing tests between the enterprise and the transit.
@@ -308,7 +308,7 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.
 
 ### Spoke Egress routing
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-.svg){: class="center"}
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
 {: style="text-align: center;"}
 
 It is possible to work around this limiation by using egress routing in the spokes.  In the diagram this is represented by the egress dashed line.
