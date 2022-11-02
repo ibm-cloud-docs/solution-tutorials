@@ -26,6 +26,8 @@ toc:
                 topics:
                 - solution-template.md
                 - satellite-tour.hidden.md
+                - checklist-get-started-vmware.hidden.md
+                - vpc-transit.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
@@ -124,13 +126,6 @@ toc:
                 topics:
                 - vmware-solutions-shared-getting-started.md
 
-            - topicgroup:
-                label: (Hidden) High Performance Computing
-                topics:
-                - hpc-eda.md
-                - hpc-lsf-on-vpc.md
-                - hpc-lsf-vpc-auto-scale.md
-
         - topicgroup:
             label: By Compute Options
             topics:
@@ -155,12 +150,6 @@ toc:
                 - scalable-webapp-openshift.md
                 - openshift-service-mesh.md
                 - openshift-microservices.md
-
-            - topicgroup:
-                label: Cloud Foundry
-                topics:
-                - static-files-cdn.md
-                - plan-create-update-deployments.md
 
             - topicgroup:
                 label: Code Engine

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-23"
+lastupdated: "2022-11-01"
 lasttested: "2022-09-23"
 
 content-type: tutorial
@@ -516,7 +516,7 @@ Click on the **IBM Cloud Operator** to open it.  Scroll down to the **Prerequisi
 
 An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Prerequisites** section of the installed operator.  Steps:
 
-1. Skip the `login` command and the `ibmcloud target --cf`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group and region that is associated with your cluster.
+1. Use the same resource group and region that is associated with your cluster.
    ```sh
    ibmcloud target -g <resource_group> -r <region>
    ```

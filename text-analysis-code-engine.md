@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-02-01"
+  years: 2022
+lastupdated: "2022-11-02"
 lasttested: "2021-12-09"
 
 content-type: tutorial
@@ -71,10 +71,13 @@ This tutorial requires:
    * code-engine/ce plugin (`code-engine/ce`) - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You can find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+To avoid the installation of these tools, this tutorial will use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 
-**Note:** To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{: tip}
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #text-analysis-cloud-shell}
+{: step}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 
 <!--#/istutorial#-->
 
@@ -104,11 +107,7 @@ Putting entities into a single project enables you to manage access control more
    - Provide a project name and select a resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
    - Click on **Create**.
    - Wait until the project `status` changes to **Active**.
-3. In a terminal on your machine, ensure you're logged in to the `ibmcloud` CLI.
-   ```sh
-   ibmcloud login
-   ```
-   {: pre}
+3. Switch to the {{site.data.keyword.cloud-shell_short}} session that you started earlier and use it in this tutorial when you are asked to run CLI commands.
 
 4. Target the resource group where you created your project.
    ```sh
@@ -173,6 +172,10 @@ We've already built images for the two applications and pushed them to the publi
    {: tip}
 
 3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
+   
+   If you do not see any running instances, make sure to open the url from step 2 to run the application.
+   {: tip}
+
    ```sh
    ibmcloud code-engine application logs --instance <INSTANCE_NAME>
    ```
@@ -243,7 +246,7 @@ Most of these values have a default set if nothing is provided as an option when
    ```
    {: pre}
 
-   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time.
+   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time. Learn more by reading the [Working with environment variables](https://{DomainName}/docs/codeengine?topic=codeengine-envvar) documentation topic.
    {: tip}
 
 4. Hard refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload a text file(.txt) and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the text files. Clicking on **Upload text file** should also show a similar error message.
@@ -322,7 +325,7 @@ Now that you have configured the service ID, you need to update the {{site.data.
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables of the container for your application or job.
 
-1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store files in COS._Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. Creating this binding will give your {{site.data.keyword.codeengineshort}} application access to the service credentials for {{site.data.keyword.cos_full_notm}} so that it can store files in COS. _Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
    ```sh
    ibmcloud code-engine application bind --name backend --service-instance <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->code-engine-cos --service-credential cos-for-code-engine --prefix COS
    ```
@@ -368,7 +371,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 This job will read text files from {{site.data.keyword.cos_full_notm}}, and then analyze them using the {{site.data.keyword.nlushort}} Service. It will need to have access to service credentials for both services.
 
-1. On a terminal, run the following command to create a job,
+1. Run the following command to create a job,
    ```sh
    ibmcloud code-engine job create --name backend-job --image icr.io/solution-tutorials/tutorial-text-analysis-code-engine-backend-job --env-from-configmap backend-configuration
    ```

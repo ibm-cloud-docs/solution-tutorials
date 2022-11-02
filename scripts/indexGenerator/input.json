@@ -2,7 +2,6 @@
    "tags": [
       "Kubernetes",
       "OpenShift",
-      "Cloud Foundry",
       "Code Engine",
       "Virtual Servers"
    ],
@@ -39,6 +38,18 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
+            },
+            {
+               "name": " Getting started with VMware",
+               "url": "checklist-get-started-vmware.hidden.html",
+               "description": "Get started with VMware on IBM Cloud.",
+               "imgSrc": ""
+            },
+            {
+               "name": " Build a VPC and Spoke and extended to On Premises via a Transit VPC",
+               "url": "vpc-transit.hidden.html",
+               "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
+               "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
             }
          ]
       },
@@ -185,7 +196,6 @@
                "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
                "imgSrc": "images/solution3/Architecture.png",
                "tags": [
-                  "Cloud Foundry",
                   "Node.js",
                   "Content Delivery Network",
                   "Cloud Object Storage"
@@ -194,8 +204,7 @@
                   "cloud_object_storage",
                   "content_delivery_network",
                   "ibmcloud_cli",
-                  "ibmcloud_plugin_dev",
-                  "cloud_foundry"
+                  "ibmcloud_plugin_dev"
                ],
                "supportsCloudShell": "yes_with_modifications",
                "repos": [
@@ -233,7 +242,6 @@
                "tags": [
                   "Terraform",
                   "Kubernetes",
-                  "Cloud Foundry",
                   "Identity and Access Management"
                ],
                "requirements": [
@@ -617,7 +625,6 @@
                "description": "Benefits and implementation of sharing cloud resources across accounts.",
                "imgSrc": "images/solution65-resource-sharing/resource-sharing-architecture-security.svg"
             }
-
          ]
       },
       {
@@ -1152,58 +1159,6 @@
                ],
                "repos": [
                   "https://github.com/IBM-Cloud/vmware-solutions-shared"
-               ]
-            }
-         ]
-      },
-      {
-         "name": "High Performance Computing",
-         "anchor": "hpc",
-         "hidden": true,
-         "solutions": [
-            {
-               "name": "Extend an existing IBM Spectrum LSF cluster to the IBM Cloud",
-               "url": "hpc-eda.html",
-               "hidden": true,
-               "description": "Build and configure an hybrid environment for a IBM Spectrum LSF Multi-Cluster",
-               "imgSrc": "images/solution60-hpc-eda/hpc-eda-arch.svg",
-               "tags": [
-                  "Storage",
-                  "HPC",
-                  "Virtual Private Cloud"
-               ],
-               "repos": [
-                  "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
-               ]
-            },
-            {
-               "name": "Provision an IBM Spectrum LSF cluster on the Virtual Private Cloud",
-               "url": "hpc-lsf-on-vpc.html",
-               "hidden": true,
-               "description": "Provision and configure IBM Cloud resources to create an IBM Spectrum LSF cluster.",
-               "imgSrc": "images/solution61-hpc-lsf-on-vpc/hpc-lsf-on-vpc-arch.svg",
-               "tags": [
-                  "Storage",
-                  "HPC",
-                  "Virtual Private Cloud"
-               ],
-               "repos": [
-                  "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
-               ]
-            },
-            {
-               "name": "Add auto scaling to existing IBM Spectrum LSF cluster on IBM Cloud VPC",
-               "url": "hpc-lsf-vpc-auto-scale.html",
-               "hidden": true,
-               "description": "Enabling and configure the LSF resource connector on an existing VPC-based LSF cluster",
-               "imgSrc": "images/solution-hpc-lsf-vpc-auto-scale/hpc-lsf-vpc-auto-scale.svg",
-               "tags": [
-                  "Storage",
-                  "HPC",
-                  "Virtual Private Cloud"
-               ],
-               "repos": [
-                  "https://github.com/IBMSpectrumComputing/lsf-hybrid-cloud"
                ]
             }
          ]

@@ -137,12 +137,6 @@ toc:
                 - openshift-microservices.md
 
             - topicgroup:
-                label: Cloud Foundry
-                topics:
-                - static-files-cdn.md
-                - plan-create-update-deployments.md
-
-            - topicgroup:
                 label: Code Engine
                 topics:
                 - mean-stack.md

@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
+  years: 2021, 2022
+lastupdated: "2022-11-01"
 lasttested: "2021-11-18"
 
 content-type: tutorial
@@ -69,11 +69,11 @@ All of the operations will be done in a `bash` shell and making use of `terrafor
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 
-With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, {{site.data.keyword.codeengineshort}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, {{site.data.keyword.codeengineshort}}, and services, you can provision all of them from the command line.
 
 Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned. It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
-To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs), enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services), and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
+To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs), enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS services, and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
 
 ## Write scripts to automate the deployment
 {: #plan-create-update-deployments-scripts}
