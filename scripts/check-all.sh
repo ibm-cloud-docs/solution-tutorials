@@ -3,7 +3,7 @@ export ROOT_DIR="$( cd "$(dirname "$BASH_SOURCE")" ; cd ..; pwd -P )"
 export SCRIPT_DIR=$ROOT_DIR/scripts
 
 function travis_fold_start {
-  echo -e "travis_fold:start:$1\r"
+  echo "travis_fold:start:$1"
 }
 
 function travis_fold_end {
@@ -13,6 +13,7 @@ function travis_fold_end {
 errorCode=0
 
 TESTS=(
+  $SCRIPT_DIR/check-domainname.sh
   $SCRIPT_DIR/check-translation.sh
   $SCRIPT_DIR/check-a11y.sh
   $SCRIPT_DIR/check-lastmodified.sh
@@ -20,6 +21,7 @@ TESTS=(
   $SCRIPT_DIR/check-wordsmatter.sh
   $SCRIPT_DIR/check-marked-it.sh
 )
+failedTests=""
 for test in "${TESTS[@]}"; do
   testBasename=`basename $test`
   travis_fold_start $testBasename
@@ -27,9 +29,14 @@ for test in "${TESTS[@]}"; do
     echo "✅ Passed - $testBasename"
   else
     echo "❌ Failed - $testBasename"
+    failedTests="$testBasename $failedTests"
     errorCode=1
   fi
   travis_fold_end $testBasename
 done
+
+if [ $errorCode != 0 ]; then
+  echo "❌❌❌❌ One or most tests have failed: $failedTests"
+fi
 
 exit $errorCode

@@ -1,11 +1,11 @@
 #!/bin/bash
+echo "Checking if lastupdated was updated..."
+
 errorCode=0
 
 # travis does pull only with depth=50
 # we need to ensure we have the latest and greatest otherwise we can't accurately check date
 git pull --unshallow --ff-only 2>/dev/null
-
-echo "Checking if lastupdated was updated..."
 
 for source in *.md; do
 
