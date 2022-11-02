@@ -27,7 +27,7 @@ for test in "${TESTS[@]}"; do
 done
 
 if [ $errorCode != 0 ]; then
-  echo "❌❌❌❌ One or most tests have failed: $failedTests"
+  echo "❌❌❌❌ One or more tests have failed: $failedTests"
 fi
 
 exit $errorCode
