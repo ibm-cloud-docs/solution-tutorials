@@ -2,14 +2,6 @@
 export ROOT_DIR="$( cd "$(dirname "$BASH_SOURCE")" ; cd ..; pwd -P )"
 export SCRIPT_DIR=$ROOT_DIR/scripts
 
-function travis_fold_start {
-  echo "travis_fold:start:$1"
-}
-
-function travis_fold_end {
-  echo "travis_fold:end:$1"
-}
-
 errorCode=0
 
 TESTS=(
@@ -24,7 +16,7 @@ TESTS=(
 failedTests=""
 for test in "${TESTS[@]}"; do
   testBasename=`basename $test`
-  travis_fold_start $testBasename
+  echo "Running $testBasename"
   if $test; then
     echo "✅ Passed - $testBasename"
   else
@@ -32,7 +24,6 @@ for test in "${TESTS[@]}"; do
     failedTests="$testBasename $failedTests"
     errorCode=1
   fi
-  travis_fold_end $testBasename
 done
 
 if [ $errorCode != 0 ]; then

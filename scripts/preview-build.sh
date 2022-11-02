@@ -37,7 +37,7 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/solution-tut
 # generate the new files
 npm install -g marked-it-cli
 export VERSION=2
-marked-it-cli \
+NODE_ENV=production marked-it-cli \
   builddocs/input \
   --output=builddocs/output \
   --header-file=scripts/header.txt \
