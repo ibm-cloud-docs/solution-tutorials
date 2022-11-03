@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-11-17"
-lasttested: "2021-11-16"
+lastupdated: "2022-11-03"
+lasttested: "2022-11-03"
 
 content-type: tutorial
 services: assistant, speech-to-text, text-to-speech
@@ -35,7 +35,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}} and {{site.data.keyword.speechtotextshort}} services on {{site.data.keyword.Bluemix_short}}.
+Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}} and {{site.data.keyword.speechtotextshort}} services on {{site.data.keyword.cloud_notm}}.
 {: shortdesc}
 
 This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer queries. You will learn how to enable {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services for easy interaction with the Android app.
@@ -85,7 +85,7 @@ You will also provision {{site.data.keyword.speechtotextfull}} service that tran
 ### Provision {{site.data.keyword.speechtotextshort}} service
 {: #android-watson-chatbot-services-stt}
 
-The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
+The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.cloud_notm}}.
 
 1. Select [{{site.data.keyword.speechtotextshort}}](https://{DomainName}/catalog/services/speech-to-text) service
    1. Select a region and **Lite** as your pricing plan
@@ -157,7 +157,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
    {: tip}
 
 6. Click the **back** button to save the intent.
-7. Click on **Content Catalog** and select **General**. Click **Add to skill**.
+7. Select **Content Catalog** and then **General**. Click **Add to skill**.
 
    Content catalog helps you in getting started faster by adding existing intents (banking, customer care, insurance, telco, e-commerce and many more). These intents are trained on common questions that users may ask.
    {: tip}
@@ -172,11 +172,11 @@ The following are examples of entity names
 - `@menu_item`
 - `@product`
 
-   System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.Click **System entities** under **Entities** to check the common entities created by {{site.data.keyword.IBM_notm}} that could be used across any use case.
+   System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words. Click **System entities** under **Entities** to check the common entities created by {{site.data.keyword.IBM_notm}} that could be used across any use case.
    {: tip}
 
 1. Click **Entities** on the left pane to see the existing entities.
-2. Click **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
+2. Select **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
 4. Add `place` as a synonym and click the **+** icon. Repeat with synonyms `office`, `centre`, `branch` etc., and click **Add Value**.
 
@@ -215,7 +215,7 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 2. Use **Add dialog skill** under **Add a dialog skill to design your conversation flow** to select the skill created in the previous sections.
    1. Click on **Add dialog skill**
    2. Select **Ana**
-3. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
+3. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application (in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
 {: #android-watson-chatbot-configure_run_android_app}
@@ -229,7 +229,7 @@ The repository contains Android application code with required gradle dependenci
    ```
    {: pre}
 
-2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
+2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
 
    You can find the ASSISTANT URL in the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. The Assistant URL is NOT same as the workspace URL.
@@ -273,7 +273,7 @@ The repository contains Android application code with required gradle dependenci
    {: tip}
 
 5. In the **Enter your query** space provided below, interact with your chatbot by typing `Hi` and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
-6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
+6. The response will be passed to {{site.data.keyword.texttospeechshort}} service, and you should hear a voice reading out the response.
 7. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
 
