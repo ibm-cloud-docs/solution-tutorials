@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-09"
-lasttested: "2021-11-17"
+  years: 2022
+lastupdated: "2022-11-03"
+lasttested: "2022-11-03"
 
 ---
 
@@ -73,7 +73,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control (authorize) access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. {{site.data.keyword.cloud_notm}} services enabled to use Cloud IAM for access control are provisioned into [**resource groups**](https://{DomainName}/docs/account?topic=account-rgs) within your **account**. They allow you to give **users**, **service IDs**, and **trusted profiles** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
-This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-what-is-enterprise) and organized in account groups to centrally manage billing and resource usage.
+This tutorial focuses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-what-is-enterprise) and organized in account groups to centrally manage billing and resource usage.
 {: tip}
 
 A **policy** assigns a user, service ID, or trusted profile one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user, service ID, or trusted profile is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
@@ -137,7 +137,7 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer*  \n - Logging & Monitoring service role: *Writer* |
 | Pipeline Service ID | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 
-The IAM access configuration for groups is centralized in [Access (IAM) Acess groups](https://{DomainName}/iam/groups):
+The IAM access configuration for groups is centralized in [access groups (IAM)](https://{DomainName}/iam/groups):
 1. Select or create an access group.
 1. Select the **Access policies** tab
 1. Click **Assign access** button to assign policies as shown below
@@ -161,7 +161,7 @@ The following diagram shows the development, testing, and production resource gr
 
 ![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli), [Terraform](https://{DomainName}/docs/terraform?topic=terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://{DomainName}/docs/cli?topic=cli-install-ibmcloud-cli), [Terraform](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 The above design utilizes a Kubernetes cluster for each environment. This has the following benefits:
 * no matter the environment, all clusters will tend to look the same,
