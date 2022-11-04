@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-11-03"
-lasttested: "2022-11-03"
+  years: 2022
+lastupdated: "2022-11-04"
+lasttested: "2022-11-04"
 
 content-type: tutorial
 services: assistant, speech-to-text, text-to-speech
@@ -119,14 +119,11 @@ A skill is a container for the artifacts that define the conversation flow.
 For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_skill.json) file with predefined intents, entities and dialog flow to your machine.
 
 1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch {{site.data.keyword.conversationshort}}** to see the {{site.data.keyword.conversationshort}} dashboard.
-
-   This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You might need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
-   {: tip}
-
+1. This tutorial is written for the {{site.data.keyword.conversationshort}} classic experience. You need to [switch from the new to the classic experience](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-welcome-new-assistant).
 1. On the left navigation pane, Click on **Skills**.
 1. Click **Create skill**, select **Dialog skill** and **Next**.
 1. Under **Upload skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Upload**.
-1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
+1. Go back to the list of Skills by clicking **Skills** again. Select the action menu on the `Ana` skill to **View API Details**.
 
 ### Define an intent
 {: #android-watson-chatbot-define_intent}
@@ -145,19 +142,18 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 
 2. Click on **Create intent** under Intents. Enter `cancel_policy` as your intent name and provide an optional description.
 3. Click **Create intent**.
-4. Add user examples when requested to cancel a policy
+4. Add user examples when requested to cancel a policy. Add them one after another and click **Add example**. Repeat this for all examples.
    - `I want to cancel my policy`
    - `Drop my policy now`
    - `I wish to stop making payments on my policy.`
    - `How do I cancel my policy?`
    - `What's the procedure to cancel my policy?`
-5. Add user examples one after another and click **Add example**. Repeat this for all the other user examples.
 
    Remember to add at least 5 user examples to train your bot better.
    {: tip}
 
-6. Click the **back** button to save the intent.
-7. Select **Content Catalog** and then **General**. Click **Add to skill**.
+5. Click the **back** button to save the intent.
+6. Select **Content Catalog** and then click on **Add content** in the row of **General**.
 
    Content catalog helps you in getting started faster by adding existing intents (banking, customer care, insurance, telco, e-commerce and many more). These intents are trained on common questions that users may ask.
    {: tip}
@@ -193,7 +189,7 @@ A dialog is a branching conversation flow that defines how your application resp
 1. Click on **Dialog** to see the existing dialog flow with intents and entities.
 2. Click **Add node** to add a new node to the dialog.
 3. Under **if assistant recognizes**, enter `#cancel_policy`.
-4. Under **Assistant responds**, select **Text** and enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
+4. Under **Assistant responds**, select **Text** and enter the response `This feature is not available online. Please visit our nearest branch to cancel your policy.`
 5. Close the node editor, it saves the node.
 6. Scroll to find the `#greeting` node. Click on the node to see the details.
 7. Click the **+** icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
@@ -212,10 +208,10 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** on the left navigation pane and use **Create assistant**.
    1. Set **Name** to **android-chatbot-assistant**
    2. Click on **Create assistant**
-2. Use **Add dialog skill** under **Add a dialog skill to design your conversation flow** to select the skill created in the previous sections.
+2. Use **Add dialog skill** under **Actions or Dialogs** to select the skill created in the previous sections.
    1. Click on **Add dialog skill**
    2. Select **Ana**
-3. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application (in the `config.xml` file of the Android app).
+3. Select the action menu on the Assistant > **Assistant settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application (in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
 {: #android-watson-chatbot-configure_run_android_app}
@@ -230,9 +226,9 @@ The repository contains Android application code with required gradle dependenci
    {: pre}
 
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
-3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file. You might need to switch to the **Project** view to see the file.
 
-   You can find the ASSISTANT URL in the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. The Assistant URL is NOT same as the workspace URL.
+   You can find the ASSISTANT URL in the {{site.data.keyword.conversationshort}} service credentials you noted while provisioning the service. The Assistant URL is NOT the same as the workspace URL.
    {: tip}
 
    ```xml
