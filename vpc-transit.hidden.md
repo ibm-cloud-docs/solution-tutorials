@@ -292,6 +292,8 @@ Open [Transit Gateway](https://{DomainName}/interconnectivity/transit) in the IB
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone but new failures with transit -> enterprise.
 
 ## Stateful Routing and Direct Server Return
+{: #vpc-transit-stateful-routing}
+{: step}
 The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return, DSR, todo link.  This allows incoming connections to pass through the fireweall to the transit test instance and then return directly to the originator.
 
 todo add diagram with green
@@ -363,6 +365,7 @@ Currently enterprise <-> spoke traffic is flowing through the transit router/fir
 Due to direct service return currently transit -> enterprise traffic is also not flowing through the firewall.
 
 ### Route Spoke and Transit to the firewall
+{: #vpc-transit-route-spoke-and-transit-to-firewall}
 Routing all cloud traffic originating at the spokes through the firewall is accomplished by these routing table routes in the spokes:
 
 zone|destination|next_hop
@@ -383,6 +386,7 @@ Typically there is no reason to send the inter spoke traffic through the firewal
 
 
 ### Do not route Inter Zone and Inter Spoke traffic to the firewall
+{: #vpc-transit-do-not-route-inter-zone-to-firewall}
 zone|destination
 --|--|--
 Dallas 1|10.0.0.0/24
@@ -421,6 +425,7 @@ Dallas 2|10.2.0.0/24
 Dallas 3|10.2.0.0/24
 
 ### Apply and Test More Firewall
+{: #vpc-transit-apply-and-test-more-firewall}
    ```sh
    ./apply.sh all_firewall.tf
    ```
@@ -436,6 +441,7 @@ With these changes the transit <-> (enterprise, transit, spokes) are all working
 All the tests are now passing except the cross zone tests transit <-> spoke and spoke <-> spoke.  
 
 ### Optionally fix cross zone routing
+{: #vpc-transit-optionally-fix-cross-zone-routing}
 
 As mentioned earlier for a system to be resiliant across zonal failures it is best to eliminate cross zone traffic. If it is required additional egress routes can be added.  The problem for spoke to spoke traffic is shown in this diagram
 
