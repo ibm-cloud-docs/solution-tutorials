@@ -81,10 +81,9 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 
 {: shortdesc}
 
-1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your preferred {{site.data.keyword.cloud_notm}} region, however we will use `ca-tor` in this tutorial.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region, however we will use `ca-tor` in this tutorial.
 
    ```sh
-   ibmcloud login 
    ibmcloud target -r ca-tor 
    ```
    {: codeblock}

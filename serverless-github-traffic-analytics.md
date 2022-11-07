@@ -67,7 +67,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment (terminal).
 
-1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. You can reconfirm the details by running `ibmcloud target` command.
 2. Create an {{site.data.keyword.cloud_notm}} IAM API key and save it to the file **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud iam api-key-create ghstatsAPIKEY -d "API key for tutorial" --file ghstatsAPIKEY.json --output json

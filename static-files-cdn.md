@@ -132,9 +132,9 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ```
    {: pre}
 
-1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI and target the region where the bucket was created. As example for a bucket created in `us-south`:
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region where the bucket was created. As example for a bucket created in `us-south`:
    ```sh
-   ibmcloud login -r us-south
+   ibmcloud target -r us-south
    ```
    {: pre}
 

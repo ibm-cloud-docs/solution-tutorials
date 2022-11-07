@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-07-05"
+lastupdated: "2022-11-07"
 lasttested: "2022-05-30"
 
 content-type: tutorial
@@ -85,7 +85,7 @@ In this section, you are going to set up the needed services and deploy the back
    ```
    {: pre}
 
-2. If you are not logged in, use `ibmcloud login` to log in interactively. Make sure to target the resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
+2. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Make sure to target the resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
    ```sh
    ibmcloud target -g RESOURCE_GROUP
    ```
