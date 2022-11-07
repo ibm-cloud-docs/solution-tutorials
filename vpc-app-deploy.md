@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-04-14"
+  years: 2022
+lastupdated: "2022-11-03"
 lasttested: "2021-12-02"
 
 content-type: tutorial
@@ -365,7 +365,7 @@ This section uses a shell script found in the [Public frontend and private backe
 ### Before you begin
 {: #vpc-app-deploy-terraform-before-you-begin}
 
-Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/terraform) on your workstation.
+Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/ibm-cloud-provider-for-terraform) on your workstation.
 
 ### Provision a single virtual server instance
 {: #vpc-app-deploy-15}
@@ -549,7 +549,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 
 This section uses both Terraform and Ansible.
 
-1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/terraform) on your workstation.
+1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/ibm-cloud-provider-for-terraform) on your workstation.
 1. Follow [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to install Ansible.
 
 ### Ansible Playbook

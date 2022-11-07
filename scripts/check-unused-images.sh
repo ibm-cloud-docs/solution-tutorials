@@ -11,9 +11,7 @@ for image in $(find images -type f \( -iname \*.jpg -o -iname \*.png -o -iname \
   fi
 done
 
-if [ $errorCode == 0 ]; then
-  echo "No issue detected"
-else
+if [ $errorCode != 0 ]; then
   echo "Detected $errorCount unused images"
 fi
 

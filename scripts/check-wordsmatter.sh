@@ -16,21 +16,14 @@ for source in *.md; do
     continue
   fi
 
-  echo -n "Checking $source..."
   LOOKUP=$(grep --color=always -Hn -i -E $TERMS_TO_REPLACE $source)
   # if grep returns some rows, it is a problem
   if [[ $? == 0 ]]; then
-    echo "KO"
+    echo "$source has issues:"
     echo "$LOOKUP" | sed 's/^/    /'
     errorCode=1
-  else
-    echo "OK"
   fi
 done
-
-if [ $errorCode == 0 ]; then
-  echo "No issue detected"
-fi
 
 # don't fail yet -- other part of the documentation need to solve their issues first
 # exit $errorCode
