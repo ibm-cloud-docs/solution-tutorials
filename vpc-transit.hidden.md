@@ -114,7 +114,7 @@ Each section will apply one or more layers to the diagram.  You could cd into th
 Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  Try it out:
 
    ```sh
-   ./apply.sh -p; # print only do not apply any changes
+   ./apply.shp; # display help
    ```
    {: codeblock}
 
@@ -122,7 +122,7 @@ Results will look something like this indicating the order of execution.  You co
 
    ```sh
    $ ./apply.sh : : -p
-   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf spokes_egress_tf all_firewall_tf dns_tf vpe_transit_tf vpe_spokes_tf
+   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
    >>> success
    ```
    {: codeblock}
@@ -133,6 +133,7 @@ In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf, 
    ./apply.sh -p : spokes_tf
    ./apply.sh : spokes_tf
    ```
+   {: codeblock}
 
 ## Testing
 {: #vpc-transit-testing}
@@ -158,6 +159,7 @@ Validation was done with python 3.10.7.  You can install and activate a virtual 
    pip install --upgrade pip; # upgrade to latest version of pip
    pip install -r requirements.txt; #install dependencies
    ```
+   {: codeblock}
 
 Each time a fresh shell is initialized remember to activate the python virtual environment.  Do this now:
    ```sh
@@ -197,6 +199,7 @@ Connect the spokes to each other and to the transit:
    ```sh
    ./apply.sh transit_spoke_tgw_tf
    ```
+   {: codeblock}
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-transit-spoke-tgw.png){: class="center"}
 {: style="text-align: center;"}
@@ -206,6 +209,7 @@ The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs
    ```sh
    pytest -v
    ```
+   {: codeblock}
 
 ## Enterprise to Transit via Direct Link and Transit Gateway
 {: #vpc-transit-enterprise-to-transit}
@@ -217,6 +221,7 @@ The enterprise in this simulation is a VPC. The enterprise to VPC connection use
    ```sh
    ./apply.sh enterprise_link_tf
    ```
+   {: codeblock}
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
 {: style="text-align: center;"}
@@ -242,6 +247,7 @@ The terraform configuration will be configure the firewall instance with [allow_
    ```sh
    ./apply.sh firewall_tf
    ```
+   {: codeblock}
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
 {: style="text-align: center;"}
@@ -333,6 +339,7 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
    ```sh
    pytest -m ping
    ```
+   {: codeblock}
 
 If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.
 
@@ -346,6 +353,7 @@ It is possible to work around this cross zone limiation by using egress routing 
    ```sh
    ./apply.sh spokes_egress_tf
    ```
+   {: codeblock}
 
 Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table directing all egress traffic in Dallas 1 should be directed to 10.0.0.196 in Dallas 1.  With this change spoke traffic originating in Dallas 2 remains in Dallas 2 in the transit VPC.
 
@@ -429,6 +437,7 @@ Dallas 3|10.2.0.0/24
    ```sh
    ./apply.sh all_firewall.tf
    ```
+   {: codeblock}
 
 What about the firewall itself?  This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit vpc that delegates routing to the default for all destinations.  It is only associated with the firewall subnets so the firewall is not effected by the changes to the default egress routing table used by the other subnets.  Check the routing tables for the transit VPC for more details.
 
@@ -437,6 +446,7 @@ With these changes the transit <-> (enterprise, transit, spokes) are all working
    ```sh
    pytest -v -m curl
    ```
+   {: codeblock}
 
 All the tests are now passing except the cross zone tests transit <-> spoke and spoke <-> spoke.  
 
@@ -468,8 +478,11 @@ Dallas 3|10.1.0.0/16|10.1.0.196
    ```sh
    ./apply.sh all_firewall_asym_tf
    ```
+   {: codeblock}
 
 ## Firewall and High Availability
+{: #vpc-transit-firewall-and-high-availability}
+{: step}
 To prevent a firewall from becoming a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewalls.
 
 ![vpc-transit-ha-firewall](images/vpc-transit-hidden/vpc-transit-ha-firewall.svg){: class="center"}
@@ -483,16 +496,20 @@ config_tf/terraform.tfvars:
    firewall_lb                  = true
    number_of_firewalls_per_zone = 2
    ```
+   {: codeblock}
 
    ```sh
    vi config_tf/terraform.tfvars; # make the above changes
    ```
+   {: codeblock}
+
 This change results in the IP address of the firewall changing from the firewall instance used earlier to the IP address of the network load balancer.  This will need to be applied to a number of VPC route table routes in the transit and spoke vpcs.  It is best to start over:
 
 
    ```sh
    ./apply.sh : all_firewall_asym_tf
    ```
+   {: codeblock}
 
 
 
@@ -516,6 +533,7 @@ Create the dns services and add a DNS zone for each VPC and an A record for each
    ```sh
    ./apply.sh dns_tf
    ```
+   {: codeblock}
 
 Open the [Resources](https://{DomainName}/resources) in the IBM Cloud Console.  Open the **Networking** section and notice the **DNS Services**.  Open the **x-spoke0** instance.  Click the **x-spoke0.com** DNS zone.  Notice the A records associated with the test instances that are in the spoke instance.  Optional explore the other DNS instances and find similarly named DNS zones and A records for the other test instances.
 
@@ -538,6 +556,7 @@ There are now a set of **curl DNS** tests that have been made available in type 
    ```sh
    pytest -v -m dns
    ```
+   {: codeblock}
 
 
 ## Virtual Private Endpoint Gateways
@@ -554,6 +573,7 @@ Create the VPEs for the transit and the spokes:
    ```sh
    ./apply.sh vpe_transit_tf vpe_spokes_tf
    ```
+   {: codeblock}
 
 There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These vpedns test will verify that the DNS name of a redis instance is within the private CIDR block. The vpe test will exectute a **redli** command to access redis remotely.
 
@@ -561,6 +581,7 @@ There are now a set of **vpe**  and **vpedns**tests that have been made availabl
    ```sh
    pytest -v -m vpedns -m vpe
    ```
+   {: codeblock}
 
 ## Routing Considerations for Virtual Private Endpoint Gateways
 {: #vpc-transit-VPE-routing}
@@ -593,7 +614,7 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
    cd ..
    ./bin/destroy.sh
    ```
-   {: pre}
+   {: codeblock}
 
 ## Expand the tutorial
 {: #vpc-transit-expand-tutorial}
