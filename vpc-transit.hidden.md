@@ -30,29 +30,29 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the cloud.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other using Transit Gateway.
+The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-A hub and spoke model connects multiple VPCs via transit gateway.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
+
+A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} and to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
 
 - The hub can be the respository for shared microservices used by spokes
 - The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can be a central point of traffic routing between on premises and the cloud.
 - Enterprise to cloud traffic can be routed, monitored, and logged through a Virtual Network Function, VNF, appliance in the hub
-- The hub can also can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterperise.
+- The hub can also can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
 
-This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the possible paths. The thin layers help the reader modify or eliminate layers in order to model an environment.
+This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the layers. The thin layers focus in on bite size challenges and solutions.
 
-
- During the journey we will explore:
-- Transit Gateway
+ During the journey the follosing are explored:
+- [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway)
 - VPC egress and ingress routing
+- Virtual Network Functions with optional Network Load Balancers to support high availability
 - Virtual private endpoint gateways
 - DNS resolution
-- Virtual Network Functions with optional Network Load Balancers to support high availability
 
 A layered architecture will introduce resources and allow connectivity to be provided.  Each layer will add connectivity. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
@@ -448,6 +448,7 @@ As mentioned earlier for a system to be resiliant across zonal failures it is be
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
+
 The green path is an example of the originator spoke0 10.0.1.4 routing to 10.1.2.4.  The matching egress route is:
 
 zone|destination|next_hop
@@ -464,6 +465,34 @@ Dallas 2|10.0.0.0/16|10.0.0.196
 Dallas 3|10.0.0.0/16|10.0.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
 
+   ```sh
+   ./apply.sh all_firewall_asym_tf
+   ```
+
+## Firewall and High Availability
+To prevent a firewall from becoming a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewalls.
+
+![vpc-transit-ha-firewall](images/vpc-transit-hidden/vpc-transit-ha-firewall.svg){: class="center"}
+
+This diagram shows a single zone with a network load balancer fronting two firewalls. To optionally see this constructed it is required to change the configuration and apply again. 
+
+
+config_tf/terraform.tfvars:
+   ```sh
+   firewall                     = true
+   firewall_lb                  = true
+   number_of_firewalls_per_zone = 2
+   ```
+
+   ```sh
+   vi config_tf/terraform.tfvars; # make the above changes
+   ```
+This change results in the IP address of the firewall changing from the firewall instance used earlier to the IP address of the network load balancer.  This will need to be applied to a number of VPC route table routes in the transit and spoke vpcs.  It is best to start over:
+
+
+   ```sh
+   ./apply.sh : all_firewall_asym_tf
+   ```
 
 
 
@@ -480,21 +509,63 @@ In this example a DNS service is created for the transit and each of the spokes 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
 
-### Microservices DNS
-{: #vpc-transit-microservices-dns}
+### DNS Resources
+{: #vpc-transit-dns-resources}
+Create the dns services and add a DNS zone for each VPC and an A record for each of the test instances:
 
    ```sh
    ./apply.sh dns_tf
    ```
 
-## STEP Virtual Private Endpoint Gateways
+Open the [Resources](https://{DomainName}/resources) in the IBM Cloud Console.  Open the **Networking** section and notice the **DNS Services**.  Open the **x-spoke0** instance.  Click the **x-spoke0.com** DNS zone.  Notice the A records associated with the test instances that are in the spoke instance.  Optional explore the other DNS instances and find similarly named DNS zones and A records for the other test instances.
+
+Click on the **Custom resolver** tab on the left and notice the forwarding rules.
+
+### DNS Forwarding
+{: #vpc-transit-dns-forwarding}
+Separate DNS instances learn each other's DNS names with forwarding rules.  In the diagram there are arrows that indicate a forwarding rule.  The associated table indicates when the forwarding rule will be used.  Starting on the left notice that the enterprise DNS forwarding rule will look to the transit for the DNS zones: x-transit.com, x-spoke0.com, and x-spoke1.com.
+
+The tranit DNS instance can resolve x-transit.com and has forwarding rules to the spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
+
+You can verify these forwarding rules in the IBM Cloud Console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.
+
+### DNS Testing
+{: #vpc-transit-dns-testing}
+
+There are now a set of **curl DNS** tests that have been made available in type pytest script.  These tests will curl using the DNS name of the remote.
+
+
+   ```sh
+   pytest -v -m dns
+   ```
+
+
+## Virtual Private Endpoint Gateways
 {: #vpc-transit-VPE}
 {: step}
-VPC allows private access through ...
 
-## STEP Routing Considerations for Virtual Private Endpoint Gateways
+![vpc-transit-vpc-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
+
+{: style="text-align: center;"}
+VPC allows private access to IBM Cloud Services through Virtual Private Endpoint Gateways, VPEs, todo link.  Network access to VPE is controlled with Security Groups and subnet Access Control Lists just like a VSI
+
+Create the VPEs for the transit and the spokes:
+
+   ```sh
+   ./apply.sh vpe_transit_tf vpe_spokes_tf
+   ```
+
+There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These vpedns test will verify that the DNS name of a redis instance is within the private CIDR block. The vpe test will exectute a **redli** command to access redis remotely.
+
+
+   ```sh
+   pytest -v -m vpedns -m vpe
+   ```
+
+## Routing Considerations for Virtual Private Endpoint Gateways
 {: #vpc-transit-VPE-routing}
 {: step}
+You will notice that there are some cross zone connection problems.  These are expected.
 
 
 
@@ -527,6 +598,9 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 ## Expand the tutorial
 {: #vpc-transit-expand-tutorial}
 
+Flow Logs
+Multi account
+
 
 ## Conclusions
 {: #vpc-transit-conclusions}
@@ -536,6 +610,7 @@ The architecture of a system is influenced by the containment and ownership of c
 ## Related content
 {: #vpc-transit-related}
 
+Flow Logs
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
