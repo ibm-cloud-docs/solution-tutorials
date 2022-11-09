@@ -223,9 +223,9 @@ Running the tests will now demonstrate passing tests between the transit and the
 
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway.
 
-[{{site.data.keyword.dl_full_notm}}](https://{DomainName}/cloud/direct-link) is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
+Data Link is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
 
-The enterprise in this simulation is a VPC connected to the transit through{{site.data.keyword.tg_short}} that will closely match a {{site.data.keyword.dl_short}} connection or a{{site.data.keyword.dl_short}} to {{site.data.keyword.tg_short}} connection.
+The enterprise in this simulation is a VPC connected to the transit through {{site.data.keyword.tg_short}} that will closely match a Data Link connection or Data Link to {{site.data.keyword.tg_short}} connection.
 
 Apply the layer:
    ```sh
@@ -301,6 +301,7 @@ Example failure:
    FAILED py/test_transit.py::test_curl[l-tvpc-transit-z0-s0 (150.240.68.219) 10.0.0.4     -> r-tvpc-enterprise-z0-s0 192.168.0.4] - assert False
    ```
 
+Lets 
 
 ## Stateful Routing and Direct Server Return
 {: #vpc-transit-stateful-routing}
