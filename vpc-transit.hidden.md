@@ -263,51 +263,49 @@ Apply the layer:
 
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
-Traffic reaches the firewall-router appliance through routing tables.  Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select the transit VPC and then click on **Manage routing tables** click on the **Ingress** routing table.
+Traffic reaches the firewall-router appliance through routing tables.  Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select the transit VPC and then click on **Manage routing tables** click on the **tgw-ingress** routing table.
 
-The next_hop identifies the firewall-router in the table below are 10.0.0.196 (Dallas 1) and 10.1.0.196 (Dallas 2). All ingress traffic for the transit VPC will remain in the same zone.
+The next_hop identifies the firewall-router.  In the table below 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.
 
-Zone is the transit VPC zone determined by the Transit Gateway using the destination IP address. The destination CIDR block will be in the enterprise range (192.168.*.*) when the source is a spoke or the cloud range (10.*.*.*) when the source is the enterprise.  Notice how wide the routes are
+The zone is determined by the Transit Gateway which will exaimine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
 
-TODO update table
-zone|destination|next_hop|note
---|--|--|--
-Dallas 1|192.168.0.0/16|10.0.0.196|spoke to enterprise
-Dallas 2|192.168.0.0/16|10.1.0.196|spoke to enterprise
-Dallas 1|10.0.1.0/24|10.0.0.0.196|enterprise to spoke
-Dallas 1|10.0.2.0/24|10.0.0.0.196|enterprise to spoke
-Dallas 2|10.1.1.0/24|10.1.0.0.196|enterprise to spoke
-Dallas 2|10.1.2.0/24|10.1.0.0.196|enterprise to spoke
+Notice how wide the routes are in the ingress routing table:
 
+zone|destination|next_hop
+--|--|--
+Dallas 1|0.0.0.0/0|10.0.0.196
+Dallas 2|0.0.0.0/0|10.1.0.196
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
-The Transit Gateways learn routes to the attached VPCs through [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does the spoke learn the route to the enterprise (192.168.0.0/16)?  By adding phantom VPC address prefixes to the transit VPC.
+The Transit Gateways learn routes to the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does a spoke learn the route to the enterprise (192.168.0.0/16)?  And how does the enterprise learn the route to a spoke?  By adding phantom VPC address prefixes to the transit VPC.
 
-The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 and 10.0.1.0/24.  Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the Cloud Console and select the **transit VPC** and notice the Address prefixes disaplayed and find the additional address prefixes that have been added.
+The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 Dallas 1 and 192.168.1.0/24 Dallas 2.  Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the Cloud Console and select the **transit VPC** and notice the Address prefixes disaplayed and find the additional address prefixes that have been added.
 
-With these additional address prefixes the spoke VPCs learn that traffic destined to 192.168.0.0/16 should pass through the connected transit gateway.  Similary the enterprise learn that traffic destined to 10.*.1.0/24 should pass through its connected transit gateway.
+Also notice that the Address prefix for that transit VPC itself is 10.0.0.0/16 Dallas 1 and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The transit VPC addresses will always be 10.Z.0.x where Z is the zone and x identifies the network interface.
 
-
-### Transit Gateway Prefix Filters
-{: #vpc-transit-transit-gateway-prefix-filters}
-TODO remove
-Additional address prefixes are required for routes to be advertised by the VPC but the transit gateway will report that there are conflicting routes.  For example the enterprise transit gateway sees 192.168.0.0/16 routes on both sides.  How does it know which ones to choose?
-
-Clearly the desire is all traffic destined to 192.168.0.0/16 to flow to the enterprise.  [Prefix filters](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-adding-prefix-filters are added to hide the routes.  
- 
-Open [Transit Gateway](https://{DomainName}/interconnectivity/transit) in the IBM Cloud Console and select the enterprise transit gateway. Notice the filter icon next to the transit VPC connection and click to open.  Click the **View** in the **Prefix filters** row.  Notice the **Deny** action for 192.168.0.0/16 that is shown in the diagram.  You can visit the other transit gateway if you wish.
-
+With these additional address prefixes the spoke VPCs learn that traffic spoke -> 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24 should pass through the connected transit gateway.  Similary the enterprise will learn that traffic destined to 10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16 should pass through its connected transit gateway.
 
 ### Testing enterprise <-> spoke
 {: #vpc-transit-testing-enterperise-spoke}
 
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone but new failures with transit -> enterprise.
 
+   ```sh
+   pytest -v -m curl
+   ```
+   {: codeblock}
+
+Example failure:
+   ```sh
+   FAILED py/test_transit.py::test_curl[l-tvpc-transit-z0-s0 (150.240.68.219) 10.0.0.4     -> r-tvpc-enterprise-z0-s0 192.168.0.4] - assert False
+   ```
+
+
 ## Stateful Routing and Direct Server Return
 {: #vpc-transit-stateful-routing}
 {: step}
-The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return, DSR, todo link.  This allows incoming connections to pass through the fireweall to the transit test instance and then return directly to the originator.
+The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return used by routers like [{{site.data.keyword.nlb_full}}](https://{DomainName}.com/docs/vpc?topic=vpc-network-load-balancers).  This allows incoming connections from the enterprise to pass through the fireweall to the transit test instance and then return directly to the originator.
 
 todo add diagram with green
 
