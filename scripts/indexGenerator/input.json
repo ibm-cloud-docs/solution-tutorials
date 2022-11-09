@@ -50,6 +50,12 @@
                "url": "vpc-transit.hidden.html",
                "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
                "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
+            },
+            {
+               "name": "Enhance cloud security by applying context-based restrictions",
+               "url": "cbr-security.hidden.html",
+               "description": "Learn how to implement context-based restrictions to enhance security of your cloud environment",
+               "imgSrc": "images/solution-cbr-security-hidden/architecture-e2e-security.svg"
             }
          ]
       },

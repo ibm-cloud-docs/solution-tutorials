@@ -39,7 +39,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-09-06"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -120,7 +120,7 @@
             "https://github.com/IBM-Cloud/patient-health-backend",
             "https://github.com/IBM-Cloud/patient-health-frontend"
           ],
-          "lastUpdated": "2022-09-23"
+          "lastUpdated": "2022-11-01"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -135,7 +135,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/webapp-with-cos-and-cdn"
           ],
-          "lastUpdated": "2022-09-06"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
@@ -195,7 +195,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
           ],
-          "lastUpdated": "2022-10-04"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -210,7 +210,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/cloud-sql-database"
           ],
-          "lastUpdated": "2022-07-05"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Serverless web application and API with Code Engine",
@@ -241,7 +241,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/application-log-analysis"
           ],
-          "lastUpdated": "2022-02-09"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -255,7 +255,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/code-engine-text-analysis"
           ],
-          "lastUpdated": "2022-02-01"
+          "lastUpdated": "2022-11-02"
         }
       ]
     },
@@ -277,7 +277,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2022-07-05"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -293,7 +293,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/chatbot-watson-android"
           ],
-          "lastUpdated": "2021-11-17"
+          "lastUpdated": "2022-11-04"
         }
       ]
     },
@@ -334,7 +334,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
-          "lastUpdated": "2022-03-14"
+          "lastUpdated": "2022-11-09"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -350,7 +350,7 @@
             "Activity Tracker"
           ],
           "guide": true,
-          "lastUpdated": "2022-08-23"
+          "lastUpdated": "2022-11-03"
         }
       ]
     },
@@ -371,7 +371,7 @@
             "Key Protect",
             "Analytics Engine"
           ],
-          "lastUpdated": "2022-05-19"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -387,7 +387,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
           ],
-          "lastUpdated": "2022-05-19"
+          "lastUpdated": "2022-11-01"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -403,7 +403,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/github-traffic-stats"
           ],
-          "lastUpdated": "2021-11-24"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -442,7 +442,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2021-12-09"
+          "lastUpdated": "2022-11-03"
         },
         {
           "name": "Resource sharing across accounts",
@@ -521,7 +521,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2022-04-14"
+          "lastUpdated": "2022-11-03"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -705,7 +705,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-31"
+          "lastUpdated": "2022-11-07"
         },
         {
           "name": "VMware VPC",

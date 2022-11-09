@@ -28,6 +28,7 @@ toc:
                 - satellite-tour.hidden.md
                 - checklist-get-started-vmware.hidden.md
                 - vpc-transit.hidden.md
+                - cbr-security.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
