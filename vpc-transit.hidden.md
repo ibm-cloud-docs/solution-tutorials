@@ -307,7 +307,6 @@ Example failure:
 {: step}
 The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return used by routers like [nlb-todo](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers).  This allows incoming connections from the enterprise to pass through the fireweall to the transit test instance and then return directly to the originator.
 
-todo before [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers) after
 
 ![vpc-transit-routing-green](images/vpc-transit-hidden/vpc-transit-routing-green.svg){: class="center"}
 {: style="text-align: center;"}
@@ -361,9 +360,9 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 
 If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.  The enterprise physical concept of zones may not match the
 
-todo {{site.data.keyword.cloud_notm}}. 
+todo cloud_notm
 
-todo Using the VPC Address Prefix to associate CIDR blocks with zones is identifying on premise resources with an {{site.data.keyword.cloud_notm}} zone.
+todo Using the VPC Address Prefix to associate CIDR blocks with zones is identifying on premise resources with an todo_cloud_notm zone.
 
 ### Spoke Egress routing
 {: #vpc-transit-spoke-egress-routing}
@@ -395,7 +394,7 @@ If you only need routing capability and you added the optional routes the hub an
 
 Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router.  
 
-If you added routes to fix the transit -> enterprise and transit -> spoke as an optional step earlier now is the time to remove the routes that you manually added using the {{site.data.keyword.cloud_notm}} console.
+If you added routes to fix the transit -> enterprise and transit -> spoke as an optional step earlier now is the time to remove the routes that you manually added using the todo_cloud_notm console.
 {: note}
 
 ### Route Spoke and Transit to the firewall-router
