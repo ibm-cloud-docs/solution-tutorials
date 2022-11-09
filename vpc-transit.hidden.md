@@ -225,7 +225,7 @@ The diagram had been enhanced to include the Direct Link simulation using Transi
 
 Data Link is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
 
-The enterprise in this simulation is a VPC connected to the transit through {{site.data.keyword.tg_short}} that will closely match a Data Link connection or Data Link to {{site.data.keyword.tg_short}} connection.
+The enterprise in this simulation is a VPC connected to the transit through tgw-todo that will closely match a Data Link connection or Data Link to tgw-todo connection.
 
 Apply the layer:
    ```sh
@@ -301,12 +301,12 @@ Example failure:
    FAILED py/test_transit.py::test_curl[l-tvpc-transit-z0-s0 (150.240.68.219) 10.0.0.4     -> r-tvpc-enterprise-z0-s0 192.168.0.4] - assert False
    ```
 
-Lets 
-
 ## Stateful Routing and Direct Server Return
 {: #vpc-transit-stateful-routing}
 {: step}
-The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return used by routers like [{{site.data.keyword.nlb_full}}](https://{DomainName}.com/docs/vpc?topic=vpc-network-load-balancers).  This allows incoming connections from the enterprise to pass through the fireweall to the transit test instance and then return directly to the originator.
+The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connections use the same path on the way in as the way out.  One exception to this is Direct Server Return used by routers like [nlb-todo](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers).  This allows incoming connections from the enterprise to pass through the fireweall to the transit test instance and then return directly to the originator.
+
+todo before [{{site.data.keyword.nlb_full}}](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers) after
 
 todo add diagram with green
 
