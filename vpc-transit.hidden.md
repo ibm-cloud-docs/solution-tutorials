@@ -56,15 +56,18 @@ This solution tutorial will walk through communication paths in a hub and spoke 
 
 A layered architecture will introduce resources and allow connectivity to be provided.  Each layer will add connectivity. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
-This tutorial walks you through a complete example demonstrating the network connectivity, routing, DNS name resolution and other details that potentially need to be considered when stiching together multi VPC architectures.  A layered presentation approach allows you to pick and choose parts of this tutorial that might be applicable in your environment.
+This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, DNS name resolution and other details that potentially need to be considered when stiching together multi VPC architectures.  A layered approach allows you to pick and choose parts of this tutorial that are applicable to your environment.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-transit-objectives}
 
-* todo
-* Address micro-services by DNS name resolution using {{site.data.keyword.dns_short}}.
+* Understand the concepts behind a VPC based hub and spoke model.
+* Understand the applicability of a firewall-router and a transit VPC environment.
+* Understand VPC ingress and egress routing.
+* Identify and optionally resolve asymmetric routing issues.
 * Connect VPCs via {{site.data.keyword.tg_short}}.
+* Utilize the DNS service routing and forwarding rules to build architecturally sound name resolution system.
 
 There is a companion GitHub repository with instructions on how to build and test the architecture.  If follows the layers defined in this tutorial.  It allows you to demonstrate connectivity problems and solutions as layers are added.
 
@@ -75,10 +78,10 @@ There is a companion GitHub repository with instructions on how to build and tes
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in a multi zone region (todo link mzr definition) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
+The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in this [multizone region](https://cloud.ibm.com/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
 
 There are a few subnets in the the transit and spokes:
-- workers - Worker subnets for load balancers, ROCS todo, VPC instances that each spoke group will be producing.
+- workers - Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
 - firewall - firewall-router.
 - vpe - all of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
 - dns - For DNS locations (todo link).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
