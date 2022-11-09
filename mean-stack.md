@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-04"
+lastupdated: "2022-11-07"
 lasttested: "2022-02-08"
 
 content-type: tutorial
@@ -67,7 +67,7 @@ This tutorial requires:
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 <!--#/istutorial#-->
 
@@ -81,10 +81,9 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 
 {: shortdesc}
 
-1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your preferred {{site.data.keyword.cloud_notm}} region, however we will use `ca-tor` in this tutorial.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region, however we will use `ca-tor` in this tutorial.
 
    ```sh
-   ibmcloud login 
    ibmcloud target -r ca-tor 
    ```
    {: codeblock}

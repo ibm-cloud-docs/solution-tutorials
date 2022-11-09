@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-05-19"
+lastupdated: "2022-11-07"
 lasttested: "2022-03-25"
 
 content-type: tutorial
@@ -465,11 +465,10 @@ Open the analytics engine service:
 
 Try the following:
 
-Target the region and resource group you have been using (edit for your specifics):
+If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region and resource group you have been using (edit for your specifics):
 ```
 region=us-south; #<REGION>
 rg=Default; # <RESOURCE-GROUP>
-ibmcloud login
 ibmcloud target -r $region -g $rg
 ```
 {: codeblock}

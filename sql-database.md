@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-07-05"
+lastupdated: "2022-11-07"
 lasttested: "2022-07-05"
 
 content-type: tutorial
@@ -148,12 +148,7 @@ The data has been loaded into the relational database. There were no errors, but
 
 Change back to the terminal. Now you are going to deploy the application code, using a pre-built container image. You can modify the application code and build the container image on your own. See the [instructions in the GitHub repository](https://github.com/IBM-Cloud/cloud-sql-database) for details.
 
-1. Log in to IBM Cloud and set the region and resource group to where the database has been provisioned. Replace **RESOURCE_GROUP** and **REGION** accordingly.
-   ```sh
-   ibmcloud login
-   ```
-   {: pre}
-
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Set the region and resource group to where the database has been provisioned. Replace **RESOURCE_GROUP** and **REGION** accordingly.
    ```sh
    ibmcloud target -g RESOURCE_GROUP -r REGION
    ```
