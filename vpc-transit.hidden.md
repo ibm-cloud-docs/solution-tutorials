@@ -308,24 +308,28 @@ The IBM VPC uses the industry standard state based routing for secuire TCP conne
 
 todo before [{{site.data.keyword.nlb_full}}](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers) after
 
-todo add diagram with green
+![vpc-transit-routing-green](images/vpc-transit-hidden/vpc-transit-routing-green.svg){: class="center"}
+{: style="text-align: center;"}
 
 This does not help with the traffic originating in the transit test instance passing through the transit gateway then back through ingress routing to the firewall-router.  This connection will not complete.
 
-One possible solution is to not send transit traffic through the firewall-router.  Essentially restore it back to the pre firewall-router configuration.  By adding the following routes to the transit vpc ingress route table:
+![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
+{: style="text-align: center;"}
 
 
-zone|destination|next_hop|note
---|--|--|--
-Dallas 1|10.0.0.0/24|Delegate|
-Dallas 2|10.1.0.0/24|Delegate|
-Dallas 3|10.2.0.0/24|Add if testing a 3 zone configuration
+One possible solution is to not send transit traffic through the firewall-router.  Adding the following routes to the transit vpc ingress route table would restore it back to the pre firewall-router configuration for traffic destine to the transit test instrances:
 
-Optionally visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the IBM Cloud Console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.  Click **Create** to add each route.  **Delegate** will delegate to the default routing behavior for the matching CIDR block in the zone.
+zone|destination|next_hop
+--|--|--
+Dallas 1|10.0.0.0/24|Delegate
+Dallas 2|10.1.0.0/24|Delegate
+Dallas 3|10.2.0.0/24|Delegate
+
+Optionally visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the IBM Cloud Console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.  Click **Create** to add each route.  **Delegate** will delegate to the default VPC routing behavior for the matching CIDR block in the zone.
 
 If you created the routes do not forget to remove them now before moving on to the next step.
 
-An alternative solution which will be used here is to route the transit VPC test instance traffic through the firewall/router.
+An alternative solution which will be used below is to route the transit VPC test instance traffic through the firewall/router.
 
 ## Cross Zone and Asymmetric Routing
 {: #vpc-transit-asymmetric}
@@ -336,18 +340,25 @@ An alternative solution which will be used here is to route the transit VPC test
 
 ### Asymmetric Routing Limitation
 {: #vpc-transit-asymmeteric-routing-limitation}
-The green connections are working. The blue line represents a TCP connection request flowing from an on premise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
+Ignoring the transit -> enterprise and tranist -> spoke failures the remaining failures are cross zone failures enterprise <-> spoke.
+
+Example failure:
+   ```sh
+   FAILED py/test_transit.py::test_curl[l-tvpc-enterprise-z0-s0 (52.118.186.209) 192.168.0.4 -> r-tvpc-spoke0-z1-s0 10.1.1.4] - assert False
+   ```
+
+In the diagram the green connections are working. The blue line represents a TCP connection request flowing from enterprise zone through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
 
 The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone.  The IBM VPC uses the industry standard state based routing for secuire TCP connection tracking.  This requires that the TCP connection pass through the same firewall-router in both directions.  The VPC does not support tcp "Asymmetric Routing".
 
 It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  ICMP does not require a stateful connection.  Connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 via ICMP is possible.  You can run the ping marked tests to verify:
 
    ```sh
-   pytest -m ping
+   pytest -v -m ping
    ```
    {: codeblock}
 
-If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.
+If the goal is to create an architecture that is resiliant across IBM Cloud zonal failures then cross zone traffic should generally be avoided.  Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud.  The enterprise physical concept of zones may not match the {{site.data.keyword.cloud_notm}}.  But by using the VPC Address Prefix to associate CIDR blocks with zones is identifying on premise resources with an {{site.data.keyword.cloud_notm}} zone
 
 ### Spoke Egress routing
 {: #vpc-transit-spoke-egress-routing}
@@ -363,10 +374,10 @@ It is possible to work around this cross zone limiation by using egress routing 
 
 Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table directing all egress traffic in Dallas 1 should be directed to 10.0.0.196 in Dallas 1.  With this change spoke traffic originating in Dallas 2 remains in Dallas 2 in the transit VPC.
 
-zone|destination|next_hop|note
---|--|--|--
-Dallas 1|192.168.0.0/16|10.0.0.196|spoke to enterprise
-Dallas 2|192.168.0.0/16|10.1.0.196|spoke to enterprise
+zone|destination|next_hop
+--|--|--
+Dallas 1|192.168.0.0/16|10.0.0.196
+Dallas 2|192.168.0.0/16|10.1.0.196
 
 
 Run `pytest -v` and verify that all tests are now passing.
@@ -376,7 +387,8 @@ Run `pytest -v` and verify that all tests are now passing.
 {: #vpc-transit-firewall}
 {: step}
 Currently enterprise <-> spoke traffic is flowing through the transit firewall-router.  It is not unusual to require spoke <-> spoke traffic and transit <-> spoke traffic to flow through the firewall-router.
-Due to direct service return currently transit -> enterprise traffic is also not flowing through the firewall-router.
+
+If you added routes to fix the transit -> enterprise and transit -> spoke as an optional step earlier now is the time to remove the routes that you manually added using the {{site.data.keyword.cloud_notm}} console.
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
