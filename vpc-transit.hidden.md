@@ -141,7 +141,7 @@ In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf, 
 {: #vpc-transit-testing}
 {: step}
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
+![vpc-transit-test-instances](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
 {: style="text-align: center;"}
 
 VPC Virtual Server Instances, VSIs, can be provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes.  If the default configuration of 2 zones and 2 spokes is used then 8 instances will be provisioned.
@@ -199,7 +199,7 @@ FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.
 {: #vpc-transit-transit-to-spokes}
 {: step}
 
-![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-vpc-transit-spoke-tgw.png){: class="center"}
+![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
 The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs.  Apply the layer:
@@ -221,7 +221,7 @@ Running the tests will now demonstrate passing tests between the transit and the
 {: #vpc-transit-enterprise-to-transit}
 {: step}
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
+![vpc-transit-enterprise-link](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
 {: style="text-align: center;"}
 
 The diagram had been enhanced to include the Direct Link simulation using Transit Gateway.
@@ -248,7 +248,7 @@ An off the shelf appliance can be used for a router.  There are many to choose f
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
+![vpc-transit-firewall](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
 {: style="text-align: center;"}
 
 The diagram shows the firewall-router appliances.  An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines.
@@ -338,7 +338,7 @@ An alternative solution which will be used below is to route the transit VPC tes
 {: #vpc-transit-asymmetric}
 {: step}
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
+![vpc-transit-asymmetric](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
 {: style="text-align: center;"}
 
 ### Asymmetric Routing Limitation
@@ -369,7 +369,7 @@ todo Using the VPC Address Prefix to associate CIDR blocks with zones is identif
 
 ### Spoke Egress routing
 {: #vpc-transit-spoke-egress-routing}
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
+![vpc-transit-spoke-egress](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
 {: style="text-align: center;"}
 
 It is possible to work around this cross zone limiation by using egress routing in the spokes.  In the diagram this is represented by the egress dashed line.
@@ -464,7 +464,7 @@ Only the cross zone transit <-> spoke and spoke <-> spoke tests are failing.
 
 As mentioned earlier for a system to be resiliant across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added.  The problem for spoke to spoke traffic is shown in this diagram
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
+![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 The green path is an example of the originator spoke0 10.0.1.4 routing to 10.1.2.4.  The matching egress route is:
@@ -527,12 +527,11 @@ This change results in the IP address of the firewall-router changing from the f
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
 
-The DNS service is used to provie names to IP addresses.
-If a single DNS service for the cloud would meet your isolation needs it is a simpler solution.
-In this example a DNS service is created for the transit and each of the spokes to provide isolation between teams.  DNS ....
-
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
+
+The {{site.data.keyword.dns_full_notm}} service is used to provie names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it is a preferred solution.
+
 
 ### DNS Resources
 {: #vpc-transit-dns-resources}
@@ -560,7 +559,6 @@ You can verify these forwarding rules in the IBM Cloud Console in the **Custom r
 
 There are now a set of **curl DNS** tests that have been made available in type pytest script.  These tests will curl using the DNS name of the remote.
 
-
    ```sh
    pytest -v -m dns
    ```
@@ -583,20 +581,14 @@ Create the VPEs for the transit and the spokes:
    ```
    {: codeblock}
 
-There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These vpedns test will verify that the DNS name of a redis instance is within the private CIDR block. The vpe test will exectute a **redli** command to access redis remotely.
+There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These vpedns test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The vpe test will exectute a **redli** command to access redis remotely.
 
 
    ```sh
-   pytest -v -m vpedns -m vpe
+   pytest -v -m vpedns
+   pytest -v -m vpe
    ```
    {: codeblock}
-
-## Routing Considerations for Virtual Private Endpoint Gateways
-{: #vpc-transit-VPE-routing}
-{: step}
-You will notice that there are some cross zone connection problems.  These are expected.
-
-
 
 ## Production Notes
 {: #vpc-transit-production-notes}
