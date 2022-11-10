@@ -177,7 +177,6 @@ Run the test suite and notice connectivity within a VPC (like enterprise -> ente
    pytest -v
    ```
    {: codeblock}
-   ```sh
 
 Your output will resemble:
 todo newoutput
@@ -193,7 +192,6 @@ py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4
 FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
 =================================== 48 failed, 16 passed, 3 skipped, 18223 warnings in 203.68s (0:03:23) ===================================
    ```
-   {: codeblock}
 
 ## Transit to Spokes via Transit Gateway
 {: #vpc-transit-transit-to-spokes}
@@ -420,6 +418,8 @@ Dallas 3|10.2.0.0/8|10.2.0.0.196
 Dallas 1|192.168.0.0/16|10.0.0.0.196
 Dallas 2|192.168.1.0/16|10.1.0.0.196
 Dallas 3|192.168.2.0/16|10.2.0.0.196
+
+
 zone|destination|next_hop
 --|--|--
 Dallas 1|10.0.0.0/8|10.0.0.196
