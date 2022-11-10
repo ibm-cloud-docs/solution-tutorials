@@ -519,7 +519,6 @@ This change results in the IP address of the firewall-router changing from the f
    ```
    {: codeblock}
 
-
 ## DNS
 {: #vpc-transit-dns}
 {: step}
