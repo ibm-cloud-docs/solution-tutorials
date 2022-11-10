@@ -646,4 +646,4 @@ Flow Logs
 Network Function Virtualization
 https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing
 
-  See [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha) for some additional information.
+See [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha) for some additional information.
