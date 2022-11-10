@@ -576,8 +576,6 @@ Create the VPEs for the transit and the spokes:
    ```
    {: codeblock}
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
-{: style="text-align: center;"}
 
 To make the DNS names for the VPE available it is required to update the DNS fowarding rules:
 
@@ -592,8 +590,40 @@ There are now a set of **vpe**  and **vpedns**tests that have been made availabl
 
 
    ```sh
-   pytest -v -m vpedns
    pytest -v -m vpe
+   pytest -v -m vpedns
+   ```
+   {: codeblock}
+
+Notice the failing vpedns tests like this one:
+
+   ```sh
+   FAILED py/test_transit.py::test_vpe_dns_resolution[redis tvpc-spoke0-z0-s0 (169.48.153.106)) 10.0.1.4 -> tvpc-transit (['10.0.0.128/26', '10.1.0.128/26']) 5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] - AssertionErro...
+   ```
+
+These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.0.0.128/26 or 10.1.0.128/26.  Looking at the stack trace notice it is resolving to an adress like 166.9.14.12 which is a Cloud [Service Enpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
+
+![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
+{: style="text-align: center;"}
+
+The diagram uses **transit-.databases.appdomain.cloud** to identify the database in the transit instead of the fully qualified name like **5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
+
+   ```sh
+   ./apply.sh vpe_dns_forwarding_rules_tf
+   ```
+   {: codeblock}
+
+Verify that all VPEs can be accessed from all test instances:
+   ```sh
+   pytest -v -m vpe
+   pytest -v -m vpedns
+   ```
+   {: codeblock}
+
+In fact now all tests should pass:
+
+   ```sh
+   pytest -v
    ```
    {: codeblock}
 
