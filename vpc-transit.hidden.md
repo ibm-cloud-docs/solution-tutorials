@@ -530,7 +530,7 @@ This change results in the IP address of the firewall-router changing from the f
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
 
-The {{site.data.keyword.dns_full_notm}} service is used to provie names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it is a preferred solution.
+The todo site.data.keyword.dns_full_notm service is used to provie names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it is a preferred solution.
 
 
 ### DNS Resources
