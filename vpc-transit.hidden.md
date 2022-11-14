@@ -171,22 +171,19 @@ Each time a fresh shell is initialized remember to activate the python virtual e
    ```
    {: codeblock}
 
-Run the test suite and notice connectivity within a VPC (like enterprise -> enterprise) is working but no cross VPC connectivity (like enterprise -> transit) is working. 
+Run the test suite and notice connectivity within a VPC (like enterprise -> enterprise) is working but cross VPC connectivity (like enterprise -> transit) is not working. 
 
    ```sh
-   pytest -v
+   pytest
    ```
    {: codeblock}
 
 Your output will resemble:
-todo newoutput
    ```sh
    ...
    py/test_transit.py::test_curl[tvpc-transit-z1-s0 (52.118.204.173) 10.1.0.4       -> tvpc-transit-z1-s0 10.1.0.4] PASSED              [ 11%]
    py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z0-s0 10.0.0.4] FAILED              [ 13%]
    py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z1-s0 10.1.0.4] FAILED              [ 14%]
-   ...
-   ... lots of stack traces
    ...
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z0-s0 10.0.1.4] - assert False
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
@@ -200,7 +197,7 @@ todo newoutput
 ![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs.  Apply the layer:
+The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.  Apply the layer:
 
    ```sh
    ./apply.sh transit_spoke_tgw_tf
@@ -208,10 +205,10 @@ The diagram shows the Transit Gateway between the transit vpc and the spoke vpcs
    {: codeblock}
 
 
-Running the tests will now demonstrate passing tests between the transit and the spokes.  The curl tests are sufficient.
+Running the tests will now demonstrate passing tests between the transit and the spokes.  The curl tests are sufficient:
 
    ```sh
-   pytest -v -m curl
+   pytest -m curl
    ```
    {: codeblock}
 
@@ -222,11 +219,9 @@ Running the tests will now demonstrate passing tests between the transit and the
 ![vpc-transit-enterprise-link](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram had been enhanced to include the Direct Link simulation using Transit Gateway.
+The the {{site.data.keyword.dl_short}} using {{site.data.keyword.tg_short}}has been added to the diagram.
 
-Data Link is a high speed secure data path for connecting an enterprise to the IBM cloud.  Direct link can also be connected to a Transit Gateway for distribution.
-
-The enterprise in this simulation is a VPC connected to the transit through tgw-todo that will closely match a Data Link connection or Data Link to tgw-todo connection.
+{{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the IBM cloud. {{site.data.keyword.dl_full_notm}}  can optionally be connected to a transit-notm for distribution.  The enterprise in this simulation is a VPC.  It is connected to the transit through {{site.data.keyword.apigw_full_notm}} that will closely match a Data Link connection or Data Link to tgw-todo connection.
 
 Apply the layer:
    ```sh
@@ -294,7 +289,7 @@ With these additional address prefixes the spoke VPCs learn that traffic spoke -
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone but new failures with transit -> enterprise.
 
    ```sh
-   pytest -v -m curl
+   pytest -m curl
    ```
    {: codeblock}
 
@@ -355,7 +350,7 @@ The red line represents the TCP connection response to 192.168.0.4.  The transit
 It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  ICMP does not require a stateful connection.  Connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 via ICMP is possible.  You can run the ping marked tests to verify:
 
    ```sh
-   pytest -v -m ping
+   pytest -m ping
    ```
    {: codeblock}
 
@@ -385,7 +380,7 @@ Dallas 1|192.168.0.0/16|10.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.196
 
 
-Run `pytest -v` and verify that all tests are now passing.
+Run `pytest` and verify that all tests are now passing.
 
 
 ## More Firewall Protection
@@ -453,7 +448,7 @@ Similar routes are added to the transit and other spokes.
 What about the firewall-router itself?  This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit vpc that delegates routing to the default for all destinations.  It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets.  Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Console.  Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
 
    ```sh
-   pytest -v -m curl
+   pytest -m curl
    ```
    {: codeblock}
 
@@ -555,7 +550,7 @@ You can verify these forwarding rules in the IBM Cloud Console in the **Custom r
 There are now a set of **curl DNS** tests that have been made available in type pytest script.  These tests will curl using the DNS name of the remote.
 
    ```sh
-   pytest -v -m dns
+   pytest -m dns
    ```
    {: codeblock}
 
@@ -590,8 +585,8 @@ There are now a set of **vpe**  and **vpedns**tests that have been made availabl
 
 
    ```sh
-   pytest -v -m vpe
-   pytest -v -m vpedns
+   pytest -m vpe
+   pytest -m vpedns
    ```
    {: codeblock}
 
@@ -615,15 +610,15 @@ The diagram uses **transit-.databases.appdomain.cloud** to identify the database
 
 Verify that all VPEs can be accessed from all test instances:
    ```sh
-   pytest -v -m vpe
-   pytest -v -m vpedns
+   pytest -m vpe
+   pytest -m vpedns
    ```
    {: codeblock}
 
 In fact now all tests should pass:
 
    ```sh
-   pytest -v
+   pytest
    ```
    {: codeblock}
 
