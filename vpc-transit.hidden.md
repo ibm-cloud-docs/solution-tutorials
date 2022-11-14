@@ -185,9 +185,11 @@ Your output will resemble:
    py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z0-s0 10.0.0.4] FAILED              [ 13%]
    py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z1-s0 10.1.0.4] FAILED              [ 14%]
    ...
+   =======================================short test summary info ===========================================================================
+   ...
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z0-s0 10.0.1.4] - assert False
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
-   =================================== 48 failed, 16 passed, 3 skipped, 18223 warnings in 203.68s (0:03:23) ===================================
+   =================================== 96 failed, 32 passed, 4 skipped in 896.72s (0:14:56) =================================================
    ```
 
 ## Transit to Spokes via Transit Gateway
@@ -205,7 +207,7 @@ The Transit Gateway between the transit vpc and the spoke vpcs has been added to
    {: codeblock}
 
 
-Running the tests will now demonstrate passing tests between the transit and the spokes.  The curl tests are sufficient:
+Running the curl tests (-m curl) will demonstrate passing tests between the transit and the spokes.
 
    ```sh
    pytest -m curl
@@ -219,9 +221,9 @@ Running the tests will now demonstrate passing tests between the transit and the
 ![vpc-transit-enterprise-link](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
 {: style="text-align: center;"}
 
-The the {{site.data.keyword.dl_short}} using {{site.data.keyword.tg_short}}has been added to the diagram.
+The the {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}} has been added to the diagram.
 
-{{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the IBM cloud. {{site.data.keyword.dl_full_notm}}  can optionally be connected to a transit-notm for distribution.  The enterprise in this simulation is a VPC.  It is connected to the transit through {{site.data.keyword.apigw_full_notm}} that will closely match a Data Link connection or Data Link to tgw-todo connection.
+{{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the IBM cloud. {{site.data.keyword.dl_full_notm}}  can optionally be connected to {{site.data.keyword.tg_short}} for distribution.  The enterprise in this simulation is a VPC and uses a {{site.data.keyword.tg_short}} to ensure an experience very close to {{site.data.keyword.dl_short}}.
 
 Apply the layer:
    ```sh
@@ -235,9 +237,7 @@ Running the tests will now demonstrate passing tests between the enterprise and 
 {: #vpc-transit-router}
 {: step}
 
-The incentive for a transit vpc for enterprise <-> cloud traffic is to have a central place to monitor, inspect, route and log traffic.  A firewall-router appliance can be installed in the transit VPC. 
-
-An off the shelf appliance can be used for a router.  There are many to choose from in the IBM Catalog.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+The incentive for a transit vpc for enterprise <-> cloud traffic is to have a central place to monitor, inspect, route and log traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
@@ -246,7 +246,7 @@ An off the shelf appliance can be used for a router.  There are many to choose f
 
 The diagram shows the firewall-router appliances.  An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines.
 
-Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router in the transit VPC.  In production you can choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image kernel iptables set up to forward all packets from the source to destination.  No firewall inspection is performed.
+Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router in the transit VPC.  In production you can choose one from the catalog or bring your own.  This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination.  No firewall inspection is performed.
 
 The terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about).  You must [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
@@ -275,11 +275,11 @@ Dallas 3|0.0.0.0/0|10.2.0.196
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
-The Transit Gateways learn routes to the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does a spoke learn the route to the enterprise (192.168.0.0/16)?  And how does the enterprise learn the route to a spoke?  By adding phantom VPC address prefixes to the transit VPC.
+The Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does a spoke learn the route to the enterprise (192.168.0.0/16)?  And how does the enterprise learn the route to a spoke?  By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 Dallas 1 and 192.168.1.0/24 Dallas 2.  Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the Cloud Console and select the **transit VPC** and notice the Address prefixes disaplayed and find the additional address prefixes that have been added.
 
-Also notice that the Address prefix for that transit VPC itself is 10.0.0.0/16 Dallas 1 and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The transit VPC addresses will always be 10.Z.0.x where Z is the zone and x identifies the network interface.
+Also notice that the Address prefix for that transit VPC itself is 10.0.0.0/16 Dallas 1 and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The address prefixes for the transit is expaned to include all of the spokes to allow the routes to flow to the enterprise.
 
 With these additional address prefixes the spoke VPCs learn that traffic spoke -> 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24 should pass through the connected transit gateway.  Similary the enterprise will learn that traffic destined to 10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16 should pass through its connected transit gateway.
 
