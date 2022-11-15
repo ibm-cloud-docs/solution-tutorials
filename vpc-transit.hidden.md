@@ -641,18 +641,20 @@ Apply the vpe_dns_forwarding_rules_tf layer:
    ```
    {: codeblock}
 
-Verify that all VPEs can be accessed from all test instances:
+Verify that all VPEs can be accessed from all test instances.
    ```sh
-   pytest -m vpe -m vpedns
+   pytest -m 'vpe and vpedns'
    ```
    {: codeblock}
 
-In fact now all tests should pass:
+It can take a few tries for the DNS names to be resolveda accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
 
    ```sh
    pytest
    ```
    {: codeblock}
+
+Powell: todo neeed to consider taking out the failing tests.  Meeting with Shaival to determine what to do.
 
 ## Production Notes
 {: #vpc-transit-production-notes}
