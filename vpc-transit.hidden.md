@@ -655,6 +655,7 @@ In fact now all tests should pass:
    {: codeblock}
 
 ## Production Notes
+{: #vpc-transit-production-notes}
 Powell is still working on this section
 {: #vpc-transit-production-notes}
 More detailed notes for production environments can be found in the todo link.
@@ -670,7 +671,6 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 
 ## Remove resources
 {: #vpc-transit-remove-resources}
-{: #vpc-tg-dns-iam-remove_resource}
 
 1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
 
