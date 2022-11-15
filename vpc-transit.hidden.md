@@ -272,7 +272,7 @@ Traffic reaches the firewall-router appliance through routing tables.  Visit the
 
 The zone is determined by the Transit Gateway which will exaimine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
 
-Notice how wide the routes are in the ingress routing table:
+Notice how wide the routes are in the ingress routing table for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -322,7 +322,7 @@ This does not help with the traffic originating in the transit test instance pas
 {: style="text-align: center;"}
 
 
-One possible solution is to not send transit traffic through the firewall-router.  Adding the following routes to the transit vpc ingress route table would restore it back to the pre firewall-router configuration for traffic destined to the transit test instrances:
+One possible solution is to not send transit traffic through the firewall-router.  Adding the following routes (three zone configuration) to the transit vpc ingress route table would restore it back to the pre firewall-router configuration for traffic destined to the transit test instrances.  Routes for three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -392,6 +392,8 @@ Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Con
 ![vpc-transit-asymmetric-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-fix.svg){: class="center"}
 {: style="text-align: center;"}
 
+Routes for the three zone configuration:
+
 zone|destination|next_hop
 --|--|--
 Dallas 1|192.168.0.0/16|10.0.0.196
@@ -416,7 +418,9 @@ If you added routes to fix the transit -> enterprise and transit -> spoke as an 
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
-Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routing table routes in the spoke egress routing table:
+Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routing table routes in the spoke egress routing table.
+
+Routes for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -426,7 +430,7 @@ Dallas 3|10.0.0.0/8|10.2.0.196
 
 Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.0.0.4 (Dallas 1) attempting contact with 10.1.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.0.0.196.  
 
-Egress routes in transit VPC:
+Egress routes in transit VPC for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -440,7 +444,9 @@ Dallas 3|192.168.0.0/16|10.2.0.0.196
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit-do-not-route-intara-zone-traffic-to-firewall-router}
-In this example Intra-VPC traffic will not pass throught the firewall-router.  Additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated:
+In this example Intra-VPC traffic will not pass throught the firewall-router.  Additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
+
+Routes for the three zone configuration:
 
 zone|destination|action
 --|--|--
@@ -490,12 +496,16 @@ zone|destination|next_hop
 --|--|--
 Dallas 2|10.0.0.0/8|10.1.0.196
 
-Which the is the firewall-router in the middle zone of the diagram.  On the return path the lower zone is selected.
+Moving right to left Which the is the firewall-router in the middle zone of the diagram.  On the return path the lower zone is selected.
 
-To fix this a few more specific routes need to be added to force the upper zones to route to the lower zones.  The return trip does not change.will then .  For the transit and each of the spokes the following routes have been added:
+To fix this a few more specific routes need to be added to force the upper zones to route to the lower zones.
+
+
 
 ![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
 {: style="text-align: center;"}
+
+Routes for the three zone configuration.  Added to each of the spokes:
 
 zone|destination|next_hop
 --|--|--
