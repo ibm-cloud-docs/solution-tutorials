@@ -84,7 +84,7 @@ There are a few subnets in the the transit and spokes:
 - workers - Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
 - firewall - firewall-router.
 - vpe - All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
-- dns - For DNS locations see [working with custom resolvers[(https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
+- dns - For DNS locations see [working with custom resolvers[(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
 
 There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) that can be used to follow along as the resources are created.  Clone and initialize the files **local.env** and **config_tf/terraform.tfvars**.  The APIKEY in local.env is a secret that should not be shared.  The config_tf/terraform.tfvars has an initial section that requires modification.
 
@@ -280,7 +280,7 @@ Dallas 1|0.0.0.0/0|10.0.0.196
 Dallas 2|0.0.0.0/0|10.1.0.196
 Dallas 3|0.0.0.0/0|10.2.0.196
 
-The next_hop identifies the firewall-router.  In the table below 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  Check [Virtual server instances for VPC](https://cloud.ibm.com/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP**.
+The next_hop identifies the firewall-router.  In the table below 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  Check [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP**.
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
@@ -598,10 +598,10 @@ Test:
 ![vpc-transit-vpc-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
 
 {: style="text-align: center;"}
-VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
-- [{{site.data.keyword.security-groups}}](https://cloud.ibm.com/docs/vpc?topic=vpc-using-security-groups)
-- [VPC Network Access Control Lists](https://cloud.ibm.com/docs/vpc?topic=vpc-using-acls)
-- [Routing tables and routes](https://cloud.ibm.com/docs/vpc?topic=vpc-about-custom-routes)
+VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://{DomainName}/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
+- [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups)
+- [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls)
+- [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes)
 
 Create the VPEs for the transit and the spokes, by applying the vpe layers:
    ```sh
