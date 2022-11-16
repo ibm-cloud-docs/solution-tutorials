@@ -80,6 +80,8 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 * make sure to not locked you out (console, CLI, TF)
 
 ### Overview: Context-based restrictions
+{: #cbr-security-strategy-overview}
+{: step}
 
 Context-based restrictions provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
 
@@ -96,6 +98,7 @@ in the tutorial and TF code,
 
 
 ## Verify the rules
+{: #cbr-security-verify}
 
 ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
 {: style="text-align: center;"}
