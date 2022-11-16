@@ -403,28 +403,6 @@
                "repos": [
                   "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
                ]
-            },
-            {
-               "name": "Build a voice-enabled Android chatbot",
-               "url": "android-watson-chatbot.html",
-               "description": "Define intents, entities and build a dialog flow for the chatbot to respond to customer's queries. Enable speech to text and text to speech services for easy interaction with the Android app.",
-               "imgSrc": "images/solution28-watson-chatbot-android/architecture.png",
-               "tags": [
-                  "IBM Watson Assistant",
-                  "Speech to Text",
-                  "Text to Speech",
-                  "Android"
-               ],
-               "requirements": [
-                  "watson_assistant",
-                  "speech_to_text",
-                  "text_to_speech",
-                  "android_studio"
-               ],
-               "supportsCloudShell": "not_applicable",
-               "repos": [
-                  "https://github.com/IBM-Cloud/chatbot-watson-android"
-               ]
             }
          ]
       },
