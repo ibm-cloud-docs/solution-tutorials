@@ -30,7 +30,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
+The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.  Here is a high level diagram:
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
@@ -686,16 +686,12 @@ Powell: todo need to consider taking out the failing tests.  Meeting with Shaiva
 ## Production Notes
 {: #vpc-transit-production-notes}
 
-The [VPC reference architecture for IBM Cloud for Financial Services](https://cloud.ibm.com/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the 
-Powell is still working on this section
-{: #vpc-transit-production-notes}
-More detailed notes for production environments can be found in the todo link.
+The [VPC reference architecture for IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
 
 Some obvious changes to make:
-- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.4.0.0/10, 10.8.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
+- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
 - Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered
 - Network Access Control Lists for each subnet should be carefully considered
-- 
 
 DNS
 The appliances are used as both DNS resolvers used by remote DNS servers and DNS forwarders.
@@ -714,16 +710,21 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 ## Expand the tutorial
 {: #vpc-transit-conclusions}
 
-Your architecture will likely be different than the one presented.  Hopefully the building blocks discussed here will be applicable to your problems.  Ideas to expand this tutorial:
+Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
+- Force all outbound traffic through the firewall in the transit VPC.
+- Integrate incoming public internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
 - Add flow log capture in the transit
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial)
+- Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
+- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://cloud.ibm.com/docs/openshift?topic=openshift-vpc-lbaas)
 
 ## Related content
 {: #vpc-transit-related}
 
-* [IBM Cloud for Financial Services](https://cloud.ibm.com/docs/framework-financial-services) has 
+* [IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services) has 
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
+* [How to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-[Network Function Virtualization](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vnf)
-* [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
+[Network Function Virtualization](https://{DomainName}/docs/vpc?topic=vpc-about-vnf)
+* [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
