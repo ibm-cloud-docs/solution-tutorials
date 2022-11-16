@@ -21,7 +21,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Build VPC Hub and Spoke and extended to On Premises via a Transit VPC
+# Build VPC Transit Hub and Spoke
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
@@ -34,7 +34,6 @@ The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traf
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
-
 
 A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} and to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
 
@@ -54,9 +53,9 @@ This solution tutorial will walk through communication paths in a hub and spoke 
 - Virtual private endpoint gateways
 - DNS resolution
 
-A layered architecture will introduce resources and allow connectivity to be provided.  Each layer will add connectivity. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
+A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
-This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, DNS name resolution and other details that potentially need to be considered when stiching together multi VPC architectures.  A layered approach allows you to pick and choose parts of this tutorial that are applicable to your environment.
+This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, DNS name resolution and other details to considered when stiching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate a solution in the context of a complete architecture.
 {: shortdesc}
 
 ## Objectives
@@ -69,7 +68,7 @@ This tutorial walks you through a complete example demonstrating the network con
 * Connect VPCs via {{site.data.keyword.tg_short}}.
 * Utilize the DNS service routing and forwarding rules to build architecturally sound name resolution system.
 
-There is a companion GitHub repository with instructions on how to build and test the architecture.  If follows the layers defined in this tutorial.  It allows you to demonstrate connectivity problems and solutions as layers are added.
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) with the source code for this tutorial and more. If follows the layers defined in this tutorial.
 
 ## VPC Layout
 {: #vpc-transit-layout}
@@ -86,7 +85,7 @@ There are a few subnets in the the transit and spokes:
 - vpe - All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
 - dns - For DNS locations see [working with custom resolvers[(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
 
-There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) that can be used to follow along as the resources are created.  Clone and initialize the files **local.env** and **config_tf/terraform.tfvars**.  The APIKEY in local.env is a secret that should not be shared.  The config_tf/terraform.tfvars has an initial section that requires modification.
+There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) that can be used to follow along as the resources are created.  Clone and initialize the files **local.env** and **config_tf/terraform.tfvars**.  The APIKEY in local.env is a secret that should not be kept secret.
 
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit
@@ -97,13 +96,15 @@ There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transi
    ```
    {: codeblock}
 
+ The config_tf/terraform.tfvars has an initial section that requires modification.
+
    ```
    cp config_tf/template.terraform.tfvars config_tf/terraform.tfvars
    vi config_tf/terraform.tfvars; # make the initial changes suggested
    ```
    {: codeblock}
 
-Each section will apply one or more layers to the diagram.  You could cd into the directory and execute the terraform commands as shown for **config_tf**:
+Below each **Step** will apply one or more layers to the diagram.  You could cd into the directory and execute the terraform commands as shown for **config_tf**:
 
    ```sh
    cd config_tf
@@ -116,20 +117,19 @@ Each section will apply one or more layers to the diagram.  You could cd into th
 Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  Try it out:
 
    ```sh
-   ./apply.shp; # display help
+   ./apply.sh; # display help
    ```
    {: codeblock}
 
-Results will look something like this indicating the order of execution.  You could apply all of the layers configured by execting `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_spokes_tf).
+You could apply all of the layers configured by execting `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf).  The **-p** prints the layers:
 
    ```sh
    $ ./apply.sh : : -p
    directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
    >>> success
    ```
-   {: codeblock}
 
-In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf, to verify this and then do it try the following:
+In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p then do it:
 
    ```sh
    ./apply.sh -p : spokes_tf
@@ -165,13 +165,13 @@ Validation was done with python 3.10.7.  You can install and activate a virtual 
    ```
    {: codeblock}
 
-Each time a fresh shell is initialized remember to activate the python virtual environment.  Do this now:
+Each time a fresh shell is initialized remember to activate the python virtual environment:
    ```sh
    source venv/bin/activate
    ```
    {: codeblock}
 
-Run the test suite and notice connectivity within a VPC (like enterprise -> enterprise) is working but cross VPC connectivity (like enterprise -> transit) is not working. 
+Run the test suite and notice connectivity within a VPC, like enterprise -> enterprise, is working but cross VPC connectivity, like enterprise -> transit, is not working. 
 
    ```sh
    pytest
@@ -192,7 +192,7 @@ Your output will resemble:
    =================================== 96 failed, 32 passed, 4 skipped in 896.72s (0:14:56) =================================================
    ```
 
-Note on testing: A change to the network configuration it can take a couple of test runs for the underlying VPC network system to become consistent.  If you do not see the expected results initially run the test again a couple of times.
+A change to the network configuration can take a couple of test runs for the underlying VPC network system to become consistent.  If you do not see the expected results initially be prepared to run the test again a couple of times.
 {: note}
 
 ## Transit to Spokes via Transit Gateway
@@ -213,7 +213,7 @@ The Transit Gateway between the transit vpc and the spoke vpcs has been added to
 Running the curl tests (-m curl) will demonstrate passing tests between the transit and the spokes.
 
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -237,7 +237,7 @@ Apply the enteprise_link_tf layer:
 Running the curl tests (-m curl) will demonstrate passing tests between the enterprise and the transit.
 
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -298,7 +298,7 @@ With these additional address prefixes the spoke VPCs learn that traffic spoke -
 Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone but new failures with transit -> enterprise.
 
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -362,13 +362,13 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 
 Success:
    ```sh
-   pytest -m ping -k 'l-tvpc-enterprise-z0-s0 and r-tvpc-spoke0-z1-s0'
+   pytest -v -m ping -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
    ```
    {: codeblock}
 
 Failure:
    ```sh
-   pytest -m curl -k 'l-tvpc-enterprise-z0-s0 and r-tvpc-spoke0-z1-s0'
+   pytest -v -m curl -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
    ```
    {: codeblock}
 
@@ -392,7 +392,7 @@ Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the IBM Cloud Con
 ![vpc-transit-asymmetric-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-fix.svg){: class="center"}
 {: style="text-align: center;"}
 
-Routes for the three zone configuration:
+Spoke egress routes for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -400,9 +400,10 @@ Dallas 1|192.168.0.0/16|10.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.196
 Dallas 3|192.168.0.0/16|10.2.0.196
 
+
 Verify that more tests are passing.  If you manually added the ingress routes earlier all of the tests are passing:
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -420,7 +421,7 @@ If you added routes to fix the transit -> enterprise and transit -> spoke as an 
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
 Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routing table routes in the spoke egress routing table.
 
-Routes for the three zone configuration:
+Egress routes in spokes for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -430,7 +431,7 @@ Dallas 3|10.0.0.0/8|10.2.0.196
 
 Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.0.0.4 (Dallas 1) attempting contact with 10.1.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.0.0.196.  
 
-Egress routes in transit VPC for the three zone configuration:
+Egress routes in transit for the three zone configuration:
 
 zone|destination|next_hop
 --|--|--
@@ -441,12 +442,28 @@ Dallas 1|192.168.0.0/16|10.0.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.0.196
 Dallas 3|192.168.0.0/16|10.2.0.0.196
 
+This is going to introduce another cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destine to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} wil route to the zone of the destination.,
+
+Egress routes in the spokes for the three zone configuration:
+
+zone|destination|next_hop
+--|--|--
+Dallas 1|10.0.0.0/24|delegate
+Dallas 2|10.0.0.0/24|delegate
+Dallas 3|10.0.0.0/24|delegate
+Dallas 1|10.1.0.0/24|delegate
+Dallas 2|10.1.0.0/24|delegate
+Dallas 3|10.1.0.0/24|delegate
+Dallas 1|10.2.0.0/24|delegate
+Dallas 2|10.2.0.0/24|delegate
+Dallas 3|10.2.0.0/24|delegate
+
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit-do-not-route-intara-zone-traffic-to-firewall-router}
 In this example Intra-VPC traffic will not pass throught the firewall-router.  Additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
 
-Routes for the three zone configuration:
+Egress routes for spoke0 for the three zone configuration:
 
 zone|destination|action
 --|--|--
@@ -476,7 +493,7 @@ Apply the all_firewall_tf layer:
 
 Test:
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -521,7 +538,7 @@ Apply the all_firewall_asym_tf layer:
 
 Test:
    ```sh
-   pytest -m curl
+   pytest -v -m curl
    ```
    {: codeblock}
 
@@ -597,7 +614,7 @@ There are now a set of **curl DNS** tests that have been made available in type 
 
 Test:
    ```sh
-   pytest -m dns
+   pytest -v -m dns
    ```
    {: codeblock}
 
@@ -619,11 +636,11 @@ Create the VPEs for the transit and the spokes, by applying the vpe layers:
    ```
    {: codeblock}
 
-There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These vpedns test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The vpe test will exectute a **redli** command to access redis remotely.
+There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will exectute a **redli** command to access redis remotely.
 
 Test vpe and vpedns
    ```sh
-   pytest -m vpe -m vpedns
+   pytest -v -m 'vpe or vpedns'
    ```
    {: codeblock}
 
@@ -653,7 +670,7 @@ Apply the vpe_dns_forwarding_rules_tf layer:
 
 Verify that all VPEs can be accessed from all test instances.
    ```sh
-   pytest -m 'vpe and vpedns'
+   pytest -v -m 'vpe or vpedns'
    ```
    {: codeblock}
 
@@ -693,26 +710,17 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
    {: codeblock}
 
 ## Expand the tutorial
-{: #vpc-transit-expand-tutorial}
-
-Flow Logs
-Multi account
-
-
-## Conclusions
 {: #vpc-transit-conclusions}
 
-The architecture of a system is influenced by the containment and ownership of cloud resources. It is important for architects from all aspects of the system contribute their concerns to the architecture. Each team needs the ability to control the resources they produce and release. Isolation will reduce the likelihood of problems and contain the blast radius when problems occur.
+Your architecture will likely be different than the one presented.  Hopefully the building blocks discussed here will be applicable to your problems.  Ideas to expand this tutorial:
+
+- Add flow log capture in the transit
+- Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial)
 
 ## Related content
 {: #vpc-transit-related}
 
-Flow Logs
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-* [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
-
-Network Function Virtualization
-https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing
-
-See [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha) for some additional information.
+[Network Function Virtualization](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vnf)
+* [Private hub and spoke with transparent VNF and spoke-to-spoke traffic Figure](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
