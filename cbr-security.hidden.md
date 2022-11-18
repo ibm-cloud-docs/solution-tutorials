@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-16"
-lasttested: "2022-11-16"
+lastupdated: "2022-11-18"
+lasttested: "2022-11-18"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -97,12 +97,49 @@ in the tutorial and TF code,
 - discuss how to check that rules are in place but not enforced yet
 
 
+- configure zone and rule for CR
+- perform local pull on image uploaded
+
+## Some headline
+{: #cbr-security-xyz}
+{: step}
+
+For evaluating the impact of context-based restrictions, you are going to start with creating a rule governing the access to {{site.data.keyword.registryshort_notm}}.
+
+1. In the {{site.data.keyword.cloud_notm}} console, click on the **Manage** menu and select [**Context-based restrictions**](https://{DomainName}/context-based-restrictions). In the overview page, click on **Create a network zone**.
+2. Enter **VPCzone** as name.
+3. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
+4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
+5. 
+
+
+
+
+
+```
+ibmcloud cr login
+ibmcloud cr namespace-add YOUR_INITIALS-e2esec
+docker pull icr.io/solution-tutorials/tutorial-cloud-e2e-security
+docker tag icr.io/solution-tutorials/tutorial-cloud-e2e-security REGION.icr.io/YOUR_INITIALS-e2esec/tutorial-cloud-e2e-security
+docker push REGION.icr.io/YOUR_INITIALS-e2esec/tutorial-cloud-e2e-security
+```
+
+registry.access.redhat.com/ubi8/ubi-micro
+
 ## Verify the rules
 {: #cbr-security-verify}
+{: step}
+
+When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The log record has details on the request. In the image below, the rule to allow
 
 ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
 {: style="text-align: center;"}
 
+
+![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
+{: style="text-align: center;"}
+
+https://{DomainName}/docs/account?topic=account-cbr-monitor
 
 ## Expand the tutorial
 {: #cbr-security-21}
