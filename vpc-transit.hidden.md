@@ -44,7 +44,7 @@ A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} 
 - The hub can also can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
 
-This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the layers. The thin layers focus in on bite size challenges and solutions.
+This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the layers. The thin layers focus on bite size challenges and solutions.
 
  During the journey the following are explored:
 - [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway)
@@ -699,11 +699,10 @@ The appliances are used as both DNS resolvers used by remote DNS servers and DNS
 ## Remove resources
 {: #vpc-transit-remove-resources}
 
-1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
+You can cd to the team directories in order, and execute `terraform destroy`.  Or use the `./apply.sh` command:
 
    ```sh
-   cd ..
-   ./bin/destroy.sh
+   ./apply.sh -d : :
    ```
    {: codeblock}
 
@@ -726,5 +725,5 @@ Your architecture will likely be different than the one presented but will likel
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [How to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-[Network Function Virtualization](https://{DomainName}/docs/vpc?topic=vpc-about-vnf)
+* [Network Function Virtualization](https://{DomainName}/docs/vpc?topic=vpc-about-vnf)
 * [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
