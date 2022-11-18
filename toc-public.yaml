@@ -44,7 +44,6 @@ toc:
                 label: Chatbots
                 topics:
                 - slack-chatbot-database-watson.md
-                - android-watson-chatbot.md
 
             - topicgroup:
                 label: Security
