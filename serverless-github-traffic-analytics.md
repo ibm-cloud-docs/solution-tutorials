@@ -106,9 +106,9 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. When prompted, enter the API key that was previously stored in **ghstatsAPIKEY.json**.
+2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. The API key is in the file previously stored in **ghstatsAPIKEY.json**.
    ```sh
-   ibmcloud ce registry create --name usicr
+   ibmcloud ce registry create --name usicr --password-from-json-file ./ghstatsAPIKEY.json
    ```
    {: pre}
 
@@ -124,12 +124,10 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-   You can check the status of your buildruns:
+   The output indicates more commands to run to follow the status logs of the build as it progresses.  Something like:
    ```sh
-   ibmcloud ce buildrun list
+   ibmcloud ce buildrun logs -f -n ghstats-build-run-123456-123456789
    ```
-   {: pre}
-
 
 ## Deploy the app (shell)
 {: #serverless-github-traffic-analytics-3}
@@ -158,7 +156,15 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ```
    {: pre}
 
-   Note that each bind causes a new [IAM Service ID](https:/{DomainName}/iam/serviceids) to be created and an associated API key.  The API key is added to the environment of the application.  A new revision of the app will be deployed.
+   Each `application bind` creates the folowing resources and relationships:
+   1.  An [IAM Service ID](https:/{DomainName}/iam/serviceids).
+   2.  An IAM API key is created in the IAM Service ID.
+   3.  A resource service key. These are called (**Service credentials** in the {{site.data.keyword.cloud_notm}} console. Try the following command to display the {{site.data.keyword.appid_short}} entry:
+
+   ```sh
+   ibmcloud resource service-keys  --instance-name ghstatsAppID
+   ```
+   {: pre}
 
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {: tip}
@@ -255,13 +261,29 @@ You can recreate and thereby rotate the credentials for the services bound to th
 {: step}
 
 To clean up the resources used for this tutorial, you can delete the related project and services.
-1. Delete the project and its components.
+1. Unbind the the provisioned services.  First display the bindings then delete them by **Service Bindings Names** (FIRST and SECOND below are from the get output)
+   ```sh
+   ibmcloud ce application get --name ghstats-app
+   ```
+   {: pre}
+
+   ```sh
+   ibmcloud ce application unbind --name ghstats-app --binding ghstats-app-ce-service-binding-FIRST
+   ```
+   {: pre}
+
+   ```sh
+   ibmcloud ce application unbind --name ghstats-app --binding ghstats-app-ce-service-binding-SECOND
+   ```
+   {: pre}
+
+2. Delete the project and its components.
    ```sh
    ibmcloud ce project delete --name ghstats
    ```
    {: pre}
 
-2. Delete the services:
+3. Delete the services:
    ```sh
    ibmcloud resource service-instance-delete ghstatsDB
    ```
@@ -272,7 +294,19 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ```
    {: pre}
 
-3. Delete the [Github.com token](https://github.com/settings/tokens)
+4. Delete the {{site.data.keyword.registryshort_notm}} namespace
+   ```sh
+   ibmcloud cr namespace-rm $NAMESPACE
+   ```
+   {: pre}
+
+5. Remove the ./ghstatsAPIKEY.json
+   ```sh
+   rm $NAMESPACE
+   ```
+   {: pre}
+
+6. Delete the [Github.com token](https://github.com/settings/tokens)
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
