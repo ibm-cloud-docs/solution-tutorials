@@ -707,10 +707,11 @@ You can cd to the team directories in order, and execute `terraform destroy`.  O
    {: codeblock}
 
 ## Conclusions
+{: #vpc-transit-conclusions}
 In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs.  You created a transit VPC firewall-router in each zone for centralized monitoring.  Test instances were used to verify connectivity and identify potential problems.  Routing table routes were used to identify the traffic paths required.
 
 ## Expand the tutorial
-{: #vpc-transit-conclusions}
+{: #vpc-transit-expand-tutorial}
 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
