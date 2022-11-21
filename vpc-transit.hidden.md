@@ -719,7 +719,7 @@ Your architecture will likely be different than the one presented but will likel
 - Add flow log capture in the transit
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial)
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
-- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://cloud.ibm.com/docs/openshift?topic=openshift-vpc-lbaas)
+- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas)
 
 ## Related content
 {: #vpc-transit-related}
