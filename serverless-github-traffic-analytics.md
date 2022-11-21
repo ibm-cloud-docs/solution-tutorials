@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-18"
-lasttested: "2022-11-18"
+lastupdated: "2022-11-21"
+lasttested: "2022-11-21"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid

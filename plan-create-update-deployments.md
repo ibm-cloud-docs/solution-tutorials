@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021, 2022
-lastupdated: "2022-11-01"
-lasttested: "2022-11-18"
+lastupdated: "2022-11-21"
+lasttested: "2022-11-21"
 
 content-type: tutorial
 services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform, activity-tracker, monitoring

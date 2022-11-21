@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-01"
-lasttested: "2022-11-01"
+lastupdated: "2022-11-21"
+lasttested: "2022-11-16"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
@@ -705,6 +705,9 @@ You can cd to the team directories in order, and execute `terraform destroy`.  O
    ./apply.sh -d : :
    ```
    {: codeblock}
+
+## Conclusions
+In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs.  You created a transit VPC firewall-router in each zone for centralized monitoring.  Test instances were used to verify connectivity and identify potential problems.  Routing table routes were used to identify the traffic paths required.
 
 ## Expand the tutorial
 {: #vpc-transit-conclusions}
