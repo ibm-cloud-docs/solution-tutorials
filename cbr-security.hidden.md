@@ -117,7 +117,7 @@ For evaluating the impact of context-based restrictions, you are going to create
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
 
-### Create zone and rule
+### Verify rule and enforcement mode
 {: #cbr-security-in-action}
 {: step}
 
