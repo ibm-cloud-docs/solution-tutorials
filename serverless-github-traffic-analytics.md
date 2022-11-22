@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2021-11-24"
+lastupdated: "2022-11-21"
+lasttested: "2022-11-21"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid
@@ -67,7 +67,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment (terminal).
 
-1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. You can reconfirm the details by running `ibmcloud target` command.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. You can reconfirm the details and set the resource group and region by running `ibmcloud target` command.
 2. Create an {{site.data.keyword.cloud_notm}} IAM API key and save it to the file **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud iam api-key-create ghstatsAPIKEY -d "API key for tutorial" --file ghstatsAPIKEY.json --output json
@@ -86,9 +86,10 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {: pre}
  
-5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. The namespace needs to be unique across the registry.
+5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. The namespace needs to be unique across a IBM Coud accounts in the same region.
    ```sh
-   ibmcloud cr namespace-add ghstats
+   NAMESPACE=ghstatsYourInitials
+   ibmcloud cr namespace-add $NAMESPACE
    ```
    {: pre}
 
@@ -105,15 +106,15 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. When prompted, enter the API key that was previously stored in **ghstatsAPIKEY.json**.
+2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. The API key is in the file previously stored in **ghstatsAPIKEY.json**.
    ```sh
-   ibmcloud ce registry create --name usicr
+   ibmcloud ce registry create --name usicr --password-from-json-file ./ghstatsAPIKEY.json
    ```
    {: pre}
 
 3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats) and stores the image in the registry in the previously created  namespace using the registered user information.
    ```sh
-   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/ghstats/codeengine-ghstats --registry-secret usicr
+   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/$NAMESPACE/codeengine-ghstats --registry-secret usicr
    ```
    {: pre}
 
@@ -123,12 +124,10 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-   You can check the status of your buildruns:
+   The output indicates more commands to run to follow the status logs of the build as it progresses.  Something like:
    ```sh
-   ibmcloud ce buildrun list
+   ibmcloud ce buildrun logs -f -n ghstats-build-run-123456-123456789
    ```
-   {: pre}
-
 
 ## Deploy the app (shell)
 {: #serverless-github-traffic-analytics-3}
@@ -137,7 +136,7 @@ With the services provisioned and the general setup done, next is to create the 
 Once the build is ready, you can use the container image to deploy the app, thereafter bind the previously provisioned services.
 1. To deploy the app means to [create a {{site.data.keyword.codeengineshort}} app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-create) named **ghstats-app**. It pulls the image from the given registry and namespace.
    ```sh
-   ibmcloud ce app create --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr
+   ibmcloud ce app create --name ghstats-app --image us.icr.io/$NAMESPACE/codeengine-ghstats:latest --registry-secret usicr
    ```
    {: pre}
 
@@ -157,7 +156,15 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ```
    {: pre}
 
-   Note that each bind causes a new service key to be created and a new revision of the app to be deployed.
+   Each `application bind` creates the folowing resources and relationships:
+   1.  An [IAM Service ID](https:/{DomainName}/iam/serviceids).
+   2.  An IAM API key is created in the IAM Service ID.
+   3.  A resource service key. These are called (**Service credentials** in the {{site.data.keyword.cloud_notm}} console. Try the following command to display the {{site.data.keyword.appid_short}} entry:
+
+   ```sh
+   ibmcloud resource service-keys  --instance-name ghstatsAppID
+   ```
+   {: pre}
 
    Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {: tip}
@@ -180,7 +187,7 @@ The following steps are all performed using your Internet browser. First, you co
    {: tip}
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
-5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
+5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token (classic)**. Enter **GHStats Tutorial** for the **Note**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
    ![GitHub Access Token](images/solution24-github-traffic-analytics/GithubAccessToken.png)
 
 
@@ -212,13 +219,13 @@ With the app in place and configured, the last part is to initiate daily retriev
 
 1. Create the cron subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
    ```sh
-   ibmcloud ce subscription cron create --name ghstats-daily --destination ghstats-app --path /collectStats --schedule '0 6 * * *' --data '{"token":"SECRET_TOKEN_AS_IDENTIFIER"}'
+   ibmcloud ce subscription cron create --name ghstats-daily --destination ghstats-app --path /collectStats --schedule '0 6 * * *' --data '{"token":"SECRET_TOKEN_AS_IDENTIFIER"}' --content-type application/json
    ```
    {: pre}
 
 2. To make the secret token know to the app, [update the app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-update). Replace **SECRET_TOKEN_AS_IDENTIFIER** with the value you picked at the previous step.
    ```sh
-   ibmcloud ce app update --name ghstats-app --image us.icr.io/ghstats/codeengine-ghstats:latest --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
+   ibmcloud ce app update --name ghstats-app --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
    ```
    {: pre}
 
@@ -254,13 +261,29 @@ You can recreate and thereby rotate the credentials for the services bound to th
 {: step}
 
 To clean up the resources used for this tutorial, you can delete the related project and services.
-1. Delete the project and its components.
+1. Unbind the the provisioned services.  First display the bindings then delete them by **Service Bindings Names** (FIRST and SECOND below are from the get output)
+   ```sh
+   ibmcloud ce application get --name ghstats-app
+   ```
+   {: pre}
+
+   ```sh
+   ibmcloud ce application unbind --name ghstats-app --binding ghstats-app-ce-service-binding-FIRST
+   ```
+   {: pre}
+
+   ```sh
+   ibmcloud ce application unbind --name ghstats-app --binding ghstats-app-ce-service-binding-SECOND
+   ```
+   {: pre}
+
+2. Delete the project and its components.
    ```sh
    ibmcloud ce project delete --name ghstats
    ```
    {: pre}
 
-2. Delete the services:
+3. Delete the services:
    ```sh
    ibmcloud resource service-instance-delete ghstatsDB
    ```
@@ -270,6 +293,20 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ibmcloud resource service-instance-delete ghstatsAppID
    ```
    {: pre}
+
+4. Delete the {{site.data.keyword.registryshort_notm}} namespace
+   ```sh
+   ibmcloud cr namespace-rm $NAMESPACE
+   ```
+   {: pre}
+
+5. Remove the ./ghstatsAPIKEY.json
+   ```sh
+   rm $NAMESPACE
+   ```
+   {: pre}
+
+6. Delete the [Github.com token](https://github.com/settings/tokens)
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
