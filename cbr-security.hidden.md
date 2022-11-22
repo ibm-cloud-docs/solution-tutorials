@@ -127,25 +127,25 @@ For evaluating the impact of context-based restrictions, you are going to create
    ```sh
    ibmcloud cr login
    ```
-   {: code}
+   {: codeblock}
   
    The above logs you in to the {{site.data.keyword.registryshort_notm}}. Next, pull a container image to the shell environment.
    ```sh
    docker pull registry.access.redhat.com/ubi8/ubi-micro
    ```
-   {: code}
+   {: codeblock}
 
    Re-tag the image to upload it to your registry namespace. Make sure to adapt **REGION** and **YOUR_INITIALS** to your configuration.
    ```sh
    docker tag registry.access.redhat.com/ubi8/ubi-micro REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
    ```
-   {: code}
+   {: codeblock}
 
    Last, push the container image to the registry.
    ```sh
    docker push --remove-signatures REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
    ```
-   {: code}
+   {: codeblock}
 
 4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The action is still approved. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
@@ -156,14 +156,14 @@ For evaluating the impact of context-based restrictions, you are going to create
    ```sh
    ibmcloud cr images --restrict YOUR_INITIALS-e2esec
    ```
-   {: code}
+   {: codeblock}
 
 6. In a third browser tab, navigate to the [CBR rules](https://{DomainName}/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
 7. Go back to the browser tab with {{site.data.keyword.cloud-shell_notm}}. Issue the same command as before to list the images:
    ```sh
    ibmcloud cr images --restrict YOUR_INITIALS-e2esec
    ```
-   {: code}
+   {: codeblock}
 
    This time, it should result in an error message that you are not authorized.
 8. In the browser tab with the logs, you should find a new record similar to the following:
