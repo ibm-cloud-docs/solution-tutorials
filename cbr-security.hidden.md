@@ -150,7 +150,6 @@ For evaluating the impact of context-based restrictions, you are going to create
 4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The action is still approved. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
    ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
-   {: style="text-align: center;"}
 
 5. Back in the browser tab with the shell, list the container images in the namespace. Remember to replace **YOUR_INITIALS** with your chosen prefix.
    ```sh
@@ -168,7 +167,7 @@ For evaluating the impact of context-based restrictions, you are going to create
    This time, it should result in an error message that you are not authorized.
 8. In the browser tab with the logs, you should find a new record similar to the following:
    ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
-   {: style="text-align: center;"}
+
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
 
