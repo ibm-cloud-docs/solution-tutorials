@@ -69,6 +69,8 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 !!!Need to have app from other tutorial DEPLOYED!!!
 
+* You need to have an instance of [{{site.data.keyword.at_short}}](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
+
 
 ## Define the access strategy for your cloud resources
 {: #cbr-security-strategy}
@@ -79,11 +81,11 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 * what endpoints to protect / use
 * make sure to not locked you out (console, CLI, TF)
 
-### Overview: Context-based restrictions
+## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
 {: step}
 
-Context-based restrictions provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
+Context-based restrictions (CBR) provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
 
 * discuss actions / privileges, who is authorized to create / update / view zones and rules
 * show how to add CBR zone and rule in the UI
@@ -100,8 +102,8 @@ in the tutorial and TF code,
 - configure zone and rule for CR
 - perform local pull on image uploaded
 
-## Some headline
-{: #cbr-security-xyz}
+### Create zone and rule
+{: #cbr-security-zone-rule-create}
 {: step}
 
 For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone.
@@ -115,31 +117,68 @@ For evaluating the impact of context-based restrictions, you are going to create
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
 
+### Create zone and rule
+{: #cbr-security-in-action}
+{: step}
 
+1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](https://{DomainName}/observe/activitytracker) to monitor IAM-related events.
+2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) in another browser tab.
+3. In the shell, perform the following commands:
+  ```sh
+  ibmcloud cr login
+  ```
+  {: code}
+  
+  The above logs you in to the {{site.data.keyword.registryshort_notm}}. Next, pull a container image to the shell environment.
+  ```sh
+  docker pull registry.access.redhat.com/ubi8/ubi-micro
+  ```
+  {: code}
 
+  Re-tag the image to upload it to your registry namespace. Make sure to adapt **REGION** and **YOUR_INITIALS** to your configuration.
+  ```sh
+  docker tag registry.access.redhat.com/ubi8/ubi-micro REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
+  ```
+  {: code}
 
-```
-ibmcloud cr login
-ibmcloud cr namespace-add YOUR_INITIALS-e2esec
-docker pull icr.io/solution-tutorials/tutorial-cloud-e2e-security
-docker tag icr.io/solution-tutorials/tutorial-cloud-e2e-security REGION.icr.io/YOUR_INITIALS-e2esec/tutorial-cloud-e2e-security
-docker push REGION.icr.io/YOUR_INITIALS-e2esec/tutorial-cloud-e2e-security
-```
+  Last, push the container image to the registry.
+  ```sh
+  docker push --remove-signatures REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
+  ```
+  {: code}
 
-registry.access.redhat.com/ubi8/ubi-micro
+4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The action is still approved. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
+
+   ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
+   {: style="text-align: center;"}
+
+5. Back in the browser tab with the shell, list the container images in the namespace. Remember to replace **YOUR_INITIALS** with your chosen prefix.
+  ```sh
+  ibmcloud cr images --restrict YOUR_INITIALS-e2esec
+  ```
+  {: code}
+
+6. In a third browser tab, navigate to the [CBR rules](https://{DomainName}/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
+7. Go back to the browser tab with {{site.data.keyword.cloud-shell_notm}}. Issue the same command as before to list the images:
+  ```sh
+  ibmcloud cr images --restrict YOUR_INITIALS-e2esec
+  ```
+  {: code}
+
+  This time, it should result in an error message that you are not authorized.
+8. In the browser tab with the logs, you should find a new record similar to the following:
+   ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
+   {: style="text-align: center;"}
+
+   The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
+
 
 ## Verify the rules
 {: #cbr-security-verify}
 {: step}
 
-When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The log record has details on the request. In the image below, the rule to allow
-
-![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
-{: style="text-align: center;"}
 
 
-![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
-{: style="text-align: center;"}
 
 https://{DomainName}/docs/account?topic=account-cbr-monitor
 
