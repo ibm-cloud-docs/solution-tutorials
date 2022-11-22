@@ -165,7 +165,7 @@ For evaluating the impact of context-based restrictions, you are going to create
    ```
    {: code}
 
-  This time, it should result in an error message that you are not authorized.
+   This time, it should result in an error message that you are not authorized.
 8. In the browser tab with the logs, you should find a new record similar to the following:
    ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
    {: style="text-align: center;"}
