@@ -11,14 +11,7 @@ account-plan: paid
 completion-time: 2h
 
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Enhance cloud security by applying context-based restrictions
 {: #cbr-security}
@@ -159,34 +152,40 @@ For evaluating the impact of context-based restrictions, you are going to create
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
 
-Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Rule Enforcement**](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis&interface=ui#rule-enforcement) in the CBR overview documentation.
+Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](https://{DomainName}/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
 {: tip}
 
 ## Define the access strategy for your cloud resources
 {: #cbr-security-strategy}
 {: step}
 
-should this be moved towards the end, after some more hands-on experience?
-
 * what to protect
 * which by CBR, by IAM
 * what endpoints to protect / use
-* make sure to not locked you out (console, CLI, TF)
+* make sure to not lock you out (console, CLI, TF)
+  - what are your bastions or zones for admin work?
+  - what are typical users of the protected resources? Are all accounted for with zones and rules?
+* test it in report-only mode (for 30 days or more) before enabling enforcement
 
 
 
+## Use Terraform to configure context-based restrictions
+{: #cbr-security-terraform}
+{: step}
 
-https://{DomainName}/docs/account?topic=account-cbr-monitor
+* introduce the concept of modules for the parts
+* variable to control enforcement mode
+
 
 ## Expand the tutorial
-{: #cbr-security-21}
+{: #cbr-security-expand}
 
 Security is never done. Try the below suggestions to enhance the security of your application.
 
 
 
 ## Remove resources
-{: #cbr-security-23}
+{: #cbr-security-remove}
 {: removeresources}
 
 To remove the resource, delete the created network zones and rules.
