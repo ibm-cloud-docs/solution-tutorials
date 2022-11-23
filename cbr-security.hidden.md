@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-22"
-lasttested: "2022-11-22"
+lastupdated: "2022-11-23"
+lasttested: "2022-11-23"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -72,15 +72,6 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 * You need to have an instance of [{{site.data.keyword.at_short}}](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
 
 
-## Define the access strategy for your cloud resources
-{: #cbr-security-strategy}
-{: step}
-
-* what to protect
-* which by CBR, by IAM
-* what endpoints to protect / use
-* make sure to not locked you out (console, CLI, TF)
-
 ## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
 {: step}
@@ -99,14 +90,11 @@ in the tutorial and TF code,
 - discuss how to check that rules are in place but not enforced yet
 
 
-- configure zone and rule for CR
-- perform local pull on image uploaded
-
-### Create zone and rule
+## Create zone and rule
 {: #cbr-security-zone-rule-create}
 {: step}
 
-For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone.
+For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone to identify a VPC as traffic source.
 
 1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](https://{DomainName}/registry/namespaces) and select the region you want to work with. Click **Create** and enter **YOUR_INITIALS-e2esec** as **Name**. Use your initials or something else to make sure the namespace is unique within the region. Last, **Create** the new namespace.
 2. In the [{{site.data.keyword.cloud_notm}}](https://{DomainName}) console, click on the **Manage** menu and select [**Context-based restrictions**](https://{DomainName}/context-based-restrictions). In the overview page, click on **Create a network zone**.
@@ -117,7 +105,7 @@ For evaluating the impact of context-based restrictions, you are going to create
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
 
-### Verify rule and enforcement mode
+## Test the rule and its enforcement modes
 {: #cbr-security-in-action}
 {: step}
 
@@ -171,10 +159,19 @@ For evaluating the impact of context-based restrictions, you are going to create
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
 
+Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Rule Enforcement**](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis&interface=ui#rule-enforcement) in the CBR overview documentation.
+{: tip}
 
-## Verify the rules
-{: #cbr-security-verify}
+## Define the access strategy for your cloud resources
+{: #cbr-security-strategy}
 {: step}
+
+should this be moved towards the end, after some more hands-on experience?
+
+* what to protect
+* which by CBR, by IAM
+* what endpoints to protect / use
+* make sure to not locked you out (console, CLI, TF)
 
 
 
