@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-23"
-lasttested: "2022-11-23"
+lastupdated: "2022-11-30"
+lasttested: "2022-11-30"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -173,8 +173,14 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 {: #cbr-security-terraform}
 {: step}
 
-* introduce the concept of modules for the parts
+Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](https://{DomainName}/docs/ibm-cloud-provider-for-terraform).
+
+
+* introduce the concept of modules for the parts, group zones and rules for each "usage relationship" in the e2e tutorial into a module => e.g., allow access from COS to KP
 * variable to control enforcement mode
+
+* Then walk through commands to deploy the rules.
+* What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
 
 
 ## Expand the tutorial
