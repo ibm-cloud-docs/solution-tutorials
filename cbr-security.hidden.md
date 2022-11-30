@@ -163,8 +163,8 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 * which by CBR, by IAM
 * what endpoints to protect / use
 * make sure to not lock you out (console, CLI, TF)
-  what are your bastions or zones for admin work?
-  what are typical users of the protected resources? Are all accounted for with zones and rules?
+* what are your bastions or zones for admin work?
+* what are typical users of the protected resources? Are all accounted for with zones and rules?
 * test it in report-only mode (for 30 days or more) before enabling enforcement
 
 
