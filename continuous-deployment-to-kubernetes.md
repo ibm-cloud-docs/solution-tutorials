@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021, 2022
-lastupdated: "2022-10-04"
-lasttested: "2021-11-30"
+lastupdated: "2022-11-30"
+lasttested: "2022-11-30"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
@@ -72,7 +72,7 @@ This tutorial requires:
 
 Create a cluster:
 1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
-2. Click **Create cluster**
+2. Click **Create a cluster**
 3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure
 4. Choose desired resource group
 5. Choose desired Geography, Availability and Metro
@@ -116,20 +116,18 @@ The toolchain will build your application and deploy it to the cluster.
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
 1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![Screenshot showing how to find the IP address](images/solution21/Logs.png)
+   ![Screen capture showing how to find the IP address](images/solution21/Logs.png)
 
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
 1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`
-1. Click the **Eclipse Orion Web IDE** tile.
-1. Expand the `<your-initials>-mynodestarter-repository`.
-1. Update the `utils.js` by making a simple change, for example change "Welcome to" to something else, your changes are automatically saved.
-1. Click on the Git icon in the left most column.
-1. Enter a commit message: *my first changes* and click on **Commit**.
-1. On the left in the Outgoing section click **Push**.
-1. Click on the arrow at the top to get back to the toolchain.
+1. Click the link under the **Repositories** tile, a new browser tab will open to the repository.
+1. Click on the `utils.js` file and then click on **Edit**. 
+1. Make a simple change, for example change "Welcome to" to something else.
+1. Enter a commit message: *my first changes* and click on **Commit changes**.
+1. Return to the previous tab showing the toolchain.
 1. Click on the **Delivery Pipeline** tile named **ci-pipeline**.
 1. Notice a new **BUILD** has started.
 1. Wait for the **DEPLOY** stage to complete.
@@ -167,7 +165,7 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 {: step}
 
 1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks). You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
-2. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
+2. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![Configure the Slack integration](images/solution21/configure_slack.png)
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
@@ -185,10 +183,8 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
-   - Click on the configuration for the **BUILD** stage
-   - Select the **Input** panel
-   - Copy the Git URL and paste into a browser
-   - In the git repository: select Settings on the right then General > Advanced > Remove Project
+   - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
+   - In the git repository: select **Settings** on the right then **General** > **Advanced** > **Delete Project**.
 - Delete the toolchain.
 - Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).
 <!--##istutorial#-->
