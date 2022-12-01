@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2021-12-03"
+lastupdated: "2022-12-01"
+lasttested: "2022-12-01"
 
 content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
@@ -184,7 +184,7 @@ In a terminal window:
 
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with ibmcloud ks cluster get \-\-cluster  &lt;your\-cluster\-name&gt;\. |
+   | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster $MYCLUSTER`\. |
 
 
 ## Validate {{site.data.keyword.la_short}} instance configuration
@@ -240,9 +240,9 @@ Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/
 
 You can access the application specific log in the {{site.data.keyword.la_short}} UI using the filters.
 
-1. On the top bar, click on **All Apps**.
+1. On the top bar, click on **Apps**.
 1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels. You can also type `app:app-log-analysis` in the *Search...* field.
-1. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error, info, warning etc.,
+1. To see logs of specific log level(s), Click on **Levels** and select multiple levels like Error, info, warning etc.,
 
 ## Search and filter logs
 {: #application-log-analysis-search_filter_logs}
@@ -272,8 +272,8 @@ In this section, you will modify what and how much is displayed and save this as
 
 You can filter logs by tags, sources, apps or levels.
 
-1. On the top bar, click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
-2. To check other container or file logs, click **app-log-analysis** or **All Apps** and select the checkbox(s) you are interested in seeing the logs.
+1. On the top bar, click **Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
+2. To check other container or file logs, click **app-log-analysis** or **Apps** and select the checkbox(s) you are interested in seeing the logs.
 
 ### Create a view
 {: #application-log-analysis-16}
@@ -281,8 +281,8 @@ You can filter logs by tags, sources, apps or levels.
 Views are saved shortcuts to a specific set of filters and search queries.
 
 As soon as you search or filter logs, you should see **Unsaved View** in the top bar. To save this as a view:
-1. Click **All Apps** and select the checkbox next to **app-log-analysis**
-1. Click on **Unsaved View** > click **save as new view / alert** and name the view as **app-log-analysis-view**. Leave the **Category** as empty.
+1. Click **Apps** and select the checkbox next to **app-log-analysis**
+1. Click on **Unsaved View** > click **save as new view** and name the view as **app-log-analysis-view**. Leave the **Category** as empty.
 1. Click **Save View** and new view should appear on the left pane showing logs for the app.
 
 ### Visualize logs with graphs and breakdowns
@@ -290,12 +290,12 @@ As soon as you search or filter logs, you should see **Unsaved View** in the top
 
 In this section, you will create a board and then add a graph with a breakdown to visualize the app level data. A board is a collection of graphs and breakdowns.
 
-1. On the left pane, click on the **board** icon (above the settings icon) > click **NEW BOARD**.
-1. Click **Edit** on the top bar and let's name this **app-log-analysis-board**. Click **Save**.
-1. Click **Add Graph**:
-   - Select **app** under **Graph a field**.
-   - Choose **app-log-analysis** as the field value.
-   - Click **Add Graph**.
+1. On the left pane, click on the **board** icon (above the settings icon) > click **New Board**.
+1. Set **Name** to **app-log-analysis-board**. Click **Save**.
+1. Under **Select a field to graph**:
+   1. Select **app** as the field
+   1. Select **app-log-analysis** as the field value
+1. Click **Add Graph**.
 1. Select **Counts** as your metric to see the number of lines in each interval over last 24 hours.
 1. To add a breakdown, click on the arrow below the graph:
    - Choose **Histogram** as your breakdown type.
@@ -357,31 +357,26 @@ Note: Change the interval to **5 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
-2. Back to the Monitoring UI, under `Explore` choose `Deployments`.
-3. Expand your cluster name on the left pane, then expand **default** namespace and click on **app-log-analysis-deployment**.
-4. To check **default metrics** such as the HTTP request-response codes, type `HTTP` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
-   ![Dashboard showing deployments](images/solution12/monitoring_deployments.png)
-5. To monitor the latency of the application, type `net.http.request.time` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
-   - Select Time: **Sum** and Group: **Average**.
-   - Click **More options** and then click **Topology** icon.
-   - Click **Done** and Double click the box to expand the view.
-6. To monitor the Kubernetes namespace where the application is running,
-   - On the left pane, click on the name of the namespace under which the app is running. _If you haven't set a namespace, the app will be running under `default` namespace_
-   - Type `Kubernetes Namespace Overview` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
+2. Back to the Monitoring UI, select **Dashboards**.
+1. Search for the predefined dashboard named `Workload Status & Performance`.
+1. In this dashboard, set the **workload** filter to `app-log-analysis-deployment` to focus on the metrics generated by the application deployed earlier.
+1. Scroll through the dashboard to discover all the predefined graphs like `HTTP Requests Count per Workload` or `HTTP Requests Latency per Workload`, `Resource usage by Pod`.
 
 The sample application that was deployed includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
 ![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png){: class="center"}
 {: style="text-align: center;"}
 
+1. Under **Explore**, select **All workloads**.
 1. Expand your cluster name on the left pane, then expand **default** namespace and then click on **app-log-analysis-deployment**.
-2. To monitor the calls to a given api endpoint of the application,
-   - From the Explore tab, select `Deployments`.
-   - Type `wolam_api_counter_total` in the `Search Metrics and Dashboards` field and click on it from the dropdown.
-   - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
+1. In the list of **metrics**, expand `wolam`.
+1. Select `wolam_api_counter_total` to monitor the calls to API endpoints.
+1. Configure the query
+   1. Set **Metric** to **sum**
+   1. Set **Group by** to **sum**
+   1. Set **label** to **endpoint**
 3. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
-4. To monitor the calls to a given api endpoint of the application by region,
-   - Select Time: **Sum**, Group: **Average**, Segment: **region**
+4. To monitor the calls to a given API endpoint of the application by region, change the **Group by** label to **region**.
 
 ### Create a custom dashboard
 {: #application-log-analysis-20}
@@ -389,36 +384,34 @@ The sample application that was deployed includes code to generate **custom metr
 Along with the pre-defined dashboards, you can create your own custom dashboard to display the most useful/relevant views and metrics for the containers running your app in a single location. Each dashboard is comprised of a series of panels configured to display specific data in a number of different formats.
 
 To create a dashboard with a first panel:
-1. Click on **Dashboards** on the left most pane > click **+** (add dashboard).
-2. In the New Panel, set the **Metrics** to **net.http.request.time**.
-3. Set **Segmentation** to **container.id**.
-4. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
+1. Under **Dashboards**, click **New Dashboard**.
+2. In the New Panel:
+   1. Set the **Metric** to **sysdig_container_net_http_request_time**.
+   3. Set **Group by** to **container_id**.
+4. Edit the **Dashboard scope**, set the filter to **container_image**, **is** and **`icr.io/solution-tutorials/tutorial-application-log-analysis:latest`**.
 5. Save the dashboard.
+
+![New Dashboard](images/solution12/new_dashboard.png){: class="center"}
+{: style="text-align: center;"}
 
 To add another panel:
 1. Use the **Add Panel** button in the dashboard.
 2. Change the panel type from **Timechart** to **Number**
-3. Set the **Metric** to **net.http.request.count**.
+3. Set the **Metric** to **sysdig_container_net_request_count**.
 4. Set the **Time Aggregation** to **Rate**.
-5. Set the **Group Rollup** to **Sum**.
-6. In the scope, uncheck **Inherit Dashboard Scope** and set the filter to **container.image**, **is** and the _the application image_ you built earlier, e.g., `icr.io/solution-tutorials/tutorial-application-log-analysis`.
+5. Set the **Group by** to **Sum**.
 7. Enable **Compare To** and set the value to **1 Hour ago**.
 8. Save the dashboard.
-
-To focus the dashboard on your cluster:
-1. To edit the scope of this dashboard,
-2. Set the filter to **kubernetes.cluster.name**, **is**, and your cluster name.
-3. Click **Save**.
 
 ## Remove resources
 {: #application-log-analysis-remove_resource}
 {: step}
 
-- Remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.
+- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
-   ibmcloud ks cluster rm --cluster $MYCLUSTER -f
+   ibmcloud ks cluster rm --cluster $MYCLUSTER -f --force-delete-storage
    ```
    {: pre}
 
@@ -439,7 +432,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #application-log-analysis-12}
 {: related}
 
-- [Resetting the ingestion key used by a Kubernetes cluster](/docs/log-analysis?topic=log-analysis-kube-reset)
+- [Resetting the ingestion key used by a Kubernetes cluster](/docs/log-analysis?topic=log-analysis-kube_reset_ingestion)
 - [Archiving logs to IBM Cloud Object Storage](/docs/log-analysis?topic=log-analysis-archiving#archiving)
 - [Working with monitoring alerts](/docs/monitoring?topic=monitoring-alerts)
 - [Working with monitoring notification channels](/docs/monitoring?topic=monitoring-notifications#notifications)

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-30"
-lasttested: "2022-11-30"
+lastupdated: "2022-12-01"
+lasttested: "2022-12-01"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -173,8 +173,78 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 {: #cbr-security-terraform}
 {: step}
 
-Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](https://{DomainName}/docs/ibm-cloud-provider-for-terraform).
+Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](https://{DomainName}/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration. 
 
+In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone) resource. The following shows a zone specification which identifies the Kubernetes cluster.
+
+```hcl
+resource "ibm_cbr_zone" "cbr_zone_k8s" {
+  account_id = data.ibm_iam_account_settings.team_iam_account_settings.account_id
+  addresses {
+    type = "serviceRef"
+    ref {
+      account_id       = data.ibm_iam_account_settings.team_iam_account_settings.account_id
+      service_instance = data.terraform_remote_state.e2e-resources.outputs.cluster.id
+      service_name     = "containers-kubernetes"
+    }
+  }
+  description = "Zone with the Kubernetes cluster"
+  name        = "cbr_zone_k8s"
+}
+```
+{: codeblock}
+
+
+The code for rules is using the [**ibm_cbr_rule**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_rule) resource. The Terraform configuration for a typical rule is shown below.
+Similar to the browser UI:
+* Contexts to specify the zones
+* Enforcement mode
+* Resources it applies to.
+
+```hcl
+resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
+  contexts {
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone_k8s.id
+    }
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone_iam_groups.id
+    }
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone_iam_users.id
+    }
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone_homezone.id
+    }
+
+  }
+
+  description      = "restrict COS access to cluster"
+  enforcement_mode = var.cbr_enforcement_mode
+  resources {
+    attributes {
+      name  = "accountId"
+      value = data.ibm_iam_account_settings.team_iam_account_settings.account_id
+    }
+    attributes {
+      name     = "serviceInstance"
+      operator = "stringEquals"
+      value    = data.terraform_remote_state.e2e-resources.outputs.cos.guid
+    }
+    attributes {
+      name     = "serviceName"
+      operator = "stringEquals"
+      value    = "cloud-object-storage"
+    }
+
+  }
+}
+```
+{: codeblock}
 
 * introduce the concept of modules for the parts, group zones and rules for each "usage relationship" in the e2e tutorial into a module => e.g., allow access from COS to KP
 * variable to control enforcement mode
