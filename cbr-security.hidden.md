@@ -321,4 +321,5 @@ terraform destroy
 {: #cbr-security-12}
 {: related}
 
-https://{DomainName}/docs/vpc?topic=vpc-cbr&interface=cli
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions)
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions)
