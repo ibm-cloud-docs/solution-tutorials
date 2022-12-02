@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-01"
-lasttested: "2022-12-01"
+lastupdated: "2022-12-02"
+lasttested: "2022-12-02"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -60,7 +60,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-!!!Need to have app from other tutorial DEPLOYED!!!
+You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
 
 * You need to have an instance of [{{site.data.keyword.at_short}}](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
 
@@ -253,18 +253,68 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 * What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
 
 
-## Expand the tutorial
-{: #cbr-security-expand}
+1. Get the Terraform code:
+   ```sh
+   git clone https://github.com/IBM-Cloud/secure-file-storage
+   ```
+   {: codeblock}
+   
+2. Change into the **secure-file-storage/terraform** directory:
+   ```sh
+   cd secure-file-storage/terraform
+   ```
+   {: codeblock}
 
-Security is never done. Try the below suggestions to enhance the security of your application.
+3. Next, create a file **terraform.tfvars** with settings like the following. Adapt the values where needed.
+   ```hcl
+   ibmcloud_api_key="<your-api-key>"
+   region = "us-south"
+   iks_cluster_name="mycluster-us-south-e2e-sec"
+   iks_namespace="secure-file-storage"
+   existing_resources=true
+   ```
+   {: codeblock}
 
+   The last variable is to make sure that no new service instances will be created, but that the metadata of existing ones is retrieved.
+4. First, initialize the Terraform project.
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
 
+   Next, retrieve the metadata by running **apply**. You will be asked to confirm with **yes**. Before confirming, check that no resources will be created, changed, or deleted. It should just retrieve data and create outputs.
+   ```sh
+   terraform apply
+   ```
+   {: codeblock}
+
+The above created a file **terraform.tfstate**. It holds all the metadata about the managed resources. The same file will be used when deploying the CBR zones and rules. It is utilized to reference the existing services as well as to store the state information about the new CBR objects. With that, it is time to actually create the zones and rules.
+
+1. Change into the **terraform-cbr** directory:
+   ```sh
+   cd ../terraform-cbr
+   ```
+   {: codeblock}
+
+2. Again, create a file **terraform.tfvars** to configure an API key and the region. Moreover, you can set a range of IP addresses as home or bastion zone. It will be used to create a network zone which is granted access (allow-listed) in CBR rules.
+   ```hcl
+   ibmcloud_api_key=""<your-api-key>""
+   region = "us-south"
+   homezone_iprange = "2.42.42.1-2.42.42.255"
+   ```
+   {: codeblock}
+
+3.    
 
 ## Remove resources
 {: #cbr-security-remove}
 {: removeresources}
 
-To remove the resource, delete the created network zones and rules.
+To remove the resource, delete the created context rules and network zones. Run the following command in the **terraform-cbr** directory:
+```sh
+terraform destroy
+```
+{: codeblock}
 
 
 ## Related content
