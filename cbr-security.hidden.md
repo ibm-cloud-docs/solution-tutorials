@@ -323,3 +323,4 @@ terraform destroy
 
 * Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions)
 * Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions)
+* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust)
