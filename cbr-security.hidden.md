@@ -327,10 +327,17 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    ```
    {: codeblock}
 
+   Note that you can run **apply** again after changing some configuration. A use case would be to test the zones and rules and later to update the enforcement mode, then deploying the changed configuration.
+   {: note}
 
 
-* Then walk through commands to deploy the rules.
+### Test the context rules
+{: #cbr-security-terraform-test}
+
 * What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
+* need to go to AT again
+* repeat the first test from above with the container registry
+* 
 
 
 ## Remove resources
