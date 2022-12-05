@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-02"
-lasttested: "2022-12-02"
+lastupdated: "2022-12-05"
+lasttested: "2022-12-05"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -252,6 +252,10 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 * Then walk through commands to deploy the rules.
 * What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
 
+You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session. 
+
+Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](https://{DomainName}/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
+{: note}
 
 1. Get the Terraform code:
    ```sh
@@ -296,7 +300,10 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    ```
    {: codeblock}
 
-2. Again, create a file **terraform.tfvars** to configure an API key and the region. Moreover, you can set a range of IP addresses as home or bastion zone. It will be used to create a network zone which is granted access (allow-listed) in CBR rules.
+2. Take a look at the file content of **backend.tf**. It defines the reference to the Terraform state in the other directory.
+3. Review the file **variables.tf** which contains definitions of variables. The variable **cbr_enforcement_mode** is used for the new rules and should have a default value **report**. 
+
+4. Again, create a file **terraform.tfvars** to configure an API key and the region. Moreover, you can set a range of IP addresses as home or bastion zone. It will be used to create a network zone which is granted access (allow-listed) in CBR rules.
    ```hcl
    ibmcloud_api_key=""<your-api-key>""
    region = "us-south"
@@ -304,7 +311,19 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    ```
    {: codeblock}
 
-3.    
+   For enforcing rules instead of creating them in report-only mode, you would need to add a line with `cbr_enforcement_mode=enabled`.
+
+5. Similar to the steps applied in the other directory, start by initializing the Terraform project.
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+
+   Next, **apply** the infrastructure definition and create the zones and rules. You will be asked to confirm with **yes**. Before confirming, review the objects to be created which should only be CBR zones and rules.
+   ```sh
+   terraform apply
+   ```
+   {: codeblock}
 
 ## Remove resources
 {: #cbr-security-remove}
