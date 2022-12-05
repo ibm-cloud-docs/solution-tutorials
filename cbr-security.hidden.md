@@ -175,6 +175,10 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 
 Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](https://{DomainName}/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration. 
 
+### Terraform resources for zones and rules
+{: #cbr-security-terraform-resources}
+
+
 In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone) resource. The following shows a zone specification which identifies the Kubernetes cluster.
 
 ```hcl
@@ -196,10 +200,10 @@ resource "ibm_cbr_zone" "cbr_zone_k8s" {
 
 
 The code for rules is using the [**ibm_cbr_rule**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_rule) resource. The Terraform configuration for a typical rule is shown below.
-Similar to the browser UI:
+Similar to the browser UI, it has the following elements:
 * Contexts to specify the zones
 * Enforcement mode
-* Resources it applies to.
+* Resources it applies to, identified by attributes
 
 ```hcl
 resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
@@ -246,12 +250,10 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 ```
 {: codeblock}
 
-* introduce the concept of modules for the parts, group zones and rules for each "usage relationship" in the e2e tutorial into a module => e.g., allow access from COS to KP
-* variable to control enforcement mode
+### Deploy the Terraform resources
+{: #cbr-security-terraform-deploy}
 
-* Then walk through commands to deploy the rules.
-* What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
-
+With the understanding of the CBR-related Terraform resources, it is time to deploy them to create zones and rules. 
 You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session. 
 
 Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](https://{DomainName}/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
@@ -325,9 +327,16 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    ```
    {: codeblock}
 
+
+
+* Then walk through commands to deploy the rules.
+* What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
+
+
 ## Remove resources
 {: #cbr-security-remove}
 {: removeresources}
+
 
 To remove the resource, delete the created context rules and network zones. Run the following command in the **terraform-cbr** directory:
 ```sh
@@ -335,6 +344,7 @@ terraform destroy
 ```
 {: codeblock}
 
+If you do not have access to that directory any longer, you could also use the browser UI. Visit the [page with CBR objects](https://{DomainName}/context-based-restrictions/) and first delete the rules, then the zones that were created as part of this tutorial.
 
 ## Related content
 {: #cbr-security-12}
