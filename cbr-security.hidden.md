@@ -261,7 +261,10 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 {: #cbr-security-terraform-deploy}
 
 With the understanding of the CBR-related Terraform resources, it is time to deploy them to create zones and rules. 
-You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session. 
+
+
+
+You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session or in a terminal. 
 
 Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
 {: note}
@@ -341,14 +344,18 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
 ### Test the context rules
 {: #cbr-security-terraform-test}
 
-With the set of context-based restrictions deployed, it is time again to verify them. Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr--security-in-action).
+With the set of context-based restrictions deployed, it is time again to verify them. This includes tests on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}}.
 
+Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr-security-in-action).
 
-* What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
-* need to go to AT again
-* repeat the first test from above with the container registry
-* 
+To test the new rule for access to {{site.data.keyword.cos_short}}, follow these steps:
+1. In a browser tab, go to the [list of {{site.data.keyword.cos_short}} instances](/objectstorage). Click on the service name for the tutorial, e.g., **secure-file-storage-cos**.
+2. In a second browser tab, visit the already used {{site.data.keyword.at_short}} dashboard with the activity logs.
+3. Back in the tab with the {{site.data.keyword.cos_short}} overview, in the list of **Buckets**, click on the storage bucket.
+4. Use **Upload** to import a file into the bucket. Leave the setting as **Standard transfer** and use the **Upload files (objects)** area to select a file. Finish by clicking **Upload**.
+5. Back in the browser tab with the activity logs, there should be CBR-related log records titled `Context restriction matched while in report mode`. This is due to the fact that the rules have been deployed in **report** mode. Expand some records to check the reported **decision** and **isEnforced** data. Depending on the configured IP range for the homezone, **decision** might be **Permit** or **Deny**. The value for **isEnforced** should be **false** because of the reporting mode.
 
+For further testing, you might want to change the IP range of the homezone and then redeploy the rules with `terraform apply`.
 
 ## Remove resources
 {: #cbr-security-remove}
