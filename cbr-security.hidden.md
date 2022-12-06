@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-05"
-lasttested: "2022-12-05"
+lastupdated: "2022-12-06"
+lasttested: "2022-12-06"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -20,14 +20,17 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of implementing context-based restrictions (CBRs) in your {{site.data.keyword.cloud_notm}} account. They help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model).
+This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){:external: target="_blank" .external}.
 {: shortdesc}
 
+The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. 
+
+* gotchas? best practices?
 
 
 ## Objectives
@@ -57,12 +60,12 @@ This tutorial requires:
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
+You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
 
-* You need to have an instance of [{{site.data.keyword.at_short}}](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
+* You need to have an instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
 
 
 ## Overview: Context-based restrictions
@@ -81,6 +84,10 @@ in the tutorial and TF code,
 - discuss that rules can be disabled, reported, enabled
 - provide switch to change the mode for rules, so that there could be a transition (and test) phase towards enabled rules
 - discuss how to check that rules are in place but not enforced yet
+
+
+supported service references: 
+https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute
 
 
 ## Create zone and rule
@@ -179,7 +186,7 @@ Instead of manually creating the network zones and context rules for a project, 
 {: #cbr-security-terraform-resources}
 
 
-In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone) resource. The following shows a zone specification which identifies the Kubernetes cluster.
+In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone) resource. The following shows a zone specification which identifies the Kubernetes cluster. Such a cluster is one of the [supported service references](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute).
 
 ```hcl
 resource "ibm_cbr_zone" "cbr_zone_k8s" {
@@ -256,7 +263,7 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 With the understanding of the CBR-related Terraform resources, it is time to deploy them to create zones and rules. 
 You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session. 
 
-Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](https://{DomainName}/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
+Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
 {: note}
 
 1. Get the Terraform code:
@@ -334,6 +341,9 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
 ### Test the context rules
 {: #cbr-security-terraform-test}
 
+With the set of context-based restrictions deployed, it is time again to verify them. Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr--security-in-action).
+
+
 * What should be tested? Access the app from the e2e tutorial to see that it still works? How to test that rules tighten the security?
 * need to go to AT again
 * repeat the first test from above with the container registry
@@ -357,6 +367,6 @@ If you do not have access to that directory any longer, you could also use the b
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions)
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions)
-* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust)
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){:external: target="_blank" .external}
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){:external: target="_blank" .external}
+* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){:external: target="_blank" .external}
