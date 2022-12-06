@@ -341,8 +341,9 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    {: note}
 
 
-### Test the context rules
+## Test the context rules
 {: #cbr-security-terraform-test}
+{: step}
 
 With the set of context-based restrictions deployed, it is time again to verify them. This includes tests on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}}.
 
