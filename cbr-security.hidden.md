@@ -76,18 +76,10 @@ Context-based restrictions (CBR) provide the ability to define and enforce acces
 
 * discuss actions / privileges, who is authorized to create / update / view zones and rules
 * show how to add CBR zone and rule in the UI
-* IKS to COS? or COS to KP?
-
-
-
-in the tutorial and TF code,
-- discuss that rules can be disabled, reported, enabled
-- provide switch to change the mode for rules, so that there could be a transition (and test) phase towards enabled rules
-- discuss how to check that rules are in place but not enforced yet
 
 
 supported service references: 
-https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute
+https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute or on CLI
 
 
 ## Create zone and rule
@@ -149,7 +141,7 @@ For evaluating the impact of context-based restrictions, you are going to create
    ```
    {: codeblock}
 
-6. In a third browser tab, navigate to the [CBR rules](https://{DomainName}/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
+6. In a third browser tab, navigate to the [CBR rules](/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
 7. Go back to the browser tab with {{site.data.keyword.cloud-shell_notm}}. Issue the same command as before to list the images:
    ```sh
    ibmcloud cr images --restrict YOUR_INITIALS-e2esec
@@ -165,6 +157,8 @@ For evaluating the impact of context-based restrictions, you are going to create
 
 Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](https://{DomainName}/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
 {: tip}
+
+In order to prepare for the deployment of CBR objects with Terraform in a section further down, go to the browser tab with the [CBR rules](/context-based-restrictions/rules). There, delete the previously created rule by clicking on its dot menu and selecting **Remove** and then confirming with **Delete**. Thereafter, click on **Network zones** and delete the previously created zone.
 
 ## Define the access strategy for your cloud resources
 {: #cbr-security-strategy}
@@ -183,6 +177,8 @@ In summary, these questions should be asked:
 
 Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
+The documentation has a [list of resources which are supported as service references](/docs/account?topic=account-context-restrictions-whatis#service-attribute). You can also retrieve the list using the [CLI command **service-ref-targets**](/docs/cli?topic=cli-cbr-plugin#cbr-cli-service-ref-targets-command) or the related API function [List available service reference targets](/apidocs/context-based-restrictions#list-available-serviceref-targets).
+{: tip}
 
 ## Use Terraform to configure context-based restrictions
 {: #cbr-security-terraform}
