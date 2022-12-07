@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-06"
-lasttested: "2022-12-06"
+lastupdated: "2022-12-07"
+lasttested: "2022-12-07"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -65,7 +65,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
 
-* You need to have an instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
+Additionally, you need to have an instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
 
 
 ## Overview: Context-based restrictions
@@ -137,7 +137,11 @@ For evaluating the impact of context-based restrictions, you are going to create
 
 4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The action is still approved. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
-   ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: class="center"}
+   ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
+
+   Note that in report mode, all requests are reported. In the event details you see an attribute **decision** with values of either **Permit** or **Deny**.
+
+   ![Decision with Permit value in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
 
 5. Back in the browser tab with the shell, list the container images in the namespace. Remember to replace **YOUR_INITIALS** with your chosen prefix.
    ```sh
@@ -154,7 +158,7 @@ For evaluating the impact of context-based restrictions, you are going to create
 
    This time, it should result in an error message that you are not authorized.
 8. In the browser tab with the logs, you should find a new record similar to the following:
-   ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: class="center"}
+   ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: caption="A context restriction rendered a deny" caption-side="bottom"}
 
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
@@ -166,7 +170,11 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 {: #cbr-security-strategy}
 {: step}
 
-* what to protect
+To set up the right set of rules for context-based restrictions (CBRs), you should have defined the access strategy for your cloud resources. All resources should be protected by identity and access management (IAM). It means, that authentication and authorization checks should be performed before a user or service ID accesses a resource. CBRs add to the protection by cutting off network access based and origin criteria and other rules, but they do not replace proper IAM configuration. Additionally, many services support limiting network traffic to private endpoints, thereby already reducing access options.
+
+Here are some questions that help you come up with the right strategy.
+
+* What resources store and manage data? They should be protected most.
 * which by CBR, by IAM
 * what endpoints to protect / use
 * make sure to not lock you out (console, CLI, TF)
