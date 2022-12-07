@@ -46,7 +46,7 @@
                "imgSrc": ""
             },
             {
-               "name": " Build a VPC and Spoke and extended to On Premises via a Transit VPC",
+               "name": "Build VPC Transit Hub and Spoke",
                "url": "vpc-transit.hidden.html",
                "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
                "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
