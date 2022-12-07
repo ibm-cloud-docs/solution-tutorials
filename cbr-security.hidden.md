@@ -28,10 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){:external: target="_blank" .external}.
 {: shortdesc}
 
-The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. 
-
-* gotchas? best practices?
-
+The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. You will also learn about criteria on how to define the access strategy for your cloud resources.
 
 ## Objectives
 {: #cbr-security-objectives}
@@ -44,10 +41,6 @@ The tutorial discusses how to create network zones and context rules and how to 
 ![Architecture](images/solution-cbr-security-hidden/architecture-e2e-security.svg){: class="center"}
 {: style="text-align: center;"}
 
-
-1. Adapt to creating CBR zones and rules
-2. Need to decide how to visualize it
-3. could be boxes around zones, lines with question marks for rules?
 
 <!--##istutorial#-->
 ## Before you begin
@@ -72,15 +65,13 @@ Additionally, you need to have an instance of [{{site.data.keyword.at_short}}](/
 {: #cbr-security-strategy-overview}
 {: step}
 
-Context-based restrictions (CBR) provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
+[Context-based restrictions (CBRs)](docs/account?topic=account-context-restrictions-whatis) provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
 
-* discuss actions / privileges, who is authorized to create / update / view zones and rules
-* show how to add CBR zone and rule in the UI
+A rule governs access to a resource. It can be identified by its service name and type as well as by additional attributes. They can include the region, resource group, and other service-specific properties. The attributes in a rule are mostly optional, so that you could govern, e.g., all {{site.data.keyword.keymanagementserviceshort}} instances together, or target just a specific key ring in an identified {{site.data.keyword.keymanagementserviceshort}} instance.
 
+The context for a restriction is made up of network zones and service endpoints. You might want to define zones based on specific IP addresses or ranges, or by configuring traffic originating from one or more VPCs or cloud services. With that, access to the sample {{site.data.keyword.keymanagementserviceshort}} instance might only be allowed from, e.g., a specific {{site.data.keyword.cos_short}} instance, a well-known range of IP addresses, and only via the private endpoint.
 
-supported service references: 
-https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute or on CLI
-
+Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
 
 ## Create zone and rule
 {: #cbr-security-zone-rule-create}
