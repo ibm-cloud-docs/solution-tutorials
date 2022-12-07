@@ -27,6 +27,8 @@ completion-time: 2h
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
 {: toc-completion-time="2h"}
 
+This solution tutorial will walk through communication paths in a multi zone hub and spoke VPC model.
+
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
@@ -37,21 +39,21 @@ The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traf
 
 A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} and to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
 
-- The hub can be the repository for shared micro services used by spokes
+- The hub can be the repository for shared micro services used by spokes.
 - The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can be a central point of traffic routing between on premises and the cloud.
-- Enterprise to cloud traffic can be routed, monitored, and logged through a Virtual Network Function, VNF, appliance in the hub
-- The hub can also can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
+- Enterprise to cloud traffic can be routed, monitored, and logged through a Virtual Network Function (VNF) appliance in the hub.
+- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
 
 This solution tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  It is typical for an organization to use a subset of the layers. The thin layers focus on bite size challenges and solutions.
 
  During the journey the following are explored:
-- [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway)
-- VPC egress and ingress routing
-- Virtual Network Functions with optional Network Load Balancers to support high availability
-- Virtual private endpoint gateways
-- DNS resolution
+- [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
+- VPC egress and ingress routing.
+- Virtual Network Functions with optional Network Load Balancers to support high availability.
+- Virtual private endpoint gateways.
+- DNS resolution.
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
@@ -77,7 +79,7 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.Z.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.Z.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
+The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
 
 There are a few subnets in the the transit and spokes:
 - workers - Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
@@ -626,9 +628,9 @@ Test:
 
 {: style="text-align: center;"}
 VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://{DomainName}/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
-- [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups)
-- [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls)
-- [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes)
+- [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
+- [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
+- [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes).
 
 Create the VPEs for the transit and the spokes, by applying the vpe layers:
    ```sh
@@ -690,8 +692,8 @@ The [VPC reference architecture for IBM Cloud for Financial Services](https://{D
 
 Some obvious changes to make:
 - CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
-- Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered
-- Network Access Control Lists for each subnet should be carefully considered
+- Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered.
+- Network Access Control Lists for each subnet should be carefully considered.
 
 DNS
 The appliances are used as both DNS resolvers used by remote DNS servers and DNS forwarders.
@@ -716,11 +718,11 @@ In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
 - Force all outbound traffic through the firewall in the transit VPC.
-- Integrate incoming public internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
-- Add flow log capture in the transit
-- Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial)
+- Integrate incoming public internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started).
+- Add flow log capture in the transit.
+- Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
-- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas)
+- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas).
 
 ## Related content
 {: #vpc-transit-related}
