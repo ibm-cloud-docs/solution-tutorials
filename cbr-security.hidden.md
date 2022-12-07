@@ -135,11 +135,11 @@ For evaluating the impact of context-based restrictions, you are going to create
    ```
    {: codeblock}
 
-4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches. The action is still approved. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
+4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches, regardless of the decision outcome. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
    ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
 
-   Note that in report mode, all requests are reported. In the event details you see an attribute **decision** with values of either **Permit** or **Deny**.
+   As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**, below **Permit**.
 
    ![Decision with Permit value in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
 
@@ -172,16 +172,16 @@ Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn mo
 
 To set up the right set of rules for context-based restrictions (CBRs), you should have defined the access strategy for your cloud resources. All resources should be protected by identity and access management (IAM). It means, that authentication and authorization checks should be performed before a user or service ID accesses a resource. CBRs add to the protection by cutting off network access based and origin criteria and other rules, but they do not replace proper IAM configuration. Additionally, many services support limiting network traffic to private endpoints, thereby already reducing access options.
 
-Here are some questions that help you come up with the right strategy.
+You might find that some rules impact the comfort of administrating resources, e.g., through the browser console. Moreover, you need to make sure that you don't lock you out from accessing resources and related management dashboards and APIs. Thus, you have to account for bastion hosts, corporate networks and gateways. In addition, some services support a fine-grained distinction of data plane and control place access for CBR configuration.
 
-* What resources store and manage data? They should be protected most.
-* which by CBR, by IAM
-* what endpoints to protect / use
-* make sure to not lock you out (console, CLI, TF)
-* what are your bastions or zones for admin work?
-* what are typical users of the protected resources? Are all accounted for with zones and rules?
-* test it in report-only mode (for 30 days or more) before enabling enforcement
+In summary, these questions should be asked:
+* Are all resources protected by IAM and similar?
+* How are the resources accessed, are they already limited to private endpoints where possible?
+* Is it possible to separate data plane and control plane access?
+* What is traffic related to usage, which to administrative work? How are emergencies handled?
+* From where does the above traffic originate?
 
+Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
 
 ## Use Terraform to configure context-based restrictions
