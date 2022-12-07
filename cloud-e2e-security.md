@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-09"
+lastupdated: "2022-12-07"
 lasttested: "2022-03-07"
 
 content-type: tutorial
@@ -641,7 +641,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #cloud-e2e-security-12}
 {: related}
 
-* [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/security-advisor?topic=security-advisor-about#about)
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
 * [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
