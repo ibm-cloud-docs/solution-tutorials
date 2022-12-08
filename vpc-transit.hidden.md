@@ -221,14 +221,16 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    ```
    {: codeblock}
 
-1. Run the test suite and notice connectivity within a VPC, like enterprise -> enterprise, is working but cross VPC connectivity, like enterprise -> transit, is not working. 
+1. Run the test suite.  Choose the tests marked with curl, lz0 (left zone 0) and rz0 (right zone 0).
+   - Expected pass: connectivity within a VPC, like enterprise -> enterprise.
+   - Expected fail: connectivity cross VPC, like enterprise -> transit.
 
    ```sh
-   pytest -m curl
+   pytest -v -m "curl and lz0 and rz0"
    ```
    {: codeblock}
 
-Your output will resemble:
+   Your output will resemble:
    ```sh
    ...
    py/test_transit.py::test_curl[tvpc-transit-z1-s0 (52.118.204.173) 10.1.0.4       -> tvpc-transit-z1-s0 10.1.0.4] PASSED              [ 11%]
@@ -241,6 +243,7 @@ Your output will resemble:
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
    =================================== 96 failed, 32 passed, 4 skipped in 896.72s (0:14:56) =================================================
    ```
+   {: codeblock}
 
 A change to the network configuration can take a couple of test runs for the underlying VPC network system to become consistent.  If you do not see the expected results initially be prepared to run the test again a couple of times.
 {: note}
@@ -252,18 +255,21 @@ A change to the network configuration can take a couple of test runs for the und
 ![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.  Apply the layer:
+The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.
+
+1. Apply the layer:
 
    ```sh
    ./apply.sh transit_spoke_tgw_tf
    ```
    {: codeblock}
 
-
-Running the curl tests (-m curl) will demonstrate passing tests between the transit and the spokes.
+1. Run the test suite.
+   - Expected pass: connectivity within a VPC and transit <-> spoke.
+   - Expected fail: connectivity to/from enterprise
 
    ```sh
-   pytest -v -m curl
+   pytest -v -m "curl and lz0 and rz0"
    ```
    {: codeblock}
 
