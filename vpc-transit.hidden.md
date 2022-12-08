@@ -163,7 +163,7 @@ It is tempting to divide up the CIDR space first by VPC but this complicates rou
 
 VPC Virtual Server Instances, VSIs, can be provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes.  If the default configuration of 2 zones and 2 spokes is used then 8 instances will be provisioned.
 
-1. Create the test instances
+Create the test instances
 
    ```sh
    ./apply.sh test_instances_tf
@@ -196,14 +196,16 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    {: codeblock}
 
 1. Activate the virtual environment.  This will need to be done each time a new terminal shell is initialized.  Mac or Linux:
+
    ```sh
    source venv/bin/activate;
    ```
    {: codeblock}
 
    Windows:
+
    ```sh
-   source venv/bin/todo;
+   source venv/bin/todo 2 ;
    ```
    {: codeblock}
 
