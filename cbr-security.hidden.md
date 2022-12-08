@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-07"
-lasttested: "2022-12-07"
+lastupdated: "2022-12-08"
+lasttested: "2022-12-08"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -37,9 +37,9 @@ The tutorial discusses how to create network zones and context rules and how to 
 * Define network zones to identify traffic sources for allowed and denied access
 * Create rules that define context for access to your cloud resources
 
+The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional red boxes around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
 
-![Architecture](images/solution-cbr-security-hidden/architecture-e2e-security.svg){: class="center"}
-{: style="text-align: center;"}
+![Architecture](images/solution-cbr-security-hidden/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
 
 <!--##istutorial#-->
@@ -87,6 +87,8 @@ For evaluating the impact of context-based restrictions, you are going to create
 6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another attribute and configure **Resource Name** as **YOUR_INITIALS-e2esec** (the same value as in step 1). Click **Review**, then **Continue**.
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
+Be aware that CBR zones and rules are deployed asynchronously. It may take up to few minutes for them to become active (eventually consistent).
+{: note}
 
 ## Test the rule and its enforcement modes
 {: #cbr-security-in-action}
@@ -157,7 +159,7 @@ In order to prepare for the deployment of CBR objects with Terraform in a sectio
 
 To set up the right set of rules for context-based restrictions (CBRs), you should have defined the access strategy for your cloud resources. All resources should be protected by identity and access management (IAM). It means, that authentication and authorization checks should be performed before a user or service ID accesses a resource. CBRs add to the protection by cutting off network access based and origin criteria and other rules, but they do not replace proper IAM configuration. Additionally, many services support limiting network traffic to private endpoints, thereby already reducing access options.
 
-You might find that some rules impact the comfort of administrating resources, e.g., through the browser console. Moreover, you need to make sure that you don't lock you out from accessing resources and related management dashboards and APIs. Thus, you have to account for bastion hosts, corporate networks and gateways. In addition, some services support a fine-grained distinction of data plane and control place access for CBR configuration.
+You might find that some rules impact the comfort of administrating resources, e.g., through the browser console. Moreover, you need to make sure that you don't lock you out from accessing resources and related management dashboards and APIs. Thus, you have to account for bastion hosts, corporate networks, gateways and maybe even {{site.data.keyword.cloud-shell_short}}. In addition, some services support a fine-grained distinction of data plane and control place access for CBR configuration, e.g., [{{site.data.keyword.containershort_notm}} cluster and management APIs](/docs/containers?topic=containers-cbr#protect-api-types-cbr).
 
 In summary, these questions should be asked:
 * Are all resources protected by IAM and similar?
@@ -168,8 +170,23 @@ In summary, these questions should be asked:
 
 Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
+For this tutorial, we are going to define the following network zones:
+* a zone each for all deployed services where supported as service reference
+* a zone each for the VPC and the Kubernetes cluster
+* for an IP range with the addresses of a home network (corporate or bastion) to serve as **homezone**
+* a zone each for the platform services where supported
+
+Thereafter, we are going to define context rules as follows:
+* for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr)
+* for the access to the [{{site.data.keyword.cos_short}} instance and its bucket](/docs/cloud-object-storage?topic=cloud-object-storage-setting-a-firewall)
+* for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr)
+* for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr)
+
+All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command.
+
 The documentation has a [list of resources which are supported as service references](/docs/account?topic=account-context-restrictions-whatis#service-attribute). You can also retrieve the list using the [CLI command **service-ref-targets**](/docs/cli?topic=cli-cbr-plugin#cbr-cli-service-ref-targets-command) or the related API function [List available service reference targets](/apidocs/context-based-restrictions#list-available-serviceref-targets).
 {: tip}
+
 
 ## Use Terraform to configure context-based restrictions
 {: #cbr-security-terraform}
