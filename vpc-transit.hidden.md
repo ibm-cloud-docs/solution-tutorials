@@ -134,6 +134,7 @@ It is tempting to divide up the CIDR space first by VPC but this complicates rou
    $ ./apply.sh : : -p
    ```
    {: codeblock}
+
    It will look something like:
    ```sh
    directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
@@ -199,9 +200,10 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    source venv/bin/activate;
    ```
    {: codeblock}
+
    Windows:
    ```sh
-   source venv/bin/activate;
+   source venv/bin/todo;
    ```
    {: codeblock}
 
@@ -210,6 +212,7 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    pip install --upgrade pip;
    ```
    {: codeblock}
+
 1. Install pytest and the rest of the requirements.
    ```
    pip install -r requirements.txt
