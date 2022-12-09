@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-08"
-lasttested: "2022-12-08"
+lastupdated: "2022-12-09"
+lasttested: "2022-12-09"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -72,6 +72,9 @@ A rule governs access to a resource. It can be identified by its service name an
 The context for a restriction is made up of network zones and service endpoints. You might want to define zones based on specific IP addresses or ranges, or by configuring traffic originating from one or more VPCs or cloud services. With that, access to the sample {{site.data.keyword.keymanagementserviceshort}} instance might only be allowed from, e.g., a specific {{site.data.keyword.cos_short}} instance, a well-known range of IP addresses, and only via the private endpoint.
 
 Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
+
+![Context-based restrictions](images/solution-cbr-security-hidden/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
+
 
 ## Create zone and rule
 {: #cbr-security-zone-rule-create}
@@ -335,7 +338,7 @@ The above created a file **terraform.tfstate**. It holds all the metadata about 
    ```
    {: codeblock}
 
-   For enforcing rules instead of creating them in report-only mode, you would need to add a line with `cbr_enforcement_mode=enabled`.
+   For enforcing rules instead of creating them in report-only mode, you would need to add a line with `cbr_enforcement_mode="enabled"`.
 
 5. Similar to the steps applied in the other directory, start by initializing the Terraform project.
    ```sh
