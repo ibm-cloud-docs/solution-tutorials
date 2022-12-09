@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-21"
+lastupdated: "2022-12-09"
 lasttested: "2022-11-16"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ completion-time: 2h
 # Build VPC Transit Hub and Spoke
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
+{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
