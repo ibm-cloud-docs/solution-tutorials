@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-21"
+lastupdated: "2022-12-09"
 lasttested: "2022-11-16"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ completion-time: 2h
 # Build VPC Transit Hub and Spoke
 {: #vpc-transit}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
+{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -221,7 +221,7 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    ```
    {: codeblock}
 
-1. Run the test suite.  Choose the tests marked with curl, lz0 (left zone 0) and rz0 (right zone 0).
+1. Run the the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
    - Expected pass: connectivity within a VPC, like enterprise -> enterprise.
    - Expected fail: connectivity cross VPC, like enterprise -> transit.
 
@@ -232,16 +232,30 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
 
    Your output will resemble:
    ```sh
-   ...
-   py/test_transit.py::test_curl[tvpc-transit-z1-s0 (52.118.204.173) 10.1.0.4       -> tvpc-transit-z1-s0 10.1.0.4] PASSED              [ 11%]
-   py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z0-s0 10.0.0.4] FAILED              [ 13%]
-   py/test_transit.py::test_curl[tvpc-enterprise-z0-s0 (52.116.140.173) 192.168.0.4 -> tvpc-transit-z1-s0 10.1.0.4] FAILED              [ 14%]
-   ...
-   =======================================short test summary info ===========================================================================
-   ...
-   FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z0-s0 10.0.1.4] - assert False
-   FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
-   =================================== 96 failed, 32 passed, 4 skipped in 896.72s (0:14:56) =================================================
+   ================================================================== test session starts ==================================================================
+platform darwin -- Python 3.10.7, pytest-6.2.4, py-1.10.0, pluggy-0.13.1 -- /Users/pquiring/github.com/IBM-Cloud/vpc-transit/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/pquiring/github.com/IBM-Cloud/vpc-transit, configfile: pytest.ini
+collected 166 items / 157 deselected / 9 selected
+
+py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] PASSED       [ 11%]
+py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] FAILED             [ 22%]
+py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] FAILED               [ 33%]
+py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] FAILED       [ 44%]
+py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] PASSED             [ 55%]
+py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] FAILED               [ 66%]
+py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] FAILED       [ 77%]
+py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] FAILED             [ 88%]
+py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] PASSED               [100%]
+
+================================================================ short test summary info ================================================================
+FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] - assert False
+FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] - assert False
+FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] - assert F...
+FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] - assert False
+FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] - assert F...
+FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] - assert False
+===================================================== 6 failed, 3 passed, 157 deselected in 35.93s ======================================================
    ```
    {: codeblock}
 
@@ -284,25 +298,26 @@ The {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}} has
 
 {{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the IBM cloud. {{site.data.keyword.dl_full_notm}}  can optionally be connected to {{site.data.keyword.tg_short}} for distribution.  The enterprise in this simulation is a VPC and uses a {{site.data.keyword.tg_short}} to ensure an experience very close to {{site.data.keyword.dl_short}}.
 
-Apply the enterprise_link_tf layer:
+1. Apply the enterprise_link_tf layer:
    ```sh
    ./apply.sh enterprise_link_tf
    ```
    {: codeblock}
 
-Running the curl tests (-m curl) will demonstrate passing tests between the enterprise and the transit.
+1. Run the test suite.
+   - Expected pass: connectivity within a VPC and transit <-> spoke, enterprise <-> transit.
+   - Expected fail: enterprise <-> spoke
 
    ```sh
-   pytest -v -m curl
+   pytest -v -m "curl and lz0 and rz0"
    ```
    {: codeblock}
-
 
 ## Enterprise to Spoke via Transit NFV Router
 {: #vpc-transit-router}
 {: step}
 
-The incentive of a transit vpc for enterprise <-> cloud traffic is for central monitor, inspect, route and logging of network traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+The incentive for a transit vpc for enterprise <-> cloud traffic is typicall to route, inspect, monitor and log network traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
@@ -316,9 +331,18 @@ Connectivity from the enterprise to a spoke is achieved through a Network Functi
 The terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about).  You must [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
 
-Apply the firewall_tf layer:
+1. Apply the firewall_tf layer:
    ```sh
    ./apply.sh firewall_tf
+   ```
+   {: codeblock}
+
+1. Run the test suite.
+   - Expected pass: connectivity within a VPC, enterprise <-> transit, enterprise <-> spoke same zone
+   - Expected fail: enterprise <-> spoke, transit -> enterprise, enterprise <--> spoke cross zone
+
+   ```sh
+   pytest -v -m "curl and lz0 and (rz0 or rz1)"
    ```
    {: codeblock}
 
@@ -348,21 +372,6 @@ Also notice that the Address prefix for that transit VPC itself is 10.0.0.0/16 D
 
 With these additional address prefixes the spoke VPCs learn that traffic spoke -> 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24 should pass through the connected transit gateway.  Similarly the enterprise will learn that traffic destined to 10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16 should pass through its connected transit gateway.
 
-### Testing enterprise <-> spoke
-{: #vpc-transit-testing-enterprise-spoke}
-
-Running the tests will demonstrate passing tests between the enterprise and the spokes within the same zone but new failures with transit -> enterprise.
-
-   ```sh
-   pytest -v -m curl
-   ```
-   {: codeblock}
-
-Example failure:
-   ```sh
-   FAILED py/test_transit.py::test_curl[l-tvpc-transit-z0-s0 (150.240.68.219) 10.0.0.4     -> r-tvpc-enterprise-z0-s0 192.168.0.4] - assert False
-   ```
-
 ## Stateful Routing and Direct Server Return
 {: #vpc-transit-stateful-routing}
 {: step}
@@ -377,8 +386,7 @@ This does not help with the traffic originating in the transit test instance pas
 ![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
 {: style="text-align: center;"}
 
-
-One possible solution is to not send transit traffic through the firewall-router.  Adding the following routes (three zone configuration) to the transit vpc ingress route table would restore it back to the pre firewall-router configuration for traffic destined to the transit test instances.  Routes for three zone configuration:
+One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router, essentially restoring it back to the pre firewall-router configuration for traffic destined to the transit test instances by adding these routes to the transit VPC ingress route table:
 
 zone|destination|next_hop
 --|--|--
@@ -386,11 +394,23 @@ Dallas 1|10.0.0.0/24|Delegate
 Dallas 2|10.1.0.0/24|Delegate
 Dallas 3|10.2.0.0/24|Delegate
 
-Optionally visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.  Click **Create** to add each route.  **Delegate** will delegate to the default VPC routing behavior for the matching CIDR block in the zone.
+1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.
 
-If you created the routes do not forget to remove them as noted below.
+1. Apply the transit_ingress layer:
+   ```sh
+   ./apply.sh transit_ingress_tf
+   ```
+   {: codeblock}
 
-An alternative solution, used below, is to route the transit VPC test instance traffic through the firewall/router.
+1. Run the test suite.
+   - Expected pass: all tests except:
+   - Expected fail: enterprise <-> spoke cross zone
+
+   ```sh
+   pytest -v -m "curl and lz0 and (rz0 or rz1)"
+   ```
+   {: codeblock}
+
 
 ## Cross Zone and Asymmetric Routing
 {: #vpc-transit-asymmetric}
@@ -437,9 +457,18 @@ If the goal is to create an architecture that is resilient across {{site.data.ke
 
 It is possible to work around this cross zone limitation by using egress routing in the spokes.  In the diagram this is represented by the egress dashed line.
 
-Apply the spoke_egress_tf layer:
+1. Apply the spoke_egress_tf layer:
    ```sh
    ./apply.sh spokes_egress_tf
+   ```
+   {: codeblock}
+
+1. Run the test suite.
+   - Expected pass: all
+   - Expected fail: none
+
+   ```sh
+   pytest -v -m "curl and lz0 and (rz0 or rz1)"
    ```
    {: codeblock}
 
@@ -448,7 +477,7 @@ Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.k
 ![vpc-transit-asymmetric-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-fix.svg){: class="center"}
 {: style="text-align: center;"}
 
-Spoke egress routes for the three zone configuration:
+Spoke egress routes:
 
 zone|destination|next_hop
 --|--|--
@@ -469,9 +498,6 @@ Verify that more tests are passing.  If you manually added the ingress routes ea
 If you only need routing capability and you added the optional routes the hub and spoke model is complete. Routing is possible from transit (hub) and spoke.  Enterprise to both transit and spoke is complete.  You can skip this step.
 
 Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router.  
-
-If you added routes to fix the transit -> enterprise and transit -> spoke as an optional step earlier now is the time to remove the routes that you manually added using the {{site.data.keyword.cloud_notm}} console.
-{: note}
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
@@ -541,22 +567,32 @@ What about the firewall-router itself?  This was not mentioned earlier but in an
 
 ### Apply and Test More Firewall
 {: #vpc-transit-apply-and-test-more-firewall}
-Apply the all_firewall_tf layer:
+In an eralier step had added the transit_ingress_tf layer.  It added routes to the transit VPC ingress route table to **delegate** traffic instead of routing to the firewall-router.
+
+1. Edit config_tf/terraform.tfvars and change the value of all_firewall to true.
+1. Apply the config_tf layer and then the transit_ingress_tf layer.  This will remove the **delegate** routes in the ingress route table in the transit VPC:
+   ```sh
+   ./apply.sh config_tf
+   ./apply.sh transit_ingress_tf
+   ```
+
+1. Apply the all_firewall layer:
    ```sh
    ./apply.sh all_firewall_tf
    ```
    {: codeblock}
 
-Test:
+4. Run the test suite.
+   - Expected pass: all except:
+   - Expected fail: cross zone transit <-> spoke and spoke <-> spoke.
+
    ```sh
-   pytest -v -m curl
+   pytest -v -m "curl and lz0 and (rz0 or rz1)"
    ```
    {: codeblock}
 
-Only the cross zone transit <-> spoke and spoke <-> spoke tests are failing.
-
-### Optionally fix cross zone routing
-{: #vpc-transit-optionally-fix-cross-zone-routing}
+### Fix cross zone routing
+{: #vpc-transit-fix-cross-zone-routing}
 
 As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added.  The problem for spoke to spoke traffic is shown in this diagram
 
@@ -586,15 +622,18 @@ Dallas 2|10.0.0.0/16|10.0.0.196
 Dallas 3|10.0.0.0/16|10.0.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
 
-Apply the all_firewall_asym_tf layer:
+1. Apply the all_firewall_asym layer:
    ```sh
    ./apply.sh all_firewall_asym_tf
    ```
    {: codeblock}
 
-Test:
+1. Run the test suite.
+   - Expected pass: all
+   - Expected fail: none
+
    ```sh
-   pytest -v -m curl
+   pytest -v -m "curl and lz0 and (rz0 or rz1)"
    ```
    {: codeblock}
 
