@@ -87,7 +87,7 @@ For evaluating the impact of context-based restrictions, you are going to create
 3. Enter **VPCzone** as name. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
 4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
 5. Select **{{site.data.keyword.registryshort_notm}}** in the **Service** section and click **Next**.
-6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another attribute and configure **Resource Name** as **YOUR_INITIALS-e2esec** (the same value as in step 1). Click **Review**, then **Continue**.
+6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another condition and configure **Resource Name** as **YOUR_INITIALS-e2esec** (the same value as in step 1). Click **Review**, then **Continue**.
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
 Be aware that CBR zones and rules are deployed asynchronously. It may take up to few minutes for them to become active (eventually consistent).
@@ -97,7 +97,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 {: #cbr-security-in-action}
 {: step}
 
-1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](https://{DomainName}/observe/activitytracker) to monitor IAM-related events.
+1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](https://{DomainName}/observe/activitytracker) to monitor IAM-related events (Frankfurt region).
 2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) in another browser tab.
 3. In the shell, perform the following commands:
    ```sh
@@ -174,10 +174,10 @@ In summary, these questions should be asked:
 Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
 For this tutorial, we are going to define the following network zones:
-* a zone each for all deployed services where supported as service reference
-* a zone each for the VPC and the Kubernetes cluster
+* a zone for each for all deployed services where supported as service reference
+* a zone for each for the VPC and the Kubernetes cluster
 * for an IP range with the addresses of a home network (corporate or bastion) to serve as **homezone**
-* a zone each for the platform services where supported
+* a zone for each for the platform services where supported
 
 Thereafter, we are going to define context rules as follows:
 * for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr)
