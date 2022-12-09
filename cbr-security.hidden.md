@@ -56,6 +56,13 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
+
+## Setup
+{: #cbr-security-setup}
+{: step}
+
+**Explain what is required and how to get it. Schematics to create the resources from e2e tutorial. AT in Frankfurt required for logs**
+
 You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
 
 Additionally, you need to have an instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
