@@ -27,15 +27,15 @@ completion-time: 2h
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs cloud-databases,databases-for-redis"}
 {: toc-completion-time="2h"}
 
-This solution tutorial will walk through communication paths in a multi zone hub and spoke VPC model.
-
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.  Here is a high level diagram:
+This solution tutorial will walk through communication paths in a multi zone hub and spoke VPC model.
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
+
+The {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.  Here is a high level diagram:
 
 A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} and to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
 
@@ -79,7 +79,12 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram above shows the VPC layout in more detail. The on premises is CIDR 192.168.0.0/16 and a zone within the enterprise is shown.  In the IBM Cloud there is a transit VPC and one spoke VPC (the other spokes are configured similarly).  The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The transit VPC consumes CIDRs 10.*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 spoke 0 consumes 10.*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.  It is tempting to divide up the CIDR space first by VPC but this complicates routing as we will see in later steps.
+The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the IBM cloud on the right.  In the ibm cloud a single zone for the transit VPC and Spoke0.  Notice the details:
+- The on premises CIDR is 192.168.0.0/16.
+- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The second digit: 0, 1, 2 is the zone number and corresponds to us-south-1 (Dallas 1), us-south-2 (Dallas 2) and us-south-3 (Dallas 3). Zone0 is shown.
+- Spoke0 consumes 10.\*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.
+- The transit VPC consumes CIDRs 10.\*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 which is clear from the subnet CIDRs that further divide the 10.0.0.0/24 into /26.
+- The transit VPC Address Prefix for Zone0 is 10.0.0.0/16 which seems incorrect since it overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
 
 There are a few subnets in the the transit and spokes:
 - workers - Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
@@ -87,60 +92,70 @@ There are a few subnets in the the transit and spokes:
 - vpe - All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
 - dns - For DNS locations see [working with custom resolvers[(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
 
-There is a companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) that can be used to follow along as the resources are created.  Clone and initialize the files **local.env** and **config_tf/terraform.tfvars**.  The APIKEY in local.env is a secret that should not be kept secret.
+It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of a zone as a single CIDR block and each VPC as consuming a slice of each of the zones:
+
+![vpc-transit-zones](images/vpc-transit-hidden/vpc-transit-zones.svg){: class="center"}
+{: style="text-align: center;"}
+
+1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture.
 
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit
    cd vpc-transit
-   cp template.local.env local.env
-   vi local.env; # make the suggested change
-   source local.env
    ```
    {: codeblock}
 
- The config_tf/terraform.tfvars has an initial section that requires modification.
+1. The config_tf directory contains configuration variables that you are required to configure.
 
-   ```
+   ```sh
    cp config_tf/template.terraform.tfvars config_tf/terraform.tfvars
-   vi config_tf/terraform.tfvars; # make the initial changes suggested
    ```
    {: codeblock}
 
-Below each **Step** will apply one or more layers to the diagram.  You could cd into the directory and execute the terraform commands as shown for **config_tf**:
+1. Edit **config_tf/terraform.tfvars**.
 
+1. Below each **Step** will apply one or more layers to the diagram.  You could cd into the directory and execute the terraform commands as shown for **config_tf** but do not do this:
    ```sh
    cd config_tf
    terraform init
    terraform apply 
    cd ..
    ```
-   {: codeblock}
-
-Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  Try it out:
+1. Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  The following will display help:
 
    ```sh
-   ./apply.sh; # display help
+   ./apply.sh
    ```
    {: codeblock}
 
-You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf).  The **-p** prints the layers:
+1. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf).  The **-p** prints the layers:
 
    ```sh
    $ ./apply.sh : : -p
+   ```
+   {: codeblock}
+
+   It will look something like:
+   ```sh
    directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
-   >>> success
    ```
 
-In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p then do it:
+1. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p to see what it will do:
 
    ```sh
    ./apply.sh -p : spokes_tf
+   ```
+   {: codeblock}
+
+1. Now do it:
+
+   ```sh
    ./apply.sh : spokes_tf
    ```
    {: codeblock}
 
-## Testing
-{: #vpc-transit-testing}
+## Create test instances
+{: #vpc-transit-create-test-instances}
 {: step}
 
 ![vpc-transit-test-instances](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
@@ -148,39 +163,74 @@ In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf. 
 
 VPC Virtual Server Instances, VSIs, can be provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes.  If the default configuration of 2 zones and 2 spokes is used then 8 instances will be provisioned.
 
+Create the test instances
+
    ```sh
    ./apply.sh test_instances_tf
    ```
    {: codeblock}
 
 
-The python py/test_transit.py pytest script tests the connectivity of the test instances.  Each test will ssh to one of the instances and perform different types of connectivity tests.
+## Testing
+{: #vpc-transit-testing}
+{: step}
 
-Validation was done with python 3.10.7.  You can install and activate a virtual environment using the following steps.
+This tutorial will add communication paths a layer at a time.  A pytest test suite exhaustively tests communication paths.  By the end of the tutorial all of the tests will pass.  The reader can follow along and test each layer using pytest.  You can also investigate the results of each layer using the {{site.data.keyword.cloud_notm}} console.
+
+The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform different types of connectivity tests.
+
+Validation was done with python 3.10.7.  There are lots of ways to configure a python virtual environment.  The following steps were used:
+
+1. Verify python version 3.10.7 or later.
 
    ```sh
-   python --version; # ensure python 3 is active
-   python -m venv venv --prompt transit_vpc; # install a python virtual environment with activation prompt of transit_vpc
-   source venv/bin/activate; # now pip and python will come from the virtual environment
-   pip install --upgrade pip; # upgrade to latest version of pip
-   pip install -r requirements.txt; #install dependencies
+   python --version
    ```
    {: codeblock}
 
-Each time a fresh shell is initialized remember to activate the python virtual environment:
+1. Install a python virtual environment with activation prompt of transit_vpc.
+
    ```sh
-   source venv/bin/activate
+   python -m venv venv --prompt transit_vpc
    ```
    {: codeblock}
 
-Run the test suite and notice connectivity within a VPC, like enterprise -> enterprise, is working but cross VPC connectivity, like enterprise -> transit, is not working. 
+1. Activate the virtual environment.  This will need to be done each time a new terminal shell is initialized.  Mac or Linux:
 
    ```sh
-   pytest
+   source venv/bin/activate;
    ```
    {: codeblock}
 
-Your output will resemble:
+   Windows:
+
+   ```sh
+   source venv/bin/todo 2 ;
+   ```
+   {: codeblock}
+
+1. Upgrade to the latest version of pip.
+   ```sh
+   pip install --upgrade pip;
+   ```
+   {: codeblock}
+
+1. Install pytest and the rest of the requirements.
+   ```
+   pip install -r requirements.txt
+   ```
+   {: codeblock}
+
+1. Run the test suite.  Choose the tests marked with curl, lz0 (left zone 0) and rz0 (right zone 0).
+   - Expected pass: connectivity within a VPC, like enterprise -> enterprise.
+   - Expected fail: connectivity cross VPC, like enterprise -> transit.
+
+   ```sh
+   pytest -v -m "curl and lz0 and rz0"
+   ```
+   {: codeblock}
+
+   Your output will resemble:
    ```sh
    ...
    py/test_transit.py::test_curl[tvpc-transit-z1-s0 (52.118.204.173) 10.1.0.4       -> tvpc-transit-z1-s0 10.1.0.4] PASSED              [ 11%]
@@ -193,6 +243,7 @@ Your output will resemble:
    FAILED py/test_transit.py::test_curl[tvpc-spoke1-z1-s0 (150.239.167.126) 10.1.2.4       -> tvpc-spoke0-z1-s0 10.1.1.4] - assert False
    =================================== 96 failed, 32 passed, 4 skipped in 896.72s (0:14:56) =================================================
    ```
+   {: codeblock}
 
 A change to the network configuration can take a couple of test runs for the underlying VPC network system to become consistent.  If you do not see the expected results initially be prepared to run the test again a couple of times.
 {: note}
@@ -204,18 +255,21 @@ A change to the network configuration can take a couple of test runs for the und
 ![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.  Apply the layer:
+The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.
+
+1. Apply the layer:
 
    ```sh
    ./apply.sh transit_spoke_tgw_tf
    ```
    {: codeblock}
 
-
-Running the curl tests (-m curl) will demonstrate passing tests between the transit and the spokes.
+1. Run the test suite.
+   - Expected pass: connectivity within a VPC and transit <-> spoke.
+   - Expected fail: connectivity to/from enterprise
 
    ```sh
-   pytest -v -m curl
+   pytest -v -m "curl and lz0 and rz0"
    ```
    {: codeblock}
 
