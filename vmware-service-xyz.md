@@ -29,10 +29,10 @@ completion-time: 1h
 {:preview: .preview}
 
 
-# Provision {{site.data.keyword.dns_full_notm}} for VMware deployment
-{: #vpc-bm-vmware-dns}
+# hfjakhfjkahfjkahskjashjkfa
+{: #vmware-service-dhqjkshjdkah}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, vmwaresolutions, dns-svcs"}
+{: toc-services="vmware-service"}
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
@@ -47,7 +47,7 @@ In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMwa
 {: shortdesc}
 
 ## Objectives
-{: #vpc-bm-vmware-dns-objectives}
+{: #vmware-service-objectives}
 
 In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the {{site.data.keyword.dns_full_notm}} solution for the VMware Deployment.
 
@@ -55,7 +55,7 @@ In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs
 
 
 ## Before you begin
-{: #vpc-bm-vmware-dns-prereqs}
+{: #vmware-service-prereqs}
 
 This tutorial requires:
 
@@ -71,8 +71,8 @@ The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of thi
 {: note}
 
 
-## Provision IBM Cloud DNS service
-{: #vpc-bm-vmware-dns-provision}
+## Provision fanmashfjkahjka
+{: #vmware-service-provision}
 {: step}
 
 1. Create the DNS service using the `standard-dns` plan and get its ID.
@@ -90,86 +90,9 @@ The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of thi
    {: codeblock}
 
 
-## Provision a Zone
-{: #vpc-bm-vmware-dns-zone}
-{: step}
-
-1. Provision a zone. In this example `vmware.ibmcloud.local` is used, but you may modify this to fit your needs.
-
-   ```sh
-   VMWARE_DNS_ZONE_NAME=vmware.ibmcloud.local
-   ```
-   {: codeblock}
-   
-   ```sh
-   VMWARE_DNS_ZONE=$(ibmcloud dns zone-create $VMWARE_DNS_ZONE_NAME -d "Zone for VMware on VPC" --output json | jq -r .id)
-   ```
-   {: codeblock}
-
-2. Add your previously created {{site.data.keyword.vpc_short}} in the permitted networks. Use the {{site.data.keyword.vpc_short}} CRN here.
-
-   ```sh
-   ibmcloud dns permitted-network-add $VMWARE_DNS_ZONE --vpc-crn $VMWARE_VPC_CRN
-   ```
-   {: codeblock}
-
-
-## Creating DNS records
-{: #vpc-bm-vmware-dns-record}
-{: step}
-
-DNS records for the ESXi hosts will be created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
-{: note}
-
-1. To create DNS records via CLI, the following command provides a help for record creation.
-
-   ```sh
-   ibmcloud dns resource-record-create --help
-   ```
-   {: codeblock}
-
-2. To create `A records` for your previously created Zone `vmware.ibmcloud.local`, you can use the following CLI command (modify the 'NAME' and 'IP_ADDRESS' accordingly):
-
-   ```sh
-   ibmcloud dns resource-record-create $VMWARE_DNS_ZONE --type A --name NAME --ipv4 IP_ADDRESS
-   ```
-   {: codeblock}
-
-
-## Validate DNS records
-{: #vpc-bm-vmware-dns-validation}
-{: step}
-
-1. List information about configured zones in your DNS instance `dns-vmware`. Use the following command.
-
-   ```sh
-   ibmcloud dns zones -i dns-vmware
-   ```
-   {: codeblock}
-
-2. List information about configured records in your DNS instance `dns-vmware` and zone `vmware.ibmcloud.local`. Use the following command.
-
-   ```sh
-   ibmcloud dns resource-records $VMWARE_DNS_ZONE -i dns-vmware 
-   ```
-   {: codeblock}
-
-3. Verify that you permitted your {{site.data.keyword.vpc_short}} networks to access and use the DNS service:
-
-   ```sh
-   ibmcloud dns permitted-networks $VMWARE_DNS_ZONE
-   ```
-   {: codeblock}
-
-4. When a DNS record is created during the tutorial, validate that you get correct responses from your Windows Jump host, for example using `nslookup` via Windows command line.
-
-   ```sh
-   nslookup <hostname>
-   ```
-   {: codeblock}
 
 ## Next steps
-{: #vpc-bm-vmware-dns-next-steps}
+{: #vmware-service-next-steps}
 
 The next step in the tutorial series is:
 
