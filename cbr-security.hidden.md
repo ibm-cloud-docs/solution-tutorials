@@ -37,7 +37,7 @@ The tutorial discusses how to create network zones and context rules and how to 
 * Define network zones to identify traffic sources for allowed and denied access
 * Create rules that define context for access to your cloud resources
 
-The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional red boxes around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
+The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional boxes with dashed, blue lines around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
 
 ![Architecture](images/solution-cbr-security-hidden/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
