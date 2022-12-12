@@ -228,7 +228,7 @@ resource "ibm_cbr_zone" "cbr_zone_k8s" {
     type = "serviceRef"
     ref {
       account_id       = data.ibm_iam_account_settings.team_iam_account_settings.account_id
-      service_instance = data.terraform_remote_state.e2e-resources.outputs.cluster.id
+      service_instance = data.ibm_container_vpc_cluster.cluster.id
       service_name     = "containers-kubernetes"
     }
   }
@@ -254,20 +254,12 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
     }
     attributes {
       name  = "networkZoneId"
-      value = ibm_cbr_zone.cbr_zone_iam_groups.id
-    }
-    attributes {
-      name  = "networkZoneId"
-      value = ibm_cbr_zone.cbr_zone_iam_users.id
-    }
-    attributes {
-      name  = "networkZoneId"
       value = ibm_cbr_zone.cbr_zone_homezone.id
     }
 
   }
 
-  description      = "restrict COS access to cluster"
+  description      = "restrict COS access, limit to cluster"
   enforcement_mode = var.cbr_enforcement_mode
   resources {
     attributes {
@@ -277,7 +269,7 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
     attributes {
       name     = "serviceInstance"
       operator = "stringEquals"
-      value    = data.terraform_remote_state.e2e-resources.outputs.cos.guid
+      value    = var.cos.guid
     }
     attributes {
       name     = "serviceName"
@@ -296,10 +288,13 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 With the understanding of the CBR-related Terraform resources, it is time to deploy them on top of the existing resources to create zones and rules. 
 
 1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces overview](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.   
-2. Click on **Settings**. In the list of **Variables** and locate the row with **deploy_cbr**. It's value should be **false**, the default.
+2. Click on **Settings**. In the list of **Variables** and locate the row with **deploy_cbr**. Its value should be **false**, the default.
 3. In the dot menu for the variable select **Edit**. Then, in the pop-up form, uncheck **Use default** to be able to change the value. Type **true** in the field for **Value of the variable called: deploy_cbr**. Thereafter, finish the update by clicking **Save**.
 4. Once the settings page has updated, continue with **Generate plan** in the top. The plan output should indicate that CBR zones and rules would be created.
 5. Create the CBR objects by using the **Apply plan** button.
+
+By default, the enforcement mode is configured to **report-only**. You can change the variable **cbr_enforcement_mode** to the value **enabled** to enforce the restrictions.
+{: tip}
 
 
 ## Test the context rules
@@ -317,7 +312,7 @@ To test the new rule for access to {{site.data.keyword.cos_short}}, follow these
 4. Use **Upload** to import a file into the bucket. Leave the setting as **Standard transfer** and use the **Upload files (objects)** area to select a file. Finish by clicking **Upload**.
 5. Back in the browser tab with the activity logs, there should be CBR-related log records titled `Context restriction matched while in report mode`. This is due to the fact that the rules have been deployed in **report** mode. Expand some records to check the reported **decision** and **isEnforced** data. Depending on the configured IP range for the homezone, **decision** might be **Permit** or **Deny**. The value for **isEnforced** should be **false** because of the reporting mode.
 
-For further testing, you might want to change the IP range of the homezone and then redeploy the rules with `terraform apply`.
+For further testing, you might want to change the IP range of the homezone. It is the variable **homezone_iprange** in the {{site.data.keyword.bpshort}} settings.
 
 ## Remove resources
 {: #cbr-security-remove}
