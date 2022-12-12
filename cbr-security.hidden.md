@@ -49,7 +49,8 @@ The following diagram shows the solution architecture as used in the tutorial [A
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
 * `git` to clone source code repository,
-* `terraform` to deploy resources.
+* `terraform` to deploy resources,
+* `docker` client to push and pull container images.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -61,12 +62,9 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #cbr-security-setup}
 {: step}
 
-**Explain what is required and how to get it. Schematics to create the resources from e2e tutorial. AT in Frankfurt required for logs**
+In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). For it, deploy those resources as described in the companion GitHub repository in section [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics).
 
-You need to have deployed the resources discussed in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). This could have been manually by following the steps or by [using Terraform code as described](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security-setup).
-
-Additionally, you need to have an instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started) configured for platform logs.
-
+To monitor events for context-based restrictions, you must create an instance of the {{site.data.keyword.cloudaccesstrailshort}} service in the Frankfurt (eu-de) region. For more information, see [Provisioning an instance](/docs/activity-tracker?topic=activity-tracker-provision).
 
 ## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
@@ -295,94 +293,22 @@ resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
 ### Deploy the Terraform resources
 {: #cbr-security-terraform-deploy}
 
-With the understanding of the CBR-related Terraform resources, it is time to deploy them to create zones and rules. 
+With the understanding of the CBR-related Terraform resources, it is time to deploy them on top of the existing resources to create zones and rules. 
 
-
-
-You can run the following commands in the browser tab with the {{site.data.keyword.cloud-shell_notm}} session or in a terminal. 
-
-Note that the files will be gone once the session is closed. It is not a problem for the tutorial, but should be avoided for production systems. For these, consider using [{{site.data.keyword.bpfull_notm}}](/docs/schematics?topic=schematics-about-schematics), a managed Infrastructure-as-Code solution, or having the files on your computers.
-{: note}
-
-1. Get the Terraform code:
-   ```sh
-   git clone https://github.com/IBM-Cloud/secure-file-storage
-   ```
-   {: codeblock}
-   
-2. Change into the **secure-file-storage/terraform** directory:
-   ```sh
-   cd secure-file-storage/terraform
-   ```
-   {: codeblock}
-
-3. Next, create a file **terraform.tfvars** with settings like the following. Adapt the values where needed.
-   ```hcl
-   ibmcloud_api_key="<your-api-key>"
-   region = "us-south"
-   iks_cluster_name="mycluster-us-south-e2e-sec"
-   iks_namespace="secure-file-storage"
-   existing_resources=true
-   ```
-   {: codeblock}
-
-   The last variable is to make sure that no new service instances will be created, but that the metadata of existing ones is retrieved.
-4. First, initialize the Terraform project.
-   ```sh
-   terraform init
-   ```
-   {: codeblock}
-
-   Next, retrieve the metadata by running **apply**. You will be asked to confirm with **yes**. Before confirming, check that no resources will be created, changed, or deleted. It should just retrieve data and create outputs.
-   ```sh
-   terraform apply
-   ```
-   {: codeblock}
-
-The above created a file **terraform.tfstate**. It holds all the metadata about the managed resources. The same file will be used when deploying the CBR zones and rules. It is utilized to reference the existing services as well as to store the state information about the new CBR objects. With that, it is time to actually create the zones and rules.
-
-1. Change into the **terraform-cbr** directory:
-   ```sh
-   cd ../terraform-cbr
-   ```
-   {: codeblock}
-
-2. Take a look at the file content of **backend.tf**. It defines the reference to the Terraform state in the other directory.
-3. Review the file **variables.tf** which contains definitions of variables. The variable **cbr_enforcement_mode** is used for the new rules and should have a default value **report**. 
-
-4. Again, create a file **terraform.tfvars** to configure an API key and the region. Moreover, you can set a range of IP addresses as home or bastion zone. It will be used to create a network zone which is granted access (allow-listed) in CBR rules.
-   ```hcl
-   ibmcloud_api_key=""<your-api-key>""
-   region = "us-south"
-   homezone_iprange = "2.42.42.1-2.42.42.255"
-   ```
-   {: codeblock}
-
-   For enforcing rules instead of creating them in report-only mode, you would need to add a line with `cbr_enforcement_mode="enabled"`.
-
-5. Similar to the steps applied in the other directory, start by initializing the Terraform project.
-   ```sh
-   terraform init
-   ```
-   {: codeblock}
-
-   Next, **apply** the infrastructure definition and create the zones and rules. You will be asked to confirm with **yes**. Before confirming, review the objects to be created which should only be CBR zones and rules.
-   ```sh
-   terraform apply
-   ```
-   {: codeblock}
-
-   Note that you can run **apply** again after changing some configuration. A use case would be to test the zones and rules and later to update the enforcement mode, then deploying the changed configuration.
-   {: note}
+1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces overview](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.   
+2. Click on **Settings**. In the list of **Variables** and locate the row with **deploy_cbr**. It's value should be **false**, the default.
+3. In the dot menu for the variable select **Edit**. Then, in the pop-up form, uncheck **Use default** to be able to change the value. Type **true** in the field for **Value of the variable called: deploy_cbr**. Thereafter, finish the update by clicking **Save**.
+4. Once the settings page has updated, continue with **Generate plan** in the top. The plan output should indicate that CBR zones and rules would be created.
+5. Create the CBR objects by using the **Apply plan** button.
 
 
 ## Test the context rules
 {: #cbr-security-terraform-test}
 {: step}
 
-With the set of context-based restrictions deployed, it is time again to verify them. This includes tests on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}}.
+With the set of context-based restrictions deployed, it is time again to verify and test them. To verify the CBR objects, go to the [context-based restrictions overview](/context-based-restrictions). Then, inspect the new [zones](/context-based-restrictions/zones) and [rules](/context-based-restrictions/rules).
 
-Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr-security-in-action).
+Tests should be performed on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}} and validated by monitoring the logs as performed earlier. Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr-security-in-action).
 
 To test the new rule for access to {{site.data.keyword.cos_short}}, follow these steps:
 1. In a browser tab, go to the [list of {{site.data.keyword.cos_short}} instances](/objectstorage). Click on the service name for the tutorial, e.g., **secure-file-storage-cos**.
@@ -398,13 +324,7 @@ For further testing, you might want to change the IP range of the homezone and t
 {: removeresources}
 
 
-To remove the resource, delete the created context rules and network zones. Run the following command in the **terraform-cbr** directory:
-```sh
-terraform destroy
-```
-{: codeblock}
-
-If you do not have access to that directory any longer, you could also use the browser UI. Visit the [page with CBR objects](https://{DomainName}/context-based-restrictions/) and first delete the rules, then the zones that were created as part of this tutorial.
+To remove the resource, use the browser and navigate to the [{{site.data.keyword.bpfull_notm}} workspaces overview](/schematics/workspaces). Select the workspace, then in the **Actions** menu, first select **Destroy resources**, thereafter use **Delete workspace**.
 
 ## Related content
 {: #cbr-security-12}
