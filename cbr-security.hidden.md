@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-09"
-lasttested: "2022-12-09"
+lastupdated: "2022-12-12"
+lasttested: "2022-12-12"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -107,26 +107,39 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](https://{DomainName}/observe/activitytracker) to monitor IAM-related events (Frankfurt region).
 2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) in another browser tab.
 3. In the shell, perform the following commands:
+   Set an environment variable to the cloud region you are going to use for the {{site.data.keyword.registryshort_notm}}, e.g., **us** or **de**.
+   ```sh
+   export REGION=us
+   ```
+   {: codeblock}
+
+   Set another variable with your initials (or the prefix you picked above):
+   ```sh
+   export YOUR_INITIALS=MI
+   ```
+   {: codeblock}
+
+   Now log in to the {{site.data.keyword.registryshort_notm}}.
    ```sh
    ibmcloud cr login
    ```
    {: codeblock}
   
-   The above logs you in to the {{site.data.keyword.registryshort_notm}}. Next, pull a container image to the shell environment.
+   Next, pull a container image to the shell environment.
    ```sh
-   docker pull registry.access.redhat.com/ubi8/ubi-micro
+   docker pull docker.io/library/hello-world:latest
    ```
    {: codeblock}
 
-   Re-tag the image to upload it to your registry namespace. Make sure to adapt **REGION** and **YOUR_INITIALS** to your configuration.
+   Re-tag the image to upload it to your registry namespace.
    ```sh
-   docker tag registry.access.redhat.com/ubi8/ubi-micro REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
+   docker tag docker.io/library/hello-world $REGION.icr.io/$YOUR_INITIALS-e2esec/hello-world
    ```
    {: codeblock}
 
    Last, push the container image to the registry.
    ```sh
-   docker push --remove-signatures REGION.icr.io/YOUR_INITIALS-e2esec/ubi-micro
+   docker push $REGION.icr.io/$YOUR_INITIALS-e2esec/hello-world
    ```
    {: codeblock}
 
@@ -138,16 +151,16 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    ![Decision with Permit value in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
 
-5. Back in the browser tab with the shell, list the container images in the namespace. Remember to replace **YOUR_INITIALS** with your chosen prefix.
+5. Back in the browser tab with the shell, list the container images in the namespace.
    ```sh
-   ibmcloud cr images --restrict YOUR_INITIALS-e2esec
+   ibmcloud cr images --restrict $YOUR_INITIALS-e2esec
    ```
    {: codeblock}
 
 6. In a third browser tab, navigate to the [CBR rules](/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
 7. Go back to the browser tab with {{site.data.keyword.cloud-shell_notm}}. Issue the same command as before to list the images:
    ```sh
-   ibmcloud cr images --restrict YOUR_INITIALS-e2esec
+   ibmcloud cr images --restrict $YOUR_INITIALS-e2esec
    ```
    {: codeblock}
 
