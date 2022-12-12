@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-01"
-lasttested: "2021-12-01"
+  years: 2022
+lastupdated: "2022-12-12"
+lasttested: "2022-12-12"
 
 content-type: tutorial
 services: vpc
@@ -244,7 +244,7 @@ The frontend instance has its software installed but it can not yet be reached.
    _The connection should time out eventually._
 1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-1. First, add the **inbound** rules by clicking **Add**. They allow incoming HTTP requests and Ping (ICMP). See the table **Inbound rules** below for values.
+1. Click on the **Rules** tab and under the **Inbound rules** click on **Create**. Add the rules from the table below, they allow incoming HTTP requests and Ping (ICMP). .
 
    | Protocol | Source type| Source | Value    | Description |
    |------------|---------------|----------|-----------|------|
@@ -282,6 +282,8 @@ The backend server is running the same web server software as the frontend serve
    ```sh
    curl -v -m 30 http://<private-ip-address-of-the-backend-vsi>
    ```
+   {: pre}
+
    _After 30 seconds, the call should timeout. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection._
 
 ### Configure the backend security group
@@ -290,7 +292,7 @@ The backend server is running the same web server software as the frontend serve
 To allow inbound connections to the backend server, you need to configure the associated security group.
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-backend-sg**.
-2. Add the following **inbound** rule by clicking **Add**.
+2. Click on the **Rules** tab and under the **Inbound rules** click on **Create**.  Add the following rule.
 
 
    | Protocol | Source type | Source | Value   | Description |
@@ -306,6 +308,8 @@ To allow inbound connections to the backend server, you need to configure the as
    ```sh
    curl -v -m 30 http://<private-ip-address-of-the-backend-vsi>
    ```
+   {: pre}
+
 1. The request returns quickly and outputs the message `I'm the backend server` from the backend web server. This completes the configuration of the connectivity between the servers.
 
 ### Complete the maintenance
@@ -314,7 +318,7 @@ To allow inbound connections to the backend server, you need to configure the as
 With the frontend and backend server software properly installed and working, the servers can be removed from the maintenance security group.
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-secure-maintenance-sg**.
-1. Select **Attached interfaces**.
+1. Select **Attached resources**.
 1. Click **Edit interfaces**, expand and uncheck the **vpc-pubpriv-frontend-vsi** and **vpc-pubpriv-backend-vsi** interfaces.
 1. **Save** the configuration.
 1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to confirm it is still working as expected.
