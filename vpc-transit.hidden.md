@@ -107,9 +107,9 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the IBM cloud on the right.  In the ibm cloud a single zone for the transit VPC and Spoke0.  Notice the details:
+The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the IBM cloud on the right.  In the ibm cloud a single zone for the transit VPC and Spoke 0.  Notice the details:
 - The on premises CIDR is 192.168.0.0/16.
-- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The second digit: 0, 1, 2 is the zone number (shown for Dallas/us-south):
+- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 0, 1, 2 is the zone number (shown for Dallas/us-south):
    - 10.0.0.0/16, zone 0, Dallas 1, us-south-1.
    - 10.1.0.0/16, zone 1, Dallas 2, us-south-2.
    - 10.2.0.0/16, zone 2, Dallas 3, us-south-3.
@@ -117,7 +117,7 @@ The diagram above shows the VPC layout in more detail. There is an enterprise on
    - 10.0.0.0/24, zone 0.
    - 10.1.0.0/24, zone 1.
    - 10.2.0.0/24, zone 2.
-- Spoke0 consumes 10.\*.1.0/24 or CIDRs:
+- Spoke 0 consumes 10.\*.1.0/24 or CIDRs:
    - 10.0.1.0/24, zone 0.
    - 10.1.1.0/24, zone 1.
    - 10.2.1.0/24, zone 2.
@@ -268,6 +268,7 @@ Validation was done with python 3.6.8.  There are lots of ways to configure a py
    {: codeblock}
 
 1. Run the the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
+
    **Expected:** Connectivity within a VPC, like enterprise -> enterprise, pass and cross VPC fail.
 
    ```sh
@@ -344,6 +345,7 @@ The Transit Gateway between the transit vpc and the spoke vpcs has been added to
    {: codeblock}
 
 1. Run the test suite.
+
    **Expected:** Connectivity within a VPC and transit <-> spoke pass and connectivity to/from enterprise fail.
 
    ```sh
@@ -369,6 +371,7 @@ The {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}} has
    {: codeblock}
 
 1. Run the test suite.
+
    **Expected:** Connectivity within a VPC, transit <-> spoke and enterprise <-> transit pass and enterprise <-> spoke fail.
 
    ```sh
@@ -699,7 +702,7 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke0 zone 1 10.1.1.4 routing to spoke 1 zone 0 10.0.2.4.  The matching egress route is:
+The green path is an example of the originator spoke 0 zone 1 10.1.1.4 routing to spoke 1 zone 0 10.0.2.4.  The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
