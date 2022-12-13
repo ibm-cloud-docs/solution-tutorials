@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-12"
-lasttested: "2022-12-12"
+lastupdated: "2022-12-13"
+lasttested: "2022-12-13"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -62,17 +62,19 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #cbr-security-setup}
 {: step}
 
-In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). For it, deploy those resources as described in the companion GitHub repository in section [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics).
+In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). 
 
-To monitor events for context-based restrictions, you must create an instance of the {{site.data.keyword.cloudaccesstrailshort}} service in the Frankfurt (eu-de) region. For more information, see [Provisioning an instance](/docs/activity-tracker?topic=activity-tracker-provision).
+1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics) as described in the companion GitHub repository.
+
+2. To monitor events for context-based restrictions, you must have an instance of the {{site.data.keyword.cloudaccesstrailshort}} service in the Frankfurt (eu-de) region. For more information, see [Provisioning an instance](/docs/activity-tracker?topic=activity-tracker-provision).
 
 ## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
 {: step}
 
-[Context-based restrictions (CBRs)](/docs/account?topic=account-context-restrictions-whatis) provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. These restrictions add an extra layer of protection and are additional to traditional IAM (Identity and Access Management) policies. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
+[Context-based restrictions (CBRs)](/docs/account?topic=account-context-restrictions-whatis) provide the ability to define and enforce access restrictions for {{site.data.keyword.cloud_notm}} resources based on the network location and the type of access requests. Because both IAM policies and context-based restrictions enforce access, context-based restrictions offer protection even in the face of compromised or mismanaged credentials.
 
-A rule governs access to a resource. It can be identified by its service name and type as well as by additional attributes. They can include the region, resource group, and other service-specific properties. The attributes in a rule are mostly optional, so that you could govern, e.g., all {{site.data.keyword.keymanagementserviceshort}} instances together, or target just a specific key ring in an identified {{site.data.keyword.keymanagementserviceshort}} instance.
+A rule governs access to a resource identified by its service name and type as well as by additional attributes. They can include the region, resource group, and other service-specific properties. The attributes in a rule are mostly optional, so that you could govern, e.g., all {{site.data.keyword.keymanagementserviceshort}} instances together, or target just a specific key ring in an identified {{site.data.keyword.keymanagementserviceshort}} instance.
 
 The context for a restriction is made up of network zones and service endpoints. You might want to define zones based on specific IP addresses or ranges, or by configuring traffic originating from one or more VPCs or cloud services. With that, access to the sample {{site.data.keyword.keymanagementserviceshort}} instance might only be allowed from, e.g., a specific {{site.data.keyword.cos_short}} instance, a well-known range of IP addresses, and only via the private endpoint.
 
