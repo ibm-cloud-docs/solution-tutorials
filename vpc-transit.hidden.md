@@ -109,12 +109,23 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the IBM cloud on the right.  In the ibm cloud a single zone for the transit VPC and Spoke0.  Notice the details:
 - The on premises CIDR is 192.168.0.0/16.
-- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The second digit: 0, 1, 2 is the zone number and corresponds to us-south-1 (Dallas 1), us-south-2 (Dallas 2) and us-south-3 (Dallas 3). Zone0 is shown.
-- Spoke0 consumes 10.\*.1.0/24 or CIDRs 10.0.1.0/24, 10.1.1.0/24 and 10.2.1.0/24.
-- The transit VPC consumes CIDRs 10.\*.0.0/24 or 10.0.0.0/24, 10.1.0.0/24 and 10.2.0.0/24 which is clear from the subnet CIDRs that further divide the 10.0.0.0/24 into /26.
-- The transit VPC Address Prefix for Zone0 is 10.0.0.0/16 which seems incorrect since it overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
+- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.  The second digit: 0, 1, 2 is the zone number (shown for Dallas/us-south):
+   - 10.0.0.0/16, zone 0, Dallas 1, us-south-1.
+   - 10.1.0.0/16, zone 1, Dallas 2, us-south-2.
+   - 10.2.0.0/16, zone 2, Dallas 3, us-south-3.
+- The transit VPC consumes CIDRs 10.\*.0.0/24:
+   - 10.0.0.0/24, zone 0.
+   - 10.1.0.0/24, zone 1.
+   - 10.2.0.0/24, zone 2.
+- Spoke0 consumes 10.\*.1.0/24 or CIDRs:
+   - 10.0.1.0/24, zone 0.
+   - 10.1.1.0/24, zone 1.
+   - 10.2.1.0/24, zone 2.
+- The subnet CIDRs further divide the /24 into /26.
+- The zone box within a VPC shows the Address Prefix.  In the transit for zone 0 this is 10.0.0.0/16 which seems incorrect since it is not 10.0.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
 
 There are a few subnets in the the transit and spokes:
+
 - workers - Subnet s0. Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
 - dns - Subnet s1. For DNS locations see [working with custom resolvers](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
 - vpe - Subnet s2. All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
@@ -418,7 +429,7 @@ Dallas 3|0.0.0.0/0|10.2.0.196
 The next_hop identifies the firewall-router.  In the table above 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  You can observe this using the {{site.data.keyword.cloud_notm}} console.
 
 1. Open [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP** (click the **Name** column header to sort).
-2. Match them up with the table above to verify the next hop relationship.
+1. Match them up with the table above to verify the next hop relationship.
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
@@ -430,8 +441,7 @@ The transit VPC zone in the diagram has the additional address prefixes:
 - 192.168.2.0/24 Dallas 3.
 
 To observe this:
-1. todo2 Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
-1. Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
+1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
 1. Select the **transit VPC** and notice the Address prefixes displayed.
 1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
 
@@ -465,7 +475,7 @@ This does not help with the traffic originating in the transit test instance pas
 ![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
 {: style="text-align: center;"}
 
-One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router, essentially restoring it back to the pre firewall-router configuration for traffic destined to the transit test instances by adding these routes to the transit VPC ingress route table:
+One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router, essentially restoring it back to the pre firewall-router configuration for traffic destined to the transit test instances by adding these routes to the transit's ingress routing table:
 
 Zone|Destination|Next hop
 --|--|--
@@ -533,10 +543,18 @@ If the goal is to create an architecture that is resilient across {{site.data.ke
 
 ### Spoke Egress routing
 {: #vpc-transit-spoke-egress-routing}
+
+To resolve this problem transit <-> spoke traffic will be routed to stay in the same zone.
+
+![vpc-transit-asymmetric-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-fix.svg){: class="center"}
+{: style="text-align: center;"}
+
+The spoke -> transit traffic can be routed using an egress routing table in the spokes.
+
 ![vpc-transit-spoke-egress](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
 {: style="text-align: center;"}
 
-It is possible to work around this cross zone limitation by using egress routing in the spokes.  In the diagram this is represented by the egress dashed line.
+In the diagram this is represented by the egress dashed line.
 
 1. Apply the spoke_egress_tf layer:
    ```sh
@@ -552,25 +570,15 @@ It is possible to work around this cross zone limitation by using egress routing
    ```
    {: codeblock}
 
-Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table directing all egress traffic in Dallas 1 should be directed to 10.0.0.196 in Dallas 1.  With this change spoke traffic originating in a spoke in Dallas 2 remains in Dallas 2 as it flows through the firewall-router in the transit VPC.
+1. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table.  With this change spoke traffic originating in a spoke in Dallas 2 remains in Dallas 2 as it flows through the firewall-router in the transit VPC.
 
-![vpc-transit-asymmetric-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-fix.svg){: class="center"}
-{: style="text-align: center;"}
-
-Spoke egress routes:
+1. Notice these routes in the spoke's egress routing table:
 
 Zone|Destination|Next hop
 --|--|--
 Dallas 1|192.168.0.0/16|10.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.196
 Dallas 3|192.168.0.0/16|10.2.0.196
-
-
-Verify that more tests are passing.  If you manually added the ingress routes earlier all of the tests are passing:
-   ```sh
-   pytest -v -m curl
-   ```
-   {: codeblock}
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
@@ -587,9 +595,15 @@ All connectivity tests now pass.
 
 Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router.  
 
+![vpc-transit-more-firewall](images/vpc-transit-hidden/vpc-transit-more-firewall.svg){: class="center"}
+{: style="text-align: center;"}
+
+The flow lines show more traffic flowing through the firewall.  All traffic that flows through the transit gateway also flows through the firewall.  Notice in spoke 0 that traffic within the spoke (or transit) will not flow through the firewall.
+
+
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
-Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routes in the spoke's default egress route table (shown for Dallas/us-south):
+Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routes in the spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -610,9 +624,9 @@ Dallas 1|192.168.0.0/16|10.0.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.0.196
 Dallas 3|192.168.0.0/16|10.2.0.0.196
 
-This is going to introduce another cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destine to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} will route to the zone of the destination.,
+This is going to introduce another cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destined to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} will route to the zone of the destination.,
 
-Routes in spoke's default egress routing table (shown for Dallas/us-south):
+Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -685,16 +699,15 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke0 10.0.1.4 routing to 10.1.2.4.  The matching egress route is:
+The green path is an example of the originator spoke0 zone 1 10.1.1.4 routing to spoke 1 zone 0 10.0.2.4.  The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
 Dallas 2|10.0.0.0/8|10.1.0.196
 
-Moving right to left Which the is the firewall-router in the middle zone of the diagram.  On the return path the lower zone is selected.
+Moving left to right the the firewall-router in the middle zone, zone 1, of the diagram is selected.  On the return path zone 0 is selected.
 
-To fix this a few more specific routes need to be added to force the upper zones to route to the lower zones.
-
+To fix this a few more specific routes need to be added to force the higher number zones to route to the lower zone number firewalls when a lower zone number destination is specified.  When referencing an equal or higher numbered zone continue to route to the firewall in the same zone.
 
 
 ![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
@@ -715,15 +728,12 @@ Dallas 3|10.1.0.0/16|10.1.0.196
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: all
-   - Expected fail: none
+   **Expected:** all tests pass
 
    ```sh
    pytest -v -m curl
    ```
    {: codeblock}
-
-All tests are passing!
 
 ## High Performance High Availability (HA) Firewall-Router
 {: #vpc-transit-high-performance-ha-firewall-router}
@@ -752,7 +762,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
 Observe the changes that were made:
 
 1. Open the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers).
-1. Select the load balancer in zone zero (Dallas 1/us-south-1) it has the suffix fw-z0-s3.
+1. Select the load balancer in zone 0 (Dallas 1/us-south-1) it has the suffix fw-z0-s3.
 1. Note the **Private IPs**.
 
 Compare the Private IPs with those in the transit VPC ingress route table:
@@ -776,7 +786,7 @@ Verify resiliancy:
 1. Locate the **BASENAME-fw-z0-s3-1** three verticle dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance.
 1. Run the **pytest** again and all tests fail.
-2. Start one or both of the firewall-router instances and the tests will pass again.
+1. Start one or both of the firewall-router instances and the tests will pass again.
 
 Remove the NLB firewall:
 1. Change these two vaiables in config_tf/terraform.tfvars:
@@ -895,8 +905,6 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    ```
    {: codeblock}
 
-Powell: todo need to consider taking out the failing tests.  Meeting with Shaival to determine what to do.
-
 ## Production Notes
 {: #vpc-transit-production-notes}
 
@@ -929,17 +937,17 @@ In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified 
 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
-- Force all outbound traffic through the firewall in the transit VPC.
 - Integrate incoming public internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started).
-- Add flow log capture in the transit.
+- Add [flow log capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
 - Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas).
+- Force all outbound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
 
 ## Related content
 {: #vpc-transit-related}
 
-* [IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services) has 
+* [IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services)
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [How to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
