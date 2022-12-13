@@ -563,7 +563,7 @@ In the diagram this is represented by the egress dashed line.
    {: codeblock}
 
 1. Run the test suite.
-   **Expected:** All tests pass.
+   **Expected:** All tests pasas.
 
    ```sh
    pytest -v -m "curl and lz0 and (rz0 or rz1)"
@@ -667,7 +667,7 @@ What about the firewall-router itself?  This was not mentioned earlier but in an
 
 ### Apply and Test More Firewall
 {: #vpc-transit-apply-and-test-more-firewall}
-In an earlier step had added the transit_ingress_tf layer.  It added routes to the transit VPC ingress route table to **delegate** traffic instead of routing to the firewall-router.
+In an eralier step had added the transit_ingress_tf layer.  It added routes to the transit VPC ingress route table to **delegate** traffic instead of routing to the firewall-router.
 
 1. Edit config_tf/terraform.tfvars and change the value of all_firewall to true.
 1. Apply the config_tf layer and then the transit_ingress_tf layer.  This will remove the **delegate** routes in the ingress route table in the transit VPC:
@@ -744,7 +744,7 @@ To prevent a firewall-router from becoming the performance bottleneck or a singl
 
 This diagram shows a single zone with a Network Load Balancer (NLB) fronting two firewall-routers. To see this constructed it is required to change the configuration and apply again.
 
-1. Change these two variables in config_tf/terraform.tfvars:
+1. Change these two vaiables in config_tf/terraform.tfvars:
    ```sh
    firewall_nlb                 = true
    number_of_firewalls_per_zone = 2
@@ -770,9 +770,9 @@ Compare the Private IPs with those in the transit VPC ingress route table:
 1. Open the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs).
 1. Select the transit VPC.
 1. Click on **Manage routing tables**.
-1. Click on the **tgw-ingress** routing table.  Notice the **Next hop** IP address matches one of the NLB **Private IPs**
+1. Click on the **tgw-ingress** routing table.  Notice the **Next hop** IP address matches one of the NLB **Privte IPs**
 
-Verify resiliency:
+Verify resiliancy:
 
 1. Run the spoke 0 zone 0 tests:
    ```sh
@@ -781,15 +781,15 @@ Verify resiliency:
    {: codeblock}
 
 1. Open the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs)
-1. Locate the **BASENAME-fw-z0-s3-0** three vertical dots menu on the right and select **Stop**
+1. Locate the **BASENAME-fw-z0-s3-0** three verticle dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance, at which point all tests will pass.
-1. Locate the **BASENAME-fw-z0-s3-1** three vertical dots menu on the right and select **Stop**
+1. Locate the **BASENAME-fw-z0-s3-1** three verticle dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance.
 1. Run the **pytest** again and all tests fail.
 1. Start one or both of the firewall-router instances and the tests will pass again.
 
 Remove the NLB firewall:
-1. Change these two variables in config_tf/terraform.tfvars:
+1. Change these two vaiables in config_tf/terraform.tfvars:
    ```sh
    firewall_nlb                 = false
    number_of_firewalls_per_zone = 1
@@ -937,12 +937,12 @@ In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified 
 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
-- Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started).
+- Integrate incoming public internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started).
 - Add [flow log capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
 - Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas).
-- Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
+- Force all outbound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
 
 ## Related content
 {: #vpc-transit-related}
@@ -950,6 +950,6 @@ Your architecture will likely be different than the one presented but will likel
 * [IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services)
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [How to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
-* [Public front end and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+* [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Network Function Virtualization](https://{DomainName}/docs/vpc?topic=vpc-about-vnf)
 * [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
