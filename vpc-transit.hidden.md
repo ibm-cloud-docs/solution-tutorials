@@ -573,6 +573,7 @@ Verify that more tests are passing.  If you manually added the ingress routes ea
    {: codeblock}
 
 ## Routing Summary
+{: #vpc-transit-routing-summary}
 Basic routing is complete:
 - enterprise <-> transit
 - transit <-> spoke
