@@ -430,7 +430,7 @@ The transit VPC zone in the diagram has the additional address prefixes:
 - 192.168.2.0/24 Dallas 3.
 
 To observe this:
-1. todo Open the [VPCs](https://vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
+1. todo2 Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
 1. Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
 1. Select the **transit VPC** and notice the Address prefixes displayed.
 1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
@@ -579,7 +579,7 @@ Basic routing is complete:
 - transit <-> spoke
 - enterprise <--(transit firewall-router)--> spoke
 
-Enterprise can access transit directly.  In
+All connectivity tests now pass.
 
 ## More Firewall Protection
 {: #vpc-transit-firewall}
