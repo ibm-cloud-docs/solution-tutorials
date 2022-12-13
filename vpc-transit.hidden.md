@@ -407,7 +407,7 @@ Traffic reaches the firewall-router appliance through routing tables.
 
 The zone is determined by the Transit Gateway which will examine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
 
-Notice how wide the routes are in the ingress routing table for the three zone configuration:
+Notice how wide the routes are in the transit's ingress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -589,9 +589,7 @@ Often an enterprise uses a transit VPC to monitor the traffic with the firewall-
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
-Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routing table routes in the spoke egress routing table.
-
-Egress routes in spokes for the three zone configuration.  If provisioning was done in Dallas/us-south it will resemble the following:
+Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routes in the spoke's default egress route table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -601,7 +599,7 @@ Dallas 3|10.0.0.0/8|10.2.0.196
 
 Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.0.0.4 (Dallas 1) attempting contact with 10.1.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.0.0.196.  
 
-Egress routes in transit for the three zone configuration:
+Routes in transit's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -614,7 +612,7 @@ Dallas 3|192.168.0.0/16|10.2.0.0.196
 
 This is going to introduce another cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destine to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} will route to the zone of the destination.,
 
-Egress routes in the spokes for the three zone configuration:
+Routes in spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -633,7 +631,7 @@ Dallas 3|10.2.0.0/24|delegate
 {: #vpc-transit-do-not-route-intra-zone-traffic-to-firewall-router}
 In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly.  To accomplish this additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
 
-Egress routes for spoke0 for the three zone configuration:
+Routes in spoke 0's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
@@ -702,7 +700,7 @@ To fix this a few more specific routes need to be added to force the upper zones
 ![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
 {: style="text-align: center;"}
 
-Routes for the three zone configuration.  Added to each of the spokes:
+Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
