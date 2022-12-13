@@ -72,6 +72,34 @@ This tutorial walks you through a complete example demonstrating the network con
 
 There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) with the source code for this tutorial and more. If follows the layers defined in this tutorial.
 
+## Before you begin
+{: #vpc-transit-prereqs}
+
+This tutorial requires:
+* `Terraform CLI` to run the Terraform commands.
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+<!--#/istutorial#-->
+
+In addition:
+
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
+
+You can optionally save some disk space by sharing terraform plugins across the layers using a [config-file](https://developer.hashicorp.com/terraform/cli/config/config-file).  On linux:
+
+$HOME/.terraformrc:
+
+   ```sh
+   plugin_cache_dir   = "$HOME/.terraform.d/plugin-cache"
+   disable_checkpoint = true
+   ```
+   {: codeblock}
+
+
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console, but be aware that restarting the shell results in the loss of disk with associated terraform state files and environment.  It will be required to complete the tutorial and remove resources in one session.  Use the terraform plugin cache to avoid reaching the 500MB limit.
+
 ## VPC Layout
 {: #vpc-transit-layout}
 {: step}
@@ -87,10 +115,10 @@ The diagram above shows the VPC layout in more detail. There is an enterprise on
 - The transit VPC Address Prefix for Zone0 is 10.0.0.0/16 which seems incorrect since it overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
 
 There are a few subnets in the the transit and spokes:
-- workers - Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
-- firewall - firewall-router.
-- vpe - All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
-- dns - For DNS locations see [working with custom resolvers[(https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
+- workers - Subnet s0. Worker subnets for network accessible compute resources via load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), VPC instances, etc.
+- dns - Subnet s1. For DNS locations see [working with custom resolvers](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).  The DNS location appliances managed by the DNS Service consume network interfaces in this subnet.
+- vpe - Subnet s2. All of the Virtual Private Endpoint Gateways for private connectivity to cloud services.
+- firewall - Subnet s3. The firewall-router.
 
 It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of a zone as a single CIDR block and each VPC as consuming a slice of each of the zones:
 
@@ -175,13 +203,13 @@ Create the test instances
 {: #vpc-transit-testing}
 {: step}
 
-This tutorial will add communication paths a layer at a time.  A pytest test suite exhaustively tests communication paths.  By the end of the tutorial all of the tests will pass.  The reader can follow along and test each layer using pytest.  You can also investigate the results of each layer using the {{site.data.keyword.cloud_notm}} console.
+This tutorial will add communication paths a layer at a time.  A pytest test suite exhaustively tests communication paths.  By the end of the tutorial all of the tests will pass.  The reader can follow along and test each layer using pytest. The results of each layer can also be observed using the {{site.data.keyword.cloud_notm}} console.
 
-The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform different types of connectivity tests.
+The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform different types of connectivity tests.  The ssh uses the default ssh environment to log into the test instances.  Navigate to the test [instances](https:///{DomainName}/vpc-ext/compute/vs) and notice the **Floating IP** value.  If there are unexpected problems verify it is possible to `ssh root@FloatingIP` from your workstation.
 
-Validation was done with python 3.10.7.  There are lots of ways to configure a python virtual environment.  The following steps were used:
+Validation was done with python 3.6.8.  There are lots of ways to configure a python virtual environment.  The following steps are one example:
 
-1. Verify python version 3.10.7 or later.
+1. Verify python version 3.6.8 or later.  Your python may be **python3**.  After activated use python.
 
    ```sh
    python --version
@@ -198,20 +226,27 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
 1. Activate the virtual environment.  This will need to be done each time a new terminal shell is initialized.  Mac or Linux:
 
    ```sh
-   source venv/bin/activate;
+   source venv/bin/activate
    ```
    {: codeblock}
 
    Windows:
 
    ```sh
-   source venv/bin/todo 2 ;
+   source venv/Scripts/activate
+   ```
+   {: codeblock}
+
+1. Verify python version 3.6.8 or later.  No longer need to use python3:
+
+   ```sh
+   python --version
    ```
    {: codeblock}
 
 1. Upgrade to the latest version of pip.
    ```sh
-   pip install --upgrade pip;
+   pip install --upgrade pip
    ```
    {: codeblock}
 
@@ -222,8 +257,7 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
    {: codeblock}
 
 1. Run the the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
-   - Expected pass: connectivity within a VPC, like enterprise -> enterprise.
-   - Expected fail: connectivity cross VPC, like enterprise -> transit.
+   **Expected:** Connectivity within a VPC, like enterprise -> enterprise, pass and cross VPC fail.
 
    ```sh
    pytest -v -m "curl and lz0 and rz0"
@@ -232,30 +266,50 @@ Validation was done with python 3.10.7.  There are lots of ways to configure a p
 
    Your output will resemble:
    ```sh
-   ================================================================== test session starts ==================================================================
-platform darwin -- Python 3.10.7, pytest-6.2.4, py-1.10.0, pluggy-0.13.1 -- /Users/pquiring/github.com/IBM-Cloud/vpc-transit/venv/bin/python
-cachedir: .pytest_cache
-rootdir: /Users/pquiring/github.com/IBM-Cloud/vpc-transit, configfile: pytest.ini
-collected 166 items / 157 deselected / 9 selected
-
-py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] PASSED       [ 11%]
-py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] FAILED             [ 22%]
-py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] FAILED               [ 33%]
-py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] FAILED       [ 44%]
-py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] PASSED             [ 55%]
-py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] FAILED               [ 66%]
-py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] FAILED       [ 77%]
-py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] FAILED             [ 88%]
-py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] PASSED               [100%]
-
-================================================================ short test summary info ================================================================
-FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] - assert False
-FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (150.240.69.122) 192.168.0.4    -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] - assert False
-FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] - assert F...
-FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (52.116.129.203) 10.0.0.4          -> 10.0.1.4 (52.118.191.19) r-spoke0-z0-s0] - assert False
-FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 192.168.0.4 (150.240.69.122) r-enterprise-z0-s0] - assert F...
-FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.118.191.19) 10.0.1.4            -> 10.0.0.4 (52.116.129.203) r-transit-z0-s0] - assert False
-===================================================== 6 failed, 3 passed, 157 deselected in 35.93s ======================================================
+   (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -v -m "curl and lz0 and rz0"
+   ===================================================================== test session starts ======================================================================
+   platform linux -- Python 3.6.8, pytest-7.0.1, pluggy-1.0.0 -- /home/user/venv/bin/python3
+   cachedir: .pytest_cache
+   rootdir: /home/user/vpc-transit, configfile: pytest.ini
+   collected 292 items / 276 deselected / 16 selected                                                                                                             
+   
+   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] PASSED              [  6%]
+   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] FAILED                     [ 12%]
+   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] FAILED                       [ 18%]
+   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] FAILED                     [ 25%]
+   py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] FAILED              [ 31%]
+   py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] PASSED                     [ 37%]
+   py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] FAILED                       [ 43%]
+   py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] FAILED                     [ 50%]
+   py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] FAILED              [ 56%]
+   py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] FAILED                     [ 62%]
+   py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] PASSED                       [ 68%]
+   py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] FAILED                     [ 75%]
+   py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] FAILED              [ 81%]
+   py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] FAILED                     [ 87%]
+   py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] FAILED                       [ 93%]
+   py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] PASSED                     [100%]
+   
+   ======================================================================= warnings summary =======================================================================
+   ../venv/lib64/python3.6/site-packages/paramiko/transport.py:33
+     /home/user/venv/lib64/python3.6/site-packages/paramiko/transport.py:33: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography and will be removed in a future release.
+       from cryptography.hazmat.backends import default_backend
+   
+   -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+   =================================================================== short test summary info ====================================================================
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z0-s0 (52.116.133.7) 10.0.1.4             -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z0-s0 (52.116.132.255) 10.0.2.4           -> 10.0.1.4 (52.116.133.7) r-spoke0-z0-s0] - assert False
+   ============================================== 12 failed, 4 passed, 276 deselected, 1 warning in 72.32s (0:01:12) ==============================================
    ```
    {: codeblock}
 
@@ -279,8 +333,7 @@ The Transit Gateway between the transit vpc and the spoke vpcs has been added to
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: connectivity within a VPC and transit <-> spoke.
-   - Expected fail: connectivity to/from enterprise
+   **Expected:** Connectivity within a VPC and transit <-> spoke pass and connectivity to/from enterprise fail.
 
    ```sh
    pytest -v -m "curl and lz0 and rz0"
@@ -305,8 +358,7 @@ The {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}} has
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: connectivity within a VPC and transit <-> spoke, enterprise <-> transit.
-   - Expected fail: enterprise <-> spoke
+   **Expected:** Connectivity within a VPC, transit <-> spoke and enterprise <-> transit pass and enterprise <-> spoke fail.
 
    ```sh
    pytest -v -m "curl and lz0 and rz0"
@@ -338,8 +390,7 @@ The terraform configuration will configure the firewall-router instance with [al
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: connectivity within a VPC, enterprise <-> transit, enterprise <-> spoke same zone
-   - Expected fail: enterprise <-> spoke, transit -> enterprise, enterprise <--> spoke cross zone
+   **Expected:** Connectivity within a VPC, enterprise <-> transit, enterprise <-> spoke same zone and enterprise <-> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail.
 
    ```sh
    pytest -v -m "curl and lz0 and (rz0 or rz1)"
@@ -348,27 +399,45 @@ The terraform configuration will configure the firewall-router instance with [al
 
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
-Traffic reaches the firewall-router appliance through routing tables.  Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select the transit VPC and then click on **Manage routing tables** click on the **tgw-ingress** routing table.
+Traffic reaches the firewall-router appliance through routing tables.
+1. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.
+1. Select the transit VPC.
+1. Click on **Manage routing tables**.
+1. Click on the **tgw-ingress** routing table.
 
 The zone is determined by the Transit Gateway which will examine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
 
 Notice how wide the routes are in the ingress routing table for the three zone configuration:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|0.0.0.0/0|10.0.0.196
 Dallas 2|0.0.0.0/0|10.1.0.196
 Dallas 3|0.0.0.0/0|10.2.0.196
 
-The next_hop identifies the firewall-router.  In the table below 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  Check [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP**.
+The next_hop identifies the firewall-router.  In the table above 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  You can observe this using the {{site.data.keyword.cloud_notm}} console.
+
+1. Open [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP** (click the **Name** column header to sort).
+2. Match them up with the table above to verify the next hop relationship.
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
 Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design).  But how does a spoke learn the route to the enterprise (192.168.0.0/16)?  And how does the enterprise learn the route to a spoke?  By adding phantom VPC address prefixes to the transit VPC.
 
-The transit VPC zone in the diagram has the additional address prefixes: 192.168.0.0/24 Dallas 1 and 192.168.1.0/24 Dallas 2.  Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} and select the **transit VPC** and notice the Address prefixes displayed and find the additional address prefixes that have been added.
+The transit VPC zone in the diagram has the additional address prefixes:
+- 192.168.0.0/24 Dallas 1.
+- 192.168.1.0/24 Dallas 2.
+- 192.168.2.0/24 Dallas 3.
 
-Also notice that the Address prefix for that transit VPC itself is 10.0.0.0/16 Dallas 1 and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The address prefixes for the transit is expanded to include all of the spokes to allow the routes to flow to the enterprise.
+To observe this:
+1. todo Open the [VPCs](https://vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
+1. Open the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
+1. Select the **transit VPC** and notice the Address prefixes displayed.
+1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
+
+Also notice that the Address prefix for that transit VPC itself:
+- 10.0.0.0/16 Dallas 1.
+- and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The address prefixes for the transit is expanded to include all of the spokes to allow the routes to flow to the enterprise.
 
 With these additional address prefixes the spoke VPCs learn that traffic spoke -> 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24 should pass through the connected transit gateway.  Similarly the enterprise will learn that traffic destined to 10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16 should pass through its connected transit gateway.
 
@@ -388,7 +457,7 @@ This does not help with the traffic originating in the transit test instance pas
 
 One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router, essentially restoring it back to the pre firewall-router configuration for traffic destined to the transit test instances by adding these routes to the transit VPC ingress route table:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|10.0.0.0/24|Delegate
 Dallas 2|10.1.0.0/24|Delegate
@@ -403,8 +472,7 @@ Dallas 3|10.2.0.0/24|Delegate
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: all tests except:
-   - Expected fail: enterprise <-> spoke cross zone
+   **Expected:** All tests except enterprise <-> spoke cross zone
 
    ```sh
    pytest -v -m "curl and lz0 and (rz0 or rz1)"
@@ -423,11 +491,11 @@ Green: successful routing, Blue: initial connection, Red: failure on return.
 
 ### Asymmetric Routing Limitation
 {: #vpc-transit-asymmetric-routing-limitation}
-Ignoring the transit -> enterprise and transit -> spoke failures the remaining failures are cross zone failures enterprise <-> spoke.
+The remaining failures are cross zone failures enterprise <-> spoke.
 
 Example failure:
    ```sh
-   FAILED py/test_transit.py::test_curl[l-tvpc-enterprise-z0-s0 (52.118.186.209) 192.168.0.4 -> r-tvpc-spoke0-z1-s0 10.1.1.4] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.1.1.4 (52.116.203.217) r-spoke0-z1-s0] - assert False
    ```
 
 In the diagram the green connections are working. The blue line represents a TCP connection request from enterprise through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the address prefix in that zone.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
@@ -436,13 +504,13 @@ The red line represents the TCP connection response to 192.168.0.4.  The transit
 
 It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  ICMP does not require a stateful connection.  Connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 via ICMP is possible.  You can run the ping marked tests to verify via copy paste of the failed output  The **l-** is for left and **r-** is for right:
 
-Success:
+**Expect success:**
    ```sh
    pytest -v -m ping -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
    ```
    {: codeblock}
 
-Failure:
+**Expect failure:**
    ```sh
    pytest -v -m curl -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
    ```
@@ -464,8 +532,7 @@ It is possible to work around this cross zone limitation by using egress routing
    {: codeblock}
 
 1. Run the test suite.
-   - Expected pass: all
-   - Expected fail: none
+   **Expected:** All tests pasas.
 
    ```sh
    pytest -v -m "curl and lz0 and (rz0 or rz1)"
@@ -479,7 +546,7 @@ Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.k
 
 Spoke egress routes:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|192.168.0.0/16|10.0.0.196
 Dallas 2|192.168.0.0/16|10.1.0.196
@@ -492,10 +559,17 @@ Verify that more tests are passing.  If you manually added the ingress routes ea
    ```
    {: codeblock}
 
+## Routing Summary
+Basic routing is complete:
+- enterprise <-> transit
+- transit <-> spoke
+- enterprise <--(transit firewall-router)--> spoke
+
+Enterprise can access transit directly.  todo  
+
 ## More Firewall Protection
 {: #vpc-transit-firewall}
 {: step}
-If you only need routing capability and you added the optional routes the hub and spoke model is complete. Routing is possible from transit (hub) and spoke.  Enterprise to both transit and spoke is complete.  You can skip this step.
 
 Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router.  
 
@@ -503,9 +577,9 @@ Often an enterprise uses a transit VPC to monitor the traffic with the firewall-
 {: #vpc-transit-route-spoke-and-transit-to-firewall-router}
 Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routing table routes in the spoke egress routing table.
 
-Egress routes in spokes for the three zone configuration:
+Egress routes in spokes for the three zone configuration.  If provisioning was done in Dallas/us-south it will resemble the following:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|10.0.0.0/8|10.0.0.196
 Dallas 2|10.0.0.0/8|10.1.0.196
@@ -515,7 +589,7 @@ Similarly in the transit VPC route all enterprise and cloud traffic through the 
 
 Egress routes in transit for the three zone configuration:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|10.0.0.0/8|10.0.0.0.196
 Dallas 2|10.0.0.0/8|10.1.0.0.196
@@ -528,7 +602,7 @@ This is going to introduce another cross zone asymmetric route transit <--> spok
 
 Egress routes in the spokes for the three zone configuration:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|10.0.0.0/24|delegate
 Dallas 2|10.0.0.0/24|delegate
@@ -543,11 +617,11 @@ Dallas 3|10.2.0.0/24|delegate
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit-do-not-route-intra-zone-traffic-to-firewall-router}
-In this example Intra-VPC traffic will not pass through the firewall-router.  Additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
+In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly.  To accomplish this additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
 
 Egress routes for spoke0 for the three zone configuration:
 
-zone|destination|action
+Zone|Destination|Next hop
 --|--|--
 Dallas 1|10.0.1.0/24|delegate
 Dallas 1|10.1.1.0/24|delegate
@@ -601,7 +675,7 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 
 The green path is an example of the originator spoke0 10.0.1.4 routing to 10.1.2.4.  The matching egress route is:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 2|10.0.0.0/8|10.1.0.196
 
@@ -616,7 +690,7 @@ To fix this a few more specific routes need to be added to force the upper zones
 
 Routes for the three zone configuration.  Added to each of the spokes:
 
-zone|destination|next_hop
+Zone|Destination|Next hop
 --|--|--
 Dallas 2|10.0.0.0/16|10.0.0.196
 Dallas 3|10.0.0.0/16|10.0.0.196
@@ -633,39 +707,73 @@ Dallas 3|10.1.0.0/16|10.1.0.196
    - Expected fail: none
 
    ```sh
-   pytest -v -m "curl and lz0 and (rz0 or rz1)"
+   pytest -v -m curl
    ```
    {: codeblock}
 
 All tests are passing!
 
-## High Availability (HA) Firewall-Router
-{: #vpc-transit-ha-firewall-router}
+## High Performance High Availability (HA) Firewall-Router
+{: #vpc-transit-high-performance-ha-firewall-router}
 {: step}
-To prevent a firewall-router from becoming a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router.
+To prevent a firewall-router from becoming the performance bottleneck or a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router.
 
 ![vpc-transit-ha-firewall](images/vpc-transit-hidden/vpc-transit-ha-firewall.svg){: class="center"}
 
-This diagram shows a single zone with a network load balancer fronting two firewall-routers. To optionally see this constructed it is required to change the configuration and apply again.  Note that configuring the HA firewall-router it is not required for this tutorial.  You may read through this step but skip the actions.
+This diagram shows a single zone with a Network Load Balancer (NLB) fronting two firewall-routers. To see this constructed it is required to change the configuration and apply again.
 
-
-Optionally change config_tf/terraform.tfvars:
+1. Change these two vaiables in config_tf/terraform.tfvars:
    ```sh
-   firewall                     = true
-   firewall_lb                  = true
+   firewall_nlb                 = true
    number_of_firewalls_per_zone = 2
    ```
-   {: codeblock}
 
+   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke vpcs.  It is best to apply all of the layers to this point:
+
+
+1. Apply all the layers through the all_firewall_asym_tf layer:
    ```sh
-   vi config_tf/terraform.tfvars; # make the above changes
+   ./apply.sh : all_firewall_asym_tf
    ```
    {: codeblock}
 
-This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the network load balancer.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke vpcs.  It is best to start over:
+Observe the changes that were made:
 
+1. Open the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers).
+1. Select the load balancer in zone zero (Dallas 1/us-south-1) it has the suffix fw-z0-s3.
+1. Note the **Private IPs**.
 
-Optionally apply all the layers through the all_firewall_asym_tf layer:
+Compare the Private IPs with those in the transit VPC ingress route table:
+
+1. Open the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs).
+1. Select the transit VPC.
+1. Click on **Manage routing tables**.
+1. Click on the **tgw-ingress** routing table.  Notice the **Next hop** IP address matches one of the NLB **Privte IPs**
+
+Verify resiliancy:
+
+1. Run the spoke 0 zone 0 tests:
+   ```sh
+   pytest -k r-spoke0-z0-s0 -m curl
+   ```
+   {: codeblock}
+
+1. Open the [Virtual server instances for VPC](https://cloud.ibm.com/vpc-ext/compute/vs)
+1. Locate the **BASENAME-fw-z0-s3-0** three verticle dots menu on the right and select **Stop**
+1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance, at which point all tests will pass.
+1. Locate the **BASENAME-fw-z0-s3-1** three verticle dots menu on the right and select **Stop**
+1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance.
+1. Run the **pytest** again and all tests fail.
+2. Start one or both of the firewall-router instances and the tests will pass again.
+
+Remove the NLB firewall:
+1. Change these two vaiables in config_tf/terraform.tfvars:
+   ```sh
+   firewall_nlb                 = false
+   number_of_firewalls_per_zone = 1
+   ```
+
+1. Apply all the layers through the all_firewall_asym_tf layer:
    ```sh
    ./apply.sh : all_firewall_asym_tf
    ```
@@ -677,8 +785,7 @@ Optionally apply all the layers through the all_firewall_asym_tf layer:
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
 
-The {{site.data.keyword.dns_full_notm}} service is used to provide names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it is the preferred solution.
-
+The {{site.data.keyword.dns_full_notm}} service is used to provide names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it will be simpler to configure.
 
 ### DNS Resources
 {: #vpc-transit-dns-resources}
@@ -690,7 +797,7 @@ Apply the dns_tf layer:
    ```
    {: codeblock}
 
-Open the [Resources](https://{DomainName}/resources) in the {{site.data.keyword.cloud_notm}} console.  Open the **Networking** section and notice the **DNS Services**.  Open the **x-spoke0** instance.  Click the **x-spoke0.com** DNS zone.  Notice the A records associated with the test instances that are in the spoke instance.  Optional explore the other DNS instances and find similarly named DNS zones and A records for the other test instances.
+Open the [Resources](https://{DomainName}/resources) in the {{site.data.keyword.cloud_notm}} console.  Open the **Networking** section and notice the **DNS Services**.  Open the **x-spoke0** instance.  Click the **x-spoke0.com** DNS zone.  Notice the A records associated with the test instances that are in the spoke instance.  Optionally explore the other DNS instances and find similarly named DNS zones and A records for the other test instances.
 
 Click on the **Custom resolver** tab on the left and notice the forwarding rules.
 
@@ -700,12 +807,12 @@ Separate DNS instances learn each other's DNS names with forwarding rules.  In t
 
 The transit DNS instance can resolve x-transit.com and has forwarding rules to the spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
 
-You can verify these forwarding rules in the {{site.data.keyword.cloud_notm}} console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.
+You can verify these forwarding rules in the {{site.data.keyword.cloud_notm}} console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.  All DNS zones are forwarded to the DNS resolvers in the transit VPC.
 
 ### DNS Testing
 {: #vpc-transit-dns-testing}
 
-There are now a set of **curl DNS** tests that have been made available in type pytest script.  These tests will curl using the DNS name of the remote.
+There are now a set of **curl DNS** tests that are available in the pytest script.  These tests will curl using the DNS name of the remote.
 
 Test:
    ```sh
@@ -718,61 +825,61 @@ Test:
 {: step}
 
 ![vpc-transit-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
-
 {: style="text-align: center;"}
+
 VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://{DomainName}/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
 - [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
 - [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
 - [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes).
 
-Create the VPEs for the transit and the spokes, by applying the vpe layers:
+1. Create the VPEs for the transit and the spokes, by applying the vpe layers:
    ```sh
    ./apply.sh vpe_transit_tf vpe_spokes_tf
    ```
    {: codeblock}
 
-There are now a set of **vpe**  and **vpedns**tests that have been made available in type pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access redis remotely.
+   There are now a set of **vpe**  and **vpedns**tests that are available in type pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access redis remotely.
 
-Test vpe and vpedns
+1. Test vpe and vpedns
    ```sh
    pytest -v -m 'vpe or vpedns'
    ```
    {: codeblock}
 
-Notice the failing vpedns tests like this one:
+   Notice the failing vpedns tests like this one:
 
    ```sh
    FAILED py/test_transit.py::test_vpe_dns_resolution[redis tvpc-spoke0-z0-s0 (169.48.153.106)) 10.0.1.4 -> tvpc-transit (['10.0.0.128/26', '10.1.0.128/26']) 5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] - AssertionErro...
    ```
 
-These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.0.0.128/26 or 10.1.0.128/26.  Looking at the stack trace notice it is resolving to an address like 166.9.14.12 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
+   These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.0.0.128/26 or 10.1.0.128/26.  Looking at the stack trace notice it is resolving to an address like 166.9.14.12 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
 
-To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
-- For enterprise `appdomain.com` will forward to the transit.
-- For transit the fully qualified DNS name of the REDIS instance will be forwarded to the spoke instance that owns the REDIS instance.
-- For spoke_from -> spoke_to access to REDIS the spoke_from needs the DNS name for the REDIS instance.
+   To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
+   - For enterprise `appdomain.com` will forward to the transit.
+   - For transit the fully qualified DNS name of the REDIS instance will be forwarded to the spoke instance that owns the REDIS instance.
+   - For spoke_from -> spoke_to access to REDIS the spoke_from needs the DNS name for the REDIS instance.
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
+   ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram uses **transit-.databases.appdomain.cloud** to identify the database in the transit instead of the fully qualified name like **5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
+   The diagram uses **transit-.databases.appdomain.cloud** to identify the database in the transit instead of the fully qualified name like **5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
 
-Apply the vpe_dns_forwarding_rules_tf layer:
+1. Apply the vpe_dns_forwarding_rules_tf layer:
    ```sh
    ./apply.sh vpe_dns_forwarding_rules_tf
    ```
    {: codeblock}
 
-Verify that all VPEs can be accessed from all test instances.
+1. Verify that all VPEs can be accessed from all test instances.
    ```sh
    pytest -v -m 'vpe or vpedns'
    ```
    {: codeblock}
 
-It can take a few tries for the DNS names to be resolved accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
+1. It can take a few tries for the DNS names to be resolved accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
 
    ```sh
-   pytest
+   pytest -v
    ```
    {: codeblock}
 
