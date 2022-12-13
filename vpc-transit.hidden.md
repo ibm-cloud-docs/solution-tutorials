@@ -437,9 +437,19 @@ To observe this:
 
 Also notice that the Address prefix for that transit VPC itself:
 - 10.0.0.0/16 Dallas 1.
-- and 10.1.0.0/16 Dallas 2.  The transit VPC will only use a subset of each zone 10.0.0.0/24 Dallas 1 and 10.1.0.0/24 Dallas 2.  The address prefixes for the transit is expanded to include all of the spokes to allow the routes to flow to the enterprise.
+- 10.1.0.0/16 Dallas 2.
+- 10.2.0.0/16 Dallas 3.
 
-With these additional address prefixes the spoke VPCs learn that traffic spoke -> 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24 should pass through the connected transit gateway.  Similarly the enterprise will learn that traffic destined to 10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16 should pass through its connected transit gateway.
+The transit VPC will only use a subset of each zone:
+- 10.0.0.0/24 Dallas 1.
+- 10.1.0.0/24 Dallas 2.
+- 10.2.0.0/24 Dallas 3.
+ 
+The address prefixes for the transit itself is expanded to include all of the spokes to allow the routes to flow to the enterprise.
+
+With these additional address prefixes:
+- Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through transit gateway tgw-link. 
+- Enterprise will learn that traffic enterprise -> (10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16) should pass through transit gateway tgw-spoke.
 
 ## Stateful Routing and Direct Server Return
 {: #vpc-transit-stateful-routing}
@@ -465,12 +475,15 @@ Dallas 3|10.2.0.0/24|Delegate
 
 1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.
 
+   Make the changes to the routing table:
+
 1. Apply the transit_ingress layer:
    ```sh
    ./apply.sh transit_ingress_tf
    ```
    {: codeblock}
 
+1. Refresh the browser display of the routing table to observe the routes.
 1. Run the test suite.
    **Expected:** All tests except enterprise <-> spoke cross zone
 
@@ -565,7 +578,7 @@ Basic routing is complete:
 - transit <-> spoke
 - enterprise <--(transit firewall-router)--> spoke
 
-Enterprise can access transit directly.  todo  
+Enterprise can access transit directly.  In
 
 ## More Firewall Protection
 {: #vpc-transit-firewall}
@@ -758,7 +771,7 @@ Verify resiliancy:
    ```
    {: codeblock}
 
-1. Open the [Virtual server instances for VPC](https://cloud.ibm.com/vpc-ext/compute/vs)
+1. Open the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs)
 1. Locate the **BASENAME-fw-z0-s3-0** three verticle dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance, at which point all tests will pass.
 1. Locate the **BASENAME-fw-z0-s3-1** three verticle dots menu on the right and select **Stop**
