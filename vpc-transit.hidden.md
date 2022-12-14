@@ -42,7 +42,7 @@ A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}} 
 - The hub can be the repository for shared micro services used by spokes.
 - The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can be a central point of traffic routing between on premises and the cloud.
-- Enterprise to cloud traffic can be routed, monitored, and logged through a Virtual Network Function (VNF) appliance in the hub.
+- Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
 - The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
 
@@ -335,7 +335,7 @@ A change to the network configuration can take a couple of test runs for the und
 ![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The Transit Gateway between the transit vpc and the spoke vpcs has been added to the diagram.
+The Transit Gateway between the transit VPC and the spoke VPCs has been added to the diagram.
 
 1. Apply the layer:
 
@@ -383,7 +383,7 @@ The {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}} has
 {: #vpc-transit-router}
 {: step}
 
-The incentive for a transit vpc for enterprise <-> cloud traffic is typicall to route, inspect, monitor and log network traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+The incentive for a transit VPC for enterprise <-> cloud traffic is typicall to route, inspect, monitor and log network traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
@@ -486,7 +486,7 @@ Dallas 1|10.0.0.0/24|Delegate
 Dallas 2|10.1.0.0/24|Delegate
 Dallas 3|10.2.0.0/24|Delegate
 
-1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** vpc from the drop down and then select the **tgw-ingress** routing table.
+1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
 
    Make the changes to the routing table:
 
@@ -666,7 +666,7 @@ Similar routes are added to the transit and other spokes.
 
 ### Firewall Subnets
 {: #vpc-transit-firewall-subnets}
-What about the firewall-router itself?  This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit vpc that delegates routing to the default for all destinations.  It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets.  Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
+What about the firewall-router itself?  This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations.  It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets.  Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
 
 ### Apply and Test More Firewall
 {: #vpc-transit-apply-and-test-more-firewall}
@@ -753,7 +753,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
    number_of_firewalls_per_zone = 2
    ```
 
-   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke vpcs.  It is best to apply all of the layers to this point:
+   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke VPCs.  It is best to apply all of the layers to this point:
 
 
 1. Apply all the layers through the all_firewall_asym_tf layer:
@@ -908,6 +908,8 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    ```
    {: codeblock}
 
+It is not currently possible to access a spoke VPE through a transit VPC cross zone.  The VPE return traffic does use spoke egress route table.  The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE in the same zone.  Configuring this is beyond the scope of this tutorial.
+
 ## Production Notes
 {: #vpc-transit-production-notes}
 
@@ -918,13 +920,16 @@ Some obvious changes to make:
 - Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered.
 - Network Access Control Lists for each subnet should be carefully considered.
 
-DNS
-The appliances are used as both DNS resolvers used by remote DNS servers and DNS forwarders.
+Floating IPs were attached to all test instances to support connectivity tests via ssh.  This is not required or desirable in production.
+
+[Create context-based restrictions](https://cloud.ibm.com/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
+
+Place each team into their own account.  Organize with [IBM Cloud enterprise](https://cloud.ibm.com/docs/account?topic=account-what-is-enterprise)
 
 ## Remove resources
 {: #vpc-transit-remove-resources}
 
-You can cd to the team directories in order, and execute `terraform destroy`.  Or use the `./apply.sh` command:
+Execute `terraform destroy` in all directories in reverse order using the `./apply.sh` command:
 
    ```sh
    ./apply.sh -d : :
