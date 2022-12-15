@@ -169,7 +169,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
    ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: caption="A context restriction rendered a deny" caption-side="bottom"}
 
 
-   The rule has been enforced and, based on how you tried to access the registry, the access has been denied.
+   The rule has been enforced and, based on how you tried to access the registry, the access has been denied. The reason is that rule allows access from a specific VPC only. The {{site.data.keyword.cloud-shell_short}} environment and its IP address, as documented in the logs in the **requestData->environment** fields, differ. Therefore, the request is denied.
 
 Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](https://{DomainName}/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
 {: tip}
@@ -180,9 +180,9 @@ In order to prepare for the deployment of CBR objects with Terraform in a sectio
 {: #cbr-security-strategy}
 {: step}
 
-To set up the right set of rules for context-based restrictions (CBRs), you should have defined the access strategy for your cloud resources. All resources should be protected by identity and access management (IAM). It means, that authentication and authorization checks should be performed before a user or service ID accesses a resource. CBRs add to the protection by cutting off network access based and origin criteria and other rules, but they do not replace proper IAM configuration. Additionally, many services support limiting network traffic to private endpoints, thereby already reducing access options.
+To set up the right set of rules for context-based restrictions (CBRs), you should have defined the access strategy for your cloud resources. All resources should be protected by identity and access management (IAM). It means, that authentication and authorization checks should be performed before a user or service ID accesses a resource. CBRs add to the protection by cutting off network access based on origin criteria and other rules, but they do not replace proper IAM configuration. Additionally, many services support limiting network traffic to private endpoints, thereby already reducing access options.
 
-You might find that some rules impact the comfort of administrating resources, e.g., through the browser console. Moreover, you need to make sure that you don't lock you out from accessing resources and related management dashboards and APIs. Thus, you have to account for bastion hosts, corporate networks, gateways and maybe even {{site.data.keyword.cloud-shell_short}}. In addition, some services support a fine-grained distinction of data plane and control place access for CBR configuration, e.g., [{{site.data.keyword.containershort_notm}} cluster and management APIs](/docs/containers?topic=containers-cbr#protect-api-types-cbr).
+You might find that some rules impact the comfort of administrating resources, e.g., through the browser console. Moreover, you need to make sure that you don't deny yourself access to resources, management dashboards and APIs. Thus, you have to account for bastion hosts, corporate networks, gateways and maybe even {{site.data.keyword.cloud-shell_short}}. In addition, some services support a fine-grained distinction of data plane and control place access for CBR configuration, e.g., [{{site.data.keyword.containershort_notm}} cluster and management APIs](/docs/containers?topic=containers-cbr#protect-api-types-cbr).
 
 In summary, these questions should be asked:
 * Are all resources protected by IAM and similar?
@@ -194,10 +194,10 @@ In summary, these questions should be asked:
 Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
 For this tutorial, we are going to define the following network zones:
-* a zone for each for all deployed services where supported as service reference
+* a zone for each of the deployed services which are supported as service reference for originating traffic
 * a zone for each for the Kubernetes cluster
 * for an IP range with the addresses of a home network (corporate or bastion) to serve as **homezone**
-* a zone for each for the platform services where supported
+* a zone for each of the CBR-enabled platform services
 
 Thereafter, we are going to define context rules as follows:
 * for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr)
@@ -289,7 +289,7 @@ resource "ibm_cbr_rule" "cbr_rule_cos_k8s" {
 
 With the understanding of the CBR-related Terraform resources, it is time to deploy them on top of the existing resources to create zones and rules. 
 
-1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces overview](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.   
+1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.   
 2. Click on **Settings**. In the list of **Variables** and locate the row with **deploy_cbr**. Its value should be **false**, the default.
 3. In the dot menu for the variable select **Edit**. Then, in the pop-up form, uncheck **Use default** to be able to change the value. Type **true** in the field for **Value of the variable called: deploy_cbr**. Thereafter, finish the update by clicking **Save**.
 4. Once the settings page has updated, continue with **Generate plan** in the top. The plan output should indicate that CBR zones and rules would be created.
