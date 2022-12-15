@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-13"
-lasttested: "2022-12-13"
+lastupdated: "2022-12-15"
+lasttested: "2022-12-15"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -195,7 +195,7 @@ Use the report mode to be aware of activities matching the context-based restric
 
 For this tutorial, we are going to define the following network zones:
 * a zone for each for all deployed services where supported as service reference
-* a zone for each for the VPC and the Kubernetes cluster
+* a zone for each for the Kubernetes cluster
 * for an IP range with the addresses of a home network (corporate or bastion) to serve as **homezone**
 * a zone for each for the platform services where supported
 
@@ -205,7 +205,7 @@ Thereafter, we are going to define context rules as follows:
 * for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr)
 * for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr)
 
-All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command.
+All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command. Note that the rules are not meant for production use, but as a starter to investigate usage and traffic in report-only mode.
 
 The documentation has a [list of resources which are supported as service references](/docs/account?topic=account-context-restrictions-whatis#service-attribute). You can also retrieve the list using the [CLI command **service-ref-targets**](/docs/cli?topic=cli-cbr-plugin#cbr-cli-service-ref-targets-command) or the related API function [List available service reference targets](/apidocs/context-based-restrictions#list-available-serviceref-targets).
 {: tip}
@@ -248,7 +248,7 @@ Similar to the browser UI, it has the following elements:
 * Resources it applies to, identified by attributes
 
 ```hcl
-resource "ibm_cbr_rule" "cbr_rule_cos_vpc" {
+resource "ibm_cbr_rule" "cbr_rule_cos_k8s" {
   contexts {
     attributes {
       name  = "networkZoneId"
@@ -305,7 +305,7 @@ By default, the enforcement mode is configured to **report-only**. You can chang
 
 With the set of context-based restrictions deployed, it is time again to verify and test them. To verify the CBR objects, go to the [context-based restrictions overview](/context-based-restrictions). Then, inspect the new [zones](/context-based-restrictions/zones) and [rules](/context-based-restrictions/rules).
 
-Tests should be performed on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}} and validated by monitoring the logs as performed earlier. Because the zones and rules include the access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr-security-in-action).
+Tests should be performed on {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.cos_short}} and {{site.data.keyword.keymanagementserviceshort}} and validated by monitoring the logs as performed earlier. Because the zones and rules include an access restriction on the {{site.data.keyword.registryshort_notm}}, you can repeat the tests performed in section [Test the rule and its enforcement modes](#cbr-security-in-action).
 
 To test the new rule for access to {{site.data.keyword.cos_short}}, follow these steps:
 1. In a browser tab, go to the [list of {{site.data.keyword.cos_short}} instances](/objectstorage). Click on the service name for the tutorial, e.g., **secure-file-storage-cos**.
