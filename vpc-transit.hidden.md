@@ -922,9 +922,9 @@ Some obvious changes to make:
 
 Floating IPs were attached to all test instances to support connectivity tests via ssh.  This is not required or desirable in production.
 
-[Create context-based restrictions](https://cloud.ibm.com/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
+[Create context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
 
-Place each team into their own account.  Organize with [IBM Cloud enterprise](https://cloud.ibm.com/docs/account?topic=account-what-is-enterprise)
+Place each team into their own account.  Organize with [IBM Cloud enterprise](/docs/account?topic=account-what-is-enterprise)
 
 ## Remove resources
 {: #vpc-transit-remove-resources}
