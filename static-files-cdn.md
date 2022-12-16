@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2021-11-24"
+lastupdated: "2022-12-16"
+lasttested: "2022-12-16"
 
 content-type: tutorial
 services: CDN, cloud-object-storage
