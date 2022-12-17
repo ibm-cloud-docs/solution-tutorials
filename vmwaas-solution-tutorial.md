@@ -4,11 +4,11 @@
 <br>
 <p>This guide is broken into five steps to make implementation easier. These steps are:</p>
 
-1.	Log into the instance and deploy the initial network
-2.	Create a NAT rule to allow virtual machines to access the Internet
-3.	Create an IP set
-4.	Create a firewall rule to allow the initial network to access resources outside the instance
-5.	Create a virtual machine and validate the deployment
+1.	[Log into the instance and deploy the initial network](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#1log-into-the-instance-and-deploy-the-initial-network)
+2.	[Create a NAT rule to allow virtual machines to access the Internet](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#2create-a-nat-rule-to-allow-virtual-machines-to-access-the-internet)
+3.	[Create an IP set](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#3create-an-ip-set) 
+4.	[Create a firewall rule to allow the initial network to access resources outside the instance](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#4create-a-firewall-rule) 
+5.	[Create a virtual machine and validate the deployment](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#5create-a-virtual-machine-and-validate-deployment) 
 <br>
 <p>This guide should take around ten minutes to complete and assumes VMware as a Service – single tenant has already been provisioned.</p>
 
@@ -141,3 +141,5 @@ o	Using the web console, log into the virtual machine using root as the user ID 
 This completes this guide. To remove the resources provisioned simply reverse the steps provided, choosing delete at each step. 
 
 <!-- comment for copy paste caracters like: #  -->
+
+search engine is [Duck Duck Go](https://duckduckgo.com "The best search engine for privacy")
