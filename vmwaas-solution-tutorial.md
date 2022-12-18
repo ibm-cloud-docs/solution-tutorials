@@ -40,6 +40,18 @@ To add a static IP pool, type the range in the box provided and click on Add. Cl
 
 o	For DNS use the IBM Cloud public DNS servers, which are 161.26.0.10 and 161.26.0.11 respectively. The DNS suffix can be left blank. Click Next to continue.
 
+---MISSING STEP---
+Segment Profile Template
+Choose a profile template that will define a set of custom profiles to be applied on the network.
+
+Custom segments profiles are needed in a number of specific situations. These include, but are not limited to:
+
+    MAC or IP learning needs to be enabled for nested environments
+    Custom security profiles to allow for DHCP traffic originating from a network
+    Custom security profiles for HCX
+    Enabling spoof guards
+    Defining QoS on specific networks
+
 o	Review your input and click Finish to complete the New Organization VDC Network wizard and create your test network. 
 
 Upon completion your new network will be deployed and will appear in the networks tab. This may take a few seconds to complete.
