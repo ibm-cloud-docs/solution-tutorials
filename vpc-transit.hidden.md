@@ -218,7 +218,15 @@ This tutorial will add communication paths a layer at a time.  A pytest test sui
 
 The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform different types of connectivity tests.  The ssh uses the default ssh environment to log into the test instances.  Navigate to the test [instances](https:///{DomainName}/vpc-ext/compute/vs) and notice the **Floating IP** value.  If there are unexpected problems verify it is possible to `ssh root@FloatingIP` from your workstation.
 
-Validation was done with python 3.6.8.  There are lots of ways to configure a python virtual environment.  The following steps are one example:
+Validation was done with python 3.6.8.  You can use docker, the .ssh directory is needed for your `id_rsa` private file allowing the python tests to ssh to the instances:
+
+   ```sh
+   docker run -it --rm -v ~/.ssh:/root/.ssh -v `pwd`:/usr/src/app  -w /usr/src/app python:3.11 bash
+   ```
+   {: codeblock}
+
+
+Or use your desktop version. There are lots of ways to configure a python virtual environment.  The following steps are one example:
 
 1. Verify python version 3.6.8 or later.  Your python may be **python3**.  After activated use python.
 
@@ -260,6 +268,9 @@ Validation was done with python 3.6.8.  There are lots of ways to configure a py
    pip install --upgrade pip
    ```
    {: codeblock}
+
+
+Once python is ready:
 
 1. Install pytest and the rest of the requirements.
    ```
@@ -922,9 +933,9 @@ Some obvious changes to make:
 
 Floating IPs were attached to all test instances to support connectivity tests via ssh.  This is not required or desirable in production.
 
-[Create context-based restrictions](https://cloud.ibm.com/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
+[Create context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
 
-Place each team into their own account.  Organize with [IBM Cloud enterprise](https://cloud.ibm.com/docs/account?topic=account-what-is-enterprise)
+Place each team into their own account.  Organize with [IBM Cloud enterprise](/docs/account?topic=account-what-is-enterprise)
 
 ## Remove resources
 {: #vpc-transit-remove-resources}

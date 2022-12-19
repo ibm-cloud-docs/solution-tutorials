@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2021-11-24"
+lastupdated: "2022-12-16"
+lasttested: "2022-12-16"
 
 content-type: tutorial
 services: CDN, cloud-object-storage
@@ -195,7 +195,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
       - Choose SSL certificate **Wildcard** - **this is required**.
       - CDN Content will be available in the generated CNAME.
    
-2. On the next dialog, set the **Hostname** to a DNS subdomain like `static.example.com` (option 1) or simply a unique name (option 2).
+2. On the next dialog, set the **Hostname** to a DNS subdomain like `static.example.com` (option a) or simply a unique name (option b).
 4. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
 5. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
 6. Select **Object Storage** to configure the CDN for COS.
@@ -203,10 +203,10 @@ In this section, you will create a CDN service. The CDN service distributes cont
 8. Set **Bucket name** to the bucket name from above.
 9. Enable HTTP (80).
 10. Enable HTTPS (443) for https access.
-    - If using a subdomain that you control (option 1):
+    - If using a subdomain that you control (option a):
       - HTTPS is optional.
       - If HTTPS is selected it is required to select **DV SAN Certificate** for the **SSL certificate**.
-    - If not using a a subdomain (option 2):
+    - If not using a a subdomain (option b):
       - Select HTTPS.  It is **required**.
       - Select **Wildcard Certificate** for the **SSL certificate**. 
 11. Accept the **Master Service Agreement** and click **Create**.
