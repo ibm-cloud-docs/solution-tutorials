@@ -4,18 +4,18 @@
 <br>
 <p>This guide is broken into five steps to make implementation easier. These steps are:</p>
 
-1.	[Log into the instance and deploy the initial network](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#1log-into-the-instance-and-deploy-the-initial-network)
-2.	[Create a NAT rule to allow virtual machines to access the Internet](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#2create-a-nat-rule-to-allow-virtual-machines-to-access-the-internet)
-3.	[Create an IP set](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#3create-an-ip-set) 
-4.	[Create a firewall rule to allow the initial network to access resources outside the instance](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#4create-a-firewall-rule) 
-5.	[Create a virtual machine and validate the deployment](https://github.ibm.com/VMWSolutions/solution-tutorials/blob/vmwaas-tutorial/vmwaas-solution-tutorial.md#5create-a-virtual-machine-and-validate-deployment) 
+1.	[Log into the instance and deploy the initial network](#vmwaas-tag-01loginandnet)
+2.	[Create a NAT rule to allow virtual machines to access the Internet](#vmwaas-tag-02createnat)
+3.	[Create an IP set](#vmwaas-tag-03createip) 
+4.	[Create a firewall rule to allow the initial network to access resources outside the instance](#vmwaas-tag-04fwrules) 
+5.	[Create a virtual machine and validate the deployment](#vmwaas-tag-05createvm) 
 <br>
 <p>This guide should take around ten minutes to complete and assumes VMware as a Service – single tenant has already been provisioned.</p>
 
 <br>
 <br>
 
-### 1.	Log into the instance and deploy the initial network
+### 1.	Log into the instance and deploy the initial network {#vmwaas-tag-01loginandnet}
 <br>
 <p>The first step is to log into your VMware as a Service – single tenant instance and deploy the initial network that will be used for testing.</p> 
 
@@ -57,7 +57,7 @@ o	Review your input and click Finish to complete the New Organization VDC Networ
 Upon completion your new network will be deployed and will appear in the networks tab. This may take a few seconds to complete.
 
 
-### 2.	Create a NAT rule to allow virtual machines to access the Internet
+### 2.	Create a NAT rule to allow virtual machines to access the Internet {#vmwaas-tag-02createnat}
 
 The next step is to create a NAT rule to allow your virtual machines to access the public Internet.  
 
@@ -80,7 +80,7 @@ Click Save when complete. The new NAT rule will be created.
 
 Stay on this screen and proceed to the next step.
 
-### 3.	Create an IP set
+### 3.	Create an IP set {#vmwaas-tag-03createip}
 
 The next step is to create an IP set. This IP set is used as part of configuration of the firewall rules and is required. Unlike other firewalls IBM Cloud for VMware Solutions – single tenant uses static groups and IP sets to configure firewalls. 
 
@@ -93,7 +93,7 @@ o	In the new IP set window, select a name and the IP range for this IP set. In t
 
 Stay on this screen and proceed to the next step.
 
-### 4.	Create a firewall rule.
+### 4.	Create a firewall rule. {#vmwaas-tag-04fwrules}
 
 The next step is to create a firewall rule. By default, the VMware as a Service – single tenant instance has been provisioned with a default firewall rule that will drop all traffic to ensure security. An additional rule must be put in place to allow the traffic from the previously created network to access the Internet.
 
@@ -113,7 +113,7 @@ Review the inputs and click on Save when complete. The new firewall rule will be
 
 Stay on this screen and proceed to the next step.
 
-### 5.	Create a virtual machine and validate deployment
+### 5.	Create a virtual machine and validate deployment {#vmwaas-tag-05createvm}
 
 The final step is to create a virtual machine that will be used to test and validate the deployment. 
 
@@ -154,4 +154,4 @@ This completes this guide. To remove the resources provisioned simply reverse th
 
 <!-- comment for copy paste caracters like: #  -->
 
-search engine is [Duck Duck Go](https://duckduckgo.com "The best search engine for privacy")
+
