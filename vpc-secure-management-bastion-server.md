@@ -95,10 +95,10 @@ Let's create a security group and configure inbound rules to your bastion VSI (v
 3. Select a resource group same as your VPC.
 3. Now, create the following inbound rules by clicking **Add** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
 
-   | Protocol | Source type | Source | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Any            | |Port range: 22-22  |
-   |ICMP         |Any           | |Type: **8**,Code: **Leave empty**|
+   | Protocol | Port / Value                      | Source type |
+   |------------|---------------------------------|-------------|
+   |TCP         |Port range: 22-22                |Any          |
+   |ICMP        |Type: **8**,Code: **Leave empty**|Any          |
    
    {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
@@ -153,20 +153,20 @@ With access to the bastion working, continue and create the security group for m
 2. Enter **vpc-secure-maintenance-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 4. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
-   | Protocol | Source type | Source | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |
+   | Protocol | Port / Value  | Source type   | Source              |
+   |------------|-------------|---------------|---------------------|
+   |TCP         |Ports 22-22  |Security group |vpc-secure-bastion-sg|
    
    {: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 5. Next, add the **outbound** rule shown in the table below. It allows SSH access from the bastion host.
 
-   | Protocol | Destination type | Destination | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
-   |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
-   |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
-   |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |
+   | Protocol   | Port / Value|Destination type |
+   |------------|-------------|-----------------|
+   |TCP         |Ports 80-80  |Any              |
+   |TCP         |Ports 443-443|Any              |
+   |TCP         |Ports 53-53  |Any              |
+   |UDP         |Ports 53-53  |Any              |
    
    {: caption="Maintenance: Outbound rules" caption-side="bottom"}  
 
@@ -243,8 +243,8 @@ For administrative work on the servers, you have to associate the specific virtu
 Let's enable the maintenance security group for the server.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.
-2. Click **Attached interfaces**, then **Edit interfaces**.
-3. Expand the virtual server instances and check the selection in the **Interfaces** column.
+2. Click on the**Attached resources** tab, then **Edit interfaces**.
+3. Expand the virtual server instances and check the selection in the **Interfaces** column for **vpc-secure-private-vsi**.
 4. Click **Save** for the changes to be applied.
 
 ### Connect to the instance
@@ -288,7 +288,7 @@ Once you're done installing software or performing maintenance, you should remov
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.
 2. Click **Attached interfaces**, then **Edit interfaces**.
-3. Expand the virtual server instances and uncheck the selection in the **Interfaces** column.
+3. Expand the virtual server instances and uncheck the selection in the **Interfaces** column for **vpc-secure-private-vsi**.
 4. Click **Save** for the changes to be applied.
 
 ## Remove resources
