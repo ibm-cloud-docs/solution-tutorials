@@ -206,7 +206,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
     - If using a subdomain that you control (option a):
       - HTTPS is optional.
       - If HTTPS is selected it is required to select **DV SAN Certificate** for the **SSL certificate**.
-    - If not using a a subdomain (option b):
+    - If not using a subdomain (option b):
       - Select HTTPS.  It is **required**.
       - Select **Wildcard Certificate** for the **SSL certificate**. 
 11. Accept the **Master Service Agreement** and click **Create**.
