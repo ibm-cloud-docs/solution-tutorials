@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-18"
-lasttested: "2022-04-04"
+lastupdated: "2022-12-20"
+lasttested: "2022-12-20"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -188,5 +188,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #serverless-webapp-8}
 
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
+* [Serverless: Code patterns](https://developer.ibm.com/depmodels/serverless/patterns/)
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started)
