@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-09-09"
-lasttested: "2021-12-06"
+  years: 2022
+lastupdated: "2022-12-19"
+lasttested: "2022-12-19"
 
 content-type: tutorial
 services: vpc
@@ -37,10 +37,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
+This tutorial walks you through the deployment of a bastion host to securely access remote instances within a Virtual Private Cloud (VPC). A bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server, allowing secure connection to instances provisioned without a public IP address.
 {: shortdesc}
 
-To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
+To reduce exposure of servers within the VPC, you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ## Objectives
 {: #vpc-secure-management-bastion-server-objectives}
@@ -52,7 +52,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 ![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: class="center"}
 {: style="text-align: center;"}
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion host using the private SSH key.
+1. After setting up the required infrastructure (subnets, security groups with rules, virtual server instances) on the cloud, the admin (DevOps) connects (SSH) to the bastion host using the private SSH key.
 2. The admin assigns a maintenance security group with proper outbound rules.
 3. The admin connects (SSH) securely to the instance's private IP address via the bastion host to install or update any required software eg., a web server
 4. The internet user makes an HTTP/HTTPS request to the web server.
@@ -62,7 +62,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
-- The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
+- The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a VPC in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
 {: #vpc-secure-management-bastion-server-create-bastion-host}
@@ -88,17 +88,17 @@ In this section, you will create and configure a bastion host along with a secur
 ### Create and configure bastion security group
 {: #vpc-secure-management-bastion-server-create-configure-security-group }
 
-Let's create a security group and configure inbound rules to your bastion VSI.
+Let's create a security group and configure inbound rules to your bastion VSI (virtual server instance).
 
 1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
 2. Enter **vpc-secure-bastion-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 3. Now, create the following inbound rules by clicking **Add** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
 
-   | Protocol | Source type | Source | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Any            |0.0.0.0/0 |Port range: 22-22  |
-   |ICMP         |Any           |0.0.0.0/0 |Type: **8**,Code: **Leave empty**|
+   | Protocol | Port / Value                      | Source type |
+   |------------|---------------------------------|-------------|
+   |TCP         |Port range: 22-22                |Any          |
+   |ICMP        |Type: **8**,Code: **Leave empty**|Any          |
    
    {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
@@ -114,12 +114,11 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
-2. Click on **Attached resources** and under **Attached instances**, click **Create** to provision a New virtual server called **vpc-secure-bastion-vsi** under the same resource group as your subnet.
-3. Select a **Location** and make sure to later use the same location again.
-4. Select **Public** type of virtual server.
-5. Select **Ubuntu Linux** as your Operating System. You can pick any version of the image.
-6. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile by clicking **View all profiles**.
-7. To create a new **SSH key**, click **New key**
+2. Click on **Attached resources** and under **Attached instances**, click **Create** to provision a new virtual server called **vpc-secure-bastion-vsi** under the same resource group as your subnet.
+3. Select **Architecture** as **Intel** and **Public** as **Hosting type**. Pick a **Location** and make sure to later use the same location again.
+4. Select **Ubuntu Linux** as your Operating System. You can pick any version of the image.
+5. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile by clicking **View all profiles**.
+6. Create a new **SSH key**, click **New key**
    - Enter **vpc-ssh-key** as key name.
    - Select the same resource group as your VSI.
    - Leave the **Region** as is.
@@ -154,20 +153,20 @@ With access to the bastion working, continue and create the security group for m
 2. Enter **vpc-secure-maintenance-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 4. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
-   | Protocol | Source type | Source | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Security group |vpc-secure-bastion-sg|Ports 22-22  |
+   | Protocol | Port / Value  | Source type   | Source              |
+   |------------|-------------|---------------|---------------------|
+   |TCP         |Ports 22-22  |Security group |vpc-secure-bastion-sg|
    
    {: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 5. Next, add the **outbound** rule shown in the table below. It allows SSH access from the bastion host.
 
-   | Protocol | Destination type | Destination | Port / Value   |
-   |------------|---------------|----------|-----------  |
-   |TCP         |Any            |0.0.0.0/0 |Ports 80-80  |
-   |TCP         |Any            |0.0.0.0/0 |Ports 443-443|
-   |TCP         |Any            |0.0.0.0/0 |Ports 53-53  |
-   |UDP         |Any            |0.0.0.0/0 |Ports 53-53  |
+   | Protocol   | Port / Value|Destination type |
+   |------------|-------------|-----------------|
+   |TCP         |Ports 80-80  |Any              |
+   |TCP         |Ports 443-443|Any              |
+   |TCP         |Ports 53-53  |Any              |
+   |UDP         |Ports 53-53  |Any              |
    
    {: caption="Maintenance: Outbound rules" caption-side="bottom"}  
 
@@ -244,8 +243,8 @@ For administrative work on the servers, you have to associate the specific virtu
 Let's enable the maintenance security group for the server.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.
-2. Click **Attached interfaces**, then **Edit interfaces**.
-3. Expand the virtual server instances and check the selection in the **Interfaces** column.
+2. Click on the**Attached resources** tab, then **Edit interfaces**.
+3. Expand the virtual server instances and check the selection in the **Interfaces** column for **vpc-secure-private-vsi**.
 4. Click **Save** for the changes to be applied.
 
 ### Connect to the instance
@@ -289,7 +288,7 @@ Once you're done installing software or performing maintenance, you should remov
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.
 2. Click **Attached interfaces**, then **Edit interfaces**.
-3. Expand the virtual server instances and uncheck the selection in the **Interfaces** column.
+3. Expand the virtual server instances and uncheck the selection in the **Interfaces** column for **vpc-secure-private-vsi**.
 4. Click **Save** for the changes to be applied.
 
 ## Remove resources

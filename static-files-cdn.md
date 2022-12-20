@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2021-11-24"
+lastupdated: "2022-12-16"
+lasttested: "2022-12-16"
 
 content-type: tutorial
 services: CDN, cloud-object-storage
@@ -102,7 +102,7 @@ To start, retrieve the application code:
 4. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
 
 Next, create a storage bucket.
-1. In the service dashboard, click **Buckets**, then **Create bucket** followed by choosing **Custom bucket**.
+1. In the service dashboard, click **Buckets**, then **Create bucket** followed by choosing **Customize your bucket**.
 1. Set a unique bucket name such as `username-mywebsite` avoid dots (.) in the bucket name.
 1. Set the **Resiliency** to **Regional**.
 1. Set the **Location** appropriately.  Choose **us-south** or make substitutions in the instructions below when you see **us-south**.
@@ -178,16 +178,38 @@ In this section, you will create a CDN service. The CDN service distributes cont
 {: #static-files-cdn-6}
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
-2. On the next dialog, set the **Hostname** to a subdomain in a custom domain that you can control.  For example, if you own the domain `example.com`, choose as Hostname something like `static.example.com`.  If you do not control your own domain, no problem, but below you will have limited options. In that case you must choose HTTPS with a `Wildcard` SSL certificate, and instead of accessing the CDN contents through `static.example.com` use the IBM provided CNAME.
-3. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
-4. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
-5. Select **Object Storage** to configure the CDN for COS.
-6. Set the **Endpoint** to your bucket public endpoint ($PUBLIC_ENDPOINT). Above this was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
-7. Set **Bucket name** to the bucket name from above.
-8. Enable HTTP (80).
-9. Optionally enable HTTPS (443) for https access.  Enable if you do not control the DNS **Hostname** supplied earlier.
-   - For **SSL certificate** select **DV SAN Certificate** to use your custom domain. If you do not have a custom domain pick the **Wildcard Certificate** option.
-10. Accept the **Master Service Agreement** and click **Create**.
+
+   The **Hostname** has two purposes.  It is a unique name that idenifies the CDN instance.  It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain).  When filling out this form you will choose one of the following options:
+   
+   1. To use a DNS subdomain in a domain that you control:
+      - Fill in the hostname as the DNS subdomain.  For example if you control `example.com` then `static.example.com` would be a valid choice.
+      - Choose HTTP port if required by your application.
+      - Choose HTTPS port if required by your application and chose the SSL certificate **DV SAN certificate**.
+      - CDN Content will be available at your subdomain, `static.example.com`, for example.
+      - CDN Content is also available on the generated CNAME.
+      
+   1. Use the IBM generated DNS subdomain:
+      - Fill in a unique hostname to identify the DNS instance, this will not be used in the URL for the CDN content.
+      - Choose HTTP port if required by your application.
+      - Choose HTTPS port - **this is required**.
+      - Choose SSL certificate **Wildcard** - **this is required**.
+      - CDN Content will be available in the generated CNAME.
+   
+2. On the next dialog, set the **Hostname** to a DNS subdomain like `static.example.com` (option a) or simply a unique name (option b).
+4. Leave the **Custom CNAME** prefix blank, it will default to a unique name.
+5. Next, under **Configure your origin**, leave **Host header** and **Path** empty.
+6. Select **Object Storage** to configure the CDN for COS.
+7. Set the **Endpoint** to your bucket public endpoint ($PUBLIC_ENDPOINT). Above this was: **s3.us-south.cloud-object-storage.appdomain.cloud**.
+8. Set **Bucket name** to the bucket name from above.
+9. Enable HTTP (80).
+10. Enable HTTPS (443) for https access.
+    - If using a subdomain that you control (option a):
+      - HTTPS is optional.
+      - If HTTPS is selected it is required to select **DV SAN Certificate** for the **SSL certificate**.
+    - If not using a a subdomain (option b):
+      - Select HTTPS.  It is **required**.
+      - Select **Wildcard Certificate** for the **SSL certificate**. 
+11. Accept the **Master Service Agreement** and click **Create**.
 
 ### Access your content through the CDN CNAME
 {: #static-files-cdn-7}
@@ -197,7 +219,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
 4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.example.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
    
-   Often, it takes some minutes for DNS changes to become active. You might need to wait for proceeding to the next step.
+   Often, it takes some minutes for DNS changes to become active. You might need to wait before proceeding to the next step.
    {: tip}
 
 5. Access your files with `http://<static.example.com>/index.html`.
