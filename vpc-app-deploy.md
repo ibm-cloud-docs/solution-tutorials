@@ -356,9 +356,10 @@ With Terraform, all resources can have associated provisioners. The `null_resour
        type        = "ssh"
        user        = "root"
        host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
-       agent       = true
+       private_key = "${file("~/.ssh/id_rsa")}"
        bastion_user        = "root"
        bastion_host        = "${local.bastion_ip}"
+       bastion_private_key = "${file("~/.ssh/id_rsa")}"
      }
      provisioner "file" {
        source      = "../shared/${local.uploaded}"
