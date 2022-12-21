@@ -225,14 +225,14 @@ The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with al
 ### Before you begin
 {: #vpc-app-deploy-cli-before-you-begin}
 
-1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
+Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
 
 ### Provision virtual server instances and install software
 {: #vpc-app-deploy-cli-provision}
 
-[The CLI has a plugin for all VPC-related functionality](/docs/cli?topic=cli-vpc-reference).
+The CLI has a [plugin for all VPC-related functionality](/docs/cli?topic=cli-vpc-reference), including compute and network resources.
 
-1. You can set the current resource group and region:
+1. Before working with VPC resources, set the current resource group and region:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name -r $TF_VAR_region
    ```
@@ -258,7 +258,7 @@ The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with al
    ```
    {: pre}
 
-   It can take a few minutes for the ssh service on the server to be initialized and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
+   It can take a few minutes for the ssh service on the server to be initialized, and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
    {: tip}
 
 
