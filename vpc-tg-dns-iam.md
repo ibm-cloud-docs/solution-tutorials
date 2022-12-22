@@ -928,7 +928,7 @@ The second *application* team environment is identical to the first. Optionally 
 {: #vpc-tg-dns-iam-remove_resource}
 {: step}
 
-1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`. The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
+1. Destroy the resources. You can change (cd) to the team directories in order, and execute `source local.env; terraform destroy`. The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
 
    ```sh
    cd ..
@@ -943,7 +943,7 @@ The second *application* team environment is identical to the first. Optionally 
 {: #vpc-tg-dns-iam-expand_other}
 
 - The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
-- The *Application* team can scale horizontally using a a load balancer like the *shared* team.
+- The *Application* team can scale horizontally using a load balancer like the *shared* team.
 - The *shared* team can add additional instances to the load balancer by adding instances to the shared/main.tf 
 - The *shared* team could switch their implementation platform to Kubernetes
 
