@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021, 2022
-lastupdated: "2022-12-01"
+lastupdated: "2022-12-22"
 lasttested: "2022-12-01"
 
 ---
@@ -28,7 +28,7 @@ This tutorial walks you through the process of moving a VM based app to a Kubern
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
 
-1. Identify components of a large monolith app that can be separated into their own micro-service. You can containerize these micro-services and deploy them to a Kubernetes cluster.
+1. Identify components of a large monolith app that can be separated into their own microservice. You can containerize these microservices and deploy them to a Kubernetes cluster.
 2. Containerize the entire app and deploy the app to a Kubernetes cluster.
 
 Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
@@ -36,7 +36,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 ## Objectives
 {: #vm-to-containers-and-kubernetes-objectives}
 
-- Understand how to identify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
+- Understand how to identify microservices in a VM based app and learn how to map components between VMs and Kubernetes.
 - Learn how to containerize a VM based app.
 - Learn how to deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
 - Put everything learned to practice, run the **JPetStore** app in your cluster.

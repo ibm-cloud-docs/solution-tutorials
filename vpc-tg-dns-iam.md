@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-20"
-lasttested: "2021-12-06"
+lastupdated: "2022-12-22"
+lasttested: "2022-12-22"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -34,7 +34,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based micro-service architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared micro-services is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared micro-service.
+Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
 {: shortdesc}
 
 ## Objectives
@@ -42,7 +42,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 
 * Learn how to isolate infrastructure using IAM and Resource groups
 * Create the VPCs and associated resources such as subnets, network ACLs, security groups, instances.
-* Address micro-services by DNS name resolution using {{site.data.keyword.dns_short}}.
+* Address microservices by DNS name resolution using {{site.data.keyword.dns_short}}.
 * Connect VPCs via {{site.data.keyword.tg_short}}.
 * Transparently configure a {{site.data.keyword.loadbalancer_short}} for an application.
 
@@ -52,7 +52,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 ![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: class="center"}
 {: style="text-align: center;"}
 
-In the diagram above the end user is accessing the applications. The applications are leveraging shared micro-services. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
+In the diagram above the end user is accessing the applications. The applications are leveraging shared microservices. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.
 
 ### Concrete Architecture
 {: #vpc-tg-dns-iam-2}
@@ -136,7 +136,7 @@ The {{site.data.keyword.tg_short}} service instance is managed exclusively by th
 
 In this example a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the micro-service teams, like VSI instances. But some are edited by the *network* team and operated by the micro-service team, like subnet. The *network* team will create the subnet and a micro-service team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnet. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
 
 |Service|network|shared|application|
 |-|-|-|-|
@@ -158,7 +158,7 @@ Resource Group diagram:
 ![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png){: class="center"}
 {: style="text-align: center;"}
 
-Each micro-service team will be allowed the access in the corresponding resource group. The **network** team will have access to all of these resource groups.
+Each microservice team will be allowed the access in the corresponding resource group. The **network** team will have access to all of these resource groups.
 
 The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services.
 
@@ -341,7 +341,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
 {: #vpc-tg-dns-iam-network}
 {: step}
 
-The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for micro-services etc will be in constant flux and not a concern of the *network* team.
+The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for microservices etc will be in constant flux and not a concern of the *network* team.
 
 The Admin team has provided them just the right amount of permissions to create the VPC **is** resources, the {{site.data.keyword.dns_short}} and the {{site.data.keyword.tg_short}} service.
 
@@ -499,7 +499,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
 1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
 
-## Create the shared micro-service and associated DNS record (Shared Team)
+## Create the shared microservice and associated DNS record (Shared Team)
 {: #vpc-tg-dns-iam-shared}
 {: step}
 
@@ -514,7 +514,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally dig deeper at this point into some of the terraform source code.  The *shared* team is going to provide micro-services.  Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+1. Optionally dig deeper at this point into some of the terraform source code.  The *shared* team is going to provide microservices.  Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
    In `main.tf` notice these two resources:
    ```terraform
@@ -568,7 +568,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
 1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**.  Notice the Value is the private IP address of the instance.
 
-## Create a publicly facing micro-service for an application (Application1 Team)
+## Create a publicly facing microservice for an application (Application1 Team)
 {: #vpc-tg-dns-iam-application1}
 {: step}
 
@@ -583,7 +583,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared micro-service.
+   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared microservice.
 
 1. Optionally investigate the source code that initializes the CentOS instance. It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
@@ -873,7 +873,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared micro-service).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared microservice).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```sh
    $ curl 169.48.152.220:3000/remote
@@ -894,7 +894,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-## Create a publicly facing micro-service for an application (Application2 Team)
+## Create a publicly facing microservice for an application (Application2 Team)
 {: #vpc-tg-dns-iam-application2}
 {: step}
 
@@ -957,7 +957,7 @@ The second *application* team environment is identical to the first.  Optionally
 {: #vpc-tg-dns-iam-expand_cd}
 
 - Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
-- For shared micro-services, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
+- For shared microservices, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
 {: #vpc-tg-dns-iam-expand_automation}
