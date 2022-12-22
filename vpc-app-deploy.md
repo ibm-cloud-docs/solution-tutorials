@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-21"
+lastupdated: "2022-12-22"
 lasttested: "2022-12-21"
 
 content-type: tutorial
@@ -75,7 +75,7 @@ You will explore how to consume these different sources.
 ## Before you begin
 {: #vpc-app-deploy-before-you-begin}
 
-### Create a VPC ssh key
+### Create a VPC SSH key
 {: #vpc-app-deploy-create-ssh-key}
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
@@ -117,7 +117,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
 
 5. Edit the `export` file and set the environment variable values:
    * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](/iam/apikeys).
-   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure SSH access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
       ibmcloud is keys
       ```

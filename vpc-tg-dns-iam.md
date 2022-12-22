@@ -79,7 +79,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.  You will also need the ability to create resource groups and IAM resources like access groups, policies, service ids, ...
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.  You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Plan the Identity and Access Management Environment
@@ -198,7 +198,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
    ```
    {: pre}
 
-    - ssh_key_name - it is **required** to specify an existing ssh key in the ibm_region as specified in the **Before you begin** section above.
+    - ssh_key_name - it is **required** to specify an existing SSH key in the ibm_region as specified in the **Before you begin** section above.
     - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
     - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required.  Most resources created will use this as a name prefix.
     - Do not uncomment the `transit_gateway` or `shared_lb` at this time.

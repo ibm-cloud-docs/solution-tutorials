@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-08-18"
+lastupdated: "2022-12-22"
 lasttested: "2022-06-01"
 
 content-type: tutorial
@@ -138,7 +138,7 @@ The {{site.data.keyword.bpshort}} workspace output contains variables that can b
    HOSTNAME_COS=s3.direct.us-south.cloud-object-storage.appdomain.cloud
    PORT_POSTGRESQL=32525
    ```
-1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the ssh key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.  The diagram shows the communication paths exercised by the steps.
+1. You can now ssh into each of the instances following different paths including jumping through the VPN.  If the SSH key is not the default for ssh try the -I PATH_TO_PRIVATE_KEY_FILE option or see the ssh reference manual for more help.  The diagram shows the communication paths exercised by the steps.
 
 ![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-verifyconnectivity.png){: class="center"}
 {: style="text-align: center;"}
