@@ -74,12 +74,12 @@ This tutorial requires:
 * `Terraform CLI` to run the Terraform commands.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.  You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Plan the Identity and Access Management Environment
@@ -87,7 +87,7 @@ In addition:
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
-Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol).  Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
+Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
@@ -110,7 +110,7 @@ A conceptual team ownership model was implemented. The *network* team administer
 #### Shared Team
 {: #vpc-tg-dns-iam-7}
 
-The *shared* team creates the VSI in its isolated VPC.  In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time.  Operator access to the VPC, subnets and security groups are required to create a VSI.
+The *shared* team creates the VSI in its isolated VPC. In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time. Operator access to the VPC, subnets and security groups are required to create a VSI.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/shared.png){: class="center"}
 {: style="text-align: center;"}
@@ -136,7 +136,7 @@ The {{site.data.keyword.tg_short}} service instance is managed exclusively by th
 
 In this example a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnet. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below.  The contents of the table are the required roles.
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnet. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
 
 |Service|network|shared|application|
 |-|-|-|-|
@@ -151,7 +151,7 @@ In this example a single DNS zone, `widgets.com` will be created and access to t
 
 The *shared* team and the *network* team are now nicely separated. But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
 
-This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed.  In other words each resource is in one resource group. 
+This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed. In other words each resource is in one resource group. 
 
 Resource Group diagram:
 
@@ -160,15 +160,15 @@ Resource Group diagram:
 
 Each microservice team will be allowed the access in the corresponding resource group. The **network** team will have access to all of these resource groups.
 
-The network resource group contains {{site.data.keyword.tg_short}} and the DNS service.  The network team has access to these resources.  The shared team will have Manager acess to the DNS service.  The shared team needs to write the DNS entries for the shared services.
+The network resource group contains {{site.data.keyword.tg_short}} and the DNS service. The network team has access to these resources. The shared team will have Manager acess to the DNS service. The shared team needs to write the DNS entries for the shared services.
 
-Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console.  It is possible to filter on resource group.
+Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console. It is possible to filter on resource group.
 
 ## Create a local working environment
 {: #vpc-tg-dns-iam-create}
 {: step}
 
-All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
@@ -199,8 +199,8 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
    {: pre}
 
     - ssh_key_name - it is **required** to specify an existing SSH key in the ibm_region as specified in the **Before you begin** section above.
-    - ibm_region - replace the default value, **us-south**, if required.  The cli command `ibmcloud regions` will display all possible regions.
-    - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required.  Most resources created will use this as a name prefix.
+    - ibm_region - replace the default value, **us-south**, if required. The cli command `ibmcloud regions` will display all possible regions.
+    - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required. Most resources created will use this as a name prefix.
     - Do not uncomment the `transit_gateway` or `shared_lb` at this time.
 
 1. Windows users only: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
@@ -215,7 +215,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ### A Note about becoming a team member
 {: #vpc-tg-dns-iam-iam_become}
 
-It is possible to populate each team's access group with users. But rather then create users this tutorial will create a Service ID in each team's access group. You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team. The service ID names are `${basename}-x` where x is network, shared, application1 and application2.  Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users. But rather then create users this tutorial will create a Service ID in each team's access group. You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team. The service ID names are `${basename}-x` where x is network, shared, application1 and application2. Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```sh
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
@@ -239,7 +239,7 @@ If you need to use the ibmcloud cli as a team member:
 {: #vpc-tg-dns-iam-admin}
 {: step}
 
-The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator).  The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin. The api key will be used by terraform to perform tasks on your behalf.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator). The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin. The api key will be used by terraform to perform tasks on your behalf.
 
 The api keys are the same as a passwords to your account. Keep the api keys safe.
 {: note}
@@ -341,7 +341,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
 {: #vpc-tg-dns-iam-network}
 {: step}
 
-The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC.  They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for microservices etc will be in constant flux and not a concern of the *network* team.
+The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC. They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for microservices etc will be in constant flux and not a concern of the *network* team.
 
 The Admin team has provided them just the right amount of permissions to create the VPC **is** resources, the {{site.data.keyword.dns_short}} and the {{site.data.keyword.tg_short}} service.
 
@@ -356,7 +356,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout.  In the snippet below notice that shared and application1 are specified without overlapping IP addresses:
+1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout. In the snippet below notice that shared and application1 are specified without overlapping IP addresses:
 
    ```terraform
    variable network_architecture {
@@ -401,7 +401,7 @@ The Admin team has provided them just the right amount of permissions to create 
 1. List the VPC resources
 {: #network_vpc}
 
-   The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity.  Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
+   The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity. Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
    ```sh
    ibmcloud target -r $(grep ibm_region terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//' -e 's/.*=//' -e 's/"//g')
    ibmcloud is subnets --all-resource-groups | grep $basename
@@ -426,7 +426,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
 1. Optionally navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all of the other resources created above.
 
-1. Optionally investigate the terraform configuration in `main.tf` to understand the the {{site.data.keyword.dns_short}} initialization.  The {{site.data.keyword.dns_short}} instance and zone were created with the terraform snippet:
+1. Optionally investigate the terraform configuration in `main.tf` to understand the the {{site.data.keyword.dns_short}} initialization. The {{site.data.keyword.dns_short}} instance and zone were created with the terraform snippet:
    ```terraform
    resource "ibm_resource_instance" "dns" {
      name              = "${var.basename}-dns"
@@ -455,7 +455,7 @@ The Admin team has provided them just the right amount of permissions to create 
    
    ```
 
-1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created.  The **widgets.com** zone was created.   Finally the zone was added to all of the VPCs.
+1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created. The **widgets.com** zone was created. Finally, the zone was added to all the VPCs.
 
    ```sh
    ibmcloud dns instances
@@ -514,7 +514,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally dig deeper at this point into some of the terraform source code.  The *shared* team is going to provide microservices.  Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile.  A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+1. Optionally dig deeper at this point into some of the terraform source code. The *shared* team is going to provide microservices. Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile. A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
    In `main.tf` notice these two resources:
    ```terraform
@@ -562,11 +562,11 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance.  Click on it and verify the following:
+1. Optionally navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance. Click on it and verify the following:
    - The instance has no incoming connectivity from the public internet (check the Security Groups)
    - Locate the private IP address
 
-1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**.  Notice the Value is the private IP address of the instance.
+1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**. Notice the Value is the private IP address of the instance.
 
 ## Create a publicly facing microservice for an application (Application1 Team)
 {: #vpc-tg-dns-iam-application1}
@@ -583,7 +583,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}.  The application uses the address `http://shared.widgets.com` to access the shared microservice.
+   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}. The application uses the address `http://shared.widgets.com` to access the shared microservice.
 
 1. Optionally investigate the source code that initializes the CentOS instance. It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
@@ -720,7 +720,7 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #vpc-tg-dns-iam-transit_gateway}
 {: step}
 
-{{site.data.keyword.tg_full_notm}} is a network service used to interconnect IBM Cloud VPC resources providing dynamic scalability, high availability and peace of mind that data isn’t traversing the public internet.  Earlier the CIDR blocks for each of the VPCs were chosen without overlap to allow {{site.data.keyword.tg_short}} to route packets by IP address.
+{{site.data.keyword.tg_full_notm}} is a network service used to interconnect IBM Cloud VPC resources providing dynamic scalability, high availability and peace of mind that data isn’t traversing the public internet. Earlier the CIDR blocks for each of the VPCs were chosen without overlap to allow {{site.data.keyword.tg_short}} to route packets by IP address.
 
 1. Change directory and become a member of the network group (use the existing API key):
 
@@ -730,7 +730,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform files. Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg).  Each has a `count = var.transit_gateway ? 1 : 0`.  This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`.  An array of length 0 will result in no resource. For example:
+1. Optionally investigate the terraform files. Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg). Each has a `count = var.transit_gateway ? 1 : 0`. This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`. An array of length 0 will result in no resource. For example:
 
    ```terraform
    resource "ibm_tg_gateway" "tgw"{
@@ -808,7 +808,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
 1. Optionally navigate the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
 
-1. Execute the curl command that failed earlier to verify there is a path from the application1 VPC to the shared VPC.  It will look something like this:
+1. Execute the curl command that failed earlier to verify there is a path from the application1 VPC to the shared VPC. It will look something like this:
 
    ```sh
    $ curl 169.48.152.220:3000/remote
@@ -844,7 +844,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC.  The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the lb.tf for the implementation. The dns record is this snippet:
+1. Optionally investigate the terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the lb.tf for the implementation. The dns record is this snippet:
 
    ```terraform
    # shared.widgets.com
@@ -873,7 +873,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared microservice).  Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared microservice). Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
 
    ```sh
    $ curl 169.48.152.220:3000/remote
@@ -898,7 +898,7 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #vpc-tg-dns-iam-application2}
 {: step}
 
-The second *application* team environment is identical to the first.  Optionally create application2 by modifying application1.
+The second *application* team environment is identical to the first. Optionally create application2 by modifying application1.
 
 1. Enter the ./application1 directory and create the application2 directory
    ```sh
@@ -934,7 +934,7 @@ The second *application* team environment is identical to the first.  Optionally
 {: #vpc-tg-dns-iam-remove_resource}
 {: step}
 
-1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`.  The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
+1. Destroy the resources. You can cd to the team directories in order, and execute `source local.env; terraform destroy`. The order is application2, application1, shared, network, admin. There is also a script that will do this for you:
 
    ```sh
    cd ..
@@ -948,7 +948,7 @@ The second *application* team environment is identical to the first.  Optionally
 ### Other Considerations
 {: #vpc-tg-dns-iam-expand_other}
 
-- The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}.  It can manage the public DNS and provide security.  [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
+- The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a a load balancer like the *shared* team.
 - The *shared* team can add additional instances to the load balancer by adding instances to the shared/main.tf 
 - The *shared* team could switch their implementation platform to Kubernetes
@@ -956,7 +956,7 @@ The second *application* team environment is identical to the first.  Optionally
 ### Continuous Delivery
 {: #vpc-tg-dns-iam-expand_cd}
 
-- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered.  [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
+- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered. [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
 - For shared microservices, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development

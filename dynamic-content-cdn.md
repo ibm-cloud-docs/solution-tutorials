@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-21"
+lastupdated: "2022-12-22"
 lasttested: "2022-12-21"
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -79,7 +79,7 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition:
