@@ -102,7 +102,7 @@ Teams:
 #### Network Team
 {: #vpc-tg-dns-iam-6}
 
-A conceptual team ownership model was implemented. The *network* team administers a lot of the diagram.
+A conceptual team ownership model was implemented. The *network* team administers all the network resources and hence most of what is shown in the diagram.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/network.png){: class="center"}
 {: style="text-align: center;"}
@@ -110,12 +110,12 @@ A conceptual team ownership model was implemented. The *network* team administer
 #### Shared Team
 {: #vpc-tg-dns-iam-7}
 
-The *shared* team creates the VSI in its isolated VPC. In addition the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time. Operator access to the VPC, subnets and security groups are required to create a VSI.
+The *shared* team creates the VSI in its isolated VPC. In addition, the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time. Operator access to the VPC, subnets and security groups are required to create a VSI.
 
 ![Architecture](images/solution59-vpc-tg-dns-iam/shared.png){: class="center"}
 {: style="text-align: center;"}
 
-The *application* teams needs the same access as the *shared* team with the exception of manager access to the {{site.data.keyword.dns_short}}.
+The *application* teams needs the same access as the *shared* team except manager access to the {{site.data.keyword.dns_short}}.
 
 *Application* team access:
 
@@ -134,9 +134,9 @@ An access group will be created for each team. Access policies are added to acce
 
 The {{site.data.keyword.tg_short}} service instance is managed exclusively by the *network* team. Editor access is required for creation. Manager access to the created instance allows VPCs to be connected to the {{site.data.keyword.tg_short}}.
 
-In this example a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all of the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
+In this example, a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs. Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnet. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
+[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs (access control lists). Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnets. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
 
 |Service|network|shared|application|
 |-|-|-|-|
@@ -149,9 +149,9 @@ In this example a single DNS zone, `widgets.com` will be created and access to t
 #### Resource Groups
 {: #vpc-tg-dns-iam-iam_resource_groups}
 
-The *shared* team and the *network* team are now nicely separated. But how is Application1 isolated from Shared and Application2?  They are Editor for the same types of services.
+The *shared* team and the *network* team are now nicely separated. But how is Application1 isolated from Shared and Application2? They are Editor for the same types of services.
 
-This is where resource groups can help out. Each service instance (i.e resource) has a resource group attribute that is initialized upon creation and can not be changed. In other words each resource is in one resource group. 
+This is where resource groups can help out. Each service instance (i.e. resource) has a resource group attribute that is initialized upon creation and cannot be changed. In other words, each resource is in one resource group. 
 
 Resource Group diagram:
 
@@ -162,13 +162,13 @@ Each microservice team will be allowed the access in the corresponding resource 
 
 The network resource group contains {{site.data.keyword.tg_short}} and the DNS service. The network team has access to these resources. The shared team will have Manager acess to the DNS service. The shared team needs to write the DNS entries for the shared services.
 
-Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the IBM {{site.data.keyword.Bluemix_notm}} console. It is possible to filter on resource group.
+Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the {{site.data.keyword.Bluemix_notm}} console. It is possible to filter on resource group.
 
 ## Create a local working environment
 {: #vpc-tg-dns-iam-create}
 {: step}
 
-All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+All the operations will be performed in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
@@ -187,20 +187,17 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
     - shared/
     - application1/
 
-1. Create and edit the terraform.tfvars file:
+1. Create the `terraform.tfvars` file:
    ```sh
    cp terraform.tfvars.template terraform.tfvars
    ```
    {: pre}
 
-   ```sh
-   edit terraform.tfvars
-   ```
-   {: pre}
-
-    - ssh_key_name - it is **required** to specify an existing SSH key in the ibm_region as specified in the **Before you begin** section above.
-    - ibm_region - replace the default value, **us-south**, if required. The cli command `ibmcloud regions` will display all possible regions.
-    - basename - replace the default value, **widget0**, with a name that is 7 characters or less, if required. Most resources created will use this as a name prefix.
+   
+   Next, edit `terraform.tfvars` to set these variables:
+    - **ssh_key_name** - it is **required** to specify an existing SSH key in the ibm_region as specified in the **Before you begin** section above.
+    - **ibm_region** - replace the default value, **us-south**, if required. The cli command `ibmcloud regions` will display all possible regions.
+    - **basename** - replace the default value, **widget0**, with a name that is 7 characters or less, if required. Most resources created will use this as a name prefix.
     - Do not uncomment the `transit_gateway` or `shared_lb` at this time.
 
 1. Windows users only: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
@@ -215,7 +212,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ### A Note about becoming a team member
 {: #vpc-tg-dns-iam-iam_become}
 
-It is possible to populate each team's access group with users. But rather then create users this tutorial will create a Service ID in each team's access group. You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team. The service ID names are `${basename}-x` where x is network, shared, application1 and application2. Later you will populate a `local.env` file in each team's directory with contents similar to this:
+It is possible to populate each team's access group with users. But rather than creating users, this tutorial will create a service ID in each team's access group. You are the administrator and will **become** a member of the different access groups by using the api key for the service ID for the team. The service ID names are `${basename}-x` where x is network, shared, application1 and application2. Later you will populate a `local.env` file in each team's directory with contents similar to this:
    ```sh
    export TF_VAR_ibmcloud_api_key=0thisIsNotARealKeyALX0vkLNSUFC7rMLEWYpVtyZaS9
    ```
@@ -293,7 +290,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
    ```
    {: pre}
 
-   Output will resemble this:
+   Output will resemble something like this:
 
    ```sh
    $ ibmcloud resource groups | grep $basename
@@ -341,11 +338,11 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
 {: #vpc-tg-dns-iam-network}
 {: step}
 
-The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC. They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for microservices etc will be in constant flux and not a concern of the *network* team.
+The *network* team will create the network resources to match the architecture ensuring that the connectivity goals are satisfied and the teams are isolated in their VPC. They do not want to control the details of the VPC Instances. It is likely that the number of applications, size of computers, DNS records for microservices etc. will be in constant flux and not a concern of the *network* team.
 
 The Admin team has provided them just the right amount of permissions to create the VPC **is** resources, the {{site.data.keyword.dns_short}} and the {{site.data.keyword.tg_short}} service.
 
-1. Change directory, generate an API key in the local.env and become a member of the network access group:
+1. Change directory, generate an API key in the `local.env` and become a member of the network access group:
 
    ```sh
    team=network
@@ -356,7 +353,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout. In the snippet below notice that shared and application1 are specified without overlapping IP addresses:
+1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout. In the snippet below notice that *shared* and application1 are specified without overlapping IP addresses:
 
    ```terraform
    variable network_architecture {
@@ -387,7 +384,7 @@ The Admin team has provided them just the right amount of permissions to create 
         ...
    ```
 
-   The {{site.data.keyword.tg_short}} will have a connection to each VPC and routes traffic based on the CIDR ranges so avoiding overlaps will ensure success.
+   The {{site.data.keyword.tg_short}} will have a connection to each VPC and routes traffic based on the CIDR ranges. So, avoiding overlaps will ensure success.
 
 
 
@@ -408,7 +405,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   Output will resemble this:
+   The output will look like this:
 
    ```sh
    $ ibmcloud is subnets --all-resource-groups | grep $basename
@@ -714,7 +711,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   Wait, that second curl command did not work! let's fix that in the next step. Remember these curl commands, you will use them again shortly.
+   Wait, that second curl command did not work! Fix it in the next step. Remember these curl commands, you will use them again shortly.
 
 ## Create {{site.data.keyword.tg_short}}
 {: #vpc-tg-dns-iam-transit_gateway}
@@ -975,5 +972,5 @@ The architecture of a system is influenced by the containment and ownership of c
 {: #vpc-tg-dns-iam-related}
 
 * Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
-* [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-* [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+* Tutorial: [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+* Tutorial: [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
