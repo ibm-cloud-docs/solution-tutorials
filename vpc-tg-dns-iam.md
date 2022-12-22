@@ -170,9 +170,6 @@ Later in the tutorial, after all resources have been created, it can be informat
 
 All the operations will be performed in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
-{: tip}
-
 1. Git clone the following [repository](https://github.com/IBM-Cloud/vpc-tg-dns-iam):
 
    ```sh
@@ -236,7 +233,7 @@ If you need to use the ibmcloud cli as a team member:
 {: #vpc-tg-dns-iam-admin}
 {: step}
 
-The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator). The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an api key for the admin. The api key will be used by terraform to perform tasks on your behalf.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator). The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an API key for the admin. The api key will be used by terraform to perform tasks on your behalf.
 
 The api keys are the same as a passwords to your account. Keep the api keys safe.
 {: note}
@@ -248,7 +245,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
    ```
    {: pre}
 
-1. Change directory, generate and source your personal API key in local.env. When terraform is invoked it will become you. Terraform will be the administrator:
+1. Change directory, generate and source your personal API key in local.env. When Terraform is invoked it will become you. Terraform will be the administrator:
    ```sh
    cd admin
    echo export TF_VAR_ibmcloud_api_key=$(ibmcloud iam api-key-create $basename-admin --output json | jq .apikey) > local.env
@@ -257,7 +254,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
    ```
    {: pre}
 
-1. Apply of the main.tf terraform configuration file creates the following resources:
+1. Apply of the `main.tf` Terraform configuration file creates the following resources:
    - Resource groups for each team
    - Access groups for each team and a service ID in each access group
    - Access group policies for the resource groups
@@ -353,7 +350,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally open the `variables_network.tf` file and notice the CIDR block specification and the zone layout. In the snippet below notice that *shared* and application1 are specified without overlapping IP addresses:
+1. Optionally, open the `variables_network.tf` file and notice the CIDR block specification and the zone layout. In the snippet below notice that *shared* and application1 are specified without overlapping IP addresses:
 
    ```terraform
    variable network_architecture {
@@ -398,7 +395,7 @@ The Admin team has provided them just the right amount of permissions to create 
 1. List the VPC resources
 {: #network_vpc}
 
-   The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity. Notice the three VPCs, the non overlapping CIDR blocks, and the resource groups membership:
+   The VPC resources created is summarized by the output of the subnets command, shown below, edited for brevity. Notice the three VPCs, the non-overlapping CIDR blocks, and the resource groups membership:
    ```sh
    ibmcloud target -r $(grep ibm_region terraform.tfvars | sed -e 's/  *//g' -e 's/#.*//' -e 's/.*=//' -e 's/"//g')
    ibmcloud is subnets --all-resource-groups | grep $basename
@@ -421,9 +418,9 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-1. Optionally navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all of the other resources created above.
+1. Optionally, navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all the other resources created above.
 
-1. Optionally investigate the terraform configuration in `main.tf` to understand the the {{site.data.keyword.dns_short}} initialization. The {{site.data.keyword.dns_short}} instance and zone were created with the terraform snippet:
+1. Optionally, investigate the Terraform configuration in `main.tf` to understand the {{site.data.keyword.dns_short}} initialization. The {{site.data.keyword.dns_short}} instance and zone were created with the Terraform snippet:
    ```terraform
    resource "ibm_resource_instance" "dns" {
      name              = "${var.basename}-dns"
@@ -494,13 +491,13 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
+1. Optionally, navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
 
 ## Create the shared microservice and associated DNS record (Shared Team)
 {: #vpc-tg-dns-iam-shared}
 {: step}
 
-1. Change directory, generate an API key in the local.env and become a member of the shared access group:
+1. Change directory, generate an API key in the `local.env` and become a member of the shared access group:
 
    ```sh
    team=shared
@@ -511,7 +508,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally dig deeper at this point into some of the terraform source code. The *shared* team is going to provide microservices. Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile. A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
+1. Optionally, dig deeper at this point into some of the Terraform source code. The *shared* team is going to provide microservices. Although the *network* team has already created the shared VPC and some network resources the *shared* team will create the instance and choose the instance profile. A Linux configuration script and simple demo application is provided in the user_data attribute and discussed in the **Application Team** section below.
 
    In `main.tf` notice these two resources:
    ```terraform
@@ -727,7 +724,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform files. Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg). Each has a `count = var.transit_gateway ? 1 : 0`. This is a terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`. An array of length 0 will result in no resource. For example:
+1. Optionally investigate the terraform files. Open the main.tf file and you will notice the {{site.data.keyword.tg_short}} resources (ibm_tg). Each has a `count = var.transit_gateway ? 1 : 0`. This is a Terraform construct that creates an array of resources of length 1 or 0 based on the value of `transit_gateway`. An array of length 0 will result in no resource. For example:
 
    ```terraform
    resource "ibm_tg_gateway" "tgw"{
@@ -841,7 +838,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the lb.tf for the implementation. The dns record is this snippet:
+1. Optionally investigate the Terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the `lb.tf` for the implementation. The DNS record is this snippet:
 
    ```terraform
    # shared.widgets.com
@@ -959,7 +956,7 @@ The second *application* team environment is identical to the first. Optionally 
 ### Automation, Staging, and Development
 {: #vpc-tg-dns-iam-expand_automation}
 
-- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace. With Schematics, terraform configurations can be executed directly in the cloud where state and output can be shared.
+- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace. With Schematics, Terraform configurations can be executed directly in the cloud where state and output can be shared.
 - The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.
 - A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production. Is roll back needed? How would this be accomplished?
 
