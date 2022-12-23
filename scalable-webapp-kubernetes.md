@@ -280,14 +280,14 @@ Use Ingress to set up the cluster inbound connection to the service.
 {: #scalable-webapp-kubernetes-custom_domain}
 {: step}
 
-This section requires you to own a custom domain. You will need to create a `CNAME` record pointing to the IBM-provided ingress subdomain for the cluster. If your domain is `example.com` then the CNAME will be `<myapp>.example.com` pointing to `<myapp>.<ingress-subdomain>`.
+This section requires you to own a custom domain. You will need to create a `CNAME` record pointing to the IBM-provided ingress subdomain for the cluster. If your domain is `example.com` then the CNAME will be `<myapp>.<example.com>` pointing to `<myapp>.<ingress-subdomain>`.
 
 ### with HTTP
 {: #scalable-webapp-kubernetes-15}
 
 1. Create an environment variable pointing to your custom domain:
    ```sh
-   export CUSTOM_SUBDOMAIN=<myapp>.example.com
+   export CUSTOM_DOMAIN=<example.com>
    ```
    {: pre}
 
@@ -303,7 +303,7 @@ This section requires you to own a custom domain. You will need to create a `CNA
    ```
    {: pre}
 
-1. Access your application at `http://<myapp>.example.com/`
+1. Access your application at `http://<myapp>.<example.com>/`
 
 ### with HTTPS
 {: #scalable-webapp-kubernetes-16}
@@ -407,7 +407,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-9. Access your application at `https://<myapp>.example.com/`.
+9. Access your application at `https://<myapp>.<example.com>/`.
 <!--#/istutorial#-->
 
 ## Monitor application health
