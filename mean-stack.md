@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2022-02-08"
+lastupdated: "2022-12-22"
+lasttested: "2022-12-22"
 
 content-type: tutorial
 services: codeengine, databases-for-mongodb
@@ -81,16 +81,16 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 
 {: shortdesc}
 
-1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region, however we will use `ca-tor` in this tutorial.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region and resource group. In the example below we will use the `ca-tor (Toronto)` region and the `default` resource group.
 
    ```sh
-   ibmcloud target -r ca-tor 
+   ibmcloud target -r ca-tor -g default
    ```
    {: codeblock}
 
    You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](https://{DomainName}/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=cloud-databases-provisioning#use-cli) or use the [console UI](https://{DomainName}/catalog/services/databases-for-mongodb). The service name must be named **mean-starter-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
+2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-starter-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
 
    ```sh
    ibmcloud resource service-instance-create mean-starter-mongodb databases-for-mongodb standard ca-tor
@@ -181,7 +181,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository.  If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
+3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
    
    ```sh
    ibmcloud code-engine application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
@@ -215,7 +215,7 @@ We've already built a container image for the application and pushed it to the p
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 {: shortdesc}
 
-1. Using the console **dashboard**, locate the **MongoDB** service instance and click until you are in the **Service Details**.
+1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](https://{DomainName}/resources) Under **Databases**.
 2. Click on the **Resources** panel.
    ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
@@ -228,13 +228,19 @@ If your service needs additional storage, or you want to reduce the amount of st
 {: step}
 
 To remove resource, follow these steps:
-1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
+1. With the command below, delete the project to delete all it's components (applications, jobs and so on).
    ```sh
    ibmcloud code-engine project delete --name mean-stack
    ```
    {: pre}
-   
-2. Delete the {{site.data.keyword.databases-for-mongodb}} service.
+
+2. Delete the {{site.data.keyword.databases-for-mongodb}} service key.
+   ```sh
+   ibmcloud resource service-key-delete mean-starter-mongodb-key
+   ```
+   {: pre}
+
+3. Delete the {{site.data.keyword.databases-for-mongodb}} service.
    ```sh
    ibmcloud resource service-instance-delete mean-starter-mongodb
    ```
