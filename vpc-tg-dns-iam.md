@@ -134,7 +134,7 @@ An access group will be created for each team. Access policies are added to acce
 
 The {{site.data.keyword.tg_short}} service instance is managed exclusively by the *network* team. Editor access is required for creation. Manager access to the created instance allows VPCs to be connected to the {{site.data.keyword.tg_short}}.
 
-In this example, a single DNS zone, `widgets.com` will be created and access to the DNS zone will be permitted to all the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
+In this example, a single DNS zone, `widgets.example.com` will be created and access to the DNS zone will be permitted to all the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
 [VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs (access control lists). Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnets. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
 
@@ -431,7 +431,7 @@ The Admin team has provided them just the right amount of permissions to create 
    }
    
    resource "ibm_dns_zone" "widgets_example_com" {
-     name        = "widgets.com"
+     name        = "widgets.example.com"
      instance_id = ibm_resource_instance.dns.guid
      description = "this is a description"
      label       = "this-is-a-label"
@@ -839,7 +839,7 @@ The Admin team has provided them just the right amount of permissions to create 
 1. Optionally investigate the Terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the `lb.tf` for the implementation. The DNS record is this snippet:
 
    ```terraform
-   # shared.widgets.com
+   # shared.widgets.example.com
    resource ibm_dns_resource_record "shared_lb" {
      count = var.shared_lb ? 1 : 0 # shared load balancer?
      instance_id = local.network_context.dns.guid
