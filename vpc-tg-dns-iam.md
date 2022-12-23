@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-22"
-lasttested: "2022-12-22"
+lastupdated: "2022-12-23"
+lasttested: "2022-12-23"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -66,12 +66,12 @@ The following architecture implements the isolation and connectivity requirement
 {: #vpc-tg-dns-iam-prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.tg_short}} plugin (`tg`)
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`)
+* {{site.data.keyword.cloud_notm}} CLI with these plugins:
+   * {{site.data.keyword.tg_short}} (`tg`)
+   * {{site.data.keyword.vpc_short}} (`vpc-infrastructure`)
    * {{site.data.keyword.dns_short}} (`dns`)
 * `git` to clone source code repository.
-* `Terraform CLI` to run the Terraform commands.
+* `terraform` CLI to run the Terraform commands.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -197,7 +197,7 @@ All the operations will be performed in a `bash` shell and making use of `terraf
     - **basename** - replace the default value, **widget0**, with a name that is 7 characters or less, if required. Most resources created will use this as a name prefix.
     - Do not uncomment the `transit_gateway` or `shared_lb` at this time.
 
-1. Windows users only: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
+1. **Windows users only**: If git does not create the symbolic link on your Windows computer it is required to copy the file contents to the team folders:
    ```sh
    cp variables.tf terraform.tfvars admin
    cp variables.tf terraform.tfvars network
@@ -304,7 +304,7 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
    ServiceId-5e919b97-380c-4343-a337-3901cafbd956   widget0-application2                                                                                                       2020-07-15T21:25+0000   2020-07-15T22:03+0000   application 2 service id                                                                                                                                              false
    ServiceId-307df062-f4b7-45f8-8ec8-94ad1ed61730   widget0-network                                                                                                            2020-07-15T21:49+0000   2020-07-15T22:03+0000   network service id                                                                                                                                                    false
    $ ibmcloud iam access-group-policies $basename-network
-   Retrieving all policies of access group widget0-network under account 8675309 as jenny@gotyournumber.com
+   Retrieving all policies of access group widget0-network under account 8675309 as jenny@example.com
    OK
    
    Policy ID:   00ceb354-7360-4ad5-9fda-5c03e462c5c0
@@ -430,7 +430,7 @@ The Admin team has provided them just the right amount of permissions to create 
      plan              = "standard-dns"
    }
    
-   resource "ibm_dns_zone" "widgets_com" {
+   resource "ibm_dns_zone" "widgets_example_com" {
      name        = "widgets.com"
      instance_id = ibm_resource_instance.dns.guid
      description = "this is a description"
@@ -442,14 +442,14 @@ The Admin team has provided them just the right amount of permissions to create 
    ```terraform
    resource "ibm_dns_permitted_network" "shared" {
      instance_id = ibm_resource_instance.dns.guid
-     zone_id     = ibm_dns_zone.widgets_com.zone_id
+     zone_id     = ibm_dns_zone.widgets_example_com.zone_id
      vpc_crn     = module.vpc_shared.vpc.crn
      type        = "vpc"
    }
    
    ```
 
-1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created. The **widgets.com** zone was created. Finally, the zone was added to all the VPCs.
+1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created. The **widgets.example.com** zone was created. Finally, the zone was added to all the VPCs.
 
    ```sh
    ibmcloud dns instances
@@ -467,7 +467,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   Output will resemble this:
+   The output will resemble this:
 
    ```sh
    $ ibmcloud dns instances
@@ -478,11 +478,11 @@ The Admin team has provided them just the right amount of permissions to create 
    $ ibmcloud dns zones -i $basename-dns
    Listing zones for service instance 'widget0-dns' ...
    OK
-   ID                                                 Name          Status   
-   widgets.com:5a1a2295-1c38-49dd-9809-f5a127e79c1b   widgets.com   ACTIVE   
+   ID                                               Name                  Status   
+   5a1a2295-1c38-49dd-9809-aaaf5a127e79c1b          widgets.example.com   ACTIVE   
    $ zone_id=$(ibmcloud dns zones -i $basename-dns --output json | jq -r '.[] | .id')
    $ ibmcloud dns permitted-networks $zone_id -i $basename-dns
-   Listing permitted networks for zone 'widgets.com:5a1a2295-1c38-49dd-9809-f5a127e79c1b' ...
+   Listing permitted networks for zone '5a1a2295-1c38-49dd-9809-f5a127e79c1b' ...
    OK
    Name                   ID                                          Type   VPC_CRN                                                                                                               State   
    widget0-shared         r006-353208ab-4e95-46fb-934b-b5566cde8975   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-353208ab-4e95-46fb-934b-b5566cde8975   ACTIVE   
@@ -556,11 +556,11 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance. Click on it and verify the following:
+1. Optionally, navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance. Click on it and verify the following:
    - The instance has no incoming connectivity from the public internet (check the Security Groups)
    - Locate the private IP address
 
-1. Optionally navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**. Notice the Value is the private IP address of the instance.
+1. Optionally, navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**. Notice the Value is the private IP address of the instance.
 
 ## Create a publicly facing microservice for an application (Application1 Team)
 {: #vpc-tg-dns-iam-application1}
@@ -577,9 +577,9 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-   The application1 team resources are very similar to the *shared* team's. In fact they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}. The application uses the address `http://shared.widgets.com` to access the shared microservice.
+   The application1 team resources are very similar to the *shared* team's. In fact, they are a little simpler since - it is not required to put records into the {{site.data.keyword.dns_short}}. The application uses the address `http://shared.widgets.example.com` to access the shared microservice.
 
-1. Optionally investigate the source code that initializes the CentOS instance. It is has been captured in a terraform module shared by all the teams during this exploratory stage.
+1. Optionally, investigate the source code that initializes the CentOS instance. It is has been captured in a terraform module shared by all the teams during this exploratory stage.
 
    **../common/user_data_app/main.tf**:
    ```terraform
@@ -609,7 +609,7 @@ The Admin team has provided them just the right amount of permissions to create 
      - A systemctl service is created for app.js
      - The service is started
 
-1. Optionally investigate the app.js contents. It has two particularly interesting sections. First there is a /info link that returns a description of the instance running the app.
+1. Optionally investigate the app.js contents. It has two particularly interesting sections. First, there is a /info link that returns a description of the instance running the app.
    **../common/user_data_app/app.js**:
    ```js
    const server = http.createServer((req, res) => {
@@ -627,7 +627,7 @@ The Admin team has provided them just the right amount of permissions to create 
        getRemote(req, res)
        break
    ```
-   Second the /remote link calls to a remote server IP and returns a the description of that remote along with the remote_url and remote_ip addresses used to access the remote.
+   Second, the /remote link calls to a remote server IP and returns the description of that remote along with the remote_url and remote_ip addresses used to access the remote.
    ```js
    const IP='REMOTE_IP'
    
@@ -644,7 +644,7 @@ The Admin team has provided them just the right amount of permissions to create 
            res.statusCode = 200;
            res.end(JSON.stringify({remote_url: remote_url, remote_ip: resp.connection.remoteAddress, remote_info: rawObj}, null, 3))
    ```
-    In our case the REMOTE_IP will be `shared.widget.com` because of the following in common/user_data_app/main.tf:
+    In our case the REMOTE_IP will be `shared.widgets.example.com` because of the following in common/user_data_app/main.tf:
    ```terraform
    output user_data_centos {
      value = replace(local.shared_app_user_data_centos, "REMOTE_IP", var.remote_ip)
@@ -656,7 +656,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```terraform
    module user_data_app {
      source    = "../common/user_data_app"
-     remote_ip = "shared.widgets.com"
+     remote_ip = "shared.widgets.example.com"
    }
    ```
 1. Create the resources:
@@ -674,14 +674,14 @@ The Admin team has provided them just the right amount of permissions to create 
 
    Outputs:
    
-   ibm1_private_ip = 10.1.0.4
-   ibm1_public_ip = 52.116.140.202
-   test_info = curl 52.116.140.202:3000/info
-   test_remote = curl 52.116.140.202:3000/remote
+   ibm1_private_ip = "10.1.0.4"
+   ibm1_public_ip = "52.116.140.202"
+   test_info = "curl 52.116.140.202:3000/info"
+   test_remote = "curl 52.116.140.202:3000/remote"
    ```
    {: screen}
 
-   Try the two curl commands suggested below: 
+   Try the two curl commands (**test_info**, **test_remote**) that were suggested above. Copy the statements from your output. 
 
    ```sh
    curl 52.116.140.202:3000/info
@@ -702,7 +702,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-
+   Then try the second command (from your output):
    ```sh
    curl 52.116.140.202:3000/remote
    ```
@@ -737,12 +737,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
 
 
-1. Edit the terraform.tfvars file and uncomment the line `transit_gateway = true` to enable the provisioning of {{site.data.keyword.tg_short}}
-
-   ```sh
-   edit terraform.tfvars
-   ```
-   {: pre}
+1. Edit the `terraform.tfvars` file and uncomment the line `transit_gateway = true` to enable the provisioning of {{site.data.keyword.tg_short}}.
 
 1. Apply the change
    ```sh
@@ -780,35 +775,38 @@ The Admin team has provided them just the right amount of permissions to create 
    Listing connections for gateway e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b under account 
    OK
    
-   Name            r006-b08a7c2c-c0ea-4908-b0ab-b96cd8ba221a
-   NetworkID       crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-b08a7c2c-c0ea-4908-b0ab-b96cd8ba221a
-   Network Type    vpc
-   Connection ID   dff6ecfd-388d-471a-908a-98880426fbee
-   Status          attached
+   Name                    widget0-shared
+   Network Type            vpc
+   Connection ID           dff6ecfd-388d-471a-908a-98880426fbee
+   Status                  attached
+   Default Prefix Filter   permit
+   NetworkID               crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-b08a7c2c-c0ea-4908-b0ab-b96cd8ba221a
    
-   Name            r006-8fdc0e7e-3a98-4f6b-93e0-505c61e3faac
-   NetworkID       crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-8fdc0e7e-3a98-4f6b-93e0-505c61e3faac
-   Network Type    vpc
-   Connection ID   bbce29f9-9ce4-47d4-911d-5341601cea07
-   Status          attached
+   Name                    widget0-application1
+   Network Type            vpc
+   Connection ID           bbce29f9-9ce4-47d4-911d-5341601cea07
+   Status                  attached
+   Default Prefix Filter   permit
+   NetworkID               crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-8fdc0e7e-3a98-4f6b-93e0-505c61e3faac
    
-   Name            r006-fa80afa7-b16b-4db7-95dd-69a558db4285
-   NetworkID       crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-fa80afa7-b16b-4db7-95dd-69a558db4285
-   Network Type    vpc
-   Connection ID   208c00cc-aee2-498e-8b1c-37ddc276f200
-   Status          attached
+   Name                    widget0-application2
+   Network Type            vpc
+   Connection ID           208c00cc-aee2-498e-8b1c-37ddc276f200
+   Status                  attached
+   Default Prefix Filter   permit
+   NetworkID               crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-fa80afa7-b16b-4db7-95dd-69a558db4285
    ```
    {: screen}
 
 1. Optionally navigate the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
 
-1. Execute the curl command that failed earlier to verify there is a path from the application1 VPC to the shared VPC. It will look something like this:
+1. Execute the curl command from above that failed earlier to verify there is a path from the application1 VPC to the shared VPC. It will look something like this:
 
    ```sh
    $ curl 169.48.152.220:3000/remote
    
    {
-      "remote_url": "http://shared.widgets.com:3000/info",
+      "remote_url": "http://shared.widgets.example.com:3000/info",
       "remote_ip": "10.0.0.4",
       "remote_info": {
          "req_url": "/info",
@@ -855,25 +853,20 @@ The Admin team has provided them just the right amount of permissions to create 
 
    The same `count = var.shared_lb ? 1 : 0` is a used. Notice a CNAME record is initialized with the load balancer hostname: `ibm_is_lb.shared_lb[0].hostname`
 
-1. Edit the terraform.tfvars file and uncomment `shared_lb = true`
-
-   ```sh
-   edit terraform.tfvars
-   ```
-   {: pre}
+1. Edit the `terraform.tfvars` file and uncomment `shared_lb = true`. Then apply the changes:
 
    ```sh
    terraform apply
    ```
    {: pre}
 
-1. Execute the curl .../remote command from the previous application1 section (ignore the output just generated for the shared microservice). Notice that the remote_ip is 10.0.1.4, the load balancer, and the remote_info is 10.0.0.4, the instance. Curl a few more times and notice the remote_ip for the load balancer may change.
+1. Execute the `curl .../remote` command from the previous *application1* section (ignore the output just generated for the shared microservice). Notice that the **remote_ip** is 10.0.1.4, the load balancer, and the **remote_info** is 10.0.0.4, the instance. Curl a few more times and notice the **remote_ip** for the load balancer may change.
 
    ```sh
    $ curl 169.48.152.220:3000/remote
    
    {
-      "remote_url": "http://shared.widgets.com:3000/info",
+      "remote_url": "http://shared.widgets.example.com:3000/info",
       "remote_ip": "10.0.1.4",
       "remote_info": {
          "req_url": "/info",
@@ -892,7 +885,7 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #vpc-tg-dns-iam-application2}
 {: step}
 
-The second *application* team environment is identical to the first. Optionally create application2 by modifying application1.
+The second *application* team environment is identical to the first. **Optionally**, create **application2** by modifying application1.
 
 1. Enter the ./application1 directory and create the application2 directory
    ```sh
@@ -903,7 +896,7 @@ The second *application* team environment is identical to the first. Optionally 
    ```
    {: pre}
 
-1. Change directory, generate an API key in the local.env and become a member of the application2 access group:
+1. Change directory, generate an API key in the `local.env`, and become a member of the **application2** access group:
 
    ```sh
    team=application2
@@ -944,8 +937,8 @@ The second *application* team environment is identical to the first. Optionally 
 
 - The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a load balancer like the *shared* team.
-- The *shared* team can add additional instances to the load balancer by adding instances to the shared/main.tf 
-- The *shared* team could switch their implementation platform to Kubernetes
+- The *shared* team can add additional instances to the load balancer by adding instances to the `shared/main.tf`. 
+- The *shared* team could switch their implementation platform to Kubernetes.
 
 ### Continuous Delivery
 {: #vpc-tg-dns-iam-expand_cd}
