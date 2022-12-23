@@ -255,17 +255,17 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: pre}
 
-4. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS. 
+4. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmsubdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS. 
 
    ```sh
-   ./ingress.sh ibmdomain_https
+   ./ingress.sh ibmsubdomain_https
    ```
    {: pre}
 
-   The file is generated from a template file `ingress-ibmdomain-template.yaml` under yaml-templates folder by replacing all the values wrapped in the placeholders (`$`) with the appropriate values from the environment variables.
+   The file is generated from a template file `ingress-ibmsubdomain-template.yaml` under yaml-templates folder by replacing all the values wrapped in the placeholders (`$`) with the appropriate values from the environment variables.
 5. Deploy the Ingress
    ```sh
-   kubectl apply -f ingress-ibmdomain.yaml
+   kubectl apply -f ingress-ibmsubdomain.yaml
    ```
    {: pre}
 
@@ -453,7 +453,7 @@ Once the autoscaler is successfully created, you should see
    ```sh
    kubectl delete -f ingress-customdomain-https.yaml
    kubectl delete -f ingress-customdomain-http.yaml
-   kubectl delete -f ingress-ibmdomain.yaml
+   kubectl delete -f ingress-ibmsubdomain.yaml
    ```
    {: pre}
 
@@ -461,7 +461,7 @@ Once the autoscaler is successfully created, you should see
    <!--##isworkshop#-->
    <!--
    ```sh
-   kubectl delete -f ingress-ibmdomain.yaml
+   kubectl delete -f ingress-ibmsubdomain.yaml
    ```
    {: pre}
 
