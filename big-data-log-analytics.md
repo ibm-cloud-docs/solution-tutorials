@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-22"
-lasttested: "2022-03-25"
+lastupdated: "2022-12-27"
+lasttested: "2022-12-27"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect
@@ -106,7 +106,8 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
    2. Select the **Standard** plan.
    3. Set the **Service name** to **log-analysis-es**.
    4. Select a **Resource group** and click **Create**.
-2. Once created, go to **Topics** and click **Create topic**.
+   5. Access the newly created service instance from the [Resource List](https://{DomainName}/resources) under the **Integration** section.
+2. Go to **Topics** and click **Create topic**.
    1. Set the **Topic Name** to `webserver` and click **Next**.
    2. Select **1** partition and click **Next**.
    3. Set message retention to **1 Day** and click the **Create topic** button.
@@ -126,7 +127,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will b
    1. Select a **location**.
    2. Set the name to **log-analysis-kp**.
    3. Select the same **resource group** as earlier.
-   4. Choose **Public and private** for the **Allowed network policy** and click **Create**.
+   4. Click **Create**.
 2. Under **Keys**, click the **Add** button to create a new root key.
    1. Set the key type to **Root key**.
    2. Set the name to **log-analysis-root-enckey**.
@@ -159,8 +160,8 @@ Finally create the bucket.
 1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Storage**.
 2. Under **Buckets**, click **Create bucket**
    * Click **Customize your bucket**
-   * Click **Regional** resiliency
    * Enter a  unique name, like `<your-initial>-log-analysis`.
+   * Click **Regional** resiliency
    * Select the region for the **Location**
 3. Click to enable **Service integrations (optional) / Encryption** - **Key management enabled**
    1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier by clicking on **Use existing instance**
@@ -180,9 +181,8 @@ The bucket will be referenced below as ABC-log-analysis
    5. Select **Encrypt with user-managed key** and then select the {{site.data.keyword.keymanagementserviceshort}} service `log-analysis-kp` with the root key **log-analysis-root-enckey** created earlier.
    6. Click **Create**.
 
-Note the **Encryption** section is indicating a warning.  An IAM Service Authorization
-
-The {{site.data.keyword.sqlquery_short}} service instance needs **Reader** authorization to access the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.  In the stream landing configuration below **ReaderPlus** will be required.
+   The **Encryption** section is indicating a warning. The {{site.data.keyword.sqlquery_short}} service instance needs **Reader** authorization to access the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance. We will add this authorization next.
+   {: note}
 
 1. Go to [Manage > Access (IAM) > Authorizations](https://{DomainName}/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
    1. Click the **Create** button.
@@ -215,9 +215,9 @@ The {{site.data.keyword.sqlquery_short}} service instance needs **Reader** autho
 
 In this section, you will learn how to run a fully-managed stream data ingestion from {{site.data.keyword.messagehub}} into Parquet on {{site.data.keyword.cos_full_notm}}. {{site.data.keyword.sqlquery_notm}} is the key component in the Stream Landing approach. It is the service that connects to {{site.data.keyword.messagehub}} and copies the data to {{site.data.keyword.cos_full_notm}}.
 
-[Parquet](https://parquet.apache.org/documentation/latest/) is an open source file format for nested data structures in a flat columnar format. Compared to the traditional approach where data is stored in rows, Parquet is more efficient in terms of storage and performance.
+[Parquet](https://parquet.apache.org/docs/) is an open source file format for nested data structures in a flat columnar format. Compared to the traditional approach where data is stored in rows, Parquet is more efficient in terms of storage and performance.
 
-1. In your browser, navigate to the [resource list](https://{DomainName}/resources) and under **Services and software**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
+1. In your browser, navigate to the [resource list](https://{DomainName}/resources) and under **Integration**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
 2. Select **Topics** from the navigation pane on the left.
 3. Select the context menu (three vertical dots) for your topic `webserver` and click **Create stream landing configuration**.
    ![Event Streams topics](images/solution31/event_streams_topics.png)
@@ -274,7 +274,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
 
 You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and also in the {{site.data.keyword.cos_short}} bucket.
 
-1. Navigate to the [resource list](https://{DomainName}/resources) and under **Services and software**, click on `log-analysis-sql` service.
+1. Navigate to the [resource list](https://{DomainName}/resources) and under **Databases**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
    ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png)
@@ -467,9 +467,7 @@ Try the following:
 
 If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region and resource group you have been using (edit for your specifics):
 ```
-region=us-south; #<REGION>
-rg=Default; # <RESOURCE-GROUP>
-ibmcloud target -r $region -g $rg
+ibmcloud target -r <region> -g <resource group>
 ```
 {: codeblock}
 
@@ -504,7 +502,7 @@ Open the platform logs for the region:
 2. Click **Open dashboard**
 3. In a few minutes you should see the logs associated with the program
 
-Search for `host:ibmanalyticsengine`.  There will be a lot of output.  Look for:
+Search for `host:ibmanalyticsengine`.  There will be a lot of output. Look for:
 ```
 Michael,: 1
 29: 1
@@ -533,9 +531,9 @@ Then upload hello.py to your bucket `ABC-log-analysis`
 2. Under **Buckets**, select your bucket.
 3. Drag and drop hello.py into the bucket.
 
-To run the hello.py application just uploaded to the bucket locate the **HMAC** credentials associated with the {{site.data.keyword.cos_short}} instance created earlier.  Click on the **Service credentials** tab and open the **cos-for-log-analysis** credentials.  Create corresponding shell variables for the cos_hmac_keys and your bucket name.  Learn more about the service variable in the [stocator](https://github.com/CODAIT/stocator#stocator-and-ibm-cloud-object-storage-ibm-cos) project.
+To run the hello.py application just uploaded to the bucket locate the **HMAC** credentials associated with the {{site.data.keyword.cos_short}} instance created earlier.  Click on the **Service credentials** tab and open the **cos-for-log-analysis** credentials. Create corresponding shell variables for the cos_hmac_keys and your bucket name. Learn more about the service variable in the [stocator](https://github.com/CODAIT/stocator#stocator-and-ibm-cloud-object-storage-ibm-cos) project.
 
-Click **Buckets** on the left, and select your bucket.  Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint.  Fill in these shell variables.  Something like the following:
+Click **Buckets** on the left, and select your bucket. Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint. Fill in these shell variables. Something like the following:
 
 ```
 # GUID= set earlier
@@ -547,7 +545,7 @@ bucket=ABC-log-analysis
 ```
 {: codeblock}
 
-Submit the hello application.  Notice the single and double quotes, it is a little tricky:
+Submit the hello application. Notice the single and double quotes, it is a little tricky:
 ```
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "cos://$bucket.$service/hello.py" \
@@ -561,7 +559,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
 
 Again verify the results in the platform log.
 
-The final step is to submit the spark application that accesses the data in the same bucket.  Create a file, solution.py, with the following contents and upload it to the bucket.  Notice the COS_PARQUET environment variable that will be initialized in the next step.
+The final step is to submit the spark application that accesses the data in the same bucket. Create a file, solution.py, with the following contents and upload it to the bucket. Notice the COS_PARQUET environment variable that will be initialized in the next step.
 
 solution.py:
 
