@@ -459,7 +459,7 @@ The data stream landed to cos can be also queried using Apache Spark that is par
 
 Open the analytics engine service:
 
-1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Services and software**.
+1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](https://{DomainName}/resources) under **Services and software**.
 2. Click the **Applications** tab
 
 
