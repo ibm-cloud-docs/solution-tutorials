@@ -257,7 +257,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
 
    If you use Docker, run:
    ```sh
-   docker run -v  `pwd`:`pwd` -w `pwd` -it --network=host edenhill/kcat:1.7.0 -F kcat.config -P -t webserver
+   docker run -v  ${PWD}:/bdla -w /bdla -it --network=host edenhill/kcat:1.7.0 -F kcat.config -P -t webserver
    ```
    {: pre}
 
