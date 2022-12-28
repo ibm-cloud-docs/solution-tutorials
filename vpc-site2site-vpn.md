@@ -199,35 +199,35 @@ Test DNS resolution to Postgresql and Object storage through the Virtual Endpoin
    ```
    {: pre}
    
-   1. Copy and paste three(3) of the variables captured earlier: `HOSTNAME_POSTGRESQL`, `HOSTNAME_COS`, `PORT_POSTGRESQL`.
+   2. Copy and paste three(3) of the variables captured earlier: `HOSTNAME_POSTGRESQL`, `HOSTNAME_COS`, `PORT_POSTGRESQL`.
    
-   1. Run a `dig` command to confirm resolution to the database instance through the Virtual Endpoint Gateway..
+   3. Run a `dig` command to confirm resolution to the database instance through the Virtual Endpoint Gateway..
    ```sh
    dig $HOSTNAME_POSTGRESQL
    ```
    {: pre}
 
-   1. Verify connectivity to the database by issuing a `telnet` command. It should display "connected".
+   4. Verify connectivity to the database by issuing a `telnet` command. It should display "connected".
    ```sh
    telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
    ```
    {: pre}
 
-   1.  Once connected to the database, issue a `Ctrl+C` to disconnect.
+   5. Once connected to the database, issue a `Ctrl+C` to disconnect.
    
-   1.  Run a `dig` command to confirm resolution to the cloud object storage instance through the Virtual Endpoint Gateway.
+   6. Run a `dig` command to confirm resolution to the cloud object storage instance through the Virtual Endpoint Gateway.
    ```sh
    dig $HOSTNAME_COS
    ```
    {: pre}
 
-   1. Verify connectivity to the cloud object storage instance by issuing a `telnet` command. It should display "connected".
+   7. Verify connectivity to the cloud object storage instance by issuing a `telnet` command. It should display "connected".
    ```sh
    telnet $HOSTNAME_COS 443
    ```
    {: pre}
 
-   1. Once connected to the cloud object storage instance, issue a `Ctrl+C` to disconnect.
+   8. Once connected to the cloud object storage instance, issue a `Ctrl+C` to disconnect.
 
 
 If there a problems see the [troubleshoot](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn#troubleshoot) section in the GitHub repository.
