@@ -139,7 +139,7 @@ Putting entities into a single project enables you to manage access control more
 
 1. Create a new project with a unique name like `<your-initials>-ceproject`:
    ```
-   ibmcloud code-engine project create --name <PROJECT_NAME>
+   ibmcloud code-engine project create --name $PROJECT_NAME
    ```
    {: pre}
 
@@ -509,7 +509,7 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
    ```sh
-   ibmcloud code-engine project delete --name <PROJECT_NAME>
+   ibmcloud code-engine project delete --name $PROJECT_NAME
    ```
    {: pre}
    
