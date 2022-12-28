@@ -472,6 +472,7 @@ Instead of running the job manually, you can automate the job run by creating an
    ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket <your-initials>-bucket-code-engine --prefix files --event-type write
    ```
    {: pre}
+
 3. Visit the URL provided by the successful completion of the command to verify it is not connected to the backend.
 4. Add the connection
 
