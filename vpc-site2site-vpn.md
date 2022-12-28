@@ -194,38 +194,38 @@ Test DNS resolution to Postgresql and Object storage through the Virtual Endpoin
 {: style="text-align: center;"}
 
    1. Access the on-premises VSI.
-   ```sh
-   ssh root@$IP_FIP_ONPREM
-   ```
-   {: pre}
+      ```sh
+      ssh root@$IP_FIP_ONPREM
+      ```
+      {: pre}
    
    2. Copy and paste three(3) of the variables captured earlier: `HOSTNAME_POSTGRESQL`, `HOSTNAME_COS`, `PORT_POSTGRESQL`.
    
    3. Run a `dig` command to confirm resolution to the database instance through the Virtual Endpoint Gateway..
-   ```sh
-   dig $HOSTNAME_POSTGRESQL
-   ```
-   {: pre}
+      ```sh
+      dig $HOSTNAME_POSTGRESQL
+      ```
+      {: pre}
 
    4. Verify connectivity to the database by issuing a `telnet` command. It should display "connected".
-   ```sh
-   telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
-   ```
-   {: pre}
+      ```sh
+      telnet $HOSTNAME_POSTGRESQL $PORT_POSTGRESQL
+      ```
+      {: pre}
 
    5. Once connected to the database, issue a `Ctrl+C` to disconnect.
    
    6. Run a `dig` command to confirm resolution to the cloud object storage instance through the Virtual Endpoint Gateway.
-   ```sh
-   dig $HOSTNAME_COS
-   ```
-   {: pre}
+      ```sh
+      dig $HOSTNAME_COS
+      ```
+      {: pre}
 
    7. Verify connectivity to the cloud object storage instance by issuing a `telnet` command. It should display "connected".
-   ```sh
-   telnet $HOSTNAME_COS 443
-   ```
-   {: pre}
+      ```sh
+      telnet $HOSTNAME_COS 443
+      ```
+      {: pre}
 
    8. Once connected to the cloud object storage instance, issue a `Ctrl+C` to disconnect.
 
