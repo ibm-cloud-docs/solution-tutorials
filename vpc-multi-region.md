@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-06"
-lasttested: "2022-06-17"
+lastupdated: "2022-12-28"
+lasttested: "2022-12-28"
 
 content-type: tutorial
 services: vpc, cis, secrets-manager
@@ -77,8 +77,8 @@ In this section, you will create your own VPC in region 1 with subnets created i
 
 1. Navigate to [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**.
 2. Enter **vpc-region1** for the name of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
-3. Uncheck **Allow SSH** and **Allow ping** from the **Default security group** and leave **Enable access to classic resources** unchecked. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
-4. Leave **Create a default prefix for each zone** checked.
+3. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
+4. Leave **Enable access to classic resources** unchecked and **Create a default prefix for each zone** checked.
 5. Under **Subnets** change the name of the Zone 1 subnet. Click the pencil icon:
    * Enter `vpc-region1-zone1-subnet` as your subnet's unique name.
    * Select the same **Resource group** as the VPC resource group.
@@ -218,7 +218,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Max retries**: `2`
 5. Click **Attach server** to add server instances to the pool.
    - From the **Subnet** dropdown, select **vpc-region1-zone1-subnet**, select the instance your created and set `80` as the **port**.
-   - Click on **Attach server**.
+   - Click on **Attach**.
    - From the **Subnet** dropdown, select **vpc-region1-zone2-subnet**, select the instance your created and set `80` as the **port**.
    - Click **Save** to complete the creation of a back-end pool.
 6. Click **Create listener** to create a new front-end listener; A listener is a process that checks for connection requests.
