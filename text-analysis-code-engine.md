@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-02"
-lasttested: "2021-12-09"
+lastupdated: "2022-12-28"
+lasttested: "2022-12-28"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, natural-language-understanding
