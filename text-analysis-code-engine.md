@@ -102,7 +102,7 @@ Putting entities into a single project enables you to manage access control more
 
 <!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
-2. On the left pane, click on **Projects** and then click **Create**,
+2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
    - Provide a project name.
    - Select resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
