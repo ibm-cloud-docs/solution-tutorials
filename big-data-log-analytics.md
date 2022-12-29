@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-27"
+lastupdated: "2022-12-29"
 lasttested: "2022-12-27"
 
 content-type: tutorial
@@ -459,7 +459,7 @@ The data stream landed to cos can be also queried using Apache Spark that is par
 
 Open the analytics engine service:
 
-1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](https://{DomainName}/resources) under **Services and software**.
+1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](https://{DomainName}/resources) under **Analytics**.
 2. Click the **Applications** tab
 
 
