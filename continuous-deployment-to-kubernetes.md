@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-11-30"
+  years: 2023
+lastupdated: "2023-01-02"
 lasttested: "2022-11-30"
 
 content-type: tutorial
@@ -71,14 +71,14 @@ This tutorial requires:
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
 Create a cluster:
-1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu
-2. Click **Create a cluster**
-3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure
-4. Choose desired resource group
-5. Choose desired Geography, Availability and Metro
+1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu.
+2. Click **Create a cluster**.
+3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure.
+4. Choose desired resource group.
+5. Choose desired Geography, Availability and Metro.
 6. One zone, one worker node per zone and the smallest **flavor** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial.
-7. Master service endpoint of **Public endpoint only**
-8. Choose a cluster name that you can remember
+7. Master service endpoint of **Public endpoint only**.
+8. Choose a cluster name that you can remember.
 
 **Note:** Do not proceed until your workers are ready.
 <!--#/istutorial#-->
@@ -101,7 +101,7 @@ Create a cluster:
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications to generate all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.  The cloud console is used in this example but the ibmcloud cli, `ibmcloud dev create`, is also available.
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [DevOps](https://{DomainName}/devops).
-2. Click **Create toolchain**
+2. Click **Create toolchain**.
 3. Under the left hand column, select **Kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
 5. Enter a unique **Toolchain Name** for the toolchain such as `<your-initials>-mynodestarter-toolchain` and select a resource group.
@@ -122,7 +122,7 @@ The toolchain will build your application and deploy it to the cluster.
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
-1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`
+1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`.
 1. Click the link under the **Repositories** tile, a new browser tab will open to the repository.
 1. Click on the `utils.js` file and then click on **Edit**. 
 1. Make a simple change, for example change "Welcome to" to something else.
@@ -170,7 +170,7 @@ You now have the full deployment setup. To deploy from dev to test, you manually
     ![Configure the Slack integration](images/solution21/configure_slack.png)
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
 5. The Slack channel is the channel name you provided while creating a webhook integration above.
-6. **Slack team name** is the team-name(first part) of team-name.slack.com. e.g., kube is the team name in kube.slack.com
+6. **Slack team name** is the team-name(first part) of team-name.slack.com. for example, kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
     ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png)
 8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
