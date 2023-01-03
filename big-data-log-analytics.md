@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-29"
+  years: 2023
+lastupdated: "2023-01-02"
 lasttested: "2022-12-27"
 
 content-type: tutorial
@@ -307,11 +307,13 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 
 For later analysis purposes increase the message volume sent to {{site.data.keyword.messagehub}}. The provided script simulates a flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
 
-1. Download and unzip the Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed log file from NASA.
-```sh
-curl ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz -o NASA_access_log_Jul95.gz
-gunzip NASA_access_log_Jul95.gz
-```
+1. Download and unzip the Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed log file from NASA:
+   ```sh
+   curl ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz -o NASA_access_log_Jul95.gz
+   gunzip NASA_access_log_Jul95.gz
+   ```
+   {: pre}
+
 2. Turn the access logs into JSON format by running:
    ```sh
    awk -F " " '{ print "{\"host\":\"" $1 "\",\"time_stamp\":\"" $4 " "  $5 "\",\"request\":" $6 " " $7 " " $8 ",\"responseCode\":\"" $9 "\",\"bytes\":\"" $10 "\"}" }' NASA_access_log_Jul95 > NASA_logs.json
@@ -343,7 +345,7 @@ gunzip NASA_access_log_Jul95.gz
 
    The script accepts a file name, the number of lines to output as chunk, and how many seconds to wait in between.
 
-3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines.
+3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines:
    ```sh
    ./rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
    ```
@@ -364,19 +366,19 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
 
 1. Back in the **Details** view edit the {{site.data.keyword.sqlquery_short}}.
    * Click on the drop down next to **Jobs** and select **Streaming**.
-   * Open the **Details** and click on the **Query the result**
+   * Open the **Details** and click on the **Query the result**.
    * Notice the query editor, above, is populated with a query.
    * Notice the **FROM** clause does not specify a specific parquet object in the bucket but references the job id, which means all of the objects in the job.  Perfect!
    ```
    cos://<REGION>/<BUCKET-NAME>/log-stream-landing/topic=webserver/jobid=<JOBID>
    ```
-   * Remove the INTO clause to display the output without storing the results:
+   * Remove the INTO clause to display the output without storing the results.
    ```
    INTO cos://<Region>/sql-<ID>/result/ STORED AS CSV
    ```
-   * **Run** the query
-   * Observe the results when it is complete in the **Result** tab
-   * Now lets do some investigation by modifying this basic query
+   * **Run** the query.
+   * Observe the results when it is complete in the **Result** tab.
+   * Now lets do some investigation by modifying this basic query.
 
 2. In the {{site.data.keyword.sqlquery_short}} UI, edit the SQL in the text area to look more like this, keep the FROM statement as is. 
    ```sql
@@ -389,7 +391,6 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
    ORDER BY 2 DESC
    LIMIT 10
    ```
-   {: codeblock}
 
 3. Update the `FROM` clause with your Object SQL URL and click **Run**.
 4. Click on the latest **Completed** job to see the result under the **Result** tab.
@@ -460,7 +461,7 @@ The data stream landed to cos can be also queried using Apache Spark that is par
 Open the analytics engine service:
 
 1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](https://{DomainName}/resources) under **Analytics**.
-2. Click the **Applications** tab
+2. Click the **Applications** tab.
 
 
 Try the following:
@@ -471,15 +472,18 @@ ibmcloud target -r <region> -g <resource group>
 ```
 {: codeblock}
 
-Record the guid of the {{site.data.keyword.iae_short}} in the shell variable
+Record the guid of the {{site.data.keyword.iae_short}} and set a shell variable:
 ```
 ibmcloud resource service-instance log-analysis-iae
-...
+```
+{: codeblock}
+
+```
 GUID=<YOUR GUID>
 ```
 {: codeblock}
 
-Enable output to the platform logs that you created earlier in the region
+Enable output to the platform logs that you created earlier in the region:
 
 ```
 ibmcloud ae-v3 log-config update --instance-id $GUID --enable=true
@@ -499,7 +503,7 @@ Back in the {{site.data.keyword.iae_short}} instance on the **Applications** cli
 Open the platform logs for the region:
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and click **Logging**, look for the existing log analysis service in the region with `Platform logs` enabled.
-2. Click **Open dashboard**
+2. Click **Open dashboard**.
 3. In a few minutes you should see the logs associated with the program
 
 Search for `host:ibmanalyticsengine`.  There will be a lot of output. Look for:
@@ -639,7 +643,7 @@ Check out the platform log and look for something that looks like this:
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
-* Follow the [Build a data lake using {{site.data.keyword.cos_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake) tutorial to add a dashboard to log data
+* Follow the [Build a data lake using {{site.data.keyword.cos_short}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake) tutorial to add a dashboard to log data.
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://{DomainName}/catalog/services/app-connect).
 
 ## Remove services
