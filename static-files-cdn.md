@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-16"
+lastupdated: "2022-12-20"
 lasttested: "2022-12-16"
 
 content-type: tutorial
@@ -105,7 +105,7 @@ Next, create a storage bucket.
 1. In the service dashboard, click **Buckets**, then **Create bucket** followed by choosing **Customize your bucket**.
 1. Set a unique bucket name such as `username-mywebsite` avoid dots (.) in the bucket name.
 1. Set the **Resiliency** to **Regional**.
-1. Set the **Location** appropriately.  Choose **us-south** or make substitutions in the instructions below when you see **us-south**.
+1. Set the **Location** appropriately. Choose **us-south** or make substitutions in the instructions below when you see **us-south**.
 1. Pick **Smart Tier** for **Storage class**.
 1. Scroll down to **Static website hosting** and click **Add**.
    * **Routing rules (individual)** should be selected.
@@ -179,10 +179,10 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
 
-   The **Hostname** has two purposes.  It is a unique name that idenifies the CDN instance.  It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain).  When filling out this form you will choose one of the following options:
+   The **Hostname** has two purposes. It is a unique name that identifies the CDN instance. It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain).  When filling out this form you will choose one of the following options:
    
    1. To use a DNS subdomain in a domain that you control:
-      - Fill in the hostname as the DNS subdomain.  For example if you control `example.com` then `static.example.com` would be a valid choice.
+      - Fill in the hostname as the DNS subdomain. For example if you control `example.com` then `static.example.com` would be a valid choice.
       - Choose HTTP port if required by your application.
       - Choose HTTPS port if required by your application and chose the SSL certificate **DV SAN certificate**.
       - CDN Content will be available at your subdomain, `static.example.com`, for example.
@@ -206,7 +206,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
     - If using a subdomain that you control (option a):
       - HTTPS is optional.
       - If HTTPS is selected it is required to select **DV SAN Certificate** for the **SSL certificate**.
-    - If not using a a subdomain (option b):
+    - If not using a subdomain (option b):
       - Select HTTPS.  It is **required**.
       - Select **Wildcard Certificate** for the **SSL certificate**. 
 11. Accept the **Master Service Agreement** and click **Create**.
@@ -215,7 +215,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 {: #static-files-cdn-7}
 
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
-2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete.  When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours.  If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate.  Do not forget to select a different hostname.
+2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete. When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours. If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate. Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
 4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.example.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
    
@@ -224,7 +224,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 5. Access your files with `http://<static.example.com>/index.html`.
 
-You can demonstrate the performance improvement.  Access via the CDN.  Check the output of the first curl to verify successful connection:
+You can demonstrate the performance improvement. Access via the CDN.  Check the output of the first curl to verify successful connection:
 ```sh
 SUBDOMAIN=static.example.com
 curl http://$SUBDOMAIN/index.html
@@ -244,7 +244,7 @@ If you are using {{site.data.keyword.cloud-shell_short}} you can change the loca
 ### Access index.html through COS and other content through CDN
 {: #static-files-cdn-8}
 
-All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content.  To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.example.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
+All of the content is now distributed through the CDN.  Website content can be broken into static content and dynamic content. To demonstrate this a file `cdn.html` has references to the CDN related files through the prefix CDN/.  Edit cdn.html and replace the occurrences of CDN with your CNAME, `http://static.example.com`, in the example above.  If you open the file in the `vim` editor the command `:%s#CDN#http://static.yourwebsite.com#` will do the trick.
 
 Upload **cdn.html** by replacing the file **index.html**:
 ```sh
@@ -257,7 +257,7 @@ Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configurati
 ### Access the static website through custom subdomain
 {: #static-files-cdn-9}
 
-Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.example.com, is even better.  Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.example.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://example.com or better yet ensure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
+Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.example.com, is even better. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.example.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://example.com or better yet ensure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
 
 ## Remove resources
 {: #static-files-cdn-10}

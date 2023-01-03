@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-03"
-lasttested: "2021-12-02"
+lastupdated: "2022-12-22"
+lasttested: "2022-12-21"
 
 content-type: tutorial
 services: vpc
@@ -33,7 +33,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {: shortdesc}
 
-After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives), you will [prepare your environment](#vpc-app-deploy-before-you-begin) for the tutorial and review the [basics of software installation](#vpc-app-deploy-basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#vpc-app-deploy-cli), [Terraform](#vpc-app-deploy-terraform) or [Ansible](#vpc-app-deploy-ansible).
+After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives), you will [prepare your environment](#vpc-app-deploy-before-you-begin) for the tutorial and review the [basics of software installation](#vpc-app-deploy-basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [Terraform](#vpc-app-deploy-terraform) or [Ansible](#vpc-app-deploy-ansible).
 
 ## Objectives
 {: #vpc-app-deploy-objectives}
@@ -51,13 +51,13 @@ After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives)
 * Understand how to use the {{site.data.keyword.Bluemix_notm}} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
 
 
-In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
 ![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png){: class="center"}
 {: style="text-align: center;"}
 
 
-The configuration also includes [a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
+The configuration also includes [a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
 ![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: class="center"}
 {: style="text-align: center;"}
@@ -75,7 +75,7 @@ You will explore how to consume these different sources.
 ## Before you begin
 {: #vpc-app-deploy-before-you-begin}
 
-### Create a VPC ssh key
+### Create a VPC SSH key
 {: #vpc-app-deploy-create-ssh-key}
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
@@ -116,14 +116,14 @@ It will walk you through example steps on a terminal using the shell, `terraform
    {: pre}
 
 5. Edit the `export` file and set the environment variable values:
-   * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
-   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+   * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](/iam/apikeys).
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure SSH access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
       ibmcloud is keys
       ```
       {: pre}
 
-   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/account?topic=account-rgs).
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](/docs/account?topic=account-rgs).
 
    * `TF_VAR_region` is a region where resources will be created. This command will display the regions:
       ```sh
@@ -143,7 +143,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
    ```
    {: pre}
 
-   **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
+   **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in [Terraform format](https://developer.hashicorp.com/terraform/cli/config/environment-variables) (notice the `TF_VAR_` prefix) for convenience. They are used in subsequent sections.
    {: tip}
 
 ## Basics of software installation
@@ -210,7 +210,7 @@ Based on whether the host has internet connectivity, the script modifies the `in
 
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
-In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
+In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/solution-tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
 
 The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
 
@@ -220,67 +220,33 @@ In the next sections, you will use the script [test_provision.bash](https://gith
 {: #vpc-app-deploy-cli}
 {: step}
 
-The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
-
-This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
+The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}. This section explains how to use these commands, but you are not going to create any resources. It is recommended to use Terraform to deploy full solutions.
 
 ### Before you begin
 {: #vpc-app-deploy-cli-before-you-begin}
 
-1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
+Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cli-install-ibmcloud-cli)
 
-### Provision subnets and virtual server instances
+### Provision virtual server instances and install software
 {: #vpc-app-deploy-cli-provision}
 
-1. Change to the tutorial folder:
-   ```sh
-   cd $CHECKOUT_DIR/vpc-app-deploy/
-   ```
-   {: pre}
+The CLI has a [plugin for all VPC-related functionality](/docs/cli?topic=cli-vpc-reference), including compute and network resources.
 
-1. Set the current resource group and region:
+1. Before working with VPC resources, set the current resource group and region:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name -r $TF_VAR_region
    ```
    {: pre}
 
-1. Run the provisioning script:
-   ```sh
-   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh $TF_VAR_zone $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
-   ```
-   {: pre}
-
-   In the command above,
-      - `$TF_VAR_zone` is the example zone
-      - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
-      - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
-      - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
-      - `resources.sh` is the output of a successful build.
-      - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
-
-   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion using Ubuntu as operating system. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
+1. To provision a virtual server instance, run the `ibmcloud is create-instance` CLI command. In [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers. You can pass the script with the `--user-data` parameter like this:
 
    ```sh
    ibmcloud is instance-create ... --user-data @shared/install.sh
    ```
-
-1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
-   ```sh
-   $ cat resources.sh
-   FRONT_IP_ADDRESS=169.61.247.108
-   BASTION_IP_ADDRESS=169.61.247.105
-   FRONT_NIC_IP=10.240.2.12
-   BACK_NIC_IP=10.240.1.8
-   FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
-   BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
-   ```
-1. Load the variables into your environment:
-   ```sh
-   source resources.sh
-   ```
    {: pre}
 
-1. The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
+
+1. With the frontend and backend VSIs deployed and in maintenance mode, you could send a script to, e.g., the frontend server, then run the script to install software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
    ```
@@ -292,69 +258,10 @@ This section uses a shell script found in the [Public frontend and private backe
    ```
    {: pre}
 
-   It can take a few minutes for the ssh service on the server to be initialized and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
+   It can take a few minutes for the ssh service on the server to be initialized, and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
    {: tip}
 
-1. Repeat the operation with the backend server:
-   ```sh
-   scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
-   ```
-   {: pre}
 
-   ```sh
-   ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
-   ```
-   {: pre}
-
-### Test the configuration of the virtual servers
-{: #vpc-app-deploy-cli-test}
-
- To validate the deployment:
-
-1. Import the output variables into the environment:
-   ```sh
-   source resources.sh
-   ```
-   {: pre}
-
-1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
-   ```sh
-   ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
-   ```
-   {: pre}
-
-   The command output should be:
-   ```sh
-   success: httpd default file was correctly replaced with the following contents:
-   INTERNET
-   success: provision of file from on premises worked and was replaced with the following contents:
-   hi
-   ```
-   {: screen}
-
-1. Validate that the backend can be reached through the bastion host and has access to the internet:
-   ```sh
-   ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
-   ```
-   {: pre}
-
-   The command output should be:
-   ```sh
-   success: httpd default file was correctly replaced with the following contents:
-   INTERNET
-   success: provision of file from on premises worked and was replaced with the following contents:
-   hi
-   ```
-   {: screen}
-
-### Remove resources
-{: #vpc-app-deploy-cli-cleanup}
-
-1. Delete the VPC and **all of the resources** in the VPC:
-   ```sh
-   ../scripts/vpc-cleanup.sh tutorialvpc-pubpriv
-   ```
-   {: pre}
 
 ## Provisioning infrastructure with Terraform
 {: #vpc-app-deploy-terraform}
@@ -365,7 +272,7 @@ This section uses a shell script found in the [Public frontend and private backe
 ### Before you begin
 {: #vpc-app-deploy-terraform-before-you-begin}
 
-Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/ibm-cloud-provider-for-terraform) on your workstation.
+Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](/docs/ibm-cloud-provider-for-terraform) on your workstation.
 
 ### Provision a single virtual server instance
 {: #vpc-app-deploy-15}
@@ -549,7 +456,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 
 This section uses both Terraform and Ansible.
 
-1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](https://{DomainName}/docs/ibm-cloud-provider-for-terraform) on your workstation.
+1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](/docs/ibm-cloud-provider-for-terraform) on your workstation.
 1. Follow [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to install Ansible.
 
 ### Ansible Playbook
@@ -707,14 +614,14 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```
    {: pre}
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content
 {: #vpc-app-deploy-related}
 
-- [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
-- [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/technologies/infrastructure/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/)
-- [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/technologies/infrastructure/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
+- [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+- [Deploy a LAMP stack using Terraform](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+- [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/) 
+- [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
 

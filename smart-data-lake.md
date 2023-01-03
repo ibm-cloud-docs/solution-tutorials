@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-01"
-lasttested: "2022-03-22"
+lastupdated: "2022-12-27"
+lasttested: "2022-12-27"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
@@ -31,7 +31,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using SQL. You'll also leverage the {{site.data.keyword.sqlquery_short}} (previously SQL Query) service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
+Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and {{site.data.keyword.sqlquery_short}}, data analysts can query data where it lies using Structured Query Language (SQL). You'll also leverage the {{site.data.keyword.sqlquery_short}} (previously SQL Query) service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights.
 {: shortdesc}
 
 ## Objectives
@@ -75,18 +75,16 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. Use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
 
-2. Initialize the default resource group used by the command line by listing the resource groups and setting the default.
-    ```sh
-    ibmcloud resource groups
-    ```
-    {: pre}
+2. Make sure to target the region and resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
+   ```sh
+   ibmcloud target -r <region> -g <resource_group>
+   ```
+   {: pre}
 
-    ```sh
-    ibmcloud target -g <your-default-resource-group>
-    ```
-    {: pre}
+   Use `ibmcloud target -g default` to switch to the default resource group.
+   {: tip}
 
 3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
@@ -119,18 +117,19 @@ This section uses the command line to create service instances. Alternatively, y
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket. You can do this using regular http upload or by utilising the built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
-2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the storage section.
+2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the **Storage** section.
 3. Create a new bucket to store data.
     - Click **Create a bucket**.
     - Select **Custom bucket/Customize your bucket**.
+    - Close to the top of the form, provide a bucket **Name**.
     - Select **Regional** in the **Resiliency** section.
     - Select a **Location**.
-    - Close to the top of the form, provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with a unique bucket name.
+     - At the bottom of the form click **Create bucket**.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
-    - From your bucket, click **Upload** > **Files**.
-    - Select **Standard Upload** to use regular http file transfer or select the **Aspera high-speed transfer. Requires installation.** radio button.
-    - In case of Aspera upload, click **Install Aspera connect** > Download Connect. This will download the Aspera plugin to your machine. Once the plugin is successfully installed. You may have to refresh the browser.
-    - Click **Select files** > Browse and select the previously downloaded CSV file.
+    - From your bucket, click **Upload**.
+    - Select **Standard transfer** to use regular http file transfer or select the **Aspera high-speed transfer** radio button, you may need to install the Aspera plugin to your machine.
+    - Click **Upload files**.
+    - Browse and select the previously downloaded CSV file and click **Upload**.
 
 ## Working with data
 {: #smart-data-lake-4}
@@ -140,7 +139,7 @@ In this section, you will convert the original, raw dataset into a targeted coho
 
 You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
-1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from your [Resource List](https://{DomainName}/resources).
+1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from the [Resource List](https://{DomainName}/resources) under the **Databases** section.
 2. Click **Launch {{site.data.keyword.sqlquery_short}} UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
@@ -175,26 +174,26 @@ You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where i
 In this section, you will use the {{site.data.keyword.sqlquery_short}} client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be accessed by applications and tools serving line of business users.
 
 First, create a new Jupyter Notebook and service connections in {{site.data.keyword.DSX}}.
-1. Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from your [Resource List](https://{DomainName}/resources).
-    - Click **Launch in IBM Cloud Pak for Data**
+1. Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from the [Resource List](https://{DomainName}/resources) under the **AI / Machine Learning** section.
+    - Click **Launch in IBM Cloud Pak for Data**.
     - Click **Create a Project** followed by **Create an empty project**.
     - Use **Data lake project** as **Name**.
     - Under **Define storage** select **data-lake-cos**.
     - Click **Create**.
 1. In the resulting project, add an access token to the project.
     - Click the **Manage** tab.
-    - Click **Access control** on the left
-    - Click the **Access tokens** tab
-    - Click **New access token**
-    - Enter name and **Editor** role
+    - Click **Access control** on the left.
+    - Click the **Access tokens** tab.
+    - Click **New access token**.
+    - Enter a name and select **Editor** for access role and click **Create**.
 2. Click the **Assets** tab and then click **New asset** and **Connection**.
-    - From the list of services select {{site.data.keyword.sqlquery_short}}.
+    - From the list of services select **{{site.data.keyword.sqlquery_notm}}**.
     - In the dialog enter **SQLQuery** as **Name**.
     - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](https://{DomainName}/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
     - Fill in `cos://us-south/<your-bucket-name>` as **Target**. Replace `us-south` and `<your-bucket-name>` similar to how you did it earlier.
     - As **Password** under **Credentials** use the API key which you created earlier. The value is from the field **apikey**.
     - Finally, click **Create**.
-3.  Now create the notebook. Click **Add to project** and **Notebook**.
+3.  Now create the notebook. Click **New asset** and **Jupyter notebook editor**.
     - From the **Blank** tab, enter a **Data lake notebook** as **Name**.
     - Leave the **Runtime** and **Language** as default and click **Create**.
 

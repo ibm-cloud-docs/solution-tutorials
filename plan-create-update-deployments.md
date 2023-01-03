@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021, 2022
-lastupdated: "2022-11-21"
+lastupdated: "2022-12-22"
 lasttested: "2022-11-21"
 
 content-type: tutorial
@@ -204,7 +204,7 @@ resource "ibm_is_instance" "vsi1" {
 ```
 {: codeblock}
 
-The ssh key to access the VSI is generated, too. The private key part of this ssh key is written to the output directory and can be used later on to connect to the VSI.
+The SSH key to access the VSI is generated, too. The private key part of this SSH key is written to the output directory and can be used later on to connect to the VSI.
 
 IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {{site.data.keyword.cloudant_short_notm}} are also created as resources within the group:
 
