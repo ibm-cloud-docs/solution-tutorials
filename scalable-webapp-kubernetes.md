@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-23"
+  years: 2023
+lastupdated: "2022-01-02"
 lasttested: "2022-12-23"
 
 content-type: tutorial
@@ -117,7 +117,7 @@ In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](
    ```
    {: pre}
 
-2. Change to the application directory,
+2. Change to the application directory:
    ```sh
    cd kubernetes-node-app
    ```
@@ -151,14 +151,14 @@ Note: If you want to build and push the application to your own container regist
    ```
    {: pre}
 
-1. Initialize the variable with the cluster name
+1. Initialize the variable with the cluster name:
 
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
    ```
    {: pre}
 
-1. Initialize the `kubectl` cli environment
+1. Initialize the `kubectl` cli environment:
 
    ```bash
    ibmcloud ks cluster config --cluster $MYCLUSTER
@@ -169,13 +169,13 @@ Note: If you want to build and push the application to your own container regist
    {: tip}
 
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 
-   1. If you want to use the `default` Kubernetes namespace, run the below command to set an environment variable
+   1. If you want to use the `default` Kubernetes namespace, run the below command to set an environment variable:
       ```sh
       export KUBERNETES_NAMESPACE=default
       ```
       {: pre}
 
-   2. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command 
+   2. If you want to create a new Kubernetes namespace, follow the steps mentioned under [Copying an existing image pull secret](/docs/containers?topic=containers-registry#copy_imagePullSecret) and [Storing the image pull secret in the Kubernetes service account for the selected namespace](/docs/containers?topic=containers-registry#store_imagePullSecret) sections of the Kubernetes service documentation. Once completed, run the below command: 
       ```sh
       export KUBERNETES_NAMESPACE=<KUBERNETES_NAMESPACE_NAME>
       ```
@@ -230,7 +230,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 ![Ingress](images/solution2/Ingress.png){: class="center"}
 {: style="text-align: center;"}
 
-1. Identify your IBM-provided **Ingress subdomain** and **Ingress secret**.
+1. Identify your IBM-provided **Ingress subdomain** and **Ingress secret**:
    ```sh
    ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
@@ -243,19 +243,19 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: screen}
 
-2. Define environment variable `INGRESS_SUBDOMAIN` to hold the value of the Ingress subdomain.
+2. Define environment variable `INGRESS_SUBDOMAIN` to hold the value of the Ingress subdomain:
    ```sh
    export INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN>
    ```
    {: pre}
 
-3. Define environment variable `INGRESS_SECRET` to hold the value of the Ingress secret.
+3. Define environment variable `INGRESS_SECRET` to hold the value of the Ingress secret:
    ```sh
    export INGRESS_SECRET=<INGRESS_SECRET>
    ```
    {: pre}
 
-4. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmsubdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS. 
+4. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmsubdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS: 
 
    ```sh
    ./ingress.sh ibmsubdomain_https
@@ -263,13 +263,13 @@ Use Ingress to set up the cluster inbound connection to the service.
    {: pre}
 
    The file is generated from a template file `ingress-ibmsubdomain-template.yaml` under yaml-templates folder by replacing all the values wrapped in the placeholders (`$`) with the appropriate values from the environment variables.
-5. Deploy the Ingress
+5. Deploy the Ingress:
    ```sh
    kubectl apply -f ingress-ibmsubdomain.yaml
    ```
    {: pre}
 
-6. Open your application in a browser at `https://<myapp>.<ingress-subdomain>/` or run the below command to see the HTTP output
+6. Open your application in a browser at `https://<myapp>.<ingress-subdomain>/` or run the below command to see the HTTP output:
    ```sh
    curl -I https://$MYAPP.$INGRESS_SUBDOMAIN
    ```
@@ -297,13 +297,13 @@ This section requires you to own a custom domain. You will need to create a `CNA
    ```
    {: pre}
 
-1. Deploy the Ingress
+1. Deploy the Ingress:
    ```sh
    kubectl apply -f ingress-customdomain-http.yaml
    ```
    {: pre}
 
-1. Access your application at `http://<myapp>.<example.com>/`
+1. Access your application at `http://<myapp>.<example.com>/`.
 
 ### with HTTPS
 {: #scalable-webapp-kubernetes-16}
@@ -354,31 +354,31 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 
 In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
 
-1. Create a service ID and set it as an environment variable.
+1. Create a service ID and set it as an environment variable:
    ```sh
    export SERVICE_ID=`ibmcloud iam service-id-create kubernetesnodeapp-tutorial --description "A service ID for scalable-webapp-kubernetes tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
    ```
    {: codeblock}
 
-2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}.
+2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}:
    ```sh
    ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
    ```
    {: codeblock}
 
-3. Create an API key for your service ID.
+3. Create an API key for your service ID:
    ```sh
    export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create kubernetesnodeapp-tutorial $SERVICE_ID --description "An API key for scalable-webapp-kubernetes tutorial." --output json | jq -r ".apikey"`
    ```
    {: codeblock}
 
-4. Create a secret in your cluster for that API key.
+4. Create a secret in your cluster for that API key:
    ```sh
    kubectl -n $KUBERNETES_NAMESPACE create secret generic kubernetesnodeapp-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
    ```
    {: codeblock}
    
-5. Run the following commands to install the External Secrets Operator.
+5. Run the following commands to install the External Secrets Operator:
    ```sh
    helm repo add external-secrets https://charts.external-secrets.io
    ```
@@ -442,7 +442,7 @@ kubectl autoscale deployment kubernetesnodeapp-deployment --cpu-percent=5 --min=
 {: pre}
 
 Once the autoscaler is successfully created, you should see
-`horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`
+`horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`.
 
 ## Remove resources
 {: #scalable-webapp-kubernetes-0}
