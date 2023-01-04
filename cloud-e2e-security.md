@@ -493,6 +493,7 @@ By default, the application is accessible on a generic subdomain of `containers.
 - Kubernetes [External Secrets Operator](https://external-secrets.io/v0.7.0/) to pull the secret TLS certificate directly from {{site.data.keyword.secrets-manager_short}}
 
 ### Create a {{site.data.keyword.cis_short_notm}} instance
+{: #cloud-e2e-security-cis-instance}
 
 - A {{site.data.keyword.cis_full_notm}}(https://{DomainName}/catalog/services/internet-services) instance is required.  Use an existing instance or create one from this [catalog entry](https://{DomainName}/catalog/services/internet-services).  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (probably outside of IBM) to use the CIS-provided domain name servers. This tutorial uses **example.com** for the DNS name.  Substitute **YOUR_DOMAIN** for **example.com** in all steps.  Also export it in the shell:
    ```sh
