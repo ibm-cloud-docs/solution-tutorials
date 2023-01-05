@@ -492,10 +492,10 @@ By default, the application is accessible on a generic subdomain of `containers.
 - {{site.data.keyword.secrets-manager_full_notm}} to integrate with Let's Encrypt to generate the TLS certificate for **secure-file-storage.example.com** and securely store.
 - Kubernetes [External Secrets Operator](https://external-secrets.io/v0.7.0/) to pull the secret TLS certificate directly from {{site.data.keyword.secrets-manager_short}}
 
-### Create a {{site.data.keyword.cis_short_notm}} instance
+### Provision a {{site.data.keyword.cis_short_notm}} and {{site.data.keyword.secrets-manager_short}} instance
 {: #cloud-e2e-security-cis-instance}
 
-- A {{site.data.keyword.cis_full_notm}}(https://{DomainName}/catalog/services/internet-services) instance is required.  Use an existing instance or create one from this [catalog entry](https://{DomainName}/catalog/services/internet-services).  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (probably outside of IBM) to use the CIS-provided domain name servers. This tutorial uses **example.com** for the DNS name.  Substitute **YOUR_DOMAIN** for **example.com** in all steps.  Also export it in the shell:
+- A [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) instance is required.  Use an existing instance or create one from this [catalog entry](https://{DomainName}/catalog/services/internet-services).  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (perhaps not in {{site.data.keyword.cloud_notm}}) to use the CIS-provided domain name servers. This tutorial uses **example.com** for the DNS name.  Substitute **your domain** for **example.com** in all steps.  Also export it in the shell:
    ```sh
    export MYDOMAIN=example.com
    ```
@@ -510,11 +510,16 @@ Create a DNS entry in the {{site.data.keyword.cis_short_notm}} instance using YO
 4. Scroll down to the DNS Records section and click **Add** to create a new record:
    1. Type: **CNAME**
    2. Name: **secure-file-storage**
-   3. Alias: The **Ingress subdomain** of YOUR-CLUSTER, `echo $INGRESS_SUBDOMAIN`.  Something like YOUR-CLUSTER-NAME-e012345678901234f61a87aaaaaaaa3a-0000.us-south.containers.appdomain.cloud
+   3. Alias: The **Ingress subdomain** of YOUR-CLUSTER.  Something like YOUR-CLUSTER-NAME-e012345678901234f61a87aaaaaaaa3a-0000.us-south.containers.appdomain.cloud.  In the shell:
+      ```sh
+      echo $INGRESS_SUBDOMAIN
+      ```
+   {: codeblock}
+
    4. Click **Add Record**
 
-Connect {{site.data.keyword.secrets-manager_short}} instance to Lets Encrypt.
-1. A Lets Encrypt ACME account and associated **.pem** file is required.  Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
+Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
+1. A Let's Encrypt ACME account and associated **.pem** file is required.  Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
    1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account) contains instructions and a link to the creation tool.
    2. Run **acme-account-creation-tool** to create an accout specifically for this secure-file-storage example.  Below is an example session for a Mac.:
    ```
@@ -547,9 +552,9 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Lets Encrypt.
 3. Connect the {{site.data.keyword.cis_short_notm}} as a DNS provider:
    1. Under DNS providers click **Add**.
    2. **Name** cis and choose **Cloud Internet Services** from the dropdown.
-   3. **Next**.
+   3. Click **Next**.
    4. In the **Authorization** tab choose the {{site.data.keyword.cis_short_notm}} instance.
-   5. **Add**.
+   5. Click **Add**.
 5. Add the TLS certificate secret to {{site.data.keyword.secrets-manager_short}}:
    1. Click the **Secrets** tab on the left.
    2. Click **Add**.
