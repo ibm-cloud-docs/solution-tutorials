@@ -49,7 +49,7 @@
                "name": "Build VPC Transit Hub and Spoke",
                "url": "vpc-transit1.hidden.html",
                "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
-               "imgSrc": "images/vpc-transit1-hidden/vpc-transit1-overview.svg"
+               "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
             },
             {
                "name": "Enhance cloud security by applying context-based restrictions",
