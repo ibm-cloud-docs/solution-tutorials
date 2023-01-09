@@ -105,7 +105,7 @@ Putting entities into a single project enables you to manage access control more
 2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
    - Provide a project name.
-   - Select resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
+   - Select the resource group where you will create your project and also the cloud services required in the later steps. Resource groups are a way for you to organize your account resources into customizable groupings.
    - Click on **Create**.
    - Wait until the project `status` changes to **Active**.
 3. Switch to the {{site.data.keyword.cloud-shell_short}} session that you started earlier and use it in this tutorial when you are asked to run CLI commands.
@@ -284,14 +284,11 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    ```
    {: pre}
 
-2. Under **Service credentials**, click on **New credential**
-   1. Give it a name - `cos-for-code-engine` and select **Writer** as the role
-   2. Click **Add**.
 3. Click **Buckets** then **Customize your bucket**
 
    _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
    1. Enter **Unique bucket name**:  `<yourInitials>-bucket-code-engine`.
-   3. Select a **Location**, region, where you created the {{site.data.keyword.codeengineshort}} project.
+   3. Select a **Location**, where you created the {{site.data.keyword.codeengineshort}} project.
    2. Select **Smart Tier** Storage class.
    3. Click **Create bucket**.
    4. Capture the bucket name in a shell variable:
@@ -317,6 +314,41 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    NLU_INSTANCE_NAME=YourServiceName
    ```
    {: pre}
+
+<!--##isworkshop#-->
+<!--
+### Create a Service ID
+{: #text-analysis-code-engine-create_service_id}
+
+To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](https://{DomainName}/iam/serviceids) and configure it with the right access policies.
+
+1. Go the page to manage [Service IDs](https://{DomainName}/iam/serviceids).
+1. **Create** a new service ID with a unique name, e.g `<PROJECT-NAME>-serviceId`.
+1. Click **Details** and make note of the `ID` of the Service ID. You will need it later.
+1. Select the **Access policies** tab.
+1. Click **Assign access**
+1. Add one access policy for the {{site.data.keyword.cos_short}} service:
+   1. Select **IAM services**.
+   2. Select **Cloud Object Storage** from the list.
+   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
+   4. Check **Operator** and **Writer** as roles.
+   5. Add the policy.
+1. Add another policy for the {{site.data.keyword.nlushort}} service:
+   1. Select **IAM services**.
+   2. Select **{{site.data.keyword.nlushort}}** from the list.
+   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
+   4. Check **Operator** and **Writer** as roles.
+   5. Add the policy.
+1. Click **Assign**.
+
+Now that you have configured the service ID, you need to update the {{site.data.keyword.codeengineshort}} project so that this service ID will be used when binding services.
+
+1. From the command line, update the project:
+   ```
+   ibmcloud code-engine project update --binding-service-id <ID-of-the-Service-ID-retrieved-from-Details-panel>
+   ```
+-->
+<!--#/isworkshop#-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #text-analysis-code-engine-9}
