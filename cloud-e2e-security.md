@@ -23,7 +23,7 @@ completion-time: 2h
 # Apply end to end security to a cloud application
 {: #cloud-e2e-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis"}
+{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis", "cis"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
