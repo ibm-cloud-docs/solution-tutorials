@@ -198,7 +198,7 @@ It can be enlightening to explore the resources created at each step in the {{si
 
 This tutorial will add communication paths a layer at a time.  A pytest test suite exhaustively tests communication paths.  By the end of the tutorial all of the tests will pass.  The reader can follow along and test each layer using pytest.
 
-The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform different types of connectivity tests.  The ssh uses the default ssh environment to log into the test instances.  Navigate to the test [instances](https:///{DomainName}/vpc-ext/compute/vs) and notice the **Floating IP** value.  If there are unexpected problems verify it is possible to `ssh root@FloatingIP` from your workstation.
+The python test suite is in py/test_transit.py pytest.  Each test will ssh to one of the test instances and perform a type of connectivity test, like executing a `curl` command to one of the other instances.  The default ssh environment is used to log into the test instances.  Navigate to the test [instances](https:///{DomainName}/vpc-ext/compute/vs) and notice the **Floating IP** value.  If there are unexpected problems - verify it is possible to `ssh root@FloatingIP` from your workstation.
 
 Validation was done with python 3.6.8.  You can use docker, the .ssh directory is needed for your `id_rsa` private key file allowing the python tests to ssh to the instances:
 
@@ -349,11 +349,11 @@ The enterprise in this simulation is a VPC.  Connecting via {{site.data.keyword.
 {: #vpc-transit-router}
 {: step}
 
-The incentive for a transit VPC for enterprise <-> cloud traffic is typicall to route, inspect, monitor and log network traffic.  A firewall-router appliance can be installed in the transit VPC.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+The incentive for a transit VPC for enterprise <-> cloud traffic is typically to route, inspect, monitor and log network traffic.  In this step a firewall-router appliance can be installed in each zone of the transit VPC.
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
-Provision the firewall-router appliances.  An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines.
+Provision the firewall-router appliances.  An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines.  A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ![vpc-transit-firewall](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
 {: style="text-align: center;"}
@@ -478,7 +478,7 @@ Dallas 3|10.2.0.0/24|Delegate
 {: #vpc-transit-asymmetric}
 {: step}
 
-This diagram shows the successful routes in green.  Notice the arrow in both directions.  One of the unsucessful routes is shows an initial route in blue and an unsuccessful return route in red:
+This step will identify and fix an asymmetric routing issues.  The diagram below shows the successful routes in green.  Notice the arrow in both directions.  One of the unsuccessful routes has an initial route in blue and an unsuccessful return route in red:
 
 ![vpc-transit-asymmetric](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
 {: style="text-align: center;"}
