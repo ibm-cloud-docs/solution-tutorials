@@ -21,8 +21,8 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Centralize communication through a VPC Transit Hub and Spoke architecture Part 1
-{: #vpc-transit}
+# Centralize communication through a VPC Transit Hub and Spoke architecture - Part 1
+{: #vpc-transit1}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
 {: toc-completion-time="2h"}
