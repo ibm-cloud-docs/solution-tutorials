@@ -300,7 +300,7 @@ A change to the network configuration can take a couple of test runs for the und
 
 Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke and spoke <-> spoke.
 
-![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
+![vpc-transit-vpc-spoke-tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
 {: style="text-align: center;"}
 
 1. Apply the layer:
@@ -474,7 +474,7 @@ Dallas 3|10.3.0.0/24|Delegate
 
    This diagram shows the traffic flow.  Only the enterprise <-> spoke is passing through the firewall:
 
-![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
+![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 ## Add Spoke Egress routes to fix Asymmetric Routing
@@ -562,12 +562,12 @@ All connectivity tests now pass.
 {: #vpc-transit2-firewall}
 {: step}
 
-Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently only enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router.  
+Often an enterprise uses a transit VPC to monitor the traffic with the firewall-router.  Currently only enterprise <-> spoke traffic is flowing through the transit firewall-router.  This section is about routing all VPC to VPC traffic through firewall-router:
 
-![vpc-transit-more-firewall](images/vpc-transit-hidden/vpc-transit-more-firewall.svg){: class="center"}
+![vpc-transit-part2-fw](images/vpc-transit-hidden/vpc-transit-part2-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The flow lines show more traffic flowing through the firewall.  All traffic that flows through the transit gateway also flows through the firewall.  Notice in spoke 0 that traffic within the spoke (or transit) will not flow through the firewall.
+Notice that traffic within a VPC enterprise <-> enterprise, transit <-> transit and spokeN <-> spokeN will not flow through the firewall.
 
 
 ### Route Spoke and Transit to the firewall-router
