@@ -30,7 +30,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.
+This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part one of a two part tutorial.
 
 A {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
 
@@ -43,6 +43,8 @@ A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}}.
 - The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
 
+High level view:
+
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
@@ -50,10 +52,11 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 
  During the journey the following are explored:
 - [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
+- VPC Network planning
 - VPC egress and ingress routing.
+- Connectivity via {{site.data.keyword.BluDirectLink}}
+- Connectivity via {{site.data.keyword.tg_short}}
 - Virtual Network Functions with optional Network Load Balancers to support high availability.
-- Virtual private endpoint gateways.
-- DNS resolution.
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
@@ -105,19 +108,19 @@ This diagram shows a single zone:
 The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the details:
 - The on premises CIDR is 192.168.0.0/16.
 - The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 0, 1, 2 is the zone number (shown for Dallas/us-south):
-   - 10.0.0.0/16, zone 0, Dallas 1, us-south-1.
-   - 10.1.0.0/16, zone 1, Dallas 2, us-south-2.
-   - 10.2.0.0/16, zone 2, Dallas 3, us-south-3.
+   - 10.1.0.0/16, zone 0, Dallas 1, us-south-1.
+   - 10.2.0.0/16, zone 1, Dallas 2, us-south-2.
+   - 10.3.0.0/16, zone 2, Dallas 3, us-south-3.
 - The transit VPC consumes CIDRs 10.\*.0.0/24:
-   - 10.0.0.0/24, zone 0.
-   - 10.1.0.0/24, zone 1.
-   - 10.2.0.0/24, zone 2.
+   - 10.1.0.0/24, zone 0.
+   - 10.2.0.0/24, zone 1.
+   - 10.3.0.0/24, zone 2.
 - Spoke 0 consumes 10.\*.1.0/24 or CIDRs:
-   - 10.0.1.0/24, zone 0.
-   - 10.1.1.0/24, zone 1.
-   - 10.2.1.0/24, zone 2.
+   - 10.1.1.0/24, zone 0.
+   - 10.2.1.0/24, zone 1.
+   - 10.3.1.0/24, zone 2.
 - The subnet CIDRs further divide the /24 into /26.
-- The zone box within a VPC shows the Address Prefix.  In the transit for zone 0 this is 10.0.0.0/16 which seems incorrect since it is not 10.0.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
+- The zone box within a VPC shows the Address Prefix.  In the transit for zone 0 this is 10.1.0.0/16 which seems incorrect since it is not 10.1.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc.  VPC instances are demonstrated in this tutorial.
@@ -279,11 +282,11 @@ Once python is ready:
    collected 292 items / 276 deselected / 16 selected                                                                                                             
    
    py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] PASSED              [  6%]
-   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] FAILED                     [ 12%]
+   py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.1.0.4 (169.48.155.56) r-transit-z0-s0] FAILED                     [ 12%]
    =================================================================== short test summary info ====================================================================
-   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.0.4 (169.48.155.56) r-transit-z0-s0] - assert False
-   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.0.2.4 (52.116.132.255) r-spoke1-z0-s0] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.0.0.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.1.0.4 (169.48.155.56) r-transit-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.1.2.4 (52.116.132.255) r-spoke1-z0-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z0-s0 (169.48.155.56) 10.1.0.4           -> 192.168.0.4 (52.118.150.249) r-enterprise-z0-s0] - assert False
    ============================================== 12 failed, 4 passed, 276 deselected, 1 warning in 72.32s (0:01:12) ==============================================
    ```
    {: codeblock}
@@ -391,11 +394,11 @@ Notice how wide the routes are in the transit's ingress routing table (shown for
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|0.0.0.0/0|10.0.0.196
-Dallas 2|0.0.0.0/0|10.1.0.196
-Dallas 3|0.0.0.0/0|10.2.0.196
+Dallas 1|0.0.0.0/0|10.1.0.196
+Dallas 2|0.0.0.0/0|10.2.0.196
+Dallas 3|0.0.0.0/0|10.3.0.196
 
-The next_hop identifies the firewall-router.  In the table above 10.0.0.196 zone Dallas 1 and 10.1.0.196 zone Dallas 2.  You can observe this using the {{site.data.keyword.cloud_notm}} console.
+The next_hop identifies the firewall-router.  In the table above 10.1.0.196 zone Dallas 1 and 10.2.0.196 zone Dallas 2.  You can observe this using the {{site.data.keyword.cloud_notm}} console.
 
 1. Open [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP** (click the **Name** column header to sort).
 1. Match them up with the table above to verify the next hop relationship.
@@ -415,20 +418,20 @@ To observe this:
 1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
 
 Also notice that the Address prefix for that transit VPC itself:
-- 10.0.0.0/16 Dallas 1.
-- 10.1.0.0/16 Dallas 2.
-- 10.2.0.0/16 Dallas 3.
+- 10.1.0.0/16 Dallas 1.
+- 10.2.0.0/16 Dallas 2.
+- 10.3.0.0/16 Dallas 3.
 
 The transit VPC will only use a subset of each zone:
-- 10.0.0.0/24 Dallas 1.
-- 10.1.0.0/24 Dallas 2.
-- 10.2.0.0/24 Dallas 3.
+- 10.1.0.0/24 Dallas 1.
+- 10.2.0.0/24 Dallas 2.
+- 10.3.0.0/24 Dallas 3.
  
 The address prefixes for the transit itself is expanded to include all of the spokes to allow the routes to flow to the enterprise.
 
 With these additional address prefixes:
 - Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through transit gateway tgw-link. 
-- Enterprise will learn that traffic enterprise -> (10.0.0.0/16, 10.1.0.0/16 10.2.0.0/16) should pass through transit gateway tgw-spoke.
+- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through transit gateway tgw-spoke.
 
 ## Removing the firewall for transit destination traffic
 {: #vpc-transit-stateful-routing}
@@ -448,9 +451,9 @@ One possible solution is to stop sending traffic destined to the transit VPC to 
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/24|Delegate
-Dallas 2|10.1.0.0/24|Delegate
-Dallas 3|10.2.0.0/24|Delegate
+Dallas 1|10.1.0.0/24|Delegate
+Dallas 2|10.2.0.0/24|Delegate
+Dallas 3|10.3.0.0/24|Delegate
 
 1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
 
@@ -471,7 +474,7 @@ Dallas 3|10.2.0.0/24|Delegate
 
    This diagram shows the traffic flow.  Only the enterprise <-> spoke is passing through the firewall:
 
-![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-flow1.svg){: class="center"}
+![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 ## Add Spoke Egress routes to fix Asymmetric Routing
@@ -489,14 +492,14 @@ The remaining failures are cross zone failures enterprise <-> spoke.
 
 Example failure:
    ```sh
-   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.1.1.4 (52.116.203.217) r-spoke0-z1-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.2.1.4 (52.116.203.217) r-spoke0-z1-s0] - assert False
    ```
 
-The blue line represents a TCP connection request from enterprise through the transit gateway: 192.168.0.4 <--TCP--> 10.1.1.4.  The transit gateway will choose a transit VPC zone based on the matching address prefix.  The matching address prefix for 10.1.1.4 is 10.1.1.0/24 in the lower zone.
+The blue line represents a TCP connection request from enterprise through the transit gateway: 192.168.0.4 <--TCP--> 10.2.1.4.  The transit gateway will choose a transit VPC zone based on the matching address prefix.  The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
 
 The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone.  The IBM VPC uses the industry standard state based routing for secure TCP connection tracking.  This requires that the TCP connection pass through the same firewall-router in both directions.  The VPC does not support tcp "Asymmetric Routing".
 
-It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  ICMP does not require a stateful connection.  Connectivity from 192.168.0.4 <--ICMP--> 10.1.1.4 via ICMP is possible.  You can run the ping marked tests to verify via copy paste of the failed output  The **l-** is for left and **r-** is for right:
+It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation.  ICMP does not require a stateful connection.  Connectivity from 192.168.0.4 <--ICMP--> 10.2.1.4 via ICMP is possible.  You can run the ping marked tests to verify via copy paste of the failed output  The **l-** is for left and **r-** is for right:
 
 **Expect success:**
    ```sh
@@ -542,9 +545,9 @@ In the diagram this is represented by the egress dashed line.
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|192.168.0.0/16|10.0.0.196
-Dallas 2|192.168.0.0/16|10.1.0.196
-Dallas 3|192.168.0.0/16|10.2.0.196
+Dallas 1|192.168.0.0/16|10.1.0.196
+Dallas 2|192.168.0.0/16|10.2.0.196
+Dallas 3|192.168.0.0/16|10.3.0.196
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
@@ -573,22 +576,22 @@ Routing all cloud traffic originating at the spokes through the transit VPC fire
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/8|10.0.0.196
-Dallas 2|10.0.0.0/8|10.1.0.196
-Dallas 3|10.0.0.0/8|10.2.0.196
+Dallas 1|10.1.0.0/8|10.1.0.196
+Dallas 2|10.1.0.0/8|10.2.0.196
+Dallas 3|10.1.0.0/8|10.3.0.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.0.0.4 (Dallas 1) attempting contact with 10.1.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.0.0.196.  
+Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.1.0.196.  
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/8|10.0.0.0.196
-Dallas 2|10.0.0.0/8|10.1.0.0.196
-Dallas 3|10.0.0.0/8|10.2.0.0.196
-Dallas 1|192.168.0.0/16|10.0.0.0.196
-Dallas 2|192.168.0.0/16|10.1.0.0.196
-Dallas 3|192.168.0.0/16|10.2.0.0.196
+Dallas 1|10.1.0.0/8|10.1.0.0.196
+Dallas 2|10.1.0.0/8|10.2.0.0.196
+Dallas 3|10.1.0.0/8|10.3.0.0.196
+Dallas 1|192.168.0.0/16|10.1.0.0.196
+Dallas 2|192.168.0.0/16|10.2.0.0.196
+Dallas 3|192.168.0.0/16|10.3.0.0.196
 
 This is going to introduce another cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destined to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} will route to the zone of the destination.,
 
@@ -596,34 +599,34 @@ Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/24|delegate
-Dallas 2|10.0.0.0/24|delegate
-Dallas 3|10.0.0.0/24|delegate
 Dallas 1|10.1.0.0/24|delegate
 Dallas 2|10.1.0.0/24|delegate
 Dallas 3|10.1.0.0/24|delegate
 Dallas 1|10.2.0.0/24|delegate
 Dallas 2|10.2.0.0/24|delegate
 Dallas 3|10.2.0.0/24|delegate
+Dallas 1|10.3.0.0/24|delegate
+Dallas 2|10.3.0.0/24|delegate
+Dallas 3|10.3.0.0/24|delegate
 
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit-do-not-route-intra-zone-traffic-to-firewall-router}
-In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly.  To accomplish this additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.0.1.0/24, 10.1.1.0/24, 10.2.1.0/24 the internal routes can be delegated.
+In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly.  To accomplish this additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.1.1.0/24, 10.2.1.0/24, 10.3.1.0/24 the internal routes can be delegated.
 
 Routes in spoke 0's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.1.0/24|delegate
 Dallas 1|10.1.1.0/24|delegate
 Dallas 1|10.2.1.0/24|delegate
-Dallas 2|10.0.1.0/24|delegate
+Dallas 1|10.3.1.0/24|delegate
 Dallas 2|10.1.1.0/24|delegate
 Dallas 2|10.2.1.0/24|delegate
-Dallas 3|10.0.1.0/24|delegate
+Dallas 2|10.3.1.0/24|delegate
 Dallas 3|10.1.1.0/24|delegate
 Dallas 3|10.2.1.0/24|delegate
+Dallas 3|10.3.1.0/24|delegate
 
 Similar routes are added to the transit and other spokes.
 
@@ -665,11 +668,11 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke 0 zone 1 10.1.1.4 routing to spoke 1 zone 0 10.0.2.4.  The matching egress route is:
+The green path is an example of the originator spoke 0 zone 1 10.2.1.4 routing to spoke 1 zone 0 10.1.2.4.  The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 2|10.0.0.0/8|10.1.0.196
+Dallas 2|10.1.0.0/8|10.2.0.196
 
 Moving left to right the firewall-router in the middle zone, zone 1, of the diagram is selected.  On the return path zone 0 is selected.
 
@@ -683,9 +686,9 @@ Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 2|10.0.0.0/16|10.0.0.196
-Dallas 3|10.0.0.0/16|10.0.0.196
+Dallas 2|10.1.0.0/16|10.1.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
+Dallas 3|10.2.0.0/16|10.2.0.196
 
 1. Apply the all_firewall_asym layer:
    ```sh
@@ -837,10 +840,10 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    Notice the failing vpedns tests like this one:
 
    ```sh
-   FAILED py/test_transit.py::test_vpe_dns_resolution[redis tvpc-spoke0-z0-s0 (169.48.153.106)) 10.0.1.4 -> tvpc-transit (['10.0.0.128/26', '10.1.0.128/26']) 5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] - AssertionErro...
+   FAILED py/test_transit.py::test_vpe_dns_resolution[redis tvpc-spoke0-z0-s0 (169.48.153.106)) 10.1.1.4 -> tvpc-transit (['10.1.0.128/26', '10.2.0.128/26']) 5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] - AssertionErro...
    ```
 
-   These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.0.0.128/26 or 10.1.0.128/26.  Looking at the stack trace notice it is resolving to an address like 166.9.14.12 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
+   These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26.  Looking at the stack trace notice it is resolving to an address like 166.9.14.12 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.
@@ -879,7 +882,7 @@ It is not currently possible to access a spoke VPE through a transit VPC cross z
 The [VPC reference architecture for IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
 
 Some obvious changes to make:
-- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
+- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.1.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
 - Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered.
 - Network Access Control Lists for each subnet should be carefully considered.
 
