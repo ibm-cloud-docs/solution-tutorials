@@ -46,8 +46,14 @@
                "imgSrc": ""
             },
             {
-               "name": "Build VPC Transit Hub and Spoke",
+               "name": "Build VPC Transit Hub and Spoke - Part1",
                "url": "vpc-transit1.hidden.html",
+               "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
+               "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
+            },
+            {
+               "name": "Build VPC Transit Hub and Spoke - Part2",
+               "url": "vpc-transit2.hidden.html",
                "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
                "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
             },
