@@ -107,20 +107,20 @@ This diagram shows a single zone:
 
 The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the details:
 - The on premises CIDR is 192.168.0.0/16.
-- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 0, 1, 2 is the zone number (shown for Dallas/us-south):
-   - 10.1.0.0/16, zone 0, Dallas 1, us-south-1.
-   - 10.2.0.0/16, zone 1, Dallas 2, us-south-2.
-   - 10.3.0.0/16, zone 2, Dallas 3, us-south-3.
+- The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
+   - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
+   - 10.2.0.0/16, zone 2, Dallas 2, us-south-2.
+   - 10.3.0.0/16, zone 3, Dallas 3, us-south-3.
 - The transit VPC consumes CIDRs 10.\*.0.0/24:
-   - 10.1.0.0/24, zone 0.
-   - 10.2.0.0/24, zone 1.
-   - 10.3.0.0/24, zone 2.
+   - 10.1.0.0/24, zone 1.
+   - 10.2.0.0/24, zone 2.
+   - 10.3.0.0/24, zone 3.
 - Spoke 0 consumes 10.\*.1.0/24 or CIDRs:
-   - 10.1.1.0/24, zone 0.
-   - 10.2.1.0/24, zone 1.
-   - 10.3.1.0/24, zone 2.
+   - 10.1.1.0/24, zone 1.
+   - 10.2.1.0/24, zone 2.
+   - 10.3.1.0/24, zone 3.
 - The subnet CIDRs further divide the /24 into /26.
-- The zone box within a VPC shows the Address Prefix.  In the transit for zone 0 this is 10.1.0.0/16 which seems incorrect since it is not 10.1.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
+- The zone box within a VPC shows the Address Prefix.  In the transit for zone 1 this is 10.1.0.0/16 which seems incorrect since it is not 10.1.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc.  VPC instances are demonstrated in this tutorial.
@@ -181,7 +181,7 @@ The subnets in the transit and spoke are for the different resources:
 {: #vpc-transit-create-test-instances}
 {: step}
 
-VPC Virtual Server Instances, VSIs, are provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes.  If the default configuration of 2 zones and 2 spokes is used then 8 instances will be provisioned.
+VPC Virtual Server Instances, VSIs, are provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes.  If the default configuration of 3 zones and 2 spokes is used then 12 instances will be provisioned.
 
 ![vpc-transit-test-instances](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
 {: style="text-align: center;"}
@@ -263,18 +263,18 @@ Once python is ready:
    ```
    {: codeblock}
 
-1. Run the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
+1. Run the zone 1 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
    **Expected:** Connectivity within a VPC, like enterprise -> enterprise pass.  Cross VPC, like enterprise -> transit, fail.
 
    ```sh
-   pytest -v -m "curl and lz0 and rz0"
+   pytest -v -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
    Below is example output that has been filtered for brevity:
    ```sh
-   (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -v -m "curl and lz0 and rz0"
+   (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -v -m "curl and lz1 and rz1"
    ===================================================================== test session starts ======================================================================
    platform linux -- Python 3.6.8, pytest-7.0.1, pluggy-1.0.0 -- /home/user/venv/bin/python3
    cachedir: .pytest_cache
@@ -310,12 +310,12 @@ Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke 
    ```
    {: codeblock}
 
-1. Run the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
+1. Run the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
    **Expected:** Connectivity within a VPC, transit <-> spoke, and spoke <-> spoke pass.  Connectivity to/from enterprise fails.
 
    ```sh
-   pytest -v -m "curl and lz0 and rz0"
+   pytest -v -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
@@ -339,12 +339,12 @@ The enterprise in this simulation is a VPC.  Connecting via {{site.data.keyword.
    ```
    {: codeblock}
 
-1. Run the zone 0 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz0** (left zone 0) and **rz0** (right zone 0).
+1. Run the zone 1 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
    **Expected:** Connectivity within a VPC, transit <-> spoke, enterprise <-> transit, spoke <-> spoke pass but enterprise <-> spoke fail.
 
    ```sh
-   pytest -v -m "curl and lz0 and rz0"
+   pytest -v -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
@@ -376,7 +376,7 @@ The terraform configuration will configure the firewall-router instance with [al
    **Expected:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass.  But transit -> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail.
 
    ```sh
-   pytest -v -m "curl and lz0 and (rz0 or rz1)"
+   pytest -v -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -468,7 +468,7 @@ Dallas 3|10.3.0.0/24|Delegate
    **Expected:** All tests except enterprise <-> spoke cross zone
 
    ```sh
-   pytest -v -m "curl and lz0 and (rz0 or rz1)"
+   pytest -v -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -541,7 +541,7 @@ In the diagram this is represented by the egress dashed line.
    **Expected:** All tests pass.
 
    ```sh
-   pytest -v -m "curl and lz0 and (rz0 or rz1)"
+   pytest -v -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -570,7 +570,7 @@ All connectivity tests now pass.
 The [VPC reference architecture for IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
 
 Some obvious changes to make:
-- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.1.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
+- CIDR blocks were chosen for clarity and ease of explanation.  The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space.  Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
 - Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered.
 - Network Access Control Lists for each subnet should be carefully considered.
 
