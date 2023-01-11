@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-01-09"
-lasttested: "2023-01-09"
+lastupdated: "2023-01-11"
+lasttested: "2023-01-11"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
@@ -92,20 +92,20 @@ In addition:
 {: #vpc-transit-provision-vpc-network-resources}
 {: step}
 
-In this step provision the VPC network resources.  It is important to carefully plan the network address space using non overlapping CIDR blocks.
+In this step provision the VPC network resources.  It is important to carefully plan when [designing an addressing plan for a VPC](/docs/vpc?topic=vpc-vpc-addressing-plan-design).  Make sure to use non overlapping CIDR blocks.
 
-It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of a zone as a single CIDR block and each VPC as consuming a slice of each of the zones:
+It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of an availability zone as a single CIDR block and each VPC as consuming a slice of each of the zones:
 
 ![vpc-transit-zones](images/vpc-transit-hidden/vpc-transit-zones.svg){: class="center"}
 {: style="text-align: center;"}
 
 
-This diagram shows a single zone:
+This diagram shows just zone 1 in more detail.  The subnet sizes and layout are identical in the other zones:
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-The diagram above shows the VPC layout in more detail. There is an enterprise on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the details:
+Above the enterprise is on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the details:
 - The on premises CIDR is 192.168.0.0/16.
 - The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
    - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
@@ -120,7 +120,7 @@ The diagram above shows the VPC layout in more detail. There is an enterprise on
    - 10.2.1.0/24, zone 2.
    - 10.3.1.0/24, zone 3.
 - The subnet CIDRs further divide the /24 into /26.
-- The zone box within a VPC shows the Address Prefix.  In the transit for zone 1 this is 10.1.0.0/16 which seems incorrect since it is not 10.1.0.0/24 (which is correct) and overlaps with the spokes.  This is a routing requirement that will be discussed in a later section.
+- The zone box within a VPC shows the Address Prefix.  In the transit for zone 1 this is 10.1.0.0/16 which overlaps with the spokes and seems incorrect.  CIDR 10.1.0.0/24 more accurately describes the transit VPC zone.  This is a routing requirement that will be discussed in a later section.
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc.  VPC instances are demonstrated in this tutorial.
@@ -447,7 +447,19 @@ This does not help with the traffic originating in the transit test instance pas
 ![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
 {: style="text-align: center;"}
 
-One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router.  The wide ingress routes for the transit are currently routing traffic to the firewall-router.  More specific routes can be added specifically for the transit to **Delegate** to the default behavior - send directly to the intended destination instead of the firewall-router.  Below are the required routes:
+One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router.  The wide ingress routes for the transit are currently routing traffic to the firewall-router.  More specific routes can be added specifically for the transit to **Delegate** to the default behavior - send directly to the intended destination instead of the firewall-router.
+
+This diagram shows the traffic flow that is desired for this step.  Only the enterprise <-> spoke is passing through the firewall:
+
+![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
+{: style="text-align: center;"}
+
+1. enterprise <-> transit
+2. spoke <-> transit
+3. spoke <-> spoke
+4. enterprise <--transit firewall-router--> spoke
+
+This routing can be achieved by adding these routes to the transit ingress route table:
 
 Zone|Destination|Next hop
 --|--|--
@@ -472,16 +484,6 @@ Dallas 3|10.3.0.0/24|Delegate
    ```
    {: codeblock}
 
-
-This diagram shows the high level traffic flow.  Only the enterprise <-> spoke is passing through the firewall:
-
-![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
-{: style="text-align: center;"}
-
-1. enterprise <-> transit
-2. spoke <-> transit
-3. spoke <-> spoke
-4. enterprise <--transit firewall-router--> spoke
 
 ## Add Spoke Egress routes to fix Asymmetric Routing
 {: #vpc-transit-asymmetric}
