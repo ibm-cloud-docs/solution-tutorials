@@ -274,6 +274,9 @@ Once python is ready:
 
    Below is example output that has been filtered for brevity:
    ```sh
+
+   TODO
+
    (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -v -m "curl and lz1 and rz1"
    ===================================================================== test session starts ======================================================================
    platform linux -- Python 3.6.8, pytest-7.0.1, pluggy-1.0.0 -- /home/user/venv/bin/python3
@@ -500,7 +503,7 @@ The remaining failures are cross zone failures enterprise <-> spoke.
 
 Example failure:
    ```sh
-   FAILED py/test_transit.py::test_curl[l-enterprise-z0-s0 (52.118.150.249) 192.168.0.4    -> 10.2.1.4 (52.116.203.217) r-spoke0-z1-s0] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z1-s0 (52.118.150.249) 192.168.0.4    -> 10.2.1.4 (52.116.203.217) r-spoke0-z2-s0] - assert False
    ```
 
 The blue line represents a TCP connection request from enterprise through the transit gateway: 192.168.0.4 <--TCP--> 10.2.1.4.  The transit gateway will choose a transit VPC zone based on the matching address prefix.  The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
@@ -511,13 +514,13 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 
 **Expect success:**
    ```sh
-   pytest -v -m ping -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
+   pytest -v -m ping -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
    ```
    {: codeblock}
 
 **Expect failure:**
    ```sh
-   pytest -v -m curl -k 'l-enterprise-z0-s0 and r-spoke0-z1-s0'
+   pytest -v -m curl -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
    ```
    {: codeblock}
 

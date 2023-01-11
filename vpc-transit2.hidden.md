@@ -90,8 +90,8 @@ In addition:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-## Background covered in Part one
-{: #vpc-transit2-background}
+## Summary of Part one
+{: #vpc-transit2-summary}
 
 In the [first part](todo) of this tutorial we carefully planned the address space of the transit and spoke VPCs.  The zone based architecture is shown below:
 
@@ -103,12 +103,12 @@ This diagram shows the traffic flow.  Only the enterprise <-> spoke is passing t
 ![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-This was achieved with the connectivity and routing.  All zones are configured similarly and the diagram below shows the details of zone 1:
+This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_short}} and VPC routing.  All zones are configured similarly and the diagram below shows the details of zone 1:
 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-part1.svg){: class="center"}
 {: style="text-align: center;"}
 
-The phantom address prefixes in the transit are used to advertise routes.  The CIDR 10.1.0.0/16 is for the transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 is for the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
+The phantom address prefixes in the transit are used to advertise routes.  The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 is covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
 
 Egress routes in the spokes route traffic to the firewall-router.  Ingress routes in the transit route enterprise <-> spoke traffic through the firewall-router.
 
