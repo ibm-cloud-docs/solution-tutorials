@@ -134,7 +134,7 @@ Traffic within a VPC will not flow through the firewall.
 If continuing from part one make special note of the configuration in the terraform.tfvars: `all_firewall = true`.
 {: tip}
 
-### Apply layers
+### Clone Companion Repository
 1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture.  In a desktop shell clone the repository:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit
@@ -172,32 +172,43 @@ If continuing from part one make special note of the configuration in the terraf
    directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
    ```
 
-Do not apply any resources.
+4. Apply all of the layers in part one and described above.
+   ```sh
+   $ ./apply.sh : spokes_egress_tf
+   ```
+   {: codeblock}
 
-### Route Spoke and Transit to the firewall-router
-{: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
-Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone is accomplished by these routes in the spoke's default egress routing table (shown for Dallas/us-south):
+
+If you were following along in part one some additional ingress routes were added to the transit ingress route table to avoid routing through the firewall-router.  In this step these have been removed and the transit ingress route table has just these entries so that all incoming traffic for a zone is routed to the firewall-router in the same zone:
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.1.0.0/8|10.1.0.196
-Dallas 2|10.1.0.0/8|10.2.0.196
-Dallas 3|10.1.0.0/8|10.3.0.196
+Dallas 1|0.0.0.0/0|10.1.0.196
+Dallas 2|0.0.0.0/0|10.2.0.196
+Dallas 3|0.0.0.0/0|10.3.0.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating transit instance.  For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (Dallas 2) will be sent through the firewall-router in Dallas 1: 10.1.0.196.  
+### Route Spoke and Transit to the firewall-router
+{: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
+Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone as the originating instance is accomplished by these routes in the spoke's default egress routing table (shown for Dallas/us-south):
+
+Zone|Destination|Next hop
+--|--|--
+Dallas 1|10.0.0.0/8|10.1.0.196
+Dallas 2|10.0.0.0/8|10.2.0.196
+Dallas 3|10.0.0.0/8|10.3.0.196
+
+Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance.  For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.  
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.1.0.0/8|10.1.0.0.196
-Dallas 2|10.1.0.0/8|10.2.0.0.196
-Dallas 3|10.1.0.0/8|10.3.0.0.196
-Dallas 1|192.168.0.0/16|10.1.0.0.196
-Dallas 2|192.168.0.0/16|10.2.0.0.196
-Dallas 3|192.168.0.0/16|10.3.0.0.196
-
-This is going to introduce a cross zone asymmetric route transit <--> spoke.  For example a transit worker in an upper zone pictorially will choose the firewall in the upper zone.  On the return trip the spoke in the lower zone will choose the firewall in the lower zone.  In the spokes, traffic destined to the transit should be delegated to normal traffic routing, meaning the{{site.data.keyword.tg_short}} will route to the zone of the destination.,
+Dallas 1|10.0.0.0/8|10.1.0.196
+Dallas 2|10.0.0.0/8|10.2.0.196
+Dallas 3|10.0.0.0/8|10.3.0.196
+Dallas 1|192.168.0.0/16|10.1.0.196
+Dallas 2|192.168.0.0/16|10.2.0.196
+Dallas 3|192.168.0.0/16|10.3.0.196
 
 Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
@@ -212,6 +223,8 @@ Dallas 3|10.2.0.0/24|delegate
 Dallas 1|10.3.0.0/24|delegate
 Dallas 2|10.3.0.0/24|delegate
 Dallas 3|10.3.0.0/24|delegate
+
+With these routes in place the return trip in the example in the spoke 10.2.1.4 -> 10.1.0.4 will be delegated to VPC routing.  In this case it will be the ingress routing of the transit in zone 1 and in turn onto the zone 1 firewall-router.
 
 
 ### Do not route Intra VPC traffic to the firewall-router
@@ -266,7 +279,7 @@ The green path is an example of the originator spoke 0 zone 1 10.2.1.4 routing t
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 2|10.1.0.0/8|10.2.0.196
+Dallas 2|10.0.0.0/8|10.2.0.196
 
 Moving left to right the firewall-router in the middle zone, zone 1, of the diagram is selected.  On the return path zone 0 is selected.
 
@@ -284,6 +297,8 @@ Dallas 2|10.1.0.0/16|10.1.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
 Dallas 3|10.2.0.0/16|10.2.0.196
 
+These routes are also going to correct the transit <--> spoke cross zone asymmetric routing problem.  Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4.  Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone).  On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
+
 1. Apply the all_firewall_asym layer:
    ```sh
    ./apply.sh all_firewall_asym_tf
@@ -297,6 +312,8 @@ Dallas 3|10.2.0.0/16|10.2.0.196
    pytest -v -m curl
    ```
    {: codeblock}
+
+All traffic between VPCs is now routed through the firewall-routers.
 
 ## High Performance High Availability (HA) Firewall-Router
 {: #vpc-transit2-high-performance-ha-firewall-router}
@@ -313,8 +330,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
    number_of_firewalls_per_zone = 2
    ```
 
-   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke VPCs.  It is best to apply all of the layers to this point:
-
+   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke VPCs.  It is best to apply all of the layers previously applied:
 
 1. Apply all the layers through the all_firewall_asym_tf layer:
    ```sh
@@ -337,16 +353,16 @@ Compare the Private IPs with those in the transit VPC ingress route table:
 
 Verify resiliency:
 
-1. Run the spoke 0 zone 0 tests:
+1. Run the spoke 0 zone 1 tests:
    ```sh
-   pytest -k r-spoke0-z0-s0 -m curl
+   pytest -k r-spoke0-z1-s0 -m curl
    ```
    {: codeblock}
 
 1. Open the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs)
-1. Locate the **BASENAME-fw-z0-s3-0** three vertical dots menu on the right and select **Stop**
+1. Locate the **BASENAME-fw-z1-s3-0** three vertical dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance, at which point all tests will pass.
-1. Locate the **BASENAME-fw-z0-s3-1** three vertical dots menu on the right and select **Stop**
+1. Locate the **BASENAME-fw-z1-s3-1** three vertical dots menu on the right and select **Stop**
 1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance.
 1. Run the **pytest** again and all tests fail.
 1. Start one or both of the firewall-router instances and the tests will pass again.
