@@ -56,7 +56,7 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 - VPC egress and ingress routing.
 - Connectivity via {{site.data.keyword.BluDirectLink}}
 - Connectivity via {{site.data.keyword.tg_short}}
-- Virtual Network Functions with optional Network Load Balancers to support high availability.
+- [Virtual Network Functions with optional Network Load Balancers to support high availability](/docs/vpc?topic=vpc-about-vnf-ha)
 - Virtual private endpoint gateways.
 - DNS resolution.
 
@@ -134,7 +134,8 @@ Traffic within a VPC will not flow through the firewall.
 If continuing from part one make special note of the configuration in the terraform.tfvars: `all_firewall = true`.
 {: tip}
 
-### Clone Companion Repository
+### Apply Layers
+{: #vpc-transit2-apply-layers}
 1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture.  In a desktop shell clone the repository:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit

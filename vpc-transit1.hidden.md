@@ -52,11 +52,11 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 
  During the journey the following are explored:
 - [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
-- VPC Network planning
-- VPC egress and ingress routing.
-- Connectivity via {{site.data.keyword.BluDirectLink}}
-- Connectivity via {{site.data.keyword.tg_short}}
-- Virtual Network Functions with optional Network Load Balancers to support high availability.
+- [VPC Network planning](/docs/vpc?topic=vpc-vpc-addressing-plan-design)
+- [VPC egress and ingress routing](/docs/vpc?topic=vpc-about-custom-routes)
+- Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/cloud/direct-link)
+- Connectivity via [{{site.data.keyword.tg_short}}](https://www.ibm.com/cloud/transit-gateway)
+- [Virtual Network Functions with optional Network Load Balancers to support high availability](/docs/vpc?topic=vpc-about-vnf-ha)
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
