@@ -268,7 +268,7 @@ Once python is ready:
    **Expected:** Connectivity within a VPC, like enterprise -> enterprise pass.  Cross VPC, like enterprise -> transit, fail.
 
    ```sh
-   pytest -v -m "curl and lz1 and rz1"
+   pytest -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
@@ -277,7 +277,7 @@ Once python is ready:
 
    TODO
 
-   (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -v -m "curl and lz1 and rz1"
+   (transit_vpc) user@cloudshell:~/vpc-transit$    pytest -m "curl and lz1 and rz1"
    ===================================================================== test session starts ======================================================================
    platform linux -- Python 3.6.8, pytest-7.0.1, pluggy-1.0.0 -- /home/user/venv/bin/python3
    cachedir: .pytest_cache
@@ -318,7 +318,7 @@ Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke 
    **Expected:** Connectivity within a VPC, transit <-> spoke, and spoke <-> spoke pass.  Connectivity to/from enterprise fails.
 
    ```sh
-   pytest -v -m "curl and lz1 and rz1"
+   pytest -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
@@ -347,7 +347,7 @@ The enterprise in this simulation is a VPC.  Connecting via {{site.data.keyword.
    **Expected:** Connectivity within a VPC, transit <-> spoke, enterprise <-> transit, spoke <-> spoke pass but enterprise <-> spoke fail.
 
    ```sh
-   pytest -v -m "curl and lz1 and rz1"
+   pytest -m "curl and lz1 and rz1"
    ```
    {: codeblock}
 
@@ -379,7 +379,7 @@ The terraform configuration will configure the firewall-router instance with [al
    **Expected:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass.  But transit -> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail.
 
    ```sh
-   pytest -v -m "curl and lz1 and (rz1 or rz2)"
+   pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -483,7 +483,7 @@ Dallas 3|10.3.0.0/24|Delegate
    **Expected:** All tests except enterprise <-> spoke cross zone
 
    ```sh
-   pytest -v -m "curl and lz1 and (rz1 or rz2)"
+   pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -514,13 +514,13 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
 
 **Expect success:**
    ```sh
-   pytest -v -m ping -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
+   pytest -m ping -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
    ```
    {: codeblock}
 
 **Expect failure:**
    ```sh
-   pytest -v -m curl -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
+   pytest -m curl -k 'l-enterprise-z1-s0 and r-spoke0-z2-s0'
    ```
    {: codeblock}
 
@@ -546,7 +546,7 @@ In the diagram this is represented by the egress dashed line.
    **Expected:** All tests pass.
 
    ```sh
-   pytest -v -m "curl and lz1 and (rz1 or rz2)"
+   pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 

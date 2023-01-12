@@ -263,7 +263,7 @@ What about the firewall-router itself?  This was not mentioned earlier but in an
    - Expected fail: cross zone transit <-> spoke and spoke <-> spoke.
 
    ```sh
-   pytest -v -m "curl and lz1 and (rz1 or rz2)"
+   pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
@@ -309,7 +309,7 @@ These routes are also going to correct the transit <--> spoke cross zone asymmet
    **Expected:** all tests pass
 
    ```sh
-   pytest -v -m curl
+   pytest -m curl
    ```
    {: codeblock}
 
@@ -383,10 +383,11 @@ Remove the NLB firewall:
 ## DNS
 {: #vpc-transit2-dns}
 {: step}
+The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it will be simpler to configure.  All zones are configured similarly and below is a diagram for a two zone architecture:
+
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
 
-The {{site.data.keyword.dns_full_notm}} service is used to provide names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it will be simpler to configure.
 
 ### DNS Resources
 {: #vpc-transit2-dns-resources}
@@ -406,9 +407,9 @@ Click on the **Custom resolver** tab on the left and notice the forwarding rules
 {: #vpc-transit2-dns-forwarding}
 Separate DNS instances learn each other's DNS names with forwarding rules.  In the diagram there are arrows that indicate a forwarding rule.  The associated table indicates when the forwarding rule will be used.  Starting on the left notice that the enterprise DNS forwarding rule will look to the transit for the DNS zones: x-transit.com, x-spoke0.com, and x-spoke1.com.
 
-The transit DNS instance can resolve x-transit.com and has forwarding rules to the spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
+The transit DNS instance can resolve x-transit.com and has forwarding rules to the enterprise and spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
 
-You can verify these forwarding rules in the {{site.data.keyword.cloud_notm}} console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.  All DNS zones are forwarded to the DNS resolvers in the transit VPC.
+You can verify these forwarding rules in the {{site.data.keyword.cloud_notm}} console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.  All DNS zones (except the transit) are forwarded to the DNS resolvers in the transit VPC.
 
 ### DNS Testing
 {: #vpc-transit2-dns-testing}
@@ -417,7 +418,7 @@ There are now a set of **curl DNS** tests that are available in the pytest scrip
 
 Test:
    ```sh
-   pytest -v -m dns
+   pytest -m dns
    ```
    {: codeblock}
 
@@ -425,13 +426,13 @@ Test:
 {: #vpc-transit2-VPE}
 {: step}
 
-![vpc-transit-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
-{: style="text-align: center;"}
-
 VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://{DomainName}/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
 - [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
 - [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
 - [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes).
+
+![vpc-transit-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
+{: style="text-align: center;"}
 
 1. Create the VPEs for the transit and the spokes, by applying the vpe layers:
    ```sh
@@ -443,22 +444,23 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 1. Test vpe and vpedns
    ```sh
-   pytest -v -m 'vpe or vpedns'
+   pytest -m 'vpe or vpedns'
    ```
    {: codeblock}
 
    Notice the failing vpedns tests like this one:
 
    ```sh
-   FAILED py/test_transit.py::test_vpe_dns_resolution[redis tvpc-spoke0-z0-s0 (169.48.153.106)) 10.1.1.4 -> tvpc-transit (['10.1.0.128/26', '10.2.0.128/26']) 5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] - AssertionErro...
+   FAILED py/test_transit.py::test_vpe_dns_resolution[redis spoke0-z1 -> transit 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud] - AssertionError: 166.9.48.220 not in ['10.1.0.128/26', '10.2.0.128/26', '10.3.0.128/26'] from 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud
    ```
 
-   These are failing because the DNS resolution.  In the example above the ID.private.databases.appdomain.cloud should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26.  Looking at the stack trace notice it is resolving to an address like 166.9.14.12 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
+   These are failing due to DNS resolution.  In the example above the REDIS name, ID.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26.  The error message asserts the REDIS name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints).  The DNS names can not be resolved by the private DNS resolvers.  Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.
    - For transit the fully qualified DNS name of the REDIS instance will be forwarded to the spoke instance that owns the REDIS instance.
-   - For spoke_from -> spoke_to access to REDIS the spoke_from needs the DNS name for the REDIS instance.
+   - For spoke_from -> spoke_to access to REDIS the spoke_from needs the DNS name for the REDIS instance.  The fully qualified REDIS name in spoke_from DNS instance will be forwarded to the transit.
+   - The transit forward fully qualified REDIS names to the corresponding spoke.
 
    ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
@@ -473,14 +475,14 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 1. Verify that all VPEs can be accessed from all test instances.
    ```sh
-   pytest -v -m 'vpe or vpedns'
+   pytest -m 'vpe or vpedns'
    ```
    {: codeblock}
 
 1. It can take a few tries for the DNS names to be resolved accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
 
    ```sh
-   pytest -v
+   pytest
    ```
    {: codeblock}
 
@@ -502,7 +504,7 @@ Floating IPs were attached to all test instances to support connectivity tests v
 
 Place each team into their own account.  Organize with [IBM Cloud enterprise](/docs/account?topic=account-what-is-enterprise)
 
-In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs.  You created a transit VPC firewall-router in each zone for centralized monitoring.  Test instances were used to verify connectivity and identify potential problems.  Routing table routes were used to identify the traffic paths required.
+In this tutorial you created a hub VPC and a set of spoke VPCs.  You routed all cross VPC traffic through transit VPC firewall-router.  DNS services were created for each VPC and forwarding rules created between them for workoads and REDIS.
 
 ## Remove resources
 {: #vpc-transit2-remove-resources}
