@@ -60,18 +60,17 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
-This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, DNS name resolution and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate a solution in the context of a complete architecture.
+This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate solutions.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-transit-objectives}
 
 * Understand the concepts behind a VPC based hub and spoke model.
-* Understand the applicability of a firewall-router and a transit VPC environment.
+* Understand the implementation of a firewall-router and a transit VPC environment.
 * Understand VPC ingress and egress routing.
 * Identify and optionally resolve asymmetric routing issues.
 * Connect VPCs via {{site.data.keyword.tg_short}}.
-* Utilize the DNS service routing and forwarding rules to build architecturally sound name resolution system.
 
 ## Before you begin
 {: #vpc-transit-prereqs}
@@ -88,9 +87,8 @@ In addition:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-## Provision VPC network resources
-{: #vpc-transit-provision-vpc-network-resources}
-{: step}
+## IP Address and Subnet Layout
+{: #vpc-transit-ip-address-and-subnet-layout}
 
 In this step provision the VPC network resources.  It is important to carefully plan when [designing an addressing plan for a VPC](/docs/vpc?topic=vpc-vpc-addressing-plan-design).  Make sure to use non overlapping CIDR blocks.
 
@@ -120,13 +118,17 @@ Above the enterprise is on the left and the cloud-{{site.data.keyword.cloud_notm
    - 10.2.1.0/24, zone 2.
    - 10.3.1.0/24, zone 3.
 - The subnet CIDRs further divide the /24 into /26.
-- The zone box within a VPC shows the Address Prefix.  In the transit for zone 1 this is 10.1.0.0/16 which overlaps with the spokes and seems incorrect.  CIDR 10.1.0.0/24 more accurately describes the transit VPC zone.  This is a routing requirement that will be discussed in a later section.
+- The zone box within a VPC shows the Address Prefix.  In the transit for zone 1 this is 10.1.0.0/16 overlaps with the spokes and seems incorrect.  CIDR 10.1.0.0/24 more accurately describes the transit VPC zone.  This is a routing requirement that will be discussed in a later section.
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc.  VPC instances are demonstrated in this tutorial.
 - dns - {{site.data.keyword.dns_short}} location appliances.  See [working with custom resolvers](/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).
 - vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) for private connectivity to cloud services.
 - firewall - firewall-router VPC instances.
+
+## Provision VPC network resources
+{: #vpc-transit-provision-vpc-network-resources}
+{: step}
 
 1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture.  In a desktop shell clone the repository:
    ```sh
@@ -154,7 +156,7 @@ The subnets in the transit and spoke are for the different resources:
 1. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf).  The **-p** prints the layers:
 
    ```sh
-   $ ./apply.sh : : -p
+   ./apply.sh : : -p
    ```
    {: codeblock}
 
@@ -163,14 +165,22 @@ The subnets in the transit and spoke are for the different resources:
    directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
    ```
 
-1. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p to see what it will do:
+1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and export the API key for use by terraform:
+
+   ```sh
+   export IBMCLOUD_API_KEY=YourAPIKEy
+   ```
+   {: codeblock}
+
+
+3. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p to see what it will do:
 
    ```sh
    ./apply.sh -p : spokes_tf
    ```
    {: codeblock}
 
-1. Now do it:
+4. Now do it:
 
    ```sh
    ./apply.sh : spokes_tf
