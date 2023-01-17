@@ -150,7 +150,7 @@ Putting entities into a single project enables you to manage access control more
 {: #text-analysis-code-engine-deploy_app}
 {: step}
 
-{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, autoscale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
+{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, automatically scale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the public {{site.data.keyword.registryshort_notm}}. You will use these pre-built container images to deploy the respective applications. Creation of your own applications will be covered in a later step.
 
@@ -494,7 +494,7 @@ echo $BACKEND_PRIVATE_URL
 ```
 {: pre}
 
-You can change some of the source code to verify.  The second occurrance of `Text analysis with Code Engine` in the **body** of public/index.html and public/501.html can be changed to add in your name.  Create the container image in a code engine namespace and create the application in one command:
+You can change some of the source code to verify.  The second occurrence of `Text analysis with Code Engine` in the **body** of public/index.html and public/501.html can be changed to add in your name.  Create the container image in a code engine namespace and create the application in one command:
 ```sh
 ibmcloud ce application create --name frontend-fromsource --build-source . --env BACKEND_URL=$BACKEND_PRIVATE_URL
 ```
