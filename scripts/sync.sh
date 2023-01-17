@@ -3,7 +3,7 @@ COMMIT_MESSAGE=`date +"%Y-%m-%d %T%z"`' ('`git rev-parse HEAD`')'
 
 # get the publish branch
 mkdir build
-git clone --depth=1 --branch=publish git@github.ibm.com:cloud-docs/solution-tutorials.git build
+git clone --depth=1 --branch=publish git@github.ibm.com:cloud-docs-solutions/solution-tutorials.git build
 
 git config --global push.default simple
 git config --global user.email "autobuild@not-a-dom.ain"
