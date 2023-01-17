@@ -30,7 +30,7 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part two of a two part tutorial.  This tutorial is stand alone and it is not required to execute the steps in part one.
+This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part two of a two part tutorial.  Open [part 1](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1).  This tutorial is stand alone and it is not required to execute the steps in part one.
 
 A {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
 
@@ -80,15 +80,15 @@ This tutorial walks you through a complete example demonstrating the network con
 
 This tutorial requires:
 * `Terraform CLI` to run the Terraform commands.
+* Python to optionally run the pytest commands.
+* Firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check).
+* An SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for options to install the prerequisites.
 
 In addition:
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Summary of Part one
 {: #vpc-transit2-summary}

@@ -77,14 +77,15 @@ This tutorial walks you through a complete example demonstrating the network con
 
 This tutorial requires:
 * `Terraform CLI` to run the Terraform commands.
-* Python to optionally run the pytest commands
+* Python to optionally run the pytest commands.
+* Firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check).
+* An SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for some options to install the prerequisites.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for options to install the prerequisites.
 
 In addition:
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## IP Address and Subnet Layout
 {: #vpc-transit-ip-address-and-subnet-layout}
@@ -532,11 +533,19 @@ In the diagram below this is represented by the egress dashed line.
 
 1. Notice these routes in the spoke's egress routing table:
 
-Zone|Destination|Next hop
---|--|--
-Dallas 1|192.168.0.0/16|10.1.0.196
-Dallas 2|192.168.0.0/16|10.2.0.196
-Dallas 3|192.168.0.0/16|10.3.0.196
+   Zone|Destination|Next hop
+   --|--|--
+   Dallas 1|192.168.0.0/16|10.1.0.196
+   Dallas 2|192.168.0.0/16|10.2.0.196
+   Dallas 3|192.168.0.0/16|10.3.0.196
+
+1. Run all of the tests.  The `-n` option enabled by the `pytest-xdist` plugin runs tests in parallel. Tests will be run 30 at a time.
+
+   ```sh
+   pytest -n 30
+   ```
+   {: codeblock}
+
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
@@ -567,6 +576,8 @@ In this tutorial you created a hub VPC and a set of spoke VPCs.  You identified 
 
 ## Remove resources
 {: #vpc-transit-remove-resources}
+
+It is not required to remove the resources if you plan to continue with the the second part of this tutorial.
 
 Execute `terraform destroy` in all directories in reverse order using the `./apply.sh` command:
 
