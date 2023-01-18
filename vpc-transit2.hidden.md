@@ -164,7 +164,7 @@ If continuing from part one make special note of the configuration in the terraf
 4. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf).  The **-p** prints the layers:
 
    ```sh
-   $ ./apply.sh : : -p
+   ./apply.sh : : -p
    ```
    {: codeblock}
 
@@ -175,7 +175,7 @@ If continuing from part one make special note of the configuration in the terraf
 
 4. Apply all of the layers in part one and described above.
    ```sh
-   $ ./apply.sh : spokes_egress_tf
+   ./apply.sh : spokes_egress_tf
    ```
    {: codeblock}
 
@@ -211,23 +211,6 @@ Dallas 1|192.168.0.0/16|10.1.0.196
 Dallas 2|192.168.0.0/16|10.2.0.196
 Dallas 3|192.168.0.0/16|10.3.0.196
 
-Routes in each spoke's default egress routing table (shown for Dallas/us-south):
-
-Zone|Destination|Next hop
---|--|--
-Dallas 1|10.1.0.0/24|delegate
-Dallas 2|10.1.0.0/24|delegate
-Dallas 3|10.1.0.0/24|delegate
-Dallas 1|10.2.0.0/24|delegate
-Dallas 2|10.2.0.0/24|delegate
-Dallas 3|10.2.0.0/24|delegate
-Dallas 1|10.3.0.0/24|delegate
-Dallas 2|10.3.0.0/24|delegate
-Dallas 3|10.3.0.0/24|delegate
-
-With these routes in place the return trip in the example in the spoke 10.2.1.4 -> 10.1.0.4 will be delegated to VPC routing.  In this case it will be the ingress routing of the transit in zone 1 and in turn onto the zone 1 firewall-router.
-
-
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit2-do-not-route-intra-zone-traffic-to-firewall-router}
 In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly.  To accomplish this additional more specific routes can be added to delegate internal traffic.  For example in spoke 0, which has the CIDR ranges: 10.1.1.0/24, 10.2.1.0/24, 10.3.1.0/24 the internal routes can be delegated.
@@ -254,10 +237,9 @@ What about the firewall-router itself?  This was not mentioned earlier but in an
 
 ### Apply and Test More Firewall
 {: #vpc-transit2-apply-and-test-more-firewall}
-1. Edit config_tf/terraform.tfvars and ensure the value of **all_firewall** is **true**.
 1. Apply all the layers through the all_firewall_tf:
    ```sh
-   ./apply.sh : all_firewall_tf
+   ./apply.sh all_firewall_tf
    ```
 
 3. Run the test suite.
@@ -276,13 +258,13 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke 0 zone 1 10.2.1.4 routing to spoke 1 zone 0 10.1.2.4.  The matching egress route is:
+The green path is an example of the originator spoke 0 zone 2 10.2.1.4 routing to spoke 1 zone 1 10.1.2.4.  The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
 Dallas 2|10.0.0.0/8|10.2.0.196
 
-Moving left to right the firewall-router in the middle zone, zone 1, of the diagram is selected.  On the return path zone 0 is selected.
+Moving left to right the firewall-router in the middle zone, zone 2, of the diagram is selected.  On the return path zone 1 is selected.
 
 To fix this a few more specific routes need to be added to force the higher number zones to route to the lower zone number firewalls when a lower zone number destination is specified.  When referencing an equal or higher numbered zone continue to route to the firewall in the same zone.
 
@@ -307,10 +289,10 @@ These routes are also going to correct the transit <--> spoke cross zone asymmet
    {: codeblock}
 
 1. Run the test suite.
-   **Expected:** all tests pass
+   **Expected:** all tests pass, run them in parallel:
 
    ```sh
-   pytest -m curl
+   pytest -n 30 -m curl
    ```
    {: codeblock}
 
@@ -342,7 +324,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
 Observe the changes that were made:
 
 1. Open the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers).
-1. Select the load balancer in zone 0 (Dallas 1/us-south-1) it has the suffix fw-z0-s3.
+1. Select the load balancer in zone 1 (Dallas 1/us-south-1) it has the suffix fw-z1-s3.
 1. Note the **Private IPs**.
 
 Compare the Private IPs with those in the transit VPC ingress route table:
@@ -356,19 +338,19 @@ Verify resiliency:
 
 1. Run the spoke 0 zone 1 tests:
    ```sh
-   pytest -k r-spoke0-z1-s0 -m curl
+   pytest -k r-spoke0-z1 -m curl
    ```
    {: codeblock}
 
 1. Open the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs)
-1. Locate the **BASENAME-fw-z1-s3-0** three vertical dots menu on the right and select **Stop**
-1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance, at which point all tests will pass.
-1. Locate the **BASENAME-fw-z1-s3-1** three vertical dots menu on the right and select **Stop**
-1. Run the **pytest** again it may take a few minutes for the NLB to stop routing traffic to the stopped instance.
-1. Run the **pytest** again and all tests fail.
-1. Start one or both of the firewall-router instances and the tests will pass again.
+1. Stop traffic to the **0** firewall instance by specifying a security group that will not allow inbound port 80.  Locate the **BASENAME-fw-z1-s3-0** and open the details view:
+   1. Scroll down and hit the pencil edit next to the **Network Interface**
+   2. Uncheck the x-fw-inall-outall
+   3. Check the x-fw-in22-outall
+   4. Click **Save**
+2. Run the **pytest** again.  It will indicate failures.  It will take a few minutes for the NLB to stop routing traffic to the instance, at which point all tests will pass.  Continue waiting and running **pytest** until all tests pass.
 
-Remove the NLB firewall:
+The NLB firewall is no longer required.  Remove the NLB firewall:
 1. Change these two variables in config_tf/terraform.tfvars:
    ```sh
    firewall_nlb                 = false
@@ -406,20 +388,20 @@ Click on the **Custom resolver** tab on the left and notice the forwarding rules
 
 ### DNS Forwarding
 {: #vpc-transit2-dns-forwarding}
-Separate DNS instances learn each other's DNS names with forwarding rules.  In the diagram there are arrows that indicate a forwarding rule.  The associated table indicates when the forwarding rule will be used.  Starting on the left notice that the enterprise DNS forwarding rule will look to the transit for the DNS zones: x-transit.com, x-spoke0.com, and x-spoke1.com.
+Separate DNS instances learn each other's DNS names with forwarding rules.  In the diagram there are arrows that indicate a forwarding rule.  The associated table are a list of zones that could be resolved by the forwarding rule.  Starting on the left notice that the enterprise DNS forwarding rule will look to the transit for the DNS zones: x-transit.com, x-spoke0.com, and x-spoke1.com.
 
-The transit DNS instance can resolve x-transit.com and has forwarding rules to the enterprise and spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
+The transit DNS instance can resolve x-transit.com and has its own forwarding rules to the enterprise and spokes to resolve the rest.  Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
 
 You can verify these forwarding rules in the {{site.data.keyword.cloud_notm}} console in the **Custom resolver** tab in each of the DNS instances.  After locating the custom resolve click to open then click **Forwarding rules** tab.  All DNS zones (except the transit) are forwarded to the DNS resolvers in the transit VPC.
 
 ### DNS Testing
 {: #vpc-transit2-dns-testing}
 
-There are now a set of **curl DNS** tests that are available in the pytest script.  These tests will curl using the DNS name of the remote.
+There are now a set of **curl DNS** tests that are available in the pytest script.  These tests will curl using the DNS name of the remote.  There are quite a few so run the tests in parallel:
 
 Test:
    ```sh
-   pytest -m dns
+   pytest -n 30 -m dns
    ```
    {: codeblock}
 
@@ -441,7 +423,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    ```
    {: codeblock}
 
-   There are now a set of **vpe**  and **vpedns** tests that are available in type pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access redis remotely.
+   There are now a set of **vpe**  and **vpedns** tests that are available in the pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access redis remotely.
 
 1. Test vpe and vpedns
    ```sh

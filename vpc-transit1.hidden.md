@@ -103,7 +103,7 @@ This diagram shows just zone 1 in more detail.  The subnet sizes and layout are 
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-Above the enterprise is on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the details:
+Above the enterprise is on the left and the cloud-{{site.data.keyword.cloud_notm}} on the right.  In the {{site.data.keyword.cloud_notm}} a single zone for the transit VPC and Spoke 0.  Notice the CIDR blocks do not overlap and VPCs all consume a CIDR block in each zone:
 - The on premises CIDR is 192.168.0.0/16.
 - The zones in this [multi zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
    - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
@@ -218,7 +218,7 @@ Each pytest test will ssh to one of the test instances and perform a type of con
 
 1. Run the zone 1 curl tests in the suite my using the **-m** (markers) flag.  Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
-   **Expected:** Connectivity within a VPC, like enterprise -> enterprise pass.  Cross VPC, like enterprise -> transit, fail.
+   **Expected:** Connectivity within a VPC, like enterprise <-> enterprise pass.  Cross VPC, like enterprise -> transit, fail.
 
    ```sh
    pytest -m "curl and lz1 and rz1"
@@ -330,7 +330,7 @@ The enterprise in this simulation is a VPC.  Connecting via {{site.data.keyword.
 {: #vpc-transit-router}
 {: step}
 
-The incentive for a transit VPC for enterprise <-> cloud traffic is typically to route, inspect, monitor and log network traffic.  In this step a firewall-router appliance can be installed in each zone of the transit VPC.
+The incentive for a transit VPC for enterprise <-> cloud traffic is typically to route, inspect, monitor and log network traffic.  In this step a firewall-router appliance will be installed in each zone of the transit VPC.
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
