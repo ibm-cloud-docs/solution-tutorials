@@ -68,9 +68,11 @@ The following diagram presents an overview of the solution to be deployed.
 This tutorial is broken into the following steps:
 
 1. [Clone examples repo](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
-2. [Obtain required basic information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
+2. [Obtain the required information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
 3. [Configure tf.vars](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
 4. [Init, plan and apply](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
+5. [Connect to the virtual machine using console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vmconsole)
+6. [Connect to the virtual machines though Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
 {:note}
@@ -94,26 +96,28 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 
-## Clone Terraform template examples repo
+## Clone examples repo
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
-The example terraform templated for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-terraform-examples):
+The example terraform templates for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-terraform-examples).
 
-Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access. For example with GitHub CLI:
+Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access. 
+
+For example using GitHub CLI:
 
 ```bash
 gh repo clone IBM/vmwaas-terraform-examples
 ```
 
-If yu use HTTPS, use the following URL:
+Or using HTTPS with the following URL:
 
 ```bash
 https://github.com/IBM/vmwaas-terraform-examples.git
 ```
 
 
-## Obtain required basic information about your virtual data center
+## Obtain the required information about your virtual data center
 {: #vmware-as-a-service-vdc-vdcinfo}
 {: step}
 
@@ -121,15 +125,15 @@ As a prerequisite, use the [IBM Cloud Console](http://{DomainName}/vmware) to [c
 
 Once the instance and virtual data center has been deployed, you can collect the required details and virtual data center IDs from the Console.
 
-Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director console:
+Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console:
 
 1. In the VMware as a Service table, click a VMware as a Service instance name.
 2. On the Summary tab, review the information.
-3. On the VDC details page, click VMware Cloud Director console to access the console.
-4. Use the admin username and password to log in to the VMware Cloud Director console for the first time.
-5. After the admin is logged in to the VMware Cloud Director console, you can create extra users who have roles that allow them to access the VMware Cloud Director console.
+3. On the VDC details page, click VMware Cloud Director Console to access the console.
+4. Use the admin username and password to log in to the VMware Cloud Director Console for the first time.
+5. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
 
-You can login to the VMware Cloud Director console to collect the required information for your Terraform deployment, or you can alternatively use the `vmwaas.sh` shell script on the examples repo. The provided script will collect these values using {{site.data.keyword.vmware-service_full}} API.
+You can login to the VMware Cloud Director Console to collect the required information for your Terraform deployment. You can alternatively use the provided `vmwaas.sh` shell script on the examples repo. The script will collect these values using {{site.data.keyword.vmware-service_full}} API.
 
 To use the script, configure your region and API key with:
 
@@ -203,9 +207,16 @@ This demo terraform deployment deploys the following example infrastructure, whi
 ![Basic infrastructure](images/solution66-vmware-service-intro/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
-In this example, the creation is fully controlled though terraform variables - you do not need to change the actual terraform templates, if you need more networks or more virtual machines, for example. 
+The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){:external} and the main provider resources in the example used are:
 
-An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
+* [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2)){:external
+* [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2)){:external
+* [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm)){:external
+* [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set)){:external
+* [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule)){:external
+* [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){:external}
+
+In this example template, the creation is fully controlled though terraform variables - you do not need to change the actual terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
 
 Set the following common variable to access your instance and virtual data center.
 
@@ -586,9 +597,7 @@ firewall_rules = {
 }
 ```
 
-Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`. 
-
-For example:
+Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`, for example:
 
 ```bash
 cp terraform.tfvars-example terraform.tfvars
@@ -601,7 +610,7 @@ You can use it as such, add more networks, more virtual machines and customize N
 {: #vmware-as-a-service-vdc-apply}
 {: step}
 
-To initialize our Terraform project, run `terraform init` command in the example directory and observe the output as below.
+To initialize your Terraform project, run `terraform init` command in the example directory and observe the output.
 
 For example:
 
@@ -634,6 +643,21 @@ commands will detect it and remind you to do so if necessary.
 
 Next, you can run `terraform plan` to see what will be deployed.
 
+```bash
+% terraform plan
+data.vcd_resource_list.list_of_vdcs: Reading...
+data.vcd_resource_list.list_of_vdc_edges: Reading...
+data.vcd_resource_list.list_of_catalog_items: Reading...
+data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
+data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
+data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
+data.vcd_org_vdc.org_vdc: Reading...
+
+[output omitted]
+
+Plan: 29 to add, 0 to change, 0 to destroy.
+```
+
 Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
 
 For example: 
@@ -653,7 +677,31 @@ data.vcd_org_vdc.org_vdc: Reading...
 Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
 ```
 
-Check the `output`values for IP addressing and other access information to your virtual machines. 
+In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines.
+
+
+## Connect to the virtual machine using console
+{: #vmware-as-a-service-tf-connect-to-vmconsole}
+{: step}
+
+Get the username and password from the terraform `output`. Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) how to use and access VMware Cloud Director Console.
+
+To connect to the virtual machine with console in VMware Cloud Director Console:
+1. Click on Launch Web Console to open a local console to the virtual machine.
+2. Using the web console, log into the virtual machine using root as the user ID and the password you captured from the previous step.
+3. You should then be able to ping Internet resources such as www.ibm.com, showing that the networking is complete and working.
+
+
+## Connect to the virtual machines though Internet and validate connectivity
+{: #vmware-as-a-service-tf-connect-to-vm}
+{: step}
+
+The final step is to connect the virtual machine validate the deployment.
+
+To connect to the virtual machine through Public Internet:
+1. You should then be able to ping the public IP address `public-ip-1` or `public-ip-2` from your laptop or workstation, showing that the networking is complete and working.
+2. You should be able to use RDP to connect to your Jump Server using the public IP address `public-ip-1` and the username and password collected in the previous step.
+3. You can then disable the FW rule `dnat-to-jump` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray), or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
 
 
 ## Reference material

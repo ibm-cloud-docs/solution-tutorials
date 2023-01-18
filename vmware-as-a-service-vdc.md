@@ -57,7 +57,7 @@ The following diagram presents an overview of the solution to be deployed.
 
 This tutorial is broken into the following steps:
 
-1. [Log into the instance's VMware Cloud Director console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
+1. [Log into the instance's VMware Cloud Director Console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
 2. [Create virtual machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
 3. [Create IP Sets and Static Groups](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-ip-set-sg) 
 4. [Create a NAT rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-nat)
@@ -87,15 +87,15 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-vdc-deploy-network}
 {: step}
 
-The first step is to log into your {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director console and deploy the initial networks that will be used for testing.
+The first step is to log into your {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console and deploy the initial networks that will be used for testing.
 
-Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director console:
+Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console:
 
 1. In the VMware as a Service table, click a VMware as a Service instance name.
 2. On the Summary tab, review the information.
-3. On the VDC details page, click VMware Cloud Director console to access the console.
-4. Use the admin username and password to log in to the VMware Cloud Director console for the first time.
-5. After the admin is logged in to the VMware Cloud Director console, you can create extra users who have roles that allow them to access the VMware Cloud Director console.
+3. On the VDC details page, click VMware Cloud Director Console to access the console.
+4. Use the admin username and password to log in to the VMware Cloud Director Console for the first time.
+5. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
 
 Next, you will create the following virtual data center networks: 
 
@@ -215,7 +215,7 @@ Name               | Type            | External IP       | Internal IP         |
 `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
 `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
 
-Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director console.
+Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
 {:important} 
 
 To create a destination NAT (DNAT) rule:
