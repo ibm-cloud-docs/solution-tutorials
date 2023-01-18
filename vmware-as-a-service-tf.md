@@ -71,7 +71,7 @@ This tutorial is broken into the following steps:
 2. [Obtain the required information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
 3. [Configure tf.vars](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
 4. [Init, plan and apply](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
-5. [Connect to the virtual machine using console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vmconsole)
+5. [Connect to the VMware Cloud Director Console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
 6. [Connect to the virtual machines though Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
@@ -680,11 +680,17 @@ Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
 In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines.
 
 
-## Connect to the virtual machine using console
-{: #vmware-as-a-service-tf-connect-to-vmconsole}
+## Connect to the VMware Cloud Director Console
+{: #vmware-as-a-service-tf-connect-to-console}
 {: step}
 
-Get the username and password from the terraform `output`. Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) how to use and access VMware Cloud Director Console.
+Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
+
+Get the vistual machines' usernames and passwords from the terraform `output`, for example:
+
+```bash
+terraform output created_virtual_machines
+```
 
 To connect to the virtual machine with console in VMware Cloud Director Console:
 1. Click on Launch Web Console to open a local console to the virtual machine.
