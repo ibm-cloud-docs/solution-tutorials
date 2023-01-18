@@ -425,9 +425,9 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
    There are now a set of **vpe**  and **vpedns** tests that are available in the pytest script.  These **vpedns** test will verify that the DNS name of a redis instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access redis remotely.
 
-1. Test vpe and vpedns
+1. Test vpe and vpedns from spoke 0 zone 1:
    ```sh
-   pytest -m 'vpe or vpedns'
+   pytest -m 'vpe or vpedns' -k spoke0-z1
    ```
    {: codeblock}
 
@@ -462,12 +462,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    ```
    {: codeblock}
 
-1. It can take a few tries for the DNS names to be resolved accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
-
-   ```sh
-   pytest
-   ```
-   {: codeblock}
+It can take a few tries for the DNS names to be resolved accurately.  So try the test at least three times.  All tests should pass except the enterprise to spoke VPE tests:
 
 It is not currently possible to access a spoke VPE through a transit VPC cross zone.  The VPE return traffic does use spoke egress route table.  The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE in the same zone.  Configuring this is beyond the scope of this tutorial.
 
@@ -487,7 +482,7 @@ Floating IPs were attached to all test instances to support connectivity tests v
 
 Place each team into their own account.  Organize with [IBM Cloud enterprise](/docs/account?topic=account-what-is-enterprise)
 
-In this tutorial you created a hub VPC and a set of spoke VPCs.  You routed all cross VPC traffic through transit VPC firewall-router.  DNS services were created for each VPC and forwarding rules created between them for workoads and REDIS.
+In this tutorial you created a hub VPC and a set of spoke VPCs.  You routed all cross VPC traffic through transit VPC firewall-router.  DNS services were created for each VPC and forwarding rules created between them for workloads and a virtual private endpoint gateway (REDIS).
 
 ## Remove resources
 {: #vpc-transit2-remove-resources}
