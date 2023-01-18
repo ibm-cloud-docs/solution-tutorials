@@ -62,7 +62,7 @@ This tutorial is broken into the following steps:
 3. [Create IP Sets and Static Groups](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-ip-set-sg) 
 4. [Create a NAT rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-nat)
 5. [Create a firewall rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-fw)
-6. [Connect to the virtual machine using console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vm)
+6. [Connect to the virtual machine using console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vmconsole)
 7. [Connect to the virtual machine through Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) with `terraform` is also available.
@@ -285,7 +285,7 @@ The new firewall rule will be created. This may take a few seconds to complete. 
 
 
 ## Connect to the virtual machine using console
-{: #vmware-as-a-service-vdc-create-vm}
+{: #vmware-as-a-service-vdc-connect-to-vmconsole}
 {: step}
 
 Prior to logging into the virtual machine for the first time you will need to get the provisioned password.

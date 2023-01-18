@@ -94,7 +94,7 @@ You will find instructions to download and install these tools for your operatin
 <!--#/istutorial#-->
 
 
-## Clone examples repo
+## Clone Terraform template examples repo
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
@@ -190,7 +190,7 @@ export TF_VAR_vmwaas_org="f37f3422-e6c4-427e-b277-9fec334b99fb"
 export TF_VAR_vmwaas_vdc_name="vdc-demo"
 ```
 
-You can export these to your shell, or you can get the terraform.tfvars lines as output of the script using the `tfvars` option.
+You can export these to your shell, or you can get the terraform.tfvars lines to be added to `terraform.tfvars` files as an output of the script using the `tfvars` option.
 
 ## Configure tf.vars
 {: #vmware-as-a-service-vdc-tfvars}
