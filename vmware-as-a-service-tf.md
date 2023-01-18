@@ -699,9 +699,10 @@ To connect to the virtual machine with console in VMware Cloud Director Console:
 The final step is to connect the virtual machine validate the deployment.
 
 To connect to the virtual machine through Public Internet:
-1. You should then be able to ping the public IP address `public-ip-1` or `public-ip-2` from your laptop or workstation, showing that the networking is complete and working.
-2. You should be able to use RDP to connect to your Jump Server using the public IP address `public-ip-1` and the username and password collected in the previous step.
-3. You can then disable the FW rule `dnat-to-jump` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray), or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
+1. You should be able to ping the public IP address `public-ip-1` and ssh to your `app-server-1` from your laptop or workstation, showing that the networking is complete and working.
+2. You should be able to use RDP to connect to your Jump Server `jump-server-1` using the public IP address `public-ip-2` and the username and password collected in the previous step.
+3. You can then disable the FW rule `dnat-to-app-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
+4. You can then disable the FW rule `dnat-to-jump-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
 
 
 ## Reference material
