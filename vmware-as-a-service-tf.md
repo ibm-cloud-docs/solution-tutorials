@@ -537,11 +537,13 @@ nat_rules = {
   }  
 ```
 
-The terraform creates IP Sets for the public IP addresses, but you can define additional IP sets, for example for your on premises networks or other public IP addresses you need in the firewall rules.
-
-You can create your own 
+The terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
 
 ```terraform
+# Note. This terraform will an create IP set for each NAT rule, 
+# and it will use the NAT key as the `name` and `external_address`
+# or IP address of `external_address_target` as the IP address.
+
 # Note. You can create IP sets to be used in firewall rules.
 
 ip_sets = {
