@@ -1,14 +1,14 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-09-15"
-lasttested: "2021-12-08"
+  years: 2023
+lastupdated: "2023-01-18"
+lasttested: "2023-01-18"
 
 content-type: tutorial
 services: vmware-service, schematics
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 
 ---
 
@@ -26,7 +26,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance
+# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance with Terraform
 {: #vmware-as-a-service-tf}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware, schematics"}
@@ -65,7 +65,7 @@ The following diagram presents an overview of the solution to be deployed.
 8. Source NAT (SNAT) and destination NAT (DNAT) rules are created for public network access. SNAT to public internet is configured for all routed networks and DNAT is configured to access the application server. NO_SNAT rules are created for traffic directed to IBM Cloud Service Endpoints.
 9. Firewall rules are provisioned to secure network access to the environment. To create firewall rules, Static Groups and IP Sets are created for networks and individual IP addresses.
 
-This guide is broken into the following steps:
+This tutorial is broken into the following steps:
 
 1. [Clone examples repo](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
 2. [Obtain required basic information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
@@ -119,16 +119,27 @@ https://github.com/IBM/vmwaas-terraform-examples.git
 
 As a prerequisite, use the [IBM Cloud Console](http://{DomainName}/vmware) to [create your {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more virtual data centers](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
 
-Once the instance and virtual data center has been deployed, you can collect the API details and virtual data center IDs from the Console, or you can alternatively use the `vmwaas.sh` shell script on the examples repo. The script will collect these values using {{site.data.keyword.vmware-service_full}} API.
+Once the instance and virtual data center has been deployed, you can collect the required details and virtual data center IDs from the Console.
 
-Configure your region and API key with:
+Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director console:
+
+1. In the VMware as a Service table, click a VMware as a Service instance name.
+2. On the Summary tab, review the information.
+3. On the VDC details page, click VMware Cloud Director console to access the console.
+4. Use the admin username and password to log in to the VMware Cloud Director console for the first time.
+5. After the admin is logged in to the VMware Cloud Director console, you can create extra users who have roles that allow them to access the VMware Cloud Director console.
+
+You can login to the VMware Cloud Director console to collect the required information for your Terraform deployment, or you can alternatively use the `vmwaas.sh` shell script on the examples repo. The provided script will collect these values using {{site.data.keyword.vmware-service_full}} API.
+
+To use the script, configure your region and API key with:
 
 ```bash
 export IBMCLOUD_API_KEY=your-api-key-here
 export IBMCLOUD_REGION=region-here 
 ```
 
-Note. The default region is `us-south`.
+The default region is `us-south`.
+{:note}
 
 Script usage:
 
@@ -179,20 +190,22 @@ export TF_VAR_vmwaas_org="f37f3422-e6c4-427e-b277-9fec334b99fb"
 export TF_VAR_vmwaas_vdc_name="vdc-demo"
 ```
 
+You can export these to your shell, or you can get the terraform.tfvars lines as output of the script using the `tfvars` option.
+
 ## Configure tf.vars
 {: #vmware-as-a-service-vdc-tfvars}
 {: step}
 
-This demo terraform deployment deploys an example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
-
 This example infrastructure terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
 
-An overview of the infrastructure deployment is shown below.
+This demo terraform deployment deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
 
 ![Basic infrastructure](images/solution66-vmware-service-intro/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
-In this example, the creation is fully controlled though terraform variables - you do not need to change the actual terraform templates. An example `terraform.tfvars-example` file is provided below and example values are provided with explanations:
+In this example, the creation is fully controlled though terraform variables - you do not need to change the actual terraform templates, if you need more networks or more virtual machines, for example. 
+
+An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
 
 Set the following common variable to access your instance and virtual data center.
 
@@ -588,10 +601,59 @@ You can use it as such, add more networks, more virtual machines and customize N
 {: #vmware-as-a-service-vdc-apply}
 {: step}
 
-Next, you can run `terraform init`.
+To initialize our Terraform project, run `terraform init` command in the example directory and observe the output as below.
 
+For example:
 
+```bash
+% terraform init
 
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding latest version of hashicorp/random...
+- Finding latest version of vmware/vcd...
+- Using previously-installed hashicorp/random v3.4.3
+- Installing vmware/vcd v3.8.2...
+- Installed vmware/vcd v3.8.2 (signed by a HashiCorp partner, key ID 8BF53DB49CDB70B0)
+
+Partner and community providers are signed by their developers.
+If you'd like to know more about provider signing, you can read about it here:
+https://www.terraform.io/docs/cli/plugins/signing.html
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+Next, you can run `terraform plan` to see what will be deployed.
+
+Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
+
+For example: 
+
+```bash
+% terraform apply --auto-approve
+data.vcd_resource_list.list_of_vdcs: Reading...
+data.vcd_resource_list.list_of_vdc_edges: Reading...
+data.vcd_resource_list.list_of_catalog_items: Reading...
+data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
+data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
+data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
+data.vcd_org_vdc.org_vdc: Reading...
+
+[output omitted]
+
+Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
+```
+
+Check the `output`values for IP addressing and other access information to your virtual machines. 
 
 
 ## Reference material

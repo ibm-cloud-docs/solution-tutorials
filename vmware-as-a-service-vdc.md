@@ -1,14 +1,14 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-09-15"
-lasttested: "2021-12-08"
+  years: 2023
+lastupdated: "2023-01-18"
+lasttested: "2023-01-18"
 
 content-type: tutorial
 services: vmware-service, schematics
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 
 ---
 
@@ -26,7 +26,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance
+# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance using UI
 {: #vmware-as-a-service-vdc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware, schematics"}
@@ -55,7 +55,7 @@ The following diagram presents an overview of the solution to be deployed.
 ![Architecture](images/solution66-vmware-service-intro/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: class="center"}
 {: style="text-align: center;"}
 
-This guide is broken into the following steps:
+This tutorial is broken into the following steps:
 
 1. [Log into the instance's VMware Cloud Director console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
 2. [Create virtual machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
