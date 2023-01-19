@@ -58,6 +58,7 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
 
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources.  A layer may introduce small problems and demonstrate solutions in the context of a larger architecture.  The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
+
 ## Objectives
 {: #vpc-transit-objectives}
 
