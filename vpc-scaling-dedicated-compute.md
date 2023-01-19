@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2022-08-17"
-lasttested: "2022-08-17"
+  years: 2023
+lastupdated: "2023-01-03"
+lasttested: "2023-01-03"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -80,7 +80,7 @@ In this section, you will create the following cloud services required for the a
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on **Create workspace**.
    1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. 
-   2. Select **terraform_v1.1** as the Terraform version and click **Next**.
+   2. Select **terraform_v1.2** as the Terraform version and click **Next**.
 2. Under **Workspace details**,
    1. Provide a workspace name : **vpc-scaling-workspace**.
    2. Choose a `Resource Group` and a `Location`.
@@ -101,9 +101,9 @@ You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a 
 {: important}
 
 1. Navigate to the [Observability](https://{DomainName}/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
-2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you wish to enable monitoring.
+2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you want to enable monitoring.
 3. To configure platform logs, navigate to the [Observability](https://{DomainName}/observe) page and click **Logging** on the left pane.
-   1. Click on **Options > Edit platform** and **select** a region in which you have provisioned the VPC resources.
+   1. Click on **Options > Edit platform** and **select** a region in which you plan to provision the VPC resources.
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
 4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
 
@@ -147,7 +147,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
    {: tip}
 
 3. Follow the status logs by clicking on **Show more**.
-   After the apply is succesful, you should see the following resources provisioned:
+   After the apply is successful, you should see the following resources provisioned:
     - a VPC
     - two subnets (one in each zone) 
     - a public load balancer with a [security group](https://{DomainName}/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
@@ -212,7 +212,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
 
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
-2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `5` instances. You should see `2` instances under the **Memberships** tab of the instance group.
+2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. The Terraform template will schedule the actions for 5 minutes from the time you apply the plan. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `5` instances. You should see `2` instances under the **Memberships** tab of the instance group.
 3. Click on **Generate load** a couple of times to generate more traffic to see the instances scale to a maximum of `5`.
 
 ### Monitoring Load Balancer for VPC metrics
@@ -225,8 +225,8 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
    2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**.
 2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](https://{DomainName}/observe) page and click **Monitoring** on the left pane 
    1. Click on **Open dashboard** next to the instance marked as `Platform metrics`.
-   2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer Monitoring Metrics dashboard.
-   3. Under Dashboard templates, expand **IBM** > Load Balancer Monitoring Metrics. _The default dashboard is not editable_.
+   2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer for VPC Monitoring Metrics dashboard.
+   3. Under Dashboard templates, expand **IBM** > Load Balancer for VPC Monitoring Metrics. _The default dashboard is not editable_.
 3. Remember to generate load against your application.
   
 ### Check the logs
@@ -240,7 +240,7 @@ Platform logs are logs that are exposed by logging-enabled services and the plat
 2. Click on **Open dashboard** next to the instance marked as `Platform logs`.
 3. Under **Apps** from the top menu, check the load balancer CRN for which you want to see the logs and click **Apply**. 
 4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers) page by 
-    1. Clicking on the load balancer name for which you wish to check the logs.
+    1. Clicking on the load balancer name for which you want to check the logs.
     2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**.
     3. Remember to generate load against your application to see the logs.
 
@@ -281,7 +281,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
 
    ```sh
    curl \
-   -X POST \
+   -s -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
    http://$INSTANCE_IP/api/bank
@@ -291,7 +291,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
 5. Issue the following curl command to query the COS bucket. The application running on the instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the instance on the dedicated host.
    ```sh
    curl \
-   -X POST \
+   -s -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
    http://$INSTANCE_IP/api/bank
@@ -301,7 +301,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
 6. Issue the following curl command to query the database and COS bucket at once. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
-   -X POST \
+   -s -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
    http://$INSTANCE_IP/api/bank
@@ -338,7 +338,7 @@ In this section, you will also expand the block storage volume attached to the V
 {: #vpc-scaling-dedicated-compute-dedicated-next}
 {: step}
 
-Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption.  For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}
@@ -346,7 +346,7 @@ Extend the scenario by configuring SSL termination, sticky sessions, and end-to-
 
 To remove the Schematics workspace and its resources, follow these steps:
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
-2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+2. Click on the **Actions...** drop down and click **Destroy resources** to clean up all the resources that were provisioned via Schematics.
 3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).

@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-22"
-lasttested: "2022-03-07"
+lastupdated: "2023-01-10"
+lasttested: "2023-01-04"
 
 content-type: tutorial
-services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
+services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
 account-plan: paid
 completion-time: 2h
 
@@ -23,7 +23,7 @@ completion-time: 2h
 # Apply end to end security to a cloud application
 {: #cloud-e2e-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis"}
+{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -101,16 +101,10 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 In the next section, you are going to create the services used by the application.
 
 <!--##istutorial#-->
-If you want to skip the manual steps to create the services, the tutorial provides an automated alternative set of [terraform templates to use with {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics).
-{: tip}
-
-<!--#/istutorial#-->
-
-<!--##istutorial#-->
 ### Decide where to deploy the application
 {: #cloud-e2e-security-4}
 
-1. Identify the **location** and **resource group** where you will deploy the application and its resources.
+The **location** and **resource group** of the resources should match the kubernetes cluster.
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -197,7 +191,7 @@ Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} s
 Finally create the bucket.
 
 1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Storage**.
-2. Click **Create bucket** and then **Custom bucket**.
+2. Click **Create bucket** and then **Customize your bucket**.
    1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the {{site.data.keyword.keymanagementserviceshort}} service instance.
@@ -293,18 +287,18 @@ All services have been configured. In this section you will deploy the tutorial 
 ### Fill in credentials and configuration settings
 {: #cloud-e2e-security-15}
 
-1. Copy `credentials.template.env` to `credentials.env`:
-   ```sh
-   cp credentials.template.env credentials.env
-   ```
-   {: codeblock}
+      1. Copy `credentials.template.env` to `credentials.env`:
+         ```sh
+         cp credentials.template.env credentials.env
+         ```
+         {: codeblock}
 
-2. Edit `credentials.env` and fill in the blanks with these values:
-   * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-   * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+      2. Edit `credentials.env` and fill in the blanks with these values:
+         * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
+         * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
 
-   When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
-   {: tip}
+         When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
+         {: tip}
 
 3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
    1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
@@ -346,7 +340,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 | Variable | Value | Description |
 | -------- | ----- | ----------- |
-| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
+| `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
 | `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
@@ -492,28 +486,102 @@ Now that the application and its services have been successfully deployed, you c
 {: #cloud-e2e-security-19}
 {: step}
 
-By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will upload an existing certificate and deploy it to the cluster. You will also update the app configuration to use the custom domain.
+By default, the application is accessible on a generic subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided.  There are various combinations of services that can be used to manage DNS names and TLS certificates for integration into a kubernetes application.  This tutorial will use the following services:
+- DNS subdomain, **secure-file-storage**, of a DNS domain, **example.com**, that is managed by {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service.
+- [Let's Encrypt](https://letsencrypt.org/) to generate the TLS certificates.
+- {{site.data.keyword.secrets-manager_full_notm}} to integrate with Let's Encrypt to generate the TLS certificate for **secure-file-storage.example.com** and securely store.
+- Kubernetes [External Secrets Operator](https://external-secrets.io/v0.7.0/) to pull the secret TLS certificate directly from {{site.data.keyword.secrets-manager_short}}
 
-If you don't already have a certificate for your custom domain, you can obtain one from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates).
-{: tip}
+### Provision a {{site.data.keyword.cis_short_notm}} and {{site.data.keyword.secrets-manager_short}} instance
+{: #cloud-e2e-security-cis-instance}
 
-You need to have an instance of the {{site.data.keyword.secrets-manager_short}} service, you can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a Secrets Manager service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, you can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
+- A [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) instance is required.  Use an existing instance or create one from this [catalog entry](https://{DomainName}/catalog/services/internet-services).  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (perhaps not in {{site.data.keyword.cloud_notm}}) to use the CIS-provided domain name servers. This tutorial uses **example.com** for the DNS name.  Substitute **your domain** for **example.com** in all steps.  Also export it in the shell:
+   ```sh
+   export MYDOMAIN=example.com
+   ```
+   {: codeblock}
 
-Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
+- A {{site.data.keyword.secrets-manager_short}} instance is required.  Use an existing instance or create a new one described in [Creating a Secrets Manager service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui). If creating a new instance, name it **secure-file-storage-sm**.  You can enhance the security of your secrets at rest by integrating with the {{site.data.keyword.keymanagementserviceshort}} instance created earlier.
 
-1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Services and software**.
-2. Click on **Secrets** in the left navigation.
-3. Click **Add** and then **TLS certificates**.
-4. Click on the **Import certificate** tile.
-   * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
-   * Upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
-   * Click **Import** to complete the import process.
-5. Locate the entry for the imported certificate and click on it.
-   * Verify the type is **Imported certificate**
-   * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** symbol next to the certificate's **ID** and save it for later.
+Create a DNS entry in the {{site.data.keyword.cis_short_notm}} instance using YOUR-CLUSTER **Ingress subdomain** as the alias.
+1. Open the {{site.data.keyword.cis_short_notm}} service instance, you can find it in the [Resource List](https://{DomainName}/resources).
+2. Click the **Reliability** tab on the left.
+3. Click the **DNS** tab on the top.
+4. Scroll down to the DNS Records section and click **Add** to create a new record:
+   1. Type: **CNAME**
+   2. Name: **secure-file-storage**
+   3. Alias: The **Ingress subdomain** of YOUR-CLUSTER.  Something like YOUR-CLUSTER-NAME-e012345678901234f61a87aaaaaaaa3a-0000.us-south.containers.appdomain.cloud.  In the shell:
+      ```sh
+      echo $INGRESS_SUBDOMAIN
+      ```
+   {: codeblock}
 
-In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
+   4. Click **Add Record**
+
+Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
+1. A Let's Encrypt ACME account and associated **.pem** file is required.  Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
+   1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account) contains instructions and a link to the creation tool.
+   2. Run **acme-account-creation-tool** to create an accout specifically for this secure-file-storage example.  Below is an example session for a Mac.:
+   ```
+   $ ./acme-account-creation-tool-darwin-amd64 -e YOUREMAIL -o secure-file-storage.example.com -d letsencrypt-prod
+   INFO[2022-12-28T13:30:00-08:00] Registering a new account with the CA
+   INFO[2022-12-28T13:30:00-08:00] Account information written to file : secure-file-storage.example.com-account-info.json
+   INFO[2022-12-28T13:30:00-08:00] Private key written to file : secure-file-storage.example.com-private-key.pem
+
+   Account Info
+   {
+      "email": "YOUREMAIL",
+      "registration_uri": "https://acme-v02.api.letsencrypt.org/acme/acct/891897087",
+      "registration_body": {
+         "status": "valid",
+         "contact": [
+            "mailto:YOUREMAIL"
+         ]
+      }
+   }%
+   $ ls
+   secure-file-storage.example.com-account-info.json secure-file-storage.example.com-private-key.pem
+   ```
+2. Connect the Let's Encrypt ACME account to the {{site.data.keyword.secrets-manager_short}} instance.  See [Adding a certificate authority configuration in the UI](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui#add-certificate-authority-ui) for more details:
+   1. Open the {{site.data.keyword.secrets-manager_short}}service instance, you can find it in the [Resource List](https://{DomainName}/resources).
+   2. Open **Secrets engines** on the left and click **Public certificates**.
+   3. Under **Certificate authorities** click **Add**.
+   4. **Name**: LetsEncrypt and **Certificate authority**: Let's Encrypt.
+   5. For the Private key under **Select file** click **Add file** and choose the **secure-file-storage.example.com-private-key.pem** or your existing **.pem** file from the chooser.
+   6. Click **Add**.
+3. Connect the {{site.data.keyword.cis_short_notm}} as a DNS provider:
+   1. Under DNS providers click **Add**.
+   2. **Name** cis and choose **Cloud Internet Services** from the dropdown.
+   3. Click **Next**.
+   4. In the **Authorization** tab choose the {{site.data.keyword.cis_short_notm}} instance.
+   5. Click **Add**.
+5. Add the TLS certificate secret to {{site.data.keyword.secrets-manager_short}}:
+   1. Click the **Secrets** tab on the left.
+   2. Click **Add**.
+   3. Click **TLS certificates**.
+   4. Click **Order a public certificate**.
+   5. **Name** secure-file-storage.example.com.
+   6. **Certificate authority**: **LetsEncrypt** created earlier.
+   7. **Key algorithm**: **RSA2048**.
+   8. **DNS provider**: **cis** created earlier.
+   9. **Select domains** .
+   10. Open the **cis** example.com.
+   11. Click secure-file-storage.example.com created as a DNS CNAME record created earlier.
+   12. Click **Done** then **Order**.
+   13. Click the three vertical dots menu for the active secret and choose **Show snippet** and note the secret's **PUBLIC_CERT_ID** can be extracted from the command line.  Export the value in the shell.  It will look something like this:
+      ```sh   
+      export PUBLIC_CERT_ID=01234567-abcd-abcd-abcd-01234567abcd
+      ```
+      {: codeblock}
+
+6. Click **Endpoints** on the left.  Make note of the **Public** URL in the Service API section.  This is the {{site.data.keyword.secrets-manager_short}} **SECRETS_MANAGER_API_URL**.  Export it in the shell.  Something like this:
+   ```sh   
+   export SECRETS_MANAGER_API_URL=https://01234567-0123-0123-0123-01234567abcd.us-south.secrets-manager.appdomain.cloud
+   ```
+   {: codeblock}
+
+
+This tutorial leverages the [External Secrets Operator](https://external-secrets.io/) to access the {{site.data.keyword.secrets-manager_short}} service instance and the secret created from your cluster. A service ID and API key are required to provide access:
 
 1. Create a service ID and set it as an environment variable.
    ```sh
@@ -550,23 +618,41 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: codeblock}
 
-5. Edit the file `secure-file-storage.yaml`.
-   * Find the section for **Ingress**.
-   * Uncomment and edit the lines covering custom domains. Making sure to fill in the values for **your custom domain**, **{{site.data.keyword.secrets-manager_short}} API URL** and **certificate ID**.
-   
-   The CNAME entry in DNS for your custom domain needs to point to the URL for your cluster, i.e. `https://mycluster-1234-d123456789.us-south.containers.appdomain.cloud`.
-   {: tip}
+5. Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
+   ```sh   
+   echo MYDOMAIN $(printenv MYDOMAIN)
+   echo SECRETS_MANAGER_API_URL $(printenv SECRETS_MANAGER_API_URL)
+   echo PUBLIC_CERT_ID $(printenv PUBLIC_CERT_ID)
+   ```
+   {: codeblock}
 
-6. Apply the configuration changes to the deployed:
+   You can test the secrets manager variables with this command:
+   ```
+   ibmcloud sm secret --service-url $SECRETS_MANAGER_API_URL  --secret-type public_cert --id $PUBLIC_CERT_ID
+   ```
+   {: codeblock}
+
+5. Run the below command to generate a new copy of `secure-file-storage.yaml`. It will use all of the environment variables you configured together with the template file `secure-file-storage.template.yaml`.  You may want to first save the current version:
+   ```sh
+   cp secure-file-storage.yaml /tmp
+   ```
+   {: pre}
+
+   ```sh
+   ./generate_yaml.sh
+   ```
+   {: pre}
+
+   
+6. Apply the configuration changes to your cluster:
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
    {: codeblock}
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
-   * 
-   * Under **Manage Authentication**, in the **Authentication Settings** tab.
-   * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
+   * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
+   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 <!--#/istutorial#-->
 

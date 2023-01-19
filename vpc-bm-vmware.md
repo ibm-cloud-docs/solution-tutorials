@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-11-07"
+  years: 2023
+lastupdated: "2023-01-19"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -97,9 +97,9 @@ You have the **option** to use **NSX-T** for your VMware Virtual Machines and an
 
 If you want to use **NSX-T** in {{site.data.keyword.vpc_short}}, review [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-overview) first. Then proceed with the following steps. 
 
-1.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
-2.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment) 
-3.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-routing)
+1.  OPTIONAL - NSX-T: [Provision {{site.data.keyword.bm_is_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-vlannics)
+2.  OPTIONAL - NSX-T: [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-deploy) 
+3.  OPTIONAL - NSX-T: [Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-routing)
 
 ## Before you begin
 {: #vpc-bm-vmware-prereqs}
