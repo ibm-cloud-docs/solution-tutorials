@@ -21,7 +21,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Centralize communication through a VPC Transit Hub and Spoke architecture - Part 1
+# Centralize communication through a VPC Transit Hub and Spoke architecture - Part one
 {: #vpc-transit1}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
@@ -76,7 +76,7 @@ This tutorial requires:
 * Firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check).
 * An SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for options to install the prerequisites.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for a few options including a Dockerfile to easily create the prerequisite environment.
 
 In addition:
 
