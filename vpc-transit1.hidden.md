@@ -30,25 +30,21 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part one of a two part tutorial.
-
-A {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
-
-A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}}.  The cloud VPCs can be connected to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
-
-- The hub can be a central point of traffic routing between on premises and the cloud.
-- Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
-- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
-- The hub can be the repository for shared micro services used by spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
-- The hub can hold the VPN resources that are shared by the spokes.
-
-High level view:
+A {{site.data.keyword.vpc_full}} (VPC) provides the network isolation and security in the {{site.data.keyword.cloud_notm}} A VPC can be a building block to encapsulate a corporate division (marketing, development, accounting, ...) or to hold a collection of microservices owned by a DevSecOps team.  VPCs can be connected to an on premises enterprise and to each other.  This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high level view:
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
+This is part one of a two part tutorial.  This part will introduce the VPC transit hub as the conduit to the on premises enterprise.  Enterprise to spoke VPC connectivity between microservices will be discussed and implemented.  This architecture will support a number of scenarios:
+
+- The hub can be a central point of traffic routing between enterprise and the cloud.
+- Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
+- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
+- The hub can be the repository for shared microservices used by spokes.
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
+- The hub can hold the VPN resources that are shared by the spokes.
+
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
  During the journey the following are explored:
 - [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
@@ -60,7 +56,7 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
-This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate solutions.
+This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problems and demonstrate solutions in the context of a larger architecture.
 {: shortdesc}
 
 ## Objectives
