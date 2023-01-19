@@ -269,9 +269,9 @@ A change to the network configuration can take a couple of test runs for the und
 The **r-** and **l-** stand for **r**ight and **l**eft.  The middle part of the name identifies enterprise, transit, spoke0, spoke1, ... The z1, z2, ... identify the zone. The test will ssh to the left instance.  On the left instance the connectivity to the right instance is attempted.  The **test_curl** performs a curl connectivity on the left instance to the right instance.
 
 The test `test_curl[l-enterprise-z1 -> r-transit-z1]`:
-1. ssh to a test instance in enterprise zone 1
-2. execute a curl to transit zone 1
-3. assert the return string contains the ID of transit zone 1 to mark pass or fail
+1. ssh to a test instance in enterprise zone 1.
+2. execute a curl to transit zone 1.
+3. assert the return string contains the ID of transit zone 1 to mark pass or fail.
 
 The **README.md** in the comp companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has more details and the source code.
 
