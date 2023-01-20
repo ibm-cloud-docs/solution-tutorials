@@ -66,7 +66,7 @@ This tutorial is broken into the following steps:
 7. [Connect to the virtual machine through Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) with `terraform` is also available.
-{:note}
+{: note}
 
 ## Before you begin
 {: #vmware-as-a-service-vdc-prereqs}
@@ -108,7 +108,7 @@ isolated         | `net-isolated-db`   | `192.168.102.1/24`
 Routed virtual data center networks are attached to the edge gateway while an isolated virtual data center network is a standalone network without any platform provided routing capabilities. You can create more networks based on your needs by following the same logic and steps.
 
 The recommendation is to use RFC1918 addresses, for example IP subnets from the `10.0.0.0/8`, `172.16.0.0/12` or `192.168.0.0/16` ranges.
-{:note}
+{: note}
 
 To create a virtual data center network:
 
@@ -168,7 +168,7 @@ IP Sets and Static Groups are used as part of configuration of the firewall rule
 Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use {{site.data.keyword.cloud_notm}} portal](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses. 
 
 In these examples, `public-ip-0` refers to the first IP address provided in the list of available IP addresses, and should be noted as a normal IP address notation `aaa.bbb.ccc.ddd`. Likewise, `public-ip-1` refers to the second IP address and so on.
-{:note}
+{: note}
 
 You will create the following IP Sets and Static Groups:
 
@@ -216,7 +216,7 @@ Name               | Type            | External IP       | Internal IP         |
 `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
-{:important} 
+{: important} 
 
 To create a destination NAT (DNAT) rule:
 
@@ -265,7 +265,7 @@ Name             | Applications       | Source                | Destination     
 `default_rule`   | -                  | `Any`                 | `Any`                | Drop       | IPv4
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
-{:note}
+{: note}
 
 To create a firewall rule: 
 
