@@ -734,6 +734,113 @@ Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
 
 In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines.
 
+For example, to get access access information to your virtual machines:
+
+```bash
+% terraform output created_virtual_machines
+{
+  "app-server-1" = {
+    "admin_password" = "<omitted>"
+    "name" = "demo-app-server-1"
+    "network" = [
+      {
+        "ip_address" = "172.26.1.10"
+        "is_primary" = true
+        "name" = "demo-application-network-1"
+      },
+    ]
+  }
+  "db-server-1" = {
+    "admin_password" = "<omitted>"
+    "name" = "demo-db-server-1"
+    "network" = [
+      {
+        "ip_address" = "172.26.2.10"
+        "is_primary" = true
+        "name" = "demo-db-network-1"
+      },
+      {
+        "ip_address" = "172.26.3.10"
+        "is_primary" = false
+        "name" = "demo-isolated-network-1"
+      },
+    ]
+  }
+  "jump-server-1" = {
+    "admin_password" = "<omitted>"
+    "name" = "demo-jump-server-1"
+    "network" = [
+      {
+        "ip_address" = "172.26.1.11"
+        "is_primary" = true
+        "name" = "demo-application-network-1"
+      },
+    ]
+  }
+}
+```
+
+To get the NAT rules, and used public IP addresses:
+
+```bash
+% terraform output created_nat_rules
+{
+  "dnat-to-app-1" = {
+    "dnat_external_port" = ""
+    "external_address" = "xxx.yyy.zzz.19"
+    "internal_address" = "172.26.1.10"
+    "name" = "demo-dnat-to-app-1"
+    "rule_type" = "DNAT"
+    "snat_destination_address" = ""
+  }
+  "dnat-to-jump-1" = {
+    "dnat_external_port" = ""
+    "external_address" = "xxx.yyy.zzz.20"
+    "internal_address" = "172.26.1.11"
+    "name" = "demo-dnat-to-jump-1"
+    "rule_type" = "DNAT"
+    "snat_destination_address" = ""
+  }
+  "no-snat-to-ibm-cloud-161-26" = {
+    "dnat_external_port" = ""
+    "external_address" = ""
+    "internal_address" = "172.26.1.0/24"
+    "name" = "demo-no-snat-to-ibm-cloud-161-26"
+    "rule_type" = "NO_SNAT"
+    "snat_destination_address" = "161.26.0.0/16"
+  }
+  "no-snat-to-ibm-cloud-166-9" = {
+    "dnat_external_port" = ""
+    "external_address" = ""
+    "internal_address" = "172.26.1.0/24"
+    "name" = "demo-no-snat-to-ibm-cloud-166-9"
+    "rule_type" = "NO_SNAT"
+    "snat_destination_address" = "166.9.0.0/16"
+  }
+  "snat-to-internet-1" = {
+    "dnat_external_port" = ""
+    "external_address" = "xxx.yyy.zzz.18"
+    "internal_address" = "172.26.1.0/24"
+    "name" = "demo-snat-to-internet-1"
+    "rule_type" = "SNAT"
+    "snat_destination_address" = ""
+  }
+  "snat-to-internet-2" = {
+    "dnat_external_port" = ""
+    "external_address" = "xxx.yyy.zzz.18"
+    "internal_address" = "172.26.2.0/24"
+    "name" = "demo-snat-to-internet-2"
+    "rule_type" = "SNAT"
+    "snat_destination_address" = ""
+  }
+}
+``` 
+
+You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on.
+
+After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose publish access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
+{:important}
+
 
 ## Connect to the VMware Cloud Director Console
 {: #vmware-as-a-service-tf-connect-to-console}
