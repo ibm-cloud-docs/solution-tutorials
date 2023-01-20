@@ -419,33 +419,32 @@ The following variable `public_ips` is currently just an example, and it explain
 
 ```terraform
 # Note. Map of available 6 public IPs. You can use these names
-# in NAT rules.
-
+# in NAT rules. Do not change the map's keys here.
 
 public_ips = {
-    0 = {
-        name = "public-ip-0"
-        description = "SNAT rule to application-network-1 and application-network-2"
+    public-ip-0 = {
+      name = "public-ip-0"
+      description = ""
     },
-    1 = {
-        name = "public-ip-1" 
-        description = "DNAT rule to app-server-1"
+    public-ip-1 = {
+      name = "public-ip-1" 
+      description = ""
     },
-    2 = {
-        name = "public-ip-2" 
-        description = "DNAT rule to jump-server-1"
+    public-ip-2 = {
+      name = "public-ip-2" 
+      description = ""
     },
-    3 = {
-        name = "public-ip-3" 
-        description = ""
+    public-ip-3 = {
+      name = "public-ip-3" 
+      description = ""
     },
-    4 = {
-        name = "public-ip-4" 
-        description = ""
+    public-ip-4 = {
+      name = "public-ip-4" 
+      description = ""
     },
-    5 = {
-        name = "public-ip-5" 
-        description = ""
+    public-ip-5 = {
+      name = "public-ip-5" 
+      description = ""
     },
 }
 ```
@@ -540,16 +539,67 @@ nat_rules = {
 The terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
 
 ```terraform
-# Note. This terraform will an create IP set for each NAT rule, 
-# and it will use the NAT key as the `name` and `external_address`
-# or IP address of `external_address_target` as the IP address.
-
-# Note. You can create IP sets to be used in firewall rules.
+# Note. You need to create IP sets to be used in firewall rules.
+# You can use the `public_ips`keys here as address_targets,
+# you you can define `ip_addresses`.
 
 ip_sets = {
-    on-premises-networks = {
+    ip-set-on-public-ip-0 = {
+      description = "Public IP 0 - used for SNAT"
+      ip_addresses = []
+      address_target = "public-ip-0"
+    },
+    ip-set-on-public-ip-1 = {
+      description = "Public IP 2 - used for DNAT to app-server-1"
+      ip_addresses = []
+      address_target = "public-ip-1"
+    },
+    ip-set-on-public-ip-2 = {
+      description = "Public IP 2 - used for DNAT to jump-server-1"
+      ip_addresses = []
+      address_target = "public-ip-2"
+    },
+    ip-set-on-public-ip-3 = {
+      description = "Public IP 3"
+      ip_addresses = []
+      address_target = "public-ip-3"
+    },
+    ip-set-on-public-ip-4 = {
+      description = "Public IP 4"
+      ip_addresses = []
+      address_target = "public-ip-4"
+    },
+    ip-set-on-public-ip-5 = {
+      description = "Public IP 5"
+      ip_addresses = []
+      address_target = "public-ip-5"
+    },
+    ip-set-on-premises-networks = {
       description = "On-premises networks"
       ip_addresses = ["172.16.0.0/16",]
+      address_target = ""
+    },
+}
+```
+
+You can also use Static Groups in firewall rules as sources and targets.
+
+```terraform
+# Note. You need to create Static Groups to be used in firewall rules.
+# You can use `vdc_networks` as keys here.
+
+security_groups = {
+    sg-application-network-1 = {
+      description = "Static Group for application-network-1"
+      address_targets = ["application-network-1"]
+    },
+    sg-db-network-1 = {
+      description = "Static Group for db-network-1"
+      address_targets = ["db-network-1"]
+    },
+    sg-all-routed-networks = {
+      description = "Static Group for all VDC networks"
+      address_targets = ["application-network-1", "db-network-1"]
     },
 }
 ```
@@ -557,24 +607,18 @@ ip_sets = {
 The variable `firewall_rules` defines the firewall rules to be created. See the examples and modify based on your needs.
 
 ```terraform
-# Note. You can use `vdc_networks`, `nat_rules` (for DNAT) or
-# `ip_sets` keys as sources or destinations here. Terraform 
-# will pick the IP address of the specific resource and 
-# use that in the actual rule.
-
 # Note. Use "ALLOW or "DROP".
 
 # Note. Use Director UI to get the name for the Application
 # profiles."
-
 
 firewall_rules = {
     app-1-egress = {
         action  = "ALLOW"
         direction = "OUT"
         ip_protocol = "IPV4"
-        destinations = []                                       # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = ["application-network-1", "db-network-1"]     # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        destinations = []                                          # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        sources = ["sg-application-network-1", "sg-db-network-1"]  # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
         system_app_ports = []
         logging = false
         enabled = true
@@ -583,8 +627,8 @@ firewall_rules = {
         action  = "ALLOW"
         direction = "IN"
         ip_protocol = "IPV4"
-        destinations = ["dnat-to-app-1"]                        # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = []                                            # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        destinations = ["ip-set-on-public-ip-1"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
         system_app_ports = ["SSH","HTTPS","ICMP ALL"]
         logging = false
         enabled = true
@@ -593,8 +637,8 @@ firewall_rules = {
         action  = "ALLOW"
         direction = "IN"
         ip_protocol = "IPV4"
-        destinations = ["dnat-to-jump-1"]                       # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = []                                            # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        destinations = ["ip-set-on-public-ip-2"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+        sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
         system_app_ports = ["RDP"]
         logging = false
         enabled = true
@@ -627,13 +671,19 @@ Initializing the backend...
 Initializing provider plugins...
 - Finding latest version of hashicorp/random...
 - Finding latest version of vmware/vcd...
-- Using previously-installed hashicorp/random v3.4.3
+- Installing hashicorp/random v3.4.3...
+- Installed hashicorp/random v3.4.3 (signed by HashiCorp)
 - Installing vmware/vcd v3.8.2...
 - Installed vmware/vcd v3.8.2 (signed by a HashiCorp partner, key ID 8BF53DB49CDB70B0)
 
 Partner and community providers are signed by their developers.
 If you'd like to know more about provider signing, you can read about it here:
 https://www.terraform.io/docs/cli/plugins/signing.html
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
 
 Terraform has been successfully initialized!
 
@@ -728,7 +778,3 @@ Check the following VMware Cloud Director™ Tenant Portal Guides for more detai
 Check the following `terraform` registry for more detailed information about the provider, resources and data sources:
 
 * [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){:external}
-
-
-
-
