@@ -167,7 +167,6 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
-
 3. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf.  First use the -p to see what it will do:
 
    ```sh
