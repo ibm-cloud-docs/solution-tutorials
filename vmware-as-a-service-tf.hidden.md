@@ -42,13 +42,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) has already been provisioned. This tutorial uses an example `terraform` template, which can be customized and modified for your use case, if needed. 
+The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) has already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed. 
 
 In this tutorial, you will learn:
 
-* How to create virtual data center (VDC) networks with `terraform`,
-* How to create virtual machines into your create virtual data center networks with `terraform`, and
-* How to configure network address translation (NAT) and firewall (FW) rules in your virtual data center edge gateway with `terraform`.
+* How to create virtual data center (VDC) networks with Terraform,
+* How to create virtual machines into your create virtual data center networks with Terraform, and
+* How to configure network address translation (NAT) and firewall (FW) rules in your virtual data center edge gateway with Terraform.
 
 The following diagram presents an overview of the solution to be deployed.
 
@@ -89,7 +89,7 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
 * [{{site.data.keyword.cloud_notm}} API KEY](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui),
 * `jq` to query JSON files, and
-* `terraform` to use Infrastructure as Code to provision resources.
+* Terraform to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -100,7 +100,7 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
-The example terraform templates for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-terraform-examples).
+The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-Terraform-examples).
 
 Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access. 
 
@@ -183,11 +183,11 @@ NAME             ID                                    DIRECTOR_SITE_ID         
 vdc-demo         5e37ed2d-54cc-4798-96cf-c363de922ab4  b75efs1c-35df-40b3-b569-1124be37687d  crn:v1:bluemix:public:vmware:us-south:...
 ```
 
-To get terraform TF_VARs for authentication:
+To get Terraform TF_VARs for authentication:
 
 ```bash
 % ./vmwaas.sh tfvars vdc-demo
-Get variables for terraform in export format.
+Get variables for Terraform in export format.
 
 
 TF_VARs:
@@ -197,20 +197,20 @@ export TF_VAR_vmwaas_org="f37f3422-e6c4-427e-b277-9fec334b99fb"
 export TF_VAR_vmwaas_vdc_name="vdc-demo"
 ```
 
-You can export these to your shell, or you can get the terraform.tfvars lines to be added to `terraform.tfvars` files as an output of the script using the `tfvars` option.
+You can export these to your shell, or you can get the terraform.tfvars lines to be added to `Terraform.tfvars` files as an output of the script using the `tfvars` option.
 
 ## Configure tf.vars
 {: #vmware-as-a-service-vdc-tfvars}
 {: step}
 
-This example infrastructure terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
+This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
 
-This demo terraform deployment deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
+This demo Terraform deployment deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
 
 ![Basic infrastructure](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
-The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
+The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
 
 * [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2){: external}
 * [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2){: external}
@@ -219,7 +219,7 @@ The terraform uses [VMware Cloud Director Provider](https://registry.terraform.i
 * [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule){: external}
 * [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){: external}
 
-In this example template, the creation is fully controlled though terraform variables - you do not need to change the actual terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
+In this example template, the creation is fully controlled though Terraform variables - you do not need to change the actual Terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
 
 Set the following common variable to access your instance and virtual data center.
 
@@ -546,7 +546,7 @@ nat_rules = {
 ```
 {: codeblock}
 
-The terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
+The Terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
 
 ```terraform
 # Note. You need to create IP sets to be used in firewall rules.
@@ -889,8 +889,8 @@ The final step is to connect the virtual machine validate the deployment.
 To connect to the virtual machine through Public Internet:
 1. You should be able to ping the public IP address `public-ip-1` and ssh to your `app-server-1` from your laptop or workstation, showing that the networking is complete and working.
 2. You should be able to use RDP to connect to your Jump Server `jump-server-1` using the public IP address `public-ip-2` and the username and password collected in the previous step.
-3. You can then disable the FW rule `dnat-to-app-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
-4. You can then disable the FW rule `dnat-to-jump-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
+3. You can then disable the FW rule `dnat-to-app-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the Terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
+4. You can then disable the FW rule `dnat-to-jump-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the Terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
 
 
 ## Reference material
@@ -902,6 +902,6 @@ Check the following VMware Cloud Director™ Tenant Portal Guides for more detai
 * [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
 * [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
 
-Check the following `terraform` registry for more detailed information about the provider, resources and data sources:
+Check the following Terraform registry for more detailed information about the provider, resources and data sources:
 
 * [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external}
