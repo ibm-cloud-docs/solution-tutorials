@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-06"
-lasttested: "2021-12-06"
+  years: 2022
+lastupdated: "2022-12-22"
+lasttested: "2022-12-19"
 
 content-type: tutorial
 services: vpc
@@ -63,7 +63,7 @@ This tutorial requires:
 * `git` to clone source code repository,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
@@ -155,7 +155,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 20.x by running the following command.  
    ```sh
-   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-20-04-2-minimal-amd64-1") | .id')
+   IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-22-04-1-minimal-amd64-3") | .id')
    ```
    {: pre}
 
@@ -177,7 +177,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-   You will need to know the Floating IP for accessing the virtual server via your browser.  Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs or https://{DomainName}/vpc-ext/network/floatingIPs.
+   You will need to know the Floating IP for accessing the virtual server via your browser. Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs.
    {: tip}
 
 ## Install Apache, MySQL, and PHP
@@ -243,6 +243,24 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    ```
    {: pre}
 
+1. Open a `mysql` prompt.
+   ```sh
+   mysql
+   ```
+   {: pre}
+
+1. Run the following commands substituting your password for *yourPassword*.
+   ```sh
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourPassword';
+   ```
+   {: pre}
+
+1. Exit the `mysql` prompt.
+   ```sh
+   exit
+   ```
+   {: pre}
+
 1. Run the following script to secure the MySQL database.
    ```sh
    mysql_secure_installation
@@ -290,13 +308,13 @@ Experience your LAMP stack by installing an application. The following steps ins
    ```
    {: pre}
 
-4. In a working directory, create a text file `wordpress.sql` to configure the WordPress database.
+4. Open a `mysql` prompt and supply your password.
    ```sh
-   sensible-editor wordpress.sql
+   mysql -u root -p
    ```
    {: pre}
 
-5. Add the following commands substituting your database password for *yourPassword* and leaving the other values unchanged. Then save the file.
+5. Run the following commands substituting your database password for *yourPassword* and leaving the other values unchanged.
    ```sql
    CREATE DATABASE wordpress;
    CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'yourPassword';
@@ -305,20 +323,20 @@ Experience your LAMP stack by installing an application. The following steps ins
    ```
    {: pre}
 
-6. Run the following command to create the database.
+6. Exit the `mysql` prompt.
    ```sh
-   cat wordpress.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf
+   exit
    ```
    {: pre}
 
-7. After the command completes, delete the file `wordpress.sql`. Move the WordPress installation to the web server document root.
+7. Move the WordPress installation to the web server document root.
    ```sh
    ln -s /usr/share/wordpress /var/www/html/wordpress
    mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
    {: pre}
 
-8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress`. Substitute the floating IP address of your instance. It should look similar to the following image.
+8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress/wp-admin`. Substitute the floating IP address of your instance. It should look similar to the following image.
    ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
 
 ## Configure domain

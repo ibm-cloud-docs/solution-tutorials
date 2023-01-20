@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-12"
-lasttested: "2021-12-01"
+lastupdated: "2022-12-22"
+lasttested: "2022-12-08"
 
 content-type: tutorial
 services: containers, Registry, cis
@@ -54,9 +54,9 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 {: style="text-align: center;"}
 
 
-1. The developer builds Docker images for the application.
-2. The images are pushed to {{site.data.keyword.registryshort_notm}} in Dallas and London.
-3. The application is deployed to Kubernetes clusters in both locations.
+1. The developer builds a Docker image for the application.
+2. The image is pushed to a {{site.data.keyword.registryshort_notm}}.
+3. The application is deployed to Kubernetes clusters in Dallas and London.
 4. End-users access the application.
 5. {{site.data.keyword.cis_full_notm}} is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
@@ -69,7 +69,7 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition, make sure you:
@@ -93,8 +93,8 @@ When creating the Kubernetes cluster below:
 1. Locate in **North America** and **Dallas**
 
 Create the Kubernetes cluster:
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
-- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
 {: #create_cluster}
 
 While the cluster is getting ready, you are going to prepare the application.
@@ -104,7 +104,7 @@ While the cluster is getting ready, you are going to prepare the application.
 
 The cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
 
-1. Gain access to your cluster as described on the Access tab of your cluster.  Something like:
+1. Gain access to your cluster as described on the Access tab of your cluster. Something like:
    ```bash
    MYCLUSTER=my-us-cluster
    ibmcloud ks cluster config --cluster $MYCLUSTER
@@ -157,7 +157,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. You could also replace the Ingress Subdomain with the public Application Load Balancer, ALB of the cluster.   An `<IngressSubdomain>` looks sommething like `my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
+This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. You could also replace the Ingress Subdomain with the public Application Load Balancer, ALB of the cluster. An `<IngressSubdomain>` looks something like `my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
 
 ### Configure the Ingress for your DNS subdomain
 {: #multi-region-k8s-cis-ingress}
@@ -180,7 +180,7 @@ It will be required to have your own DNS domain name and a global load balancer 
         - path: /
           pathType: Prefix
           backend:
-            service
+            service:
               name: hello-world-service
               port:
                 number: 80
@@ -205,20 +205,16 @@ It will be required to have your own DNS domain name and a global load balancer 
    ```
    {: pre}
 
-   The curl command would look something like this: `curl --header 'Host: hello-world-service.ibmom.com' my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud`
+   The curl command would look something like this: `curl --header 'Host: hello-world-service.ibmom.com' my-us-cluster-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud/hostname`
 
 ## And then to another location
 {: #multi-region-k8s-cis-0}
 {: step}
 
-Repeat the following steps for the London location:
+Repeat the steps from above for the London location with the following replacements:
 * In [Create a Kubernetes cluster](#multi-region-k8s-cis-3) replace:
    * the cluster name **my-us-cluster** with **my-uk-cluster**;
-   * the Geography name **North America** with **Europe**;
-   * the Metro name **Dallas** with **London**;
-   * and the cluster name **my-us-cluster** with **my-uk-cluster**.
-* In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#multi-region-k8s-cis-create_namespace) replace:
-   * the target region **us-south** with **eu-gb**: `ibmcloud target -r eu-gb`
+   * the location from **North America** and **Dallas** with **Europe** and **London**.
 * In the [Deploy the application to the Kubernetes cluster](#multi-region-k8s-cis-deploy_application) replace:
    * Replace the MYCLUSTER= **my-us-cluster** with **my-uk-cluster**
 * [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress)
@@ -246,21 +242,13 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, click on **Add domain**.
-5. Enter your domain name and click **Connect and continue**.
-6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
+5. Enter your domain name and click **Next**.
+6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 8. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
-
-### Verify the Global Load Balancer name
-{: #multi-region-k8s-cis-glb}
-
-Earlier in [Configure the Ingress for the DNS subdomain](#multi-region-k8s-cis-ingress) you chose a `<glb_name>.<your_domain_name>`.  Verify the `<your_domain_name>` is consistent.  Verify the `<glb_name>` is not used by an existing GLB or by existing DNS record:
-1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the left navigation menu to select **Reliability** > **Global Load Balancers**.
-1. Select the **Load balancers** tab and inspect.
-1. Select the  **Reliability** > **DNS** and inspect.
 
 ### Configure Health Check for the Global Load Balancer
 {: #multi-region-k8s-cis-12}
@@ -290,7 +278,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 1. Select the **Origin pools** tab and click **Create**.
 1. Set **Name** to **US**
 1. Set **Origin Name** to **us-cluster**
-1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `kubectl get services` for us cluster
+1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the US cluster
 1. Set **Health check** to the one created in the previous section
 1. Set **Health Check Region** to **Western North America**
 1. Click **Save**
@@ -301,7 +289,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 1. Select the **Origin pools** tab and click **Create**.
 1. Set **Name** to **UK**
 1. Set **Origin Name** to **uk-cluster**
-1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `kubectl get services` for uk cluster
+1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the UK cluster
 1. Set **Health check** to the one created in the previous section
 1. Set **Health Check Region** to **Western Europe**
 1. Click **Save**
@@ -396,9 +384,24 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 ### Remove Kubernetes Cluster resources
 {: #multi-region-k8s-cis-23}
 
-1. Remove the Ingress.
-1. Remove the service.
-1. Remove the deployment.
+1. Remove the Ingress, you can do so by running the following command:
+   ```bash
+   kubectl delete -f glb-ingress.yaml
+   ```
+   {: pre}
+
+1. Remove the service, you can do so by running the following command:
+   ```bash
+   kubectl delete service hello-world-service
+   ```
+   {: pre}
+
+1. Remove the deployment, you can do so by running the following command:
+   ```bash
+   kubectl delete deployment hello-world-deployment
+   ```
+   {: pre}
+
 1. Delete the clusters if you created them specifically for this tutorial.
 
 ### Remove {{site.data.keyword.cis_short_notm}} resources
@@ -407,6 +410,8 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 1. Remove the GLB.
 1. Remove the origin pools.
 1. Remove the health checks.
+1. Update the DNS for your custom domain.
+1. Delete the {{site.data.keyword.cis_short_notm}} instance if you created it specifically for this tutorial.
 
 ## Related content
 {: #multi-region-k8s-cis-7}

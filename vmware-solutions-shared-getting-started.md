@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-15"
-lasttested: "2021-12-08"
+lastupdated: "2022-12-21"
+lasttested: "2022-12-21"
 
 content-type: tutorial
 services: vmwaresolutions, schematics
@@ -90,30 +90,34 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 ### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
-1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
-2. In the **IaaS platforms** section, click the **VMware Solutions Shared** card.
+1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](https://{DomainName}/infrastructure/vmware-solutions/console).
+2. In the **Platforms** section, click the **VMware Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
-4. Enter the virtual data center name, i.e. `vmware-tutorial`.
+4. Enter the virtual data center name, for example `vmware-tutorial`.
 5. Select the **Resource group** where to create the service instance.
-6. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
-7. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
-8. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
-9. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
+6. In the **Deployment topology** section, click the **Single-zone Vmware virtual data center** card.
+7. Select the {{site.data.keyword.Bluemix_notm}} geography to host the instance.
+8. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
+9. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
+10. After having read and agreed to the third-party service agreements, click on **Create**. 
+
+While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
+{: tip}
 
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
 
-1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
-2. Click on the newly created instance `vmware-tutorial`.
-3. Click on **Set Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console/instances/vdc) page.
+2. Click on the {{site.data.keyword.vmwaresolutions_short}} Site, for example `Dallas Director 01`.
+3. Click on **Reset site admin password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
-5. Note the tabs at the top and click **Networking** then click the **Edge Gateways** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
+5. Note the tabs at the top and click **Networking** then click the **Edge Gateways** category. Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. Click on the radio button next to the edge gateway name, at the top of the page, click on **Enable Distributed Routing**. You can proceed to the next steps, however come back to confirm the status of distributed routing is **enabled** prior to running the [Terraform plan](#vmware-solutions-shared-getting-started-create-schematics).
 7. Change to **Administration** from the main toolbar. Click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization name below (`vcd_org`).
 
 | Name | Description | Default |
 |----------|---------|---------|
-| vcd_user | vCloud Director username |  |
+| vcd_user | vCloud Director username | admin |
 | vcd_password | vCloud Director instance password |  |
 | vcd_org | vCloud Director organization name |  |
 | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
@@ -335,7 +339,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
 2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
 3. Select `terraform_v1.1` as the **Terraform version**. Click **Next**.
-4. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
+4. Enter the workspace name for your workspace, for example `vmware-tutorial`.
 5. Select the resource group and location of the workspace, you can also add tags and description as needed.
 6. Click **Next** and then **Create** to create your workspace. Your workspace is created and the workspace Settings page opens.
 7. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
@@ -347,15 +351,15 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
    {: tip}
 
 8. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
-9. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful.  Capture the information provided under the **Outputs** section. 
+9. Click on **Apply plan** to create the resources. Review the logs and confirm it was successful. Capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
 {: #vmware-solutions-shared-getting-started-access-virtual-machine}
 {: step}
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
-2. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
-3. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+2. Test connectivity to the Internet by pinging known addresses on the Internet, for example `ping 8.8.8.8`. 
+3. Test connectivity to the IBM Cloud by pinging internal addresses, for example [IBM Cloud private DNS resolver endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
    If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
     - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
@@ -372,7 +376,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 {: step}
 
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
-2. Click on the **Actions...** drop down and click **Destroy** to clean up all the resources that were provisioned via Schematics.
+2. Click on the **Actions...** drop down and click **Destroy resources** to clean up all the resources that were provisioned via Schematics.
 3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
 4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
 5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.

@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021
-lastupdated: "2021-12-07"
-lasttested: "2021-12-07"
+  years: 2022
+lastupdated: "2022-12-22"
+lasttested: "2022-12-21"
 content-type: tutorial
 services: CDN, containers, Registry, dns
 account-plan: paid
@@ -79,13 +79,13 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition:
 - create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
-   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
-   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
+   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-cluster-create-vpc-gen2).
+   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-cluster-create-classic) instructions.
 
 ## Deploy a dynamic web application to be accelerated
 {: #dynamic-content-cdn-2}
@@ -110,24 +110,39 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ```
    {: pre}
 
-1. Identify the cluster, {{site.data.keyword.registryshort_notm}} and cluster namespace.
-   - `ibmcloud cr info` will return the name of the container registry.
+1. Identify the cluster.
    - `ibmcloud ks cluster ls` will return cluster names.
    ```bash
-   ibmcloud cr info
    ibmcloud ks cluster ls
    ```
    {: pre}
 
-   Set the variables accordingly:
+   Set the variable accordingly:
    ```bash
    MYCLUSTER=<cluster_name>
+   ```
+   {: pre}
+
+1. Identify the {{site.data.keyword.registryshort_notm}} and set a namespace.
+   - `ibmcloud cr info` will return the name of the container registry.
+   ```bash
+   ibmcloud cr info
+   ```
+   {: pre}
+
+   Set the variable accordingly:
+   ```bash
    MYCONTAINERREGISTRY=<us.icr.io_like_value_returned_from_ibmcloud_cr_info>
+   ```
+   {: pre}
+
+   Set the variable to a name you want to used as a new namespace:
+   ```bash
    MYNAMESPACE=<my_container_registry_namespace>
    ```
    {: pre}
 
-1. Create a namespace to store the container image.  Feel free to skip this step and use an exising namespace.
+1. Create a namespace to store the container image. Feel free to skip this step and use an existing namespace.
    ```bash
    ibmcloud cr namespace-add $MYNAMESPACE
    ```
@@ -188,21 +203,22 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
 1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
-   * Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
-   * Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
+   * Set **Hostname** to a custom domain, for this tutorial it is not required to be a domain you own as we will not be using it, you can set it to `todo.example.com`.
+   * Leave the **Custom CNAME** prefix empty, it will default to a generated unique name, this is the entry we will use to test the CDN.
    * Leave **Host header** and **Path** empty.
    * Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
    * Uncheck HTTP port.
    * Check HTTPS port and select **Wildcard** SSL certificate.
 
-      With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
+      With the [**Wildcard** certificate)[https://{DomainName}/docs/CDN?topic=CDN-about-https#wildcard-certificate-support], you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, https://cdnakaivlnqidbg4.cdn.appdomain.cloud). 
       {: note}
 
 1. Accept the **Master Service Agreement** and click **Create**.
 
 After you have successfully created the CDN mapping:
+* **CNAME configuration required** may display in the Status column, you can ignore it and check the status again by selecting **Get status** from the overflow menu. It should change to *Running* after a few minutes.
 * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-* You application is now accessible through the CNAME only: `https://<CNAME>`.
+* You application is now accessible through the CNAME only: `https://<CNAME>`. You may need to wait a few minutes for all configuration to complete and for the CNAME to work.
 
 ## Enable Dynamic Content Acceleration (DCA)
 {: #dynamic-content-cdn-6}
@@ -235,7 +251,7 @@ After enabling DCA for a period, you can view the both static and dynamic traffi
 
 With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, {{site.data.keyword.cdn_full}} consults the most recent data to send that request over the best path to the origin.
 
-With **Prefetching** enabled, DCA also finds which content is required by the application and preemptively fetches content from origin and stores it close to the user by analyzing user behavior data and web sessions. The **Image compression** option serves compressed images to reduces the amount of content required to load a page, especially when end users have slow network speed. DCA also employs TCP-layer optimizations that accelerate connection set-up and reduce round trips.
+With **Prefetching** enabled, DCA also finds which content is required by the application and preemptively fetches content from origin and stores it close to the user by analyzing user behavior data and web sessions. The **Image compression** option serves compressed images to reduces the amount of content required to load a page, especially when end users have slow network speed. DCA also employs TCP-layer optimizations that accelerate connection set up and reduce round trips.
 
 ## Remove resources
 {: #dynamic-content-cdn-7}

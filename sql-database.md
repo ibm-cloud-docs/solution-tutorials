@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-07"
-lasttested: "2022-07-05"
+lastupdated: "2022-12-29"
+lasttested: "2022-12-29"
 
 content-type: tutorial
 services: codeengine, Db2whc
@@ -44,7 +44,7 @@ This tutorial shows how to provision a SQL (relational) database service. As adm
 * Create the database schema (table) and load data
 * Deploy a pre-built containerized app to {{site.data.keyword.codeengineshort}}
 * Connect the app and database service (share credentials)
-* Monitoring, Security, Backups & Recovery of cloud databases
+* Monitor, Secure, Backup & Recovery of cloud databases
 
 ## Before you begin
 {: #sql-database-prereqs}
@@ -66,6 +66,8 @@ You will find instructions to download and install these tools for your operatin
    git clone https://github.com/IBM-Cloud/cloud-sql-database.git
    cd cloud-sql-database
    ```
+   {: pre}
+
 2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
@@ -78,7 +80,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
 3. Pick the **Flex One** plan and change the suggested service name to **sqldatabase** (you will use that name later on). Pick a resource group and a location for the deployment of the database.
 4. Click on **Create**. The provisioning starts.
-5. In the **Resource List**, locate the new instance under **Services and software** and wait for it to be available (sometimes you may need to refresh the page). Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
+5. In the **Resource List**, locate the new instance under **Databases** and wait for it to be available (sometimes you may need to refresh the page). Click on the entry for your {{site.data.keyword.dashdbshort_notm}} service.
 6. Click on **Open Console** to launch the database console.
 
 ## Create a table
@@ -87,26 +89,31 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 
 You need a table to hold the sample data. Create it using the console.
 
-1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar and start **From file**.
-2. Select the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) from your local directory and open it.
-3. Click on **Run all** to execute the statement. It should show a success message.
+1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar. 
+2. Click on the **+** symbol (**Add a new script**) next to the **Untitled - 1** tab.
+3. Click on **From file** and select the file `cityschema.txt` from the Github repository that was previously cloned to your local directory and open it.
+4. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
 {: #sql-database-4}
 {: step}
 
-Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, e.g. from your local machine or from cloud object storage (COS) or Amazon S3 interface. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
+Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, for example from your local machine or from cloud object storage (COS) or Amazon S3 interface. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
 
-1. In the top navigation click on **Data** and **Load Data**. Then, after clicking **My Computer**, under **File selection**, click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
+1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Data** in the navigation bar. 
+2. From the **Load Data** tab, click on **My Computer**.
+3. Under **File selection**, click on **Drag a file here or browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
 2. Click **Next** to get to the schema overview. Choose the schema starting with **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
 
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
    {: tip}
 
-3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screenshot.
-   ![Screenshot showing the sampled data](images/solution5/LoadTabSeparator.png)
-4. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
-5. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
+3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. 
+4. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). 
+5. Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screen capture.
+   ![Screen capture showing the sampled data](images/solution5/LoadTabSeparator.png)
+6. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
+7. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 
 ## Verify Loaded Data Using SQL
 {: #sql-database-5}
@@ -114,14 +121,14 @@ Now that the table "cities" has been created, you are going to load data into it
 
 The data has been loaded into the relational database. There were no errors, but you should run some quick tests anyway. Use the built-in SQL editor to type in and execute some SQL statements.
 
-1. In the top navigation click on **Run SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Create new** to create a new editor tab.
+1. In the left navigation click on **Run SQL** to get back to the SQL editor. Click on the **+** symbol (**Add new script**) and **Create new** to create a new editor tab.
 
-   Instead of the built-in SQL editor you can use cloud-based and traditional SQL tools on your desktop or server machine with {{site.data.keyword.dashdbshort_notm}}. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
+   Instead of the built-in SQL editor you can use cloud-based and traditional SQL tools on your desktop or server machine with {{site.data.keyword.dashdbshort_notm}}. The connection information can be found in the **Administration** menu in the left navigation.
    {: tip}
 
 2. In the editor type or copy in the following query:   
    ```bash
-   select count(*) from cities
+   select count(*) from cities;
    ```
    {: codeblock}
 
@@ -130,7 +137,7 @@ The data has been loaded into the relational database. There were no errors, but
    ```sql
    select countrycode, count(name) from cities
    group by countrycode
-   order by 2 desc
+   order by 2 desc;
    ```
    {: codeblock}
   
@@ -139,8 +146,9 @@ The data has been loaded into the relational database. There were no errors, but
    ```sql
    select * from cities
    where name='San Francisco'
-   and countrycode='US'
+   and countrycode='US';
    ```
+   {: codeblock}
 
 ## Deploy the application code
 {: #sql-database-6}
@@ -209,7 +217,7 @@ The app to display city information based on the loaded data set is reduced to a
 To clean up resources used by the tutorial, follow these steps:
 1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). 
 2. In the {{site.data.keyword.codeengineshort}} section locate the project **sqldatabase**. Click on the three dots and select **Delete** to delete the project and its app.
-3. Locate the database `sqldatabase` under **Services and software**. Again, click on the three dots and select **Delete** to delete the database.
+3. Locate the database `sqldatabase` under **Databases**. Again, click on the three dots and select **Delete** to delete the database.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
 {: tip}
@@ -221,7 +229,7 @@ Want to extend this app? Here are some ideas:
 1. Offer a wildcard search on the alternate names.
 2. Search for cities of a specific country and within a certain population values only.
 3. Change the page layout by replacing the CSS styles and extending the templates.
-4. Allow form-based creation of new city information or allow updates to existing data, e.g. population.
+4. Allow form-based creation of new city information or allow updates to existing data, for example population.
 
 ## Related Content
 {: #sql-database-11}

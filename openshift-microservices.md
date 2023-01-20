@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-01"
+lastupdated: "2022-11-30"
 lasttested: "2022-09-23"
 
 content-type: tutorial
@@ -324,8 +324,8 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 
 When deploying new apps, making configuration changes, or simply inspecting the state of your cluster, the project-scope dashboard gives a Developer clear insights.
 
-1. Access the dashboard in the **Developer** perspective by clicking **Project** on the left side menu.
-2. You can also dive in a bit deeper by clicking the **View events** under the **Activity** tile. **Events** are useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
+1. Access the dashboard in the **Developer** perspective by clicking **Observe** on the left side menu.
+2. You can also dive in a bit deeper by clicking the **Events** tab. **Events** are useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
 
 Almost all actions in {{site.data.keyword.redhat_openshift_notm}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 

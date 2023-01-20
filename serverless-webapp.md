@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-10-18"
-lasttested: "2022-04-04"
+lastupdated: "2022-12-20"
+lasttested: "2022-12-20"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -74,7 +74,7 @@ Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](https://{D
    1. Click **Create**.
 2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
-4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and do **not** select **Partitioned** under **Partitioning**. Click **Create** to create the database.
+4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partioned** under **Partitioning**. Click **Create** to create the database.
 5. Switch back to the browser tab with the service dashboard page. Go to **Service credentials**, then:
    1. Click **New credential**.
    2. Set the name to **for-guestbook**. Leave the role as **Manager**.
@@ -150,7 +150,11 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. Open https://github.com/IBM-Cloud/serverless-guestbook/tree/ce in a new tab.
 1. Download a zip file by clicking **Code** then **Download ZIP**.
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
-1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section. Make sure that the URI does not end on a slash (`/`).
+1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section. 
+   
+   Make sure that the URI does not end on a slash (`/`).
+   {: note}
+
 1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
 1. Navigate to the **Configuration** tab for the bucket. In the endpoints section locate the **Static website hosting endpoints** section. Copy the **Public** endpoint into a browser tab.
 1. You should see the guestbook page.
@@ -188,5 +192,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #serverless-webapp-8}
 
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
-* [More code patterns on serverless](https://developer.ibm.com/patterns/category/serverless/)
+* [Serverless: Code patterns](https://developer.ibm.com/depmodels/serverless/patterns/)
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started)
