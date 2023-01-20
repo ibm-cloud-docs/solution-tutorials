@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) has already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed. 
+The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) has already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 
 In this tutorial, you will learn:
 
@@ -102,7 +102,7 @@ You will find instructions to download and install these tools for your operatin
 
 The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-Terraform-examples).
 
-Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access. 
+Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access.
 
 For example using GitHub CLI:
 
