@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-19"
-lasttested: "2023-01-19"
+lastupdated: "2023-01-20"
+lasttested: "2023-01-20"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -170,6 +170,11 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied. The reason is that rule allows access from a specific VPC only. The {{site.data.keyword.cloud-shell_short}} environment and its IP address, as documented in the logs in the **requestData->environment** fields, differ. Therefore, the request is denied.
+
+When working with the {{site.data.keyword.at_short}} logs, you can utilize query strings like the following to easily find the relevant log records:
+- When in report mode, `"context restriction" permit OR deny` returns the log lines with access which would have rendered a **Permit** or **Deny**.
+- In report mode, you can use `"context restriction" permit` to only show access which would have been the permitted. Similarly, use `"context restriction" deny` for denied access.
+- Last, when in **enforced** mode, use a query string like `context restriction rendered` for log lines related to denied access.
 
 Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](https://{DomainName}/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
 {: tip}
