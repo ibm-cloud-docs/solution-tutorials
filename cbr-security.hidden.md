@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-22"
-lasttested: "2022-12-15"
+  years: 2023
+lastupdated: "2023-01-19"
+lasttested: "2023-01-19"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -254,11 +254,12 @@ resource "ibm_cbr_rule" "cbr_rule_cos_k8s" {
       name  = "networkZoneId"
       value = ibm_cbr_zone.cbr_zone_k8s.id
     }
+  }
+  contexts {
     attributes {
       name  = "networkZoneId"
       value = ibm_cbr_zone.cbr_zone_homezone.id
     }
-
   }
 
   description      = "restrict COS access, limit to cluster"
@@ -278,7 +279,6 @@ resource "ibm_cbr_rule" "cbr_rule_cos_k8s" {
       operator = "stringEquals"
       value    = "cloud-object-storage"
     }
-
   }
 }
 ```

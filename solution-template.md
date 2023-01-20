@@ -222,7 +222,7 @@ Finally refer to the link topic under the content and design documentation if yo
 ### Conrefs
 {: #solution-template-13}
 
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs/solution-tutorials/conref-table.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
 {: #solution-template-10}
@@ -256,7 +256,7 @@ This section will only appear in a workshop and not in the tutorial.
 <!--#/isworkshop#-->
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
 {: #solution-template-18}
