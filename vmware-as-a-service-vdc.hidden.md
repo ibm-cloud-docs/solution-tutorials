@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-18"
-lasttested: "2023-01-18"
+lastupdated: "2023-01-20"
+lasttested: "2023-01-20"
 
 content-type: tutorial
 services: vmware-service, schematics
@@ -52,7 +52,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-service-intro/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: class="center"}
+![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: class="center"}
 {: style="text-align: center;"}
 
 This tutorial is broken into the following steps:

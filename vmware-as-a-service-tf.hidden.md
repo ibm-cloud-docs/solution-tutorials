@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-18"
-lasttested: "2023-01-18"
+lastupdated: "2023-01-20"
+lasttested: "2023-01-20"
 
 content-type: tutorial
 services: vmware-service, schematics
@@ -52,7 +52,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-service-intro/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
+![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
 {: style="text-align: center;"}
 
 1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only 2 IOPS/GB storage pool.
@@ -204,7 +204,7 @@ This example infrastructure terraform template is located in folder [`vcd-demo-i
 
 This demo terraform deployment deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
 
-![Basic infrastructure](images/solution66-vmware-service-intro/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
+![Basic infrastructure](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
 The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){:external} and the main provider resources in the example used are:
