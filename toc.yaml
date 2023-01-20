@@ -30,6 +30,8 @@ toc:
                 - vpc-transit1.hidden.md
                 - vpc-transit2.hidden.md
                 - cbr-security.hidden.md
+                - vmware-as-a-service-tf.hidden.md
+                - vmware-as-a-service-vdc.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps

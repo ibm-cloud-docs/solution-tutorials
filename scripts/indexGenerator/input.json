@@ -62,6 +62,18 @@
                "url": "cbr-security.hidden.html",
                "description": "Learn how to implement context-based restrictions to enhance security of your cloud environment",
                "imgSrc": "images/solution-cbr-security-hidden/architecture-e2e-security.svg"
+            },
+            {
+               "name": "Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance with Terraform",
+               "url": "vmware-as-a-service-tf.hidden.html",
+               "description": "Learn how to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning.",
+               "imgSrc": "images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg"
+            },
+            {
+               "name": "Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance using UI",
+               "url": "vmware-as-a-service-vdc.hidden.html",
+               "description": "Learn how to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning.",
+               "imgSrc": "images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg"
             }
          ]
       },

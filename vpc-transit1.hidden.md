@@ -21,7 +21,7 @@ completion-time: 2h
 {:important: .important}
 {:note: .note}
 
-# Centralize communication through a VPC Transit Hub and Spoke architecture - Part 1
+# Centralize communication through a VPC Transit Hub and Spoke architecture - Part one
 {: #vpc-transit1}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
@@ -30,25 +30,23 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part one of a two part tutorial.
-
-A {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
-
-A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}}.  The cloud VPCs can be connected to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
-
-- The hub can be a central point of traffic routing between on premises and the cloud.
-- Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
-- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
-- The hub can be the repository for shared micro services used by spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
-- The hub can hold the VPN resources that are shared by the spokes.
-
-High level view:
+A {{site.data.keyword.vpc_full}} (VPC) provides the network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team.  VPCs can be connected to an on premises enterprise and to each other.  This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high level view:
+{: shortdesc}
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
+This is part one of a two part tutorial ([part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)).  This part will introduce the VPC transit hub as the conduit to the enterprise.  Enterprise to spoke VPC connectivity between microservices will be discussed and implemented.  This architecture will support a number of scenarios.
+{: shortdesc}
+
+- The hub can be a central point of traffic routing between enterprise and the cloud.
+- Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
+- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
+- The hub can be the repository for shared microservices used by spokes.
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
+- The hub can hold the VPN resources that are shared by the spokes.
+
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that provisions resources and configures routing in incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
  During the journey the following are explored:
 - [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
@@ -58,10 +56,8 @@ This tutorial will walk through communication paths in a hub and spoke VPC model
 - Connectivity via [{{site.data.keyword.tg_short}}](https://www.ibm.com/cloud/transit-gateway)
 - [Virtual Network Functions with optional Network Load Balancers to support high availability](/docs/vpc?topic=vpc-about-vnf-ha)
 
-A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
-This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate solutions.
-{: shortdesc}
+A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources.  A layer may introduce small problems and demonstrate solutions in the context of a larger architecture.  The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
 
 ## Objectives
 {: #vpc-transit-objectives}
@@ -81,7 +77,7 @@ This tutorial requires:
 * Firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check).
 * An SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for options to install the prerequisites.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for a few options including a Dockerfile to easily create the prerequisite environment.
 
 In addition:
 
@@ -92,11 +88,10 @@ In addition:
 
 In this step provision the VPC network resources.  It is important to carefully plan when [designing an addressing plan for a VPC](/docs/vpc?topic=vpc-vpc-addressing-plan-design).  Make sure to use non overlapping CIDR blocks.
 
-It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of an availability zone as a single CIDR block and each VPC as consuming a slice of each of the zones:
+It is tempting to divide up the CIDR space first by VPC but this complicates routing.  Instead think of an availability zone as a single CIDR block and each VPC as consuming a slice of each of the zones.  The zones in a Multizone Region (MZR) provide physical, power and network isolation.  Communication within a zone is higher throughput and lower latency.
 
 ![vpc-transit-zones](images/vpc-transit-hidden/vpc-transit-zones.svg){: class="center"}
 {: style="text-align: center;"}
-
 
 This diagram shows just zone 1 in more detail.  The subnet sizes and layout are identical in the other zones:
 
@@ -271,6 +266,16 @@ Each pytest test will ssh to one of the test instances and perform a type of con
 
 A change to the network configuration can take a couple of test runs for the underlying VPC network system to become consistent.  If you do not see the expected results initially be prepared to run the test again a couple of times.
 {: note}
+
+The **r-** and **l-** stand for **r**ight and **l**eft.  The middle part of the name identifies enterprise, transit, spoke0, spoke1, ... The z1, z2, ... identify the zone. The test will ssh to the left instance.  On the left instance the connectivity to the right instance is attempted.  The **test_curl** performs a curl connectivity on the left instance to the right instance.
+
+The test `test_curl[l-enterprise-z1 -> r-transit-z1]`:
+1. ssh to a test instance in enterprise zone 1.
+2. execute a curl to transit zone 1.
+3. assert the return string contains the ID of transit zone 1 to mark pass or fail.
+
+The **README.md** in the comp companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has more details and the source code.
+
 
 ## Connect Transit and Spokes via Transit Gateway
 {: #vpc-transit-transit-to-spokes}

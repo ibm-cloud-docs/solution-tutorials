@@ -30,15 +30,17 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part two of a two part tutorial.  Open [part 1](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1).  This tutorial is stand alone and it is not required to execute the steps in part one.
+This tutorial will walk through communication paths in a multi zone hub and spoke VPC model.  This is part two of a two part tutorial, see [part 1](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1).  This part will focus on routing all traffic between VPCs through a transit hub firewall-router.  A scalable firewall-router using a Network Load Balancer is discussed and implemented.  Finally private DNS is introduced for microservice access and {{site.data.keyword.cloud_notm}} service instance access through a virtual private endpoint gateway.
+
+This tutorial is stand alone and it is not required to execute the steps in part one.
 
 A {{site.data.keyword.vpc_full}} (VPC) is used to securely manage network traffic in the {{site.data.keyword.cloud_notm}}.  VPCs can also be used as a way to encapsulate functionality.  The VPCs can be connected to each other and to on premises.
 
-A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}}.  The cloud VPCs can be connected to on premises using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
+A hub and spoke model connects multiple VPCs via {{site.data.keyword.tg_short}}.  The cloud VPCs can be connected to on premises enterprise using {{site.data.keyword.BluDirectLink}}.  Each spoke could be managed by a different team perhaps in a different account.  The isolation and connectivity support a number of scenarios:
 
-- The hub can be the repository for shared micro services used by spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
-- The hub can be a central point of traffic routing between on premises and the cloud.
+- The hub can be the repository for shared micro services used by spokes and enterprise.
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
+- The hub can be a central point of traffic firewall-router and routing between enterprise and the cloud.
 - Enterprise to cloud traffic can be routed, monitored, and logged through Network Function Virtualization (NFV) appliance in the hub.
 - The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
@@ -48,32 +50,25 @@ High level view:
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This tutorial will walk through communication paths in a hub and spoke VPC model.  There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers.  In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
- During the journey the following are explored:
-- [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
-- VPC Network planning
+The following will be explored:
 - VPC egress and ingress routing.
-- Connectivity via {{site.data.keyword.BluDirectLink}}
-- Connectivity via {{site.data.keyword.tg_short}}
-- [Virtual Network Functions with optional Network Load Balancers to support high availability](/docs/vpc?topic=vpc-about-vnf-ha)
+- [Virtual Network Functions](/docs/vpc?topic=vpc-about-vnf-ha) in combination with a Network Load Balancers to support a high availability and scalability.
 - Virtual private endpoint gateways.
 - DNS resolution.
 
-A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.
-
-This tutorial walks you through a complete example demonstrating the network connectivity, VPC routing, DNS name resolution and other details to considered when stitching together a multi VPC architecture.  A layered approach allows the tutorial to introduce small problem and demonstrate a solution in the context of a complete architecture.
+A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in terraform. It will be possible to change parameters, like number of zones, by changing a terraform variable.  A layered approach allows the tutorial to introduce small problems and demonstrate a solution in the context of a complete architecture.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-transit2-objectives}
 
-* Understand the concepts behind a VPC based hub and spoke model.
-* Understand the applicability of a firewall-router and a transit VPC environment.
+* Understand the concepts behind a VPC based hub and spoke model for managing all VPC to VPC traffic.
 * Understand VPC ingress and egress routing.
 * Identify and optionally resolve asymmetric routing issues.
-* Connect VPCs via {{site.data.keyword.tg_short}}.
-* Utilize the DNS service routing and forwarding rules to build architecturally sound name resolution system.
+* Understand the use of a Network Load Balancer for a highly available and scalable firewall-router.
+* Utilize the DNS service routing and forwarding rules to build an architecturally sound name resolution system.
 
 ## Before you begin
 {: #vpc-transit2-prereqs}
@@ -91,7 +86,7 @@ In addition:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
 
 ## Summary of Part one
-{: #vpc-transit2-summary}
+{: #vpc-transit2-summary-of-part-one}
 
 In the [first part](todo) of this tutorial we carefully planned the address space of the transit and spoke VPCs.  The zone based architecture is shown below:
 
