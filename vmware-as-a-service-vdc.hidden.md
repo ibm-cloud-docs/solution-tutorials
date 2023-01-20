@@ -112,16 +112,15 @@ The recommendation is to use RFC1918 addresses, for example IP subnets from the 
 
 To create a virtual data center network:
 
-1. In the top menu navigation, click on Networking.
-2. Click on New to create a new virtual data center network. New Organization VDC Network wizard will appear. 
-3. Select Organization Virtual Data Center (Default) and then select the VDC you wish to deploy the new network to. In most cases there will be a single VDC. Click Next to continue.
-4. Select network type as Routed (default) for routed networks `net-application` and `net-db` and select Isolated for the isolated network `net-isolated-db`. Click Next to continue.
-5. For Edge Connection, select the edge that was provisioned for you and leave all other settings as default. Isolated networks do not have a gateway connection. Click Next to continue.
-6. Provide a name and the gateway CIDR for the new network. The gateway CIDR is a bring your own IP deployment. This IP address can either be related to your internal network or created specifically for {{site.data.keyword.cloud_notm}}. In this example, `net-application` is used as the name and `192.168.100.1/24` is used for the gateway CIDR. Click Next to continue.
-7. Create a static IP pool for your new network. While optional, a static IP pool allows virtual machines to automatically be assigned an IP address upon provisioning. This pool should be part of the subnet created during the previous step, and for this example `192.168.100.10 – 192.168.100.19` is used for `net-application` routed network. Follow the same logic for the other networks. To add a static IP pool, type the range in the box provided and click on Add. Click Next to continue when complete.
-8. For DNS use the {{site.data.keyword.cloud_notm}} public DNS servers, which are `161.26.0.10` and `161.26.0.11` respectively. The DNS suffix can be left blank. Click Next to continue.
-9. For Segment Profile, leave as default and Click Next to continue.
-10. Review your input and click Finish to complete the New Organization VDC Network wizard and finish creating your first VDC network.
+1. In the top menu navigation, click on Networking. Then click on New to create a new virtual data center network. New Organization VDC Network wizard will appear. 
+2. Select Organization Virtual Data Center (Default) and then select the VDC you wish to deploy the new network to. In most cases there will be a single VDC. Click Next to continue.
+3. Select network type as Routed (default) for routed networks `net-application` and `net-db` and select Isolated for the isolated network `net-isolated-db`. Click Next to continue.
+4. For Edge Connection, select the edge that was provisioned for you and leave all other settings as default. Isolated networks do not have a gateway connection. Click Next to continue.
+5. Provide a name and the gateway CIDR for the new network. The gateway CIDR is a bring your own IP deployment. This IP address can either be related to your internal network or created specifically for {{site.data.keyword.cloud_notm}}. In this example, `net-application` is used as the name and `192.168.100.1/24` is used for the gateway CIDR. Click Next to continue.
+6. Create a static IP pool for your new network. While optional, a static IP pool allows virtual machines to automatically be assigned an IP address upon provisioning. This pool should be part of the subnet created during the previous step, and for this example `192.168.100.10 – 192.168.100.19` is used for `net-application` routed network. Follow the same logic for the other networks. To add a static IP pool, type the range in the box provided and click on Add. Click Next to continue when complete.
+7. For DNS use the {{site.data.keyword.cloud_notm}} public DNS servers, which are `161.26.0.10` and `161.26.0.11` respectively. The DNS suffix can be left blank. Click Next to continue.
+8. For Segment Profile, leave as default and Click Next to continue.
+9. Review your input and click Finish to complete the New Organization VDC Network wizard and finish creating your first VDC network.
 
 Upon completion of these tasks, your new network will be deployed and will appear in the networks tab. This may take a few seconds to complete. Repeat the process for the other two networks, or more if needed in your solution.
 
