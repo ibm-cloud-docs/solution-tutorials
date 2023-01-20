@@ -109,12 +109,14 @@ For example using GitHub CLI:
 ```bash
 gh repo clone IBM/vmwaas-terraform-examples
 ```
+{: codeblock}
 
 Or using HTTPS with the following URL:
 
 ```bash
 https://github.com/IBM/vmwaas-terraform-examples.git
 ```
+{: codeblock}
 
 
 ## Obtain the required information about your virtual data center
@@ -141,6 +143,7 @@ To use the script, configure your region and API key with:
 export IBMCLOUD_API_KEY=your-api-key-here
 export IBMCLOUD_REGION=region-here 
 ```
+{: codeblock}
 
 The default region is `us-south`.
 {: note}
@@ -209,11 +212,11 @@ This demo terraform deployment deploys the following example infrastructure, whi
 
 The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
 
-* [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2)){: external}
-* [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2)){: external}
-* [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm)){: external}
-* [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set)){: external}
-* [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule)){: external}
+* [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2){: external}
+* [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2){: external}
+* [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm){: external}
+* [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set){: external}
+* [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule){: external}
 * [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){: external}
 
 In this example template, the creation is fully controlled though terraform variables - you do not need to change the actual terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
@@ -232,6 +235,7 @@ vmwaas_user = "put-your-username-here"
 vmwaas_password = "put-your-password-here"
 #vmwaas_api_token = ""                                  # Note. This will be supported in the future.
 ```
+{: codeblock}
 
 You can set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on. 
 
@@ -240,6 +244,7 @@ You can set a common name prefix to identify and separate your virtual data cent
 
 item_name_prefix = "demo"
 ```
+{: codeblock}
 
 You can use IBM Cloud Public DNS server in your virtual machines, or you can use your own. When using your own, make sure you have network connectivity to reach these.
 
@@ -249,6 +254,7 @@ You can use IBM Cloud Public DNS server in your virtual machines, or you can use
 
 dns_servers = ["161.26.1.10","161.26.1.11"] 
 ```
+{: codeblock}
 
 When creating virtual data center networks, use the map variable `vdc_networks` to define these.
 
@@ -308,6 +314,7 @@ vdc_networks = {
     },
 }
 ```
+{: codeblock}
 
 When creating virtual machines, use the map variable `virtual_machines` to define these.
 
@@ -414,6 +421,7 @@ virtual_machines = {
     },
 }
 ```
+{: codeblock}
 
 The following variable `public_ips` is currently just an example, and it explains how these are used in the example and you can use the map key to define and use the index of the IP without actually specifying the IP address in the other variables.
 
@@ -448,6 +456,7 @@ public_ips = {
     },
 }
 ```
+{: codeblock}
 
 The variable `nat_rules` defines the NAT rules to be created. Check the examples and modify based on your needs.
 
@@ -535,6 +544,7 @@ nat_rules = {
     },  
   }  
 ```
+{: codeblock}
 
 The terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
 
@@ -581,6 +591,7 @@ ip_sets = {
     },
 }
 ```
+{: codeblock}
 
 You can also use Static Groups in firewall rules as sources and targets.
 
@@ -603,6 +614,7 @@ security_groups = {
     },
 }
 ```
+{: codeblock}
 
 The variable `firewall_rules` defines the firewall rules to be created. See the examples and modify based on your needs.
 
@@ -645,12 +657,14 @@ firewall_rules = {
     },
 }
 ```
+{: codeblock}
 
 Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`, for example:
 
 ```bash
 cp terraform.tfvars-example terraform.tfvars
 ```
+{: codeblock}
 
 You can use it as such, add more networks, more virtual machines and customize NAT or firewall rules and so on based on your needs.
 
@@ -836,7 +850,12 @@ To get the NAT rules, and used public IP addresses:
 }
 ``` 
 
-You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on.
+You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on. For example:
+
+```bash
+terraform output created_fw_rules
+```
+{: codeblock}
 
 After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose publish access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
 {: important}
@@ -853,6 +872,7 @@ Get the vistual machines' usernames and passwords from the terraform `output`, f
 ```bash
 terraform output created_virtual_machines
 ```
+{: codeblock}
 
 To connect to the virtual machine with console in VMware Cloud Director Console:
 1. Click on Launch Web Console to open a local console to the virtual machine.
