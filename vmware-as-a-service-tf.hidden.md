@@ -75,7 +75,7 @@ This tutorial is broken into the following steps:
 6. [Connect to the virtual machines though Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
-{:note}
+{: note}
 
 ## Before you begin
 {: #vmware-as-a-service-tf-prereqs}
@@ -143,7 +143,7 @@ export IBMCLOUD_REGION=region-here
 ```
 
 The default region is `us-south`.
-{:note}
+{: note}
 
 Script usage:
 
@@ -207,14 +207,14 @@ This demo terraform deployment deploys the following example infrastructure, whi
 ![Basic infrastructure](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
-The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){:external} and the main provider resources in the example used are:
+The terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
 
-* [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2)){:external
-* [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2)){:external
-* [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm)){:external
-* [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set)){:external
-* [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule)){:external
-* [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){:external}
+* [vcd_network_routed_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_routed_v2)){: external}
+* [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2)){: external}
+* [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm)){: external}
+* [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set)){: external}
+* [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule)){: external}
+* [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){: external}
 
 In this example template, the creation is fully controlled though terraform variables - you do not need to change the actual terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
 
@@ -839,7 +839,7 @@ To get the NAT rules, and used public IP addresses:
 You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on.
 
 After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose publish access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
-{:important}
+{: important}
 
 
 ## Connect to the VMware Cloud Director Console
@@ -878,10 +878,10 @@ To connect to the virtual machine through Public Internet:
 
 Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information about managing virtual data centers:
 
-* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){:external}
-* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){:external
-* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){:external
+* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){: external}
+* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
+* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
 
 Check the following `terraform` registry for more detailed information about the provider, resources and data sources:
 
-* [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){:external}
+* [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external}
