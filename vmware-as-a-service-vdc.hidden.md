@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-20"
-lasttested: "2023-01-20"
+lastupdated: "2023-01-24"
+lasttested: "2023-01-24"
 
 content-type: tutorial
 services: vmware-service
@@ -35,7 +35,6 @@ completion-time: 2h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
 
@@ -143,8 +142,8 @@ The first server will be used as a jump server, which you can optionally reach t
 To create a virtual machine:
 
 1. In the top menu navigation click on Applications.
-2. Click on Virtual Machines in the sub navigation tabs. 
-3. Click on New VM to launch the new virtual machine window. 
+2. Click on Virtual Machines in the sub navigation tabs.
+3. Click on New VM to launch the new virtual machine window.
 4. Select the target virtual data center and click on Next to continue.
 5. The new VM wizard will appear. There are five fields that must be filled out. Note depending on the size of your display you may need to scroll down to see all fields.
    1. Name – `jump-server-1`
@@ -152,7 +151,7 @@ To create a virtual machine:
    3. Templates – For this example the Windows 2022 template is used.
    4. Storage policy – The values here depend on what was provisioned in the instance. In this example, 4 IOPS/GB is used (VDC Default).
    5. NICs – Check the box for connected and then in the drop-down field below network select the network created in the first step. In this example, `net-application` is used. In the drop-down below IP mode, select Static-IP Pool.
-6. Leave all other values at their defaults and click OK when complete. 
+6. Leave all other values at their defaults and click OK when complete.
 
 The new virtual machine will be created. Provisioning of the virtual machine may take several minutes to complete. Upon completion, the virtual machine will automatically power on. Repeat the process for the other virtual machines, `application-server-1` and `db-server-1`.
 
@@ -163,7 +162,7 @@ The new virtual machine will be created. Provisioning of the virtual machine may
 
 IP Sets and Static Groups are used as part of configuration of the firewall rules are required. Unlike with some other firewalls, you must use Static Groups and IP Sets to configure firewalls to identify sources and destinations, IP addresses cannot be used directly in the rules.
 
-Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses. 
+Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses.
 
 In these examples, `public-ip-0` refers to the first IP address provided in the list of available IP addresses, and should be noted as a normal IP address notation `aaa.bbb.ccc.ddd`. Likewise, `public-ip-1` refers to the second IP address and so on.
 {: note}
@@ -236,13 +235,13 @@ To create a source NAT (SNAT) rule:
 
 1. From the Networking tab, click on Edge Gateways.
 2. Click on Edge gateways and select your virtual data center's Edge Gateway.
-3. In the left-hand navigation under Services, click on NAT. 
+3. In the left-hand navigation under Services, click on NAT.
 4. Click on New to create a new NAT rule.
 5. The Add NAT Rule wizard will appear. There are four fields that must be filled out. 
 	1. Name – In this example, `snat-to-inet` is used.
 	2. Interface type – Select SNAT (source NAT) as the interface type.
 	3. External IP – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-1` (the second actual public IP obtained in the previous step) is used.
-	4. Internal IP – This is the CIDR range of the network you created in the previous step. In this example, `192.168.100.0/24` is used. 
+	4. Internal IP – This is the CIDR range of the network you created in the previous step. In this example, `192.168.100.0/24` is used.
    5. Application - Leave empty.
 6. Click Save when complete.
 

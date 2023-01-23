@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-20"
-lasttested: "2023-01-20"
+lastupdated: "2023-01-24"
+lasttested: "2023-01-24"
 
 content-type: tutorial
 services: vmware-service
@@ -35,7 +35,6 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-
 <!--#/istutorial#-->
 
 
