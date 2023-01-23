@@ -6,7 +6,7 @@ lastupdated: "2023-01-20"
 lasttested: "2023-01-20"
 
 content-type: tutorial
-services: vmware-service, schematics
+services: vmware-service
 account-plan: paid
 completion-time: 1h
 
@@ -29,8 +29,8 @@ completion-time: 1h
 # Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance with Terraform
 {: #vmware-as-a-service-tf}
 {: toc-content-type="tutorial"}
-{: toc-services="vmware, schematics"}
-{: toc-completion-time="2h"}
+{: toc-services="vmware-service"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
