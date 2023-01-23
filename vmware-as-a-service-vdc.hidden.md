@@ -258,8 +258,8 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 Name             | Applications       | Source                | Destination          | Action     | IP protocol
 -----------------|--------------------|-----------------------|----------------------|------------|-----------
 `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
-`egress-to-inet` | -                  | `sg-private-networks` | `Any`                | Allow      | IPv4
-`default_rule`   | -                  | `Any`                 | `Any`                | Drop       | IPv4
+`egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
+`default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}
