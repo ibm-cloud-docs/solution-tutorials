@@ -42,26 +42,26 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) has already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 
 In this tutorial, you will learn:
 
 * How to create virtual data center (VDC) networks with Terraform,
-* How to create virtual machines into your create virtual data center networks with Terraform, and
-* How to configure network address translation (NAT) and firewall (FW) rules in your virtual data center edge gateway with Terraform.
+* How to create virtual machines on your create virtual data center networks with Terraform, and
+* How to configure network address translation (NAT) and firewall (FW) rules on your virtual data center edge gateway with Terraform.
 
 The following diagram presents an overview of the solution to be deployed.
 
 ![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
 {: style="text-align: center;"}
 
-1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only 2 IOPS/GB storage pool.
+1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a 2 IOPS/GB storage pool.
 2. When a virtual data center is created, an edge gateway and external networks are created automatically. External network provides you internet access and an IP address block of `/29` with 6 usable public IP addresses is provided.
-3. Terraform template is used to create virtual data center networks, virtual machines as well as firewall and network address translation rules. The creation is fully controlled though variables. Terraform authenticates to VMware Cloud Director API with user name and password. Access tokens will be supported in the future.
-4. Three virtual data center networks are created: two routed (application and db) and one isolated (isolated). Routed virtual data center networks are attached to the edge gateway while isolated virtual data center network is a standalone network. You can create more networks based on your needs.
-5. A jump server is created with Windows 2022 Operating System. The server it attached to the application network. You can access the virtual machine though the VM console, or using RDP though the DNAT rule created on the Edge Gateway.
-6. One example virtual machine (`application-server-1`) is created on the application network. Application server has an additional disk e.g. for logging. You can create more VMs or disks based on your needs.
-7. One example virtual machine (`db-server-1`) is created on the db network. Database server has two additional disks e.g. for data and logging. You can create more VMs or disks based on your needs.
+3. Terraform templates are used to create virtual data center networks, virtual machines as well as firewall and network address translation rules. The creation is fully controlled though variables. Terraform authenticates to the VMware Cloud Director API with a user name and password. Access tokens will be supported in the near future.
+4. Three virtual data center networks are created: two routed (`application-network-1` and `db-network-1`) and one isolated (`isolated-network-1`). Routed virtual data center networks are attached to the edge gateway while isolated virtual data center network is a standalone network. You can create more networks based on your needs.
+5. A jump server (`jump-server-1`) is created with the Windows 2022 Operating System. The server is attached to the `application-network-1`. You can access the virtual machine though the VM console, or using RDP though the DNAT rule created on the Edge Gateway.
+6. One example virtual machine (`application-server-1`) is created on the `application-network-1`. The `application-server-1` has an additional disk e.g. for logging. You can create more VMs or disks based on your needs.
+7. One example virtual machine (`db-server-1`) is created on the `db-network-1` and `isolated-network-1` with two separate vnics. The `db-server-1` has two additional disks e.g. for data and logging. You can create more VMs or disks based on your needs.
 8. Source NAT (SNAT) and destination NAT (DNAT) rules are created for public network access. SNAT to public internet is configured for all routed networks and DNAT is configured to access the application server. NO_SNAT rules are created for traffic directed to IBM Cloud Service Endpoints.
 9. Firewall rules are provisioned to secure network access to the environment. To create firewall rules, Static Groups and IP Sets are created for networks and individual IP addresses.
 
@@ -72,7 +72,7 @@ This tutorial is broken into the following steps:
 3. [Configure tf.vars](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
 4. [Init, plan and apply](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
 5. [Connect to the VMware Cloud Director Console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
-6. [Connect to the virtual machines though Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
+6. [Connect to the virtual machines through the Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
 An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
 {: note}
@@ -84,12 +84,12 @@ This tutorial requires:
 
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](https://{DomainName}/docs/vmware-service?topic=vmware-service-getting-started).
-* [Pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering),
-* [Pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding),
-* {{site.data.keyword.cloud_notm}} CLI,
+* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering),
+* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding),
+* [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli?topic=cli-getting-started),
 * [{{site.data.keyword.cloud_notm}} API KEY](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui),
-* `jq` to query JSON files, and
-* Terraform to use Infrastructure as Code to provision resources.
+* [`jq` to query JSON files](https://stedolan.github.io/jq/), and
+* [Terraform](https://www.terraform.io) with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs) to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -131,9 +131,10 @@ Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instan
 
 1. In the VMware as a Service table, click a VMware as a Service instance name.
 2. On the Summary tab, review the information.
-3. On the VDC details page, click VMware Cloud Director Console to access the console.
-4. Use the admin username and password to log in to the VMware Cloud Director Console for the first time.
-5. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
+3. If this ia the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
+4. On the VDC details page, click VMware Cloud Director Console to access the console.
+5. Use the admin username and password to log in to the VMware Cloud Director Console for the first time. 
+6. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
 
 You can login to the VMware Cloud Director Console to collect the required information for your Terraform deployment. You can alternatively use the provided `vmwaas.sh` shell script on the examples repo. The script will collect these values using {{site.data.keyword.vmware-service_full}} API.
 
@@ -857,7 +858,7 @@ terraform output created_fw_rules
 ```
 {: codeblock}
 
-After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose publish access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
+After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose public access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
 {: important}
 
 
@@ -867,7 +868,7 @@ After provisioning, please make sure you adjust the example firewall rules accor
 
 Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
 
-Get the vistual machines' usernames and passwords from the terraform `output`, for example:
+Get the virtual machines' usernames and passwords from the terraform `output`, for example:
 
 ```bash
 terraform output created_virtual_machines
@@ -884,9 +885,9 @@ To connect to the virtual machine with console in VMware Cloud Director Console:
 {: #vmware-as-a-service-tf-connect-to-vm}
 {: step}
 
-The final step is to connect the virtual machine validate the deployment.
+The final step is to connect to the virtual machine through the Internet to validate the deployment and network connectivity.
 
-To connect to the virtual machine through Public Internet:
+To connect to the virtual machine through the Internet:
 1. You should be able to ping the public IP address `public-ip-1` and ssh to your `app-server-1` from your laptop or workstation, showing that the networking is complete and working.
 2. You should be able to use RDP to connect to your Jump Server `jump-server-1` using the public IP address `public-ip-2` and the username and password collected in the previous step.
 3. You can then disable the FW rule `dnat-to-app-1-ingress` created in the previous step by editing the rule and its State by sliding the State to Disabled (gray) using Console, or you can change the Terraform variable in the specific rule to `Drop` and run `terraform apply --auto-approve`.
