@@ -277,7 +277,7 @@ The test `test_curl[l-enterprise-z1 -> r-transit-z1]`:
 The **README.md** in the companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has more details and the source code.
 
 
-## Connect Transit and Spokes via Transit Gateway
+## Connect Transit and Spokes via {{site.data.keyword.tg_short}}
 {: #vpc-transit-transit-to-spokes}
 {: step}
 
@@ -302,7 +302,7 @@ Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke(
    ```
    {: codeblock}
 
-## Connect Enterprise to Transit via Direct Link and Transit Gateway
+## Connect Enterprise to Transit via Direct Link and {{site.data.keyword.tg_short}}
 {: #vpc-transit-enterprise-to-transit}
 {: step}
 
@@ -372,7 +372,7 @@ Traffic reaches the firewall-router appliance through routing tables.
 1. Click on **Manage routing tables**.
 1. Click on the **tgw-ingress** routing table.
 
-The zone is determined by the Transit Gateway which will examine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
+The zone is determined by the {{site.data.keyword.tg_short}} which will examine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
 
 Notice how wide the routes are in the transit's ingress routing table (shown for Dallas/us-south):
 
@@ -414,24 +414,24 @@ The transit VPC will only use a subset of each zone:
 The address prefixes for the transit itself is expanded to include all of the spokes to allow the routes to flow to the enterprise.
 
 With these additional address prefixes:
-- Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through the Transit Gateway tgw-link. 
-- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the Transit Gateway tgw-spoke.
+- Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through the {{site.data.keyword.tg_short}} tgw-link. 
+- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the {{site.data.keyword.tg_short}} tgw-spoke.
 
 ## Removing the firewall for transit destination traffic
 {: #vpc-transit-stateful-routing}
 {: step}
-The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connections use the same path on the way in as the way out. One exception to this is Direct Server Return used by routers like [Network {{site.data.keyword.loadbalancer_short}}](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers).  This allows incoming connections from the enterprise to pass through the firewall to the transit test instance and then return directly to the originator.
+The {{site.data.keyword.vpc_short}} uses the industry standard state-based routing for secure TCP connection tracking. It requires that the TCP connections use the same path on the way in as the way out. One exception is Direct Server Return used by routers like [Network {{site.data.keyword.loadbalancer_short}}s](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers). It allows incoming connections from the enterprise to pass through the firewall to the transit test instance and then return directly to the originator.
 
 
 ![vpc-transit-routing-green](images/vpc-transit-hidden/vpc-transit-routing-green.svg){: class="center"}
 {: style="text-align: center;"}
 
-This does not help with the traffic originating in the transit test instance passing through the transit gateway then back through ingress routing to the firewall-router. This connection gets stuck at the firewall-router (3) and not get forwarded back to the worker as shown in red below. Traffic transit -> enterprise and transit -> spoke are failing.
+This does not help with the traffic originating in the transit test instance passing through the {{site.data.keyword.tg_short}} then back through ingress routing to the firewall-router. This connection gets stuck at the firewall-router (3) and will not get forwarded back to the worker as shown in red below. Traffic transit -> enterprise and transit -> spoke are failing.
 
 ![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
 {: style="text-align: center;"}
 
-One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router. The wide ingress routes for the transit are currently routing traffic to the firewall-router. More specific routes can be added specifically for the transit to **Delegate** to the default behavior - send directly to the intended destination instead of the firewall-router.
+One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router. The wide ingress routes for the transit are currently routing traffic to the firewall-router. More specific routes can be added for the transit to **Delegate** to the default behavior - send directly to the intended destination instead of the firewall-router.
 
 This diagram shows the traffic flow that is desired for this step. Only the enterprise <-> spoke is passing through the firewall:
 
@@ -461,7 +461,8 @@ Dallas 3|10.3.0.0/24|Delegate
 
 1. Refresh the browser display of the routing table to observe the new routes.
 1. Run the test suite.  
-   **Your expected results are:** All tests except enterprise <-> spoke cross zone
+
+   **Your expected results are:** All tests will result in **PASSED** with the exception of enterprise <-> spoke(s) that are cross zones.
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"
@@ -480,16 +481,16 @@ This step will identify and fix an asymmetric routing issues. The diagram below 
 
 ### Asymmetric Routing Limitation
 {: #vpc-transit-asymmetric-routing-limitation}
-The remaining failures are cross zone failures enterprise <-> spoke.
+The remaining failures are cross zone failures enterprise <-> spoke(s).
 
 Example failure:
    ```sh
    FAILED py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke0-z2] - assert False
    ```
 
-The blue line represents a TCP connection request from enterprise through the transit gateway: 192.168.0.4 <--TCP--> 10.2.1.4.  The transit gateway will choose a transit VPC zone based on the matching address prefix. The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
+The blue line represents a TCP connection request from enterprise through the {{site.data.keyword.tg_short}}: 192.168.0.4 <--TCP--> 10.2.1.4. The {{site.data.keyword.tg_short}} will choose a transit VPC zone based on the matching address prefix. The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
 
-The red line represents the TCP connection response to 192.168.0.4.  The transit gateway delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone. The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connection pass through the same firewall-router in both directions. The VPC does not support tcp "Asymmetric Routing".
+The red line represents the TCP connection response to 192.168.0.4.  The {{site.data.keyword.tg_short}} delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone. The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connection pass through the same firewall-router in both directions. The VPC does not support tcp "Asymmetric Routing".
 
 It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation. ICMP does not require a stateful connection. Connectivity from 192.168.0.4 <--ICMP--> 10.2.1.4 via ICMP is possible. You can run the ping marked tests to verify via copy paste of the failed output  The **l-** is for left and **r-** is for right:
 
@@ -505,12 +506,12 @@ It is interesting to note that an attempt to ping using the ICMP protocol would 
    ```
    {: codeblock}
 
-If the goal is to create an architecture that is resilient across {{site.data.keyword.cloud_notm}} zonal failures then cross zone traffic should generally be avoided. Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud. The enterprise concept of zones will need to be understood. In this tutorial the phantom VPC address prefixes will identify the cloud zone associated with an enterprise device.
+If the goal is to create an architecture that is resilient across {{site.data.keyword.cloud_notm}} zonal failures then cross zone traffic should generally be avoided. Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud. The enterprise concept of zones will need to be understood. In this tutorial the phantom VPC address prefixes will identify the zone associated with an enterprise device.
 
 ### Spoke Egress routing
 {: #vpc-transit-spoke-egress-routing}
 
-To resolve this problem transit <-> spoke traffic will be routed to stay in the same zone. The spoke -> transit traffic can be routed using an egress routing table in the spokes.
+To resolve this problem transit <-> spoke(s) traffic will be routed to stay in the same zone. The spoke -> transit traffic can be routed using an egress routing table in the spokes.
 
 ![vpc-transit-spoke-egress](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
 {: style="text-align: center;"}
@@ -557,7 +558,7 @@ In the diagram below this is represented by the egress dashed line.
 {: #vpc-transit-routing-summary}
 Basic routing is complete:
 - enterprise <-> transit
-- transit <-> spoke
+- transit <-> spoke(s)
 - enterprise <--(transit firewall-router)--> spoke
 
 All connectivity tests now pass.
@@ -574,9 +575,7 @@ Some obvious changes to make:
 
 Floating IPs were attached to all test instances to support connectivity tests via SSH. This is not required or desirable in production.
 
-[Create context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) to further control access to all resources.
-
-Place each team into their own account. Organize with [IBM Cloud enterprise](/docs/account?topic=account-what-is-enterprise)
+[Implement context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) rules to further control access to all resources.
 
 In this tutorial you created a hub VPC and a set of spoke VPCs. You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs. You created a transit VPC firewall-router in each zone for centralized monitoring. Test instances were used to verify connectivity and identify potential problems. Routing table routes were used to identify the traffic paths required.
 
