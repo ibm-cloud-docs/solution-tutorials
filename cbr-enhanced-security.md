@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-20"
-lasttested: "2023-01-20"
+lastupdated: "2023-01-24"
+lasttested: "2023-01-24"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -39,7 +39,7 @@ The tutorial discusses how to create network zones and context rules and how to 
 
 The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional boxes with dashed, blue lines around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
 
-![Architecture](images/solution-cbr-security-hidden/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
+![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
 
 <!--##istutorial#-->
@@ -80,7 +80,7 @@ The context for a restriction is made up of network zones and service endpoints.
 
 Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
 
-![Context-based restrictions](images/solution-cbr-security-hidden/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
+![Context-based restrictions](images/solution67-cbr-enhanced-security/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
 
 
 ## Create zone and rule
@@ -145,11 +145,11 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
 4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches, regardless of the decision outcome. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
-   ![Verify rules in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
+   ![Verify rules in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
 
    As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**, below **Permit**.
 
-   ![Decision with Permit value in report mode](images/solution-cbr-security-hidden/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
+   ![Decision with Permit value in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
 
 5. Back in the browser tab with the shell, list the container images in the namespace.
    ```sh
@@ -166,7 +166,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    This time, it should result in an error message that you are not authorized.
 8. In the browser tab with the logs, you should find a new record similar to the following:
-   ![Verify rules in enforced mode](images/solution-cbr-security-hidden/CBR_rule_denied_registry.png){: caption="A context restriction rendered a deny" caption-side="bottom"}
+   ![Verify rules in enforced mode](images/solution67-cbr-enhanced-security/CBR_rule_denied_registry.png){: caption="A context restriction rendered a deny" caption-side="bottom"}
 
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied. The reason is that rule allows access from a specific VPC only. The {{site.data.keyword.cloud-shell_short}} environment and its IP address, as documented in the logs in the **requestData->environment** fields, differ. Therefore, the request is denied.

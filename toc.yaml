@@ -29,7 +29,6 @@ toc:
                 - checklist-get-started-vmware.hidden.md
                 - vpc-transit1.hidden.md
                 - vpc-transit2.hidden.md
-                - cbr-security.hidden.md
                 - vmware-as-a-service-tf.hidden.md
                 - vmware-as-a-service-vdc.hidden.md
 
@@ -63,6 +62,7 @@ toc:
                 - multi-region-k8s-cis.md
                 - cloud-e2e-security.md
                 - extended-app-security.md
+                - cbr-enhanced-security.md
 
             - topicgroup:
                 label: Machine Learning and Analytics
@@ -144,6 +144,7 @@ toc:
                 - application-log-analysis.md
                 - multi-region-k8s-cis.md
                 - cloud-e2e-security.md
+                - cbr-enhanced-security.md
                 - users-teams-applications.md
                 - /containers/containers-vpc_ks_tutorial
 
