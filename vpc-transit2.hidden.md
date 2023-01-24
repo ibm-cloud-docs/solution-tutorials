@@ -149,6 +149,13 @@ If continuing from part one make special note of the configuration in the terraf
    - Make the required changes.
    - Change the value `all_firwewall = true`.
 
+2. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and export the API key for use by terraform:
+
+   ```sh
+   export IBMCLOUD_API_KEY=YourAPIKEy
+   ```
+   {: codeblock}
+
 3. Since it is important that each layer is installed in the correct order and some steps in this tutorial will install multiple layers a shell command **./apply.sh** is provided.  The following will display help:
 
    ```sh
