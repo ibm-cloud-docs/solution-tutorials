@@ -553,8 +553,9 @@ The Terraform creates IP Sets for the public IP addresses used in NAT rules, but
 
 ```terraform
 # Note. You need to create IP sets to be used in firewall rules.
-# You can use the `public_ips`keys here as address_targets,
-# you you can define `ip_addresses`.
+# You can use the `public_ips` keys here as address_targets,
+# but you can define IP sets using real IP addresses using a
+# list `ip_addresses`.
 
 ip_sets = {
     ip-set-on-public-ip-0 = {
