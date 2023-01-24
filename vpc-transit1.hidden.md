@@ -213,7 +213,7 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
 
 1. Run the zone 1 `curl` tests in the suite by using the **-m** (markers) flag. Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
-  **Your expected results are:** Connectivity within a VPC, like transit <-> transit will be **PASSED**. Cross VPC, like transit -> spoke will be **FAILED**.
+   **Your expected results are:** Connectivity within a VPC, like transit <-> transit will be **PASSED**. Cross VPC, like transit -> spoke will be **FAILED**.
 
    ```sh
    pytest -m "curl and lz1 and rz1"
