@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 10-20 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 
 In this tutorial, you will learn:
 
@@ -233,11 +233,14 @@ vmwaas_vdc_name = "put-your-vdc-name-here"
 
 vmwaas_user = "put-your-username-here"
 vmwaas_password = "put-your-password-here"
-#vmwaas_api_token = ""                                  # Note. This will be supported in the future.
+#vmwaas_api_token = ""                                  # Note. This will be supported in the near future.
 ```
 {: codeblock}
 
-You can set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on. 
+If you change the authentication method, the provider block in the code needs to changed to use a different authentication method. Currently only username and password method is supported in {{site.data.keyword.vmware-service_full}} - single tenant instance.
+{: tip}
+
+You can set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on.
 
 ```terraform
 # Note. Use a common name prefix for each item. 
@@ -423,7 +426,7 @@ virtual_machines = {
 ```
 {: codeblock}
 
-The following variable `public_ips` is currently just an example, and it explains how these are used in the example and you can use the map key to define and use the index of the IP without actually specifying the IP address in the other variables.
+Each virtual data center gets 6 public IP addresses for each virtual data center and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your virtual data center. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
 
 ```terraform
 # Note. Map of available 6 public IPs. You can use these names
