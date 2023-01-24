@@ -46,7 +46,7 @@ The objective of this tutorial is to demonstrate the basic steps to operationali
 In this tutorial, you will learn:
 
 * How to create virtual data center (VDC) networks with Terraform,
-* How to create virtual machines on your create virtual data center networks with Terraform, and
+* How to create virtual machines on your virtual data center networks with Terraform, and
 * How to configure network address translation (NAT) and firewall (FW) rules on your virtual data center edge gateway with Terraform.
 
 The following diagram presents an overview of the solution to be deployed.
@@ -197,7 +197,7 @@ export TF_VAR_vmwaas_org="f37f3422-e6c4-427e-b277-9fec334b99fb"
 export TF_VAR_vmwaas_vdc_name="vdc-demo"
 ```
 
-You can export these to your shell, or you can get the terraform.tfvars lines to be added to `Terraform.tfvars` files as an output of the script using the `tfvars` option.
+You can export these to your shell, or you can get the terraform.tfvars lines to be added to `terraform.tfvars` files as an output of the script using the `tfvars` option.
 
 ## Configure tf.vars
 {: #vmware-as-a-service-vdc-tfvars}

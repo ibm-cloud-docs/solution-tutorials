@@ -88,7 +88,7 @@ Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instan
 
 1. In the VMware as a Service table, click a VMware as a Service instance name.
 2. On the Summary tab, review the information.
-3. If this ia the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
+3. If this is the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
 4. On the VDC details page, click VMware Cloud Director Console to access the console.
 5. Use the admin username and password to log in to the VMware Cloud Director Console for the first time. 
 6. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
