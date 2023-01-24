@@ -49,7 +49,6 @@ The following diagram shows the solution architecture as used in the tutorial [A
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
 * `git` to clone source code repository,
-* `terraform` to deploy resources,
 * `docker` client to push and pull container images.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
