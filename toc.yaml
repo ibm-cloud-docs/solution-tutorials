@@ -44,7 +44,6 @@ toc:
                 - static-files-cdn.md
                 - dynamic-content-cdn.md
                 - plan-create-update-deployments.md
-                - highly-available-and-scalable-web-application.md
                 - mean-stack.md
                 - sql-database.md
                 - serverless-webapp.md
@@ -169,7 +168,6 @@ toc:
                 label: Virtual Servers
                 topics:
                 - vm-to-containers-and-kubernetes.md
-                - highly-available-and-scalable-web-application.md
                 - vpc-public-app-private-backend.md
                 - vpc-multi-region.md
                 - vpc-site2site-vpn.md
