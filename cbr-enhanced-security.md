@@ -14,7 +14,7 @@ completion-time: 2h
 {{site.data.keyword.attribute-definition-list}}
 
 # Enhance cloud security by applying context-based restrictions
-{: #cbr-security}
+{: #cbr-enhanced-security}
 {: toc-content-type="tutorial"}
 {: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis"}
 {: toc-completion-time="2h"}
