@@ -56,7 +56,7 @@ The following diagram presents an overview of the solution to be deployed.
 
 This tutorial is broken into the following steps:
 
-1. [Log into the instance's VMware Cloud Director Console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
+1. [Log in to the instance's VMware Cloud Director Console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
 2. [Create virtual machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
 3. [Create IP Sets and Static Groups](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-ip-set-sg) 
 4. [Create NAT rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-nat)
@@ -78,11 +78,11 @@ This tutorial requires:
 * [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding).
 
 
-## Log into the instance and deploy the initial network
+## Log in to the instance and deploy the initial network
 {: #vmware-as-a-service-vdc-deploy-network}
 {: step}
 
-The first step is to log into your {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console and deploy the initial networks that will be used for testing.
+The first step is to log in to your {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console and deploy the initial networks that will be used for testing.
 
 Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console:
 
@@ -158,7 +158,7 @@ The new virtual machine will be created. Provisioning of the virtual machine may
 Virtual machine `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html). After the virtual machine has been created, click Details. Then select NICs under the Hardware, and you can add the 2nd NIC to the virtual machine and attach that to the correct network segment.
 {: tip}
 
-Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){:external} for more details.  
+Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external} for more details.  
 {: tip}
 
 
@@ -225,7 +225,7 @@ To create a destination NAT (DNAT) rule:
 
 1. From the Networking tab, click on Edge Gateways.
 2. Click on Edge gateways and select your virtual data center's Edge Gateway.
-3. In the left-hand navigation under Services, click on NAT. 
+3. In the left navigation under Services, click on NAT. 
 4. Click on New to create a new NAT rule.
 5. The Add NAT Rule wizard will appear. There are four fields that must be filled out. 
 	1. Name – In this example, `dnat-to-jump` is used.
@@ -241,7 +241,7 @@ To create a source NAT (SNAT) rule:
 
 1. From the Networking tab, click on Edge Gateways.
 2. Click on Edge gateways and select your virtual data center's Edge Gateway.
-3. In the left-hand navigation under Services, click on NAT.
+3. In the left navigation under Services, click on NAT.
 4. Click on New to create a new NAT rule.
 5. The Add NAT Rule wizard will appear. There are four fields that must be filled out. 
 	1. Name – In this example, `snat-to-inet` is used.
@@ -274,7 +274,7 @@ To create a firewall rule:
 
 1. From the Networking tab, click on Edge Gateways.
 2. Click on Edge gateways and select your virtual data center's Edge Gateway.
-3. In the left-hand navigation under Services, click on Firewall.
+3. In the left navigation under Services, click on Firewall.
 4. Click on Edit Rules.
 5. Click on New on Top to create a new firewall rule above the `default_rule` (drop any).
 6. A new entry in the firewall rule list will be created. To complete the entry:
@@ -302,7 +302,7 @@ To get the password:
 
 To connect to the virtual machine using the web console:
 1. Click on Launch Web Console to open a local console to the virtual machine.
-2. Using the web console, log into the virtual machine using root as the user ID and the password you captured from the previous step.
+2. Using the web console, log in to the virtual machine using root as the user ID and the password you captured from the previous step.
 3. You should then be able to ping Internet resources such as www.ibm.com, showing that the networking is complete and working.
 
 
@@ -322,9 +322,9 @@ To connect to the virtual machine through the Internet:
 
 Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information:
 
-* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){:external}
-* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){:external
-* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){:external
+* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){: external}
+* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
+* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
 
 
 
