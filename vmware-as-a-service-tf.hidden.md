@@ -721,7 +721,7 @@ You can use it as such, add more networks, more virtual machines and customize N
    Plan: 29 to add, 0 to change, 0 to destroy.
    ```
 
-   Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
+3. Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
 
    For example: 
 
@@ -740,7 +740,7 @@ You can use it as such, add more networks, more virtual machines and customize N
    Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
    ```
 
-3. In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines. 
+4. In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines. 
 
    For example, you can run `terraform output created_virtual_machines` to get access access information to your virtual machines:
 
