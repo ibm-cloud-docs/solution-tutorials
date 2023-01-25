@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-24"
+lastupdated: "2023-01-25"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -41,7 +41,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize a {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 
 In this tutorial, you will learn:
 
@@ -54,8 +54,8 @@ The following diagram presents an overview of the solution to be deployed.
 ![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
 {: style="text-align: center;"}
 
-1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a 2 IOPS/GB storage pool.
-2. When a virtual data center is created, an edge gateway and external networks are created automatically. External network provides you internet access and an IP address block of `/29` with 6 usable public IP addresses is provided.
+1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a `2 IOPS/GB` storage pool.
+2. When a virtual data center is created, an edge gateway and external networks are created automatically. External network provides you Internet access and an IP address block of `/29` with 6 usable public IP addresses is provided.
 3. Terraform templates are used to create virtual data center networks, virtual machines as well as firewall and network address translation rules. The creation is fully controlled though variables. Terraform authenticates to the VMware Cloud Director API with a user name and password. Access tokens will be supported in the near future.
 4. Three virtual data center networks are created: two routed (`application-network-1` and `db-network-1`) and one isolated (`isolated-network-1`). Routed virtual data center networks are attached to the edge gateway while isolated virtual data center network is a standalone network. You can create more networks based on your needs.
 5. A jump server (`jump-server-1`) is created with the Windows 2022 Operating System. The server is attached to the `application-network-1`. You can access the virtual machine though the VM console, or using RDP though the DNAT rule created on the Edge Gateway.
@@ -99,7 +99,7 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
-The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [Git](https://github.com/IBM/vmwaas-Terraform-examples).
+The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples).
 
 Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access.
 
@@ -128,10 +128,10 @@ Once the instance and virtual data center has been deployed, you can collect the
 
 Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console:
 
-1. In the VMware as a Service table, click a VMware as a Service instance name.
-2. On the Summary tab, review the information.
-3. If this ia the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
-4. On the VDC details page, click VMware Cloud Director Console to access the console.
+1. In the **VMware as a Service** table, click a VMware as a Service instance name.
+2. On the **Summary** tab, review the information.
+3. If this is the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
+4. On the VDC details page, click **VMware Cloud Director Console** to access the console.
 5. Use the admin username and password to log in to the VMware Cloud Director Console for the first time. 
 6. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
 
@@ -235,7 +235,6 @@ vmwaas_user = "put-your-username-here"
 vmwaas_password = "put-your-password-here"
 #vmwaas_api_token = ""                                  # Note. This will be supported in the near future.
 ```
-{: codeblock}
 
 If you change the authentication method, the provider block in the code needs to changed to use a different authentication method. Currently only username and password method is supported in {{site.data.keyword.vmware-service_full}} - single tenant instance.
 {: tip}
@@ -247,7 +246,6 @@ You can set a common name prefix to identify and separate your virtual data cent
 
 item_name_prefix = "demo"
 ```
-{: codeblock}
 
 You can use IBM Cloud Public DNS server in your virtual machines, or you can use your own. When using your own, make sure you have network connectivity to reach these.
 
@@ -257,7 +255,6 @@ You can use IBM Cloud Public DNS server in your virtual machines, or you can use
 
 dns_servers = ["161.26.1.10","161.26.1.11"] 
 ```
-{: codeblock}
 
 When creating virtual data center networks, use the map variable `vdc_networks` to define these.
 
@@ -317,7 +314,6 @@ vdc_networks = {
     },
 }
 ```
-{: codeblock}
 
 When creating virtual machines, use the map variable `virtual_machines` to define these.
 
@@ -424,7 +420,6 @@ virtual_machines = {
     },
 }
 ```
-{: codeblock}
 
 Each virtual data center gets 6 public IP addresses for each virtual data center and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your virtual data center. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
 
@@ -459,7 +454,6 @@ public_ips = {
     },
 }
 ```
-{: codeblock}
 
 The variable `nat_rules` defines the NAT rules to be created. Check the examples and modify based on your needs.
 
@@ -547,9 +541,8 @@ nat_rules = {
     },  
   }  
 ```
-{: codeblock}
 
-The Terraform creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on premises networks or other private or public IP addresses you need in the firewall rules.
+The Terraform template creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on-premises networks or other private or public IP addresses you need in the firewall rules.
 
 ```terraform
 # Note. You need to create IP sets to be used in firewall rules.
@@ -595,7 +588,6 @@ ip_sets = {
     },
 }
 ```
-{: codeblock}
 
 You can also use Static Groups in firewall rules as sources and targets.
 
@@ -618,7 +610,6 @@ security_groups = {
     },
 }
 ```
-{: codeblock}
 
 The variable `firewall_rules` defines the firewall rules to be created. See the examples and modify based on your needs.
 
@@ -661,7 +652,6 @@ firewall_rules = {
     },
 }
 ```
-{: codeblock}
 
 Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`, for example:
 
@@ -677,189 +667,189 @@ You can use it as such, add more networks, more virtual machines and customize N
 {: #vmware-as-a-service-vdc-apply}
 {: step}
 
-To initialize your Terraform project, run `terraform init` command in the example directory and observe the output.
+1. To initialize your Terraform project, run `terraform init` command in the example directory and observe the output.
 
-For example:
+   For example:
 
-```bash
-% terraform init
+   ```bash
+   % terraform init
 
-Initializing the backend...
+   Initializing the backend...
 
-Initializing provider plugins...
-- Finding latest version of hashicorp/random...
-- Finding latest version of vmware/vcd...
-- Installing hashicorp/random v3.4.3...
-- Installed hashicorp/random v3.4.3 (signed by HashiCorp)
-- Installing vmware/vcd v3.8.2...
-- Installed vmware/vcd v3.8.2 (signed by a HashiCorp partner, key ID 8BF53DB49CDB70B0)
+   Initializing provider plugins...
+   - Finding latest version of hashicorp/random...
+   - Finding latest version of vmware/vcd...
+   - Installing hashicorp/random v3.4.3...
+   - Installed hashicorp/random v3.4.3 (signed by HashiCorp)
+   - Installing vmware/vcd v3.8.2...
+   - Installed vmware/vcd v3.8.2 (signed by a HashiCorp partner, key ID 8BF53DB49CDB70B0)
 
-Partner and community providers are signed by their developers.
-If you'd like to know more about provider signing, you can read about it here:
-https://www.terraform.io/docs/cli/plugins/signing.html
+   Partner and community providers are signed by their developers.
+   If you'd like to know more about provider signing, you can read about it here:
+   https://www.terraform.io/docs/cli/plugins/signing.html
 
-Terraform has created a lock file .terraform.lock.hcl to record the provider
-selections it made above. Include this file in your version control repository
-so that Terraform can guarantee to make the same selections by default when
-you run "terraform init" in the future.
+   Terraform has created a lock file .terraform.lock.hcl to record the provider
+   selections it made above. Include this file in your version control repository
+   so that Terraform can guarantee to make the same selections by default when
+   you run "terraform init" in the future.
 
-Terraform has been successfully initialized!
+   Terraform has been successfully initialized!
 
-You may now begin working with Terraform. Try running "terraform plan" to see
-any changes that are required for your infrastructure. All Terraform commands
-should now work.
+   You may now begin working with Terraform. Try running "terraform plan" to see
+   any changes that are required for your infrastructure. All Terraform commands
+   should now work.
 
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
-```
+   If you ever set or change modules or backend configuration for Terraform,
+   rerun this command to reinitialize your working directory. If you forget, other
+   commands will detect it and remind you to do so if necessary.
+   ```
 
-Next, you can run `terraform plan` to see what will be deployed.
+2. Next, you can run `terraform plan` to see what will be deployed.
 
-```bash
-% terraform plan
-data.vcd_resource_list.list_of_vdcs: Reading...
-data.vcd_resource_list.list_of_vdc_edges: Reading...
-data.vcd_resource_list.list_of_catalog_items: Reading...
-data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
-data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
-data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
-data.vcd_org_vdc.org_vdc: Reading...
+   ```bash
+   % terraform plan
+   data.vcd_resource_list.list_of_vdcs: Reading...
+   data.vcd_resource_list.list_of_vdc_edges: Reading...
+   data.vcd_resource_list.list_of_catalog_items: Reading...
+   data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
+   data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
+   data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
+   data.vcd_org_vdc.org_vdc: Reading...
 
-[output omitted]
+   [output omitted]
 
-Plan: 29 to add, 0 to change, 0 to destroy.
-```
+   Plan: 29 to add, 0 to change, 0 to destroy.
+   ```
 
-Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
+   Check the output of your plan, and if all look as planned, you can run `terraform apply` to actually deploy assets. 
 
-For example: 
+   For example: 
 
-```bash
-% terraform apply --auto-approve
-data.vcd_resource_list.list_of_vdcs: Reading...
-data.vcd_resource_list.list_of_vdc_edges: Reading...
-data.vcd_resource_list.list_of_catalog_items: Reading...
-data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
-data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
-data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
-data.vcd_org_vdc.org_vdc: Reading...
+   ```bash
+   % terraform apply --auto-approve
+   data.vcd_resource_list.list_of_vdcs: Reading...
+   data.vcd_resource_list.list_of_vdc_edges: Reading...
+   data.vcd_resource_list.list_of_catalog_items: Reading...
+   data.vcd_nsxt_app_port_profile.system["SSH"]: Reading...
+   data.vcd_nsxt_app_port_profile.system["HTTPS"]: Reading...
+   data.vcd_nsxt_app_port_profile.system["ICMP ALL"]: Reading...
+   data.vcd_org_vdc.org_vdc: Reading...
 
-[output omitted]
+   [output omitted]
 
-Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
-```
+   Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
+   ```
 
-In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines.
+3. In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines. 
 
-For example, to get access access information to your virtual machines:
+   For example, you can run `terraform output created_virtual_machines` to get access access information to your virtual machines:
 
-```bash
-% terraform output created_virtual_machines
-{
-  "app-server-1" = {
-    "admin_password" = "<omitted>"
-    "name" = "demo-app-server-1"
-    "network" = [
-      {
-        "ip_address" = "172.26.1.10"
-        "is_primary" = true
-        "name" = "demo-application-network-1"
-      },
-    ]
-  }
-  "db-server-1" = {
-    "admin_password" = "<omitted>"
-    "name" = "demo-db-server-1"
-    "network" = [
-      {
-        "ip_address" = "172.26.2.10"
-        "is_primary" = true
-        "name" = "demo-db-network-1"
-      },
-      {
-        "ip_address" = "172.26.3.10"
-        "is_primary" = false
-        "name" = "demo-isolated-network-1"
-      },
-    ]
-  }
-  "jump-server-1" = {
-    "admin_password" = "<omitted>"
-    "name" = "demo-jump-server-1"
-    "network" = [
-      {
-        "ip_address" = "172.26.1.11"
-        "is_primary" = true
-        "name" = "demo-application-network-1"
-      },
-    ]
-  }
-}
-```
+   ```bash
+   % terraform output created_virtual_machines
+   {
+   "app-server-1" = {
+      "admin_password" = "<omitted>"
+      "name" = "demo-app-server-1"
+      "network" = [
+         {
+         "ip_address" = "172.26.1.10"
+         "is_primary" = true
+         "name" = "demo-application-network-1"
+         },
+      ]
+   }
+   "db-server-1" = {
+      "admin_password" = "<omitted>"
+      "name" = "demo-db-server-1"
+      "network" = [
+         {
+         "ip_address" = "172.26.2.10"
+         "is_primary" = true
+         "name" = "demo-db-network-1"
+         },
+         {
+         "ip_address" = "172.26.3.10"
+         "is_primary" = false
+         "name" = "demo-isolated-network-1"
+         },
+      ]
+   }
+   "jump-server-1" = {
+      "admin_password" = "<omitted>"
+      "name" = "demo-jump-server-1"
+      "network" = [
+         {
+         "ip_address" = "172.26.1.11"
+         "is_primary" = true
+         "name" = "demo-application-network-1"
+         },
+      ]
+   }
+   }
+   ```
 
-To get the NAT rules, and used public IP addresses:
+   To get the NAT rules, and used public IP addresses you can run `terraform output created_nat_rules`:
 
-```bash
-% terraform output created_nat_rules
-{
-  "dnat-to-app-1" = {
-    "dnat_external_port" = ""
-    "external_address" = "xxx.yyy.zzz.19"
-    "internal_address" = "172.26.1.10"
-    "name" = "demo-dnat-to-app-1"
-    "rule_type" = "DNAT"
-    "snat_destination_address" = ""
-  }
-  "dnat-to-jump-1" = {
-    "dnat_external_port" = ""
-    "external_address" = "xxx.yyy.zzz.20"
-    "internal_address" = "172.26.1.11"
-    "name" = "demo-dnat-to-jump-1"
-    "rule_type" = "DNAT"
-    "snat_destination_address" = ""
-  }
-  "no-snat-to-ibm-cloud-161-26" = {
-    "dnat_external_port" = ""
-    "external_address" = ""
-    "internal_address" = "172.26.1.0/24"
-    "name" = "demo-no-snat-to-ibm-cloud-161-26"
-    "rule_type" = "NO_SNAT"
-    "snat_destination_address" = "161.26.0.0/16"
-  }
-  "no-snat-to-ibm-cloud-166-9" = {
-    "dnat_external_port" = ""
-    "external_address" = ""
-    "internal_address" = "172.26.1.0/24"
-    "name" = "demo-no-snat-to-ibm-cloud-166-9"
-    "rule_type" = "NO_SNAT"
-    "snat_destination_address" = "166.9.0.0/16"
-  }
-  "snat-to-internet-1" = {
-    "dnat_external_port" = ""
-    "external_address" = "xxx.yyy.zzz.18"
-    "internal_address" = "172.26.1.0/24"
-    "name" = "demo-snat-to-internet-1"
-    "rule_type" = "SNAT"
-    "snat_destination_address" = ""
-  }
-  "snat-to-internet-2" = {
-    "dnat_external_port" = ""
-    "external_address" = "xxx.yyy.zzz.18"
-    "internal_address" = "172.26.2.0/24"
-    "name" = "demo-snat-to-internet-2"
-    "rule_type" = "SNAT"
-    "snat_destination_address" = ""
-  }
-}
-``` 
+   ```bash
+   % terraform output created_nat_rules
+   {
+   "dnat-to-app-1" = {
+      "dnat_external_port" = ""
+      "external_address" = "xxx.yyy.zzz.19"
+      "internal_address" = "172.26.1.10"
+      "name" = "demo-dnat-to-app-1"
+      "rule_type" = "DNAT"
+      "snat_destination_address" = ""
+   }
+   "dnat-to-jump-1" = {
+      "dnat_external_port" = ""
+      "external_address" = "xxx.yyy.zzz.20"
+      "internal_address" = "172.26.1.11"
+      "name" = "demo-dnat-to-jump-1"
+      "rule_type" = "DNAT"
+      "snat_destination_address" = ""
+   }
+   "no-snat-to-ibm-cloud-161-26" = {
+      "dnat_external_port" = ""
+      "external_address" = ""
+      "internal_address" = "172.26.1.0/24"
+      "name" = "demo-no-snat-to-ibm-cloud-161-26"
+      "rule_type" = "NO_SNAT"
+      "snat_destination_address" = "161.26.0.0/16"
+   }
+   "no-snat-to-ibm-cloud-166-9" = {
+      "dnat_external_port" = ""
+      "external_address" = ""
+      "internal_address" = "172.26.1.0/24"
+      "name" = "demo-no-snat-to-ibm-cloud-166-9"
+      "rule_type" = "NO_SNAT"
+      "snat_destination_address" = "166.9.0.0/16"
+   }
+   "snat-to-internet-1" = {
+      "dnat_external_port" = ""
+      "external_address" = "xxx.yyy.zzz.18"
+      "internal_address" = "172.26.1.0/24"
+      "name" = "demo-snat-to-internet-1"
+      "rule_type" = "SNAT"
+      "snat_destination_address" = ""
+   }
+   "snat-to-internet-2" = {
+      "dnat_external_port" = ""
+      "external_address" = "xxx.yyy.zzz.18"
+      "internal_address" = "172.26.2.0/24"
+      "name" = "demo-snat-to-internet-2"
+      "rule_type" = "SNAT"
+      "snat_destination_address" = ""
+   }
+   }
+   ``` 
 
-You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on. For example:
+   You can get the configured firewall rules though an output `created_fw_rules`, IP Sets with `created_ip_sets` and Static Groups with `created_static_groups`and so on. For example:
 
-```bash
-terraform output created_fw_rules
-```
-{: codeblock}
+   ```bash
+   terraform output created_fw_rules
+   ```
+   {: codeblock}
 
 After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose public access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
 {: important}
@@ -869,7 +859,7 @@ After provisioning, please make sure you adjust the example firewall rules accor
 {: #vmware-as-a-service-tf-connect-to-console}
 {: step}
 
-Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
+Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
 
 Get the virtual machines' usernames and passwords from the terraform `output`, for example:
 
@@ -879,9 +869,9 @@ terraform output created_virtual_machines
 {: codeblock}
 
 To connect to the virtual machine with console in VMware Cloud Director Console:
-1. Click on Launch Web Console to open a local console to the virtual machine.
-2. Using the web console, log into the virtual machine using root as the user ID and the password you captured from the previous step.
-3. You should then be able to ping Internet resources such as www.ibm.com, showing that the networking is complete and working.
+1. Click on **Launch Web Console** to open a local console to the virtual machine.
+2. Using the web console, log in to the virtual machine using root as the user ID and the password you captured from the previous step.
+3. You should then be able to ping Internet resources such as `www.ibm.com`, showing that the networking is complete and working.
 
 
 ## Connect to the virtual machines though Internet and validate connectivity
