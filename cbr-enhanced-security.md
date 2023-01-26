@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-24"
-lasttested: "2023-01-24"
+lastupdated: "2023-01-26"
+lasttested: "2023-01-26"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -36,6 +36,7 @@ The tutorial discusses how to create network zones and context rules and how to 
 * Learn about context-based restrictions to protect your cloud resources
 * Define network zones to identify traffic sources for allowed and denied access
 * Create rules that define context for access to your cloud resources
+* Know how to test and monitor context rules
 
 The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional boxes with dashed, blue lines around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
 
