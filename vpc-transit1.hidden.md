@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-01-23"
-lasttested: "2023-01-11"
+lastupdated: "2023-01-24"
+lasttested: "2023-01-23"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
@@ -30,13 +30,13 @@ completion-time: 2h
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other and this creates the need to be able to route traffic through a centralized hub for use with centralized gateways or security appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
+A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
 {: shortdesc}
 
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This is part one of a two part tutorial ([part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)).  This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
+This is part one of a two part tutorial ([part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)). This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
 {: shortdesc}
 
 - The hub is a central point of traffic routing between enterprise and the cloud.
@@ -81,8 +81,8 @@ In addition:
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial. See the list of:
    - [required permissions for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-   - [required permissions for creating {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-iam&interface=ui).
-   <!--TO DO add more links for other services provisioned -->
+   - [required permissions for creating {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-iam).
+   - [required permissions for IP spoofing checks](https://{DomainName}/docs/)docs/vpc?topic=vpc-ip-spoofing-about).
 
 ## IP Address and Subnet Layout
 {: #vpc-transit-ip-address-and-subnet-layout}
@@ -99,9 +99,9 @@ This diagram shows just zone 1 in more detail. The subnet sizes and layout are i
 ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
 {: style="text-align: center;"}
 
-Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on the right. In the {{site.data.keyword.cloud_notm}} for simplictiy a single zone is depicted for the transit VPC and Spoke 0.  Notice the CIDR blocks do not overlap and VPCs all consume a CIDR block in each zone:
+Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on the right. In the {{site.data.keyword.cloud_notm}} for simplictiy a single zone is depicted for the transit VPC and Spoke 0. Notice the CIDR blocks do not overlap and VPCs all consume a CIDR block in each zone:
 - The on-premises CIDR is 192.168.0.0/16.
-- The zones in this [multi-zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16.  The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
+- The zones in this [multi-zone region](https://{DomainName}/docs/overview?topic=overview-locations) are 10.\*.0.0/16. The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
    - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
    - 10.2.0.0/16, zone 2, Dallas 2, us-south-2.
    - 10.3.0.0/16, zone 3, Dallas 3, us-south-3.
@@ -118,7 +118,7 @@ Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on 
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc. VPC instances are demonstrated in this tutorial.
-- dns - {{site.data.keyword.dns_short}} location appliances.  See [working with custom resolvers](/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).
+- dns - {{site.data.keyword.dns_short}} location appliances. See [working with custom resolvers](/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).
 - vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) for private connectivity to cloud services.
 - firewall - firewall-router VPC instances.
 
@@ -149,7 +149,7 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
-1. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
+1. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
 
    ```sh
    ./apply.sh : : -p
@@ -198,7 +198,7 @@ VPC Virtual Server Instances, VSIs, are provisioned to test the network connecti
    ```
    {: codeblock}
 
-It can be enlightening to explore the resources created at each step in the {{site.data.keyword.cloud_notm}} console.  Optionally open the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs).  On the left click on the **Virtual server instances** and notice the instances that were created.
+It can be enlightening to explore the resources created at each step in the {{site.data.keyword.cloud_notm}} console. Optionally open the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs). On the left click on the **Virtual server instances** and notice the instances that were created.
 
 ## Testing
 {: #vpc-transit-testing}
@@ -213,7 +213,7 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
 
 1. Run the zone 1 `curl` tests in the suite by using the **-m** (markers) flag. Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
-  **Your expected results are:** Connectivity within a VPC, like transit <-> transit will be **PASSED**. Cross VPC, like transit -> spoke will be **FAILED**.
+   **Your expected results are:** Connectivity within a VPC, like transit <-> transit will be **PASSED**. Cross VPC, like transit -> spoke will be **FAILED**.
 
    ```sh
    pytest -m "curl and lz1 and rz1"
@@ -312,7 +312,7 @@ Provision a {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_sho
 {: style="text-align: center;"}
 
 
-{{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the {{site.data.keyword.cloud_notm}}. In this tutorial {{site.data.keyword.tg_short}} is used for distribution.  The use of {{site.data.keyword.tg_short}} is optional for an on-premises connection.
+{{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the {{site.data.keyword.cloud_notm}}. In this tutorial {{site.data.keyword.tg_short}} is used for distribution. The use of {{site.data.keyword.tg_short}} is optional for an on-premises connection.
 
 The enterprise in this tutorial is simulated in the form of another VPC. Connecting this simulated enterprise (actually another VPC) via the {{site.data.keyword.tg_short}} will ensure an experience very close to what you would experience with a {{site.data.keyword.dl_short}}.
 
@@ -389,7 +389,7 @@ The next_hop identifies the firewall-router. In the table above 10.1.0.196 zone 
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
-Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)?  And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
+Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes:
 - 192.168.0.0/24 Dallas 1.
@@ -451,7 +451,7 @@ Dallas 1|10.1.0.0/24|Delegate
 Dallas 2|10.2.0.0/24|Delegate
 Dallas 3|10.3.0.0/24|Delegate
 
-1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console.  Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
+1. To observe the current value of the ingress route table visit the [Routing tables for VPC](https://{DomainName}/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console. Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
 
 1.  Make the changes to the routing table by applying the transit_ingress layer:
    ```sh
@@ -460,7 +460,7 @@ Dallas 3|10.3.0.0/24|Delegate
    {: codeblock}
 
 1. Refresh the browser display of the routing table to observe the new routes.
-1. Run the test suite.  
+1. Run the test suite.
 
    **Your expected results are:** All tests will result in **PASSED** with the exception of enterprise <-> spoke(s) that are cross zones.
 
@@ -490,9 +490,9 @@ Example failure:
 
 The blue line represents a TCP connection request from enterprise through the {{site.data.keyword.tg_short}}: 192.168.0.4 <--TCP--> 10.2.1.4. The {{site.data.keyword.tg_short}} will choose a transit VPC zone based on the matching address prefix. The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
 
-The red line represents the TCP connection response to 192.168.0.4.  The {{site.data.keyword.tg_short}} delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone. The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connection pass through the same firewall-router in both directions. The VPC does not support tcp "Asymmetric Routing".
+The red line represents the TCP connection response to 192.168.0.4. The {{site.data.keyword.tg_short}} delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone. The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connection pass through the same firewall-router in both directions. The VPC does not support tcp "Asymmetric Routing".
 
-It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation. ICMP does not require a stateful connection. Connectivity from 192.168.0.4 <--ICMP--> 10.2.1.4 via ICMP is possible. You can run the ping marked tests to verify via copy paste of the failed output  The **l-** is for left and **r-** is for right:
+It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation. ICMP does not require a stateful connection. Connectivity from 192.168.0.4 <--ICMP--> 10.2.1.4 via ICMP is possible. You can run the ping marked tests to verify via copy paste of the failed output. The **l-** is for left and **r-** is for right:
 
 **Expect success:**
    ```sh

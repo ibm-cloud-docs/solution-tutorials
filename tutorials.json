@@ -169,20 +169,6 @@
           "lastUpdated": "2022-12-22"
         },
         {
-          "name": "Use Virtual Servers to build highly available and scalable web app",
-          "url": "highly-available-and-scalable-web-application.html",
-          "description": "Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
-          "imgSrc": "images/solution14/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "Virtual Servers",
-            "Load Balancer",
-            "PHP",
-            "File Storage"
-          ],
-          "lastUpdated": "2022-04-21"
-        },
-        {
           "name": "Modern web application using MEAN stack",
           "url": "mean-stack.html",
           "description": "Build a web application using the popular MEAN stack - Mongo DB, Express, Angular, Node.js. Run the app locally, create and use a database-as-a-service, deploy the app and monitor the application.",
