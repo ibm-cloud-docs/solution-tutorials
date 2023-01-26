@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-25"
+lastupdated: "2023-01-26"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -298,7 +298,7 @@ To get the password:
 4. The password auto generated during virtual machine provisioning will be listed under **Specify Password**. Copy this password to a safe space to be used upon initial login. Click on **Discard** when this password has been saved.
 
 To connect to the virtual machine using the web console:
-1. Click on** Launch Web Console** to open a local console to the virtual machine.
+1. Click on **Launch Web Console** to open a local console to the virtual machine.
 2. Using the web console, log in to the virtual machine using root as the user ID and the password you captured from the previous step.
 3. You should then be able to ping Internet resources such as `www.ibm.com`, showing that the networking is complete and working.
 
