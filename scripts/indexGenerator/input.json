@@ -56,18 +56,6 @@
                "url": "vpc-transit2.hidden.html",
                "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
                "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
-            },
-            {
-               "name": "Creating a virtual data center in a VMware as a Service single tenant instance with Terraform",
-               "url": "vmware-as-a-service-tf.hidden.html",
-               "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning.",
-               "imgSrc": "images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg"
-            },
-            {
-               "name": "Creating a virtual data center in a VMware as a Service single tenant instance using UI",
-               "url": "vmware-as-a-service-vdc.hidden.html",
-               "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning.",
-               "imgSrc": "images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg"
             }
          ]
       },
@@ -501,7 +489,6 @@
                   "https://github.com/IBM-Cloud/secure-file-storage"
                ]
             }
-
          ]
       },
       {
@@ -1150,7 +1137,34 @@
          "anchor": "vmware",
          "solutions": [
             {
-               "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+               "name": "Creating a virtual data center in a VMware as a Service with Terraform",
+               "url": "vmware-as-a-service-tf.html",
+               "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning using Terraform.",
+               "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg",
+               "tags": [
+                  "VMware"
+               ],
+               "requirements": [
+                  "vmware"
+               ],
+               "repos": [
+                  "https://github.com/IBM/vmwaas-terraform-examples"
+               ]
+            },
+            {
+               "name": "Creating a virtual data center in a VMware as a Service using the UI",
+               "url": "vmware-as-a-service-vdc.html",
+               "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning using the UI.",
+               "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg",
+               "tags": [
+                  "VMware"
+               ],
+               "requirements": [
+                  "vmware"
+               ]
+            },
+            {
+               "name": "Getting Started with IBM Cloud for VMware Shared",
                "url": "vmware-solutions-shared-getting-started.html",
                "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",
                "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
