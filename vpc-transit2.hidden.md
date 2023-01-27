@@ -166,21 +166,15 @@ If continuing from part one make special note of the configuration in the terraf
 4. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
 
    ```sh
-   ./apply.sh : : -p
+   ./apply.sh -p : :
    ```
    {: codeblock}
-
-   It will look something like:
-   ```sh
-   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
-   ```
 
 4. Apply all of the layers in part one and described above.
    ```sh
    ./apply.sh : spokes_egress_tf
    ```
    {: codeblock}
-
 
 If you were following along in part one some additional ingress routes were added to the transit ingress route table to avoid routing through the firewall-router. In this step these have been removed and the transit ingress route table has just these entries so that all incoming traffic for a zone is routed to the firewall-router in the same zone:
 
@@ -269,7 +263,6 @@ Dallas 2|10.0.0.0/8|10.2.0.196
 Moving left to right the firewall-router in the middle zone, zone 2, of the diagram is selected. On the return path zone 1 is selected.
 
 To fix this a few more specific routes need to be added to force the higher number zones to route to the lower zone number firewalls when a lower zone number destination is specified. When referencing an equal or higher numbered zone continue to route to the firewall in the same zone.
-
 
 ![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
 {: style="text-align: center;"}
@@ -498,7 +491,7 @@ Your architecture may not be the same as the one presented, but will likely be c
 - Add [{{site.data.keyword.fl_full}} capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
-- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas).
+- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas).
 - Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
 
 ## Related content

@@ -351,7 +351,7 @@ The Terraform configuration will configure the firewall-router instance with [al
 
 1. Run the test suite.
 
-   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But transit -> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail.
+   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But transit -> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail due to asymmetric routing issues for this traffic through the firewall-router.  Resolution to these problems are covered in [part 2](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial 
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"
