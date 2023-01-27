@@ -491,7 +491,7 @@ You can use it as such, add more networks, more virtual machines and customize N
    # Note. You can specify the desired actual public IP address 
    # (`external_address`) in the rule, or you can use the 
    # `external_address_list_index`, which will pick the IP 
-   # addresss from the allocated IP pool (`edge_gateway_allocated_ips`). 
+   # addresses from the allocated IP pool (`edge_gateway_allocated_ips`). 
    
    # Note. Use Director UI to get the name for the Application
    # profiles."
@@ -508,6 +508,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          app_port_profile = ""
          logging = false
          priority = 90
+         enabled = true
       },
       dnat-to-jump-1 = {
          rule_type   = "DNAT"
@@ -520,6 +521,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          app_port_profile = ""
          logging = false
          priority = 90
+         enabled = true
       },
       snat-to-internet-1 = {
          rule_type = "SNAT"
@@ -531,6 +533,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          snat_destination_address = ""
          logging = false
          priority = 100
+         enabled = true
       },    
       snat-to-internet-2 = {
          rule_type = "SNAT"
@@ -542,6 +545,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          snat_destination_address = ""
          logging = false
          priority = 100
+         enabled = true
       },  
    }  
    ```
