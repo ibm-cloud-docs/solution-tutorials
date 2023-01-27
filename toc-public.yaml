@@ -108,6 +108,8 @@ toc:
             - topicgroup:
                 label: VMware Solutions
                 topics:
+                - vmware-as-a-service-tf.md
+                - vmware-as-a-service-vdc.md
                 - vmware-solutions-shared-getting-started.md
 
         - topicgroup:

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-25"
+lastupdated: "2023-01-26"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance with Terraform
+# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} with Terraform
 {: #vmware-as-a-service-tf}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
@@ -51,7 +51,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
+![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
 {: style="text-align: center;"}
 
 1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a `2 IOPS/GB` storage pool.
@@ -64,11 +64,11 @@ The following diagram presents an overview of the solution to be deployed.
 8. Source NAT (SNAT) and destination NAT (DNAT) rules are created for public network access. SNAT to public internet is configured for all routed networks and DNAT is configured to access the application server. NO_SNAT rules are created for traffic directed to IBM Cloud Service Endpoints.
 9. Firewall rules are provisioned to secure network access to the environment. To create firewall rules, Static Groups and IP Sets are created for networks and individual IP addresses.
 
-This tutorial is broken into the following steps:
+This tutorial is divided into the following steps:
 
 1. [Clone examples repo](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
 2. [Obtain the required information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
-3. [Configure tf.vars](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
+3. [Configure Terraform template variables](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
 4. [Init, plan and apply](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
 5. [Connect to the VMware Cloud Director Console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
 6. [Connect to the virtual machines through the Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
@@ -199,15 +199,15 @@ export TF_VAR_vmwaas_vdc_name="vdc-demo"
 
 You can export these to your shell, or you can get the terraform.tfvars lines to be added to `terraform.tfvars` files as an output of the script using the `tfvars` option.
 
-## Configure tf.vars
+## Configure Terraform template variables
 {: #vmware-as-a-service-vdc-tfvars}
 {: step}
 
 This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
 
-This demo Terraform deployment deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines and example SNAT and DNAT and firewall rules.
+This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
 
-![Basic infrastructure](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
+![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
 {: style="text-align: center;"}
 
 The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
@@ -216,442 +216,11 @@ The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.i
 * [vcd_network_isolated_v2](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/network_isolated_v2){: external}
 * [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/vm){: external}
 * [vcd_nsxt_ip_set](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_ip_set){: external}
+* [vcd_nsxt_security_group](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_security_group){: external}
 * [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule){: external}
 * [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){: external}
 
 In this example template, the creation is fully controlled though Terraform variables - you do not need to change the actual Terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
-
-Set the following common variable to access your instance and virtual data center.
-
-```terraform
-# Note. Variable values to access your Director instance. Use the Director portal
-# to figure our your values here.
-
-vmwaas_url = "put-your-director-url-here" # for example "https://abcxyz.us-south.vmware.cloud.ibm.com/api"
-vmwaas_org = "put-your-org-id-here"
-vmwaas_vdc_name = "put-your-vdc-name-here"
-
-vmwaas_user = "put-your-username-here"
-vmwaas_password = "put-your-password-here"
-#vmwaas_api_token = ""                                  # Note. This will be supported in the near future.
-```
-
-If you change the authentication method, the provider block in the code needs to changed to use a different authentication method. Currently only username and password method is supported in {{site.data.keyword.vmware-service_full}} - single tenant instance.
-{: tip}
-
-You can set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on.
-
-```terraform
-# Note. Use a common name prefix for each item. 
-
-item_name_prefix = "demo"
-```
-
-You can use IBM Cloud Public DNS server in your virtual machines, or you can use your own. When using your own, make sure you have network connectivity to reach these.
-
-```terraform
-# Note. IBM Cloud DNS servers listed here. 
-# You may also use your own here. 
-
-dns_servers = ["161.26.1.10","161.26.1.11"] 
-```
-
-When creating virtual data center networks, use the map variable `vdc_networks` to define these.
-
-```terraform
-# Note. Create virtual data center networks of type `routed` or
-# `isolated`. You can define one `static_ip_pool`and one
-# `dhcp_ip_pool` for each.
-
-vdc_networks = {
-    application-network-1 = {
-        description = "Application network 1"
-        type = "routed"
-        subnet = {
-            cidr = "172.26.1.0/24"
-            prefix_length = 24
-            gateway = "172.26.1.1"
-            static_ip_pool = {
-                start_address = "172.26.1.10"
-                end_address   = "172.26.1.100"
-            }
-            dhcp_ip_pool = {
-                start_address = "172.26.1.101"
-                end_address   = "172.26.1.199"
-            }        
-        }
-    },
-    db-network-1 = {
-        description = "DB network 1"
-        type = "routed"
-        subnet = {
-            cidr = "172.26.2.0/24"
-            prefix_length = 24
-            gateway = "172.26.2.1"
-            static_ip_pool = {
-                start_address = "172.26.2.10"
-                end_address   = "172.26.2.100"
-            }
-            dhcp_ip_pool = {
-                start_address = "172.26.2.101"
-                end_address   = "172.26.2.199"
-            }        
-        }
-    },
-    isolated-network-1 = {
-        description = "Isolated network 1"
-        type = "isolated"
-        subnet = {
-            cidr = "172.26.3.0/24"
-            prefix_length = 24
-            gateway = "172.26.3.1"
-            static_ip_pool = {
-                start_address = "172.26.3.10"
-                end_address   = "172.26.3.100"
-            }
-            dhcp_ip_pool = {} # leave empty for isolated network   
-        }
-    },
-}
-```
-
-When creating virtual machines, use the map variable `virtual_machines` to define these.
-
-```terraform
-# Note. Create virtual machines inside your virtual data center.
-# You can define each one idividually and attach multiple networks
-# and disks. Individual disks are created for each additional disk.
-
-# Note. Check the storage profile names and apply to your VMs / disks.
-# If left empty, default profile is used.
-
-virtual_machines = {
-    app-server-1 = {
-        image = {
-            catalog_name  = "Public Catalog"
-            template_name = "RedHat-8-Template-Official"
-        }
-        memory          = 8192
-        cpus            = 2
-        cpu_hot_add_enabled = true
-        memory_hot_add_enabled = true
-        storage_profile = "2 IOPS/GB"
-        networks = {
-            0 = {
-                name = "application-network-1"
-                ip_allocation_mode = "POOL"
-                is_primary = true
-                ip = ""
-            },
-        }
-        disks = {
-            0 = {
-                name = "logDisk"
-                size_in_mb = "100"
-                bus_type = "SCSI"
-                bus_sub_type = "VirtualSCSI"
-                bus_number = 1
-                storage_profile = ""
-            },
-        }
-    },
-    db-server-1 = {
-        image = {
-            catalog_name  = "Public Catalog"
-            template_name = "RedHat-8-Template-Official"
-        }
-        memory        = 8192
-        cpus          = 2
-        cpu_hot_add_enabled = true
-        memory_hot_add_enabled = true
-        storage_profile = ""
-        networks = {
-            0 = {
-                name = "db-network-1"
-                ip_allocation_mode = "POOL"
-                is_primary = true
-                ip = ""
-            },
-            1 = {
-                name = "isolated-network-1"
-                ip_allocation_mode = "POOL"
-                is_primary = false
-                ip = ""
-            },
-        }
-        disks = {
-            0 = {
-                name = "dbDisk"
-                size_in_mb = "100"
-                bus_type = "SCSI"
-                bus_sub_type = "VirtualSCSI"
-                bus_number = 1
-                storage_profile = ""
-            },
-            1 = {
-                name = "dbLogDisk"
-                size_in_mb = "100"
-                bus_type = "SCSI"
-                bus_sub_type = "VirtualSCSI"
-                bus_number = 1
-                storage_profile = ""
-            },
-        }    
-    },
-    jump-server-1 = {
-        image = {
-            catalog_name  = "Public Catalog"
-            template_name = "Windows-2022-Template-Official"
-        }
-        memory        = 8192
-        cpus          = 2
-        cpu_hot_add_enabled = true
-        memory_hot_add_enabled = true
-        storage_profile = ""
-        networks = {
-            0 = {
-                name = "application-network-1"
-                ip_allocation_mode = "POOL"
-                is_primary = true
-                ip = ""
-            },
-        },
-        disks = {}
-    },
-}
-```
-
-Each virtual data center gets 6 public IP addresses for each virtual data center and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your virtual data center. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
-
-```terraform
-# Note. Map of available 6 public IPs. You can use these names
-# in NAT rules. Do not change the map's keys here.
-
-public_ips = {
-    public-ip-0 = {
-      name = "public-ip-0"
-      description = ""
-    },
-    public-ip-1 = {
-      name = "public-ip-1" 
-      description = ""
-    },
-    public-ip-2 = {
-      name = "public-ip-2" 
-      description = ""
-    },
-    public-ip-3 = {
-      name = "public-ip-3" 
-      description = ""
-    },
-    public-ip-4 = {
-      name = "public-ip-4" 
-      description = ""
-    },
-    public-ip-5 = {
-      name = "public-ip-5" 
-      description = ""
-    },
-}
-```
-
-The variable `nat_rules` defines the NAT rules to be created. Check the examples and modify based on your needs.
-
-```terraform
-# Note. You can use `vdc_networks` or `virtual_machines` keys as 
-# address_targets here. Terraform will pick the IP address of 
-# the specific resource and use that in the actual NAT rule.
-
-# Note. You can specify the desired actual public IP address 
-# (`external_address`) in the rule, or you can use the 
-# `external_address_list_index`, which will pick the IP 
-# addresss from the allocated IP pool (`edge_gateway_allocated_ips`). 
-
-# Note. Use Director UI to get the name for the Application
-# profiles."
-
-nat_rules = {
-    no-snat-to-ibm-cloud-166-9 = {
-        rule_type   = "NO_SNAT"
-        description = "NO_SNAT rule to application-network-1"
-        external_address_target = ""
-        external_address = ""  
-        internal_address_target = "application-network-1"
-        internal_address = ""
-        snat_destination_address = "166.9.0.0/16"
-        logging = false
-        priority = 10
-    },
-    no-snat-to-ibm-cloud-161-26 = {
-        rule_type   = "NO_SNAT"
-        description = "NO_SNAT rule to application-network-1"
-        external_address_target = ""
-        external_address = ""  
-        internal_address_target = "application-network-1"
-        internal_address = ""
-        snat_destination_address = "161.26.0.0/16"
-        logging = false
-        priority = 10
-    },
-    dnat-to-app-1 = {
-        rule_type   = "DNAT"
-        description = "DNAT rule to app-server-1"
-        external_address_target = "public-ip-1"
-        external_address = "" 
-        internal_address_target = "app-server-1"
-        internal_address = ""
-        dnat_external_port = ""
-        app_port_profile = ""
-        logging = false
-        priority = 90
-    },
-    dnat-to-jump-1 = {
-        rule_type   = "DNAT"
-        description = "DNAT rule to jump-server-1"
-        external_address_target = "public-ip-2"
-        external_address = "" 
-        internal_address_target = "jump-server-1"
-        internal_address = ""
-        dnat_external_port = ""
-        app_port_profile = ""
-        logging = false
-        priority = 90
-    },
-    snat-to-internet-1 = {
-        rule_type = "SNAT"
-        description = "SNAT rule to application-network-1"
-        external_address_target = "public-ip-0"
-        external_address = ""  
-        internal_address_target = "application-network-1"
-        internal_address = ""
-        snat_destination_address = ""
-        logging = false
-        priority = 100
-    },    
-    snat-to-internet-2 = {
-        rule_type = "SNAT"
-        description = "SNAT rule to db-network-1"
-        external_address_target = "public-ip-0"
-        external_address = ""  
-        internal_address_target = "db-network-1"
-        internal_address = ""
-        snat_destination_address = ""
-        logging = false
-        priority = 100
-    },  
-  }  
-```
-
-The Terraform template creates IP Sets for the public IP addresses used in NAT rules, but you can define additional IP sets, for example for your on-premises networks or other private or public IP addresses you need in the firewall rules.
-
-```terraform
-# Note. You need to create IP sets to be used in firewall rules.
-# You can use the `public_ips` keys here as address_targets,
-# but you can define IP sets using real IP addresses using a
-# list `ip_addresses`.
-
-ip_sets = {
-    ip-set-on-public-ip-0 = {
-      description = "Public IP 0 - used for SNAT"
-      ip_addresses = []
-      address_target = "public-ip-0"
-    },
-    ip-set-on-public-ip-1 = {
-      description = "Public IP 1 - used for DNAT to app-server-1"
-      ip_addresses = []
-      address_target = "public-ip-1"
-    },
-    ip-set-on-public-ip-2 = {
-      description = "Public IP 2 - used for DNAT to jump-server-1"
-      ip_addresses = []
-      address_target = "public-ip-2"
-    },
-    ip-set-on-public-ip-3 = {
-      description = "Public IP 3"
-      ip_addresses = []
-      address_target = "public-ip-3"
-    },
-    ip-set-on-public-ip-4 = {
-      description = "Public IP 4"
-      ip_addresses = []
-      address_target = "public-ip-4"
-    },
-    ip-set-on-public-ip-5 = {
-      description = "Public IP 5"
-      ip_addresses = []
-      address_target = "public-ip-5"
-    },
-    ip-set-on-premises-networks = {
-      description = "On-premises networks"
-      ip_addresses = ["172.16.0.0/16",]
-      address_target = ""
-    },
-}
-```
-
-You can also use Static Groups in firewall rules as sources and targets.
-
-```terraform
-# Note. You need to create Static Groups to be used in firewall rules.
-# You can use `vdc_networks` as keys here.
-
-security_groups = {
-    sg-application-network-1 = {
-      description = "Static Group for application-network-1"
-      address_targets = ["application-network-1"]
-    },
-    sg-db-network-1 = {
-      description = "Static Group for db-network-1"
-      address_targets = ["db-network-1"]
-    },
-    sg-all-routed-networks = {
-      description = "Static Group for all VDC networks"
-      address_targets = ["application-network-1", "db-network-1"]
-    },
-}
-```
-
-The variable `firewall_rules` defines the firewall rules to be created. See the examples and modify based on your needs.
-
-```terraform
-# Note. Use "ALLOW or "DROP".
-
-# Note. Use Director UI to get the name for the Application
-# profiles."
-
-firewall_rules = {
-    app-1-egress = {
-        action  = "ALLOW"
-        direction = "OUT"
-        ip_protocol = "IPV4"
-        destinations = []                                          # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = ["sg-application-network-1", "sg-db-network-1"]  # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        system_app_ports = []
-        logging = false
-        enabled = true
-    },
-    dnat-to-app-1-ingress = {
-        action  = "ALLOW"
-        direction = "IN"
-        ip_protocol = "IPV4"
-        destinations = ["ip-set-on-public-ip-1"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        system_app_ports = ["SSH","HTTPS","ICMP ALL"]
-        logging = false
-        enabled = true
-    },
-    dnat-to-jump-1-ingress = {
-        action  = "ALLOW"
-        direction = "IN"
-        ip_protocol = "IPV4"
-        destinations = ["ip-set-on-public-ip-2"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
-        system_app_ports = ["RDP"]
-        logging = false
-        enabled = true
-    },
-}
-```
 
 Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`, for example:
 
@@ -661,6 +230,458 @@ cp terraform.tfvars-example terraform.tfvars
 {: codeblock}
 
 You can use it as such, add more networks, more virtual machines and customize NAT or firewall rules and so on based on your needs.
+
+1. Set the following common variable to access your instance and virtual data center.
+
+   ```terraform
+   # Note. Variable values to access your Director instance. Use the Director portal
+   # to figure our your values here.
+   
+   vmwaas_url = "put-your-director-url-here" # for example "https://abcxyz.us-south.vmware.cloud.ibm.com/api"
+   vmwaas_org = "put-your-org-id-here"
+   vmwaas_vdc_name = "put-your-vdc-name-here"
+   
+   vmwaas_user = "put-your-username-here"
+   vmwaas_password = "put-your-password-here"
+   #vmwaas_api_token = ""                                  # Note. This will be supported in the near future.
+   ```
+
+   For these variables, you could alternatively create environment variables named TF_VAR_ for `vmwaas_user` and `vmwaas_password` rather than defining them in `terraform.tfvars` as shown through the `vmwaas.sh` script. In this case, comment these lines out in your `terraform.tfvars`.
+   {: tip}
+
+   If you change the authentication method, the provider block in the code needs to changed to use a different authentication method. Currently only username and password method is supported in {{site.data.keyword.vmware-service_full}} - single tenant instance.
+   {: tip}
+
+2. Set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on.
+
+   ```terraform
+   # Note. Use a common name prefix for each item. 
+   
+   item_name_prefix = "demo"
+   ```
+
+3. Define DNS servers for the virtual machines.
+
+   You can use IBM Cloud Public DNS server in your virtual machines, or you can use your own. 
+
+   ```terraform
+   # Note. IBM Cloud DNS servers listed here. 
+   # You may also use your own here. 
+   
+   dns_servers = ["161.26.1.10","161.26.1.11"] 
+   ```
+
+   When using your own DNS servers here, make sure you have network connectivity to reach these.
+   {: important}
+
+4. Define virtual data center networks.
+
+   When creating virtual data center networks, use the map variable `vdc_networks` to define these and their IP pools.
+
+   ```terraform
+   # Note. Create virtual data center networks of type `routed` or
+   # `isolated`. You can define one `static_ip_pool`and one
+   # `dhcp_ip_pool` for each.
+   
+   vdc_networks = {
+      application-network-1 = {
+         description = "Application network 1"
+         type = "routed"
+         subnet = {
+               cidr = "172.26.1.0/24"
+               prefix_length = 24
+               gateway = "172.26.1.1"
+               static_ip_pool = {
+                  start_address = "172.26.1.10"
+                  end_address   = "172.26.1.100"
+               }
+               dhcp_ip_pool = {
+                  start_address = "172.26.1.101"
+                  end_address   = "172.26.1.199"
+               }        
+         }
+      },
+      db-network-1 = {
+         description = "DB network 1"
+         type = "routed"
+         subnet = {
+               cidr = "172.26.2.0/24"
+               prefix_length = 24
+               gateway = "172.26.2.1"
+               static_ip_pool = {
+                  start_address = "172.26.2.10"
+                  end_address   = "172.26.2.100"
+               }
+               dhcp_ip_pool = {
+                  start_address = "172.26.2.101"
+                  end_address   = "172.26.2.199"
+               }        
+         }
+      },
+      isolated-network-1 = {
+         description = "Isolated network 1"
+         type = "isolated"
+         subnet = {
+               cidr = "172.26.3.0/24"
+               prefix_length = 24
+               gateway = "172.26.3.1"
+               static_ip_pool = {
+                  start_address = "172.26.3.10"
+                  end_address   = "172.26.3.100"
+               }
+               dhcp_ip_pool = {} # leave empty for isolated network   
+         }
+      },
+   }
+   ```
+
+5. Define virtual machine configurations.
+
+   When creating virtual machines, use the map variable `virtual_machines` to define these.
+
+   ```terraform
+   # Note. Create virtual machines inside your virtual data center.
+   # You can define each one individually and attach multiple networks
+   # and disks. Individual disks are created for each additional disk.
+   
+   # Note. Check the storage profile names and apply to your VMs / disks.
+   # If left empty, default profile is used.
+   
+   virtual_machines = {
+      app-server-1 = {
+         image = {
+               catalog_name  = "Public Catalog"
+               template_name = "RedHat-8-Template-Official"
+         }
+         memory          = 8192
+         cpus            = 2
+         cpu_hot_add_enabled = true
+         memory_hot_add_enabled = true
+         storage_profile = "2 IOPS/GB"
+         networks = {
+               0 = {
+                  name = "application-network-1"
+                  ip_allocation_mode = "POOL"
+                  is_primary = true
+                  ip = ""
+               },
+         }
+         disks = {
+               0 = {
+                  name = "logDisk"
+                  size_in_mb = "100"
+                  bus_type = "SCSI"
+                  bus_sub_type = "VirtualSCSI"
+                  bus_number = 1
+                  storage_profile = ""
+               },
+         }
+      },
+      db-server-1 = {
+         image = {
+               catalog_name  = "Public Catalog"
+               template_name = "RedHat-8-Template-Official"
+         }
+         memory        = 8192
+         cpus          = 2
+         cpu_hot_add_enabled = true
+         memory_hot_add_enabled = true
+         storage_profile = ""
+         networks = {
+               0 = {
+                  name = "db-network-1"
+                  ip_allocation_mode = "POOL"
+                  is_primary = true
+                  ip = ""
+               },
+               1 = {
+                  name = "isolated-network-1"
+                  ip_allocation_mode = "POOL"
+                  is_primary = false
+                  ip = ""
+               },
+         }
+         disks = {
+               0 = {
+                  name = "dbDisk"
+                  size_in_mb = "100"
+                  bus_type = "SCSI"
+                  bus_sub_type = "VirtualSCSI"
+                  bus_number = 1
+                  storage_profile = ""
+               },
+               1 = {
+                  name = "dbLogDisk"
+                  size_in_mb = "100"
+                  bus_type = "SCSI"
+                  bus_sub_type = "VirtualSCSI"
+                  bus_number = 1
+                  storage_profile = ""
+               },
+         }    
+      },
+      jump-server-1 = {
+         image = {
+               catalog_name  = "Public Catalog"
+               template_name = "Windows-2022-Template-Official"
+         }
+         memory        = 8192
+         cpus          = 2
+         cpu_hot_add_enabled = true
+         memory_hot_add_enabled = true
+         storage_profile = ""
+         networks = {
+               0 = {
+                  name = "application-network-1"
+                  ip_allocation_mode = "POOL"
+                  is_primary = true
+                  ip = ""
+               },
+         },
+         disks = {}
+      },
+   }
+   ```
+
+6. Define public IP address map.
+   
+   Each virtual data center gets 6 public IP addresses for each virtual data center and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your virtual data center. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
+
+   ```terraform
+   # Note. Map of available 6 public IPs. You can use these names
+   # in NAT rules. Do not change the map's keys here.
+   
+   public_ips = {
+      public-ip-0 = {
+         name = "public-ip-0"
+         description = ""
+      },
+      public-ip-1 = {
+         name = "public-ip-1" 
+         description = ""
+      },
+      public-ip-2 = {
+         name = "public-ip-2" 
+         description = ""
+      },
+      public-ip-3 = {
+         name = "public-ip-3" 
+         description = ""
+      },
+      public-ip-4 = {
+         name = "public-ip-4" 
+         description = ""
+      },
+      public-ip-5 = {
+         name = "public-ip-5" 
+         description = ""
+      },
+   }
+   ```
+
+7. Define NAT rules.
+
+   The variable `nat_rules` defines the NAT rules to be created. Check the provided examples and modify based on your needs.
+
+   ```terraform
+   # Note. You can use `vdc_networks` or `virtual_machines` keys as 
+   # address_targets here. Terraform will pick the IP address of 
+   # the specific resource and use that in the actual NAT rule.
+   
+   # Note. You can specify the desired actual public IP address 
+   # (`external_address`) in the rule, or you can use the 
+   # `external_address_list_index`, which will pick the IP 
+   # addresss from the allocated IP pool (`edge_gateway_allocated_ips`). 
+   
+   # Note. Use Director UI to get the name for the Application
+   # profiles."
+   
+   nat_rules = {
+      no-snat-to-ibm-cloud-166-9 = {
+         rule_type   = "NO_SNAT"
+         description = "NO_SNAT rule to application-network-1"
+         external_address_target = ""
+         external_address = ""  
+         internal_address_target = "application-network-1"
+         internal_address = ""
+         snat_destination_address = "166.9.0.0/16"
+         logging = false
+         priority = 10
+      },
+      no-snat-to-ibm-cloud-161-26 = {
+         rule_type   = "NO_SNAT"
+         description = "NO_SNAT rule to application-network-1"
+         external_address_target = ""
+         external_address = ""  
+         internal_address_target = "application-network-1"
+         internal_address = ""
+         snat_destination_address = "161.26.0.0/16"
+         logging = false
+         priority = 10
+      },
+      dnat-to-app-1 = {
+         rule_type   = "DNAT"
+         description = "DNAT rule to app-server-1"
+         external_address_target = "public-ip-1"
+         external_address = "" 
+         internal_address_target = "app-server-1"
+         internal_address = ""
+         dnat_external_port = ""
+         app_port_profile = ""
+         logging = false
+         priority = 90
+      },
+      dnat-to-jump-1 = {
+         rule_type   = "DNAT"
+         description = "DNAT rule to jump-server-1"
+         external_address_target = "public-ip-2"
+         external_address = "" 
+         internal_address_target = "jump-server-1"
+         internal_address = ""
+         dnat_external_port = ""
+         app_port_profile = ""
+         logging = false
+         priority = 90
+      },
+      snat-to-internet-1 = {
+         rule_type = "SNAT"
+         description = "SNAT rule to application-network-1"
+         external_address_target = "public-ip-0"
+         external_address = ""  
+         internal_address_target = "application-network-1"
+         internal_address = ""
+         snat_destination_address = ""
+         logging = false
+         priority = 100
+      },    
+      snat-to-internet-2 = {
+         rule_type = "SNAT"
+         description = "SNAT rule to db-network-1"
+         external_address_target = "public-ip-0"
+         external_address = ""  
+         internal_address_target = "db-network-1"
+         internal_address = ""
+         snat_destination_address = ""
+         logging = false
+         priority = 100
+      },  
+   }  
+   ```
+
+8. Create IP Sets and Static Groups, which are needed in the defining firewall rules.
+   
+   The Terraform template creates IP Sets for the public IP addresses used in NAT rules. You can also define additional IP sets, for example for your on-premises networks or other private or public IP addresses.
+   
+   ```terraform
+   # Note. You need to create IP sets to be used in firewall rules.
+   # You can use the `public_ips` keys here as address_targets,
+   # but you can define IP sets using real IP addresses using a
+   # list `ip_addresses`.
+   
+   ip_sets = {
+      ip-set-on-public-ip-0 = {
+         description = "Public IP 0 - used for SNAT"
+         ip_addresses = []
+         address_target = "public-ip-0"
+      },
+      ip-set-on-public-ip-1 = {
+         description = "Public IP 1 - used for DNAT to app-server-1"
+         ip_addresses = []
+         address_target = "public-ip-1"
+      },
+      ip-set-on-public-ip-2 = {
+         description = "Public IP 2 - used for DNAT to jump-server-1"
+         ip_addresses = []
+         address_target = "public-ip-2"
+      },
+      ip-set-on-public-ip-3 = {
+         description = "Public IP 3"
+         ip_addresses = []
+         address_target = "public-ip-3"
+      },
+      ip-set-on-public-ip-4 = {
+         description = "Public IP 4"
+         ip_addresses = []
+         address_target = "public-ip-4"
+      },
+      ip-set-on-public-ip-5 = {
+         description = "Public IP 5"
+         ip_addresses = []
+         address_target = "public-ip-5"
+      },
+      ip-set-on-premises-networks = {
+         description = "On-premises networks"
+         ip_addresses = ["172.16.0.0/16",]
+         address_target = ""
+      },
+   }
+   ```
+   
+   You can also use Static Groups in firewall rules as sources and targets. This example creates three Static Groups, one for each routed virtual data center network and one which includes all routed virtual data center networks. 
+   
+   ```terraform
+   # Note. You need to create Static Groups to be used in firewall rules.
+   # You can use `vdc_networks` as keys here.
+   
+   security_groups = {
+      sg-application-network-1 = {
+         description = "Static Group for application-network-1"
+         address_targets = ["application-network-1"]
+      },
+      sg-db-network-1 = {
+         description = "Static Group for db-network-1"
+         address_targets = ["db-network-1"]
+      },
+      sg-all-routed-networks = {
+         description = "Static Group for all VDC networks"
+         address_targets = ["application-network-1", "db-network-1"]
+      },
+   }
+   ```
+
+9. Define firewall rules.
+
+   The variable `firewall_rules` defines the firewall rules to be created. See the provided examples and modify based on your needs.
+   
+   ```terraform
+   # Note. Use "ALLOW or "DROP".
+   
+   # Note. Use Director UI to get the name for the Application
+   # profiles."
+   
+   firewall_rules = {
+      app-1-egress = {
+         action  = "ALLOW"
+         direction = "OUT"
+         ip_protocol = "IPV4"
+         destinations = []                                          # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         sources = ["sg-application-network-1", "sg-db-network-1"]  # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         system_app_ports = []
+         logging = false
+         enabled = true
+      },
+      dnat-to-app-1-ingress = {
+         action  = "ALLOW"
+         direction = "IN"
+         ip_protocol = "IPV4"
+         destinations = ["ip-set-on-public-ip-1"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         system_app_ports = ["SSH","HTTPS","ICMP ALL"]
+         logging = false
+         enabled = true
+      },
+      dnat-to-jump-1-ingress = {
+         action  = "ALLOW"
+         direction = "IN"
+         ip_protocol = "IPV4"
+         destinations = ["ip-set-on-public-ip-2"]                   # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         sources = []                                               # These refer to IP sets (ip_sets or nat_rules) or Static Groups (vdc_networks)
+         system_app_ports = ["RDP"]
+         logging = false
+         enabled = true
+      },
+   }
+   ```
 
 
 ## Init, plan and apply
@@ -896,6 +917,6 @@ Check the following VMware Cloud Director™ Tenant Portal Guides for more detai
 * [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
 * [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
 
-Check the following Terraform registry for more detailed information about the provider, resources and data sources:
+Check the Terraform registry for more detailed information about the provider, resources and data sources:
 
 * [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external}

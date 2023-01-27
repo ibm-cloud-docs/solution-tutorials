@@ -339,7 +339,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
-          "lastUpdated": "2023-01-24"
+          "lastUpdated": "2023-01-26"
         }
       ]
     },
@@ -824,7 +824,30 @@
       "anchor": "vmware",
       "solutions": [
         {
-          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "name": "Creating a virtual data center in a VMware as a Service with Terraform",
+          "url": "vmware-as-a-service-tf.html",
+          "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning using Terraform.",
+          "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg",
+          "tags": [
+            "VMware"
+          ],
+          "repos": [
+            "https://github.com/IBM/vmwaas-terraform-examples"
+          ],
+          "lastUpdated": "2023-01-26"
+        },
+        {
+          "name": "Creating a virtual data center in a VMware as a Service using the UI",
+          "url": "vmware-as-a-service-vdc.html",
+          "description": "Learn how to operationalize a VMware as a Service – single tenant instance after initial instance provisioning using the UI.",
+          "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg",
+          "tags": [
+            "VMware"
+          ],
+          "lastUpdated": "2023-01-26"
+        },
+        {
+          "name": "Getting Started with IBM Cloud for VMware Shared",
           "url": "vmware-solutions-shared-getting-started.html",
           "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",
           "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",

@@ -26,7 +26,7 @@ completion-time: 1h
 {:important: .important}
 {:note: .note}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} single tenant instance using VMware Cloud Director Console
+# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} using the VMware Cloud Director Console
 {: #vmware-as-a-service-vdc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
@@ -51,10 +51,10 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-service-intro-hidden/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: class="center"}
+![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: class="center"}
 {: style="text-align: center;"}
 
-This tutorial is broken into the following steps:
+This tutorial is divided into the following steps:
 
 1. [Log in to the instance's VMware Cloud Director Console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
 2. [Create virtual machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
