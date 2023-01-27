@@ -36,8 +36,7 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 ![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This is part one of a two part tutorial ([part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)). This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
-{: shortdesc}
+This is part one of a two part tutorial. This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
 
 - The hub is a central point of traffic routing between enterprise and the cloud.
 - Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through Network Function Virtualization (NFV) appliance running inside the hub.
@@ -45,6 +44,8 @@ This is part one of a two part tutorial ([part two](docs/solution-tutorials?topi
 - The hub can be the repository for shared microservices used by spokes.
 - The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can hold the VPN resources that are shared by the spokes.
+
+([Part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)) will extend this tutorial by routing all VPC to VPC traffic through the hub, implement a highly available firewall-router and route traffic to {{site.data.keyword.cloud_notm}} service instances with DNS resolution.
 
 There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that provisions resources and configures routing in incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
@@ -152,7 +153,7 @@ The subnets in the transit and spoke are for the different resources:
 1. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
 
    ```sh
-   ./apply.sh : : -p
+   ./apply.sh -p : :
    ```
    {: codeblock}
 
@@ -168,14 +169,7 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
-3. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf. First use the -p to see what it will do:
-
-   ```sh
-   ./apply.sh -p : spokes_tf
-   ```
-   {: codeblock}
-
-4. Now do it:
+1. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf:
 
    ```sh
    ./apply.sh : spokes_tf
