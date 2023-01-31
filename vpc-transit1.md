@@ -24,7 +24,7 @@ completion-time: 2h
 # Centralize communication through a VPC Transit Hub and Spoke architecture - Part one
 {: #vpc-transit1}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link}
+{: toc-services="vpc, transit-gateway, direct-link"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

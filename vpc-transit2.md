@@ -243,6 +243,7 @@ What about the firewall-router itself? This was not mentioned earlier but in ant
    ```sh
    ./apply.sh all_firewall_tf
    ```
+   {: codeblock}
 
 3. Run the test suite.
    - Expected fail: cross zone transit <-> spoke and spoke <-> spoke.
@@ -255,7 +256,7 @@ What about the firewall-router itself? This was not mentioned earlier but in ant
 ### Fix cross zone routing
 {: #vpc-transit2-fix-cross-zone-routing}
 
-As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added. The problem for spoke to spoke traffic is shown in this diagram
+As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added. The problem for spoke 00 to spoke 1 traffic is shown in this diagram
 
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
@@ -281,7 +282,7 @@ Dallas 2|10.1.0.0/16|10.1.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
 Dallas 3|10.2.0.0/16|10.2.0.196
 
-These routes are also going to correct the transit <--> spoke cross zone asymmetric routing problem.  Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4.  Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone).  On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
+These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem.  Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4.  Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone).  On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
 
 1. Apply the all_firewall_asym layer:
    ```sh
@@ -315,7 +316,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
    number_of_firewalls_per_zone = 2
    ```
 
-   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The optional HA firewall router will need to be applied to a number of VPC route table routes in the transit and spoke VPCs. It is best to apply all of the layers previously applied:
+   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The IP address change need to be applied to a number of VPC route table routes in the transit and spoke VPCs. It is best to apply all of the layers previously applied:
 
 1. Apply all the layers through the all_firewall_asym_tf layer:
    ```sh
