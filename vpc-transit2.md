@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2022
 lastupdated: "2023-01-31"
-lasttested: "2023-01-25"
+lasttested: "2023-01-31"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
@@ -35,7 +35,7 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 ![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This is part two of a two part tutorial.  This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
+This is part two of a two part tutorial. This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
 
 This tutorial is stand alone and it is not required to execute the steps in [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1). If you are not familiar with VPC, network IP layout and planning in the {{site.data.keyword.cloud_notm}},
 {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or asymmetric routing consider reading through part one.
@@ -98,12 +98,12 @@ This diagram shows the traffic flow. Only the enterprise <-> spoke is passing th
 ![vpc-transit-part1-fw](images/vpc-transit/vpc-transit-part1-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_short}} and VPC routing.  All zones are configured similarly and the diagram below shows the details of zone 1:
+This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_short}} and VPC routing. All zones are configured similarly and the diagram below shows the details of zone 1:
 
 ![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-part1.svg){: class="center"}
 {: style="text-align: center;"}
 
-The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
+The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route. Similarly the CIDR 192.168.0.0/24 covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
 
 Egress routes in the spokes route traffic to the firewall-router. Ingress routes in the transit route enterprise <-> spoke traffic through the firewall-router.
 
@@ -163,7 +163,7 @@ If continuing from part one make special note of the configuration in the terraf
    ```
    {: codeblock}
 
-4. You could apply all of the layers configured by executing `./apply.sh : :`.  The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
+4. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
 
    ```sh
    ./apply.sh -p : :
@@ -200,7 +200,7 @@ Dallas 1|10.0.0.0/8|10.1.0.196
 Dallas 2|10.0.0.0/8|10.2.0.196
 Dallas 3|10.0.0.0/8|10.3.0.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance.  For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.  
+Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
@@ -235,7 +235,7 @@ Similar routes are added to the transit and other spokes.
 
 ### Firewall Subnets
 {: #vpc-transit2-firewall-subnets}
-What about the firewall-router itself? This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations. It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets. Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.  Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
+What about the firewall-router itself? This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations. It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets. Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console. Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
 
 ### Apply and Test More Firewall
 {: #vpc-transit2-apply-and-test-more-firewall}
@@ -261,7 +261,7 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![vpc-transit-asymmetric-spoke-fw](images/vpc-transit/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke 0 zone 2 10.2.1.4 routing to spoke 1 zone 1 10.1.2.4.  The matching egress route is:
+The green path is an example of the originator spoke 0 zone 2 10.2.1.4 routing to spoke 1 zone 1 10.1.2.4. The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
@@ -282,7 +282,7 @@ Dallas 2|10.1.0.0/16|10.1.0.196
 Dallas 3|10.1.0.0/16|10.1.0.196
 Dallas 3|10.2.0.0/16|10.2.0.196
 
-These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem.  Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4.  Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone).  On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
+These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem. Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4. Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone). On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
 
 1. Apply the all_firewall_asym layer:
    ```sh
@@ -304,7 +304,7 @@ All traffic between VPCs is now routed through the firewall-routers.
 ## High Performance High Availability (HA) Firewall-Router
 {: #vpc-transit2-high-performance-ha-firewall-router}
 {: step}
-To prevent a firewall-router from becoming the performance bottleneck or a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router.  Check your firewall-router documentation to verify it supports this architecture.
+To prevent a firewall-router from becoming the performance bottleneck or a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router. Check your firewall-router documentation to verify it supports this architecture.
 
 ![vpc-transit-ha-firewall](images/vpc-transit/vpc-transit-ha-firewall.svg){: class="center"}
 
@@ -316,7 +316,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) fronting two
    number_of_firewalls_per_zone = 2
    ```
 
-   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB.  The IP address change need to be applied to a number of VPC route table routes in the transit and spoke VPCs. It is best to apply all of the layers previously applied:
+   This change results in the IP address of the firewall-router changing from the firewall-router instance used earlier to the IP address of the NLB. The IP address change need to be applied to a number of VPC route table routes in the transit and spoke VPCs. It is best to apply all of the layers previously applied:
 
 1. Apply all the layers through the all_firewall_asym_tf layer:
    ```sh
@@ -353,7 +353,7 @@ Verify resiliency:
    4. Click **Save**
 2. Run the **pytest** again. It will indicate failures. It will take a few minutes for the NLB to stop routing traffic to the instance, at which point all tests will pass. Continue waiting and running **pytest** until all tests pass.
 
-The NLB firewall is no longer required.  Remove the NLB firewall:
+The NLB firewall is no longer required. Remove the NLB firewall:
 1. Change these two variables in config_tf/terraform.tfvars:
    ```sh
    firewall_nlb                 = false
@@ -369,7 +369,7 @@ The NLB firewall is no longer required.  Remove the NLB firewall:
 ## DNS
 {: #vpc-transit2-dns}
 {: step}
-The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it will be simpler to configure.  All zones are configured similarly and below is a diagram for a two zone architecture:
+The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a separate DNS service is created for the transit and each of the spokes. This approach provides isolation between teams and allows the architecture to spread across different accounts. If a single DNS service in a single account meets your isolation requirements it will be simpler to configure. All zones are configured similarly and below is a diagram for a two zone architecture:
 
 ![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
@@ -424,7 +424,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    ```
    {: codeblock}
 
-1. There is a set of **vpe**  and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-redis}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access the {{site.data.keyword.databases-for-redis}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
+1. There is a set of **vpe** and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-redis}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access the {{site.data.keyword.databases-for-redis}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
    ```sh
    pytest -m 'vpe or vpedns' -k spoke0-z1
    ```
@@ -477,7 +477,7 @@ Some obvious changes to make:
 - Floating IPs were attached to all test instances to support connectivity tests via SSH. This is not required or desirable in production.
 - [Implement context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) rules to further control access to all resources.
 
-In this tutorial you created a hub VPC and a set of spoke VPCs. You routed all cross VPC traffic through transit VPC firewall-router. DNS services were created for each VPC and forwarding rules created between them for workloads and a virtual private endpoint gateways.
+In this tutorial you created a hub VPC and a set of spoke VPCs. You routed all cross VPC traffic through a transit VPC firewall-router. DNS services were created for each VPC. DNS forwarding rules were created between the services for workloads and a virtual private endpoint gateways.
 
 ## Remove resources
 {: #vpc-transit2-remove-resources}

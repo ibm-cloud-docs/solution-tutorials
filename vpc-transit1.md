@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2022
 lastupdated: "2023-01-31"
-lasttested: "2023-01-23"
+lasttested: "2023-01-31"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
@@ -338,7 +338,7 @@ Provision the firewall-router appliances. An ingress route table for Transit Gat
 ![vpc-transit-firewall](images/vpc-transit/vpc-transit-firewall.svg){: class="center"}
 {: style="text-align: center;"}
 
-Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC.  In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
+Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
 
 The Terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about). You must [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
