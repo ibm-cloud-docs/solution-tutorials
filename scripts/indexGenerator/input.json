@@ -795,7 +795,7 @@
                ]
             },
             {
-               "name": "Build VPC Transit Hub and Spoke - Part1",
+               "name": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part one",
                "url": "vpc-transit1.html",
                "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part one",
                "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",
@@ -816,7 +816,7 @@
                ]
             },
             {
-               "name": "Build VPC Transit Hub and Spoke - Part2",
+               "name": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part two",
                "url": "vpc-transit2.html",
                "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part two",
                "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",

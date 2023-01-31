@@ -71,16 +71,19 @@ A layered architecture will introduce resources and demonstrate connectivity. Ea
 {: #vpc-transit2-prereqs}
 
 This tutorial requires:
-* `Terraform CLI` to run the Terraform commands.
-* Python to optionally run the pytest commands.
-* Firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check).
-* An SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
+* `terraform` to use Infrastructure as Code to provision resources,
+* `python` to optionally run the pytest commands,
+* Implementing a firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
+* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for options to install the prerequisites.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for a few options including a Dockerfile to easily create the prerequisite environment.
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial. See the list of:
+   - [required permissions for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+   - [required permissions for creating {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-iam).
+   - [required permissions for IP spoofing checks](https://{DomainName}/docs/)docs/vpc?topic=vpc-ip-spoofing-about).
 
 ## Summary of Part one
 {: #vpc-transit2-summary-of-part-one}
@@ -100,7 +103,7 @@ This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_sh
 ![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-part1.svg){: class="center"}
 {: style="text-align: center;"}
 
-The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 is covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
+The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
 
 Egress routes in the spokes route traffic to the firewall-router. Ingress routes in the transit route enterprise <-> spoke traffic through the firewall-router.
 
@@ -180,6 +183,12 @@ Zone|Destination|Next hop
 Dallas 1|0.0.0.0/0|10.1.0.196
 Dallas 2|0.0.0.0/0|10.2.0.196
 Dallas 3|0.0.0.0/0|10.3.0.196
+
+To observe this:
+1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
+1. Select the **transit VPC** and notice the Address prefixes displayed.
+1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
+
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
