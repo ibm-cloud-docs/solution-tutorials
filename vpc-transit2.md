@@ -88,7 +88,7 @@ In addition:
 ## Summary of Part one
 {: #vpc-transit2-summary-of-part-one}
 
-In the [first part](todo) of this tutorial we carefully planned the address space of the transit and spoke VPCs. The zone based architecture is shown below:
+In [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) of this tutorial we carefully planned the address space of the transit and spoke VPCs. The zone based architecture is shown below:
 
 ![vpc-transit-zones](images/vpc-transit/vpc-transit-zones.svg){: class="center"}
 {: style="text-align: center;"}

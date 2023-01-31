@@ -591,7 +591,7 @@ Execute `terraform destroy` in all directories in reverse order using the `./app
 ## Expand the tutorial
 {: #vpc-transit-expand-tutorial}
 
-You are encouraged to continue on to [part 2](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial where all cross VPC traffic is routed through the firewall-router, {{site.data.keyword.vpe_short}} and DNS are examined.
+You are encouraged to continue on to [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial where all cross VPC traffic is routed through the firewall-router, {{site.data.keyword.vpe_short}} and DNS are examined.
 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
