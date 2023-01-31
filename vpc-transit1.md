@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-01-27"
+lastupdated: "2023-01-31"
 lasttested: "2023-01-23"
 
 content-type: tutorial
