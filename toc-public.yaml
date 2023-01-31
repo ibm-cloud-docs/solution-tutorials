@@ -78,6 +78,8 @@ toc:
                 - /containers/containers-vpc_ks_tutorial
                 - vpc-tg-dns-iam.md
                 - vpc-scaling-dedicated-compute.md
+                - vpc-transit1.md
+                - vpc-transit2.md
 
             - topicgroup:
                 label: Classic Infrastructure
@@ -159,6 +161,8 @@ toc:
                 - vpc-secure-management-bastion-server.md
                 - vpc-tg-dns-iam.md
                 - vpc-scaling-dedicated-compute.md
+                - vpc-transit1.md
+                - vpc-transit2.md
                 - secure-network-enclosure.md
                 - nat-config-private.md
                 - configuring-IPSEC-VPN.md
