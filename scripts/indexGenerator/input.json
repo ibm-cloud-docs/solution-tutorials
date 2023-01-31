@@ -44,18 +44,6 @@
                "url": "checklist-get-started-vmware.hidden.html",
                "description": "Get started with VMware on IBM Cloud.",
                "imgSrc": ""
-            },
-            {
-               "name": "Build VPC Transit Hub and Spoke - Part1",
-               "url": "vpc-transit1.hidden.html",
-               "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
-               "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
-            },
-            {
-               "name": "Build VPC Transit Hub and Spoke - Part2",
-               "url": "vpc-transit2.hidden.html",
-               "description": "Get familiar with VPC Routing, Transit Gateway, DNS and Virtual Endpoint Gateway.",
-               "imgSrc": "images/vpc-transit-hidden/vpc-transit-overview.svg"
             }
          ]
       },
@@ -804,6 +792,50 @@
                "supportsCloudShell": "yes",
                "repos": [
                   "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
+               ]
+            },
+            {
+               "name": "Build VPC Transit Hub and Spoke - Part1",
+               "url": "vpc-transit1.html",
+               "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part 1",
+               "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",
+               "tags": [
+                  "Infrastructure",
+                  "Virtual Private Cloud",
+                  "Virtual Servers",
+                  "Network",
+                  "Transit Gateway"
+               ],
+               "requirements": [
+                  "vpc",
+                  "terraform"
+               ],
+               "supportsCloudShell": "no",
+               "repos": [
+                  "https://github.com/IBM-Cloud/vpc-transit"
+               ]
+            },
+            {
+               "name": "Build VPC Transit Hub and Spoke - Part2",
+               "url": "vpc-transit2.html",
+               "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part 2",
+               "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",
+               "tags": [
+                  "Infrastructure",
+                  "Virtual Private Cloud",
+                  "Virtual Servers",
+                  "Network",
+                  "Transit Gateway",
+                  "Load Balancer"
+               ],
+               "requirements": [
+                  "vpc",
+                  "databases_for_redis",
+                  "terraform"
+               ],
+               "supportsCloudShell": "no",
+               "repos": [
+                  "https://github.com/IBM-Cloud/vpc-transit"
                ]
             }
          ]

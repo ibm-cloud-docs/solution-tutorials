@@ -32,10 +32,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
 
-![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
+![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: class="center"}
 {: style="text-align: center;"}
 
-This is part two of a two part tutorial.  This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Finally private DNS is introduced for microservice access and {{site.data.keyword.cloud_notm}} service instance access through a virtual private endpoint gateway.
+This is part two of a two part tutorial.  This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
 
 This tutorial is stand alone and it is not required to execute the steps in [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1). If you are not familiar with VPC, network IP layout and planning in the {{site.data.keyword.cloud_notm}},
 {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or asymmetric routing consider reading through part one.
@@ -87,17 +87,17 @@ In addition:
 
 In the [first part](todo) of this tutorial we carefully planned the address space of the transit and spoke VPCs. The zone based architecture is shown below:
 
-![vpc-transit-zones](images/vpc-transit-hidden/vpc-transit-zones.svg){: class="center"}
+![vpc-transit-zones](images/vpc-transit/vpc-transit-zones.svg){: class="center"}
 {: style="text-align: center;"}
 
 This diagram shows the traffic flow. Only the enterprise <-> spoke is passing through the firewall:
 
-![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
+![vpc-transit-part1-fw](images/vpc-transit/vpc-transit-part1-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_short}} and VPC routing.  All zones are configured similarly and the diagram below shows the details of zone 1:
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-part1.svg){: class="center"}
+![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-part1.svg){: class="center"}
 {: style="text-align: center;"}
 
 The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route.  Similarly the CIDR 192.168.0.0/24 is covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
@@ -112,7 +112,7 @@ Often an enterprise uses a transit VPC to monitor the traffic with the firewall-
 
 This diagram shows the traffic flow implemented in this step:
 
-![vpc-transit-part2-fw](images/vpc-transit-hidden/vpc-transit-part2-fw.svg){: class="center"}
+![vpc-transit-part2-fw](images/vpc-transit/vpc-transit-part2-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 All traffic between VPCs will flow through the firewall-router:
@@ -248,7 +248,7 @@ What about the firewall-router itself? This was not mentioned earlier but in ant
 
 As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added. The problem for spoke to spoke traffic is shown in this diagram
 
-![vpc-transit-asymmetric-spoke-fw](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
+![vpc-transit-asymmetric-spoke-fw](images/vpc-transit/vpc-transit-asymmetric-spoke-fw.svg){: class="center"}
 {: style="text-align: center;"}
 
 The green path is an example of the originator spoke 0 zone 2 10.2.1.4 routing to spoke 1 zone 1 10.1.2.4.  The matching egress route is:
@@ -261,7 +261,7 @@ Moving left to right the firewall-router in the middle zone, zone 2, of the diag
 
 To fix this a few more specific routes need to be added to force the higher number zones to route to the lower zone number firewalls when a lower zone number destination is specified. When referencing an equal or higher numbered zone continue to route to the firewall in the same zone.
 
-![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit-hidden/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
+![vpc-transit-asymmetric-spoke-fw-fix](images/vpc-transit/vpc-transit-asymmetric-spoke-fw-fix.svg){: class="center"}
 {: style="text-align: center;"}
 
 Routes in each spoke's default egress routing table (shown for Dallas/us-south):
@@ -285,7 +285,7 @@ These routes are also going to correct the transit <--> spoke cross zone asymmet
    **Your expected results are:** all tests **PASSED**, run them in parallel:
 
    ```sh
-   pytest -n 30 -m curl
+   pytest -n 10 -m curl
    ```
    {: codeblock}
 
@@ -296,7 +296,7 @@ All traffic between VPCs is now routed through the firewall-routers.
 {: step}
 To prevent a firewall-router from becoming the performance bottleneck or a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router.  Check your firewall-router documentation to verify it supports this architecture.
 
-![vpc-transit-ha-firewall](images/vpc-transit-hidden/vpc-transit-ha-firewall.svg){: class="center"}
+![vpc-transit-ha-firewall](images/vpc-transit/vpc-transit-ha-firewall.svg){: class="center"}
 
 This diagram shows a single zone with a Network Load Balancer (NLB) fronting two firewall-routers. To see this constructed it is required to change the configuration and apply again.
 
@@ -361,7 +361,7 @@ The NLB firewall is no longer required.  Remove the NLB firewall:
 {: step}
 The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses.  In this example a separate DNS service is created for the transit and each of the spokes.  This approach provides isolation between teams and allows the architecture to spread across different accounts.  If a single DNS service in a single account meets your isolation requirements it will be simpler to configure.  All zones are configured similarly and below is a diagram for a two zone architecture:
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns.svg){: class="center"}
+![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-dns.svg){: class="center"}
 {: style="text-align: center;"}
 
 
@@ -392,7 +392,7 @@ The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP a
 There is a set of **curl DNS** tests that are available in the pytest script. These tests will curl using the DNS name of the remote. There are quite a few so run the tests in parallel:
 
    ```sh
-   pytest -n 30 -m dns
+   pytest -n 10 -m dns
    ```
    {: codeblock}
 
@@ -405,7 +405,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 - [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
 - [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes).
 
-![vpc-transit-vpe](images/vpc-transit-hidden/vpc-transit-vpe.svg){: class="center"}
+![vpc-transit-vpe](images/vpc-transit/vpc-transit-vpe.svg){: class="center"}
 {: style="text-align: center;"}
 
 1. Create a {{site.data.keyword.databases-for-redis_full_notm}} instance and VPEs for the transit and each of the spoke VPCs, by applying the vpe_transit_tf and vpe_spokes_tf layers:
@@ -434,7 +434,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    - For spoke_from -> spoke_to access to Redis the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-redis}} instance. The fully qualified Redis name in spoke_from DNS instance will be forwarded to the transit.
    - The transit forward fully qualified Redis names to the corresponding spoke.
 
-   ![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-dns-vpe.svg){: class="center"}
+   ![vpc-transit-vpc-layout](images/vpc-transit/vpc-transit-dns-vpe.svg){: class="center"}
 {: style="text-align: center;"}
 
    The diagram uses **transit-.databases.appdomain.cloud** to identify the database in the transit instead of the fully qualified name like **5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.

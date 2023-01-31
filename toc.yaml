@@ -27,8 +27,6 @@ toc:
                 - solution-template.md
                 - satellite-tour.hidden.md
                 - checklist-get-started-vmware.hidden.md
-                - vpc-transit1.hidden.md
-                - vpc-transit2.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
@@ -87,6 +85,8 @@ toc:
                 - /containers/containers-vpc_ks_tutorial
                 - vpc-tg-dns-iam.md
                 - vpc-scaling-dedicated-compute.md
+                - vpc-transit1.md
+                - vpc-transit2.md
 
             - topicgroup:
                 label: Classic Infrastructure
