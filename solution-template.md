@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-22"
+  years: 2022, 2023
+lastupdated: "2023-02-02"
 lasttested: "2022-02-22"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -35,7 +35,8 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
 
-![Architecture](images/solution1/Architecture.png){: class="center"}
+![Architecture](images/solution1/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+{: class="center"}
 {: style="text-align: center;"}
 
 1. The user does this
