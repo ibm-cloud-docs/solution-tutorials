@@ -59,7 +59,7 @@ In the diagram above the end user is accessing the applications. The application
 
 The following architecture implements the isolation and connectivity requirements set by the company. Notice that application1, shared, and application2 are VPCs. The single zone and subnet in each VPC can be expanded to a more detailed multi zone implementation over time.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/architecture.png){: class="center"}
+![Architecture of the tutorial](images/solution59-vpc-tg-dns-iam/architecture.png){: caption="Architecture of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Before you begin
@@ -104,7 +104,7 @@ Teams:
 
 A conceptual team ownership model was implemented. The *network* team administers all the network resources and hence most of what is shown in the diagram.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/network.png){: class="center"}
+![Architecture focusing on the Network team](images/solution59-vpc-tg-dns-iam/network.png){: caption="Architecture focusing on the Network team" caption-side="bottom"}
 {: style="text-align: center;"}
 
 #### Shared Team
@@ -112,14 +112,14 @@ A conceptual team ownership model was implemented. The *network* team administer
 
 The *shared* team creates the VSI in its isolated VPC. In addition, the team needs to write records into the DNS service since the IP addresses of the VSIs are determined at creation time. Operator access to the VPC, subnets and security groups are required to create a VSI.
 
-![Architecture](images/solution59-vpc-tg-dns-iam/shared.png){: class="center"}
+![Architecture focusing on the Shared team](images/solution59-vpc-tg-dns-iam/shared.png){: caption="Architecture focusing on the Shared team" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The *application* teams needs the same access as the *shared* team except manager access to the {{site.data.keyword.dns_short}}.
 
 *Application* team access:
 
-![Architecture](images/solution59-vpc-tg-dns-iam/app1.png){: class="center"}
+![Architecture focusing on the Application team](images/solution59-vpc-tg-dns-iam/app1.png){: caption="Architecture focusing on the Application team" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ### IAM Architecture
@@ -155,7 +155,7 @@ This is where resource groups can help out. Each service instance (i.e. resource
 
 Resource Group diagram:
 
-![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png){: class="center"}
+![Resource Group diagram](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-resource-groups.png){: caption="Resource Group diagram" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Each microservice team will be allowed the access in the corresponding resource group. The **network** team will have access to all of these resource groups.
@@ -825,7 +825,7 @@ The Admin team has provided them just the right amount of permissions to create 
 {: #vpc-tg-dns-iam-shared_lb}
 {: step}
 
-![Architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-lb.png){: class="center"}
+![Adding a Load Balancer to the architecture](images/solution59-vpc-tg-dns-iam/vpc-tg-dns-iam-lb.png){: caption="Adding a Load Balancer to the architecture" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Change directory and become a member of the shared access group (use the existing API key):
