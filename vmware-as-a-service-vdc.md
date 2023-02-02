@@ -35,8 +35,8 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-<!--#/istutorial#-->
 
+<!--#/istutorial#-->
 
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
@@ -241,10 +241,10 @@ To create a source NAT (SNAT) rule:
 3. In the left navigation under **Services**, click on **NAT**.
 4. Click on New to create a new NAT rule.
 5. The Add NAT Rule wizard will appear. There are four fields that must be filled out. 
-	1. **Name** – In this example, `snat-to-inet` is used.
-	2. **Interface type** – Select `SNAT` (source NAT) as the interface type.
-	3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-1` (the second actual public IP obtained in the previous step) is used.
-	4. **Internal IP** – This is the CIDR range of the network you created in the previous step. In this example, `192.168.100.0/24` is used.
+   1. **Name** – In this example, `snat-to-inet` is used.
+   2. **Interface type** – Select `SNAT` (source NAT) as the interface type.
+   3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-1` (the second actual public IP obtained in the previous step) is used.
+   4. **Internal IP** – This is the CIDR range of the network you created in the previous step. In this example, `192.168.100.0/24` is used.
    5. **Application** - Leave empty.
 6. Click **Save** when complete.
 
@@ -275,10 +275,10 @@ To create a firewall rule:
 4. Click on **Edit Rules**.
 5. Click on **New** on Top to create a new firewall rule above the `default_rule` (drop any).
 6. A new entry in the firewall rule list will be created. To complete the entry:
-	1. **Name** – In this example, `dnat-to-jump` is used.
+   1. **Name** – In this example, `dnat-to-jump` is used.
    2. **Application** - Click on the pencil icon next to Applications and select `RDP` and `ICMP ALL` from the applications list. You can filter with a name. Click on **Save** when complete.
-	3. **Source** – Click on the pencil icon next to source and toggle the slider next to Any source to green (enabled). Click on **Keep** when complete.
-	4. **Destination** – Click on the pencil icon next to destination and select IP Set `ipset-dnat-to-jump` (or Static Group if that would have been used). Click on **Keep** when complete.
+   3. **Source** – Click on the pencil icon next to source and toggle the slider next to Any source to green (enabled). Click on **Keep** when complete.
+   4. **Destination** – Click on the pencil icon next to destination and select IP Set `ipset-dnat-to-jump` (or Static Group if that would have been used). Click on **Keep** when complete.
 7. Review the inputs and click on **Save** when complete.
 
 The new firewall rule will be created. This may take a few seconds to complete. Repeat the process for the other firewall rules, or more if needed in your solution.

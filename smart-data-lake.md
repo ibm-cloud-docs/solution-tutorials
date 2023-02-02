@@ -119,17 +119,17 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the **Storage** section.
 3. Create a new bucket to store data.
-    - Click **Create a bucket**.
-    - Select **Custom bucket/Customize your bucket**.
-    - Close to the top of the form, provide a bucket **Name**.
-    - Select **Regional** in the **Resiliency** section.
-    - Select a **Location**.
-     - At the bottom of the form click **Create bucket**.
+   - Click **Create a bucket**.
+   - Select **Custom bucket/Customize your bucket**.
+   - Close to the top of the form, provide a bucket **Name**.
+   - Select **Regional** in the **Resiliency** section.
+   - Select a **Location**.
+   - At the bottom of the form click **Create bucket**.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
-    - From your bucket, click **Upload**.
-    - Select **Standard transfer** to use regular http file transfer or select the **Aspera high-speed transfer** radio button, you may need to install the Aspera plugin to your machine.
-    - Click **Upload files**.
-    - Browse and select the previously downloaded CSV file and click **Upload**.
+   - From your bucket, click **Upload**.
+   - Select **Standard transfer** to use regular http file transfer or select the **Aspera high-speed transfer** radio button, you may need to install the Aspera plugin to your machine.
+   - Click **Upload files**.
+   - Browse and select the previously downloaded CSV file and click **Upload**.
 
 ## Working with data
 {: #smart-data-lake-4}

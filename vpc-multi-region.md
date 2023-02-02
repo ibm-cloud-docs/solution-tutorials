@@ -321,6 +321,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    > You can add more routes if desired based on geographies and direct traffic to the closest pool. Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
    > With this configuration, a request does not match any of the defined route, it will be redirected to the **Default origin pools**, users in the GLB region you have define will be directed to the closest Load Balancers/VSIs.
    {: note}
+
 1. Click **Create**.
 
 ## Secure with HTTPS

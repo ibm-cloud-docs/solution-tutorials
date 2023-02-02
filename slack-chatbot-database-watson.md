@@ -175,6 +175,7 @@ In this section, you are going to set up the needed services and deploy the back
 ## Create an assistant
 {: #slack-chatbot-database-watson-4}
 {: step}
+
 In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistant. Then, you create the custom extension and add it to the assistant. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
 
 

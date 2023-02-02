@@ -69,6 +69,7 @@ You will find instructions to download and install these tools for your operatin
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 ## Create an instance of MongoDB database in the cloud

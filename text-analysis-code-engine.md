@@ -77,6 +77,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #text-analysis-cloud-shell}
 {: step}
+
 1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 
 <!--#/istutorial#-->
@@ -110,7 +111,7 @@ Putting entities into a single project enables you to manage access control more
    - Wait until the project `status` changes to **Active**.
 3. Switch to the {{site.data.keyword.cloud-shell_short}} session that you started earlier and use it in this tutorial when you are asked to run CLI commands.
 4. Create a shell variable with the project name and resource group name
-   ```
+   ```sh
    PROJECT_NAME=YourProjectName
    RESOURCE_GROUP_NAME=YourResourceGroupName
    ```
