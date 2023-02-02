@@ -99,13 +99,6 @@ toc:
                 - web-app-private-network.md
 
             - topicgroup:
-                label: (Hidden) Observability in Virtual Private Cloud
-                topics:
-                - vpc-observability-tour.hidden.md
-                - vpc-observability-advanced.hidden.md
-                - vpc-observability-troubleshooting.hidden.md
-
-            - topicgroup:
                 label: VMware on VPC Bare metal servers
                 topics:
                 - vpc-bm-vmware.md
