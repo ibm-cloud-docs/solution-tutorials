@@ -116,7 +116,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
 1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![Screen capture showing how to find the IP address](images/solution21/Logs.png)
+   ![Screen capture showing how to find the IP address](images/solution21/Logs.png){: caption="How to find the IP address" caption-side="bottom"}
 
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
@@ -148,7 +148,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 2. Rename the **DEPLOY** stage to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
-   ![Access the settings Icon](images/solution21/deploy_stage.png)
+   ![Access the settings Icon](images/solution21/deploy_stage.png){: caption="Access the settings Icon" caption-side="bottom"}
 3. To save the changes scroll down and click **Save**.
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. On the **Input** panel change the **stage trigger** to `Run jobs only when this stage is run manually`.
@@ -156,7 +156,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
-   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
+   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png){: caption="Toolchain with dev and prod stages" caption-side="bottom"}
 
 You now have the full deployment setup. To deploy from dev to test, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
@@ -167,14 +167,14 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks). You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
 2. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
-    ![Configure the Slack integration](images/solution21/configure_slack.png)
+    ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
 5. The Slack channel is the channel name you provided while creating a webhook integration above.
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. for example, kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
-    ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png)
+    ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png){: caption="Toolchain with new Slack integration" caption-side="bottom"}
 8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
-    ![Slack app with notification](images/solution21/slack_channel.png)
+    ![Slack app with notification](images/solution21/slack_channel.png){: caption="Slack app with notification" caption-side="bottom"}
 
 ## Remove resources
 {: #continuous-deployment-to-kubernetes-removeresources}

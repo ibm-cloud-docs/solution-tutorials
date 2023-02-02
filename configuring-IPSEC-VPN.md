@@ -91,7 +91,7 @@ Configuring an IPSec VPN site-to-site link between your data center and {{site.d
 
 Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.
 
-![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png){: class="center"}
+![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png){: caption="IPSec tunnel" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
