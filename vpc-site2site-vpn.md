@@ -149,7 +149,7 @@ The {{site.data.keyword.bpshort}} workspace output contains variables that can b
    If the SSH key is not the default for SSH, you can set the option `-I PATH_TO_PRIVATE_KEY_FILE` or see the SSH reference manual for more help. 
    {: tip}
 
-![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-verifyconnectivity.png){: class="center"}
+![Verify connectivity](images/solution46-vpc-vpn/vpc-site2site-vpn-verifyconnectivity.png){: caption="Verify connectivity" caption-side="bottom"}
 {: style="text-align: center;"}
 
    1. Test access to on-premises VSI:
@@ -190,7 +190,7 @@ The on-premises DNS resolution has been configured to use the {{site.data.keywor
 
 Test DNS resolution to Postgresql and Object storage through the Virtual Endpoint Gateway. The two paths being verified are shown in the diagram below:
 
-![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-verifydns.png){: class="center"}
+![Verify DNS resolution](images/solution46-vpc-vpn/vpc-site2site-vpn-verifydns.png){: caption="Verify DNS resolution" caption-side="bottom"}
 {: style="text-align: center;"}
 
    1. Access the on-premises VSI.

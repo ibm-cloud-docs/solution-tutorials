@@ -59,7 +59,7 @@ In this tutorial, you will deploy the configuration introduced in another tutori
 
 The configuration also includes [a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
-![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: class="center"}
+![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: caption="Architecture of Bastion Host" caption-side="bottom"}
 {: style="text-align: center;"}
 
 While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
@@ -67,7 +67,7 @@ While provisioning the resources, you will also deploy applications on the virtu
 2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install supported packages;
 3. Internet or intranet software repositories.
 
-![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png){: class="center"}
+![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png){: caption="Architecture diagram showing the different sources to install software from" caption-side="bottom"}
 {: style="text-align: center;"}
 
 You will explore how to consume these different sources.
