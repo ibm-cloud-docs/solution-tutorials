@@ -147,8 +147,6 @@ To avoid installing the command line tools, the recommended approach is to use t
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
 1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**.
-
-   ![Cloud Shell icon](images/solution55-openshift-microservices/cloudshell-icon.png)
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
@@ -196,7 +194,7 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 {: #openshift-microservices-6}
 
 1. Switch from the **Administrator** to the **Developer** perspective. Your context should be **Developer** > **+Add** on the left and **Project: example-health** on the top.
-   ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png)
+   ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png){: caption="Project View" caption-side="bottom"}
 2. Let's build and deploy the application by selecting **Import from Git**.
 3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend.git` in the Git Repo URL field.
    * Note the `Validated` indication.
@@ -213,7 +211,7 @@ A project is a collection of resources managed by a DevOps team.  An administrat
 
 1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
 1. Select the **node** **patient-health-frontend** to bring up the details view of the `DeploymentConfig`.  Note the **DC** next to **patient-health-frontend**.  The Pods, Builds, Services and Routes are visible.
-   ![App Details](images/solution55-openshift-microservices/ocp45-topo-app-details.png)
+   ![App Details](images/solution55-openshift-microservices/ocp45-topo-app-details.png){: caption="App Details" caption-side="bottom"}
 
    * **Pods**: Your Node.js application containers
    * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the {{site.data.keyword.redhat_openshift_notm}} container registry, and kicked off your deployment config

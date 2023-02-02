@@ -241,7 +241,7 @@ There are 3 versions of the reviews microservice:
 
 The end-to-end architecture of the application is shown below.
 
-![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: class="center"}
+![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: caption="Architecture using Istio" caption-side="bottom"}
 {: style="text-align: center;"}
 
 {{site.data.keyword.redhat_openshift_notm}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
