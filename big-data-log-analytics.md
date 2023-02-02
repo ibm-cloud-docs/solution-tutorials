@@ -83,6 +83,7 @@ The {{site.data.keyword.iae_short}} serverless plan has limited availability. Da
 
 ### Enable Platform Logs
 {: #big-data-log-analytics-platform-logs}
+
 Platform logs are generally useful for troubleshooting resources and will be required in a later step to see the output of {{site.data.keyword.iae_short}}.
 
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances, however, only one instance in a region can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} region.

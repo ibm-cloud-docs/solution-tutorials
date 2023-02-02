@@ -152,7 +152,7 @@ Once the experiment completes running,
    Sorting by different metrics may not change the leaderboard rankings as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary.
    {: tip}
 
-4. Next to the model with *Rank 1* when sorted by Accuracy, click on **Save as** > **Model**.
+4. Next to the model with _Rank 1_ when sorted by Accuracy, click on **Save as** > **Model**.
 5. Check the details of the model and click **Create**.
 6. From the received notification, click **View in project**.
 
@@ -201,8 +201,8 @@ In this section, you will deploy the saved model and test the deployed model,
 
 Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
 
-1. Under **API reference** tab of the deployment, you can see the *Endpoint* under Direct link and code snippets in various programming languages.
-2. **Copy** the *Endpoint* in a notepad for future reference.
+1. Under **API reference** tab of the deployment, you can see the _Endpoint_ under Direct link and code snippets in various programming languages.
+2. **Copy** the _Endpoint_ in a notepad for future reference.
 3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'

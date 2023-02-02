@@ -85,6 +85,7 @@ In addition:
 ## Use {{site.data.keyword.bpshort}}  to create the resources
 {: #vpc-site2site-vpn-create-ressources}
 {: step}
+
 1. Log in to [{{site.data.keyword.cloud_notm}}](https://{DomainName}).
 1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.2) Under the **Specify Template** section, verify:
    1.  **Repository URL** is `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn`
@@ -108,6 +109,7 @@ Explore the resources that were created by clicking below and selecting the inst
 ## Verify connectivity
 {: #vpc-site2site-vpn-verify-connectivity}
 {: step}
+
 The {{site.data.keyword.bpshort}} workspace output contains variables that can be used to verify the VPN connectivity.
 
 1. Get the list of workspaces, note the ID column, set the shell variable:
@@ -186,6 +188,7 @@ The {{site.data.keyword.bpshort}} workspace output contains variables that can b
 ## Verify DNS resolution
 {: #vpc-site2site-vpn-verify-dns-resolution}
 {: step}
+
 The on-premises DNS resolution has been configured to use the {{site.data.keyword.vpc_short}} DNS resolver location.  This allows the cloud services to be accessed by name and resolved to the IP addresses of the private endpoint gateways.
 
 Test DNS resolution to Postgresql and Object storage through the Virtual Endpoint Gateway. The two paths being verified are shown in the diagram below:

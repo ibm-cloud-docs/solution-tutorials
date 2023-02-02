@@ -333,6 +333,7 @@ The incentive for a transit VPC for enterprise <-> cloud traffic is typically to
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
+
 Provision the firewall-router appliances. An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
@@ -363,6 +364,7 @@ The Terraform configuration will configure the firewall-router instance with [al
 
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
+
 Traffic reaches the firewall-router appliance through routing tables.
 1. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.
 1. Select the transit VPC.
@@ -386,6 +388,7 @@ The next_hop identifies the firewall-router. In the table above 10.1.0.196 zone 
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
+
 Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes:
@@ -417,6 +420,7 @@ With these additional address prefixes:
 ## Removing the firewall for transit destination traffic
 {: #vpc-transit-stateful-routing}
 {: step}
+
 The {{site.data.keyword.vpc_short}} uses the industry standard state-based routing for secure TCP connection tracking. It requires that the TCP connections use the same path on the way in as the way out. One exception is Direct Server Return used by routers like [Network {{site.data.keyword.loadbalancer_short}}s](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers). It allows incoming connections from the enterprise to pass through the firewall to the transit test instance and then return directly to the originator.
 
 
@@ -554,6 +558,7 @@ In the diagram below this is represented by the egress dashed line.
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
+
 Basic routing is complete:
 - enterprise <-> transit
 - transit <-> spoke(s)

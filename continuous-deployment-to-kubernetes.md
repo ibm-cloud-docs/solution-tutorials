@@ -155,6 +155,7 @@ There are [different options](https://{DomainName}/docs/solution-tutorials?topic
 6. In **Environment properties** panel, set **CLUSTER_NAMESPACE** to **production**.
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
+
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
    ![Toolchain with dev and prod stages](images/solution21/full-deploy.png){: caption="Toolchain with dev and prod stages" caption-side="bottom"}
 

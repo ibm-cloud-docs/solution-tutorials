@@ -131,6 +131,7 @@ If continuing from part one make special note of the configuration in the terraf
 
 ### Apply Layers
 {: #vpc-transit2-apply-layers}
+
 1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture. In a desktop shell clone the repository:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit
@@ -192,6 +193,7 @@ To observe this:
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
+
 Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone as the originating instance is accomplished by these routes in the spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
@@ -215,6 +217,7 @@ Dallas 3|192.168.0.0/16|10.3.0.196
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit2-do-not-route-intra-zone-traffic-to-firewall-router}
+
 In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly. To accomplish this additional more specific routes can be added to delegate internal traffic. For example in spoke 0, which has the CIDR ranges: 10.1.1.0/24, 10.2.1.0/24, 10.3.1.0/24 the internal routes can be delegated.
 
 Routes in spoke 0's default egress routing table (shown for Dallas/us-south):
@@ -235,10 +238,12 @@ Similar routes are added to the transit and other spokes.
 
 ### Firewall Subnets
 {: #vpc-transit2-firewall-subnets}
+
 What about the firewall-router itself? This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations. It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets. Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console. Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
 
 ### Apply and Test More Firewall
 {: #vpc-transit2-apply-and-test-more-firewall}
+
 1. Apply all the layers through the all_firewall_tf:
    ```sh
    ./apply.sh all_firewall_tf
@@ -304,6 +309,7 @@ All traffic between VPCs is now routed through the firewall-routers.
 ## High Performance High Availability (HA) Firewall-Router
 {: #vpc-transit2-high-performance-ha-firewall-router}
 {: step}
+
 To prevent a firewall-router from becoming the performance bottleneck or a single point of failure it is possible to add a VPC Network Load Balancer to distribute traffic to the zonal firewall-routers to create a Highly Available, HA, firewall-router. Check your firewall-router documentation to verify it supports this architecture.
 
 ![High Availability Firewall](images/vpc-transit/vpc-transit-ha-firewall.svg){: caption="High Availability Firewall" caption-side="bottom"}
@@ -369,6 +375,7 @@ The NLB firewall is no longer required. Remove the NLB firewall:
 ## DNS
 {: #vpc-transit2-dns}
 {: step}
+
 The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a separate DNS service is created for the transit and each of the spokes. This approach provides isolation between teams and allows the architecture to spread across different accounts. If a single DNS service in a single account meets your isolation requirements it will be simpler to configure. All zones are configured similarly and below is a diagram for a two zone architecture:
 
 ![DNS Layout](images/vpc-transit/vpc-transit-dns.svg){: caption="DNS Layout" caption-side="bottom"}
@@ -377,6 +384,7 @@ The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP a
 
 ### DNS Resources
 {: #vpc-transit2-dns-resources}
+
 1. Apply the dns_tf layer to create the DNS services and add a DNS zone for each VPC and an A record for each of the test instances:
    ```sh
    ./apply.sh dns_tf
@@ -436,7 +444,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    FAILED py/test_transit.py::test_vpe_dns_resolution[redis spoke0-z1 -> transit 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud] - AssertionError: 166.9.48.220 not in ['10.1.0.128/26', '10.2.0.128/26', '10.3.0.128/26'] from 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud
    ```
 
-   These are failing due to DNS resolution. In the example above the Redis name, <id>.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26. The error message asserts the Redis name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints). The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
+   These are failing due to DNS resolution. In the example above the Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26. The error message asserts the Redis name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints). The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.

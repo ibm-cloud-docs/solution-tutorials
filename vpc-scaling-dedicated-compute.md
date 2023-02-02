@@ -188,7 +188,8 @@ You can check the logs and monitor your load balancers later in the tutorial.
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
- ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
+   
+   ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
 2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. 
    1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/).This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
    2. **Paste** the public load balancer URL from the above step 
