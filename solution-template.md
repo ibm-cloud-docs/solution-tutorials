@@ -42,6 +42,8 @@ This template shows how to structure a tutorial but also some writing tips and g
 2. Then that
 3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram
 
+![Ingress](images/solution2/Ingress.png){: caption="Ingress" caption-side="bottom"}{: class="center"}
+{: style="text-align: center;"}
 
 ## Before you begin
 {: #solution-template-prereqs}
