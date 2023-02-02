@@ -117,9 +117,9 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision a {{site.data.keyword.openshiftshort}} cluster.
+
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
-
 
 <!--#/istutorial#-->
 
@@ -931,7 +931,7 @@ Complete the following steps to jump to a specific time:
 3. Select your custom view.
 4. Enter a time query. Choose any of the following options:
    - Enter a relative time such as `1 hour ago`. Type **ENTER**
-   ![1 hour ago](images/solution55-openshift-microservices/views-img-17.png){: caption="1 hour ago" caption-side="bottom"}
+      ![1 hour ago](images/solution55-openshift-microservices/views-img-17.png){: caption="1 hour ago" caption-side="bottom"}
    - Enter an absolute time to jump to a point in time in your events such as `January 27 10:00am`
    - You can also enter a time range such as `yesterday 10am to yesterday 11am`, `last fri 4:30pm to 11/12 1 AM`, `last wed 4:30pm to 23/05 1 AM`, or `May 20 10am to May 22 10am`. Make sure to include `to` to separate the initial timestamp from the end timestamp
 
@@ -1113,7 +1113,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    - Click **Create and Open**.
    - Edit the dashboard scope.
    - Set the filter to `kube.namespace.name`, `is`, `ibm-observe`.
-   ![Configure Filter](images/solution55-openshift-microservices/explore-img-10.png){: caption="Configure Filter" caption-side="bottom"}
+      ![Configure Filter](images/solution55-openshift-microservices/explore-img-10.png){: caption="Configure Filter" caption-side="bottom"}
    - Click **Save**.
 
     The dashboard now shows information about the ibm-observe namespace.

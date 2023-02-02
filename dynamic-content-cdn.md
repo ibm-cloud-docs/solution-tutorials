@@ -110,8 +110,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ```
    {: pre}
 
-1. Identify the cluster.
-   - `ibmcloud ks cluster ls` will return cluster names.
+1. Identify the cluster. `ibmcloud ks cluster ls` will return cluster names.
    ```bash
    ibmcloud ks cluster ls
    ```
@@ -123,8 +122,8 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    ```
    {: pre}
 
-1. Identify the {{site.data.keyword.registryshort_notm}} and set a namespace.
-   - `ibmcloud cr info` will return the name of the container registry.
+1. Identify the {{site.data.keyword.registryshort_notm}} and set a namespace. `ibmcloud cr info` will return the name of the container registry.
+
    ```bash
    ibmcloud cr info
    ```

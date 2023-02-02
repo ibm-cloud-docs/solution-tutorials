@@ -279,10 +279,10 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    3. Select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    4. Click on **Create**.
    5. Capture the service name in a shell variable:
-   ```sh
-   COS_INSTANCE_NAME=YourServiceName
-   ```
-   {: pre}
+      ```sh
+      COS_INSTANCE_NAME=YourServiceName
+      ```
+      {: pre}
 
 3. Click **Buckets** then **Customize your bucket**
 
@@ -292,28 +292,28 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    2. Select **Smart Tier** Storage class.
    3. Click **Create bucket**.
    4. Capture the bucket name in a shell variable:
-   ```sh
-   COS_BUCKETNAME=yourInitials-bucket-code-engine
-   ```
-   {: pre}
+      ```sh
+      COS_BUCKETNAME=yourInitials-bucket-code-engine
+      ```
+      {: pre}
 
 4. Click to open the bucket.
    1. Click the **Configuration** tab
    2. The Direct endpoint will keep data within the IBM cloud.  Capture the direct endpoint in a shell variable.  In the Dallas, us-south, region it might be:
-   ```sh
-   COS_ENDPOINT=s3.direct.us-south.cloud-object-storage.appdomain.cloud
-   ```
-   {: pre}
+      ```sh
+      COS_ENDPOINT=s3.direct.us-south.cloud-object-storage.appdomain.cloud
+      ```
+      {: pre}
 
 5. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Click on **Create**.
    4. Capture the service name in a shell variable:
-   ```sh
-   NLU_INSTANCE_NAME=YourServiceName
-   ```
-   {: pre}
+      ```sh
+      NLU_INSTANCE_NAME=YourServiceName
+      ```
+      {: pre}
 
 <!--##isworkshop#-->
 <!--

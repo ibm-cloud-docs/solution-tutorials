@@ -370,13 +370,13 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
    * Open the **Details** and click on the **Query the result**.
    * Notice the query editor, above, is populated with a query.
    * Notice the **FROM** clause does not specify a specific parquet object in the bucket but references the job id, which means all of the objects in the job.  Perfect!
-   ```
-   cos://<REGION>/<BUCKET-NAME>/log-stream-landing/topic=webserver/jobid=<JOBID>
-   ```
+      ```sql
+      cos://<REGION>/<BUCKET-NAME>/log-stream-landing/topic=webserver/jobid=<JOBID>
+      ```
    * Remove the INTO clause to display the output without storing the results.
-   ```
-   INTO cos://<Region>/sql-<ID>/result/ STORED AS CSV
-   ```
+      ```sql
+      INTO cos://<Region>/sql-<ID>/result/ STORED AS CSV
+      ```
    * **Run** the query.
    * Observe the results when it is complete in the **Result** tab.
    * Now lets do some investigation by modifying this basic query.
@@ -468,31 +468,31 @@ Open the analytics engine service:
 Try the following:
 
 If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region and resource group you have been using (edit for your specifics):
-```
+```sh
 ibmcloud target -r <region> -g <resource group>
 ```
 {: codeblock}
 
 Record the guid of the {{site.data.keyword.iae_short}} and set a shell variable:
-```
+```sh
 ibmcloud resource service-instance log-analysis-iae
 ```
 {: codeblock}
 
-```
+```sh
 GUID=<YOUR GUID>
 ```
 {: codeblock}
 
 Enable output to the platform logs that you created earlier in the region:
 
-```
+```sh
 ibmcloud ae-v3 log-config update --instance-id $GUID --enable=true
 ```
 {: codeblock}
 
 Run a program that is built into the IBM spark runtime to print some output:
-```
+```sh
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "/opt/ibm/spark/examples/src/main/python/wordcount.py" \
   --arg '["/opt/ibm/spark/examples/src/main/resources/people.txt"]'
@@ -508,7 +508,7 @@ Open the platform logs for the region:
 3. In a few minutes you should see the logs associated with the program
 
 Search for `host:ibmanalyticsengine`.  There will be a lot of output. Look for:
-```
+```text
 Michael,: 1
 29: 1
 Andy,: 1
@@ -521,7 +521,7 @@ Justin,: 1
 On your laptop create the following file with the name hello.py:
 
 hello.py:
-```
+```python
 def main():
   print("hello world")
 
@@ -540,7 +540,7 @@ To run the hello.py application just uploaded to the bucket locate the **HMAC** 
 
 Click **Buckets** on the left, and select your bucket. Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint. Fill in these shell variables. Something like the following:
 
-```
+```sh
 # GUID= set earlier
 service=hello
 access_key_id="0012345678901234567899550cfa9a60"
@@ -551,7 +551,7 @@ bucket=ABC-log-analysis
 {: codeblock}
 
 Submit the hello application. Notice the single and double quotes, it is a little tricky:
-```
+```sh
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "cos://$bucket.$service/hello.py" \
   --conf '{
@@ -568,7 +568,7 @@ The final step is to submit the spark application that accesses the data in the 
 
 solution.py:
 
-```
+```python
 from pyspark.sql import SparkSession
 from pyspark.sql import SQLContext
 import os
@@ -601,7 +601,7 @@ if __name__ == '__main__':
 
 Now submit the spark application that accesses the data in the same bucket. Note that you will need to substitute in your jobid instead of `01234567-0123-0123-0123-012345678901`.  Double check the full path to the jobid in the COS bucket
 
-```
+```sh
 jobid=01234567-0123-0123-0123-012345678901
 service=solution
 endpoint=s3.direct.us-south.cloud-object-storage.appdomain.cloud
@@ -620,7 +620,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
 
 Check out the platform log and look for something that looks like this:
 
-```
+```text
 +---------------------------+-----+--------------------+--------------------+------------+--------------------+
 |_corrupt_or_schema_mismatch|bytes|                host|             request|responseCode|          time_stamp|
 +---------------------------+-----+--------------------+--------------------+------------+--------------------+

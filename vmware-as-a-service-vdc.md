@@ -225,10 +225,10 @@ To create a destination NAT (DNAT) rule:
 3. In the left navigation under **Services**, click on **NAT**. 
 4. Click on **New** to create a new NAT rule.
 5. The Add NAT Rule wizard will appear. There are four fields that must be filled out. 
-	1. **Name** – In this example, `dnat-to-jump` is used.
-	2. **Interface type** – Select `DNAT` (destination NAT) as the interface type.
-	3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-0` (the first actual public IP obtained in the previous step) is used.
-	4.** Internal IP** – This is the IP address of the virtual machines you created in the previous step. In this example, `192.168.100.10/32` is used.
+   1. **Name** – In this example, `dnat-to-jump` is used.
+   2. **Interface type** – Select `DNAT` (destination NAT) as the interface type.
+   3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-0` (the first actual public IP obtained in the previous step) is used.
+   4. ** Internal IP** – This is the IP address of the virtual machines you created in the previous step. In this example, `192.168.100.10/32` is used.
    5. **Application** - Leave empty.
 6. Click **Save** when complete.
 
