@@ -215,7 +215,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 {: #static-files-cdn-7}
 
 1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
-2. If you earlier picked *DV SAN Certificate*, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete. When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours. If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate. Do not forget to select a different hostname.
+2. If you earlier picked _DV SAN Certificate_, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete. When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours. If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate. Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
 4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.example.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
    

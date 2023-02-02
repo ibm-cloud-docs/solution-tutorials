@@ -38,15 +38,11 @@ This tutorial walks you through the creation of a web application using the popu
 ## Objectives
 {: #mean-stack-0}
 
-{: #objectives}
-
 - Create and run a starter Node.js app locally.
 - Create a managed {{site.data.keyword.databases-for-mongodb}} instance.
 - Deploy the Node.js app to the cloud using {{site.data.keyword.codeengineshort}}.
 - Scale runtime CPU and memory resources.
 - Scale database memory and disk resources.
-
-{: #architecture}
 
 ![Architecture diagram](images/solution7/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -76,11 +72,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #mean-stack-2}
 {: step}
 
-{: #createdatabase}
-
 In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is easy to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
-
-{: shortdesc}
 
 1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region and resource group. In the example below we will use the `ca-tor (Toronto)` region and the `default` resource group.
 
@@ -160,8 +152,6 @@ In this section, you will clone a MEAN sample code and run the application local
 ## Deploy app to the cloud
 {: #mean-stack-4}
 {: step}
-
-{: #deployapp}
 
 {{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
 
@@ -254,7 +244,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 ## Related Content
 {: #mean-stack-7}
-
-{: #related}
 
 - [Text analysis with Code Engine](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine)
