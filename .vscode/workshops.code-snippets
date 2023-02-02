@@ -5,7 +5,7 @@
       "cap"
     ],
     "body": [
-      "{: caption=\"Figure - description\" caption-side=\"bottom\"}"
+      "{: caption=\"\" caption-side=\"bottom\"}"
     ],
     "description": "Image caption"
   },
