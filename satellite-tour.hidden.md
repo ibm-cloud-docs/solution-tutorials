@@ -56,7 +56,7 @@ Your {{site.data.keyword.satelliteshort}} location includes tools like {{site.da
 * Deploy an application to a {{site.data.keyword.openshiftlong_notm}} cluster running in the location.
 * Use {{site.data.keyword.satelliteshort}} configurations to specify what Kubernetes resources you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters.
 
-![Architecture](./images/solution-satellite-tour-hidden/architecture.png){: class="center"}
+![Architecture](./images/solution-satellite-tour-hidden/architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The {{site.data.keyword.satelliteshort}} architecture is comprised of:

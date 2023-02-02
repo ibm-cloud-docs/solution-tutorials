@@ -48,7 +48,7 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 * Create and deploy a Python database app to {{site.data.keyword.codeengineshort}}
 * Access a {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
 
-![Architecture](images/solution19/SlackbotArchitecture.svg){: class="center"}
+![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user interacts with [{{site.data.keyword.conversationfull}}](https://{DomainName}/docs/watson-assistant), either through Slack or using a web chat client

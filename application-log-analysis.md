@@ -44,7 +44,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 * Gain operational visibility into the performance and health of your app and the cluster running your app.
 
 
-![Architecture diagram](images/solution12/Architecture.png){: class="center"}
+![Architecture diagram](images/solution12/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. User connects to the application and generates log entries.
@@ -71,6 +71,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 In addition, make sure you:
 - [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_logdna)
 * and [grant permissions to a user to view monitoring metrics](/docs/monitoring?topic=monitoring-iam#iam_users)
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -96,6 +97,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
 - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->

@@ -48,7 +48,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 * Make content globally available with a Content Delivery Network (CDN).
 * Expose files by using a static website application.
 
-![Architecture](images/solution3/Architecture.png){: class="center"}
+![Architecture](images/solution3/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user accesses the application

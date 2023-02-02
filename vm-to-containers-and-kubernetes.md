@@ -50,7 +50,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
-![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: class="center"}
+![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

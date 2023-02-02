@@ -47,7 +47,7 @@ Static websites are great for performance and security. Their architectural mode
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-![Architecture](./images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: class="center"}
+![Architecture](./images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

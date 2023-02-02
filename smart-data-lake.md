@@ -41,7 +41,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using {{site.data.keyword.sqlquery_short}} (previously SQL Query)
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
-![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
+![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.

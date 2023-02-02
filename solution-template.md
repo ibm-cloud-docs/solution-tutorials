@@ -36,7 +36,6 @@ This template shows how to structure a tutorial but also some writing tips and g
 * Short and informational (do not use sentences)
 
 ![Architecture](images/solution1/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
-{: class="center"}
 {: style="text-align: center;"}
 
 1. The user does this

@@ -43,7 +43,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Configure logging and monitoring to detect outages and monitor for slow performance (optional).
 * Resize the VSI (optional).
 
-![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png){: class="center"}
+![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

@@ -48,7 +48,7 @@ Based on the open source Istio project, {{site.data.keyword.redhat_openshift_not
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: class="center"}
+![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin provisions a {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.

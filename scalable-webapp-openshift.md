@@ -49,7 +49,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
 
-![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: class="center"}
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

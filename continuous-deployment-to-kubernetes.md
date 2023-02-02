@@ -47,7 +47,7 @@ This tutorial walks you through the process setting up a continuous integration 
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
-![Architecture diagram](images/solution21/Architecture.png){: class="center"}
+![Architecture diagram](images/solution21/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The code is pushed to a private Git repository.

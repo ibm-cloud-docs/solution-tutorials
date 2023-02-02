@@ -53,7 +53,7 @@ The tutorial features a sample application that enables groups of users to uploa
 This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
 <!--#/istutorial#-->
 
-![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: class="center"}
+![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

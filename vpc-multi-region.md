@@ -50,7 +50,7 @@ You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.c
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.svg){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.

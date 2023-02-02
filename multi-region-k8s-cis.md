@@ -50,7 +50,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: class="center"}
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

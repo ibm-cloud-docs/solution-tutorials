@@ -37,7 +37,7 @@ You already developed and deployed an application on {{site.data.keyword.cloud_n
 
 An existing solution with the application and connected (micro-) services is extended for enhanced security.
 
-![Architecture](images/solution51-extended-app-security/extended-app-security.svg){: class="center"}
+![Architecture](images/solution51-extended-app-security/extended-app-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Assess your application

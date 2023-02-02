@@ -53,7 +53,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
 
-![Architecture](images/solution55-openshift-microservices/Architecture.png){: class="center"}
+![Architecture](images/solution55-openshift-microservices/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

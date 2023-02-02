@@ -52,7 +52,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Configure routing between sites
 
 
-![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: class="center"}
+![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

@@ -35,7 +35,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 {: shortdesc}
 
 
-![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: class="center"}
+![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

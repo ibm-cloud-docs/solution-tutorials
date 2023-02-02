@@ -49,7 +49,7 @@ To reduce exposure of servers within the VPC, you will create and use a bastion 
 - Securely manage servers via the bastion host
 
 
-![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: class="center"}
+![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. After setting up the required infrastructure (subnets, security groups with rules, virtual server instances) on the cloud, the admin (DevOps) connects (SSH) to the bastion host using the private SSH key.

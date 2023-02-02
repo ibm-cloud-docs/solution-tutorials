@@ -49,7 +49,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 
-![Architecture](images/solution31/Architecture.png){: class="center"}
+![Architecture](images/solution31/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
