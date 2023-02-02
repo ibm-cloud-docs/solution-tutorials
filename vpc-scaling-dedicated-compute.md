@@ -120,20 +120,20 @@ In this section, you will:
 - Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
 - Create an instance template used to provision instances in your instance group.
 
-Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.   
+Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
 
-![one vsi](images/solution62-vpc-scaling-dedicated/one_vsi.svg)
+![Deploy one VSI](images/solution62-vpc-scaling-dedicated/one_vsi.svg){: caption="Deploy one VSI" caption-side="bottom"}
 
 As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.   
 
-![multiple vsi](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg)
+![Deploy multiple VSIs](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg){: caption="Deploy multiple VSIs" caption-side="bottom"}
 
 An instance template is required before you can create an instance group for auto scaling. The instance template defines the details of the virtual server instances that are created for your instance group. For example, specify the profile (vCPU and memory), image, attached volumes, and network interfaces for the image template. Additionally, `user data` is specified to automatically run [initialization scripts](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/main.tf#L109) required for the frontend and backend applications respectively. All of the VSIs that are created for an instance group use the instance template that is defined in the instance group. The script provisions an instance template and an instance group (one for frontend and one for backend) with no auto scaling policies defined yet. This example does not require data volumes so they are commented out in the [modules/create_vpc/autoscale/main.tf](https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_vpc/autoscale/main.tf#L20) ibm_is_instance_group resource.
 
    VPC uses cloud-init technology to configure virtual server instances. The `user data` field on the new virtual server for VPC page allows users to put in custom configuration options by using cloud-init.
    {: tip}
 
-   ![instance group](images/solution62-vpc-scaling-dedicated/instance_group.svg)
+   ![Use an instance group](images/solution62-vpc-scaling-dedicated/instance_group.svg){: caption="Use an instance group" caption-side="bottom"}
 
 ### Provision the resources
 {: #vpc-scaling-dedicated-compute-vpc-provision}
@@ -160,7 +160,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 
 4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance, e.g.,10 and click **Submit** to see the details of the VSIs serving the request.
 
-    ![application](images/solution62-vpc-scaling-dedicated/application.png)
+    ![View application](images/solution62-vpc-scaling-dedicated/application.png){: caption="View application" caption-side="bottom"}
 
     To check the provisioned VPC resources, you can either use the [VPC UI](https://{DomainName}/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) with [ibmcloud is](https://{DomainName}/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
     {: tip}
@@ -188,7 +188,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
- ![scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg)
+ ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
 2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. 
    1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/).This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
    2. **Paste** the public load balancer URL from the above step 
@@ -266,7 +266,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    - a dedicated host 
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
-   ![dedicated host](images/solution62-vpc-scaling-dedicated/dedicated_host.svg)
+   ![Add a dedicated host](images/solution62-vpc-scaling-dedicated/dedicated_host.svg){: caption="Add a dedicated host" caption-side="bottom"}
 3. From the log output, **copy** the instance IP address and launch [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) to run the below command by replacing the placeholder `<IP_ADDRESS`> with the instance IP address
 
    ```sh
