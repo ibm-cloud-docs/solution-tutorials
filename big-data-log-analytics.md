@@ -220,7 +220,7 @@ In this section, you will learn how to run a fully-managed stream data ingestion
 1. In your browser, navigate to the [resource list](https://{DomainName}/resources) and under **Integration**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
 2. Select **Topics** from the navigation pane on the left.
 3. Select the context menu (three vertical dots) for your topic `webserver` and click **Create stream landing configuration**.
-   ![Event Streams topics](images/solution31/event_streams_topics.png)
+   ![Event Streams topics](images/solution31/event_streams_topics.png){: caption="Event Streams topics" caption-side="bottom"}
 4. Click **Start** and select the `log-analysis-cos` service. Click **Next**.
 5. Select the `ABC-log-analysis` {{site.data.keyword.cos_short}} bucket and click **Next**.
 6. Select the {{site.data.keyword.sqlquery_short}} `log-analysis-sql` service and click **Next**.
@@ -277,7 +277,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 1. Navigate to the [resource list](https://{DomainName}/resources) and under **Databases**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
-   ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png)
+   ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png){: caption="{{site.data.keyword.sqlquery_short}} console" caption-side="bottom"}
 
    The Select statement would looks like 
    ```sql
@@ -291,10 +291,10 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    {: tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
-   ![COS object view](images/solution31/cos_object_view.png)
+   ![COS object view](images/solution31/cos_object_view.png){: caption="COS object view" caption-side="bottom"}
    
    In the COS UI, switch to `object view` by clicking on the icon next to `Upload`, You should see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
-   {: tip} 
+   {: tip}
 
 5. Return to the {{site.data.keyword.sqlquery_short}} UI and in the **Details** tab click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above. Wait for the job to change to `Completed`.
 6. Click on the **Results** tab to see the log messages in a tabular format.

@@ -1,4 +1,14 @@
 {
+  "cap": {
+    "scope": "markdown",
+    "prefix": [
+      "cap"
+    ],
+    "body": [
+      "{: caption=\"Figure - description\" caption-side=\"bottom\"}"
+    ],
+    "description": "Image caption"
+  },
   "istutorial": {
     "scope": "markdown",
     "prefix": [

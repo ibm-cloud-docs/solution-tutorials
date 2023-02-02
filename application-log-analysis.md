@@ -366,7 +366,7 @@ Note: Change the interval to **5 M** on the bottom bar of the UI.
 
 The sample application that was deployed includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
-![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png){: class="center"}
+![Dashboard showing API counter metrics](images/solution12/wolam_api_counter_total.png){: caption="Figure 2. Dashboard showing API counter metrics" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Under **Explore**, select **All workloads**.
@@ -393,7 +393,7 @@ To create a dashboard with a first panel:
 4. Edit the **Dashboard scope**, set the filter to **container_image**, **is** and **`icr.io/solution-tutorials/tutorial-application-log-analysis:latest`**.
 5. Save the dashboard.
 
-![New Dashboard](images/solution12/new_dashboard.png){: class="center"}
+![New Dashboard](images/solution12/new_dashboard.png){: caption="Figure 3. New dashboard" caption-side="bottom"}
 {: style="text-align: center;"}
 
 To add another panel:
