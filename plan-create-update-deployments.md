@@ -108,7 +108,7 @@ The *Development*, *Testing* and *Production* environments pretty much look the 
 They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, only a VSI will be deployed in each environment, no cluster will be deployed. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
 
-![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: class="center"}
+![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: caption="Using Terraform workspaces" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ### Global Configuration
