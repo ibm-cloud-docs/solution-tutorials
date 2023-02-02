@@ -171,6 +171,23 @@ some Swift stuff
 And this paragraph only appears for Swift code
 {: swift}
 
+A table
+
+| Name | Description | Default |
+|----------|---------|---------|
+| vcd_user | vCloud Director username | admin |
+| vcd_password | vCloud Director instance password |  |
+{: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
+
+1. A bullet
+1. A table under a bullet, it should have a caption
+   | Name | Description | Default |
+   |----------|---------|---------|
+   | vcd_user | vCloud Director username | admin |
+   | vcd_password | vCloud Director instance password |  |
+   {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
+
+
 ## Another Solution Specific Section
 {: #solution-template-section_two}
 {: step}
