@@ -324,9 +324,9 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 ### Provision subnets and virtual server instances
 {: #vpc-app-deploy-terraform-provision}
 
-The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Public frontend and private backend in a Virtual Private Cloud_ tutorial.
+The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the *Public frontend and private backend in a Virtual Private Cloud* tutorial.
 
-The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
+The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform *module* shared with this other tutorial:
 
 ```terraform
    module vpc_pub_priv {

@@ -38,12 +38,6 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
-            },
-            {
-               "name": " Getting started with VMware",
-               "url": "checklist-get-started-vmware.hidden.html",
-               "description": "Get started with VMware on IBM Cloud.",
-               "imgSrc": ""
             }
          ]
       },

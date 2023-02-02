@@ -269,7 +269,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 8. At this point you can click on **Cancel** to get back to the main page, after you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
-   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
+   When the domain's status on the Overview page changes from _Pending_ to _Active_, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
 
 ### Configure Health Check for the Global Load Balancer
@@ -285,7 +285,7 @@ A health check helps gain insight into the availability of pools so that traffic
 1. Set **Path** to **/**.
 1. Click **Create**.
 
-   When building your own applications, you could define a dedicated health endpoint such as */health* where you would report the application state.
+   When building your own applications, you could define a dedicated health endpoint such as _/health_ where you would report the application state.
    {: tip}
 
 ### Define Origin Pools
