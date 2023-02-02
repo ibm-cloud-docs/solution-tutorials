@@ -188,7 +188,9 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+
+   ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 
 ## Scaling the compute resources in {{site.data.keyword.codeengineshort}}
 {: #mean-stack-scalecompute}
@@ -203,7 +205,7 @@ We've already built a container image for the application and pushed it to the p
 3. Click on the **mean-stack-application** created earlier. 
 4. Click on **Configuration** and then **Runtime** to view the current configuration.
 
-   ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png)
+   ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**. 
 6. Click on **Save and create** to trigger the changes. It will indicate that the application is `Deploying` and `Ready` when complete.
 
@@ -217,7 +219,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](https://{DomainName}/resources) Under **Databases**.
 2. Click on the **Resources** panel.
-   ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
+   ![Scale Resources](images/solution7/MongoDB_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the rescaling is in progress.
 5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.

@@ -151,7 +151,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    {: pre}
 
 1. View your files from your dashboard.
-   ![Bucket Content](images/solution3/Buckets.png)
+   ![Bucket Content](images/solution3/Buckets.png){: caption="Bucket Content" caption-side="bottom"}
 1. Access the files through your browser or by using curl:
    ```sh
    curl http://$BUCKET_NAME.$PUBLIC_ENDPOINT/index.html

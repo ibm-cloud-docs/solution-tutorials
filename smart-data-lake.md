@@ -303,7 +303,7 @@ In this section, you will visualize the previous result set using a folium heat 
     ```
     {: codeblock}
 
-   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   ![Notebook](images/solution29/notebook-mapbox.png){: caption="Notebook" caption-side="bottom"}
    {: style="text-align: center;"}
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
@@ -314,7 +314,7 @@ In this section, you will visualize the previous result set using a folium heat 
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
 
-![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
+![Dashboard Chart](images/solution29/dashboard-chart.png){: caption="Dashboard Chart" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Expand the tutorial

@@ -172,7 +172,7 @@ We've already built images for the two applications and pushed them to the publi
    <!--#/istutorial#-->
 
 2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this:
-   ![Frontend is running](images/solution54-code-engine/frontend-501.png)
+   ![Frontend is running](images/solution54-code-engine/frontend-501.png){: caption="Frontend is running" caption-side="bottom"}
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
    {: tip}

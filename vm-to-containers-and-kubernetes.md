@@ -63,7 +63,7 @@ The following diagram shows an example of a traditional app architecture that is
 
 The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster.
 
-![Diagram of a modern container architecture](images/solution30/modern_architecture.png){: class="center"}
+![Diagram of a modern container architecture](images/solution30/modern_architecture.png){: caption="Diagram of a modern container architecture" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

@@ -207,7 +207,7 @@ This example infrastructure Terraform template is located in folder [`vcd-demo-i
 
 This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
 
-![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
+![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: caption="Basic infrastructure" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:

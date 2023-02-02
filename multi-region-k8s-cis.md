@@ -366,15 +366,15 @@ A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-
 1. Locate the GLB you created in the **Load Balancers** table.
 1. Enable the Security and Performance features in the **Proxy** column:
 
-   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
+   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png){: caption="CIS Proxy Toggle ON" caption-side="bottom"}
 
 **Your GLB is now protected**. An immediate benefit is that the origin IP addresses of your clusters will be hidden from the clients. If {{site.data.keyword.cis_short_notm}} detects a threat for an upcoming request, the user may see a screen like this one before being redirected to your application:
 
-   ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
+   ![Verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png){: caption="Verifying - DDoS protection" caption-side="bottom"}
 
 In addition, you can now control what content gets cached by {{site.data.keyword.cis_short_notm}} and how long it stays cached. Go to **Performance** > **Caching** to define the global caching level and the browser expiration. You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths. As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
 
-   ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
+   ![Page Rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png){: caption="Page Rules" caption-side="bottom"}
 
 ## Remove resources
 {: #multi-region-k8s-cis-6}
