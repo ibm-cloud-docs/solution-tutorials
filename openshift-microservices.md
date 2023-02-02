@@ -853,7 +853,7 @@ With the application now connected to a database for its data, to simulate load 
 ### View events with the default format
 {: #openshift-microservices-31}
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **Views** icon ![Views icon](images/solution55-openshift-microservices/views.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **Views** icon.
 2. Select **Everything** to see all the events.  It can take a few minutes for the load on the application to be visible.
    ![View Logs](images/solution55-openshift-microservices/views-img-1.png){: caption="View Logs" caption-side="bottom"}
 
@@ -897,7 +897,7 @@ At any time, you can view each log line in context.
 
 Complete the following steps:
 
-1. Click the **Views** icon ![Views icon](images/solution55-openshift-microservices/views.png).
+1. Click the **Views** icon.
 1. Select **Everything** or a view.
 1. Identify a line in the log that you want to explore.
 1. Expand the log line to display information about line identifiers, tags, and labels.
@@ -927,7 +927,7 @@ You can apply a timestamp by specifying an absolute time, a relative time, or a 
 Complete the following steps to jump to a specific time:
 
 1. Launch the {{site.data.keyword.la_short}} web UI.
-2. Click the **Views** icon ![Views icon](images/solution55-openshift-microservices/views.png).
+2. Click the **Views** icon.
 3. Select your custom view.
 4. Enter a time query. Choose any of the following options:
    - Enter a relative time such as `1 hour ago`. Type **ENTER**
@@ -947,7 +947,7 @@ Index fields are created on a regular schedule.   Currently it is done at 00:01 
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-microservices/boards.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon.
 1. Select **NEW BOARD** to create a new dashboard.
 1. Click **Add Graph**.
 1. Select the Field **All lines** under Graph a field.
@@ -987,7 +987,7 @@ You can create a screen to monitor your app graphically through metrics \(counte
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **screens** icon ![Screens icon](images/solution55-openshift-microservices/screens.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **screens** icon.
 2. Select **NEW SCREEN**.
 3. Add a count of the patient health frontend log lines for the last two weeks:
    - Click **Add Widget** at the top and select **Count**
