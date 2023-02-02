@@ -226,7 +226,7 @@ When the server is spun up for the first time, it is possible that it is already
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
 
 1. Verify Ubuntu by opening the Floating IP address in the browser. You should see the Ubuntu welcome page.
-   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc/VerifyUbuntu.png)
+   ![Verify Ubuntu](images/solution56-lamp-stack-on-vpc/VerifyUbuntu.png){: caption="Verify Ubuntu" caption-side="bottom"}
 1. Review the Apache, MySQL and PHP versions installed by using the following commands.
    ```sh
    apache2 -v
@@ -275,7 +275,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 
 1. View the PHP info page you created: open a browser and go to `http://{FloatingIPAddress}/info.php`. Substitute the floating IP address of your VSI. It will look similar to the following image.
 
-![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png){: class="center"}
+![PHP info](images/solution56-lamp-stack-on-vpc/PHPInfo.png){: caption="PHP info" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Install and configure WordPress
@@ -337,7 +337,7 @@ Experience your LAMP stack by installing an application. The following steps ins
    {: pre}
 
 8. Complete the WordPress setup and publish on the platform. Open a browser and go to `http://{FloatingIPAddress}/wordpress/wp-admin`. Substitute the floating IP address of your instance. It should look similar to the following image.
-   ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png)
+   ![WordPress site running](images/solution56-lamp-stack-on-vpc/WordPressSiteRunning.png){: caption="WordPress site running" caption-side="bottom"}
 
 ## Configure domain
 {: #lamp-stack-on-vpc-9}

@@ -234,7 +234,7 @@ To activate DCA:
 3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin.
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
 
-   ![Configure DCA](images/solution52-cdn-dca/detection_path.png){: class="center"}
+   ![Configure DCA](images/solution52-cdn-dca/detection_path.png){: caption="Configure DCA" caption-side="bottom"}
 5. Click **Save**. You have successfully accelerated your application deployed in {{site.data.keyword.containershort_notm}} cluster with **Dynamic Content Acceleration**.
 
 ## Verify DCA performance

@@ -313,7 +313,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    {: codeblock}
 
    This is an example interface configuration showing vif `1199` and the subnet gateway address.
-   ![Interfaces](images/solution33-secure-network-enclosure/show_interfaces.png)
+   ![Interfaces](images/solution33-secure-network-enclosure/show_interfaces.png){: caption="Interfaces" caption-side="bottom"}
 4. Validate the VSI is once again accessible via the management network from your workstation.
    ```bash
    ping <VSI Private IP Address>

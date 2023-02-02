@@ -160,7 +160,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. You should see the guestbook page.
 1. Add new entries to the guestbook.
 
-![Guestbook Screenshot](images/solution64-serverless-webapp/Guestbook.png){: class="center"}
+![Guestbook Screenshot](images/solution64-serverless-webapp/Guestbook.png){: caption="Guestbook Screenshot" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

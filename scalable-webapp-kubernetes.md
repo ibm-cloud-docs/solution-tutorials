@@ -227,7 +227,7 @@ Paid clusters come with an IBM-provided domain. This gives you a better option t
 
 Use Ingress to set up the cluster inbound connection to the service.
 
-![Ingress](images/solution2/Ingress.png){: class="center"}
+![Ingress](images/solution2/Ingress.png){: caption="Ingress" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Identify your IBM-provided **Ingress subdomain** and **Ingress secret**:
