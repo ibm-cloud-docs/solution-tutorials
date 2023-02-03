@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2023
+  years: 2018, 2023
 lastupdated: "2023-02-03"
 lasttested: "2022-12-01"
 
@@ -123,7 +123,7 @@ To run a production app in the cloud by using Kubernetes, consider the following
 6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
-9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_clusters#plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_clusters#plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
+9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
 To make the above more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
 
