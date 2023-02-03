@@ -99,7 +99,6 @@ Let's create a security group and configure inbound rules to your bastion VSI (v
    |------------|---------------------------------|-------------|
    |TCP         |Port range: 22-22                |Any          |
    |ICMP        |Type: **8**,Code: **Leave empty**|Any          |
-   
    {: caption="Bastion: Inbound rules" caption-side="bottom"}
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
@@ -140,7 +139,6 @@ Once your bastion's floating IP address is active, try connecting to it using **
 ```sh
 ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 ```
-
 {: pre}
 
 ## Configure a security group with maintenance access rules
@@ -156,7 +154,6 @@ With access to the bastion working, continue and create the security group for m
    | Protocol | Port / Value  | Source type   | Source              |
    |------------|-------------|---------------|---------------------|
    |TCP         |Ports 22-22  |Security group |vpc-secure-bastion-sg|
-   
    {: caption="Maintenance: Inbound rules" caption-side="bottom"}
 
 5. Next, add the **outbound** rule shown in the table below. It allows SSH access from the bastion host.
@@ -167,7 +164,6 @@ With access to the bastion working, continue and create the security group for m
    |TCP         |Ports 443-443|Any              |
    |TCP         |Ports 53-53  |Any              |
    |UDP         |Ports 53-53  |Any              |
-   
    {: caption="Maintenance: Outbound rules" caption-side="bottom"}  
 
    DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
@@ -181,7 +177,6 @@ With access to the bastion working, continue and create the security group for m
    | Protocol | Destination type | Destination | Port / Value   |
    |------------|---------------|----------|-----------  |
    |TCP         |Security group |vpc-secure-maintenance-sg|Ports 22-22  |
-   
    {: caption="Bastion: Outbound rules" caption-side="bottom"}
 
 

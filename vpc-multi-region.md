@@ -105,7 +105,6 @@ Enable inbound rules for HTTP (80) and HTTPS (443) ports to the application by d
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443 |
-   
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Provision virtual server instances
@@ -184,7 +183,6 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
-   
    {: caption="Inbound rules" caption-side="bottom"}
 
 4. Add the outbound rules below:
@@ -193,7 +191,6 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
-   
    {: caption="Outbound rules" caption-side="bottom"}
 
 5. Repeat the steps above in **region 2**.

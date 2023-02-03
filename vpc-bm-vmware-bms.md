@@ -369,7 +369,7 @@ Instance management VLAN NICs e.g. for vCenter will be created later.
    | VMWARE_BMS001   | $VMWARE_SUBNET_VMOT | 200  | false            |
    | VMWARE_BMS002   | $VMWARE_SUBNET_VMOT | 200  | false            |
    | VMWARE_BMS003   | $VMWARE_SUBNET_VMOT | 200  | false            |
-
+   {: caption="List of vMotion VLAN NICs to create" caption-side="bottom"}
 
    ```sh
    VMWARE_BMS001_VMOT=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VMOT --name vlan-nic-vmotion-vmk2 --interface-type vlan --vlan 200 --allow-interface-to-float false --output json | jq -r .id)
@@ -409,7 +409,7 @@ This phase is optional, if you use NFS.
    | VMWARE_BMS001   | $VMWARE_SUBNET_VSAN | 300  | false            |
    | VMWARE_BMS002   | $VMWARE_SUBNET_VSAN | 300  | false            |
    | VMWARE_BMS003   | $VMWARE_SUBNET_VSAN | 300  | false            |
-
+   {: caption="List of vSAN VLAN NICs to create" caption-side="bottom"}
 
    ```sh
    VMWARE_BMS001_VSAN=$(ibmcloud is bm-nicc $VMWARE_BMS001 --subnet $VMWARE_SUBNET_VSAN --name vlan-nic-vsan-vmk3 --interface-type vlan --vlan 300 --allow-interface-to-float false --output json | jq -r .id)

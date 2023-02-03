@@ -83,6 +83,7 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 | Private VLAN ID | &lt;DC1 Private VLAN ID&gt;  | &lt;DC2 Private VLAN ID&gt; |
 | VSI private IP address | &lt;DC1 VSI Private IP Address&gt; | &lt;DC2 VSI Private IP Address&gt; |
 | APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
+{: caption="Network details to write down for next steps" caption-side="bottom"}
 
 1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page.
 2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.

@@ -67,6 +67,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | Tester    | - use the deployed applications | - use the deployed applications | - no access |
 | Operator  | - can access log files  \n - can view/set app and service configuration | - can access log files  \n - can view/set app and service configuration | - can access log files  \n - can view/set app and service configuration |
 | Pipeline Service ID  | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration | - can deploy/undeploy applications  \n - can view/set app and service configuration |
+{: caption="Roles and permissions across environments" caption-side="bottom"}
 
 ## Identity and Access Management (IAM)
 {: #users-teams-applications-first_objective}
@@ -136,6 +137,7 @@ For the Development environment, the user responsibilities defined earlier could
 | Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
 | Operator  | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer*  \n - Logging & Monitoring service role: *Writer* |
 | Pipeline Service ID | - Resource Group: *Viewer*  \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
+{: caption="Roles and permissions in the Development environment" caption-side="bottom"}
 
 The IAM access configuration for groups is centralized in [access groups (IAM)](https://{DomainName}/iam/groups):
 1. Select or create an access group.

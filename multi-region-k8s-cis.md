@@ -320,7 +320,6 @@ With the origin pools defined, you can complete the configuration of the load ba
 
    Repeat the process to create the following:
 
-
    | Region               | Origin Pool |
    | :---------------:    | :---------: |
    |Default               |     All     |
@@ -330,6 +329,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    |Southeast Asia        |     UK      |
    |Western North America |     US      |
    |Eastern North America |     US      |
+   {: caption="List of Geo routes to create" caption-side="bottom"}
 
    With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
 

@@ -187,6 +187,7 @@ In a terminal window:
    | **Variable**        | **Value**                                                            | **Description**                                                                                             |
    |---------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
    | $MYINGRESSSUBDOMAIN | mycluster\-1234\-d123456789\.us\-south\.containers\.appdomain\.cloud | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster $MYCLUSTER`\. |
+   {: caption="Example and description for the environment variable MYINGRESSSUBDOMAIN" caption-side="bottom"}
 
 
 ## Validate {{site.data.keyword.la_short}} instance configuration

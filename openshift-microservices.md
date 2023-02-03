@@ -316,6 +316,7 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 | `ps aux` | List the running processes. |
 | `cat /etc/redhat-release` | Show the underlying OS. |
 | `curl localhost:8080/info` | output from the node app.js process |
+{: caption="Examples of Shell commands to run" caption-side="bottom"}
 
 ### {{site.data.keyword.openshiftshort}} Monitoring
 {: #openshift-microservices-12}
@@ -1074,6 +1075,7 @@ The following table lists the different types of pre-defined dashboards:
 | Workload Status and Performance | Dashboards that you can use to monitor your pods. |
 | Node Status and Performance | Dashboards that you can use to monitor resource utilization and system activity on your hosts and in your containers. |
 | Network | Dashboards that you can use to monitor your network connections and activity. |
+{: caption="Subset of existing pre-defined dashboards" caption-side="bottom"}
 
 ### View the {{site.data.keyword.mon_short}} dashboard
 {: #openshift-microservices-43}

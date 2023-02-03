@@ -114,6 +114,7 @@ The following parameters must be agreed and documented between the {{site.data.k
 | &lt;DC Subnet/CIDR&gt; | IP address of subnet to be accessed in client data center and CIDR. |
 | &lt;App Zone subnet/CIDR&gt; | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. |
 | &lt;Shared-Secret&gt; | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
+{: caption="List of parameters to review to configure the VPN" caption-side="bottom"}
 
 ## Configure IPSec VPN on a VRA
 {: #configuring-IPSEC-VPN-Configure_VRA_VPN}

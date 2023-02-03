@@ -138,13 +138,14 @@ In this example, a single DNS zone, `widgets.example.com` will be created and ac
 
 [VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs (access control lists). Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnets. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
 
-|Service|network|shared|application|
-|-|-|-|-|
-|{{site.data.keyword.tg_short}}|Editor, Manager||
-|DNS|Editor, Manager|Viewer, Manager|
-|IS: Network ACL|Editor||
-|IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer||Editor|Editor|
-|IS: VPC, Subnet, Security Group|Editor|Operator|Operator|
+| Service | network | shared | application |
+| ------- | ------- | ------ | ----------- |
+| {{site.data.keyword.tg_short}} | Editor, Manager| | |
+| DNS | Editor, Manager | Viewer, Manager | |
+| IS: Network ACL | Editor | | |
+| IS: Instance, Volume, Floating IP, SSH Key, Image, Load Balancer| | Editor | Editor |
+| IS: VPC, Subnet, Security Group | Editor | Operator | Operator |
+{: caption="Required roles assigned to teams based on their responsibilities" caption-side="bottom"}
 
 #### Resource Groups
 {: #vpc-tg-dns-iam-iam_resource_groups}

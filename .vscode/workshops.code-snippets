@@ -7,7 +7,7 @@
     "body": [
       "{: caption=\"\" caption-side=\"bottom\"}"
     ],
-    "description": "Image caption"
+    "description": "Image or table caption"
   },
   "istutorial": {
     "scope": "markdown",
