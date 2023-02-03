@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-20"
+lastupdated: "2023-01-05"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -96,22 +96,26 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    ```
    {: codeblock}
 
-2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word **esx**. In this example, IBM Cloud provided licenses are used. You can also bring your own, and in that case select the BYOL image option.
+2. For VMware deployment, an ID for ESXi image is needed and you can search that with a key word **esx**. In this example, IBM Cloud provided licenses are used.
 
    ```sh
-   $ ibmcloud is images | grep esx
-   r010-85e78310-b809-4e03-9257-52c7959435ea   ibm-esxi-7-amd64-1                                 available    amd64   esxi-7                               7.x                                       1               public       provider     none         -   
-   r010-1c4be597-1090-4aca-8521-623bcf5cbea4   ibm-esxi-7-byol-amd64-1                            available    amd64   esxi-7-byol                          7.x                                       1               public       provider     none         -   
+   $ ibmcloud is images | grep esx | grep available
+   r006-29e4a5c0-cc2f-45ff-b3f2-9cb64cf7e407   ibm-esxi-7-0u3g-20328353-amd64-1                    available    amd64   esxi-7                               7.x                                                      1               public       provider     none         Default          -   
    ```
    {: screen}
+
+   The available images vary over time. Always pick the latest to get the most recent updates available.
+   {: important}
 
 3. Record the image ID as a variable, which is going to be used when provisioning the BMSs.
-
+   
    ```sh
-   IMAGE_ESX=r010-85e78310-b809-4e03-9257-52c7959435ea
+   IMAGE_ESX=r006-29e4a5c0-cc2f-45ff-b3f2-9cb64cf7e407
    ```
    {: screen}
 
+   The image IDs vary per region. Select the value matching your deployment.
+   {: important}
 
 ## Validate {{site.data.keyword.bm_is_short}}  profiles
 {: #vpc-bm-vmware-bms-profile}
@@ -130,12 +134,18 @@ The used variables e.g. $VMWARE_VPC_ZONE, $VMWARE_SUBNET_HOST and $VMWARE_DNS_ZO
    $ ibmcloud is bm-prs
    Listing bare metal server profiles in region eu-de under account IBM Cloud Acc as user xxx@yyy.com...
    Name                 Architecture   Family     CPU socket count   CPU core count   Memory(GiB)   Network(Mbps)   Storage(GB)   
+   bx2-metal-96x384     amd64          balanced   2                  48               384           100000          1x960   
+   bx2d-metal-96x384    amd64          balanced   2                  48               384           100000          1x960, 8x3200   
    bx2-metal-192x768    amd64          balanced   4                  96               768           100000          1x960   
    bx2d-metal-192x768   amd64          balanced   4                  96               768           100000          1x960, 16x3200   
+   cx2-metal-96x192     amd64          compute    2                  48               192           100000          1x960   
+   cx2d-metal-96x192    amd64          compute    2                  48               192           100000          1x960, 8x3200   
+   mx2-metal-96x768     amd64          memory     2                  48               768           100000          1x960   
+   mx2d-metal-96x768    amd64          memory     2                  48               768           100000          1x960, 8x3200    
    ```
    {: screen}
 
-   If you plan to use vSAN in your VMware deployment, select the `bx2d-metal-192x768` bare metal server profile.
+   If you plan to use vSAN in your VMware deployment, select bare metal server profiles with `d` in the name. For example `bx2d-metal-192x768` has 16x3200 NVMe disks.
    {: important}
 
 
