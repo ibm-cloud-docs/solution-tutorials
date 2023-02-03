@@ -65,7 +65,7 @@ The {{site.data.keyword.satelliteshort}} architecture is comprised of:
 * {{site.data.keyword.satelliteshort}} Link to securely connect the {{site.data.keyword.satelliteshort}} location back to {{site.data.keyword.cloud_notm}},
 * Host infrastructure assigned to the {{site.data.keyword.satelliteshort}} control plane, and to clusters and services running in the {{site.data.keyword.satelliteshort}} location.
 
-![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png){: class="center"}
+![App Architecture](./images/solution-satellite-tour-hidden/app-architecture.png){: caption="Architecture of the application" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The application you will deploy will be running in one cluster in the location. It will access a {{site.data.keyword.nlushort}} service running in {{site.data.keyword.Bluemix_notm}} through {{site.data.keyword.satelliteshort}} Link.
