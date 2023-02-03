@@ -128,7 +128,7 @@ Follow the recommended order of procedures to deploy NSX-T on {{site.data.keywor
 Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
-You can order NSX licenses through [IBM Cloud Classic portal](https://cloud.ibm.com/classic/devices/vmwarelicenses).
+You can order NSX licenses through [IBM Cloud Classic portal](https://{DomainName}/classic/devices/vmwarelicenses).
 {: note}
 
 If you do not have access to VMware customer connect, please contact IBM Cloud Support to download NSX-T images.
