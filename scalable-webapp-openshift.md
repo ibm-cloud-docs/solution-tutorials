@@ -41,9 +41,9 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
 
-* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.
+* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-* Bind a custom domain.
+* Bind a custom domain.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
@@ -71,6 +71,7 @@ This tutorial requires:
 * `oc` to interact with {{site.data.keyword.openshiftshort}},
 * `git` to clone source code repository,
 * (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**.Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
+
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.11.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
@@ -86,6 +87,7 @@ In addition, make sure you [set up a registry namespace](https://{DomainName}/do
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
+
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #scalable-webapp-openshift-2}
 {: step}
@@ -724,6 +726,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
 <!--##istutorial#-->
 * Delete the cluster you created.
+
 <!--#/istutorial#-->
 
 ## Related content

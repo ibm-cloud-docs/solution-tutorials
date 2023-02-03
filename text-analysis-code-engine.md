@@ -516,7 +516,7 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
 2. Navigate to [Resource List](https://{DomainName}/resources/)
 3. Delete the services you created:
    * {{site.data.keyword.cos_full}}
-   * {{site.data.keyword.nlufull}}
+   * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
 <!--##isworkshop#-->
 <!--
 1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project.

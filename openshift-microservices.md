@@ -44,7 +44,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 {: #openshift-microservices-objectives}
 
 <!--##istutorial#-->
-* Deploy a {{site.data.keyword.openshiftshort}} cluster
+* Deploy a {{site.data.keyword.openshiftshort}} cluster<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Deploy a microservice
 * Scale the microservice

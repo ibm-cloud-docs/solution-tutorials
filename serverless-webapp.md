@@ -64,9 +64,9 @@ Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](https://{D
 
 1. In the [Catalog](https://{DomainName}/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.
-   1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.
+   1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.<!-- markdownlint-disable-line -->
    <!--##istutorial#-->
-   1. Select a resource group.
+   1. Select a resource group.<!-- markdownlint-disable-line -->
    <!--#/istutorial#-->
 
    1. Select **IAM** as authentication method.
@@ -127,9 +127,9 @@ Create a {{site.data.keyword.cos_short}} bucket configured with static website h
 Create a {{site.data.keyword.cos_short}} instance:
 1. Select [Object Storage](https://{DomainName}/objectstorage/create) from the catalog.
 1. Select **IBM Cloud** for the Infrastructure and **Standard** for the plan. 
-1. Enter a **unique** service name for the instance, such as `<yourinitials>-guestbook-cos`.
+1. Enter a **unique** service name for the instance, such as `<yourinitials>-guestbook-cos`.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-1. Select a resource group.
+1. Select a resource group.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 1. Click **Create**
 

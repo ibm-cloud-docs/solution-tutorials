@@ -41,7 +41,7 @@ This tutorial walks you through the process setting up a continuous integration 
 {: #continuous-deployment-to-kubernetes-objectives}
 
 <!--##istutorial#-->
-* Create development and production Kubernetes clusters.
+* Create development and production Kubernetes clusters.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Create a starter application, run it locally and push it to a Git repository.
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
@@ -186,10 +186,10 @@ In this step, you will clean up the resources to remove what you created above.
 - Delete the Git repository.
    - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
    - In the git repository: select **Settings** on the right then **General** > **Advanced** > **Delete Project**.
-- Delete the toolchain.
-- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).
+- Delete the toolchain.<!-- markdownlint-disable-line -->
+- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-- Delete the cluster.
+- Delete the cluster.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 - Delete the Slack channel.
 

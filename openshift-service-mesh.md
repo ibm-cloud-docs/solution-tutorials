@@ -538,7 +538,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
 2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
-4. Click on **Delete**
+4. Click on **Delete**<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 
 ## Related content

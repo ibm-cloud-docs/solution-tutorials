@@ -410,7 +410,7 @@ To add another panel:
 {: #application-log-analysis-remove_resource}
 {: step}
 
-- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.
+- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
