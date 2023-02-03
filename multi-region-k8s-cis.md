@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-22"
+  years: 2018, 2023
+lastupdated: "2023-02-03"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -93,8 +93,8 @@ When creating the Kubernetes cluster below:
 1. Locate in **North America** and **Dallas**
 
 Create the Kubernetes cluster:
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
-- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
 {: #create_cluster}
 
 While the cluster is getting ready, you are going to prepare the application.
@@ -354,7 +354,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
+For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks
@@ -417,9 +417,9 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 {: #multi-region-k8s-cis-7}
 {: related}
 
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
-* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers)
-* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
-* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
+* [{{site.data.keyword.cis_full_notm}}](/docs/cis?topic=cis-getting-started)
+* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
+* [{{site.data.keyword.containershort_notm}}](/docs/containers)
+* [Deploying single instance apps to Kubernetes clusters](/docs/containers?topic=containers-cs_cluster_tutorial)
+* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
