@@ -308,7 +308,7 @@ To prevent a firewall-router from becoming the performance bottleneck or a singl
 
 ![vpc-transit-ha-firewall](images/vpc-transit/vpc-transit-ha-firewall.svg){: class="center"}
 
-This diagram shows a single zone with a Network Load Balancer (NLB) fronting two firewall-routers. To see this constructed it is required to change the configuration and apply again.
+This diagram shows a single zone with a Network Load Balancer (NLB) configured in **route mode** fronting two firewall-routers. To see this constructed it is required to change the configuration and apply again.
 
 1. Change these two variables in config_tf/terraform.tfvars:
    ```sh
@@ -366,6 +366,12 @@ The NLB firewall is no longer required. Remove the NLB firewall:
    ```
    {: codeblock}
 
+
+**Note about NLB configured in routing mode**
+
+[Creating a NLB with routing mode](/docs/vpc?topic=vpc-nlb-vnf) for [HA VNF deployments](/docs/vpc?topic=vpc-about-vnf) enables capabilities specifically designed for this use case:
+- The VPC ingress route table of the NLB is automatically rewritten with the active NLB appliance during maintenance or fail over.
+- VPC ingress traffic from {{site.data.keyword.tg_short}} or {{site.data.keyword.BluDirectLink}} will take advantage of the rewrite ingress route table when the next hop of the standby NLB IP address is not found.
 ## DNS
 {: #vpc-transit2-dns}
 {: step}
@@ -463,7 +469,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 It can take a few tries for the DNS names to be resolved accurately. So try the test at least three times. All tests should pass except the enterprise to spoke VPE tests:
 
-It is not currently possible to access a spoke VPE through a transit VPC cross zone. The VPE return traffic does use spoke egress route table. The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE in the same zone. Configuring this is beyond the scope of this tutorial.
+It is not currently possible to access a spoke VPE through a transit VPC cross zone. The VPE return traffic does not use spoke egress route table. The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE in the same zone. Configuring this is beyond the scope of this tutorial.
 
 ## Production Notes and Conclusions
 {: #vpc-transit2-production-notes}
