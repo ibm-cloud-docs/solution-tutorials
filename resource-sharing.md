@@ -211,24 +211,25 @@ Note that the above list is not complete.
 
 Accessing resources in different accounts, even sharing resources is common practice. There are several use cases where users benefit from resource sharing. They were discussed in the overview. A combination of user identity and password or an API key to access a resource often serves as authentication. Access can be scoped to a set of privileges, e.g., only allowing read access or some other restricted actions. Sometimes, these type of credentials can be created and managed by the accessing resource like an application or compute environment ("service binding"). An even tighter integration which does not require credentials is the concept of {{site.data.keyword.cloud_notm}} service-to-service authorization. The accessing resource (source) and the accessed resource (target) are identified by their properties (authentication) and an access role is assigned (authorization). Such a relationship can be even established across account boundaries. This allows for a simple to configure, but yet secure cross-account resource sharing.
 
-|Service|Capability|
-|-|-|
-|**Security and Observability**||
-|{{site.data.keyword.compliance_short}}|[Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account)|
-|{{site.data.keyword.at_short}}|[Route your {{site.data.keyword.at_short}} events to another account](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)|
-|{{site.data.keyword.la_short}}| Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
-|{{site.data.keyword.keymanagementserviceshort}}| Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
-|{{site.data.keyword.hscrypto}}| Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
-|{{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
-|{{site.data.keyword.secrets-manager_short}}|[Integrations for {{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-integrations)|
-|**Network**||
-|{{site.data.keyword.tg_short}}|[Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
-|{{site.data.keyword.dns_short}}|[Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)|
-|**Account settings**||
-|Catalog|Restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account)|
-|**Databases**||
-|{{site.data.keyword.cloudant_short_notm}}|[Data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)|
-|{{site.data.keyword.databases-for}}|[Restore backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)|
+| Service | Capability |
+| ------- | ---------- |
+| **Security and Observability** | |
+| {{site.data.keyword.compliance_short}} | [Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](https://{DomainName}/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) |
+| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)|
+| {{site.data.keyword.la_short}} | Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](https://{DomainName}/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
+| {{site.data.keyword.keymanagementserviceshort}} | Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
+| {{site.data.keyword.hscrypto}} | Use [service-to-service authorizations](https://{DomainName}/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
+| {{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
+| {{site.data.keyword.secrets-manager_short}} | [Integrations for {{site.data.keyword.secrets-manager_short}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-integrations)|
+| **Network** | |
+| {{site.data.keyword.tg_short}} | [Connect across accounts with {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-about#use-case-5)|
+| {{site.data.keyword.dns_short}} | [Sharing DNS zones across accounts in {{site.data.keyword.dns_short}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-cross-account-about)|
+| **Account settings** | |
+| Catalog|Restricting available services in an account by utilizing [private catalogs and restricting the public catalog](https://{DomainName}/docs/account?topic=account-filter-account)|
+| **Databases** | |
+| {{site.data.keyword.cloudant_short_notm}} | [Data replication across accounts](https://{DomainName}/docs/Cloudant?topic=Cloudant-replication-guide#how-to-run-replication-across-different-ibm-cloudant-accounts)|
+| {{site.data.keyword.databases-for}} | [Restore backups across accounts](https://{DomainName}/docs/cloud-databases?topic=cloud-databases-dashboard-backups)|
+{: caption="Summary of sharing and reuse capabilities across services" caption-side="bottom"}
 
 You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing).
 {: tip}

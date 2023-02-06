@@ -48,7 +48,7 @@ Based on the open source Istio project, {{site.data.keyword.redhat_openshift_not
 - Perform simple traffic management, such as A/B tests and canary deployments
 - Secure your mesh using mTLS
 
-![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: class="center"}
+![Architecture Diagram](images/solution57-openshift-service-mesh/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin provisions a {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
@@ -108,6 +108,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision a {{site.data.keyword.openshiftshort}} cluster.
+
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
 
@@ -241,7 +242,7 @@ There are 3 versions of the reviews microservice:
 
 The end-to-end architecture of the application is shown below.
 
-![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: class="center"}
+![Architecture using Istio](images/solution57-openshift-service-mesh/withistio.svg){: caption="Architecture using Istio" caption-side="bottom"}
 {: style="text-align: center;"}
 
 {{site.data.keyword.redhat_openshift_notm}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
@@ -537,7 +538,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 1. Navigate to [OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
 2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
-4. Click on **Delete**
+4. Click on **Delete**<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 
 ## Related content

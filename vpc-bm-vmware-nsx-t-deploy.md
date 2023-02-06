@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-27"
+lastupdated: "2023-01-05"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -36,9 +36,8 @@ completion-time: 1h
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-{: tip}
-<!--#/istutorial#-->
 
+<!--#/istutorial#-->
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
 {: important}
@@ -127,6 +126,12 @@ Follow the recommended order of procedures to deploy NSX-T on {{site.data.keywor
 6. Create transport zones. For simplicity, you can use the default overlay and VLAN transport zones. For more information, see [Create Transport Zones](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-F739DC79-4358-49F4-9C58-812475F33A66.html#GUID-F739DC79-4358-49F4-9C58-812475F33A66){: external}.
 
 Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+{: note}
+
+You can order NSX licenses through [IBM Cloud Classic portal](https://{DomainName}/classic/devices/vmwarelicenses).
+{: note}
+
+If you do not have access to VMware customer connect, please contact IBM Cloud Support to download NSX-T images.
 {: note}
 
 ## Create uplink profile

@@ -50,7 +50,7 @@ You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.c
 * Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.svg){: class="center"}
+![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
@@ -105,7 +105,6 @@ Enable inbound rules for HTTP (80) and HTTPS (443) ports to the application by d
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443 |
-   
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Provision virtual server instances
@@ -184,7 +183,6 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
-   
    {: caption="Inbound rules" caption-side="bottom"}
 
 4. Add the outbound rules below:
@@ -193,7 +191,6 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    |------------|---------------|----------|-----------  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 80-80  |
    | TCP         | Any            | 0.0.0.0/0 | Ports 443-443  |
-   
    {: caption="Outbound rules" caption-side="bottom"}
 
 5. Repeat the steps above in **region 2**.
@@ -269,7 +266,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 8. At this point you can click on **Cancel** to get back to the main page, after you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
-   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
+   When the domain's status on the Overview page changes from _Pending_ to _Active_, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
 
 ### Configure Health Check for the Global Load Balancer
@@ -285,7 +282,7 @@ A health check helps gain insight into the availability of pools so that traffic
 1. Set **Path** to **/**.
 1. Click **Create**.
 
-   When building your own applications, you could define a dedicated health endpoint such as */health* where you would report the application state.
+   When building your own applications, you could define a dedicated health endpoint such as _/health_ where you would report the application state.
    {: tip}
 
 ### Define Origin Pools
@@ -321,6 +318,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    > You can add more routes if desired based on geographies and direct traffic to the closest pool. Click **Add route**, select a GLB region for example, **Western Europe**  and select the pool desired for example **region-2-pool** and click **Add**.
    > With this configuration, a request does not match any of the defined route, it will be redirected to the **Default origin pools**, users in the GLB region you have define will be directed to the closest Load Balancers/VSIs.
    {: note}
+
 1. Click **Create**.
 
 ## Secure with HTTPS
@@ -356,7 +354,7 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
    - Alternative 1: Traffic that is proxied flows through CIS. 
    - Alternative 2: Traffic that is non-proxied (DNS-only mode) flows directly from the client to the origin. In DNS-only mode, none of the CIS security, performance, and reliability features are applied.
 
-![Architecture](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.svg){: class="center"}
+![Traffic flow](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.svg){: caption="Traffic flow" caption-side="bottom"}
 {: style="text-align: center;"}
 
 For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic.

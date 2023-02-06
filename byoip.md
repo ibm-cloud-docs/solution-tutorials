@@ -66,10 +66,10 @@ The choice of pattern is determined by the applications intended to be hosted on
      * Partial Address Overlapping: when the client and {{site.data.keyword.Bluemix_notm}} IP address spaces use the same address range and there is potential for overlap and conflict. In this case client subnet addresses are chosen which don’t overlap in {{site.data.keyword.Bluemix_notm}} private network.
 
 3. GRE Tunneling + IP alias
-The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premises network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
+   The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premises network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
 
 4. Virtual Overlay Network
-[{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
+   [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
 
 Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/vmware?topic=vmware-vmware-getting-started).
 
@@ -78,7 +78,7 @@ Alternatively consider a solution such as VMware NSX that implements a virtual o
 
 The decision tree here can be used to determine the appropriate implement pattern.
 
-![Pattern decision tree](images/solution37-byoip/byoipdecision.png){: class="center"}
+![Pattern decision tree](images/solution37-byoip/byoipdecision.png){: caption="Pattern decision tree" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The following notes provide further guidance:
@@ -114,6 +114,5 @@ Additional routing configuration on the VRA will be required to create dynamic r
 ## Related content
 {: #byoip-related}
 
-- [{{site.data.keyword.BluDirectLink}}
-]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
+- [{{site.data.keyword.BluDirectLink}}]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
 - [Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)

@@ -53,7 +53,7 @@ The tutorial features a sample application that enables groups of users to uploa
 This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
 <!--#/istutorial#-->
 
-![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: class="center"}
+![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -115,6 +115,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 1. Access the {{site.data.keyword.cloud_notm}} catalog and create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create). Note that there can only be one instance of {{site.data.keyword.at_short}} per region. Set the **Service name** to **secure-file-storage-activity-tracker**.
 1. Ensure you have the right permissions assigned to manage the service instance by following [these instructions](https://{DomainName}/docs/activity-tracker?topic=activity-tracker-iam_manage_events#admin_account_opt1).
+
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -336,17 +337,17 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: pre}
 
-   As example, assuming the application is deployed to the _default_ Kubernetes namespace:
+   As example, assuming the application is deployed to the *default* Kubernetes namespace:
 
-| Variable | Value | Description |
-| -------- | ----- | ----------- |
-| `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
-| `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
-| `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
-
+   | Variable | Value | Description |
+   | -------- | ----- | ----------- |
+   | `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
+   | `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
+   | `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
+   | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+   | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+   | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+   {: caption="Environment variables used by the script" caption-side="bottom"}
 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
@@ -522,26 +523,26 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
 1. A Let's Encrypt ACME account and associated **.pem** file is required.  Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
    1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account) contains instructions and a link to the creation tool.
    2. Run **acme-account-creation-tool** to create an accout specifically for this secure-file-storage example.  Below is an example session for a Mac.:
-   ```
-   $ ./acme-account-creation-tool-darwin-amd64 -e YOUREMAIL -o secure-file-storage.example.com -d letsencrypt-prod
-   INFO[2022-12-28T13:30:00-08:00] Registering a new account with the CA
-   INFO[2022-12-28T13:30:00-08:00] Account information written to file : secure-file-storage.example.com-account-info.json
-   INFO[2022-12-28T13:30:00-08:00] Private key written to file : secure-file-storage.example.com-private-key.pem
+      ```sh
+      $ ./acme-account-creation-tool-darwin-amd64 -e YOUREMAIL -o secure-file-storage.example.com -d letsencrypt-prod
+      INFO[2022-12-28T13:30:00-08:00] Registering a new account with the CA
+      INFO[2022-12-28T13:30:00-08:00] Account information written to file : secure-file-storage.example.com-account-info.json
+      INFO[2022-12-28T13:30:00-08:00] Private key written to file : secure-file-storage.example.com-private-key.pem
 
-   Account Info
-   {
-      "email": "YOUREMAIL",
-      "registration_uri": "https://acme-v02.api.letsencrypt.org/acme/acct/891897087",
-      "registration_body": {
-         "status": "valid",
-         "contact": [
-            "mailto:YOUREMAIL"
-         ]
-      }
-   }%
-   $ ls
-   secure-file-storage.example.com-account-info.json secure-file-storage.example.com-private-key.pem
-   ```
+      Account Info
+      {
+         "email": "YOUREMAIL",
+         "registration_uri": "https://acme-v02.api.letsencrypt.org/acme/acct/891897087",
+         "registration_body": {
+            "status": "valid",
+            "contact": [
+               "mailto:YOUREMAIL"
+            ]
+         }
+      }%
+      $ ls
+      secure-file-storage.example.com-account-info.json secure-file-storage.example.com-private-key.pem
+      ```
 2. Connect the Let's Encrypt ACME account to the {{site.data.keyword.secrets-manager_short}} instance.  See [Adding a certificate authority configuration in the UI](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui#add-certificate-authority-ui) for more details:
    1. Open the {{site.data.keyword.secrets-manager_short}}service instance, you can find it in the [Resource List](https://{DomainName}/resources).
    2. Open **Secrets engines** on the left and click **Public certificates**.
@@ -627,7 +628,7 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
    {: codeblock}
 
    You can test the secrets manager variables with this command:
-   ```
+   ```sh
    ibmcloud sm secret --service-url $SECRETS_MANAGER_API_URL  --secret-type public_cert --id $PUBLIC_CERT_ID
    ```
    {: codeblock}
@@ -654,6 +655,7 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+
 <!--#/istutorial#-->
 
 ## Security: Rotate service credentials
@@ -675,7 +677,7 @@ In this tutorial, services are utilized for different purposes, from storing fil
 Security is never done. Try the below suggestions to enhance the security of your application.
 
 * Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
-text
+
 <!--#/istutorial#-->
 
 <!--##istutorial#-->

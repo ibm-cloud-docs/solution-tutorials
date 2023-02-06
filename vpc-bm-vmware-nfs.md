@@ -38,6 +38,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 File Storage in {{site.data.keyword.vpc_short}} is available for customers with special approval to preview this service in the selected regions. Contact your IBM Sales representative if you are interested in getting access.

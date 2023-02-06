@@ -96,6 +96,7 @@ The repository is structured as follow:
 | [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) | Terraform files to provision resources common to the three environments |
 | [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
 | [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
+{: caption="List of folders in the repository and their description" caption-side="bottom"}
 
 ### Heavy lifting with Terraform
 {: #plan-create-update-deployments-3}
@@ -108,7 +109,7 @@ The *Development*, *Testing* and *Production* environments pretty much look the 
 They all share the same type of resources, but differ by the allocated capacity and the access rights. For this tutorial, only a VSI will be deployed in each environment, no cluster will be deployed. The Terraform files reflect this with a ***global*** configuration to provision common resources and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
 
 
-![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: class="center"}
+![Using Terraform workspaces](./images/solution26-plan-create-update-deployments/terraform-workspaces.png){: caption="Using Terraform workspaces" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ### Global Configuration
@@ -445,6 +446,7 @@ For the *Development* environment as discussed in [this tutorial](https://{Domai
 | Tester    | - No configuration needed. Tester accesses the deployed application, not the development environments |
 | Operator  | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Operator*, *Viewer* \n - Logging & Monitoring service role: *Writer* |
 | Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
+{: caption="IAM policies for the Development environment" caption-side="bottom"}
 
 Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 

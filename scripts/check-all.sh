@@ -11,6 +11,7 @@ TESTS=(
   $SCRIPT_DIR/check-lastmodified.sh
   $SCRIPT_DIR/check-unused-images.sh
   $SCRIPT_DIR/check-wordsmatter.sh
+  $SCRIPT_DIR/check-images-with-no-caption.sh
   $SCRIPT_DIR/check-marked-it.sh
 )
 failedTests=""

@@ -26,7 +26,6 @@ toc:
                 topics:
                 - solution-template.md
                 - satellite-tour.hidden.md
-                - checklist-get-started-vmware.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
@@ -97,13 +96,6 @@ toc:
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
                 - web-app-private-network.md
-
-            - topicgroup:
-                label: (Hidden) Observability in Virtual Private Cloud
-                topics:
-                - vpc-observability-tour.hidden.md
-                - vpc-observability-advanced.hidden.md
-                - vpc-observability-troubleshooting.hidden.md
 
             - topicgroup:
                 label: VMware on VPC Bare metal servers

@@ -35,7 +35,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 {: shortdesc}
 
 
-![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: class="center"}
+![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -188,7 +188,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token (classic)**. Enter **GHStats Tutorial** for the **Note**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
-   ![GitHub Access Token](images/solution24-github-traffic-analytics/GithubAccessToken.png)
+   ![GitHub Access Token](images/solution24-github-traffic-analytics/GithubAccessToken.png){: caption="GitHub Access Token"}
 
 
 ## Configure and test Python app
@@ -198,17 +198,17 @@ The following steps are all performed using your Internet browser. First, you co
 After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/) microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
-   ![Welcome Screen](images/solution24-github-traffic-analytics/WelcomeScreen.png)
+   ![Welcome Screen](images/solution24-github-traffic-analytics/WelcomeScreen.png){: caption="Welcome Screen" caption-side="bottom"}
 
 2. In the browser, add `/admin/initialize-app` to the URI and access the page. It is used to initialize the application and its data. Click on the button **Start initialization**. This will take you to a password-protected configuration page. The email address you log in with is taken as identification for the system administrator. Use the email address and password that you configured earlier.
 
 3. In the configuration page, enter a name (it is used for greetings), your GitHub user name and the access token that you generated before. Click on **Initialize**. This creates the database tables and inserts some configuration values. Finally, it creates database records for the system administrator and a tenant.
-   ![First Step](images/solution24-github-traffic-analytics/InitializeApp.png)
+   ![First Step](images/solution24-github-traffic-analytics/InitializeApp.png){: caption="First Step" caption-side="bottom"}
 
 4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the GitHub account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
-   ![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png)
+   ![List of repositories](images/solution24-github-traffic-analytics/RepositoryList.png){: caption="List of repositories" caption-side="bottom"}
 5. For testing, click on **Administration**, then **Collect statistics**. It retrieves the traffic data on demand. Thereafter, click on **Repositories** and **Daily Traffic**. It should display collected data.
-   ![Traffic data](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
+   ![Traffic data](images/solution24-github-traffic-analytics/RepositoryTraffic.png){: caption="Traffic data" caption-side="bottom"}
 
 
 ## Set up daily data retrieval (shell)
@@ -242,7 +242,7 @@ In this tutorial, you deployed a serverless app in {{site.data.keyword.codeengin
 
 The app and the associated eventing allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Python app to manage users, repositories and to present the traffic statistics. Users can see the traffic statistics in searchable tables or visualized in a simple line chart (see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
-![Line chart](images/solution24-github-traffic-analytics/LineChart.png){: class="center"}
+![Line chart](images/solution24-github-traffic-analytics/LineChart.png){: caption="Line chart" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

@@ -41,7 +41,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using {{site.data.keyword.sqlquery_short}} (previously SQL Query)
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
-![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: class="center"}
+![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
@@ -119,17 +119,17 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the **Storage** section.
 3. Create a new bucket to store data.
-    - Click **Create a bucket**.
-    - Select **Custom bucket/Customize your bucket**.
-    - Close to the top of the form, provide a bucket **Name**.
-    - Select **Regional** in the **Resiliency** section.
-    - Select a **Location**.
-     - At the bottom of the form click **Create bucket**.
+   - Click **Create a bucket**.
+   - Select **Custom bucket/Customize your bucket**.
+   - Close to the top of the form, provide a bucket **Name**.
+   - Select **Regional** in the **Resiliency** section.
+   - Select a **Location**.
+   - At the bottom of the form click **Create bucket**.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
-    - From your bucket, click **Upload**.
-    - Select **Standard transfer** to use regular http file transfer or select the **Aspera high-speed transfer** radio button, you may need to install the Aspera plugin to your machine.
-    - Click **Upload files**.
-    - Browse and select the previously downloaded CSV file and click **Upload**.
+   - From your bucket, click **Upload**.
+   - Select **Standard transfer** to use regular http file transfer or select the **Aspera high-speed transfer** radio button, you may need to install the Aspera plugin to your machine.
+   - Click **Upload files**.
+   - Browse and select the previously downloaded CSV file and click **Upload**.
 
 ## Working with data
 {: #smart-data-lake-4}
@@ -303,7 +303,7 @@ In this section, you will visualize the previous result set using a folium heat 
     ```
     {: codeblock}
 
-   ![Notebook](images/solution29/notebook-mapbox.png){: class="center"}
+   ![Notebook](images/solution29/notebook-mapbox.png){: caption="Notebook" caption-side="bottom"}
    {: style="text-align: center;"}
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
@@ -314,7 +314,7 @@ In this section, you will visualize the previous result set using a folium heat 
 
 Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
 
-![Dashboard Chart](images/solution29/dashboard-chart.png){: class="center"}
+![Dashboard Chart](images/solution29/dashboard-chart.png){: caption="Dashboard Chart" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Expand the tutorial

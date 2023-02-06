@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-12-22"
+  years: 2018, 2023
+lastupdated: "2023-02-03"
 lasttested: "2022-12-01"
 
 ---
@@ -23,7 +23,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-getting-started) delivers powerful tools by combining container and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-getting-started) delivers powerful tools by combining container and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
@@ -50,7 +50,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
-![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: class="center"}
+![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -63,7 +63,7 @@ The following diagram shows an example of a traditional app architecture that is
 
 The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster.
 
-![Diagram of a modern container architecture](images/solution30/modern_architecture.png){: class="center"}
+![Diagram of a modern container architecture](images/solution30/modern_architecture.png){: caption="Diagram of a modern container architecture" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -89,7 +89,7 @@ The following diagram shows an example of a modern container architecture that r
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/support/knowledgecenter/en/linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.html).
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm).
 
 #### Kubernetes orchestration
 {: #vm-to-containers-and-kubernetes-6}
@@ -116,14 +116,14 @@ As you design your cluster architecture, you want to balance costs against avail
 To run a production app in the cloud by using Kubernetes, consider the following items:
 
 1. Do you expect traffic from a specific geographic location? If yes, select the location that is physically closest to you for best performance.
-2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications-5) solution guide for creating multiple environments.
-3. What [hardware](https://{DomainName}/docs/containers?topic=containers-planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
+2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications-5) solution guide for creating multiple environments.
+3. What [hardware](/docs/containers?topic=containers-planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
 6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
-7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
+7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
-9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_vpc_basics) or in [Classic infrastructure](https://{DomainName}/docs/containers?topic=containers-plan_clusters#plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
+9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
 To make the above more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
 
@@ -159,12 +159,12 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 ### Learn how to create persistent data storage for your app
 {: #vm-to-containers-and-kubernetes-12}
 
-You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes.
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/features) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes.
 {: shortdesc}
 
 To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
 
-To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](https://{DomainName}/docs/containers?topic=containers-file_storage#file_storage).
+To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](/docs/containers?topic=containers-file_storage#file_storage).
 
 ### Learn how to move existing data to persistent storage
 {: #vm-to-containers-and-kubernetes-13}
@@ -214,7 +214,7 @@ To copy data from your local machine to your persistent storage, you must mount 
 
 File shares and block storage are provisioned into the same location as your cluster. The storage itself is hosted on clustered servers by IBM to provide high availability. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups, which you can use to restore your data when needed.
 
-For more information, see [backup and restore](https://{DomainName}/docs/containers?topic=containers-storage_planning#storage_planning) options for NFS file storage and block storage.
+For more information, see [backup and restore](/docs/containers?topic=containers-storage_planning#storage_planning) options for NFS file storage and block storage.
 
 ## Prepare your code
 {: #vm-to-containers-and-kubernetes-prepare_code}
@@ -227,7 +227,7 @@ The [twelve-factor app](https://12factor.net/) is a methodology for building clo
 Here are some of the key principles required:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
-- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
 - **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
 
 ### Store credentials in Kubernetes secrets
@@ -315,7 +315,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 1. Create a deployment.yaml file, here is an example of a [deployment YAML](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml) file.
 
-2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
+2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
 3. Next, you can use below commands to create and view the deployment and services created:
 
@@ -347,12 +347,12 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 ## Related Content
 {: #vm-to-containers-and-kubernetes-related}
 
-- [Get started](https://developer.ibm.com/gettingstarted/containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
+- [Get started](https://developer.ibm.com/learningpaths/get-started-containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
-- [Persistent storage](https://{DomainName}/docs/containers?topic=containers-storage_planning#storage_planning) in {{site.data.keyword.containershort_notm}}.
-- [Best practices solution guide](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
-- [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
-- Set up [continuous integration and delivery pipeline](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
-- Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) for high availability.
-- Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://konveyor.io/move2kube/).
+- [Persistent storage](/docs/containers?topic=containers-storage_planning#storage_planning) in {{site.data.keyword.containershort_notm}}.
+- [Best practices solution guide](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
+- [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+- Set up [continuous integration and delivery pipeline](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
+- Use [multiple clusters across multiple locations](/docs/containers?topic=containers-regions-and-zones) for high availability.
+- Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://move2kube.konveyor.io/).

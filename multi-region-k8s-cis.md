@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-22"
+  years: 2018, 2023
+lastupdated: "2023-02-03"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -50,7 +50,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: class="center"}
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -93,8 +93,8 @@ When creating the Kubernetes cluster below:
 1. Locate in **North America** and **Dallas**
 
 Create the Kubernetes cluster:
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
-- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
 {: #create_cluster}
 
 While the cluster is getting ready, you are going to prepare the application.
@@ -111,7 +111,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ```
    {: pre}
 
-1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: new_windows}.
+1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/).
    ```bash
    kubectl create deploy hello-world-deployment --image=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
    ```
@@ -225,7 +225,7 @@ Repeat the steps from above for the London location with the following replaceme
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
-In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one stop-shop service providing _Global Load Balancer (GLB)_, _Caching_, _Web Application Firewall (WAF)_ and _Page rule_ to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one stop-shop service providing *Global Load Balancer (GLB)*, *Caching*, *Web Application Firewall (WAF)* and *Page rule* to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
@@ -320,7 +320,6 @@ With the origin pools defined, you can complete the configuration of the load ba
 
    Repeat the process to create the following:
 
-
    | Region               | Origin Pool |
    | :---------------:    | :---------: |
    |Default               |     All     |
@@ -330,6 +329,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    |Southeast Asia        |     UK      |
    |Western North America |     US      |
    |Eastern North America |     US      |
+   {: caption="List of Geo routes to create" caption-side="bottom"}
 
    With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
 
@@ -354,7 +354,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
+For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks
@@ -366,15 +366,15 @@ A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-
 1. Locate the GLB you created in the **Load Balancers** table.
 1. Enable the Security and Performance features in the **Proxy** column:
 
-   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
+   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png){: caption="CIS Proxy Toggle ON" caption-side="bottom"}
 
 **Your GLB is now protected**. An immediate benefit is that the origin IP addresses of your clusters will be hidden from the clients. If {{site.data.keyword.cis_short_notm}} detects a threat for an upcoming request, the user may see a screen like this one before being redirected to your application:
 
-   ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
+   ![Verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png){: caption="Verifying - DDoS protection" caption-side="bottom"}
 
 In addition, you can now control what content gets cached by {{site.data.keyword.cis_short_notm}} and how long it stays cached. Go to **Performance** > **Caching** to define the global caching level and the browser expiration. You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths. As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
 
-   ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
+   ![Page Rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png){: caption="Page Rules" caption-side="bottom"}
 
 ## Remove resources
 {: #multi-region-k8s-cis-6}
@@ -417,9 +417,9 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 {: #multi-region-k8s-cis-7}
 {: related}
 
-* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/cis?topic=cis-getting-started)
-* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers)
-* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
-* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
+* [{{site.data.keyword.cis_full_notm}}](/docs/cis?topic=cis-getting-started)
+* [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
+* [{{site.data.keyword.containershort_notm}}](/docs/containers)
+* [Deploying single instance apps to Kubernetes clusters](/docs/containers?topic=containers-cs_cluster_tutorial)
+* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)

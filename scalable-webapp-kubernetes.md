@@ -41,9 +41,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 ## Objectives
 {: #scalable-webapp-kubernetes-objectives}
 
-* Deploy a web application to the Kubernetes cluster.
+* Deploy a web application to the Kubernetes cluster.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-* Bind a custom subdomain.
+* Bind a custom subdomain.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
@@ -227,7 +227,7 @@ Paid clusters come with an IBM-provided domain. This gives you a better option t
 
 Use Ingress to set up the cluster inbound connection to the service.
 
-![Ingress](images/solution2/Ingress.png){: class="center"}
+![Ingress](images/solution2/Ingress.png){: caption="Ingress" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Identify your IBM-provided **Ingress subdomain** and **Ingress secret**:
@@ -407,7 +407,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-9. Access your application at `https://<myapp>.<example.com>/`.
+9. Access your application at `https://<myapp>.<example.com>/`.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 
 ## Monitor application health
@@ -493,7 +493,7 @@ Once the autoscaler is successfully created, you should see
    ```
    {: pre}
 
-* Delete the cluster.
+* Delete the cluster.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 
 ## Related content

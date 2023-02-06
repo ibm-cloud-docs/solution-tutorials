@@ -38,12 +38,6 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
-            },
-            {
-               "name": " Getting started with VMware",
-               "url": "checklist-get-started-vmware.hidden.html",
-               "description": "Get started with VMware on IBM Cloud.",
-               "imgSrc": ""
             }
          ]
       },
@@ -948,33 +942,6 @@
                   "vlan_spanning"
                ],
                "supportsCloudShell": "not_applicable"
-            }
-         ]
-      },
-      {
-         "name": "Observability in Virtual Private Cloud",
-         "hidden": true,
-         "solutions": [
-            {
-               "name": "Discover the built-in capabilities of IBM Cloud observability suite",
-               "url": "vpc-observability-tour.hidden.html",
-               "tags": [
-                  "Virtual Private Cloud"
-               ]
-            },
-            {
-               "name": "Advanced logging, metrics, application tracing",
-               "url": "vpc-observability-advanced.hidden.html",
-               "tags": [
-                  "Virtual Private Cloud"
-               ]
-            },
-            {
-               "name": "Troubleshooting problems, debugging common issues",
-               "url": "vpc-observability-troubleshooting.hidden.html",
-               "tags": [
-                  "Virtual Private Cloud"
-               ]
             }
          ]
       },

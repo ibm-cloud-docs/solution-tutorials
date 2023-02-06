@@ -38,17 +38,13 @@ This tutorial walks you through the creation of a web application using the popu
 ## Objectives
 {: #mean-stack-0}
 
-{: #objectives}
-
 - Create and run a starter Node.js app locally.
 - Create a managed {{site.data.keyword.databases-for-mongodb}} instance.
 - Deploy the Node.js app to the cloud using {{site.data.keyword.codeengineshort}}.
 - Scale runtime CPU and memory resources.
 - Scale database memory and disk resources.
 
-{: #architecture}
-
-![Architecture diagram](images/solution7/Architecture.png){: class="center"}
+![Architecture diagram](images/solution7/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user accesses the application using a web browser.
@@ -69,17 +65,14 @@ You will find instructions to download and install these tools for your operatin
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
+
 <!--#/istutorial#-->
 
 ## Create an instance of MongoDB database in the cloud
 {: #mean-stack-2}
 {: step}
 
-{: #createdatabase}
-
 In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is easy to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
-
-{: shortdesc}
 
 1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region and resource group. In the example below we will use the `ca-tor (Toronto)` region and the `default` resource group.
 
@@ -160,8 +153,6 @@ In this section, you will clone a MEAN sample code and run the application local
 {: #mean-stack-4}
 {: step}
 
-{: #deployapp}
-
 {{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
 
 We've already built a container image for the application and pushed it to the public {{site.data.keyword.registryfull_notm}}. You will use this pre-built container image to deploy the application.
@@ -188,7 +179,9 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this: ![Live App](images/solution7/live-app.png)
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+
+   ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 
 ## Scaling the compute resources in {{site.data.keyword.codeengineshort}}
 {: #mean-stack-scalecompute}
@@ -203,7 +196,7 @@ We've already built a container image for the application and pushed it to the p
 3. Click on the **mean-stack-application** created earlier. 
 4. Click on **Configuration** and then **Runtime** to view the current configuration.
 
-   ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png)
+   ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**. 
 6. Click on **Save and create** to trigger the changes. It will indicate that the application is `Deploying` and `Ready` when complete.
 
@@ -217,7 +210,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 
 1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](https://{DomainName}/resources) Under **Databases**.
 2. Click on the **Resources** panel.
-   ![Scale Resources](images/solution7/MongoDB_ScaleResources.png)
+   ![Scale Resources](images/solution7/MongoDB_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. It will indicate that the rescaling is in progress.
 5. Alternatively configure autoscaling rules to automatically increase the database resources as its usage is increasing.
@@ -251,7 +244,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 ## Related Content
 {: #mean-stack-7}
-
-{: #related}
 
 - [Text analysis with Code Engine](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine)

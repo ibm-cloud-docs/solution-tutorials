@@ -1,4 +1,14 @@
 {
+  "cap": {
+    "scope": "markdown",
+    "prefix": [
+      "cap"
+    ],
+    "body": [
+      "{: caption=\"\" caption-side=\"bottom\"}"
+    ],
+    "description": "Image or table caption"
+  },
   "istutorial": {
     "scope": "markdown",
     "prefix": [

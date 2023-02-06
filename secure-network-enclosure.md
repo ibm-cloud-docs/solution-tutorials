@@ -59,7 +59,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Secure the VRA and enclosure with firewall rules
 
 
-![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png){: class="center"}
+![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Configure VPN
@@ -219,16 +219,16 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 2. On the order page:
    - Select **Public**.
    - Set **Billing** to **Hourly**.
-   - Set the *VSI Hostname* and *Domain name*. This domain name is not used for routing and DNS but should align with your network naming standards.
+   - Set the _VSI Hostname_ and _Domain name_. This domain name is not used for routing and DNS but should align with your network naming standards.
    - Set **Location** to the same as the VRA.
    - Set **Profile** to **C1.1x1**
    - Add the **SSH Key** you specified earlier.
    - Set **Operating System** to **CentOS 7.x - Minimal**
-   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet.
+   - In **Uplink Port Speeds**, the network interface must be changed from the default of _public and private_ to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet.
    - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier.
 3. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
 4. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email.
-5. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN.
+5. Make note of the _Private IP address_ of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN.
 6. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
    ```bash
    ping <VSI Private IP Address>
@@ -242,12 +242,12 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 
 The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
 
-1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as *Route Around*. Click on the **Manage VLANs** button.
+1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as _Route Around_. Click on the **Manage VLANs** button.
 
-   The *Associate VLAN* link is enabled allowing you to add other provisioned VLANs. If no VLANs are available on the same router as the VRA, the link is grayed out. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
+   The _Associate VLAN_ link is enabled allowing you to add other provisioned VLANs. If no VLANs are available on the same router as the VRA, the link is grayed out. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
    {: tip}
 
-2. Click on the check box to the left of the associated VLAN and then click on **Route Through** to route the VLAN/Subnet via the VRA. This can take a few minutes. A screen refresh will show the status is *Route Through*.
+2. Click on the check box to the left of the associated VLAN and then click on _Route Through_ to route the VLAN/Subnet via the VRA. This can take a few minutes. A screen refresh will show the status is _Route Through_.
 
 3. Click on the VLAN number to view the VLAN details. Under Devices, the provisioned VSI can be seen. Under Subnets, the Primary Subnet which is to be used with the VRA is seen. Make a note of the Private VLAN Number &lt;nnnn&gt; as this will be used in a later step.
 
@@ -313,7 +313,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    {: codeblock}
 
    This is an example interface configuration showing vif `1199` and the subnet gateway address.
-   ![Interfaces](images/solution33-secure-network-enclosure/show_interfaces.png)
+   ![Interfaces](images/solution33-secure-network-enclosure/show_interfaces.png){: caption="Interfaces" caption-side="bottom"}
 4. Validate the VSI is once again accessible via the management network from your workstation.
    ```bash
    ping <VSI Private IP Address>
@@ -349,7 +349,7 @@ Two zones are defined:
    ```
    {: codeblock}
 
-   If a set command is accidentally run twice, you receive a message *'Configuration path xxxxxxxx is not valid. Node exists'*. This can be ignored. To change an incorrect parameter, it is necessary to first delete the node with 'delete security xxxxx xxxx xxxxx'.
+   If a set command is accidentally run twice, you receive a message _'Configuration path xxxxxxxx is not valid. Node exists'_. This can be ignored. To change an incorrect parameter, it is necessary to first delete the node with 'delete security xxxxx xxxx xxxxx'.
    {: tip}
    
 2. Create the {{site.data.keyword.Bluemix_notm}} private network resource group. This address group defines the {{site.data.keyword.Bluemix_notm}} private networks that can access the enclosure and the networks that can be reached from the enclosure. Two sets of IP addresses need access to and from the secure enclosure. These IP addresses are the SSL VPN data centers and the {{site.data.keyword.Bluemix_notm}} Service Network (backend/private network). [{{site.data.keyword.Bluemix_notm}} IP Ranges](https://{DomainName}/docs/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-ibm-cloud-ip-ranges) provides the full list of IP ranges that are allowed.
