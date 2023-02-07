@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-01-24"
-lasttested: "2023-01-23"
+lastupdated: "2023-01-31"
+lasttested: "2023-01-31"
 
 content-type: tutorial
-services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
+services: vpc, transit-gateway, direct-link
 account-plan: paid
 completion-time: 2h
 ---
@@ -24,7 +24,7 @@ completion-time: 2h
 # Centralize communication through a VPC Transit Hub and Spoke architecture - Part one
 {: #vpc-transit1}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
+{: toc-services="vpc, transit-gateway, direct-link"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -33,11 +33,10 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
 {: shortdesc}
 
-![vpc-transit-overview](images/vpc-transit-hidden/vpc-transit-overview.svg){: class="center"}
+![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-This is part one of a two part tutorial ([part two](docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)). This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
-{: shortdesc}
+This is part one of a two part tutorial. This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
 
 - The hub is a central point of traffic routing between enterprise and the cloud.
 - Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through Network Function Virtualization (NFV) appliance running inside the hub.
@@ -46,6 +45,8 @@ This is part one of a two part tutorial ([part two](docs/solution-tutorials?topi
 - The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can hold the VPN resources that are shared by the spokes.
 
+([Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)) will extend this tutorial by routing all VPC to VPC traffic through the hub, implement a highly available firewall-router and route traffic to {{site.data.keyword.cloud_notm}} service instances with DNS resolution.
+
 There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that provisions resources and configures routing in incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
  During the journey the following are explored:
@@ -53,7 +54,7 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
 - [VPC egress and ingress routing](/docs/vpc?topic=vpc-about-custom-routes).
 - Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/cloud/direct-link).
 - Connectivity via [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
-- [Virtual Network Functions with optional Network Load Balancers to support high availability](/docs/vpc?topic=vpc-about-vnf-ha).
+- [Virtual Network Functions](/docs/vpc?topic=vpc-about-vnf-ha).
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. A layer may introduce small problems and demonstrate solutions in the context of a larger architecture. The layers are implemented using Infrastructure as Code in the form of Terraform configuration files. It will be possible to change parameters, like number of zones, by changing a Terraform variable.
 
@@ -91,12 +92,12 @@ In this step you will provision the VPC network resources. Carefully plan by [de
 
 It is tempting to divide up the CIDR space first by VPC but this complicates routing. Instead think of an availability zone as a single CIDR block and each VPC as consuming a slice of it.
 
-![vpc-transit-zones](images/vpc-transit-hidden/vpc-transit-zones.svg){: class="center"}
+![Zones](images/vpc-transit/vpc-transit-zones.svg){: caption="Zones" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This diagram shows just zone 1 in more detail. The subnet sizes and layout are identical in the other zones:
 
-![vpc-transit-vpc-layout](images/vpc-transit-hidden/vpc-transit-vpc-layout.svg){: class="center"}
+![VPC Layout](images/vpc-transit/vpc-transit-vpc-layout.svg){: caption="VPC Layout" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on the right. In the {{site.data.keyword.cloud_notm}} for simplictiy a single zone is depicted for the transit VPC and Spoke 0. Notice the CIDR blocks do not overlap and VPCs all consume a CIDR block in each zone:
@@ -118,8 +119,8 @@ Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on 
 
 The subnets in the transit and spoke are for the different resources:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc. VPC instances are demonstrated in this tutorial.
-- dns - {{site.data.keyword.dns_short}} location appliances. See [working with custom resolvers](/docs/dns-svcs?topic=dns-svcs-custom-resolver&interface=ui).
-- vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) for private connectivity to cloud services.
+- dns - {{site.data.keyword.dns_short}} location appliances used in part two.
+- vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) used in part two.
 - firewall - firewall-router VPC instances.
 
 ## Provision VPC network resources
@@ -152,7 +153,7 @@ The subnets in the transit and spoke are for the different resources:
 1. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
 
    ```sh
-   ./apply.sh : : -p
+   ./apply.sh -p : :
    ```
    {: codeblock}
 
@@ -168,14 +169,7 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
-3. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf. First use the -p to see what it will do:
-
-   ```sh
-   ./apply.sh -p : spokes_tf
-   ```
-   {: codeblock}
-
-4. Now do it:
+1. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf:
 
    ```sh
    ./apply.sh : spokes_tf
@@ -188,7 +182,7 @@ The subnets in the transit and spoke are for the different resources:
 
 VPC Virtual Server Instances, VSIs, are provisioned to test the network connectivity. A test instance will be added to each of the worker subnets (one per zone) in the enterprise, transit and each of the spokes. If the default configuration of 3 zones and 2 spokes is used then 12 instances will be provisioned.
 
-![vpc-transit-test-instances](images/vpc-transit-hidden/vpc-transit-test-instances.svg){: class="center"}
+![Test Instances](images/vpc-transit/vpc-transit-test-instances.svg){: caption="Test Instances" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Create the test instances
@@ -272,7 +266,7 @@ The **r-** and **l-** stand for **r**ight and **l**eft. The middle part of the n
 The test `test_curl[l-enterprise-z1 -> r-transit-z1]`:
 1. SSH to a test instance in enterprise zone 1.
 2. Execute a curl to transit zone 1.
-3. ASssert the return string contains the ID of transit zone 1 to mark pass or fail.
+3. Assert the return string contains the ID of transit zone 1 to mark pass or fail.
 
 The **README.md** in the companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has more details and the source code.
 
@@ -283,7 +277,7 @@ The **README.md** in the companion [GitHub Repository](https://github.com/IBM-Cl
 
 Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke(s) and spoke(s) <-> spoke(s).
 
-![vpc-transit-vpc-spoke_tgw](images/vpc-transit-hidden/vpc-transit-spoke-tgw.svg){: class="center"}
+![Spoke gateway](images/vpc-transit/vpc-transit-spoke-tgw.svg){: caption="Spoke gateway" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Apply the layer:
@@ -308,7 +302,7 @@ Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke(
 
 Provision a {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}}.
 
-![vpc-transit-enterprise-link](images/vpc-transit-hidden/vpc-transit-enterprise-link.svg){: class="center"}
+![Enterprise link](images/vpc-transit/vpc-transit-enterprise-link.svg){: caption="Enterprise link" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -339,12 +333,13 @@ The incentive for a transit VPC for enterprise <-> cloud traffic is typically to
 
 ### NFV Router
 {: #vpc-transit-nfv-router}
+
 Provision the firewall-router appliances. An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
-![vpc-transit-firewall](images/vpc-transit-hidden/vpc-transit-firewall.svg){: class="center"}
+![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
 {: style="text-align: center;"}
 
-Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC.  In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
+Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](https://{DomainName}/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
 
 The Terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about). You must [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
@@ -357,15 +352,19 @@ The Terraform configuration will configure the firewall-router instance with [al
 
 1. Run the test suite.
 
-   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But transit -> spoke, transit -> enterprise and enterprise <--> spoke cross zone fail.
+   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But all transit -> spoke, all transit -> enterprise and enterprise <--> spoke cross zone fail due to asymmetric routing issues.
+   
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
+   [Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial will route all VPC <-> different VPC traffic through the router and resolve these issues. But first it is important to learn what is happening.
+
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
+
 Traffic reaches the firewall-router appliance through routing tables.
 1. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console.
 1. Select the transit VPC.
@@ -389,6 +388,7 @@ The next_hop identifies the firewall-router. In the table above 10.1.0.196 zone 
 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
+
 Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes:
@@ -415,27 +415,28 @@ The address prefixes for the transit itself is expanded to include all of the sp
 
 With these additional address prefixes:
 - Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through the {{site.data.keyword.tg_short}} tgw-link. 
-- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the {{site.data.keyword.tg_short}} tgw-spoke.
+- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the {{site.data.keyword.BluDirectLink}}
 
 ## Removing the firewall for transit destination traffic
 {: #vpc-transit-stateful-routing}
 {: step}
+
 The {{site.data.keyword.vpc_short}} uses the industry standard state-based routing for secure TCP connection tracking. It requires that the TCP connections use the same path on the way in as the way out. One exception is Direct Server Return used by routers like [Network {{site.data.keyword.loadbalancer_short}}s](https://{DomainName}/docs/vpc?topic=vpc-network-load-balancers). It allows incoming connections from the enterprise to pass through the firewall to the transit test instance and then return directly to the originator.
 
 
-![vpc-transit-routing-green](images/vpc-transit-hidden/vpc-transit-routing-green.svg){: class="center"}
+![Incoming connections from the enterprise pass through the firewall](images/vpc-transit/vpc-transit-routing-green.svg){: caption="Incoming connections from the enterprise pass through the firewall" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This does not help with the traffic originating in the transit test instance passing through the {{site.data.keyword.tg_short}} then back through ingress routing to the firewall-router. This connection gets stuck at the firewall-router (3) and will not get forwarded back to the worker as shown in red below. Traffic transit -> enterprise and transit -> spoke are failing.
 
-![vpc-transit-routing-red](images/vpc-transit-hidden/vpc-transit-routing-red.svg){: class="center"}
+![Traffic between transit and enterprise and transit and spoke is failing](images/vpc-transit/vpc-transit-routing-red.svg){: caption="Traffic between transit to enterprise and transit to spoke is failing" caption-side="bottom"}
 {: style="text-align: center;"}
 
 One possible solution is to stop sending traffic destined to the transit VPC to the firewall-router. The wide ingress routes for the transit are currently routing traffic to the firewall-router. More specific routes can be added for the transit to **Delegate** to the default behavior - send directly to the intended destination instead of the firewall-router.
 
 This diagram shows the traffic flow that is desired for this step. Only the enterprise <-> spoke is passing through the firewall:
 
-![vpc-transit-part1-fw](images/vpc-transit-hidden/vpc-transit-part1-fw.svg){: class="center"}
+![Only route enterprise to spoke through the firewall](images/vpc-transit/vpc-transit-part1-fw.svg){: caption="Only route enterprise to spoke through the firewall" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. enterprise <-> transit
@@ -476,11 +477,12 @@ Dallas 3|10.3.0.0/24|Delegate
 
 This step will identify and fix an asymmetric routing issues. The diagram below shows the successful routes in green. Notice the arrow in both directions. One of the unsuccessful routes has an initial route in blue and an unsuccessful return route in red:
 
-![vpc-transit-asymmetric](images/vpc-transit-hidden/vpc-transit-asymmetric.svg){: class="center"}
+![Asymmetric traffic needs to be fixed](images/vpc-transit/vpc-transit-asymmetric.svg){: caption="Asymmetric traffic needs to be fixed" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ### Asymmetric Routing Limitation
 {: #vpc-transit-asymmetric-routing-limitation}
+
 The remaining failures are cross zone failures enterprise <-> spoke(s).
 
 Example failure:
@@ -513,12 +515,12 @@ If the goal is to create an architecture that is resilient across {{site.data.ke
 
 To resolve this problem transit <-> spoke(s) traffic will be routed to stay in the same zone. The spoke -> transit traffic can be routed using an egress routing table in the spokes.
 
-![vpc-transit-spoke-egress](images/vpc-transit-hidden/vpc-transit-spoke-egress.svg){: class="center"}
+![Routing traffic from spoke to transit with an egress routing table](images/vpc-transit/vpc-transit-spoke-egress.svg){: caption="Routing traffic from spoke to transit with an egress routing table" caption-side="bottom"}
 {: style="text-align: center;"}
 
 In the diagram below this is represented by the egress dashed line.
 
-![vpc-transit-spoke-egress](images/vpc-transit-hidden/vpc-transit-spoke-egress-hi-fix.svg){: class="center"}
+![Egress traffic from spoke](images/vpc-transit/vpc-transit-spoke-egress-hi-fix.svg){: caption="Egress traffic from spoke" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -549,13 +551,14 @@ In the diagram below this is represented by the egress dashed line.
 1. Run all of the tests. The `-n` option enabled by the `pytest-xdist` plugin runs tests in parallel. Tests will be run 30 at a time.
 
    ```sh
-   pytest -n 30
+   pytest -n 10
    ```
    {: codeblock}
 
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
+
 Basic routing is complete:
 - enterprise <-> transit
 - transit <-> spoke(s)
@@ -594,7 +597,7 @@ Execute `terraform destroy` in all directories in reverse order using the `./app
 ## Expand the tutorial
 {: #vpc-transit-expand-tutorial}
 
-You are encouraged to continue on to [part 2](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial where all cross VPC traffic is routed through the firewall-router, {{site.data.keyword.vpe_short}} and DNS are examined.
+You are encouraged to continue on to [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial where all cross VPC traffic is routed through the firewall-router, {{site.data.keyword.vpe_short}} and DNS are examined.
 
 Your architecture will likely be different than the one presented but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
@@ -602,7 +605,7 @@ Your architecture will likely be different than the one presented but will likel
 - Add [flow log capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
 - Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
-- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](https://{DomainName}/openshift?topic=openshift-vpc-lbaas).
+- Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas).
 - Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
 
 ## Related content

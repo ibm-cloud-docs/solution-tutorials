@@ -48,7 +48,7 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 * Create and deploy a Python database app to {{site.data.keyword.codeengineshort}}
 * Access a {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
 
-![Architecture](images/solution19/SlackbotArchitecture.svg){: class="center"}
+![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user interacts with [{{site.data.keyword.conversationfull}}](https://{DomainName}/docs/watson-assistant), either through Slack or using a web chat client
@@ -175,6 +175,7 @@ In this section, you are going to set up the needed services and deploy the back
 ## Create an assistant
 {: #slack-chatbot-database-watson-4}
 {: step}
+
 In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistant. Then, you create the custom extension and add it to the assistant. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
 
 
@@ -224,7 +225,7 @@ First, you are going to create an action to retrieve information about a single 
 10. On the bottom right select **Preview** to get to the **Assistant preview**. 
 11. In the webchat, type **show me event details** and submit. The bot should respond **What is the event name?**. Now type **Think** and submit. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screen capture below).
 
-![Webchat preview showing event details](images/solution19/Slackbot_preview.png)
+![Webchat preview showing event details](images/solution19/Slackbot_preview.png){: caption="Webchat preview showing event details" caption-side="bottom"}
 
 ## Action to gather data and insert a new record
 {: #slack-chatbot-database-watson-7}
@@ -240,7 +241,7 @@ Similar to retrieving a record it is possible to gather input about an event and
 7. Repeat the same but with **When does the event end?**. 
 8. Last, in a new step, ask **What is the URL (web address) for the event?** and let the customer respond with **Free text**.
 9. Now, to confirm the input, create a new step. Use **Is this correct?** and as bulleted list show the gathered data. Add an item for **Name**, **Location**, **Begin**, **End**, and **Contact** and use Action variables relating to the input steps for the data (see screen capture below). Use **Confirmation** as customer response type.
-   ![confirmation step](images/solution19/Slackbot_confirmation.png)
+   ![Confirmation step](images/solution19/Slackbot_confirmation.png){: caption="Confirmation step" caption-side="bottom"}
 
 10. Add a new step with the condition the previous confirmation being **No**. The Assistant could say **Ok, let's start over**. Set **And then** to **Re-ask previous step(s)** and select all previous steps.
 11. In a new step, which should be step 8, react to the confirmation being **Yes**. Under **And then** select **Use an extension**. Configure the events extension with **Insert a new event record** as operation. Match the parameters to the Action variables for the steps, for example, **shortname** to **1. How do you want to name the event?**
@@ -262,7 +263,7 @@ Now, you will integrate the chatbot with Slack.
 3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 4. Once done, open up your Slack workspace. Begin a direct chat with the bot and say **show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
 
-![Slack with the eventbot](images/solution19/Slackbot_event.png)
+![Slack with the eventbot](images/solution19/Slackbot_event.png){: caption="Slack with the eventbot" caption-side="bottom"}
 
 
 

@@ -38,6 +38,7 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
+
 <!--#/istutorial#-->
 
 This tutorial is part of [series](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives), and requires that you have completed the related tutorials in the presented order.
@@ -250,7 +251,7 @@ ibmcloud is bm-nics $VMWARE_BMS001
 
 Example:
 
-```
+```sh
 ibmcloud is bm-nics $VMWARE_BMS001
 Listing network interfaces of server 02b7-18928fa3-55b7-4d63-a2bb-b0d832ea19bc under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   
@@ -269,7 +270,7 @@ ibmcloud is bm-nics $VMWARE_BMS002
 
 Example:
 
-```
+```sh
 $ ibmcloud is bm-nics $VMWARE_BMS002
 Listing network interfaces of server 02b7-02890a7a-e543-4479-92d5-a9d7d5819286 under account IBM Cloud Acc as user xxx@yyy.com...
 ID                                          Name                  Status      Type        Address       Floating IP   Interface Type   MAC address         Allowed VLANs                   VLAN ID   

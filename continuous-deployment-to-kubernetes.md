@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-01-02"
+  years: 2018, 2023
+lastupdated: "2023-02-03"
 lasttested: "2022-11-30"
 
 content-type: tutorial
@@ -41,13 +41,13 @@ This tutorial walks you through the process setting up a continuous integration 
 {: #continuous-deployment-to-kubernetes-objectives}
 
 <!--##istutorial#-->
-* Create development and production Kubernetes clusters.
+* Create development and production Kubernetes clusters.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Create a starter application, run it locally and push it to a Git repository.
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
-![Architecture diagram](images/solution21/Architecture.png){: class="center"}
+![Architecture diagram](images/solution21/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The code is pushed to a private Git repository.
@@ -116,7 +116,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
 1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
 1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![Screen capture showing how to find the IP address](images/solution21/Logs.png)
+   ![Screen capture showing how to find the IP address](images/solution21/Logs.png){: caption="How to find the IP address" caption-side="bottom"}
 
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
@@ -144,19 +144,20 @@ If you don't see your application updating, confirm all the steps passed and rev
 
 In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
-There are [different options](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
+There are [different options](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 2. Rename the **DEPLOY** stage to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
-   ![Access the settings Icon](images/solution21/deploy_stage.png)
+   ![Access the settings Icon](images/solution21/deploy_stage.png){: caption="Access the settings Icon" caption-side="bottom"}
 3. To save the changes scroll down and click **Save**.
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. On the **Input** panel change the **stage trigger** to `Run jobs only when this stage is run manually`.
 6. In **Environment properties** panel, set **CLUSTER_NAMESPACE** to **production**.
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
+
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
-   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png)
+   ![Toolchain with dev and prod stages](images/solution21/full-deploy.png){: caption="Toolchain with dev and prod stages" caption-side="bottom"}
 
 You now have the full deployment setup. To deploy from dev to test, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
@@ -167,14 +168,14 @@ You now have the full deployment setup. To deploy from dev to test, you manually
 1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks). You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
 2. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
-    ![Configure the Slack integration](images/solution21/configure_slack.png)
+    ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
 5. The Slack channel is the channel name you provided while creating a webhook integration above.
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. for example, kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
-    ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png)
+    ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png){: caption="Toolchain with new Slack integration" caption-side="bottom"}
 8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
-    ![Slack app with notification](images/solution21/slack_channel.png)
+    ![Slack app with notification](images/solution21/slack_channel.png){: caption="Slack app with notification" caption-side="bottom"}
 
 ## Remove resources
 {: #continuous-deployment-to-kubernetes-removeresources}
@@ -185,10 +186,10 @@ In this step, you will clean up the resources to remove what you created above.
 - Delete the Git repository.
    - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
    - In the git repository: select **Settings** on the right then **General** > **Advanced** > **Delete Project**.
-- Delete the toolchain.
-- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).
+- Delete the toolchain.<!-- markdownlint-disable-line -->
+- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-- Delete the cluster.
+- Delete the cluster.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 - Delete the Slack channel.
 
@@ -197,15 +198,15 @@ In this step, you will clean up the resources to remove what you created above.
 
 Do you want to learn more? Here are some ideas of what you can do next:
 
-- [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+- [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Add a 3rd environment dedicated to testing.
 
 ## Related Content
 {: #continuous-deployment-to-kubernetes-related}
 
-* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
-* [Security](https://{DomainName}/docs/containers?topic=containers-security) for {{site.data.keyword.containerlong_notm}}.
-* Toolchain [integrations](https://{DomainName}/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
-* Analyze logs and monitor [application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](/docs/solution-tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
+* [Security](/docs/containers?topic=containers-security) for {{site.data.keyword.containerlong_notm}}.
+* Toolchain [integrations](/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
+* Analyze logs and monitor [application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 
 

@@ -54,7 +54,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 * Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 
-![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png){: class="center"}
+![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -141,7 +141,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
 
-![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png)
+![Routed Network](images/solution58-vmware-solutions-getting-started/routed-network.png){: caption="Routed Network" caption-side="bottom"}
 
 ```terraform
   resource "vcd_network_routed" "tutorial_network" {
@@ -167,7 +167,7 @@ An organization VDC network with a routed connection provides controlled access 
 
 You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
-![Internet](images/solution58-vmware-solutions-getting-started/internet.png)
+![Access to Internet](images/solution58-vmware-solutions-getting-started/internet.png){: caption="Access to Internet" caption-side="bottom"}
 
 ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_internet" {
@@ -204,7 +204,7 @@ You can create rules to allow or deny traffic, this section creates a firewall a
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will enable your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
-![IBM Cloud](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
+![Access to the IBM Cloud private network](images/solution58-vmware-solutions-getting-started/ibm-cloud.png){: caption="Access to the IBM Cloud private network" caption-side="bottom"}
 
 ```terraform
   resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
@@ -242,7 +242,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
-![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png)
+![vApp VM](images/solution58-vmware-solutions-getting-started/vapp-vm.png){: caption="vApp VM" caption-side="bottom"}
 
 ```terraform
   resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -280,7 +280,7 @@ A vApp consists of one or more virtual machines that communicate over a network 
 
 You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
 
-![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png)
+![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.png){: caption="SSH from the Internet" caption-side="bottom"}
 
 This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
 {: tip}

@@ -49,7 +49,7 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 
-![Architecture](images/solution31/Architecture.png){: class="center"}
+![Architecture](images/solution31/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -83,6 +83,7 @@ The {{site.data.keyword.iae_short}} serverless plan has limited availability. Da
 
 ### Enable Platform Logs
 {: #big-data-log-analytics-platform-logs}
+
 Platform logs are generally useful for troubleshooting resources and will be required in a later step to see the output of {{site.data.keyword.iae_short}}.
 
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances, however, only one instance in a region can be configured to receive platform logs from [enabled cloud services](https://{DomainName}/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} region.
@@ -220,7 +221,7 @@ In this section, you will learn how to run a fully-managed stream data ingestion
 1. In your browser, navigate to the [resource list](https://{DomainName}/resources) and under **Integration**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
 2. Select **Topics** from the navigation pane on the left.
 3. Select the context menu (three vertical dots) for your topic `webserver` and click **Create stream landing configuration**.
-   ![Event Streams topics](images/solution31/event_streams_topics.png)
+   ![Event Streams topics](images/solution31/event_streams_topics.png){: caption="Event Streams topics" caption-side="bottom"}
 4. Click **Start** and select the `log-analysis-cos` service. Click **Next**.
 5. Select the `ABC-log-analysis` {{site.data.keyword.cos_short}} bucket and click **Next**.
 6. Select the {{site.data.keyword.sqlquery_short}} `log-analysis-sql` service and click **Next**.
@@ -277,7 +278,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 1. Navigate to the [resource list](https://{DomainName}/resources) and under **Databases**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
-   ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png)
+   ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png){: caption="{{site.data.keyword.sqlquery_short}} console" caption-side="bottom"}
 
    The Select statement would looks like 
    ```sql
@@ -291,10 +292,10 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    {: tip}
 
 4. Click on the link in the `Result location` field, which opens the {{site.data.keyword.cos_short}} UI with a filter set to the objects that are being written by that job. 
-   ![COS object view](images/solution31/cos_object_view.png)
+   ![COS object view](images/solution31/cos_object_view.png){: caption="COS object view" caption-side="bottom"}
    
    In the COS UI, switch to `object view` by clicking on the icon next to `Upload`, You should see that there are a couple of metadata objects to track, such as the latest offset that has been consumed and landed. But, in addition, you can find the Parquet files with the actual payload data.
-   {: tip} 
+   {: tip}
 
 5. Return to the {{site.data.keyword.sqlquery_short}} UI and in the **Details** tab click on **Query the result** and then click **Run** to execute a `Batch job`. You should see the query in the panel pointing to the {{site.data.keyword.cos_short}} file (under `FROM`) with the log message(s) you sent above. Wait for the job to change to `Completed`.
 6. Click on the **Results** tab to see the log messages in a tabular format.
@@ -369,13 +370,13 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
    * Open the **Details** and click on the **Query the result**.
    * Notice the query editor, above, is populated with a query.
    * Notice the **FROM** clause does not specify a specific parquet object in the bucket but references the job id, which means all of the objects in the job.  Perfect!
-   ```
-   cos://<REGION>/<BUCKET-NAME>/log-stream-landing/topic=webserver/jobid=<JOBID>
-   ```
+      ```sql
+      cos://<REGION>/<BUCKET-NAME>/log-stream-landing/topic=webserver/jobid=<JOBID>
+      ```
    * Remove the INTO clause to display the output without storing the results.
-   ```
-   INTO cos://<Region>/sql-<ID>/result/ STORED AS CSV
-   ```
+      ```sql
+      INTO cos://<Region>/sql-<ID>/result/ STORED AS CSV
+      ```
    * **Run** the query.
    * Observe the results when it is complete in the **Result** tab.
    * Now lets do some investigation by modifying this basic query.
@@ -467,31 +468,31 @@ Open the analytics engine service:
 Try the following:
 
 If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region and resource group you have been using (edit for your specifics):
-```
+```sh
 ibmcloud target -r <region> -g <resource group>
 ```
 {: codeblock}
 
 Record the guid of the {{site.data.keyword.iae_short}} and set a shell variable:
-```
+```sh
 ibmcloud resource service-instance log-analysis-iae
 ```
 {: codeblock}
 
-```
+```sh
 GUID=<YOUR GUID>
 ```
 {: codeblock}
 
 Enable output to the platform logs that you created earlier in the region:
 
-```
+```sh
 ibmcloud ae-v3 log-config update --instance-id $GUID --enable=true
 ```
 {: codeblock}
 
 Run a program that is built into the IBM spark runtime to print some output:
-```
+```sh
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "/opt/ibm/spark/examples/src/main/python/wordcount.py" \
   --arg '["/opt/ibm/spark/examples/src/main/resources/people.txt"]'
@@ -507,7 +508,7 @@ Open the platform logs for the region:
 3. In a few minutes you should see the logs associated with the program
 
 Search for `host:ibmanalyticsengine`.  There will be a lot of output. Look for:
-```
+```text
 Michael,: 1
 29: 1
 Andy,: 1
@@ -520,7 +521,7 @@ Justin,: 1
 On your laptop create the following file with the name hello.py:
 
 hello.py:
-```
+```python
 def main():
   print("hello world")
 
@@ -539,7 +540,7 @@ To run the hello.py application just uploaded to the bucket locate the **HMAC** 
 
 Click **Buckets** on the left, and select your bucket. Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint. Fill in these shell variables. Something like the following:
 
-```
+```sh
 # GUID= set earlier
 service=hello
 access_key_id="0012345678901234567899550cfa9a60"
@@ -550,7 +551,7 @@ bucket=ABC-log-analysis
 {: codeblock}
 
 Submit the hello application. Notice the single and double quotes, it is a little tricky:
-```
+```sh
 ibmcloud ae-v3 spark-app submit --instance-id $GUID \
   --app "cos://$bucket.$service/hello.py" \
   --conf '{
@@ -567,7 +568,7 @@ The final step is to submit the spark application that accesses the data in the 
 
 solution.py:
 
-```
+```python
 from pyspark.sql import SparkSession
 from pyspark.sql import SQLContext
 import os
@@ -600,7 +601,7 @@ if __name__ == '__main__':
 
 Now submit the spark application that accesses the data in the same bucket. Note that you will need to substitute in your jobid instead of `01234567-0123-0123-0123-012345678901`.  Double check the full path to the jobid in the COS bucket
 
-```
+```sh
 jobid=01234567-0123-0123-0123-012345678901
 service=solution
 endpoint=s3.direct.us-south.cloud-object-storage.appdomain.cloud
@@ -619,7 +620,7 @@ ibmcloud ae-v3 spark-app submit --instance-id $GUID \
 
 Check out the platform log and look for something that looks like this:
 
-```
+```text
 +---------------------------+-----+--------------------+--------------------+------------+--------------------+
 |_corrupt_or_schema_mismatch|bytes|                host|             request|responseCode|          time_stamp|
 +---------------------------+-----+--------------------+--------------------+------------+--------------------+

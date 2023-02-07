@@ -34,7 +34,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](https://{DomainName}/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
-![Architecture diagram](images/solution5/cloud-sql-database.svg){: class="center"}
+![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Objectives
@@ -111,7 +111,7 @@ Now that the table "cities" has been created, you are going to load data into it
 3. Now customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable **Header in first row** because the file contains data only. 
 4. Next, type in **0x09** as separator. It means that values within the file are delimited by tab(ulator). 
 5. Last, pick "YYYY-MM-DD" as date format. Now, everything should look similar to what is shown in this screen capture.
-   ![Screen capture showing the sampled data](images/solution5/LoadTabSeparator.png)
+   ![Screen capture showing the sampled data](images/solution5/LoadTabSeparator.png){: caption="Screen capture showing the sampled data" caption-side="bottom"}
 6. Click **Next** and you are offered to review the load settings. Agree and click **Begin Load** to start loading the data into the **CITIES** table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.  
 7. Click on **View Table** to browse the data. You may scroll down or click on column names to change the sort order.  
 

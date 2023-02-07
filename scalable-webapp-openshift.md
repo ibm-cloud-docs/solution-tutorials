@@ -41,15 +41,15 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keywor
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
 
-* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.
+* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
-* Bind a custom domain.
+* Bind a custom domain.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
 
-![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: class="center"}
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -71,6 +71,7 @@ This tutorial requires:
 * `oc` to interact with {{site.data.keyword.openshiftshort}},
 * `git` to clone source code repository,
 * (optional) {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**.Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
+
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.11.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
@@ -86,6 +87,7 @@ In addition, make sure you [set up a registry namespace](https://{DomainName}/do
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
+
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #scalable-webapp-openshift-2}
 {: step}
@@ -259,7 +261,7 @@ To access the app, you need to create a route. A route announces your service to
    ```
    {: pre}
 
-2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *$MYPROJECT-https* in a browser.
+2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route _$MYPROJECT-https_ in a browser.
    
 ## Monitor the app
 {: #scalable-webapp-openshift-monitor_application}
@@ -425,7 +427,7 @@ In this step, you will update the sections of `openshift.template.yaml` file to 
 
 2. Run the export command from the output to set the existing `MYPROJECT` environment variable with the new application name. Run `echo $MYPROJECT` to see the new application name.
 3. Optionally, check the generated `openshift_private_registry.yaml` file to see if all the placeholders are updated with the respective environment variables. The below are 3 important places to do a quick check. _You can skip to the next section_.
-4. **Optional** Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
+4. **Optional** Locate the _ImageStream_ object with the **name** attribute set to your project (`$MYPROJECT`) and check whether the placeholders `$MYREGISTRY`,`$MYNAMESPACE`, and `$MYPROJECT` under `dockerImageRepository` definition of `spec` are updated
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -644,7 +646,7 @@ In this step, you will automate the build and deploy process. So that whenever y
      ```
      {: pre}
 
-   - **Replace** `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
+   - **Replace** `<secret>` in the webhook GitLab URL with the secret value under _gitlab_ in the above command output.
 3. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Webhooks**.
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
@@ -653,7 +655,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    ```
    {: pre}
 
-6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
+6. Open the cloned repo in an IDE to update the `h1` tag of local _public/index.html_ file and change it to `Congratulations! <YOUR_NAME>`.
 7. Save and push the code to the repo
    ```sh
     git add public/index.html
@@ -724,6 +726,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
 <!--##istutorial#-->
 * Delete the cluster you created.
+
 <!--#/istutorial#-->
 
 ## Related content

@@ -67,7 +67,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 - Route traffic through a GRE tunnel
 
 
-![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png){: class="center"}
+![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -91,7 +91,7 @@ Configuring an IPSec VPN site-to-site link between your data center and {{site.d
 
 Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to systems in the ‘DC IP Subnet’ in the client data center.
 
-![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png){: class="center"}
+![IPSec tunnel](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png){: caption="IPSec tunnel" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -114,6 +114,7 @@ The following parameters must be agreed and documented between the {{site.data.k
 | &lt;DC Subnet/CIDR&gt; | IP address of subnet to be accessed in client data center and CIDR. |
 | &lt;App Zone subnet/CIDR&gt; | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. |
 | &lt;Shared-Secret&gt; | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
+{: caption="List of parameters to review to configure the VPN" caption-side="bottom"}
 
 ## Configure IPSec VPN on a VRA
 {: #configuring-IPSEC-VPN-Configure_VRA_VPN}

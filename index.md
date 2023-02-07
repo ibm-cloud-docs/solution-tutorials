@@ -27,8 +27,8 @@ lasttested: "2022-12-21"
 <!--#/istutorial#-->
 <!--##isworkshop#-->
 <!--
-# Getting started with workshops
-{: #tutorials}
+# Getting started with workshops<!-- markdownlint-disable-line -->
+{: #tutorials}<!-- markdownlint-disable-line -->
 -->
 <!--#/isworkshop#-->
 

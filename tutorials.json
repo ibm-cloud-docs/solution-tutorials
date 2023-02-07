@@ -587,6 +587,41 @@
             "https://github.com/IBM-Cloud/vpc-scaling-dedicated-host"
           ],
           "lastUpdated": "2023-01-03"
+        },
+        {
+          "name": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part one",
+          "url": "vpc-transit1.html",
+          "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part one",
+          "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Virtual Servers",
+            "Network",
+            "Transit Gateway"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-transit"
+          ],
+          "lastUpdated": "2023-01-31"
+        },
+        {
+          "name": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part two",
+          "url": "vpc-transit2.html",
+          "description": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part two",
+          "imgSrc": "images/vpc-transit/vpc-transit-overview.svg",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Virtual Servers",
+            "Network",
+            "Transit Gateway",
+            "Load Balancer"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/vpc-transit"
+          ],
+          "lastUpdated": "2023-01-31"
         }
       ]
     },
@@ -834,7 +869,7 @@
           "repos": [
             "https://github.com/IBM/vmwaas-terraform-examples"
           ],
-          "lastUpdated": "2023-01-26"
+          "lastUpdated": "2023-01-27"
         },
         {
           "name": "Creating a virtual data center in a VMware as a Service using the UI",

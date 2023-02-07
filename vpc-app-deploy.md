@@ -53,13 +53,13 @@ After an [introduction to the tutorial architecture](#vpc-app-deploy-objectives)
 
 In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
-![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png){: class="center"}
+![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
 The configuration also includes [a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
-![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: class="center"}
+![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png){: caption="Architecture of Bastion Host" caption-side="bottom"}
 {: style="text-align: center;"}
 
 While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
@@ -67,7 +67,7 @@ While provisioning the resources, you will also deploy applications on the virtu
 2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install supported packages;
 3. Internet or intranet software repositories.
 
-![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png){: class="center"}
+![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png){: caption="Architecture diagram showing the different sources to install software from" caption-side="bottom"}
 {: style="text-align: center;"}
 
 You will explore how to consume these different sources.
@@ -324,9 +324,9 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 ### Provision subnets and virtual server instances
 {: #vpc-app-deploy-terraform-provision}
 
-The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Public frontend and private backend in a Virtual Private Cloud_ tutorial.
+The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the *Public frontend and private backend in a Virtual Private Cloud* tutorial.
 
-The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
+The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform *module* shared with this other tutorial:
 
 ```terraform
    module vpc_pub_priv {

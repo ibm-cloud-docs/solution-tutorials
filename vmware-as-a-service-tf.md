@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-26"
+lastupdated: "2023-01-27"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -35,8 +35,8 @@ completion-time: 1h
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
-<!--#/istutorial#-->
 
+<!--#/istutorial#-->
 
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
@@ -51,7 +51,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: class="center"}
+![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a `2 IOPS/GB` storage pool.
@@ -61,7 +61,7 @@ The following diagram presents an overview of the solution to be deployed.
 5. A jump server (`jump-server-1`) is created with the Windows 2022 Operating System. The server is attached to the `application-network-1`. You can access the virtual machine though the VM console, or using RDP though the DNAT rule created on the Edge Gateway.
 6. One example virtual machine (`application-server-1`) is created on the `application-network-1`. The `application-server-1` has an additional disk e.g. for logging. You can create more VMs or disks based on your needs.
 7. One example virtual machine (`db-server-1`) is created on the `db-network-1` and `isolated-network-1` with two separate vnics. The `db-server-1` has two additional disks e.g. for data and logging. You can create more VMs or disks based on your needs.
-8. Source NAT (SNAT) and destination NAT (DNAT) rules are created for public network access. SNAT to public internet is configured for all routed networks and DNAT is configured to access the application server. NO_SNAT rules are created for traffic directed to IBM Cloud Service Endpoints.
+8. Source NAT (SNAT) and destination NAT (DNAT) rules are created for public network access. SNAT to public internet is configured for all routed networks and DNAT is configured to access the application server.
 9. Firewall rules are provisioned to secure network access to the environment. To create firewall rules, Static Groups and IP Sets are created for networks and individual IP addresses.
 
 This tutorial is divided into the following steps:
@@ -207,7 +207,7 @@ This example infrastructure Terraform template is located in folder [`vcd-demo-i
 
 This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
 
-![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: class="center"}
+![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: caption="Basic infrastructure" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:
@@ -491,34 +491,12 @@ You can use it as such, add more networks, more virtual machines and customize N
    # Note. You can specify the desired actual public IP address 
    # (`external_address`) in the rule, or you can use the 
    # `external_address_list_index`, which will pick the IP 
-   # addresss from the allocated IP pool (`edge_gateway_allocated_ips`). 
+   # addresses from the allocated IP pool (`edge_gateway_allocated_ips`). 
    
    # Note. Use Director UI to get the name for the Application
    # profiles."
    
    nat_rules = {
-      no-snat-to-ibm-cloud-166-9 = {
-         rule_type   = "NO_SNAT"
-         description = "NO_SNAT rule to application-network-1"
-         external_address_target = ""
-         external_address = ""  
-         internal_address_target = "application-network-1"
-         internal_address = ""
-         snat_destination_address = "166.9.0.0/16"
-         logging = false
-         priority = 10
-      },
-      no-snat-to-ibm-cloud-161-26 = {
-         rule_type   = "NO_SNAT"
-         description = "NO_SNAT rule to application-network-1"
-         external_address_target = ""
-         external_address = ""  
-         internal_address_target = "application-network-1"
-         internal_address = ""
-         snat_destination_address = "161.26.0.0/16"
-         logging = false
-         priority = 10
-      },
       dnat-to-app-1 = {
          rule_type   = "DNAT"
          description = "DNAT rule to app-server-1"
@@ -530,6 +508,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          app_port_profile = ""
          logging = false
          priority = 90
+         enabled = true
       },
       dnat-to-jump-1 = {
          rule_type   = "DNAT"
@@ -542,6 +521,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          app_port_profile = ""
          logging = false
          priority = 90
+         enabled = true
       },
       snat-to-internet-1 = {
          rule_type = "SNAT"
@@ -553,6 +533,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          snat_destination_address = ""
          logging = false
          priority = 100
+         enabled = true
       },    
       snat-to-internet-2 = {
          rule_type = "SNAT"
@@ -564,6 +545,7 @@ You can use it as such, add more networks, more virtual machines and customize N
          snat_destination_address = ""
          logging = false
          priority = 100
+         enabled = true
       },  
    }  
    ```
@@ -829,22 +811,6 @@ You can use it as such, add more networks, more virtual machines and customize N
       "name" = "demo-dnat-to-jump-1"
       "rule_type" = "DNAT"
       "snat_destination_address" = ""
-   }
-   "no-snat-to-ibm-cloud-161-26" = {
-      "dnat_external_port" = ""
-      "external_address" = ""
-      "internal_address" = "172.26.1.0/24"
-      "name" = "demo-no-snat-to-ibm-cloud-161-26"
-      "rule_type" = "NO_SNAT"
-      "snat_destination_address" = "161.26.0.0/16"
-   }
-   "no-snat-to-ibm-cloud-166-9" = {
-      "dnat_external_port" = ""
-      "external_address" = ""
-      "internal_address" = "172.26.1.0/24"
-      "name" = "demo-no-snat-to-ibm-cloud-166-9"
-      "rule_type" = "NO_SNAT"
-      "snat_destination_address" = "166.9.0.0/16"
    }
    "snat-to-internet-1" = {
       "dnat_external_port" = ""

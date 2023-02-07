@@ -57,7 +57,7 @@ In short, using VPC you can:
 - Know how to apply security groups to secure access to the servers
 
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png){: class="center"}
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) sets up the required infrastructure (VPC, subnets, security groups with rules, VSIs) on the cloud.
@@ -250,7 +250,6 @@ The frontend instance has its software installed but it can not yet be reached.
    |------------|---------------|----------|-----------|------|
    | TCP        | Any           | 0.0.0.0/0 | Ports 80-80  | This rule allows connections from any IP address to the frontend web server. |
    | ICMP       | Any           | 0.0.0.0/0 | Type: **8**,Code: **Leave empty**| This rule allows the frontend server to be pinged by any host. |
-   
    {: caption="Inbound rules" caption-side="bottom"}
 
 1. Next, add the **outbound** rule. The port of the backend depends on the software you are installing on the virtual server. This tutorial uses a web server listening on port 80. See the table **Outbound rules** below for values.
@@ -258,7 +257,6 @@ The frontend instance has its software installed but it can not yet be reached.
    | Protocol | Destination type | Destination | Value    | Description |
    |------------|---------------|----------|-----------|----------|
    | TCP         | Security group | vpc-pubpriv-backend-sg | Ports 80-80  | This rule allows the frontend server to communicate with the backend server. |
-   
    {: caption="Outbound rules" caption-side="bottom"}
 
 1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to view the welcome page of the web server.
@@ -298,7 +296,6 @@ To allow inbound connections to the backend server, you need to configure the as
    | Protocol | Source type | Source | Value   | Description |
    |------------|---------------|----------|-----------|--|
    | TCP        | Security group | vpc-pubpriv-frontend-sg | Ports 80-80  | This rule allows incoming connections on port 80 from the frontend server to the backend server. |
-
    {: caption="Inbound rules" caption-side="bottom"}
 
 ### Confirm the connectivity
