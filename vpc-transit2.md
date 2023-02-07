@@ -372,12 +372,22 @@ The NLB firewall is no longer required. Remove the NLB firewall:
    ```
    {: codeblock}
 
+## Note about NLB configured in routing mode
+{: #vpc-transit2-note-about-nlb-configured-in-routing-mode}
+   
+NLB route mode will rewrite route table entries - always keeping the active NLB appliance IP address in the route table during a fail over. But this is only done for routes in the transit VPC that contains the NLB.  The spoke has egress routes that were initialized with one of the NLB appliance IPs.  The spoke next hop will not be updated on NLB appliance fail over!
 
-**Note about NLB configured in routing mode**
+It will be required to maintain an ingress route in the transit VPC which will be rewritten by the NLB to reflect the active appliance.  The spoke egress route will deliver packets to the correct zone of the transit VPC. Routing within the transit VPC zone will find the matching ingress rule which will contain the active appliance.
 
-[Creating a NLB with routing mode](/docs/vpc?topic=vpc-nlb-vnf) for [HA VNF deployments](/docs/vpc?topic=vpc-about-vnf) enables capabilities specifically designed for this use case:
-- The VPC ingress route table of the NLB is automatically rewritten with the active NLB appliance during maintenance or fail over.
-- VPC ingress traffic from {{site.data.keyword.tg_short}} or {{site.data.keyword.BluDirectLink}} will take advantage of the rewrite ingress route table when the next hop of the standby NLB IP address is not found.
+Below is the transit VPC ingress route table discussed earlier.  The next hop will be kept up to date with the active NLB appliance.  Note that Dallas 3 has a change written by the NLB route mode service to reflect the active appliance.
+
+Zone|Destination|Next hop
+--|--|--
+Dallas 1|0.0.0.0/0|10.1.0.196
+Dallas 2|0.0.0.0/0|10.2.0.196
+Dallas 3|0.0.0.0/0|10.3.0.197
+
+
 ## DNS
 {: #vpc-transit2-dns}
 {: step}
@@ -470,6 +480,9 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    {: codeblock}
 
 1. Verify that all VPEs can be accessed from all test instances.
+
+   **Your expected results are:** enterprise -> spoke vpe tests will be **FAILED**:
+
    ```sh
    pytest -m 'vpe or vpedns'
    ```
@@ -477,7 +490,35 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 It can take a few tries for the DNS names to be resolved accurately. So try the test at least three times. All tests should pass except the enterprise to spoke VPE tests:
 
-It is not currently possible to access a spoke VPE through a transit VPC cross zone. The VPE return traffic does not use spoke egress route table. The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE in the same zone. Configuring this is beyond the scope of this tutorial.
+## Enterprise to Spoke Virtual Private Endpoint Gateways
+{: #vpc-transit2-enterprise-to-spoke-virtual-private-endpoint-gateways}
+{: step}
+
+The current configuration does not support enterprise -> spoke VPE traffic. The VPE return traffic does not use spoke egress route table.
+
+It is possible to improve the results by adding the enterprise address prefixes to the transit VPC.  This will allow the spoke VPE return traffic to learn the enterprise routes and forward traffic through the through the transit gateway to the transit VPC.  However, it will be delivered to the transit VPC zone of the matching address prefix. Enterprise -> spoke cross zone will not work.
+
+The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE to the zone it has been assigned in the transit VPC.  Configuring this is beyond the scope of this tutorial.
+
+1. Edit **config_tf/terraform.tfvars**.
+   - Change the value `enterprise_phantom_address_prefixes_in_transit = true`.
+
+1. Configuration changes require all current layers to be re-applied
+
+   ```sh
+   ./apply.sh : :
+   ```
+   {: codeblock}
+
+1. Verify that all VPEs can be accessed from all test instances.
+
+   **Your expected results are:** enterprise -> spoke vpe cross zone will be **FAILED**:
+
+   ```sh
+   pytest -m 'vpe or vpedns'
+   ```
+   {: codeblock}
+
 
 ## Production Notes and Conclusions
 {: #vpc-transit2-production-notes}

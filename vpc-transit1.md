@@ -417,7 +417,7 @@ With these additional address prefixes:
 - Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through the {{site.data.keyword.tg_short}} tgw-link. 
 - Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the {{site.data.keyword.BluDirectLink}}
 
-## Removing the firewall for transit destination traffic
+## Removing the firewall for Transit destination traffic
 {: #vpc-transit-stateful-routing}
 {: step}
 
@@ -475,7 +475,7 @@ Dallas 3|10.3.0.0/24|Delegate
 {: #vpc-transit-asymmetric}
 {: step}
 
-This step will identify and fix an asymmetric routing issues. The diagram below shows the successful routes in green. Notice the arrow in both directions. One of the unsuccessful routes has an initial route in blue and an unsuccessful return route in red:
+This step will identify and fix a cross zone asymmetric routing issue. The diagram below shows the successful routes in green. Notice the arrow in both directions. One of the unsuccessful routes has an initial route in blue and an unsuccessful return route in red:
 
 ![Asymmetric traffic needs to be fixed](images/vpc-transit/vpc-transit-asymmetric.svg){: caption="Asymmetric traffic needs to be fixed" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -523,7 +523,6 @@ In the diagram below this is represented by the egress dashed line.
 ![Egress traffic from spoke](images/vpc-transit/vpc-transit-spoke-egress-hi-fix.svg){: caption="Egress traffic from spoke" caption-side="bottom"}
 {: style="text-align: center;"}
 
-
 1. Apply the spoke_egress_tf layer:
    ```sh
    ./apply.sh spokes_egress_tf
@@ -548,13 +547,41 @@ In the diagram below this is represented by the egress dashed line.
    Dallas 2|192.168.0.0/16|10.2.0.196
    Dallas 3|192.168.0.0/16|10.3.0.196
 
-1. Run all of the tests. The `-n` option enabled by the `pytest-xdist` plugin runs tests in parallel. Tests will be run 30 at a time.
+1. Run all of the tests. The `-n` option enabled by the `pytest-xdist` plugin runs tests in parallel. Tests will be run 10 at a time. They should all pass.
 
    ```sh
    pytest -n 10
    ```
    {: codeblock}
 
+## Remove Enterprise phantom Address Prefixes in Transit
+{: #vpc-transit-remove-enterprise-phantom-address-prefixes-in-transit}
+{: step}
+
+Earlier phantom Address Prefixes for the enterprise were created to the transit VPC to allow the spokes to learn the routes for the enterprise. In the previous step egress routes were added to the spokes so these address prefixes can be deleted in this step.
+
+The phantom VPC address prefixes have been removed in the final diagram for part one:
+
+![Final diagram for part one](images/vpc-transit/vpc-transit-part1.svg){: caption="Final diagram for part one" caption-side="bottom"}
+{: style="text-align: center;"}
+
+
+1. Edit **config_tf/terraform.tfvars**.
+   - Change the value `enterprise_phantom_address_prefixes_in_transit = false`.
+
+1. Configuration changes require all current layers to be re-applied
+
+   ```sh
+   ./apply.sh : spokes_egress_tf
+   ```
+   {: codeblock}
+
+1. Run all of the tests. They should all pass.
+
+   ```sh
+   pytest -n 10
+   ```
+   {: codeblock}
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
