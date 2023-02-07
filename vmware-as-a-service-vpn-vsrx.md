@@ -41,26 +41,27 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-vpn-vsrx-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+The objective of this tutorial is to demonstrate the basic steps of connecting via a Virtual Private Network (VPN) a {{site.data.keyword.vmware-service_full}} – single tenant instance with a Juniper vSRX. The vSRX can either be deployed in {{site.data.keyword.cloud_notm}} Classic Infrastructure or in a client data center. The steps that follow will create a basic working environment, providing a VPN and basic firewall implementation, with test virtual machines that can be used to verify  that the end-to-end environment is functional.
+
+This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 
 In this tutorial, you will learn:
 
-* How to create virtual data center (VDC) networks inside your virtual data center,
-* How to create virtual machines and attach them to your virtual data center network, and
-* How to configure network address translation (NAT) and firewall (FW) rules on your virtual data center edge gateway.
+* How to create VPNs in between virtual data center edge gateway and Juniper xSRX,
+* How to create and configure matching IKE and IPsec tunnel proposals and profiles, and
+* How to configure firewall (FW) rules on your virtual data center edge gateway and vSRX to allow VPN traffic.
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-ui-vmwaas-vdc-tutorial.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution66-vmware-as-a-service/vmwaas-solution-tutorial-diagrams-ui-vmwaas-vdc-vpn.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This tutorial is divided into the following steps:
 
-1. [XXXXXXXXXX](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-xxxxxxxxxx)
+1. [Gather requirements](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-gather-requirements)
+2. [Configure vSRX](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-config-vsrx)
+3. [Configure {{site.data.keyword.vmware-service_full}} – single tenant edge gateway](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-edge-gateway)
 
-
-An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) with Terraform is also available.
-{: note}
 
 ## Before you begin
 {: #vmware-as-a-service-vpn-vsrx-prereqs}
@@ -73,10 +74,19 @@ This tutorial requires:
 * [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding).
 
 
-## XXXXXXXYYYYYZZZ
-{: #vmware-as-a-service-vpn-vsrx-xxxxxxxxxx}
+## Gather requirements
+{: #vmware-as-a-service-vpn-vsrx-gather-requirements}
 {: step}
 
+
+## Configure vSRX
+{: #vmware-as-a-service-vpn-vsrx-config-vsrx}
+{: step}
+
+
+## Configure {{site.data.keyword.vmware-service_full}} – single tenant edge gateway
+{: #vmware-as-a-service-vpn-vsrx-config-edge-gateway}
+{: step}
 
 
 ## Reference material
