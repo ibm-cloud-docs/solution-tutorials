@@ -497,7 +497,7 @@ It can take a few tries for the DNS names to be resolved accurately. So try the 
 
 The current configuration does not support enterprise -> spoke VPE traffic. The VPE return traffic does not use spoke egress route table.
 
-It is possible to improve the results by adding the enterprise address prefixes to the transit VPC.  This will allow the spoke VPE return traffic to learn the enterprise routes and forward traffic through the through the transit gateway to the transit VPC.  However, it will be delivered to the transit VPC zone of the matching address prefix. Enterprise -> spoke cross zone will not work.
+It is possible to improve the results by adding the enterprise address prefixes to the transit VPC.  This will allow the spoke VPE return traffic to learn the enterprise routes and forward traffic through the through the {{site.data.keyword.tg_short}} to the transit VPC.  However, it will be delivered to the transit VPC zone of the matching address prefix. Enterprise -> spoke cross zone will not work.
 
 The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE to the zone it has been assigned in the transit VPC.  Configuring this is beyond the scope of this tutorial.
 

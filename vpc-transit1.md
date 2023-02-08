@@ -334,7 +334,7 @@ The incentive for a transit VPC for enterprise <-> cloud traffic is typically to
 ### NFV Router
 {: #vpc-transit-nfv-router}
 
-Provision the firewall-router appliances. An ingress route table for Transit Gateways has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+Provision the firewall-router appliances. An ingress route table for {{site.data.keyword.tg_short}} has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
 
 ![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -389,7 +389,7 @@ The next_hop identifies the firewall-router. In the table above 10.1.0.196 zone 
 ### VPC Address Prefixes
 {: #vpc-transit-vpc-address-prefixes}
 
-Transit Gateways learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
+{{site.data.keyword.tg_short}} learn routes in the attached VPCs through the [VPC Address Prefixes](https://{DomainName}/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
 
 The transit VPC zone in the diagram has the additional address prefixes:
 - 192.168.0.0/24 Dallas 1.
