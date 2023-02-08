@@ -558,7 +558,7 @@ In the diagram below this is represented by the egress dashed line.
 {: #vpc-transit-remove-enterprise-phantom-address-prefixes-in-transit}
 {: step}
 
-Earlier phantom Address Prefixes for the enterprise were created to the transit VPC to allow the spokes to learn the routes for the enterprise. In the previous step egress routes were added to the spokes so these address prefixes can be deleted in this step.
+Earlier phantom Address Prefixes for the enterprise were created in the transit VPC to allow the spokes to learn the routes of the enterprise. In the previous step egress routes were added to the spokes so these address prefixes can be deleted in this step.
 
 The phantom VPC address prefixes have been removed in the final diagram for part one:
 

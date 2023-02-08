@@ -149,6 +149,7 @@ If continuing from part one make special note of the configuration in the terraf
 1. Edit **config_tf/terraform.tfvars**.
    - Make the required changes.
    - Change the value `all_firwewall = true`.
+   - Change the value `enterprise_phantom_address_prefixes_in_transit = false`.
 
 2. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and export the API key for use by Terraform:
 
