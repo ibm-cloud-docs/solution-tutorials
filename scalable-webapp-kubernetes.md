@@ -111,7 +111,7 @@ Open the [Kubernetes cluster](https://{DomainName}/kubernetes/clusters) and clic
 -->
 <!--#/isworkshop#-->
 
-## Clone a starter application
+## Clone a sample application
 {: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
@@ -208,26 +208,15 @@ Note: If you want to build and push the application to your own container regist
    ```
    {: pre}
 
-1. Locate the service `kubernetesnodeapp` linked to your application.
-1. Make note of the the public port the service is listening on. The port is a 5-digit number(for example, 31569) under `PORT(S)`.
-1. Identify a public IP of a worker node with the command below:
+1. List the Kubernetes pods in the namespace:
    ```sh
-   ibmcloud ks workers --cluster $MYCLUSTER
-   ```
-   {: pre}
-
-1. For VPC the IP addresses of the clusters are private to the VPC. These will not be accessible from your desktop but can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
-1. Access the application at `http://worker-ip-address:portnumber/`:
-   ```sh
-   curl http://<worker-ip-address>:<portnumber>
+   kubectl get pods -n $KUBERNETES_NAMESPACE
    ```
    {: pre}
 
 ## Use the IBM-provided domain for your cluster
 {: #scalable-webapp-kubernetes-ibm_domain}
 {: step}
-
-In the previous step, the application was accessed with a not standard port. The service was exposed by way of Kubernetes NodePort feature.
 
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
 
@@ -326,13 +315,13 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 2. Click on **Secrets** in the left navigation.
 3. Click **Add** and then **TLS certificates**.
 4. You can select either **Import certificate**, **Order a public certificate** or **Create a private certificate**. Detailed steps are available in the [Adding SSL or TLS certificates](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) topic. If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
-5. Locate the entry for the imported or ordered certificate and click on it.
-   * Verify the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** symbol next to the certificate's **ID**.
-   * Create an environment variable pointing to the certificate ID:
+5. Locate the secret entry for the imported or ordered certificate and click on it.
+   * Verify the domain name matches your $CUSTOM_DOMAIN. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
+   * Click the **copy** symbol next to the secret's **ID**.
+   * Create an environment variable pointing to the secret ID:
 
    ```sh
-   export CERTIFICATE_ID=<certificate ID>
+   export SECRET_ID=<secret ID>
    ```
    {: pre}
 
@@ -350,7 +339,7 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    {: pre}
 
 7. Click on **Endpoints** in the left navigation.
-8. Locate the **Public** endpoint for the **Vault API**.
+8. Locate the **Public** endpoint for the **Service API**.
    * Create an environment variable pointing to the endpoint:
 
    ```sh
@@ -413,7 +402,11 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-9. Access your application at `https://<myapp>.<example.com>/`.<!-- markdownlint-disable-line -->
+9. Access your application at `https://$MYAPP.$CUSTOM_DOMAIN/`.<!-- markdownlint-disable-line -->
+   ```sh
+   curl -I https://$MYAPP.$CUSTOM_DOMAIN
+   ```
+   {: pre}
 <!--#/istutorial#-->
 
 ## Monitor application health
@@ -422,8 +415,11 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 
 1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on your cluster.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
-3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
-4. To review the application logs from the container, select **Pods**, **pod-name**, click **View logs** in the action menu in the upper right
+3. Click  **Pods** on the left then click a **pod-name** matching $MYAPP
+   - Examine he CPU and Memory usage.
+   - Note the node IP name.
+   - Click **View logs** in the action menu in the upper right to see the standard output and error of the application.
+4. Select **Nodes** on the left pane, click the **Name** of a node noted earlier and see the **Allocation Resources** to see the health of your nodes.
 5. To exec into the container select **Exec into** in the action menu
 
 ## Scale Kubernetes pods
@@ -437,7 +433,7 @@ kubectl scale deployment kubernetesnodeapp-deployment --replicas=2
 ```
 {: pre}
 
-After a short while, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas.
+After a short while, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handle the load balancing between the two replicas.
 
 With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
 
@@ -453,6 +449,12 @@ Once the autoscaler is successfully created, you should see
 ## Remove resources
 {: #scalable-webapp-kubernetes-0}
 {: step}
+
+* Delete the horizontal pod autoscaler:
+   ```sh
+   kubectl delete horizontalpodautoscaler.autoscaling/kubernetesnodeapp-deployment
+   ```
+   {: pre}
 
 * Delete the resources applied:
    <!--##istutorial#-->
