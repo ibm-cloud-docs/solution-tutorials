@@ -94,8 +94,16 @@ In addition, make sure you:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2).
-- Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
+Open the [Kubernetes cluster](https://{DomainName}/kubernetes/clusters) and click **Create cluster**.
+
+- For Kubernetes on VPC infrastructure, you must:
+   - Click **Create VPC**.
+   - Attach a Public Gateway to each of the subnets that you create:
+      - Navigate to the [VPC](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Click the previously created VPC used for the cluster.
+      - Scroll down to subnets section and click a subnet.
+      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      - Attach a public gateway to each subnet
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 
 <!--#/istutorial#-->
