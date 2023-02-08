@@ -82,13 +82,19 @@ In addition, make sure you:
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom subdomain require a **Standard** cluster.
-
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-- Create the Kubernetes **version 1.19+** cluster:
-   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2_ui).
-   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
+Open the [Kubernetes cluster](https://{DomainName}/kubernetes/clusters) and click **Create cluster**.
+
+- For Kubernetes on VPC infrastructure, you must:
+   - Click **Create VPC**.
+   - Attach a Public Gateway to each of the subnets that you create:
+      - Navigate to the [VPC](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Click the previously created VPC used for the cluster.
+      - Scroll down to subnets section and click a subnet.
+      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      - Attach a public gateway to each subnet
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
 <!--#/istutorial#-->
