@@ -100,10 +100,11 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
       - Repeat the previous three steps to attach a public gateway to each subnet.
 - For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
 - Choose a resource group.
-- Uncheck all zones except one
-- Scale down to 1 **Worker nodes per zone**
-- Choose the smallest **Worker Pool flavor**
-- Click **Create**
+- Uncheck all zones except one.
+- Scale down to 1 **Worker nodes per zone**.
+- Choose the smallest **Worker Pool flavor**.
+- Enter a **Cluster name**.
+- Click **Create**.
 {: #create_cluster}
 
 <!--#/istutorial#-->
