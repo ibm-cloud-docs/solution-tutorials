@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-01-10"
+lastupdated: "2023-02-14"
 lasttested: "2023-01-04"
 
 content-type: tutorial
@@ -288,66 +288,66 @@ All services have been configured. In this section you will deploy the tutorial 
 ### Fill in credentials and configuration settings
 {: #cloud-e2e-security-15}
 
-      1. Copy `credentials.template.env` to `credentials.env`:
+   1. Copy `credentials.template.env` to `credentials.env`:
+      ```sh
+      cp credentials.template.env credentials.env
+      ```
+      {: codeblock}
+
+   2. Edit `credentials.env` and fill in the blanks with these values:
+      * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
+      * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+
+      When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
+      {: tip}
+
+   3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
+      1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
          ```sh
-         cp credentials.template.env credentials.env
+         export MYCLUSTER=<YOUR_CLUSTER_NAME>
          ```
-         {: codeblock}
+         {: pre}
 
-      2. Edit `credentials.env` and fill in the blanks with these values:
-         * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-         * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+      2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
+         ```sh
+         export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
+         export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
+         ```
+         {: pre}
 
-         When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
-         {: tip}
+      3. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
+         ```sh
+         export IMAGE_REPOSITORY=icr.io/solution-tutorials/tutorial-cloud-e2e-security
+         ```
+         {: pre}
 
-3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
-   1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
+      4. Set additional environment variables by replacing the default values:
+         ```sh
+         export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
+         export TARGET_NAMESPACE=default
+         ```
+         {: pre}
+
+      Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
+      {: tip}
+
+   4. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
       ```sh
-      export MYCLUSTER=<YOUR_CLUSTER_NAME>
+      ./generate_yaml.sh
       ```
       {: pre}
 
-   2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
-      ```sh
-      export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
-      export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
-      ```
-      {: pre}
+      As example, assuming the application is deployed to the *default* Kubernetes namespace:
 
-   3. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
-      ```sh
-      export IMAGE_REPOSITORY=icr.io/solution-tutorials/tutorial-cloud-e2e-security
-      ```
-      {: pre}
-
-   4. Set additional environment variables by replacing the default values:
-      ```sh
-      export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
-      export TARGET_NAMESPACE=default
-      ```
-      {: pre}
-
-   Set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-registry#other)).
-   {: tip}
-
-4. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
-   ```sh
-   ./generate_yaml.sh
-   ```
-   {: pre}
-
-   As example, assuming the application is deployed to the *default* Kubernetes namespace:
-
-   | Variable | Value | Description |
-   | -------- | ----- | ----------- |
-   | `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
-   | `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
-   | `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
-   | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-   | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-   | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
-   {: caption="Environment variables used by the script" caption-side="bottom"}
+      | Variable | Value | Description |
+      | -------- | ----- | ----------- |
+      | `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
+      | `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
+      | `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
+      | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+      | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+      | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+      {: caption="Environment variables used by the script" caption-side="bottom"}
 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
