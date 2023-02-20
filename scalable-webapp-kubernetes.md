@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-02-09"
+lastupdated: "2023-02-20"
 lasttested: "2023-02-08"
 
 content-type: tutorial
@@ -417,6 +417,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    curl -I https://$MYAPP.$CUSTOM_DOMAIN
    ```
    {: pre}
+
 <!--#/istutorial#-->
 
 ## Monitor application health
