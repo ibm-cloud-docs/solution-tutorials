@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-26"
+lastupdated: "2023-02-20"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -95,11 +95,12 @@ Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instan
 
 Next, you will create the following virtual data center networks: 
 
-Network type     | Name                | IP subnet
------------------|---------------------|-------------------
-routed network   | `net-application`   | `192.168.100.1/24`
-routed network   | `net-db`            | `192.168.101.1/24`
-isolated         | `net-isolated-db`   | `192.168.102.1/24`
+| Network type     | Name                | IP subnet
+| -----------------|---------------------|-------------------
+| routed network   | `net-application`   | `192.168.100.1/24`
+| routed network   | `net-db`            | `192.168.101.1/24`
+| isolated         | `net-isolated-db`   | `192.168.102.1/24`
+{: caption="Virtual data center networks" caption-side="bottom"}
 
 Routed virtual data center networks are attached to the edge gateway while an isolated virtual data center network is a standalone network without any platform provided routing capabilities. You can create more networks based on your needs by following the same logic and steps.
 
@@ -128,11 +129,12 @@ In this step, you will create a few virtual machines inside your virtual data ce
 
 You will create the following virtual machines:
 
-Virtual machine name   | Operating System     | Networks
------------------------|----------------------|-------------------------------
-`jump-server-1`        | Windows Server 2022  | `net-application`
-`application-server-1` | RedHat Linux 8       | `net-application`
-`db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
+| Virtual machine name   | Operating System     | Networks
+| -----------------------|----------------------|-------------------------------
+| `jump-server-1`        | Windows Server 2022  | `net-application`
+| `application-server-1` | RedHat Linux 8       | `net-application`
+| `db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
+{: caption="Virtual machines" caption-side="bottom"}
 
 The first server will be used as a jump server, which you can optionally reach through the public Internet. The other two servers are examples of application and database servers.
 
@@ -172,12 +174,12 @@ In these examples, `public-ip-0` refers to the first IP address provided in the 
 
 You will create the following IP Sets and Static Groups:
 
-Type            | Name                  | Members or IP addresses
-----------------|-----------------------|--------------------------------
-IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
-IP Set          | `ipset-snat`          | `public-ip-1`
-Static Group    | `sg-private-networks` | `net-application` and `net-db`
-
+| Type            | Name                  | Members or IP addresses
+| ----------------|-----------------------|--------------------------------
+| IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
+| IP Set          | `ipset-snat`          | `public-ip-1`
+| Static Group    | `sg-private-networks` | `net-application` and `net-db`
+{: caption="IP Sets and Static Groups" caption-side="bottom"}
 
 To create an IP Set:
 
@@ -209,11 +211,12 @@ The next step is to create NAT rules to allow your virtual machines to access th
 
 You will create the following NAT rules in this tutorial.
 
-Name               | Type            | External IP       | Internal IP         | Application
--------------------|-----------------|-------------------|---------------------|-----------------------
-`dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
-`snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
-`snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+| Name               | Type            | External IP       | Internal IP         | Application
+| -------------------|-----------------|-------------------|---------------------|-----------------------
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+{: caption="NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
 {: important} 
@@ -257,12 +260,12 @@ The new NAT rule will be created. This may take a few seconds to complete. Repea
 
 The next step is to create firewall rules. By default, the {{site.data.keyword.vmware-service_full}} – single tenant instance has been provisioned with a default firewall rule that will drop all traffic for ensuring basic network security. Additional rules must be put in place to allow the traffic from the previously created network to access the Public Internet and for you to access the virtual machine from the Public Internet.
 
-
-Name             | Applications       | Source                | Destination          | Action     | IP protocol
------------------|--------------------|-----------------------|----------------------|------------|-----------
-`dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
-`egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
-`default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
+| Name             | Applications       | Source                | Destination          | Action     | IP protocol
+| -----------------|--------------------|-----------------------|----------------------|------------|-----------
+| `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
+| `egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
+| `default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
+{: caption="Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}

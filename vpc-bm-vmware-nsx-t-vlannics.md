@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-09-20"
+  years: 2022, 2023
+lastupdated: "2023-02-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -92,12 +92,12 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 
 In this step, the following {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for NSX-T Managers and a virtual IP address (VIP) for NSX-T Managers, which provides fault tolerance and high availability to the NSX-T cluster.
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | Distributed Port Group Name
-----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
-vlan-nic-nsx-0        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 1   | dpg-mgmt
-vlan-nic-nsx-1        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 2   | dpg-mgmt
-vlan-nic-nsx-2        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 3   | dpg-mgmt
-vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager VIP | dpg-mgmt
+| Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | Distributed Port Group Name
+| ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
+| vlan-nic-nsx-0        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 1   | dpg-mgmt
+| vlan-nic-nsx-1        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 2   | dpg-mgmt
+| vlan-nic-nsx-2        | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager 3   | dpg-mgmt
+| vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Manager VIP | dpg-mgmt
 {: caption="Table 1. VLAN interfaces for NSX-T Managers" caption-side="top"}
 
 
@@ -202,9 +202,9 @@ vlan-nic-nsx-vip      | vlan           | 100     | vpc-mgmt-subnet     | true   
 
 In this step, the following {{site.data.keyword.bm_is_short}} VLAN interfaces will be created for each host to be used as NSX-T Tunnel Endpoints (TEPs).
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | VMkernel Adapter | Distributed Port Group Name
-----------------------|----------------|---------|---------------------|--------------|------------------|------------------------------
-vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false        | vmk10            | dpg-tep
+| Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | VMkernel Adapter | Distributed Port Group Name
+| ----------------------|----------------|---------|---------------------|--------------|------------------|------------------------------
+| vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false        | vmk10            | dpg-tep
 {: caption="Table 2. Host management networks and VMkernel adapters" caption-side="top"}
 
 
@@ -285,12 +285,12 @@ vlan-nic-tep-vmk10    | vlan           | 400     | vpc-tep-subnet      | false  
 
 In this step, the following VLAN interfaces will be created for NSX-T edge nodes. Each edge node require one IP address for management and one for TEP traffic.
 
-Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | DPG/Segment Name
-----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
-vlan-nic-nsx-edge-1   | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Edge 1 Mgmt | dpg-mgmt
-vlan-nic-nsx-edge-2   | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Edge 2 Mgmt | dpg-mgmt
-vlan-nic-tep-edge-1   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 1 TEP  | vpc-zone-edge-tep
-vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 2 TEP  | vpc-zone-edge-tep
+| Interface name        | Interface type | VLAN ID | Subnet              | Allow float  | NSX-T Interface   | DPG/Segment Name
+| ----------------------|----------------|---------|---------------------|--------------|-------------------|------------------------------
+| vlan-nic-nsx-edge-1   | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Edge 1 Mgmt | dpg-mgmt
+| vlan-nic-nsx-edge-2   | vlan           | 100     | vpc-mgmt-subnet     | true         | NSX-T Edge 2 Mgmt | dpg-mgmt
+| vlan-nic-tep-edge-1   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 1 TEP  | vpc-zone-edge-tep
+| vlan-nic-tep-edge-2   | vlan           | 400     | vpc-tep-subnet      | true         | NSX-T Edge 2 TEP  | vpc-zone-edge-tep
 {: caption="Table 3. Edge management and TEP VLAN interfaces" caption-side="top"}
 
 

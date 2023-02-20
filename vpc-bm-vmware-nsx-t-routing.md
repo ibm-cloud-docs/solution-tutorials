@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-09-20"
+  years: 2022, 2023
+lastupdated: "2023-02-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -84,10 +84,10 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 
 In this step, the following {{site.data.keyword.vpc_short}} subnets will be created for the Tier 0 (T0) private uplinks. These subnets will be used as transit networks. When the interfaces have been created, static routing will be configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0's private uplinks.
 
-Subnet name                   | System Traffic Type          | Subnet Sizing Guidance  
-------------------------------|------------------------------|-----------------------------------
-vpc-t0-public-uplink-subnet   | T0 public uplink subnet      | /29 or larger
-vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
+| Subnet name                   | System Traffic Type          | Subnet Sizing Guidance  
+| ------------------------------|------------------------------|-----------------------------------
+| vpc-t0-public-uplink-subnet   | T0 public uplink subnet      | /29 or larger
+| vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
 {: caption="Table 1. VPC subnets for NSX-T T0 uplinks" caption-side="top"}
 
 
@@ -115,14 +115,14 @@ vpc-t0-private-uplink-subnet  | T0 private uplink subnet     | /29 or larger
 
 In this step, {{site.data.keyword.bm_is_short}}VLAN interfaces will be created for the Tier 0 (T0)  external uplinks for public and private connectivity. These uplinks and subnets will be used as transit networks and static routing is configured between {{site.data.keyword.vpc_short}} implicit router and NSX-T T0 logical router.
 
-Interface name              | Interface type | VLAN ID | Subnet                       | Allow float  | Allow IP spoofing | Enable Infra NAT  | NSX-T Interface            | Segment Name
-----------------------------|----------------|---------|------------------------------|--------------|-------------------|-------------------|----------------------------|------------------------------
-vlan-nic-t0-pub-uplink-1    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 1  | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-pub-uplink-2    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 2  | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-pub-uplink-vip  | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink VIP       | vpc-zone-t0-public-*vlanid*
-vlan-nic-t0-priv-uplink-1   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 1 | vpc-zone-t0-private-*vlanid*
-vlan-nic-t0-priv-uplink-2   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 2 | vpc-zone-t0-private-*vlanid*
-vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink VIP      | vpc-zone-t0-private-*vlanid*
+| Interface name              | Interface type | VLAN ID | Subnet                       | Allow float  | Allow IP spoofing | Enable Infra NAT  | NSX-T Interface            | Segment Name
+| ----------------------------|----------------|---------|------------------------------|--------------|-------------------|-------------------|----------------------------|------------------------------
+| vlan-nic-t0-pub-uplink-1    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 1  | vpc-zone-t0-public-*vlanid*
+| vlan-nic-t0-pub-uplink-2    | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink * Edge 2  | vpc-zone-t0-public-*vlanid*
+| vlan-nic-t0-pub-uplink-vip  | vlan           | 700     | vpc-t0-public-uplink-subnet  | true         | false             | false             | T0 Public uplink VIP       | vpc-zone-t0-public-*vlanid*
+| vlan-nic-t0-priv-uplink-1   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 1 | vpc-zone-t0-private-*vlanid*
+| vlan-nic-t0-priv-uplink-2   | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink * Edge 2 | vpc-zone-t0-private-*vlanid*
+| vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink VIP      | vpc-zone-t0-private-*vlanid*
 {: caption="Table 4. VLAN interfaces for T0 uplinks" caption-side="top"}
 
 Depending on your networking design, provision only the VLAN interfaces you need, for example if you do not need direct public connectivity you can skip that part. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.

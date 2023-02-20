@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2023-01-05"
+  years: 2022, 2023
+lastupdated: "2023-02-20"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -83,10 +83,10 @@ The used variables e.g. $VMWARE_SUBNET_MGMT, $VMWARE_BMS001 and $VMWARE_DNS_ZONE
 
 In this step, you will provision a VLAN NIC for vCenter into `Instance Management Subnet` using `VLAN 100` as the matching VLAN ID. Use server BMS001 / esx-001 here. When creating the VLAN NIC, allow it to float between the hosts.
 
-NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
------------------|---------------------|----------|-------------|--------------------------|------------------
-vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
-
+| NIC              | Subnet              | VLAN ID  | Allow float | IP                       | MAC
+| -----------------|---------------------|----------|-------------|--------------------------|------------------
+| vlan-nic-vcenter | $VMWARE_SUBNET_MGMT | 100      | yes         | provided by VPC          | provided by VPC
+{: caption="NIC Parameters" caption-side="bottom"}
 
 While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you only need to use the IP address here when configuring the vCenter to use a static IP.
 {: note}
@@ -189,22 +189,23 @@ Verify that `vcenter.vmware.ibmcloud.local` resolves to the correct IP address p
 
 5. Deploy vcenter into BMS001 / esx-001 using the following parameters (match with your IP address plan and host names).
 
-   Parameter | Value
-   -----------------|----------
-   Target ESXi host | esx-001.vmware.ibmcloud.local
-   VM name | vcenter
-   Deployment size | Small
-   Storage size | Default
-   Datastore | datastore1, thin
-   Network | pg-mgmt (VLAN ID 100)
-   IPv4 | static
-   IP address | 10.97.0.132
-   Host name | vcenter.vmware.ibmcloud.local
-   Subnet mask or prefix length | 25
-   Default gateway | 10.97.0.129
-   DNS servers | 161.26.0.7, 161.26.0.8
-   HTTP Port | 80
-   HTTPS Port | 443
+   | Parameter | Value
+   | -----------------|----------
+   | Target ESXi host | esx-001.vmware.ibmcloud.local
+   | VM name | vcenter
+   | Deployment size | Small
+   | Storage size | Default
+   | Datastore | datastore1, thin
+   | Network | pg-mgmt (VLAN ID 100)
+   | IPv4 | static
+   | IP address | 10.97.0.132
+   | Host name | vcenter.vmware.ibmcloud.local
+   | Subnet mask or prefix length | 25
+   | Default gateway | 10.97.0.129
+   | DNS servers | 161.26.0.7, 161.26.0.8
+   | HTTP Port | 80
+   | HTTPS Port | 443
+   {: caption="vCenter Parameters" caption-side="bottom"}
 
 
 ### Configure vCenter - Phase 2
@@ -216,22 +217,22 @@ After the previous step, vCenter installation continues with Phase 2.
 
 2. Use the following settings (match with your IP address plan and host names). Review the settings before finishing the wizard.
 
-   Parameter | Value
-   -----------------|----------
-   Network configuration | Assign static IP address
-   IP version | IPv4
-   IP address | 10.97.0.132
-   Subnet mask | 25
-   Host name | vcenter.vmware.ibmcloud.local
-   Gateway | 10.97.0.129
-   DNS servers | 161.26.0.7, 161.26.0.8
-   Time synchronization mode | Synchronize time with the NTP servers
-   NTP Servers | 161.26.0.6
-   SSH access | Disabled
-   SSO Details | vmware.ibmcloud.local
-   Username | administrator
-   CEIP setting | Opted out
-    
+   | Parameter | Value
+   | -----------------|----------
+   | Network configuration | Assign static IP address
+   | IP version | IPv4
+   | IP address | 10.97.0.132
+   | Subnet mask | 25
+   | Host name | vcenter.vmware.ibmcloud.local
+   | Gateway | 10.97.0.129
+   | DNS servers | 161.26.0.7, 161.26.0.8
+   | Time synchronization mode | Synchronize time with the NTP servers
+   | NTP Servers | 161.26.0.6
+   | SSH access | Disabled
+   | SSO Details | vmware.ibmcloud.local
+   | Username | administrator
+   | CEIP setting | Opted out
+   {: caption="vCenter Parameters for Phase 2" caption-side="bottom"}
 
 ## Create a new Datacenter and create a Cluster
 {: #vpc-bm-vmware-vcenter-dccluster}
