@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-02-03"
-lasttested: "2022-11-30"
+lastupdated: "2023-02-21"
+lasttested: "2023-02-21"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
@@ -43,8 +43,8 @@ This tutorial walks you through the process setting up a continuous integration 
 <!--##istutorial#-->
 * Create development and production Kubernetes clusters.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
-* Create a starter application, run it locally and push it to a Git repository.
-* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
+* Create a sample application, run it locally and push it to a Git repository.
+* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the sample app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
 ![Architecture diagram](images/solution21/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
@@ -70,15 +70,29 @@ This tutorial requires:
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-Create a cluster:
-1. Open [kubernetes clusters](https://{DomainName}/kubernetes/clusters) or navigate to Kubernetes > Clusters from the left hamburger navigation menu.
-2. Click **Create a cluster**.
-3. Choose **Standard** plan, Default Kubernetes **version**, **Classic** infrastructure.
-4. Choose desired resource group.
-5. Choose desired Geography, Availability and Metro.
-6. One zone, one worker node per zone and the smallest **flavor** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial.
-7. Master service endpoint of **Public endpoint only**.
-8. Choose a cluster name that you can remember.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
+
+Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+- Click **Standard tier cluster**
+- For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+   - Click **Create VPC**:
+      - Enter a **name** for the VPC.
+      - Chose the same resource group as the cluster.
+      - Click **Create**.
+   - Attach a Public Gateway to each of the subnets that you create:
+      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Click the previously created VPC used for the cluster.
+      - Scroll down to subnets section and click a subnet.
+      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      - Click the browser **back** button to return to the VPC details page.
+      - Repeat the previous three steps to attach a public gateway to each subnet.
+- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
+- Choose a resource group.
+- Uncheck all zones except one.
+- Scale down to 1 **Worker nodes per zone**.
+- Choose the smallest **Worker Pool flavor**.
+- Enter a **Cluster name**.
+- Click **Create**.
 
 **Note:** Do not proceed until your workers are ready.
 <!--#/istutorial#-->
@@ -94,15 +108,13 @@ Create a cluster:
 -->
 <!--#/isworkshop#-->
 
-## Create a starter application
+## Create a sample application
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-{{site.data.keyword.containershort_notm}} offers a selection of starter applications to generate all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.  The cloud console is used in this example but the ibmcloud cli, `ibmcloud dev create`, is also available.
-
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [DevOps](https://{DomainName}/devops).
 2. Click **Create toolchain**.
-3. Under the left hand column, select **Kubernetes** as a filter.
+3. In the **search box** type **kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
 5. Enter a unique **Toolchain Name** for the toolchain such as `<your-initials>-mynodestarter-toolchain` and select a resource group.
 6. Enter a unique **Repository Name** for the repository such as `<your-initials>-mynodestarter-repository`.
@@ -111,12 +123,24 @@ Create a cluster:
 9. Select a region and your cluster from the list.
 10. Make sure to set the cluster namespace to `default` and click **Create**.
 
+In a new browser tab open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters):
+- Click on your cluster.
+- Locate the **Ingress subdomain** field and click the copy button.  The ingress subdomain will be used in the next section.
+
 The toolchain will build your application and deploy it to the cluster.
 
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
-1. After the DEPLOY stage passes, click on **View logs and history** to see the logs.
-1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
-   ![Screen capture showing how to find the IP address](images/solution21/Logs.png){: caption="How to find the IP address" caption-side="bottom"}
+1. Wait for the DEPLOY stage to complete.  The **Check health** job will fail for VPC clusters.
+1. Click on the settings cog in the DEPLOY stage and click **Configure stage**.
+   - Click the **Environment properties** tab at the top.
+   - Click **Add property**, click **Text property**.
+   - Enter **Name**: HELM_UPGRADE_EXTRA_ARGS.
+   - Enter **Value**: --set ingress.enabled=true,ingress.hosts={dev.INGRESS_SUBDOMAIN} somthing like: --set ingress.enabled=true,ingress.hosts={dev.vpc-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud}.
+1. Click Save.
+1. Click the **play** button on DEPLOY stage.
+1. In a browser tab paste the dev.INGRESS_SUBDOMAIN of the cluster.  The message from the application should be returned: **Welcome to IBM Cloud DevOps with Docker, Kubernetes and Helm Charts. Lets go use the Continuous Delivery Service**.
+1. Switch back to the pipeline tab.
+
 
 ## Modify the application and deploy the updates
 {: #continuous-deployment-to-kubernetes-6}
@@ -124,19 +148,18 @@ The toolchain will build your application and deploy it to the cluster.
 
 1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`.
 1. Click the link under the **Repositories** tile, a new browser tab will open to the repository.
-1. Click on the `utils.js` file and then click on **Edit**. 
+1. Click on the `utils.js` file and then click on **Open in Web IDE**/**Edit** drop down and choose **EDIT** then click **EDIT**. 
 1. Make a simple change, for example change "Welcome to" to something else.
 1. Enter a commit message: *my first changes* and click on **Commit changes**.
 1. Return to the previous tab showing the toolchain.
 1. Click on the **Delivery Pipeline** tile named **ci-pipeline**.
 1. Notice a new **BUILD** has started.
 1. Wait for the **DEPLOY** stage to complete.
-1. After the DEPLOY stage passes, click on **View logs and history** to see the logs and open the application.
-1. Scroll to the bottom of the log and visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
+1. After the DEPLOY stage completes open a new tab and paste in the dev.INGRESS_SUBDOMAIN of the cluster.
 
 If you don't see your application updating, confirm all the steps passed and review their respective logs.
 
-**Note:** If you prefer to work locally for making and viewing updates to the application, you can  clone the repository to your own environment for editing and use `ibmcloud dev build` and `ibmcloud dev run` to view the changes locally before pushing them back to the repository. Once your changes are pushed to the repository they will also trigger a build in the **Delivery Pipeline**.
+**Note:** If you prefer to work locally for making and viewing updates to the application. Once your changes are pushed to the repository they will also trigger a build in the **Delivery Pipeline**.
 
 ## Deploy to a production environment
 {: #continuous-deployment-to-kubernetes-deploytoproduction}
@@ -152,14 +175,14 @@ There are [different options](/docs/solution-tutorials?topic=solution-tutorials-
 3. To save the changes scroll down and click **Save**.
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. On the **Input** panel change the **stage trigger** to `Run jobs only when this stage is run manually`.
-6. In **Environment properties** panel, set **CLUSTER_NAMESPACE** to **production**.
+6. In **Environment properties** panel, set **CLUSTER_NAMESPACE** to **production**.  Update the **HELM_UPGRADE_EXTRA_ARGS** property **Value**: --set ingress.enabled=true,ingress.hosts={**prod**.INGRESS_SUBDOMAIN}
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
 
 You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
    ![Toolchain with dev and prod stages](images/solution21/full-deploy.png){: caption="Toolchain with dev and prod stages" caption-side="bottom"}
 
-You now have the full deployment setup. To deploy from dev to test, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
+You now have the full deployment setup. To deploy from dev to production, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
 ## Setup Slack notifications
 {: #continuous-deployment-to-kubernetes-setup_slack}
@@ -185,13 +208,13 @@ In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
    - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
-   - In the git repository: select **Settings** on the right then **General** > **Advanced** > **Delete Project**.
+   - In the git repository: select **Settings** on the left then **General** scroll down and click **Advanced** **Expand**  then scroll down and click **Delete Project**.
 - Delete the toolchain.<!-- markdownlint-disable-line -->
 - Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
 - Delete the cluster.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->
-- Delete the Slack channel.
+- Delete the Slack app.
 
 ## Expand the Tutorial
 {: #continuous-deployment-to-kubernetes-expandTutorial}
