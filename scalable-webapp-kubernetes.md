@@ -36,8 +36,6 @@ This tutorial walks you through how to run a web application locally in a contai
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments. The templates generate [Helm](https://github.com/kubernetes/helm) charts that describe the application’s initial Kubernetes deployment configuration, and are easily extended to create multi-image or complex deployments as needed.
-
 ## Objectives
 {: #scalable-webapp-kubernetes-objectives}
 
@@ -51,7 +49,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 ![Architecture](images/solution2/Architecture.png){: caption="Architecture diagram" caption-side="bottom" class="center" }
 {: style="text-align: center;"}
 
-1. A developer downloads or clones a starter web application.
+1. A developer downloads or clones a sample web application.
 1. Optionally build the application to produce a container image.
 1. Optionally the image is pushed to a namespace in the {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
@@ -125,7 +123,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 {: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
-In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
+In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev) sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
 
 1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/) to your machine:
    ```sh
@@ -139,7 +137,7 @@ In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](
    ```
    {: pre}
 
-This starter application code contains all the necessary configuration files for local development and deployment to Kubernetes.
+This sample application code contains all the necessary configuration files for local development and deployment to Kubernetes.
 
 ## Deploy application to cluster using helm chart
 {: #scalable-webapp-kubernetes-deploy}
@@ -148,7 +146,7 @@ This starter application code contains all the necessary configuration files for
 ### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
 
-The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the starter application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
+The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 Note: If you want to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryshort_notm}} or any other container registry.  
 {: tip}
@@ -197,7 +195,7 @@ Note: If you want to build and push the application to your own container regist
       ```
       {: pre}
 
-1. Change to the chart directory under your starter application directory:
+1. Change to the chart directory under your sample application directory:
    ```sh
    cd chart/kubernetesnodeapp
    ```
@@ -206,6 +204,12 @@ Note: If you want to build and push the application to your own container regist
 1. Install the Helm chart:
    ```sh
    helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYAPP --namespace $KUBERNETES_NAMESPACE . --set image.repository=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
+   ```
+   {: pre}
+
+1. Change back to the sample application directory:
+   ```sh
+   cd ../..
    ```
    {: pre}
 
@@ -260,7 +264,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: pre}
 
-4. Change to your starter application directory and run the below bash command to create an Ingress file `ingress-ibmsubdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS: 
+4. In the sample application directory run the below bash command to create an Ingress file `ingress-ibmsubdomain.yaml` pointing to the IBM-provided domain with support for HTTP and HTTPS: 
 
    ```sh
    ./ingress.sh ibmsubdomain_https

@@ -51,7 +51,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Objectives
 {: #dynamic-content-cdn-objectives}
 
-* Deploy a starter dynamic web application to a {{site.data.keyword.containershort_notm}} cluster.
+* Deploy a sample dynamic web application to a {{site.data.keyword.containershort_notm}} cluster.
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 

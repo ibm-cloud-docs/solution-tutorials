@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-22"
+lastupdated: "2023-02-21"
 lasttested: "2022-12-22"
 
 content-type: tutorial
@@ -32,13 +32,13 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongoDB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale both the runtime and database resources.
+This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongoDB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN sample app locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale both the runtime and database resources.
 {: shortdesc}
 
 ## Objectives
 {: #mean-stack-0}
 
-- Create and run a starter Node.js app locally.
+- Create and run a sample Node.js app locally.
 - Create a managed {{site.data.keyword.databases-for-mongodb}} instance.
 - Deploy the Node.js app to the cloud using {{site.data.keyword.codeengineshort}}.
 - Scale runtime CPU and memory resources.
@@ -83,24 +83,24 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 
    You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](https://{DomainName}/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-starter-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
+2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-sample-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
 
    ```sh
-   ibmcloud resource service-instance-create mean-starter-mongodb databases-for-mongodb standard ca-tor
+   ibmcloud resource service-instance-create mean-sample-mongodb databases-for-mongodb standard ca-tor
    ```
    {: codeblock}
 
 3. Wait for the instance to be ready. You can check the provisioning status with the following command:
    
    ```sh
-   ibmcloud resource service-instance mean-starter-mongodb
+   ibmcloud resource service-instance mean-sample-mongodb
    ```
    {: codeblock}
 
 4. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key.
   
    ```sh
-   ibmcloud resource service-key-create mean-starter-mongodb-key --instance-name mean-starter-mongodb
+   ibmcloud resource service-key-create mean-sample-mongodb-key --instance-name mean-sample-mongodb
    ```
    {: codeblock} 
 
@@ -111,7 +111,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 In this section, you will clone a MEAN sample code and run the application locally to test the connection to the MongoDB database running on {{site.data.keyword.cloud_notm}}.
 {: shortdesc}
 
-1. Clone the MEAN starter code.
+1. Clone the MEAN sample code.
   
    ```sh
    git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
@@ -129,7 +129,7 @@ In this section, you will clone a MEAN sample code and run the application local
 1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command:
   
    ```sh
-   ibmcloud resource service-key mean-starter-mongodb-key --output json
+   ibmcloud resource service-key mean-sample-mongodb-key --output json
    ```
    {: codeblock}
 
@@ -229,13 +229,13 @@ To remove resource, follow these steps:
 
 2. Delete the {{site.data.keyword.databases-for-mongodb}} service key.
    ```sh
-   ibmcloud resource service-key-delete mean-starter-mongodb-key
+   ibmcloud resource service-key-delete mean-sample-mongodb-key
    ```
    {: pre}
 
 3. Delete the {{site.data.keyword.databases-for-mongodb}} service.
    ```sh
-   ibmcloud resource service-instance-delete mean-starter-mongodb
+   ibmcloud resource service-instance-delete mean-sample-mongodb
    ```
    {: pre}
 

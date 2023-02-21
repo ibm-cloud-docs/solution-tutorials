@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-09-22"
+lastupdated: "2023-02-21"
 lasttested: "2022-09-22"
 
 content-type: tutorial
@@ -181,7 +181,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 {: #scalable-webapp-openshift-create_openshift_app}
 {: step}
 
-In this section, you will create an {{site.data.keyword.openshiftshort}} project and then deploy an application to {{site.data.keyword.openshiftshort}} from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/). The code sample is a simple [NodeJS](https://nodejs.dev) starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
+In this section, you will create an {{site.data.keyword.openshiftshort}} project and then deploy an application to {{site.data.keyword.openshiftshort}} from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/). The code sample is a simple [NodeJS](https://nodejs.dev) sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
 
 ### Create an {{site.data.keyword.openshiftshort}} project
 {: #scalable-webapp-openshift-create-project}
@@ -397,7 +397,7 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
    ```
    {: pre}
 
-### Clone a starter application
+### Clone a sample application
 {: #scalable-webapp-openshift-clone-web-app-code}
 
 In this section, you will clone a GitHub repo with `yaml` template files and a shell script to generate `yaml` file with updated environment variables. The generated file is used to build a container image, push the image to the private container registry and deploy a new app using the private container image.
@@ -542,7 +542,7 @@ You should see the same application exposed on a different route and deployed us
 {: #scalable-webapp-openshift-private-git-repo}
 {: step}
 
-In this step, you will create a private {{site.data.keyword.cloud_notm}} Git repository and push the starter application code. You will also learn how to automatically build and redeploy when the app is updated.
+In this step, you will create a private {{site.data.keyword.cloud_notm}} Git repository and push the sample application code. You will also learn how to automatically build and redeploy when the app is updated.
 
    You need to configure an SSH key for the push to be successful,check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
    {: important}
@@ -554,8 +554,8 @@ In this step, you will create a private {{site.data.keyword.cloud_notm}} Git rep
 
 2. Click on **New project**, click on **Create blank project**, and then provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the starter application code.
-5. Once you push the code to the private repository, you should see the starter code in the project.
+4. Follow the instructions under **Git global setup** and **Push an existing Git repository** sections to setup Git and to push the sample application code.
+5. Once you push the code to the private repository, you should see the sample code in the project.
 
 ### Create a Git deploy token
 {: #scalable-webapp-openshift-git-deploy-token}
