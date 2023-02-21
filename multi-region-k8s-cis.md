@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-02-06"
+lastupdated: "2023-02-21"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -92,10 +92,27 @@ When creating the Kubernetes cluster below:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Locate in **North America** and **Dallas**
 
-Create the Kubernetes cluster:
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC cluster in the console](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
-- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) instructions.
-{: #create_cluster}
+Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+- Click **Standard tier cluster**
+- For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+   - Click **Create VPC**:
+      - Enter a **name** for the VPC.
+      - Chose the same resource group as the cluster.
+      - Click **Create**.
+   - Attach a Public Gateway to each of the subnets that you create:
+      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Click the previously created VPC used for the cluster.
+      - Scroll down to subnets section and click a subnet.
+      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      - Click the browser **back** button to return to the VPC details page.
+      - Repeat the previous three steps to attach a public gateway to each subnet.
+- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
+- Choose a resource group.
+- Uncheck all zones except one.
+- Scale down to 1 **Worker nodes per zone**.
+- Choose the smallest **Worker Pool flavor**.
+- Enter a **Cluster name**.
+- Click **Create**.
 
 While the cluster is getting ready, you are going to prepare the application.
 
