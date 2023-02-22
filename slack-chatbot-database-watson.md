@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-27"
-lasttested: "2022-12-27"
+  years: 2023
+lastupdated: "2023-02-22"
+lasttested: "2023-02-22"
 
 content-type: tutorial
 services: codeengine, watson-assistant, Db2onCloud
@@ -222,10 +222,14 @@ First, you are going to create an action to retrieve information about a single 
    {: note}
 
 9. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. 
-10. On the bottom right select **Preview** to get to the **Assistant preview**. 
-11. In the webchat, type **show me event details** and submit. The bot should respond **What is the event name?**. Now type **Think** and submit. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screen capture below).
+10. On the bottom right select **Preview** to test the dialog. 
+11. In the chat, type **show me event details** and submit. The bot should respond **What is the event name?**. Now type **Think** and submit. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screen capture below).
 
-![Webchat preview showing event details](images/solution19/Slackbot_preview.png){: caption="Webchat preview showing event details" caption-side="bottom"}
+![chat preview showing event details](images/solution19/Slackbot_debug_preview.png){: caption="preview showing event details" caption-side="bottom"}
+
+
+You can click **Inspect** to see details on how the custom extension is utilized. You can check input and output variables and how the API function of the extension is invoked.
+{: note}
 
 ## Action to gather data and insert a new record
 {: #slack-chatbot-database-watson-7}
@@ -250,7 +254,7 @@ Similar to retrieving a record it is possible to gather input about an event and
 13. Test the new action by clicking on **Preview** on the left and using the webchat. Type **add new event** and submit. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 
 
-When creating a chatbot, you may want to [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows to roll back changes and to continue with development without impacting the chatbot interacting with real customers.
+When creating a chatbot, you may want to [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows rolling back changes and to continue with development without impacting the chatbot interacting with real customers.
 {: tip}
 
 ## Integrate with Slack
