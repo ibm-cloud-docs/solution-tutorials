@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-02-09"
-lasttested: "2022-12-01"
+lastupdated: "2023-02-23"
+lasttested: "2023-02-23"
 
 content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
@@ -345,6 +345,22 @@ During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is e
    sysdig-agent-mp4d6   1/1     Running   0          73s
    sysdig-agent-q2s55   1/1     Running   0          73s
    ```
+Small clusters will result in pods in a Pending state.  This can be adjusted by changing the daemon set:
+   ```sh
+   kubectl edit daemonset/sysdig-agent -n ibm-observe
+   ```
+   {: pre}
+
+Change the values in the requests section to cpu: "200m" and memory to "200Mi" and check the pods again.
+   ```
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: "200m"
+            memory: 200Mi
+   ```
 
 Note: The agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#application-log-analysis-deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
 ```yaml
@@ -373,7 +389,7 @@ Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a 
 
 To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
 
-Note: Change the interval to **5 M** on the bottom bar of the UI.
+Note: Change the interval to **10 M** on the bottom bar of the UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
