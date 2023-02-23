@@ -352,7 +352,7 @@ Small clusters will result in pods in a Pending state.  This can be adjusted by 
    {: pre}
 
 Change the values in the requests section to cpu: "200m" and memory to "200Mi" and check the pods again.
-   ```
+   ```yaml
         resources:
           limits:
             cpu: "1"
