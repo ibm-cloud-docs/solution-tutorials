@@ -18,6 +18,8 @@ completion-time: 2h
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
+{:note: .note}
 
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #openshift-service-mesh}
