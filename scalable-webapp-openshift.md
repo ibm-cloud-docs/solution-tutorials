@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2023-02-21"
-lasttested: "2022-09-22"
+  years: 2023
+lastupdated: "2023-02-24"
+lasttested: "2023-02-24"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -711,16 +711,16 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
 * Delete all resource objects specific to an application:
    ```sh
-   oc delete all --selector app=<APPLICATION_NAME>
+   oc delete all --selector app=$MYPROJECT
    ```
    {: pre}
 
    To list the application names in the project, run `oc get svc | awk '{print $1}'` 
    {: tip}
 
-* Delete the project by replacing `<your-initials>`:
+* Delete the project:
    ```sh
-   oc delete project <your-initials>-openshiftapp
+   oc delete project $MYPROJECT
    ```
    {: pre}
 
