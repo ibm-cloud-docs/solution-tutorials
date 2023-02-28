@@ -92,15 +92,34 @@ set interfaces reth2 unit 2498 vlan-id 2498
 set interfaces reth2 unit 2498 family inet address 10.95.1.1/26
 ```
 
-IKE Policy                       | Value
+
+
+
+Prefix                           | Value
+---------------------------------|---------------------------
+Subnets on virtual data center   | 192.168.100.0/24
+Subnets behind vSRX              | 10.95.1.1/26
+{: caption="List of site prefixes or subnets to review before configuring the VPN." caption-side="bottom"}
+
+
+Gateway IP address                 | Value
+-----------------------------------|---------------------------
+Public IP address of edge gateway  | <public-IP address-of-the-vcd-edge-gateway>
+Public IP address of vSRX          | <public-IP address-of-the-vsrx>
+{: caption="List of gateway IP addresses to review before configuring the VPN." caption-side="bottom"}
+
+
+IKE policy                       | Value
 ---------------------------------|------------------
 Version                          | IKE v2
 Encryption                       | AES 256
 Digest                           | SHA 2 - 256
 Diffie-Hellman Group             | Group 14
 Association Life Time (seconds)  | 28800
+{: caption="List of IKE policy parameters to review before configuring the VPN." caption-side="bottom"}
 
-Tunnel/Ipsec Policy              | Value
+
+IPsec (or tunnel) policy         | Value
 ---------------------------------|------------------
 Perfect Forward Secrecy          | Enabled
 Defragmentation Policy           | Copy
@@ -108,11 +127,14 @@ Encryption                       | AES 256
 Digest                           | SHA 2 - 256
 Diffie-Hellman Group             | Group 14
 Association Life Time (seconds)  | 3600
+{: caption="List of IPsec (or tunnel) policy parameters to review before configuring the VPN." caption-side="bottom"}
 
 
 DPD                              | Value
 ---------------------------------|------------------
 Probe Interval (seconds)         | 60
+{: caption="List of dead peer detection (DPD) policy parameters to review before configuring the VPN." caption-side="bottom"}
+
 
 
 ## Configure vSRX
@@ -135,8 +157,7 @@ set security ike policy ike-phase1-policy pre-shared-key ascii-text <your-psk>
 
 ```bash
 set security ike gateway vmwaas ike-policy ike-phase1-policy
-set security ike gateway vmwaas address 52.116.171.18
-set security ike gateway vmwaas address <remote-IP address-of-the-vcd-edge-gateway>
+set security ike gateway vmwaas address <public-IP address-of-the-vcd-edge-gateway>
 
 
 set security ike gateway vmwaas external-interface reth1.0
@@ -170,18 +191,18 @@ set firewall filter PROTECT-IN term PING from destination-address 10.95.1.1/32
 set firewall filter PROTECT-IN term PING from protocol icmp
 
 set firewall filter PROTECT-IN term IPSec-IKE from destination-address <public-IP address-of-the-vsrx>/32
-#set firewall filter PROTECT-IN term IPSec-IKE from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+#set firewall filter PROTECT-IN term IPSec-IKE from source-address <public-IP address-of-the-vcd-edge-gateway>/32
 set firewall filter PROTECT-IN term IPSec-IKE from protocol udp
 set firewall filter PROTECT-IN term IPSec-IKE from port 500
 set firewall filter PROTECT-IN term IPSec-IKE then accept
 
 set firewall filter PROTECT-IN term IPSec-ESP from destination-address <public-IP address-of-the-vsrx>/32
-#set firewall filter PROTECT-IN term IPSec-ESP from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+#set firewall filter PROTECT-IN term IPSec-ESP from source-address <public-IP address-of-the-vcd-edge-gateway>/32
 set firewall filter PROTECT-IN term IPSec-ESP from protocol esp
 set firewall filter PROTECT-IN term IPSec-ESP then accept
 
 set firewall filter PROTECT-IN term IPSec-4500 from destination-address <public-IP address-of-the-vsrx>/32
-#set firewall filter PROTECT-IN term IPSec-4500 from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+#set firewall filter PROTECT-IN term IPSec-4500 from source-address <public-IP address-of-the-vcd-edge-gateway>/32
 set firewall filter PROTECT-IN term IPSec-4500 from protocol udp
 set firewall filter PROTECT-IN term IPSec-4500 from port 4500
 set firewall filter PROTECT-IN term IPSec-4500 then accept
