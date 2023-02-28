@@ -78,63 +78,82 @@ This tutorial requires:
 {: #vmware-as-a-service-vpn-vsrx-gather-requirements}
 {: step}
 
-Get the public side IP of the vSRX:
+It is important to design and collect the following information as these values must match on configuration on both sides.
 
-```
-set interfaces reth1 unit 0 description "SL PUBLIC VLAN INTERFACE"
-set interfaces reth1 unit 0 family inet address 169.46.0.43/29
-```
+1. Collect local and remote network information for the policy based tunnel
 
-Get or configure the private interface of the vSRX:
-```
-set interfaces reth2 unit 2498 description "Test net"
-set interfaces reth2 unit 2498 vlan-id 2498
-set interfaces reth2 unit 2498 family inet address 10.95.1.1/26
-```
-
-
-
-
-Prefix                           | Value
----------------------------------|---------------------------
-Subnets on virtual data center   | 192.168.100.0/24
-Subnets behind vSRX              | 10.95.1.1/26
-{: caption="List of site prefixes or subnets to review before configuring the VPN." caption-side="bottom"}
+   The private interface of the vSRX is typically configured as follows:
+   
+   ```
+   set interfaces reth2 unit <vlan-id> description "Your private network routed through Gateway Appliance"
+   set interfaces reth2 unit <vlan-id> vlan-id <vlan-id>
+   set interfaces reth2 unit <vlan-id> family inet address <private-IP address-of-the-vsrx>/26
+   ```
+      
+   As your solution may differ, collect the local and remote network information for the policy based tunnel. Example values are provided as follows.
+   
+   Prefix                           | Value
+   ---------------------------------|---------------------------
+   Subnets on virtual data center   | 192.168.100.0/24
+   Subnets behind vSRX              | 10.95.1.1/26
+   {: caption="List of site prefixes or subnets to review before configuring the VPN." caption-side="bottom"}
 
 
-Gateway IP address                 | Value
------------------------------------|---------------------------
-Public IP address of edge gateway  | <public-IP address-of-the-vcd-edge-gateway>
-Public IP address of vSRX          | <public-IP address-of-the-vsrx>
-{: caption="List of gateway IP addresses to review before configuring the VPN." caption-side="bottom"}
+2. Collect local and remote gateway IP address information for the tunnel
 
+   Gateway IP address                 | Value
+   -----------------------------------|---------------------------
+   Public IP address of edge gateway  | <public-IP address-of-the-vcd-edge-gateway>
+   Public IP address of vSRX          | <public-IP address-of-the-vsrx>
+   {: caption="List of gateway IP addresses to review before configuring the VPN." caption-side="bottom"}
+   
+   The public IP address for the virtual data center gateway is provided though the IBM Cloud portal, see [Viewing and deleting VDCs](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete#vdc-view-delete-details).
+   
+   The public interface IP of the vSRX is typically configured as follows in IBM Cloud:
+   
+   ```
+   set interfaces reth1 unit 0 description "SL PUBLIC VLAN INTERFACE"
+   set interfaces reth1 unit 0 family inet address <public-IP address-of-the-vsrx>/29
+   ```
+   
+   As your solution may differ, collect the information for tunnel endpoints.
+   
+3. Design and decide IKE policy
 
-IKE policy                       | Value
----------------------------------|------------------
-Version                          | IKE v2
-Encryption                       | AES 256
-Digest                           | SHA 2 - 256
-Diffie-Hellman Group             | Group 14
-Association Life Time (seconds)  | 28800
-{: caption="List of IKE policy parameters to review before configuring the VPN." caption-side="bottom"}
+   Design and decide IKE policy for your tunnel. The following table shows values used in this example.
 
+   IKE policy                       | Value
+   ---------------------------------|------------------
+   Version                          | IKE v2
+   Encryption                       | AES 256
+   Digest                           | SHA 2 - 256
+   Diffie-Hellman Group             | Group 14
+   Association Life Time (seconds)  | 28800
+   {: caption="List of IKE policy parameters to review before configuring the VPN." caption-side="bottom"}
+   
+   
+4. Design and decide IPsec policy
 
-IPsec (or tunnel) policy         | Value
----------------------------------|------------------
-Perfect Forward Secrecy          | Enabled
-Defragmentation Policy           | Copy
-Encryption                       | AES 256
-Digest                           | SHA 2 - 256
-Diffie-Hellman Group             | Group 14
-Association Life Time (seconds)  | 3600
-{: caption="List of IPsec (or tunnel) policy parameters to review before configuring the VPN." caption-side="bottom"}
+   Design and decide IPsec (or tunnel) policy. The following table shows values used in this example.
 
+   IPsec (or tunnel) policy         | Value
+   ---------------------------------|------------------
+   Perfect Forward Secrecy          | Enabled
+   Defragmentation Policy           | Copy
+   Encryption                       | AES 256
+   Digest                           | SHA 2 - 256
+   Diffie-Hellman Group             | Group 14
+   Association Life Time (seconds)  | 3600
+   {: caption="List of IPsec (or tunnel) policy parameters to review before configuring the VPN." caption-side="bottom"}
+   
+5. Design and decide dead peer detection (DPD) policy
 
-DPD                              | Value
----------------------------------|------------------
-Probe Interval (seconds)         | 60
-{: caption="List of dead peer detection (DPD) policy parameters to review before configuring the VPN." caption-side="bottom"}
+   Design and decide DPD policy. The following table shows values used in this example.
 
+   DPD                              | Value
+   ---------------------------------|------------------
+   Probe Interval (seconds)         | 60
+   {: caption="List of dead peer detection (DPD) policy parameters to review before configuring the VPN." caption-side="bottom"}
 
 
 ## Configure vSRX
