@@ -78,10 +78,136 @@ This tutorial requires:
 {: #vmware-as-a-service-vpn-vsrx-gather-requirements}
 {: step}
 
+Get the public side IP of the vSRX:
+
+```
+set interfaces reth1 unit 0 description "SL PUBLIC VLAN INTERFACE"
+set interfaces reth1 unit 0 family inet address 169.46.0.43/29
+```
+
+Get or configure the private interface of the vSRX:
+```
+set interfaces reth2 unit 2498 description "Test net"
+set interfaces reth2 unit 2498 vlan-id 2498
+set interfaces reth2 unit 2498 family inet address 10.95.1.1/26
+```
+
+IKE Policy                       | Value
+---------------------------------|------------------
+Version                          | IKE v2
+Encryption                       | AES 256
+Digest                           | SHA 2 - 256
+Diffie-Hellman Group             | Group 14
+Association Life Time (seconds)  | 28800
+
+Tunnel/Ipsec Policy              | Value
+---------------------------------|------------------
+Perfect Forward Secrecy          | Enabled
+Defragmentation Policy           | Copy
+Encryption                       | AES 256
+Digest                           | SHA 2 - 256
+Diffie-Hellman Group             | Group 14
+Association Life Time (seconds)  | 3600
+
+
+DPD                              | Value
+---------------------------------|------------------
+Probe Interval (seconds)         | 60
+
 
 ## Configure vSRX
 {: #vmware-as-a-service-vpn-vsrx-config-vsrx}
 {: step}
+
+
+```bash
+set security ike proposal ike-phase1-vmwaas authentication-method pre-shared-keys
+set security ike proposal ike-phase1-vmwaas dh-group group14
+set security ike proposal ike-phase1-vmwaas authentication-algorithm sha-256
+set security ike proposal ike-phase1-vmwaas encryption-algorithm aes-256-cbc
+set security ike proposal ike-phase1-vmwaas lifetime-seconds 28800
+
+set security ike policy ike-phase1-policy mode main
+set security ike policy ike-phase1-policy proposals ike-phase1-vmwaas
+set security ike policy ike-phase1-policy pre-shared-key ascii-text <your-psk>
+
+```
+
+```bash
+set security ike gateway vmwaas ike-policy ike-phase1-policy
+set security ike gateway vmwaas address 52.116.171.18
+set security ike gateway vmwaas address <remote-IP address-of-the-vcd-edge-gateway>
+
+
+set security ike gateway vmwaas external-interface reth1.0
+set security ike gateway vmwaas version v2-only
+```
+
+```bash
+set security ipsec proposal ipsec-phase2-vmwaas protocol esp
+set security ipsec proposal ipsec-phase2-vmwaas authentication-algorithm hmac-sha-256-128
+set security ipsec proposal ipsec-phase2-vmwaas encryption-algorithm aes-256-cbc
+set security ipsec proposal ipsec-phase2-vmwaas lifetime-seconds 3600
+
+set security ipsec policy ipsec-phase2-policy perfect-forward-secrecy keys group14
+set security ipsec policy ipsec-phase2-policy proposals ipsec-phase2-vmwaas
+```
+
+```bash
+set interfaces st0 unit 0 family inet
+set security ipsec vpn vmwaas-vpn-1 bind-interface st0.0
+set security ipsec vpn vmwaas-vpn-1 ike gateway vmwaas
+set security ipsec vpn vmwaas-vpn-1 ike ipsec-policy ipsec-phase2-policy
+set security ipsec vpn vmwaas-vpn-1 traffic-selector pair1 local-ip 10.95.1.0/26
+set security ipsec vpn vmwaas-vpn-1 traffic-selector pair1 remote-ip 192.168.100.0/24
+set security ipsec vpn vmwaas-vpn-1 establish-tunnels immediately
+set security ipsec vpn vmwaas-vpn-1 df-bit copy
+```
+
+
+```bash
+set firewall filter PROTECT-IN term PING from destination-address 10.95.1.1/32
+set firewall filter PROTECT-IN term PING from protocol icmp
+
+set firewall filter PROTECT-IN term IPSec-IKE from destination-address <public-IP address-of-the-vsrx>/32
+#set firewall filter PROTECT-IN term IPSec-IKE from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+set firewall filter PROTECT-IN term IPSec-IKE from protocol udp
+set firewall filter PROTECT-IN term IPSec-IKE from port 500
+set firewall filter PROTECT-IN term IPSec-IKE then accept
+
+set firewall filter PROTECT-IN term IPSec-ESP from destination-address <public-IP address-of-the-vsrx>/32
+#set firewall filter PROTECT-IN term IPSec-ESP from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+set firewall filter PROTECT-IN term IPSec-ESP from protocol esp
+set firewall filter PROTECT-IN term IPSec-ESP then accept
+
+set firewall filter PROTECT-IN term IPSec-4500 from destination-address <public-IP address-of-the-vsrx>/32
+#set firewall filter PROTECT-IN term IPSec-4500 from source-address <remote-IP address-of-the-vcd-edge-gateway>/32
+set firewall filter PROTECT-IN term IPSec-4500 from protocol udp
+set firewall filter PROTECT-IN term IPSec-4500 from port 4500
+set firewall filter PROTECT-IN term IPSec-4500 then accept
+
+
+```
+
+```bash
+set security zones security-zone vpn-vmwaas-tunnel interfaces st0.0
+set security zones security-zone vsrx-vlan interfaces reth2.2498
+
+set security policies from-zone vsrx-vlan to-zone vpn-vmwaas-tunnel policy vlan_to_vmwaas match source-address any
+set security policies from-zone vsrx-vlan to-zone vpn-vmwaas-tunnel policy vlan_to_vmwaas match destination-address any
+set security policies from-zone vsrx-vlan to-zone vpn-vmwaas-tunnel policy vlan_to_vmwaas match application any
+set security policies from-zone vsrx-vlan to-zone vpn-vmwaas-tunnel policy vlan_to_vmwaas then permit
+
+set security policies from-zone vpn-vmwaas-tunnel to-zone vsrx-vlan policy vmass_to_vlan match source-address any
+set security policies from-zone vpn-vmwaas-tunnel to-zone vsrx-vlan policy vmass_to_vlan match destination-address any
+set security policies from-zone vpn-vmwaas-tunnel to-zone vsrx-vlan policy vmass_to_vlan match application any
+set security policies from-zone vpn-vmwaas-tunnel to-zone vsrx-vlan policy vmass_to_vlan then permit
+
+```
+
+```bash
+set security flow tcp-mss ipsec-vpn mss 1360
+```
 
 
 ## Configure {{site.data.keyword.vmware-service_full}} – single tenant edge gateway
