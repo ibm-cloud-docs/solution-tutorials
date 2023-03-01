@@ -1163,8 +1163,9 @@
                ]
             },
             {
+               "hidden": true,
                "name": "Creating a VPN between virtual data center edge gateway and on-premises VPN gateway",
-               "url": "vmware-as-a-service-vpn-vsrx.html",
+               "url": "vmware-as-a-service-vpn-vsrx.hidden.html",
                "description": "",
                "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-solution-tutorial-diagrams-ui-vmwaas-vdc-vpn.svg",
                "tags": [

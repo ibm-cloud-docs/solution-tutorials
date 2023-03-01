@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-26"
+lastupdated: "2023-03-01"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -84,7 +84,7 @@ It is important to design and collect the following information as these values 
 
    The private interface of the vSRX is typically configured as follows:
    
-   ```
+   ```sh
    set interfaces reth2 unit <vlan-id> description "Your private network routed through Gateway Appliance"
    set interfaces reth2 unit <vlan-id> vlan-id <vlan-id>
    set interfaces reth2 unit <vlan-id> family inet address <private-IP address-of-the-vsrx>/26
@@ -103,15 +103,15 @@ It is important to design and collect the following information as these values 
 
    Gateway IP address                 | Value
    -----------------------------------|---------------------------
-   Public IP address of edge gateway  | <public-IP address-of-the-vcd-edge-gateway>
-   Public IP address of vSRX          | <public-IP address-of-the-vsrx>
+   Public IP address of edge gateway  | `<public-IP address-of-the-vcd-edge-gateway>`
+   Public IP address of vSRX          | `<public-IP address-of-the-vsrx>`
    {: caption="List of gateway IP addresses to review before configuring the VPN." caption-side="bottom"}
    
    The public IP address for the virtual data center gateway is provided though the IBM Cloud portal, see [Viewing and deleting VDCs](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete#vdc-view-delete-details).
    
    The public interface IP of the vSRX is typically configured as follows in IBM Cloud:
    
-   ```
+   ```sh
    set interfaces reth1 unit 0 description "SL PUBLIC VLAN INTERFACE"
    set interfaces reth1 unit 0 family inet address <public-IP address-of-the-vsrx>/29
    ```
