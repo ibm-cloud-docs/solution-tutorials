@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-01-17"
+lastupdated: "2023-03-02"
 lasttested: "2022-12-28"
 
 content-type: tutorial
@@ -99,7 +99,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of {{site.data.keyword.codeengineshort}} entities such as applications, jobs, and builds. Projects are used to manage resources and provide access to its entities.
 
-Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](https://{DomainName}/docs/codeengine?topic=codeengine-manage-project)
+Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](https://{DomainName}/docs/codeengine?topic=codeengine-manage-project).
 
 <!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
@@ -288,13 +288,13 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 3. Click **Buckets** then **Customize your bucket**
 
    _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
-   1. Enter **Unique bucket name**:  `<yourInitials>-bucket-code-engine`.
+   1. Enter **Unique bucket name** such as `<your-initials>-bucket-code-engine`.
    3. Select a **Location**, where you created the {{site.data.keyword.codeengineshort}} project.
    2. Select **Smart Tier** Storage class.
    3. Click **Create bucket**.
    4. Capture the bucket name in a shell variable:
       ```sh
-      COS_BUCKETNAME=yourInitials-bucket-code-engine
+      COS_BUCKETNAME=your-initials-bucket-code-engine
       ```
       {: pre}
 
@@ -307,10 +307,11 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
       {: pre}
 
 5. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
-   1. Select a region and select **Lite** plan.
+   1. Select a location and select **Lite** plan.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
-   3. Click on **Create**.
-   4. Capture the service name in a shell variable:
+   3. Read the license agreement and then check **I have read and agree to the following license agreements:**.
+   4. Click on **Create**.
+   5. Capture the service name in a shell variable:
       ```sh
       NLU_INSTANCE_NAME=YourServiceName
       ```
