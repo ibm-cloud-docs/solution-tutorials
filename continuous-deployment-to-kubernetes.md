@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-02-21"
+lastupdated: "2023-03-03"
 lasttested: "2023-02-21"
 
 content-type: tutorial
@@ -135,7 +135,7 @@ The toolchain will build your application and deploy it to the cluster.
    - Click the **Environment properties** tab at the top.
    - Click **Add property**, click **Text property**.
    - Enter **Name**: HELM_UPGRADE_EXTRA_ARGS.
-   - Enter **Value**: --set ingress.enabled=true,ingress.hosts={dev.INGRESS_SUBDOMAIN} somthing like: --set ingress.enabled=true,ingress.hosts={dev.vpc-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud}.
+   - Enter **Value**: --set ingress.enabled=true,ingress.hosts={dev.INGRESS_SUBDOMAIN} something like: --set ingress.enabled=true,ingress.hosts={dev.vpc-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud}.
 1. Click Save.
 1. Click the **play** button on DEPLOY stage.
 1. In a browser tab paste the dev.INGRESS_SUBDOMAIN of the cluster.  The message from the application should be returned: **Welcome to IBM Cloud DevOps with Docker, Kubernetes and Helm Charts. Lets go use the Continuous Delivery Service**.
