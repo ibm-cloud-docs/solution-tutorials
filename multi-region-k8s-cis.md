@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-02-21"
+lastupdated: "2023-03-03"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -163,7 +163,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
 ### Get the Ingress Subdomain assigned to the cluster
 {: #multi-region-k8s-cis-CSALB_IP_subdomain}
 
-When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
+When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (for example, *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
 
 1. Retrieve the Ingress subdomain of the cluster:
    ```bash
