@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-03"
+lastupdated: "2023-03-08"
 lasttested: "2022-12-01"
 
 ---
@@ -214,7 +214,7 @@ To copy data from your local machine to your persistent storage, you must mount 
 
 File shares and block storage are provisioned into the same location as your cluster. The storage itself is hosted on clustered servers by IBM to provide high availability. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups, which you can use to restore your data when needed.
 
-For more information, see [backup and restore](/docs/containers?topic=containers-storage_planning#storage_planning) options for NFS file storage and block storage.
+For more information, see [Planning for storage](/docs/containers?topic=containers-storage-plan) options for NFS file storage and block storage.
 
 ## Prepare your code
 {: #vm-to-containers-and-kubernetes-prepare_code}
@@ -350,7 +350,7 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - [Get started](https://developer.ibm.com/learningpaths/get-started-containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
-- [Persistent storage](/docs/containers?topic=containers-storage_planning#storage_planning) in {{site.data.keyword.containershort_notm}}.
+- [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
