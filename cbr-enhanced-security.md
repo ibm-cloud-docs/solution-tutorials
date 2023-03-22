@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-02-21"
+lastupdated: "2023-03-22"
 lasttested: "2023-01-26"
 
 content-type: tutorial
@@ -49,7 +49,6 @@ The following diagram shows the solution architecture as used in the tutorial [A
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-* `git` to clone source code repository,
 * `docker` client to push and pull container images.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -79,6 +78,9 @@ A rule governs access to a resource identified by its service name and type as w
 The context for a restriction is made up of network zones and service endpoints. You might want to define zones based on specific IP addresses or ranges, or by configuring traffic originating from one or more VPCs or cloud services. With that, access to the sample {{site.data.keyword.keymanagementserviceshort}} instance might only be allowed from, e.g., a specific {{site.data.keyword.cos_short}} instance, a well-known range of IP addresses, and only via the private endpoint.
 
 Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
+
+At the moment, not all cloud services support the report-only mode. Moreover, these service also do not generate any CBR-related log entries when enabled. Check the individual service documentation for details.
+{: note}
 
 ![Context-based restrictions](images/solution67-cbr-enhanced-security/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
 
