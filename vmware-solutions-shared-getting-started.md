@@ -54,7 +54,7 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 * Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 
-![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
