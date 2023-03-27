@@ -149,9 +149,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    ![Verify rules in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
 
-   As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**, below **Permit**.
-
-   ![Decision with Permit value in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
+   As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**.
 
 5. Back in the browser tab with the shell, list the container images in the namespace.
    ```sh
