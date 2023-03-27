@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2023-02-21"
+  years: 2023
+lastupdated: "2023-03-27"
 lasttested: "2022-12-21"
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -55,7 +55,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 * Make static content globally available with {{site.data.keyword.cdn_full}}.
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 
-![Architecture](images/solution52-cdn-dca/solution_52_architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution52-cdn-dca/solution_52_architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
