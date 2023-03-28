@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-27"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-27"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -57,10 +57,10 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 Optionally:
@@ -72,10 +72,10 @@ Optionally:
 
 In this section, you will create the services required to build your data lake.
 
-This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
+This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line. Use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cli-getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. Use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. See [CLI Getting Started](/docs/cli?topic=cli-getting-started).
 
 2. Make sure to target the region and resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
    ```sh
@@ -86,19 +86,19 @@ This section uses the command line to create service instances. Alternatively, y
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-3. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
+3. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
     {: pre}
 
-4. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query). Replace **us-south** by your region, if needed. If you already have {{site.data.keyword.sqlquery_short}} instance with a **lite** plan, use **standard** instead of **lite**.
+4. Create an instance of [{{site.data.keyword.sqlquery_short}}](/catalog/services/sql-query). Replace **us-south** by your region, if needed. If you already have {{site.data.keyword.sqlquery_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
 
-5. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
+5. Create an instance of [{{site.data.keyword.DSX}}](/catalog/services/watson-studio).
     ```sh
     ibmcloud resource service-instance-create data-lake-studio data-science-experience free-v1 us-south
     ```
@@ -116,8 +116,8 @@ This section uses the command line to create service instances. Alternatively, y
 
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket. You can do this using regular http upload or by utilising the built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
 
-1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
-2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources) under the **Storage** section.
+1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD){: external} CSV file. The file is 81MB and may take a few minutes to download.
+2. In your browser, access the **data-lake-cos** service instance from the [Resource List](/resources) under the **Storage** section.
 3. Create a new bucket to store data.
    - Click **Create a bucket**.
    - Select **Custom bucket/Customize your bucket**.
@@ -139,7 +139,7 @@ In this section, you will convert the original, raw dataset into a targeted coho
 
 You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. {{site.data.keyword.sqlquery_short}} has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
-1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from the [Resource List](https://{DomainName}/resources) under the **Databases** section.
+1. Access the **data-lake-sql** {{site.data.keyword.sqlquery_short}} service instance from the [Resource List](/resources) under the **Databases** section.
 2. Click **Launch {{site.data.keyword.sqlquery_short}} UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
@@ -174,7 +174,7 @@ You will use {{site.data.keyword.sqlquery_short}} to manipulate the data where i
 In this section, you will use the {{site.data.keyword.sqlquery_short}} client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be accessed by applications and tools serving line of business users.
 
 First, create a new Jupyter Notebook and service connections in {{site.data.keyword.DSX}}.
-1. Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from the [Resource List](https://{DomainName}/resources) under the **AI / Machine Learning** section.
+1. Access the **data-lake-studio** {{site.data.keyword.DSX}} service instance from the [Resource List](/resources) under the **AI / Machine Learning** section.
     - Click **Launch in IBM Cloud Pak for Data**.
     - Click **Create a Project** followed by **Create an empty project**.
     - Use **Data lake project** as **Name**.
@@ -189,7 +189,7 @@ First, create a new Jupyter Notebook and service connections in {{site.data.keyw
 2. Click the **Assets** tab and then click **New asset** and **Connection**.
     - From the list of services select **{{site.data.keyword.sqlquery_notm}}**.
     - In the dialog enter **SQLQuery** as **Name**.
-    - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](https://{DomainName}/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
+    - As **CRN** copy in the {{site.data.keyword.sqlquery_short}} instance CRN. You can obtain it by clicking in the [Resource List](/resources) right to the service name. **data-lake-sql**. The pop-up has the CRN and a copy button.
     - Fill in `cos://us-south/<your-bucket-name>` as **Target**. Replace `us-south` and `<your-bucket-name>` similar to how you did it earlier.
     - As **Password** under **Credentials** use the API key which you created earlier. The value is from the field **apikey**.
     - Finally, click **Create**.
@@ -243,7 +243,7 @@ Once the notebook is available, follow these steps.
     ```
     {: codeblock}
 
-    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp) retrieves the previously configured connection properties.
+    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp){: external} retrieves the previously configured connection properties.
 
 ## Visualize data using folium
 {: #smart-data-lake-6}
@@ -312,7 +312,7 @@ In this section, you will visualize the previous result set using a folium heat 
 {: #smart-data-lake-7}
 {: step}
 
-Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
+Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
 
 ![Dashboard Chart](images/solution29/dashboard-chart.png){: caption="Dashboard Chart" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -324,8 +324,8 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using {{site.data.keyword.sqlquery_short}}
-- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
-- Build a web app with a dashboard for line of business users utilizing [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial).
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](/docs/solution-tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
+- Build a web app with a dashboard for line of business users utilizing [{{site.data.keyword.dynamdashbemb_notm}}](/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial).
 
 ## Remove resources
 {: #smart-data-lake-10}
@@ -353,10 +353,10 @@ ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
 
-If the deletion of **data-lake-cos** is not successful delete it from the storage section of the [Resource List](https://{DomainName}/resources).
+If the deletion of **data-lake-cos** is not successful delete it from the storage section of the [Resource List](/resources).
 
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content

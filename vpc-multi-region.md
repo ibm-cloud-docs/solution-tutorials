@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-28"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-28"
 
 content-type: tutorial
@@ -32,7 +32,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -63,7 +63,7 @@ You will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.c
 ## Before you begin
 {: #vpc-multi-region-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Create virtual private clouds, subnets and virtual server instances
@@ -75,7 +75,7 @@ In this section, you will create your own VPC in region 1 with subnets created i
 ### Create a virtual private cloud
 {: #vpc-multi-region-21}
 
-1. Navigate to [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs) page and click on **Create**.
+1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs) page and click on **Create**.
 2. Enter **vpc-region1** for the name of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
 3. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**. SSH access will later be added to a maintenance security group. The maintenance security group is added to an instance to allow SSH access from a bastion server. Ping access is not required for this tutorial.
 4. Leave **Enable access to classic resources** unchecked and **Create a default prefix for each zone** checked.
@@ -134,7 +134,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and repea
 {: #vpc-multi-region-install-configure-web-server-vsis}
 {: step}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers. Use a bastion host which acts as a `jump` server and a maintenance security group to the VSIs previously provisioned. One bastion host in each VPC is required.
+Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers. Use a bastion host which acts as a `jump` server and a maintenance security group to the VSIs previously provisioned. One bastion host in each VPC is required.
 {: tip}
 
 Once you successfully SSHed into the server provisioned in subnet of **zone 1** of **region 1**,
@@ -258,7 +258,7 @@ To configure a global load balancer, you will need:
 The first step is to create an instance of {{site.data.keyword.cis_short_notm}} and to point your custom domain to {{site.data.keyword.cis_short_notm}} name servers.
 
 1. If you do not own a domain, you can buy one from a registrar.
-2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Navigate to [{{site.data.keyword.cis_full_notm}}](/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, click on **Add domain**.
 5. Enter your domain name and click **Next**.
@@ -330,9 +330,9 @@ HTTPS encryption requires signed certificates to be accessible from both the {{s
 ### Create and authorize a {{site.data.keyword.secrets-manager_short}} instance
 {: #vpc-multi-region-14}
 
-1. If you have an existing [{{site.data.keyword.secrets-manager_short}}](https://{DomainName}/catalog/services/secrets-manager) instance, you can use it for this tutorial or create a new one if needed by following the steps outlined in [Creating a Secrets Manager service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
+1. If you have an existing [{{site.data.keyword.secrets-manager_short}}](/catalog/services/secrets-manager) instance, you can use it for this tutorial or create a new one if needed by following the steps outlined in [Creating a Secrets Manager service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
 2. Create an authorization that gives the VPC load balancer service access to the {{site.data.keyword.secrets-manager_short}} instance that contains the SSL certificate.
-   - Navigate to [Identity and Access Authorizations](https://{DomainName}/iam/authorizations).
+   - Navigate to [Identity and Access Authorizations](/iam/authorizations).
    - Click **Create** and select **VPC Infrastructure Services** as the source service.
    - **Load Balancer for VPC** as the resource type.
    - **{{site.data.keyword.secrets-manager_short}}** as the target service.
@@ -347,7 +347,7 @@ HTTPS encryption requires signed certificates to be accessible from both the {{s
    - Assign the **Manager** service access role.
    - Click on **Authorize**.
 
-   If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains) topic.
+   If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains) topic.
    {: tip}
 
 IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, consider which of the two alternatives below best match your use case before proceeding as the traffic routing behavior differs as follows:
@@ -357,14 +357,14 @@ IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balan
 ![Traffic flow](images/solution41-vpc-multi-region/vpc-multi-region-alternatives.svg){: caption="Traffic flow" caption-side="bottom"}
 {: style="text-align: center;"}
 
-For more information read through the [Proxying DNS records and global load balancers](https://{DomainName}/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic.
+For more information read through the [Proxying DNS records and global load balancers](/docs/cis?topic=cis-dns-concepts#dns-concepts-proxying-dns-records) topic.
 
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
 
 This first alternative creates a wildcard certificate for `example.com` and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
-   Currently ordering certificates is by using **Let's Encrypt**, you may follow the topic [Supported certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account. Follow the steps outlined in the [Connecting third-party certificate authorities](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to create or register your account. In addition, you are required to add a DNS provider following the steps in the [Connecting DNS providers](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui#add-dns-provider-ui) topic. For this tutorial, you must add {{site.data.keyword.cis_short_notm}} as your DNS provider.
+   Currently ordering certificates is by using **Let's Encrypt**, you may follow the topic [Supported certificate authorities](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account. Follow the steps outlined in the [Connecting third-party certificate authorities](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to create or register your account. In addition, you are required to add a DNS provider following the steps in the [Connecting DNS providers](/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui#add-dns-provider-ui) topic. For this tutorial, you must add {{site.data.keyword.cis_short_notm}} as your DNS provider.
    {: tip}
 
 Initially HTTPS is configured from the user to {{site.data.keyword.secrets-manager_short}} only. 
@@ -426,11 +426,11 @@ In a browser open **https://lb.example.com** to verify success
 ### Alternative 2: DNS-only mode, traffic flows directly from the client to the VPC Load Balancers
 {: #vpc-multi-region-16}
 
-In this alternative you will order an SSL certificate for `lb.example.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
+In this alternative you will order an SSL certificate for `lb.example.com` from [Let's Encrypt](https://letsencrypt.org/){: external} through {{site.data.keyword.secrets-manager_short}} and configure the global load balancer.
 
 It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} global load balancer, but it is possible to order one for a CNAME record.  So we will create a CNAME to order the certificate.
 
-1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](https://{DomainName}/resources)
+1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](/resources)
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **DNS**.
 
@@ -496,13 +496,13 @@ By now, you should have seen that most of the time you are accessing the servers
 - Remove the global load balancer, origin pools and health checks under the {{site.data.keyword.cis_short_notm}} service
 - Remove the certificates in the {{site.data.keyword.secrets-manager_short}} service.
 - Remove the load balancers, VSIs, subnets and VPCs.
-- Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
+- Under [Resource list](/resources), delete the services used in this tutorial.
 
 
 ## Related content
 {: #vpc-multi-region-related}
 
-* [Getting started with Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc?topic=vpc-getting-started)
-* [Using Load Balancers in IBM Cloud VPC](https://{DomainName}/docs/vpc?topic=vpc-nlb-vs-elb)
-* [Getting started with IBM Cloud Internet Services](https://{DomainName}/docs/cis?topic=cis-getting-started)
-* [Getting started with Secrets Manager](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-getting-started)
+* [Getting started with Virtual Private Cloud (VPC)](/docs/vpc?topic=vpc-getting-started)
+* [Using Load Balancers in IBM Cloud VPC](/docs/vpc?topic=vpc-nlb-vs-elb)
+* [Getting started with IBM Cloud Internet Services](/docs/cis?topic=cis-getting-started)
+* [Getting started with Secrets Manager](/docs/secrets-manager?topic=secrets-manager-getting-started)

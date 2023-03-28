@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-23"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-21"
 
 content-type: tutorial
@@ -33,12 +33,12 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
+On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
 - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
 - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
 {: shortdesc}
@@ -73,8 +73,8 @@ VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Direct
 {: #vmware-solutions-shared-getting-started-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
-* Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist).
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts), 
+* Follow the steps outlined under the VMware Solutions documentation for [Setting up your environment for your first order](/docs/vmwaresolutions?topic=vmwaresolutions-completing_checklist).
 
 A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
 {: tip}
@@ -90,7 +90,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 ### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
-1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](https://{DomainName}/infrastructure/vmware-solutions/console).
+1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](/infrastructure/vmware-solutions/console).
 2. In the **Platforms** section, click the **VMware Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, for example `vmware-tutorial`.
@@ -107,7 +107,7 @@ While waiting for the instance to create, proceed to review the Terraform templa
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
 
-1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console/instances/vdc) page.
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](/infrastructure/vmware-solutions/console/instances/vdc) page.
 2. Click on the {{site.data.keyword.vmwaresolutions_short}} Site, for example `Dallas Director 01`.
 3. Click on **Reset site admin password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
@@ -130,9 +130,9 @@ While waiting for the instance to create, proceed to review the Terraform templa
 {: #vmware-solutions-shared-getting-started-review_terraform_template}
 {: step}
 
-[Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a data center infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
+[Terraform](https://www.terraform.io/){: external} is an open-source infrastructure as code tool. It enables users to define and provision a data center infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
 
-In a previous step you created a virtual data center(VDC). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which will be used to configure and deploy resources in that VDC. 
+In a previous step you created a virtual data center(VDC). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared){: external} which will be used to configure and deploy resources in that VDC. 
 
 The `main.tf` file contains most of the critical sections for this template.
 
@@ -282,7 +282,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.svg){: caption="SSH from the Internet" caption-side="bottom"}
 
-This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
+This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH){: external} documentation.
 {: tip}
 
 In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
@@ -336,7 +336,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 ### {{site.data.keyword.bplong_notm}}
 {: #vmware-solutions-shared-getting-started-create-schematics}
 
-1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
+1. Navigate to the [{{site.data.keyword.bplong_notm}}](/schematics/overview) overview page and click **Create a workspace**.
 2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
 3. Select `terraform_v1.1` as the **Terraform version**. Click **Next**.
 4. Enter the workspace name for your workspace, for example `vmware-tutorial`.
@@ -359,10 +359,10 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
 2. Test connectivity to the Internet by pinging known addresses on the Internet, for example `ping 8.8.8.8`. 
-3. Test connectivity to the IBM Cloud by pinging internal addresses, for example [IBM Cloud private DNS resolver endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+3. Test connectivity to the IBM Cloud by pinging internal addresses, for example [IBM Cloud private DNS resolver endpoint](/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
    If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
-    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
+    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](/infrastructure/vmware-solutions/console/instances) page.
     - Click on the instance `vmware-tutorial` instance.
     - Click on the **vCloud Director console** button found on the top right of the page.
     - Click on **Virtual Machines** 
@@ -375,10 +375,10 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 {: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces and select your workspace.
+1. Navigate to [{{site.data.keyword.bpshort}}](/schematics/workspaces) workspaces and select your workspace.
 2. Click on the **Actions...** drop down and click **Destroy resources** to clean up all the resources that were provisioned via Schematics.
 3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
-4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
+4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](/infrastructure/vmware-solutions/console/instances).
 5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
 
 ## Expand the tutorial 
@@ -391,11 +391,11 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #vmware-solutions-shared-getting-started-related}
 
-* [{{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_overview)
-* [{{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
+* [{{site.data.keyword.vmwaresolutions_short}} docs](/docs/vmwaresolutions?topic=vmwaresolutions-shared_overview)
+* [{{site.data.keyword.bpshort}} docs](/docs/schematics?topic=schematics-getting-started)
 * [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware)
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)
 
 Veeam and Zerto services are ready-to-use in all virtual data centers. For more details, see the following topics in the documentation:
-* [Managing Veeam for VMware Solutions Shared](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_veeam)
-* [Accessing the Zerto Self-Service Portal](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-shared_zerto-portal)
+* [Managing Veeam for VMware Solutions Shared](/docs/vmwaresolutions?topic=vmwaresolutions-shared_veeam)
+* [Accessing the Zerto Self-Service Portal](/docs/vmwaresolutions?topic=vmwaresolutions-shared_zerto-portal)

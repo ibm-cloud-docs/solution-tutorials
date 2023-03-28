@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-02-08"
+lastupdated: "2023-03-28"
 lasttested: "2023-02-07"
 
 content-type: tutorial
@@ -27,7 +27,7 @@ completion-time: 2h
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
 {: toc-completion-time="2h"}
 
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
@@ -45,9 +45,9 @@ The hub and spoke model supports a number of different scenarios:
 - The hub can be a central point of traffic firewall-router and routing between enterprise and the cloud.
 - The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](https://{DomainName}/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
 
-There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit) that divides the connectivity into a number of incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit){: external} that divides the connectivity into a number of incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
 The following will be explored:
 - VPC egress and ingress routing.
@@ -73,16 +73,16 @@ A layered architecture will introduce resources and demonstrate connectivity. Ea
 This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
-* Implementing a firewall-router will require that you [enable IP spoofing checks](https://{DomainName}/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
+* Implementing a firewall-router will require that you [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
 * An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites) for a few options including a Dockerfile to easily create the prerequisite environment.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to easily create the prerequisite environment.
 
 In addition:
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial. See the list of:
-   - [required permissions for VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-   - [required permissions for creating {{site.data.keyword.tg_short}}](https://{DomainName}/docs/transit-gateway?topic=transit-gateway-iam).
+   - [required permissions for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+   - [required permissions for creating {{site.data.keyword.tg_short}}](/docs/transit-gateway?topic=transit-gateway-iam).
    - [required permissions for IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about).
 
 ## Summary of Part one
@@ -132,7 +132,7 @@ If continuing from part one make special note of the configuration in the terraf
 ### Apply Layers
 {: #vpc-transit2-apply-layers}
 
-1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit) has the source files to implement the architecture. In a desktop shell clone the repository:
+1. The companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit){: external} has the source files to implement the architecture. In a desktop shell clone the repository:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-transit
    cd vpc-transit
@@ -151,7 +151,7 @@ If continuing from part one make special note of the configuration in the terraf
    - Change the value `all_firwewall = true`.
    - Change the value `enterprise_phantom_address_prefixes_in_transit = false`.
 
-2. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and export the API key for use by Terraform:
+2. If you don't already have one, obtain a [Platform API key](/iam/apikeys) and export the API key for use by Terraform:
 
    ```sh
    export IBMCLOUD_API_KEY=YourAPIKEy
@@ -240,7 +240,7 @@ Similar routes are added to the transit and other spokes.
 ### Firewall Subnets
 {: #vpc-transit2-firewall-subnets}
 
-What about the firewall-router itself? This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations. It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets. Check the routing tables for the transit VPC for more details. Visit the [VPCs](https://{DomainName}/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console. Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
+What about the firewall-router itself? This was not mentioned earlier but in anticipation of this change there was a egress_delegate router created in the transit VPC that delegates routing to the default for all destinations. It is only associated with the firewall-router subnets so the firewall-router is not effected by the changes to the default egress routing table used by the other subnets. Check the routing tables for the transit VPC for more details. Visit the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console. Select the transit VPC and then click on **Manage routing tables**, click on the **egress-delegate** routing table, click on the **Subnets** tab and note the -s3 subnets used for firewall-routers.
 
 ### Apply and Test More Firewall
 {: #vpc-transit2-apply-and-test-more-firewall}
@@ -333,13 +333,13 @@ This diagram shows a single zone with a Network Load Balancer (NLB) configured i
 
 Observe the changes that were made:
 
-1. Open the [Load balancers for VPC](https://{DomainName}/vpc-ext/network/loadBalancers).
+1. Open the [Load balancers for VPC](/vpc-ext/network/loadBalancers).
 1. Select the load balancer in zone 1 (Dallas 1/us-south-1) it has the suffix **fw-z1-s3**.
 1. Note the **Private IPs**.
 
 Compare the Private IPs with those in the transit VPC ingress route table:
 
-1. Open the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs).
+1. Open the [Virtual Private Clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC.
 1. Click on **Manage routing tables**.
 1. Click on the **tgw-ingress** routing table. Notice the **Next hop** IP address matches one of the NLB **Private IPs**
@@ -352,7 +352,7 @@ Verify resiliency:
    ```
    {: codeblock}
 
-1. Open the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs)
+1. Open the [Virtual server instances for VPC](/vpc-ext/compute/vs)
 1. Stop traffic to the **0** firewall instance by specifying a security group that will not allow inbound port 80. Locate the instance with the suffix **fw-z1-s3-0** and open the details view:
    1. Scroll down and hit the pencil edit next to the **Network Interface**
    2. Uncheck the x-fw-inall-outall
@@ -408,7 +408,7 @@ The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP a
    ```
    {: codeblock}
 
-2. Open the [Resource list](https://{DomainName}/resources) in the {{site.data.keyword.cloud_notm}} console. 
+2. Open the [Resource list](/resources) in the {{site.data.keyword.cloud_notm}} console. 
 3. Expand the **Networking** section and notice the **DNS Services**. 
 4. Locate and click to open the instance with the suffix **spoke0**. 
 5. Click on the DNS zone with the suffix **spoke0.com**. Notice the A records associated with the test instances that are in the spoke instance. 
@@ -435,10 +435,10 @@ There is a set of **curl DNS** tests that are available in the pytest script. Th
 {: #vpc-transit2-VPE}
 {: step}
 
-VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](https://{DomainName}/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
-- [{{site.data.keyword.security-groups}}](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
-- [VPC Network Access Control Lists](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
-- [Routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes).
+VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
+- [{{site.data.keyword.security-groups}}](/docs/vpc?topic=vpc-using-security-groups).
+- [VPC Network Access Control Lists](/docs/vpc?topic=vpc-using-acls).
+- [Routing tables and routes](/docs/vpc?topic=vpc-about-custom-routes).
 
 ![Adding virtual private endpoint gateways](images/vpc-transit/vpc-transit-vpe.svg){: caption="Adding virtual private endpoint gateways" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -461,7 +461,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    FAILED py/test_transit.py::test_vpe_dns_resolution[redis spoke0-z1 -> transit 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud] - AssertionError: 166.9.48.220 not in ['10.1.0.128/26', '10.2.0.128/26', '10.3.0.128/26'] from 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud
    ```
 
-   These are failing due to DNS resolution. In the example above the Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26. The error message asserts the Redis name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints). The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
+   These are failing due to DNS resolution. In the example above the Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26. The error message asserts the Redis name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints). The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.
@@ -524,7 +524,7 @@ The enterprise DNS resolution must resolve the fully qualified name to the IP ad
 ## Production Notes and Conclusions
 {: #vpc-transit2-production-notes}
 
-The [VPC reference architecture for IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
+The [VPC reference architecture for IBM Cloud for Financial Services](/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
 
 Some obvious changes to make:
 - CIDR blocks were chosen for clarity and ease of explanation. The Availability Zones in the Multi zone Region could be 10.1.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space. Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
@@ -550,9 +550,9 @@ Execute `terraform destroy` in all directories in reverse order using the `./app
 
 Your architecture may not be the same as the one presented, but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
-- Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](https://{DomainName}/docs/cis?topic=cis-getting-started).
+- Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](/docs/cis?topic=cis-getting-started).
 - Add [{{site.data.keyword.fl_full}} capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
-- Put each of the spokes in a separate account in an [enterprise](https://{DomainName}/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
+- Put each of the spokes in a separate account in an [enterprise](/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
 - Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas).
 - Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
@@ -560,9 +560,9 @@ Your architecture may not be the same as the one presented, but will likely be c
 ## Related content
 {: #vpc-transit2-related}
 
-* [IBM Cloud for Financial Services](https://{DomainName}/docs/framework-financial-services)
-* Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
-* [How to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
-* [Public front end and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-* [Network Function Virtualization](https://{DomainName}/docs/vpc?topic=vpc-about-vnf)
-* [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](https://{DomainName}/docs/vpc?topic=vpc-about-vnf-ha)
+* [IBM Cloud for Financial Services](/docs/framework-financial-services)
+* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
+* [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
+* [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+* [Network Function Virtualization](/docs/vpc?topic=vpc-about-vnf)
+* [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](/docs/vpc?topic=vpc-about-vnf-ha)

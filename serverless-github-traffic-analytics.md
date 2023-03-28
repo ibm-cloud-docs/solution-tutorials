@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-11-21"
+lastupdated: "2023-03-28"
 lasttested: "2022-11-21"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -55,10 +55,10 @@ This tutorial requires:
    * {{site.data.keyword.registrylong}} plugin,
 * a GitHub account.
 
-You can run the sections requiring a shell in the [{{site.data.keyword.cloud-shell_full}}](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-getting-started).
+You can run the sections requiring a shell in the [{{site.data.keyword.cloud-shell_full}}](/docs/cloud-shell?topic=cloud-shell-getting-started).
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 ## Service and Environment Setup (shell)
@@ -106,13 +106,13 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. The API key is in the file previously stored in **ghstatsAPIKEY.json**.
+2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. The API key is in the file previously stored in **ghstatsAPIKEY.json**.
    ```sh
    ibmcloud ce registry create --name usicr --password-from-json-file ./ghstatsAPIKEY.json
    ```
    {: pre}
 
-3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats) and stores the image in the registry in the previously created  namespace using the registered user information.
+3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats){: external} and stores the image in the registry in the previously created  namespace using the registered user information.
    ```sh
    ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/$NAMESPACE/codeengine-ghstats --registry-secret usicr
    ```
@@ -134,7 +134,7 @@ With the services provisioned and the general setup done, next is to create the 
 {: step}
 
 Once the build is ready, you can use the container image to deploy the app, thereafter bind the previously provisioned services.
-1. To deploy the app means to [create a {{site.data.keyword.codeengineshort}} app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-create) named **ghstats-app**. It pulls the image from the given registry and namespace.
+1. To deploy the app means to [create a {{site.data.keyword.codeengineshort}} app](/docs/codeengine?topic=codeengine-cli#cli-application-create) named **ghstats-app**. It pulls the image from the given registry and namespace.
    ```sh
    ibmcloud ce app create --name ghstats-app --image us.icr.io/$NAMESPACE/codeengine-ghstats:latest --registry-secret usicr
    ```
@@ -157,7 +157,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    {: pre}
 
    Each `application bind` creates the folowing resources and relationships:
-   1.  An [IAM Service ID](https:/{DomainName}/iam/serviceids).
+   1.  An [IAM Service ID](/iam/serviceids).
    2.  An IAM API key is created in the IAM Service ID.
    3.  A resource service key. These are called (**Service credentials** in the {{site.data.keyword.cloud_notm}} console. Try the following command to display the {{site.data.keyword.appid_short}} entry:
 
@@ -166,7 +166,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ```
    {: pre}
 
-   Instead of binding the services to the app, you could also [use secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
+   Instead of binding the services to the app, you could also [use secrets and configmaps](/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats).
    {: tip}
 
 ## App ID and GitHub configuration (browser)
@@ -175,10 +175,10 @@ Once the build is ready, you can use the container image to deploy the app, ther
 
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the app. Thereafter, you create a GitHub access token. It is needed by the app to retrieve the traffic data.
 
-1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
+1. In the [{{site.data.keyword.cloud}} Resource List](/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **Enabled**, all other providers to **Disabled**.
 
-   You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
+   You may want to configure [Multi-Factor Authentication (MFA)](/docs/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {: tip}
 
 3. Click on the **Authentication Settings** tab in the same dialog. In **Add web redirect URLs** enter the **url** of your application + `/redirect_uri`, for example `https://ghstats-app.56ab78cd90ef.us-south.codeengine.appdomain.cloud/redirect_uri`.
@@ -187,7 +187,7 @@ The following steps are all performed using your Internet browser. First, you co
    {: tip}
 
 4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
-5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token (classic)**. Enter **GHStats Tutorial** for the **Note**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
+5. In the browser, visit [Github.com](https://github.com/settings/tokens){: external} and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token (classic)**. Enter **GHStats Tutorial** for the **Note**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
    ![GitHub Access Token](images/solution24-github-traffic-analytics/GithubAccessToken.png){: caption="GitHub Access Token"}
 
 
@@ -195,7 +195,7 @@ The following steps are all performed using your Internet browser. First, you co
 {: #serverless-github-traffic-analytics-5}
 {: step}
 
-After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/) microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
+After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/){: external} microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
    ![Welcome Screen](images/solution24-github-traffic-analytics/WelcomeScreen.png){: caption="Welcome Screen" caption-side="bottom"}
@@ -215,7 +215,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 {: #serverless-github-traffic-analytics-6}
 {: step}
 
-With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron), the app subscribes to events on the specified schedule (eventing). 
+With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron), the app subscribes to events on the specified schedule (eventing). 
 
 1. Create the cron subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
    ```sh
@@ -223,7 +223,7 @@ With the app in place and configured, the last part is to initiate daily retriev
    ```
    {: pre}
 
-2. To make the secret token know to the app, [update the app](https://{DomainName}/docs/codeengine?topic=codeengine-cli#cli-application-update). Replace **SECRET_TOKEN_AS_IDENTIFIER** with the value you picked at the previous step.
+2. To make the secret token know to the app, [update the app](/docs/codeengine?topic=codeengine-cli#cli-application-update). Replace **SECRET_TOKEN_AS_IDENTIFIER** with the value you picked at the previous step.
    ```sh
    ibmcloud ce app update --name ghstats-app --registry-secret usicr --env EVENT_TOKEN=SECRET_TOKEN_AS_IDENTIFIER
    ```
@@ -308,7 +308,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
 
 6. Delete the [Github.com token](https://github.com/settings/tokens)
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Expand the tutorial
@@ -326,5 +326,5 @@ Want to add to or change this tutorial? Here are some ideas:
 Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats). 
 
 Documentation:
-* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/appid?topic=appid-getting-started)
-* [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/docs/Db2onCloud?topic=Db2onCloud-about)
+* [{{site.data.keyword.appid_short}} documentation](/docs/appid?topic=appid-getting-started)
+* [{{site.data.keyword.Db2_on_Cloud_short}}](/docs/Db2onCloud?topic=Db2onCloud-about)

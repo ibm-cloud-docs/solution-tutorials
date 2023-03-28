@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-23"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-23"
 
 content-type: tutorial
@@ -29,7 +29,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -74,12 +74,12 @@ This tutorial requires:
 * `terraform` CLI to run the Terraform commands.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 ## Plan the Identity and Access Management Environment
@@ -87,7 +87,7 @@ In addition:
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
-Editor, Operator, Viewer and Manager are [IAM access roles](https://{DomainName}/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](https://{DomainName}/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
+Editor, Operator, Viewer and Manager are [IAM access roles](/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
@@ -136,7 +136,7 @@ The {{site.data.keyword.tg_short}} service instance is managed exclusively by th
 
 In this example, a single DNS zone, `widgets.example.com` will be created and access to the DNS zone will be permitted to all the VPCs. The DNS service instance is created by the *network* team (Editor role) and permitting the zones requires the Manager role. DNS resolution at run time in an instance on a VPC does not require IAM access. The *shared* team needs to list the DNS instances (Viewer role) and add an A or CNAME record (Manager role).
 
-[VPC](https://{DomainName}/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs (access control lists). Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnets. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
+[VPC](/docs/vpc) Infrastructure Service (IS) consists of about 15 different service types. Some are only of concern to the *network* team, like network ACLs (access control lists). Others are only of concern to the microservice teams, like VSI instances. But some are edited by the *network* team and operated by the microservice team, like subnets. The *network* team will create the subnet and a microservice team will create an instance in a subnet. For the purpose of this tutorial the VPC IS service types, {{site.data.keyword.tg_short}} and DNS are summarized for each access group in the table below. The contents of the table are the required roles.
 
 | Service | network | shared | application |
 | ------- | ------- | ------ | ----------- |
@@ -163,7 +163,7 @@ Each microservice team will be allowed the access in the corresponding resource 
 
 The network resource group contains {{site.data.keyword.tg_short}} and the DNS service. The network team has access to these resources. The shared team will have Manager acess to the DNS service. The shared team needs to write the DNS entries for the shared services.
 
-Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](https://{DomainName}/resources) in the {{site.data.keyword.Bluemix_notm}} console. It is possible to filter on resource group.
+Later in the tutorial, after all resources have been created, it can be informative to open the [Resources list](/resources) in the {{site.data.keyword.Bluemix_notm}} console. It is possible to filter on resource group.
 
 ## Create a local working environment
 {: #vpc-tg-dns-iam-create}
@@ -234,7 +234,7 @@ If you need to use the ibmcloud cli as a team member:
 {: #vpc-tg-dns-iam-admin}
 {: step}
 
-The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](https://{DomainName}/docs/account?topic=account-iamfaq#account-administrator). The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an API key for the admin. The api key will be used by terraform to perform tasks on your behalf.
+The admin team will need to have Admin access to the IAM-enabled resources in the account used in this tutorial. See [How do I assign a user full access as an account administrator?](/docs/account?topic=account-iamfaq#account-administrator). The admin team will be responsible for creating the IAM resources. The instructions below use the `ibmcloud iam api-key-create` command to create an API key for the admin. The api key will be used by terraform to perform tasks on your behalf.
 
 The api keys are the same as a passwords to your account. Keep the api keys safe.
 {: note}
@@ -329,8 +329,8 @@ The api keys are the same as a passwords to your account. Keep the api keys safe
    ```
    {: screen}
 
-1. Optionally navigate to the account [Resource groups](https://{DomainName}/account/resource-groups ) and find the resource groups.
-1. Optionally navigate to [Access groups](https://{DomainName}/iam/groups) to see the access groups, click an access group, then click the **Service IDs** panel at the top to see the service ID created.
+1. Optionally navigate to the account [Resource groups](/account/resource-groups ) and find the resource groups.
+1. Optionally navigate to [Access groups](/iam/groups) to see the access groups, click an access group, then click the **Service IDs** panel at the top to see the service ID created.
 
 ## Create VPCs and DNS (Network Team)
 {: #vpc-tg-dns-iam-network}
@@ -419,7 +419,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-1. Optionally, navigate to the [Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs) and find the VPCs, subnets and all the other resources created above.
+1. Optionally, navigate to the [Virtual Private Clouds](/vpc-ext/network/vpcs) and find the VPCs, subnets and all the other resources created above.
 
 1. Optionally, investigate the Terraform configuration in `main.tf` to understand the {{site.data.keyword.dns_short}} initialization. The {{site.data.keyword.dns_short}} instance and zone were created with the Terraform snippet:
    ```terraform
@@ -492,7 +492,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-1. Optionally, navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
+1. Optionally, navigate to the [resource list](/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and investigate.
 
 ## Create the shared microservice and associated DNS record (Shared Team)
 {: #vpc-tg-dns-iam-shared}
@@ -557,11 +557,11 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally, navigate to the [Virtual server instances for VPC](https://{DomainName}/vpc-ext/compute/vs) and find the shared instance. Click on it and verify the following:
+1. Optionally, navigate to the [Virtual server instances for VPC](/vpc-ext/compute/vs) and find the shared instance. Click on it and verify the following:
    - The instance has no incoming connectivity from the public internet (check the Security Groups)
    - Locate the private IP address
 
-1. Optionally, navigate to the [resource list](https://{DomainName}/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**. Notice the Value is the private IP address of the instance.
+1. Optionally, navigate to the [resource list](/resources) and find the **{{site.data.keyword.dns_short}}**, click on it and find the DNS record with the name **shared**. Notice the Value is the private IP address of the instance.
 
 ## Create a publicly facing microservice for an application (Application1 Team)
 {: #vpc-tg-dns-iam-application1}
@@ -799,7 +799,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-1. Optionally navigate the [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit) and find the gateway created above.
+1. Optionally navigate the [{{site.data.keyword.tg_short}}](/interconnectivity/transit) and find the gateway created above.
 
 1. Execute the curl command from above that failed earlier to verify there is a path from the application1 VPC to the shared VPC. It will look something like this:
 
@@ -936,7 +936,7 @@ The second *application* team environment is identical to the first. **Optionall
 ### Other Considerations
 {: #vpc-tg-dns-iam-expand_other}
 
-- The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
+- The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a load balancer like the *shared* team.
 - The *shared* team can add additional instances to the load balancer by adding instances to the `shared/main.tf`. 
 - The *shared* team could switch their implementation platform to Kubernetes.
@@ -944,13 +944,13 @@ The second *application* team environment is identical to the first. **Optionall
 ### Continuous Delivery
 {: #vpc-tg-dns-iam-expand_cd}
 
-- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered. [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain) demonstrates one solution.
+- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered. [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain){: external} demonstrates one solution.
 - For shared microservices, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
 {: #vpc-tg-dns-iam-expand_automation}
 
-- For production the teams can each have their own [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview) workspace. With Schematics, Terraform configurations can be executed directly in the cloud where state and output can be shared.
+- For production the teams can each have their own [{{site.data.keyword.bpshort}}](/schematics/overview) workspace. With Schematics, Terraform configurations can be executed directly in the cloud where state and output can be shared.
 - The Terraform scripts can be adjusted to allow staging and development environments. Put these environments into new accounts.
 - A continuous deployment environment can be constructed to move the code and environments through the development, staging and into production. Is roll back needed? How would this be accomplished?
 
@@ -962,6 +962,6 @@ The architecture of a system is influenced by the containment and ownership of c
 ## Related content
 {: #vpc-tg-dns-iam-related}
 
-* Tutorial: [Best practices for organizing users, teams, applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
-* Tutorial: [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-* Tutorial: [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
+* Tutorial: [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+* Tutorial: [Deploy a LAMP stack using Terraform](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)

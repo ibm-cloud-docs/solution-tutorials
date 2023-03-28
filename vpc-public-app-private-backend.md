@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-23"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-12"
 
 content-type: tutorial
@@ -32,7 +32,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -67,8 +67,8 @@ In short, using VPC you can:
 ## Before you begin
 {: #vpc-public-app-private-backend-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Create a Virtual Private Cloud and subnets
 {: #vpc-public-app-private-backend-create-vpc}
@@ -83,7 +83,7 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
 {: note}
 
-1. Navigate to the **[Virtual Private Clouds](https://{DomainName}/vpc-ext/network/vpcs)** page and click on **Create**.
+1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.
 1. Under **New Virtual Private Cloud** section:
    1. Enter **vpc-pubpriv** as name for your VPC.
    2. Select a **Resource group**.
@@ -106,22 +106,22 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * Click **Save**
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the [**Subnets**](/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
 {: #vpc-public-app-private-backend-3}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
+Follow the steps described in [this section of the bastion tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-configure-security-group) to create a security group and configure inbound rules for the bastion virtual server instance.
 
 ### Create a bastion instance
 {: #vpc-public-app-private-backend-4}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-bastion-instance) to create the bastion virtual server instance.
+Follow the steps described in [this section of the bastion tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-create-bastion-instance) to create the bastion virtual server instance.
 
 ### Configure a security group with maintenance access rules
 {: #vpc-public-app-private-backend-5}
 
-Follow the steps described in [this section of the bastion tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
+Follow the steps described in [this section of the bastion tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server-maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
 ## Create a backend security group and VSI
 {: #vpc-public-app-private-backend-backend-subnet-vsi}
@@ -135,7 +135,7 @@ In this section, you will create a security group and a virtual server instance 
 The backend security group controls the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:
-1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
+1. Select [**Security groups**](/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 4. Click **Create security group**.
@@ -147,7 +147,7 @@ You will later edit the security group to add the inbound and outbound rules.
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
+1. Click on the backend subnet under [**Subnets**](/vpc-ext/network/subnets).
 1. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
@@ -195,7 +195,7 @@ To create a new security group for the frontend:
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc-ext/network/subnets).
+1. Click on the frontend subnet under [**Subnets**](/vpc-ext/network/subnets).
 2. Click **Attached resources**, under **Attached instances** click **Create**.
 3. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
@@ -266,7 +266,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the [**Virtual Server Instances**](https://{DomainName}/vpc-ext/compute/vs) list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the [**Virtual Server Instances**](/vpc-ext/compute/vs) list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>

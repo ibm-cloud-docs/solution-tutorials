@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-29"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-29"
 
 content-type: tutorial
@@ -26,12 +26,12 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](https://{DomainName}/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
+This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
 {: shortdesc}
 
 ![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
@@ -53,15 +53,15 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI with the Code Engine plugin,
 * `git` to clone the source code repository.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 
-1. Clone the [Github repository for this tutorial](https://github.com/IBM-Cloud/cloud-sql-database) and change into its directory. In a terminal, execute the following lines:
+1. Clone the [Github repository for this tutorial](https://github.com/IBM-Cloud/cloud-sql-database){: external} and change into its directory. In a terminal, execute the following lines:
    ```bash
    git clone https://github.com/IBM-Cloud/cloud-sql-database.git
    cd cloud-sql-database
@@ -74,9 +74,9 @@ You will find instructions to download and install these tools for your operatin
 {: #sql-database-2}
 {: step}
 
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse)** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/catalog/services/db2-warehouse)** service.
 
-1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
+1. Visit the [{{site.data.keyword.Bluemix_short}} console](/). Click on **Catalog** in the top navigation bar.
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
 3. Pick the **Flex One** plan and change the suggested service name to **sqldatabase** (you will use that name later on). Pick a resource group and a location for the deployment of the database.
 4. Click on **Create**. The provisioning starts.
@@ -154,7 +154,7 @@ The data has been loaded into the relational database. There were no errors, but
 {: #sql-database-6}
 {: step}
 
-Change back to the terminal. Now you are going to deploy the application code, using a pre-built container image. You can modify the application code and build the container image on your own. See the [instructions in the GitHub repository](https://github.com/IBM-Cloud/cloud-sql-database) for details.
+Change back to the terminal. Now you are going to deploy the application code, using a pre-built container image. You can modify the application code and build the container image on your own. See the [instructions in the GitHub repository](https://github.com/IBM-Cloud/cloud-sql-database){: external} for details.
 
 1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Set the region and resource group to where the database has been provisioned. Replace **RESOURCE_GROUP** and **REGION** accordingly.
    ```sh
@@ -194,15 +194,15 @@ Change back to the terminal. Now you are going to deploy the application code, u
    ```
    {: pre}
    
-   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](https://{DomainName}/codeengine).
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine).
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}
 {: step}
 
-The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](https://{DomainName}/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](https://{DomainName}/docs/Db2whc?topic=Db2whc-key-protect). 
+The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](/docs/Db2whc?topic=Db2whc-key-protect). 
 
-In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://{DomainName}/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction).
+In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction).
 
 ## Test the App
 {: #sql-database-8}
@@ -215,11 +215,11 @@ The app to display city information based on the loaded data set is reduced to a
 {: step}
 
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). 
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](/resources). 
 2. In the {{site.data.keyword.codeengineshort}} section locate the project **sqldatabase**. Click on the three dots and select **Delete** to delete the project and its app.
 3. Locate the database `sqldatabase` under **Databases**. Again, click on the three dots and select **Delete** to delete the database.
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Expand the tutorial
@@ -236,4 +236,4 @@ Want to extend this app? Here are some ideas:
 
 * Documentation: [API Description for the ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
 * [Db2 Data Management Console](https://www.ibm.com/products/db2-data-management-console)
-* [Db2 on Cloud](https://{DomainName}/catalog/services/db2)
+* [Db2 on Cloud](/catalog/services/db2)

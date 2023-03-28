@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-02-24"
+lastupdated: "2023-03-28"
 lasttested: "2023-02-24"
 
 content-type: tutorial
@@ -32,12 +32,12 @@ completion-time: 3h
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/about?platformType=openshift). {{site.data.keyword.openshiftshort}} provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift). {{site.data.keyword.openshiftshort}} provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 {: shortdesc}
 
 ## Objectives
@@ -66,7 +66,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 1. {{site.data.keyword.mon_short}} is provisioned and agent deployed.
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}}.
 
-There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts) that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend). If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
+There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts){: external} that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend). If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
 
 <!--##istutorial#-->
 ## Before you begin
@@ -77,9 +77,9 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
 * `oc` to interact with OpenShift.
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.12.x`). If they do not match, install the matching version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.12.x`). If they do not match, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
 <!--#/istutorial#-->
@@ -94,11 +94,11 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+1. Create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.12.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
    - Select an existing **Cloud Object Storage** service or create one if required
@@ -107,7 +107,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For {{site.data.keyword.redhat_openshift_notm}} on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.redhat_openshift_notm}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -131,14 +131,14 @@ Take a note of the resource group selected above.  This same resource group will
 
 1. Log in to the {{site.data.keyword.cloud_notm}} console.
 1. Select the account where you have been invited by clicking on the account name in the top bar (next to `Manage`).
-1. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+1. Find the cluster assigned to you in the [cluster list](/kubernetes/clusters?platformType=openshift).
 -->
 <!--#/isworkshop#-->
 
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
 
-The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html){: external} exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -146,14 +146,14 @@ To avoid installing the command line tools, the recommended approach is to use t
 
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
-1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](https://{DomainName}/shell). **_Make sure you don't close this window/tab_**.
+1. When the cluster is ready, click the button (next to your account) in the upper right corner to launch a [Cloud shell](/shell). **_Make sure you don't close this window/tab_**.
 1. Check the version of the OpenShift CLI:
    ```sh
    oc version
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
@@ -711,7 +711,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can now log-in using any user-id/password in the Cloudant DB, use "**opall:opall**".
 
-1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your `services` in IBM Cloud [Resource List](https://{DomainName}/resources). Click **&lt;your-initials&gt;-cloudant-service**.
+1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your `services` in IBM Cloud [Resource List](/resources). Click **&lt;your-initials&gt;-cloudant-service**.
 2. Launch the Cloudant dashboard by clicking on **Launch Dashboard** button and then click the `patients` db.
 3. Click through the different patients you can log in as.
 
@@ -729,7 +729,7 @@ It can take a few minutes for logging and metric data to flow through the analys
 <!--#/isworkshop#-->
 
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift)
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift)
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Scroll to **Integrations** and if **Logging** is not connected, click the Logging **Connect** button.  Use an existing {{site.data.keyword.la_short}} instance or create a new instance as shown below:
    1. Click **Create an instance**.
@@ -749,7 +749,7 @@ It can take a few minutes for logging and metric data to flow through the analys
 {: #openshift-microservices-use-logdna}
 {: step}
 
-{{site.data.keyword.la_full_notm}} is a cloud native service that you can include as part of your IBM Cloud architecture to add log management capabilities. You can use {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud. [Learn more](https://{DomainName}/docs/log-analysis?topic=log-analysis-getting-started).
+{{site.data.keyword.la_full_notm}} is a cloud native service that you can include as part of your IBM Cloud architecture to add log management capabilities. You can use {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud. [Learn more](/docs/log-analysis?topic=log-analysis-getting-started).
 
 This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfully begin the next section.
 {: note}
@@ -798,7 +798,7 @@ For example,
 
 Launch the web UI within the context of a {{site.data.keyword.la_short}} instance, from the IBM Cloud UI.
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift)
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift)
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Next to **Logging**, click the **Launch** button.
 
@@ -1026,7 +1026,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    If you do not save the screen, you lose all your widgets.
    {: important}
 
-Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/log-analysis/index.html#getting-started).
+Find more about {{site.data.keyword.la_short}} in the [IBM Cloud documentation](/docs/log-analysis/index.html#getting-started).
 {: note}
 
 ## Configure {{site.data.keyword.mon_short}}
@@ -1059,7 +1059,7 @@ sysdig-agent-rhrgz   1/1       Running   0          1m
 {: #openshift-microservices-use-sysdig}
 {: step}
 
-{{site.data.keyword.mon_full_notm}} is a cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. [Learn more](https://{DomainName}/docs/monitoring?topic=monitoring-getting-started).
+{{site.data.keyword.mon_full_notm}} is a cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. [Learn more](/docs/monitoring?topic=monitoring-getting-started).
 
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
 
@@ -1080,7 +1080,7 @@ The following table lists the different types of pre-defined dashboards:
 ### View the {{site.data.keyword.mon_short}} dashboard
 {: #openshift-microservices-43}
 
-1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.redhat_openshift_notm}} clusters
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.redhat_openshift_notm}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
 3. Next to **Monitoring**, click the **Launch** button.
 
@@ -1122,7 +1122,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
 
     ![Custom Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-5.png){: caption="Custom Network Traffic and Bandwidth" caption-side="bottom"}
 
-Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/monitoring?topic=monitoring-getting-started).
+Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentation](/docs/monitoring?topic=monitoring-getting-started).
 
 ## Remove resources
 {: #openshift-microservices-cleanup}
@@ -1145,7 +1145,7 @@ Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentat
 -->
 <!--#/isworkshop#-->
 <!--##istutorial#-->
-In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
+In the [Resource List](/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
 * To delete the {{site.data.keyword.redhat_openshift_notm}} resources without deleting the cluster, run the below commands:
    ```sh
@@ -1159,7 +1159,7 @@ In the [Resource List](https://{DomainName}/resources) locate and delete the res
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
 * {{site.data.keyword.cloudant_short_notm}} service
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 <!--#/istutorial#-->
@@ -1167,7 +1167,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #openshift-microservices-13}
 
-- [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift)
-- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
-- [Analyze logs and monitor application health](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
+- [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
+- [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant)
+- [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 - [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html)

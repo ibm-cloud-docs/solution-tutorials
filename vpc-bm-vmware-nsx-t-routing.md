@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-02-20"
+lastupdated: "2023-03-28"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -35,7 +35,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -60,21 +60,21 @@ You will first create {{site.data.keyword.bm_is_short}} VLAN interfaces for your
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
+* Common [prereqs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
-* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
-* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
-* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
-* [Deploy {{site.data.keyword.vpc_short}} NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+* [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
+* [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
+* [Deploy {{site.data.keyword.vpc_short}} NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-deployment)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+[Login](/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://nsx.vmware.ibmcloud.local` as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://nsx.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 
@@ -125,7 +125,7 @@ In this step, {{site.data.keyword.bm_is_short}}VLAN interfaces will be created f
 | vlan-nic-t0-priv-uplink-vip | vlan           | 710     | vpc-t0-private-uplink-subnet | true         | true              | true              | T0 Private uplink VIP      | vpc-zone-t0-private-*vlanid*
 {: caption="Table 4. VLAN interfaces for T0 uplinks" caption-side="top"}
 
-Depending on your networking design, provision only the VLAN interfaces you need, for example if you do not need direct public connectivity you can skip that part. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.
+Depending on your networking design, provision only the VLAN interfaces you need, for example if you do not need direct public connectivity you can skip that part. Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for architectural considerations.
 {: note}
 
 When using new VLAN IDs for VLAN interfaces, you need to modify each {{site.data.keyword.bm_is_full_notm}} where the NSX-T edge nodes are planned to run. In this setup, all three hosts are allowed to host the edge nodes and modifications are needed for all of them.
@@ -326,7 +326,7 @@ In the previous step, VLAN interfaces where created for the private and public u
 
 1. Create VLAN backed segments for your NSX-T deployment for public and private transit networks.
    
-2. Use the VLAN IDs used earlier in this tutorial, e.g. `700` for the public and `710` for the private. Name your segments so that you can identify the public and private, or refer to [naming recommendations in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
+2. Use the VLAN IDs used earlier in this tutorial, e.g. `700` for the public and `710` for the private. Name your segments so that you can identify the public and private, or refer to [naming recommendations in {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
 For more information on creating NSX-T segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
 
@@ -366,7 +366,7 @@ For more information on creating Tier 0 logical router, see [VMware Docs](https:
 NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or otherwise Tier 0 logical routers may discard the packets arriving from a "wrong" interface.
 {: note}
 
-When creating public and private uplinks, you may need to customize the security group rules. For more information, see [{{site.data.keyword.vpc_short}} Security Groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups).
+When creating public and private uplinks, you may need to customize the security group rules. For more information, see [{{site.data.keyword.vpc_short}} Security Groups](/docs/vpc?topic=vpc-using-security-groups).
 {: note}
 
 When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway Firewall on the interfaces and create required rule set to secure your workloads properly. For more information for configuring Gateway Firewall, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-A52E1A6F-F27D-41D9-9493-E3A75EC35481.html).
@@ -389,7 +389,7 @@ In this step, you will configure static routes in your {{site.data.keyword.vpc_s
    ```
    {: codeblock}
 
-If you are using Transit Gateways or Direct Links, you need to create ingress routing table with ingress {{site.data.keyword.vpc_short}} routes. Ingress routes enable you to customize routes on incoming traffic to a {{site.data.keyword.vpc_short}} from traffic sources external to the {{site.data.keyword.vpc_short}}'s availability zone (IBM Cloud Direct Link 2.0, IBM Cloud Transit Gateway, or another availability zone in same {{site.data.keyword.vpc_short}}). For more information and design considerations, refer to [Interconnectivity solutions overview for VMware Solutions in {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-interconnectivity-overview) and [{{site.data.keyword.vpc_short}} routing tables and routes](https://{DomainName}/docs/vpc?topic=vpc-about-custom-routes&interface=ui#egress-ingress-overview)].
+If you are using Transit Gateways or Direct Links, you need to create ingress routing table with ingress {{site.data.keyword.vpc_short}} routes. Ingress routes enable you to customize routes on incoming traffic to a {{site.data.keyword.vpc_short}} from traffic sources external to the {{site.data.keyword.vpc_short}}'s availability zone (IBM Cloud Direct Link 2.0, IBM Cloud Transit Gateway, or another availability zone in same {{site.data.keyword.vpc_short}}). For more information and design considerations, refer to [Interconnectivity solutions overview for VMware Solutions in {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-interconnectivity-overview) and [{{site.data.keyword.vpc_short}} routing tables and routes](/docs/vpc?topic=vpc-about-custom-routes&interface=ui#egress-ingress-overview)].
 {: note}
 
 

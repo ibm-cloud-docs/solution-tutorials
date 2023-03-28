@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-01"
+lastupdated: "2023-03-28"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -33,7 +33,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 
 The objective of this tutorial is to demonstrate the basic steps of connecting via a Virtual Private Network (VPN) a {{site.data.keyword.vmware-service_full}} – single tenant instance with a Juniper vSRX. The vSRX can either be deployed in {{site.data.keyword.cloud_notm}} Classic Infrastructure or in a client data center. The steps that follow will create a basic working environment, providing a VPN and basic firewall implementation, with test virtual machines that can be used to verify  that the end-to-end environment is functional.
 
-This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 
 In this tutorial, you will learn:
 
@@ -58,9 +58,9 @@ The following diagram presents an overview of the solution to be deployed.
 
 This tutorial is divided into the following steps:
 
-1. [Gather requirements](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-gather-requirements)
-2. [Configure vSRX](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-config-vsrx)
-3. [Configure {{site.data.keyword.vmware-service_full}} – single tenant edge gateway](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-edge-gateway)
+1. [Gather requirements](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-gather-requirements)
+2. [Configure vSRX](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-config-vsrx)
+3. [Configure {{site.data.keyword.vmware-service_full}} – single tenant edge gateway](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vpn-vsrx#vmware-as-a-service-vpn-vsrx-edge-gateway)
 
 
 ## Before you begin
@@ -68,10 +68,10 @@ This tutorial is divided into the following steps:
 
 This tutorial requires:
 
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](https://{DomainName}/docs/vmware-service?topic=vmware-service-getting-started).
-* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering), and
-* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding).
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
+* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](/docs/vmware-service?topic=vmware-service-getting-started).
+* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering), and
+* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding).
 
 
 ## Gather requirements
@@ -107,7 +107,7 @@ It is important to design and collect the following information as these values 
    Public IP address of vSRX          | `<public-IP address-of-the-vsrx>`
    {: caption="List of gateway IP addresses to review before configuring the VPN." caption-side="bottom"}
    
-   The public IP address for the virtual data center gateway is provided though the IBM Cloud portal, see [Viewing and deleting VDCs](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete#vdc-view-delete-details).
+   The public IP address for the virtual data center gateway is provided though the IBM Cloud portal, see [Viewing and deleting VDCs](/docs/vmware-service?topic=vmware-service-vdc-view-delete#vdc-view-delete-details).
    
    The public interface IP of the vSRX is typically configured as follows in IBM Cloud:
    

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-02"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-02"
 
 content-type: tutorial
@@ -30,7 +30,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -75,8 +75,8 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Create a project
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
-1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/create).
-1. From the [catalog](https://{DomainName}/catalog), create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
+1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](/catalog) and create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create).
+1. From the [catalog](/catalog), create [{{site.data.keyword.DSX_short}}](/catalog/services/data-science-experience?taxonomyNavigation=app-services)
    1. Select a **region**
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
@@ -95,7 +95,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: caption="Iris Example" caption-side="bottom"}
 {: style="text-align: center;"}
 
-**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv) which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
+**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv){: external} which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
 
 1. Under **Data in this project**, click **Drop data files here or browse for files to upload**.
 2. Upload the downloaded `iris_initial.csv`.
@@ -203,7 +203,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 
 1. Under **API reference** tab of the deployment, you can see the _Endpoint_ under Direct link and code snippets in various programming languages.
 2. **Copy** the _Endpoint_ in a notepad for future reference.
-3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
+3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
    ```
@@ -251,7 +251,7 @@ For ease of understanding, the tutorial concentrates only on improving the quali
 
 In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
+1. Create a [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watson-openscale)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan.
    3. Set the service name to **watson-openscale-tutorial**.
@@ -325,7 +325,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    2. Click on the **Number of explanations (2)**, select one of the transactions and click **Explain**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
-   To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
+   To understand the quality metrics, refer to [Quality metric overview](/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
    {: tip}
 
 ## Remove resources
@@ -333,11 +333,11 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 {: removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
+1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](/resources/).
 2. Under **Name**, enter **tutorial** in the search box.
 3. Delete the services which you created for this tutorial.
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content

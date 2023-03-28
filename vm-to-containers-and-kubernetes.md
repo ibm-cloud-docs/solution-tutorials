@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-08"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-01"
 
 ---
@@ -18,7 +18,7 @@ lasttested: "2022-12-01"
 {: #vm-to-containers-and-kubernetes}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -70,7 +70,7 @@ The following diagram shows an example of a modern container architecture that r
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.
 2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine.
 3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes.
-4. App pods store data in an {{site.data.keyword.cloud_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/catalog?category=databases#services).
+4. App pods store data in an {{site.data.keyword.cloud_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
 
 ### VMs, containers, and Kubernetes
 {: #vm-to-containers-and-kubernetes-4}
@@ -96,7 +96,7 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 [Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
 
-This [self-paced workshop](https://ibm.github.io/kube101/) can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
+This [self-paced workshop](https://ibm.github.io/kube101/){: external} can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/){: external} documentation page to learn more about the concepts of Kubernetes.
 
 ### What IBM's doing for you
 {: #vm-to-containers-and-kubernetes-7}
@@ -137,11 +137,11 @@ To make the above more specific, let's assume you want to run a production web a
 With Kubernetes, you have two options for handling databases:
 
 1. You can run your database inside the Kubernetes cluster, to do that you would need to create a microservice to run the database. For example, if you are using a MySQL database, you would need to complete the following steps:
-   - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile) here.
+   - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile){: external} here.
    - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret).
    - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml).
-2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To use this option, you would need to do the following:
-   - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/catalog?category=databases#services).
+2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services). To use this option, you would need to do the following:
+   - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
    - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
    - Use the database-as-a-service (DBaaS) in your application.
 
@@ -159,7 +159,7 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 ### Learn how to create persistent data storage for your app
 {: #vm-to-containers-and-kubernetes-12}
 
-You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/features) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes.
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/features){: external} or [block storage](https://www.ibm.com/cloud/block-storage){: external} by using native Kubernetes persistent volumes.
 {: shortdesc}
 
 To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM to provide high availability for your data.
@@ -222,7 +222,7 @@ For more information, see [Planning for storage](/docs/containers?topic=containe
 ### Apply the 12-factor principles
 {: #vm-to-containers-and-kubernetes-16}
 
-The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply some of these principles. Some of these principles are required in {{site.data.keyword.cloud_notm}}.
+The [twelve-factor app](https://12factor.net/){: external} is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply some of these principles. Some of these principles are required in {{site.data.keyword.cloud_notm}}.
 
 The following key principles are required:
 
@@ -313,9 +313,9 @@ After a container image is built and pushed to the cloud, next you need to deplo
 
 To create Kubernetes deployment.yaml files, you would need to do something like this:
 
-1. Create a deployment.yaml file, here is an example of a [deployment YAML](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml) file.
+1. Create a deployment.yaml file, here is an example of a [deployment YAML](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml){: external} file.
 
-2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
+2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/){: external} for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
 3. Next, you can use below commands to create and view the deployment and services created:
 
@@ -342,12 +342,12 @@ In this tutorial, you learned the following:
 ## Put everything learned to practice, run the JPetStore app in your cluster
 {: #vm-to-containers-and-kubernetes-runthejpetstore}
 
-To put everything you've learned in practice, follow the [demonstration](https://github.com/IBM-Cloud/jpetstore-kubernetes/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by running image classification as a separate microservice.
+To put everything you've learned in practice, follow the [demonstration](https://github.com/IBM-Cloud/jpetstore-kubernetes/){: external} to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by running image classification as a separate microservice.
 
 ## Related Content
 {: #vm-to-containers-and-kubernetes-related}
 
-- [Get started](https://developer.ibm.com/learningpaths/get-started-containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
+- [Get started](https://developer.ibm.com/learningpaths/get-started-containers/){: external} with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.

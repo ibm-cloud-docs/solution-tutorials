@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2023-03-28"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -36,7 +36,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -50,7 +50,7 @@ In this tutorial, you will deploy {{site.data.keyword.dns_full_notm}} for a VMwa
 ## Objectives
 {: #vpc-bm-vmware-dns-objectives}
 
-In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the {{site.data.keyword.dns_full_notm}} solution for the VMware Deployment.
+In this tutorial [{{site.data.keyword.dns_full_notm}}](/docs/dns-svcs?topic=dns-svcs-getting-started) is used as the {{site.data.keyword.dns_full_notm}} solution for the VMware Deployment.
 
 ![Deploying DNS service for a VMware Deployment](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-DNS.svg "Deploying DNS service for a VMware Deployment"){: caption="Figure 1. Deploying DNS service for a VMware Deployment" caption-side="bottom"}
 
@@ -60,13 +60,13 @@ In this tutorial [{{site.data.keyword.dns_full_notm}}](https://{DomainName}/docs
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
+* Common [prereqs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+[Login](/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of this tutorial.
 {: note}
@@ -119,7 +119,7 @@ The used variables e.g. $VMWARE_VPC_CRN are defined in the previous steps of thi
 {: #vpc-bm-vmware-dns-record}
 {: step}
 
-DNS records for the ESXi hosts will be created after they will be provisioned in the [next tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
+DNS records for the ESXi hosts will be created after they will be provisioned in the [next tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms) following the commands provided below.
 {: note}
 
 1. To create DNS records via CLI, the following command provides a help for record creation.

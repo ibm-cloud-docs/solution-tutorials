@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-22"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-19"
 
 content-type: tutorial
@@ -26,12 +26,12 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives
@@ -55,7 +55,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 {: #prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
 * `terraform` to use Infrastructure as Code to provision resources,
@@ -63,7 +63,7 @@ This tutorial requires:
 * `git` to clone source code repository,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
@@ -72,12 +72,12 @@ You will find instructions to download and install these tools for your operatin
 {: #lamp-stack-on-vpc-2}
 {: step}
 
-In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](https://{DomainName}/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
+In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
-If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview).
+If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview).
 {: tip}
 
-1. From the [{{site.data.keyword.Bluemix_notm}} Console](https://{DomainName}), launch the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell).
+1. From the [{{site.data.keyword.Bluemix_notm}} Console](/), launch the [{{site.data.keyword.cloud-shell_notm}}](/shell).
 1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
    ```sh
    ibmcloud target -r <region-name> -g <resource-group>
@@ -87,13 +87,13 @@ If you prefer to use a Terraform template to generate these resources, you can u
 ### Create SSH Key(s)
 {: #lamp-stack-on-vpc-3}
 
-1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
+1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
    ```
    {: pre}
 
-   The above command generates two files inside of the `~/.ssh` directory: `id_rsa` and `id_rsa.pub`.  Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
+   The above command generates two files inside of the `~/.ssh` directory: `id_rsa` and `id_rsa.pub`.  Your {{site.data.keyword.cloud-shell_short}} session is [short lived](/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
    {: tip}
 
    If you have an existing SSH key that you would like to re-use, you can upload it to your {{site.data.keyword.cloud-shell_short}} session instead.
@@ -108,7 +108,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 ### Create VPC, Subnet(s) and Security Group(s)
 {: #lamp-stack-on-vpc-4}
 
-1. Create a VPC. For more information, see the docs for creating a VPC in the [console](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
+1. Create a VPC. For more information, see the docs for creating a VPC in the [console](/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
    ```sh
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
    ```
@@ -354,7 +354,7 @@ To ensure server availability and the best user experience, monitoring should be
 ### Server monitoring
 {: #lamp-stack-on-vpc-11}
 
-You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/monitoring?topic=monitoring-ubuntu) documentation. 
+You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](/docs/monitoring?topic=monitoring-ubuntu) documentation. 
 
 ### Server logging
 {: #lamp-stack-on-vpc-12}
@@ -363,7 +363,7 @@ You can use {{site.data.keyword.la_full_notm}} to manage system and application 
 
 {{site.data.keyword.la_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
 
-If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](https://{DomainName}/docs/log-analysis?topic=log-analysis-ubuntu)
+If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](/docs/log-analysis?topic=log-analysis-ubuntu)
 
 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
@@ -378,7 +378,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
    
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
@@ -487,7 +487,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 {: #lamp-stack-on-vpc-resizing}
 {: step}
 
-The VSI was created using one of the smallest profiles available in VPC, i.e. 2 vCPU and 4GiB RAM.  It is possible based on your usage requirements to increase - or decrease - the amount of vCPU and RAM available, see [Resizing a virtual server instance](https://{DomainName}/docs/vpc?topic=vpc-resizing-an-instance). 
+The VSI was created using one of the smallest profiles available in VPC, i.e. 2 vCPU and 4GiB RAM.  It is possible based on your usage requirements to increase - or decrease - the amount of vCPU and RAM available, see [Resizing a virtual server instance](/docs/vpc?topic=vpc-resizing-an-instance). 
 
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
    ```sh
@@ -507,7 +507,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
    ```
    {: pre}
 
-   You can get a list of alternative profiles by issuing the following command `ibmcloud is instance-profiles`, note however the restrictions on resizing based on current/target profiles in the [Resizing a virtual server instance](https://{DomainName}/docs/vpc?topic=vpc-resizing-an-instance) topic.
+   You can get a list of alternative profiles by issuing the following command `ibmcloud is instance-profiles`, note however the restrictions on resizing based on current/target profiles in the [Resizing a virtual server instance](/docs/vpc?topic=vpc-resizing-an-instance) topic.
    {: tip}
    
 1. Start the instance.
@@ -522,7 +522,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
 {: #lamp-stack-on-vpc-remove-resources}
 {: step}
 
-1. In the VPC [console](https://{DomainName}/vpc-ext), click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+1. In the VPC [console](/vpc-ext), click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
 2. Next, switch to **Virtual server instances**, **Delete** your instance.
 3. Once the VSIs are gone, switch to **Subnets**. Delete your subnet.
 4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.

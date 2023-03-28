@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-12-20"
+lastupdated: "2023-03-28"
 lasttested: "2022-12-16"
 
 content-type: tutorial
@@ -26,12 +26,12 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 {: shortdesc}
 
 Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
@@ -64,15 +64,15 @@ This tutorial requires:
 * `jq` to query JSON files.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
 
 In addition, you need the following permissions on Classic Infrastructure:
-* [Manage CDN Account](https://{DomainName}/docs/CDN?topic=CDN-faqs#how-do-i-use-cloud-to-give-users-permission-to-create-or-manage-cdn)
+* [Manage CDN Account](/docs/CDN?topic=CDN-faqs#how-do-i-use-cloud-to-give-users-permission-to-create-or-manage-cdn)
 
 These permissions are required to be able to order and view the CDN service.
 
@@ -96,7 +96,7 @@ To start, retrieve the application code:
 
 {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
-1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
+1. Go to the [catalog](/catalog/) in the console, and select [**Object Storage**](/catalog/services/cloud-object-storage) from the Storage section.
 2. Provide a **Service Name**.
 3. Select the desired **resource group**
 4. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
@@ -138,7 +138,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ```
    {: pre}
 
-   If you had used the cloud-object-storage (cos) plugin before, you might need to [reconfigure the crn and set it to the current service](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-cli-plugin-ic-cos-cli#ic-iam-authentication).
+   If you had used the cloud-object-storage (cos) plugin before, you might need to [reconfigure the crn and set it to the current service](/docs/cloud-object-storage?topic=cloud-object-storage-cli-plugin-ic-cos-cli#ic-iam-authentication).
    {: tip}
 
 1. Upload the files named `index.html`, `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
@@ -177,7 +177,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 ### Create a CDN instance
 {: #static-files-cdn-6}
 
-1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
+1. Go to the catalog in the console, and select [**Content Delivery Network**](/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
 
    The **Hostname** has two purposes. It is a unique name that identifies the CDN instance. It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain).  When filling out this form you will choose one of the following options:
    
@@ -214,7 +214,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 ### Access your content through the CDN CNAME
 {: #static-files-cdn-7}
 
-1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
+1. Select the CDN instance [in the list](/classic/network/cdn).
 2. If you earlier picked _DV SAN Certificate_, you are likely seeing `Requesting certificate`.  It can take as long as 24 hours for this state to complete. When available follow the steps shown when clicking on **View domain validation**.  Note, that this can take a few hours. If you want to continue with this tutorial just create a new CDN and this time do not enable HTTPS or select a wildcard certificate. Do not forget to select a different hostname.
 3. The **Details** panel shows both the **Hostname** and the **IBM CNAME** for your CDN
 4. Go to your DNS provider and create a CNAME record for the **HOSTNAME** for **IBM CNAME**.  For me it was `static.example.com` -> `cdnakawazw9dpv33.cdn.appdomain.cloud`.
@@ -257,17 +257,17 @@ Back in the {{site.data.keyword.cloud_notm}} console in the bucket **Configurati
 ### Access the static website through custom subdomain
 {: #static-files-cdn-9}
 
-Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.example.com, is even better. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.example.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://example.com or better yet ensure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
+Accessing the website at the URL provided by the COS bucket is great, but access via a custom domain, like web.example.com, is even better. Follow the instructions at [Domain Routing for IBM Cloud Object Storage static web hosting](/docs/cloud-object-storage?topic=cloud-object-storage-routing-rules-cos).  Paste web.example.com into the browser which will default to https:// which will display the page correctly, but the CDN content will only be rendered if it also accessed via an https:// URL.  You can explicitly specify http://example.com or better yet ensure that HTTPS was selected when creating the CDN and https:// URL references to the CDN content were pasted into the index.html file in the previous step.
 
 ## Remove resources
 {: #static-files-cdn-10}
 {: step}
 
 To clean up resource, perform the following steps:
-* Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/cdn).
-* Delete the [{{site.data.keyword.cos_full_notm}} bucket and / or service](https://{DomainName}/resources).
+* Delete the [{{site.data.keyword.cdn_full}} service](/cdn).
+* Delete the [{{site.data.keyword.cos_full_notm}} bucket and / or service](/resources).
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content
@@ -275,4 +275,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 * [{{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage)
 * [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
-* [Getting Started with CDN](https://{DomainName}/docs/CDN?topic=CDN-getting-started#getting-started)
+* [Getting Started with CDN](/docs/CDN?topic=CDN-getting-started#getting-started)

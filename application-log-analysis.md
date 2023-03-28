@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-02-23"
+lastupdated: "2023-03-28"
 lasttested: "2023-02-23"
 
 content-type: tutorial
@@ -26,15 +26,15 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
+This tutorial shows how the [{{site.data.keyword.la_full_notm}}](/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 {: shortdesc}
 
-Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure monitoring agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
+Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](/observe/monitoring) service and configure monitoring agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 
 ## Objectives
 {: #application-log-analysis-objectives}
@@ -65,7 +65,7 @@ This tutorial requires:
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 In addition, make sure you:
@@ -80,7 +80,7 @@ In addition, make sure you:
 {: #application-log-analysis-2}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
 -->
 <!--#/isworkshop#-->
@@ -94,7 +94,7 @@ In addition, make sure you:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation[Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -102,7 +102,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs)).
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
@@ -125,7 +125,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 
 In this step, you'll configure `kubectl` to point to the cluster assigned to you.
 
-1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
+1. Navigate to your cluster from the [cluster list](/kubernetes/clusters) and click on the **Access** tab under the cluster name.
 1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
 1. Run the below command to see all the namespaces in your cluster:
    ```sh
@@ -217,7 +217,7 @@ By using the {{site.data.keyword.la_short}} service, it is possible to aggregate
 
 During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is expected that you completed the steps to also connect to a {{site.data.keyword.la_short}} service. 
 
-1. From the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
+1. From the [Kubernetes clusters](/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
 2. Scroll down to **Integrations** and open the {{site.data.keyword.la_short}} UI by clicking **Launch**. It may take a few minutes before you start seeing logs.
    
    If instead of **Launch** you see a **Connect** button, you can click on it to create the integration if it was not done during the creation of the cluster.  It simplifies the installation of *logdna-agent* pod on each node of your cluster. The logging agent reads log files from the pod where it is installed, and forwards the log data to your logging instance.
@@ -328,7 +328,7 @@ In this section, you will create a board and then add a graph with a breakdown t
 
 During creation of the {{site.data.keyword.containerlong_notm}} cluster, it is expected that you completed the steps to also connect to a {{site.data.keyword.monitoringshort_notm}} service. In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
-1. From the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
+1. From the [Kubernetes clusters](/kubernetes/clusters), click on the name of the Kubernetes cluster you just created and click **Overview** on the left pane.
 2. Scroll down to **Integrations** and open the {{site.data.keyword.monitoringshort_notm}} UI by clicking on the **Launch** button. It may take few minutes for the monitoring information to appear.
    If instead of **Launch** you see a **Connect** button, you can click on it to create the integration if it was not done during the creation of the cluster.  It simplifies the installation of *sysdig-agent* pod on each node of your cluster. The agent captures metrics and forwards them to your monitoring instance.
    {: tip}
@@ -372,7 +372,7 @@ spec:
         prometheus.io/port: "8002"
 ```
 
-The application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics. You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/) for details.
+The application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics. You can find a Prometheus client to use for most programming languages. See the [Prometheus metrics](https://sysdig.com/blog/prometheus-metrics/){: external} for details.
 {: tip}
 
 Use an existing {{site.data.keyword.monitoringshort_notm}} instance or create a new instance as shown below:
@@ -443,7 +443,7 @@ To add another panel:
 {: #application-log-analysis-remove_resource}
 {: step}
 
-- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](https://{DomainName}/observe) page.<!-- markdownlint-disable-line -->
+- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](/observe) page.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
@@ -453,7 +453,7 @@ To add another panel:
 
 <!--#/istutorial#-->
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Expand the tutorial

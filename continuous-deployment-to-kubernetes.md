@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-03"
+lastupdated: "2023-03-28"
 lasttested: "2023-02-21"
 
 content-type: tutorial
@@ -29,7 +29,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -72,7 +72,7 @@ This tutorial requires:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -80,7 +80,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs)).
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
@@ -103,7 +103,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 {: #continuous-deployment-to-kubernetes-access-cluster}
 {: step}
 
-1. Open the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}).
+1. Open the [{{site.data.keyword.cloud_notm}} console](/).
 2. Switch to the account where you have been invited.
 -->
 <!--#/isworkshop#-->
@@ -112,7 +112,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [DevOps](https://{DomainName}/devops).
+1. From the [{{site.data.keyword.cloud_notm}} console](/), use the left side menu option and select [DevOps](/devops).
 2. Click **Create toolchain**.
 3. In the **search box** type **kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
@@ -123,7 +123,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 9. Select a region and your cluster from the list.
 10. Make sure to set the cluster namespace to `default` and click **Create**.
 
-In a new browser tab open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters):
+In a new browser tab open the [Kubernetes clusters](/kubernetes/clusters):
 - Click on your cluster.
 - Locate the **Ingress subdomain** field and click the copy button.  The ingress subdomain will be used in the next section.
 
@@ -189,7 +189,7 @@ You now have the full deployment setup. To deploy from dev to production, you ma
 {: step}
 
 1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks). You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
-2. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add**.
+2. Go back to view the list of [toolchains](/devops/toolchains) and select your toolchain, then click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
@@ -210,7 +210,7 @@ In this step, you will clean up the resources to remove what you created above.
    - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
    - In the git repository: select **Settings** on the left then **General** scroll down and click **Advanced** **Expand**  then scroll down and click **Delete Project**.
 - Delete the toolchain.<!-- markdownlint-disable-line -->
-- Delete the images from the [{{site.data.keyword.registryshort}}](https://{DomainName}/registry/images).<!-- markdownlint-disable-line -->
+- Delete the images from the [{{site.data.keyword.registryshort}}](/registry/images).<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
 - Delete the cluster.<!-- markdownlint-disable-line -->
 <!--#/istutorial#-->

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021
-lastupdated: "2021-08-26"
+lastupdated: "2023-03-28"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -30,11 +30,11 @@ completion-time:
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
 
-This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](https://{DomainName}/docs/vpc?topic=vpc-vsi_best_practices), [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [VPN](https://{DomainName}/docs/vpc?topic=vpc-using-vpn), [subnets](https://{DomainName}/docs/vpc?topic=vpc-about-networking-for-vpc) and [network ACLs](https://{DomainName}/docs/vpc?topic=vpc-using-acls).
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](/docs/vpc?topic=vpc-vsi_best_practices), [security groups](/docs/vpc?topic=vpc-using-security-groups), [VPN](/docs/vpc?topic=vpc-using-vpn), [subnets](/docs/vpc?topic=vpc-about-networking-for-vpc) and [network ACLs](/docs/vpc?topic=vpc-using-acls).
 {: note}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -45,18 +45,18 @@ The need to create a private connection between a remote network environment and
 {{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection.
 
 See [{{site.data.keyword.BluDirectLink}}
-]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
+](/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
 for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}}. A VPN over the public internet provides a lower cost option, though without bandwidth guarantees.
 
 There are two suitable VPN options for connectivity over the public internet to servers provisioned on the {{site.data.keyword.Bluemix_notm}}:
 
--	[IPSEC VPN]( https://{DomainName}/catalog/infrastructure/ipsec-vpn)
--	[Virtual Router Appliance VPN](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
+-	[IPSEC VPN](/catalog/infrastructure/ipsec-vpn)
+-	[Virtual Router Appliance VPN](/docs/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network.
 
-This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec
-VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
+This example builds on the [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec
+VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {: shortdesc}
 
 ## Objectives
@@ -81,7 +81,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 ## Before you begin
 {: #configuring-IPSEC-VPN-prereqs}
 
-This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
+This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
 
 ## Document VPN configuration
 {: #configuring-IPSEC-VPN-Document_VPN}
@@ -339,19 +339,19 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/classic/network/gatewayappliances) page.
 {: tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
-3. [Cancel any additional VLANs](https://{DomainName}.ibm.com/docs/vlans?topic=vlans-cancel-vlan)
+3. [Cancel any additional VLANs](/docs/vlans?topic=vlans-cancel-vlan)
 
 ## Related content
 {: #configuring-IPSEC-VPN-9}
 {: related}
 
-- [IBM Virtual Router Appliance](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
-- [Static and Portable IP Subnets](https://{DomainName}/docs/subnets?topic=subnets-about-subnets-and-ips)
-- [Vyatta documentation](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)
+- [IBM Virtual Router Appliance](/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
+- [Static and Portable IP Subnets](/docs/subnets?topic=subnets-about-subnets-and-ips)
+- [Vyatta documentation](/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)
 - [Brocade Vyatta Network OS IPsec Site-to-Site VPN Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-ipsec-vpn.pdf)
 - [Brocade Vyatta Network OS Tunnels Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-tunnels.pdf)

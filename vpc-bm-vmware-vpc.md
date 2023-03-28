@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2022-01-21"
+lastupdated: "2023-03-28"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -36,7 +36,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -62,11 +62,11 @@ In this tutorial, a dedicated {{site.data.keyword.vpc_short}} for VMware is used
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
+* Common [prereqs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
-This tutorial is part of series, and it is required that you follow the [order](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
+This tutorial is part of series, and it is required that you follow the [order](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-objectives).
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+[Login](/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
 
 ## Create a {{site.data.keyword.vpc_short}}
@@ -182,7 +182,7 @@ Subnets are private by default. As the management subnet needs outbound internet
 
 If you have not already done so, create a SSH key for the {{site.data.keyword.vpc_short}}. The SSH key is used e.g. for accessing linux based {{site.data.keyword.vsi_is_short}} or decrypting the passwords.
 
-1. Create a new key on your local workstation or use on existing key based on your preferences. For more information, refer to [IBM Cloud Docs](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys).
+1. Create a new key on your local workstation or use on existing key based on your preferences. For more information, refer to [IBM Cloud Docs](/docs/vpc?topic=vpc-ssh-keys).
 
 2. Record and note the SSH key ID.
 
@@ -198,7 +198,7 @@ If you have not already done so, create a SSH key for the {{site.data.keyword.vp
 
 To ease up VMware configuration tasks, provision a Windows server on the management subnet in your {{site.data.keyword.vpc_short}}. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the {{site.data.keyword.vpc_short}} network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the {{site.data.keyword.bm_is_short}} and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
 
-For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](https://{DomainName}/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
+For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
 
 1. List available images and select your preferred image. You can use the following CLI command to list all available images:
 
@@ -267,9 +267,9 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
 
 1. Login into the Windows Jump server with Microsoft Remote Desktop client using the credentials provided earlier. 
 
-2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/) or [Microsoft Edge](https://www.microsoft.com/en-us/edge) into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
+2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/){: external} or [Microsoft Edge](https://www.microsoft.com/en-us/edge){: external} into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
 
-   You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org) or [mRemoteNG](https://mremoteng.org).
+   You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org){: external} or [mRemoteNG](https://mremoteng.org).
    {: tip}
 
 ## Next steps
