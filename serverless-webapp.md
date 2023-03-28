@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
+  years: 2023
 lastupdated: "2023-03-28"
 lasttested: "2022-12-20"
 
@@ -10,15 +10,7 @@ services: codeengine, Cloudant, cloud-object-storage
 account-plan: paid
 completion-time: 1h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-
+{{site.data.keyword.attribute-definition-list}}
 
 # Serverless web application and API with {{site.data.keyword.codeengineshort}}
 {: #serverless-webapp}

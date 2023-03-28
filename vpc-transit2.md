@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
+  years: 2023
 lastupdated: "2023-03-28"
 lasttested: "2023-02-07"
 
@@ -10,16 +10,7 @@ services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, database
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Centralize communication through a VPC Transit Hub and Spoke architecture - Part two
 {: #vpc-transit2}

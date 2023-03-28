@@ -11,22 +11,7 @@ services: vmwaresolutions, vpc
 account-plan: paid
 completion-time: 8h
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:pre: .pre}
-{:deprecated: .deprecated}
-{:important: .important}
-{:note: .note}
-{:tip: .tip}
-{:preview: .preview}
+{{site.data.keyword.attribute-definition-list}}
 
 # Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}

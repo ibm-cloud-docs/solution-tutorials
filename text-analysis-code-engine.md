@@ -11,21 +11,7 @@ account-plan: paid
 completion-time: 2h
 
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
-{:beta: .beta}
+{{site.data.keyword.attribute-definition-list}}
 
 # Text analysis with {{site.data.keyword.codeengineshort}}
 {: #text-analysis-code-engine}

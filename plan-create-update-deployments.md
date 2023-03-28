@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
+  years: 2021, 2023
 lastupdated: "2023-03-28"
 lasttested: "2022-11-21"
 
@@ -10,18 +10,7 @@ services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Plan, create and update deployment environments
 {: #plan-create-update-deployments}

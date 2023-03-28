@@ -10,14 +10,7 @@ services: containers, log-analysis, Registry, monitoring
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Analyze logs and monitor application health 
 {: #application-log-analysis}

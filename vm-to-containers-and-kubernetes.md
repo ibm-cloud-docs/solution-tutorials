@@ -6,13 +6,7 @@ lastupdated: "2023-03-28"
 lasttested: "2022-12-01"
 
 ---
-
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Moving a VM based app to Kubernetes
 {: #vm-to-containers-and-kubernetes}

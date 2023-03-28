@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
+  years: 2023
 lastupdated: "2023-03-28"
 lasttested: "2022-11-21"
 
@@ -10,14 +10,7 @@ services: codeengine, Db2onCloud, appid
 account-plan: paid
 completion-time: 1h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Serverless web app and eventing for data retrieval and analytics
 {: #serverless-github-traffic-analytics}

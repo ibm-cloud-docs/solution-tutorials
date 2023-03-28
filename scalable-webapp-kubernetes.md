@@ -10,14 +10,8 @@ services: containers, Registry, secrets-manager
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
 
 # Scalable web application on Kubernetes
 {: #scalable-webapp-kubernetes}

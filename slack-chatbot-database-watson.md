@@ -10,15 +10,8 @@ services: codeengine, watson-assistant, Db2onCloud
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:note: .note}
-{:tip: .tip}
-{:pre: .pre}
 
 # Build a database-driven Slackbot
 {: #slack-chatbot-database-watson}

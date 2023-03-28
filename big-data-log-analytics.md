@@ -10,15 +10,7 @@ services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-pr
 account-plan: paid
 completion-time: 3h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:note: .note}
-{:codeblock: .codeblock}
+{{site.data.keyword.attribute-definition-list}}
 
 # Process big data logs with SQL
 {: #big-data-log-analytics}

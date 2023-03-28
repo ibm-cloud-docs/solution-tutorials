@@ -1,7 +1,7 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
+  years: 2023
 lastupdated: "2023-03-28"
 lasttested: "2022-12-23"
 
@@ -9,18 +9,8 @@ content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
 account-plan: paid
 completion-time: 2h
-
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{: note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Team based privacy using IAM, VPC, {{site.data.keyword.tg_short}} and DNS
 {: #vpc-tg-dns-iam}

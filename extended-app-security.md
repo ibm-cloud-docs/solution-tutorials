@@ -1,19 +1,13 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
+  years: 2023
 lastupdated: "2023-03-28"
 lasttested: "2022-11-16"
 
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
 
 # Enhance security of your deployed application
 {: #extended-app-security}

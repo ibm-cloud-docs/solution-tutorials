@@ -11,15 +11,7 @@ account-plan: paid
 completion-time: 1h
 
 ---
-
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:pre: .pre}
-{:tip: .tip}
+{{site.data.keyword.attribute-definition-list}}
 
 
 # Continuous Deployment to Kubernetes

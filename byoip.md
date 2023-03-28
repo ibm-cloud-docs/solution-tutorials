@@ -6,18 +6,8 @@ lastupdated: "2023-03-28"
 lasttested: "2019-04-23"
 
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:note: .note}
 
 # Bring Your Own IP Address
 {: #byoip}
