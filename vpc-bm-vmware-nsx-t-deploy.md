@@ -94,7 +94,7 @@ Before you start the actual NSX-T deployment, review the following requirements:
 1. Review [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 2. Review the NSX Manager installation requirements. See [NSX Manager Installation](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF.html#GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF){: external}.
 3. Review and configure the necessary ports and protocols in security groups (if detailed rules are applied). See [Ports and Protocols](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-2ABB0F95-E918-43A1-B096-7401979D51AA.html#GUID-2ABB0F95-E918-43A1-B096-7401979D51AA){: external}.
-4. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6).
+4. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6){: external}.
 5. Collect the IP addresses and FQDNs for the provisioned {{site.data.keyword.bm_is_full_notm}} VLAN interfaces from the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics).
 
 

@@ -54,7 +54,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 1. {{site.data.keyword.mon_short}} is provisioned and agent deployed.
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}}.
 
-There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts){: external} that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend). If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
+There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts){: external} that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend){: external}. If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
 
 <!--##istutorial#-->
 ## Before you begin

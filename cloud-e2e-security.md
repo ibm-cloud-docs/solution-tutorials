@@ -482,7 +482,7 @@ The application can be accessed at `https://secure-file-storage.<your-cluster-in
 
 Authenticated users have their own spaces to store files. While they can not see each other files, they can generate pre-signed URLs to grant temporary access to a specific file.
 
-You can find more details about the application in the [source code repository](https://github.com/IBM-Cloud/secure-file-storage).
+You can find more details about the application in the [source code repository](https://github.com/IBM-Cloud/secure-file-storage){: external}.
 
 ## Review Security Events
 {: #cloud-e2e-security-18}

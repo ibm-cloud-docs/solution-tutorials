@@ -363,7 +363,7 @@ Istio’s traffic routing rules let you easily control the flow of traffic and A
 
 Istio’s traffic management model relies on the Envoy proxies (sidecars) that are deployed along with your services. All traffic that your services send and receive (data plane traffic) is proxied through Envoy, making it easy to direct and control traffic around your mesh without making any changes to your services.
 
-Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/), [Destination Rules](https://istio.io/latest/docs/reference/config/networking/destination-rule/), and [Service Entries](https://istio.io/latest/docs/reference/config/networking/service-entry/).
+Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/), [Destination Rules](https://istio.io/latest/docs/reference/config/networking/destination-rule/), and [Service Entries](https://istio.io/latest/docs/reference/config/networking/service-entry/){: external}.
 
 ### A/B testing with Istio
 {: #openshift-service-mesh-14}

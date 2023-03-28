@@ -141,7 +141,7 @@ To create a virtual machine:
 
 The new virtual machine will be created. Provisioning of the virtual machine may take several minutes to complete. Upon completion, the virtual machine will automatically power on. Repeat the process for the other virtual machines, `application-server-1` and `db-server-1`.
 
-Virtual machine `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html). After the virtual machine has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the virtual machine and attach that to the correct network segment.
+Virtual machine `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external}. After the virtual machine has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the virtual machine and attach that to the correct network segment.
 {: tip}
 
 Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external} for more details.  

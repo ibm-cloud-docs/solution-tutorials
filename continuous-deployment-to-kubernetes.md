@@ -54,7 +54,7 @@ This tutorial walks you through the process setting up a continuous integration 
 
 This tutorial requires:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
 
 ## Create development Kubernetes cluster
 {: #continuous-deployment-to-kubernetes-create_kube_cluster}
@@ -180,7 +180,7 @@ You now have the full deployment setup. To deploy from dev to production, you ma
 {: #continuous-deployment-to-kubernetes-setup_slack}
 {: step}
 
-1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks). You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
+1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks){: external}. You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
 2. Go back to view the list of [toolchains](/devops/toolchains) and select your toolchain, then click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}

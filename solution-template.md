@@ -241,12 +241,12 @@ Finally refer to the link topic under the content and design documentation if yo
 ### Conrefs
 {: #solution-template-13}
 
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
 
 ## Markup for workshops
 {: #solution-template-10}
 
-Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
+Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9){: external}.
 
 ### Tutorial-only content
 {: #solution-template-15}

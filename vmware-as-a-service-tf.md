@@ -86,7 +86,7 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
-The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples).
+The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples){: external}.
 
 Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access.
 
@@ -190,7 +190,7 @@ You can export these to your shell, or you can get the terraform.tfvars lines to
 {: #vmware-as-a-service-vdc-tfvars}
 {: step}
 
-This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
+This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/){: external}.
 
 This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
 

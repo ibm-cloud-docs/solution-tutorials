@@ -195,7 +195,7 @@ To create a Port Group for the  Distributed Switch:
    * DNS : 161.26.0.10, 161.26.0.11
    * NTP : 161.26.0.6
 
-   For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html).
+   For more information on deploying virtual machines on VMware, see [Deploying Virtual Machines on VMware Docs](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-39D19B2B-A11C-42AE-AC80-DDA8682AB42C.html){: external}.
    {: note}
 
 3. After the deployment, test that you can ping your default gateway and that you can resolve names with DNS.

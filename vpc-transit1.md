@@ -43,8 +43,8 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
  During the journey the following are explored:
 - [VPC Network planning](/docs/vpc?topic=vpc-vpc-addressing-plan-design).
 - [VPC egress and ingress routing](/docs/vpc?topic=vpc-about-custom-routes).
-- Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/cloud/direct-link).
-- Connectivity via [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway).
+- Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/cloud/direct-link){: external}.
+- Connectivity via [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway){: external}.
 - [Virtual Network Functions](/docs/vpc?topic=vpc-about-vnf-ha).
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. A layer may introduce small problems and demonstrate solutions in the context of a larger architecture. The layers are implemented using Infrastructure as Code in the form of Terraform configuration files. It will be possible to change parameters, like number of zones, by changing a Terraform variable.

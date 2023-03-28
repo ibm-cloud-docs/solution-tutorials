@@ -314,7 +314,7 @@ In the previous step, VLAN interfaces where created for the private and public u
    
 2. Use the VLAN IDs used earlier in this tutorial, e.g. `700` for the public and `710` for the private. Name your segments so that you can identify the public and private, or refer to [naming recommendations in {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t).
 
-For more information on creating NSX-T segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html). 
+For more information on creating NSX-T segments, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-316E5027-E588-455C-88AD-A7DA930A4F0B.html){: external}. 
 
 The VLAN IDs are only local to the hosts, they are not visible in {{site.data.keyword.vpc_short}}.
 {: note}
@@ -329,7 +329,7 @@ In this step, you will create the Tier 0 logical router or gateway in the NSX-T 
 2. Set high availability (HA) mode as active-standby.
 3. Create external interfaces using the IPs created in the previous steps for each required uplink. Use the created VLAN backed segments as the `Connected To (Segment)`.  
 
-For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html). 
+For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html){: external}. 
 
 NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or Tier 0 logical routers may discard the packets arriving from a "wrong" interface. See more in [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-7B0CD287-C5EB-493C-A57F-EEA8782A741A.html){: external}.
 {: note}
@@ -346,7 +346,7 @@ In this step, you will configure static routes in your Tier 0 logical router poi
 1. Create default route `0.0.0.0/0` using the public uplinks. Use the 1st IP address of the private uplink subnet as the next hop, e.g. `192.168.0.1`. This is the {{site.data.keyword.vpc_short}} implicit router IP address.
 2. Create static routes for your private networks, e.g. `192.168.0.0/16` and `10.0.0.0/8` using the private uplinks. These prefixes are for those networks that are reachable via the {{site.data.keyword.vpc_short}}, or Transit Gateway attached to the {{site.data.keyword.vpc_short}}.  Use the 1st IP address of the private uplink subnet as the next hop, e.g. `192.168.0.9`. This is the {{site.data.keyword.vpc_short}} implicit router IP address.
 
-For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html). 
+For more information on creating Tier 0 logical router, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-E9E62E02-C226-457D-B3A6-FE71E45628F7.html){: external}. 
 
 
 NSX-T has a strict URPF rule by default on the external uplinks. Make sure that your routing is symmetric, or otherwise Tier 0 logical routers may discard the packets arriving from a "wrong" interface.
@@ -355,7 +355,7 @@ NSX-T has a strict URPF rule by default on the external uplinks. Make sure that 
 When creating public and private uplinks, you may need to customize the security group rules. For more information, see [{{site.data.keyword.vpc_short}} Security Groups](/docs/vpc?topic=vpc-using-security-groups).
 {: note}
 
-When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway Firewall on the interfaces and create required rule set to secure your workloads properly. For more information for configuring Gateway Firewall, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-A52E1A6F-F27D-41D9-9493-E3A75EC35481.html).
+When creating public and private uplinks, a recommended best practice is to enable NSX-T Edge Gateway Firewall on the interfaces and create required rule set to secure your workloads properly. For more information for configuring Gateway Firewall, see [VMware Docs](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/administration/GUID-A52E1A6F-F27D-41D9-9493-E3A75EC35481.html){: external}.
 {: note}
 
 

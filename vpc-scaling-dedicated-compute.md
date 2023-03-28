@@ -175,7 +175,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
    
    ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
 2. To check the autoscaling capabilities, you can use a load generator to generate load against your application. 
-   1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/).This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
+   1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external}.This load generator will simulate about 300 clients hitting the frontend API for 30 seconds. 
    2. **Paste** the public load balancer URL from the above step 
    3. **Append** `/v1/controller/balance.php` which is the endpoint to the frontend API. The URL should look like `http://<load-balancer>/v1/controller/balance.php`. 
    4. Click on **Generate load** and wait for the cycle to complete. Hit a couple of cycles to generate more traffic.
@@ -323,7 +323,7 @@ In this section, you will also expand the block storage volume attached to the V
 {: #vpc-scaling-dedicated-compute-dedicated-next}
 {: step}
 
-Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones).
+Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones){: external}.
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}

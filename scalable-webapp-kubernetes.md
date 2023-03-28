@@ -66,7 +66,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
 
 ## Create a Kubernetes cluster
 {: #scalable-webapp-kubernetes-create_kube_cluster}
@@ -140,7 +140,7 @@ This sample application code contains all the necessary configuration files for 
 ### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
 
-The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
+The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/){: external}. Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 Note: If you want to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryshort_notm}} or any other container registry.  
 {: tip}
@@ -435,7 +435,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 {: #scalable-webapp-kubernetes-scale_cluster}
 {: step}
 
-As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
+As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/){: external}. To scale the application to two replicas, run the following command:
 
 ```sh
 kubectl scale deployment kubernetesnodeapp-deployment --replicas=2

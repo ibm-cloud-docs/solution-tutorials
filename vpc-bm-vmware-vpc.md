@@ -253,7 +253,7 @@ For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [c
 
 2. Install [Mozilla Firefox](https://www.mozilla.org/), [Google Chrome](https://www.google.com/intl/us_en/chrome/){: external} or [Microsoft Edge](https://www.microsoft.com/en-us/edge){: external} into your Jump server. One of these browsers is required e.g. to access hosts or vCenter later in this tutorial.
 
-   You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org){: external} or [mRemoteNG](https://mremoteng.org).
+   You may need to use SSH later when configuring, managing or configuring various VMware assets. SSH is not required in this tutorial, but it is useful. You may use your favorite SSH client in the Jump server, such as [PuTTY](https://www.putty.org){: external} or [mRemoteNG](https://mremoteng.org){: external}.
    {: tip}
 
 ## Next steps

@@ -174,7 +174,7 @@ ibmcloud iam authorization-policy-create cloud-object-storage kms Reader --sourc
 
 The console, the Terraform provider and the CLI all use the [IAM policy management API](/apidocs/iam-policy-management#create-policy) to create the policy.
 
-As a next step, with the authorization policy in place, an encrypted storage bucket using a {{site.data.keyword.keymanagementserviceshort}} root key could then be created. The following shows the Terraform code utilizing the resource[**ibm_cos_bucket**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket#example-usage-2). The attribute **key_protect** holds the CRN of the root key.
+As a next step, with the authorization policy in place, an encrypted storage bucket using a {{site.data.keyword.keymanagementserviceshort}} root key could then be created. The following shows the Terraform code utilizing the resource[**ibm_cos_bucket**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket#example-usage-2){: external}. The attribute **key_protect** holds the CRN of the root key.
 
 ```hcl
 resource "ibm_cos_bucket" "cos_bucket" {
@@ -187,7 +187,7 @@ resource "ibm_cos_bucket" "cos_bucket" {
 ```
 {: codeblock}
 
-You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing).
+You can find more examples in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing){: external}.
 {: tip}
 
 
@@ -231,7 +231,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 | {{site.data.keyword.databases-for}} | [Restore backups across accounts](/docs/cloud-databases?topic=cloud-databases-dashboard-backups)|
 {: caption="Summary of sharing and reuse capabilities across services" caption-side="bottom"}
 
-You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing).
+You can find code examples on how to set up resource sharing for some of these service in the GitHub repository [cross-account-resource-sharing](https://github.com/IBM-Cloud/cross-account-resource-sharing){: external}.
 {: tip}
 
 ## Related resources

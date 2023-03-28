@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com).
+This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com){: external}.
 {: shortdesc}
 
 ![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
@@ -61,7 +61,7 @@ You will find instructions to download and install these tools for your operatin
    ```
    {: pre}
 
-2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
+2. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip){: external}. It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
 {: #sql-database-2}
@@ -187,7 +187,7 @@ Change back to the terminal. Now you are going to deploy the application code, u
    ```
    {: pre}
    
-   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine).
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine){: external}.
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}

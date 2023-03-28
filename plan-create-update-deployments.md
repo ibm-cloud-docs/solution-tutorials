@@ -131,7 +131,7 @@ filename = "../outputs/global.env"
 
 There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html), you could put together common configurations as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository, so that you can reference a specific version of a module in your environment files.
 
-Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces). Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces){: external}. Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
 Each environment requires:
 * a dedicated resource group
@@ -140,7 +140,7 @@ Each environment requires:
 * a database
 * a file storage
 
-To access information from the global configuration, you can utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html). It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf){: external} contains the definition of the *global* remote state used to find the organization created earlier:
+To access information from the global configuration, you can utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html){: external}. It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf){: external} contains the definition of the *global* remote state used to find the organization created earlier:
 
 ```sh
 data "terraform_remote_state" "global" {

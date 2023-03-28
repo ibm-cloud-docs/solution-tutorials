@@ -83,7 +83,7 @@ The following diagram shows an example of a modern container architecture that r
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm).
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm){: external}.
 
 #### Kubernetes orchestration
 {: #vm-to-containers-and-kubernetes-6}
@@ -132,8 +132,8 @@ With Kubernetes, you have two options for handling databases:
 
 1. You can run your database inside the Kubernetes cluster, to do that you would need to create a microservice to run the database. For example, if you are using a MySQL database, you would need to complete the following steps:
    - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile){: external} here.
-   - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret).
-   - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml).
+   - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret){: external}.
+   - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml){: external}.
 2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services). To use this option, you would need to do the following:
    - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
    - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
@@ -342,11 +342,11 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 {: #vm-to-containers-and-kubernetes-related}
 
 - [Get started](https://developer.ibm.com/learningpaths/get-started-containers/){: external} with Kubernetes and {{site.data.keyword.containershort_notm}}.
-- {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
+- {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt){: external}.
 - Kubernetes main [docs](http://kubernetes.io/).
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
 - Use [multiple clusters across multiple locations](/docs/containers?topic=containers-regions-and-zones) for high availability.
-- Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://move2kube.konveyor.io/).
+- Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://move2kube.konveyor.io/){: external}.

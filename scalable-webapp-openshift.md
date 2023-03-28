@@ -173,7 +173,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 {: #scalable-webapp-openshift-create_openshift_app}
 {: step}
 
-In this section, you will create an {{site.data.keyword.openshiftshort}} project and then deploy an application to {{site.data.keyword.openshiftshort}} from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/). The code sample is a simple [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
+In this section, you will create an {{site.data.keyword.openshiftshort}} project and then deploy an application to {{site.data.keyword.openshiftshort}} from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/){: external}. The code sample is a simple [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
 
 ### Create an {{site.data.keyword.openshiftshort}} project
 {: #scalable-webapp-openshift-create-project}
@@ -253,7 +253,7 @@ To access the app, you need to create a route. A route announces your service to
    ```
    {: pre}
 
-2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route _$MYPROJECT-https_ in a browser.
+2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`){: external} next to the route _$MYPROJECT-https_ in a browser.
    
 ## Monitor the app
 {: #scalable-webapp-openshift-monitor_application}

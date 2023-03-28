@@ -52,7 +52,7 @@ This tutorial requires:
    * code-engine/ce plugin (`code-engine/ce`) v 1.29.1 or higher - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 * `git` to clone source code repository.
-* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
+* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/){: external}.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
@@ -165,14 +165,14 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
+3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md){: external}.
    
    ```sh
    ibmcloud code-engine application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app){: external} determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
 
    ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 

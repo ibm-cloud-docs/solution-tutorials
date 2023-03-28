@@ -67,7 +67,7 @@ To perform maintenance tasks on these servers such as installing software, perfo
 
 In this section, you will create the VPC and the bastion host.
 
-This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
+This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend){: external}.
 {: note}
 
 1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.

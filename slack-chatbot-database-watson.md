@@ -30,7 +30,7 @@ In this tutorial, you are going to build a Slackbot which allows to search and c
 
 The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. A custom extension, written in Python and deployed as serverless {{site.data.keyword.codeengineshort}} app, exposes a REST API against the database backend.
 
-This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
+This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions){: external}.
 {: note}
 
 ## Objectives

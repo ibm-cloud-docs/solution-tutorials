@@ -216,7 +216,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
    * Uncheck HTTP port.
    * Check HTTPS port and select **Wildcard** SSL certificate.
 
-      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, https://cdnakaivlnqidbg4.cdn.appdomain.cloud). 
+      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, https://cdnakaivlnqidbg4.cdn.appdomain.cloud){: external}. 
       {: note}
 
 1. Accept the **Master Service Agreement** and click **Create**.
@@ -232,7 +232,7 @@ After you have successfully created the CDN mapping:
 
 At that stage, the static content of the application is cached by the CDN but not the dynamic content.
 
-The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html){: external} made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
+The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html){: external} made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11){: external}.
 
 To activate DCA:
 1. Select the **Settings** tab in the CDN configuration.

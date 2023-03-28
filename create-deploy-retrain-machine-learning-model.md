@@ -306,7 +306,7 @@ As the tutorial uses a small dataset, configuring Fairness and Drift won't have 
 ### Evaluate the deployed model
 {: #create-deploy-retrain-machine-learning-model-14}
 
-In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
+In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv){: external}.
 
 1. Click on **Actions** and then **Evaluate now**.
 2. Choose **from CSV file** as your import option and click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.

@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives
@@ -68,7 +68,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
-If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview).
+If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview){: external}.
 {: tip}
 
 1. From the [{{site.data.keyword.Bluemix_notm}} Console](/), launch the [{{site.data.keyword.cloud-shell_notm}}](/shell).
@@ -276,7 +276,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
 {: #lamp-stack-on-vpc-8}
 {: step}
 
-Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page).
+Experience your LAMP stack by installing an application. The following steps install the open source WordPress platform, which is often used to create websites and blogs. For more information and settings for production installation, see the [WordPress documentation](https://codex.wordpress.org/Main_Page){: external}.
 
 1. Run the following command to install WordPress.
    ```sh
@@ -372,7 +372,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
    
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:

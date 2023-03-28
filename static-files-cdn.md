@@ -172,7 +172,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 1. Go to the catalog in the console, and select [**Content Delivery Network**](/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
 
-   The **Hostname** has two purposes. It is a unique name that identifies the CDN instance. It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain).  When filling out this form you will choose one of the following options:
+   The **Hostname** has two purposes. It is a unique name that identifies the CDN instance. It can also be the [DNS subdomain](https://en.wikipedia.org/wiki/Subdomain){: external}.  When filling out this form you will choose one of the following options:
    
    1. To use a DNS subdomain in a domain that you control:
       - Fill in the hostname as the DNS subdomain. For example if you control `example.com` then `static.example.com` would be a valid choice.
