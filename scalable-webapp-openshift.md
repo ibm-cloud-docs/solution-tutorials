@@ -253,7 +253,7 @@ To access the app, you need to create a route. A route announces your service to
    ```
    {: pre}
 
-2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`){: external} next to the route _$MYPROJECT-https_ in a browser.
+2. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route _$MYPROJECT-https_ in a browser.
    
 ## Monitor the app
 {: #scalable-webapp-openshift-monitor_application}

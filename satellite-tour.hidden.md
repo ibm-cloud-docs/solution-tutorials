@@ -206,7 +206,7 @@ Looking at the value for `url`, notice that this instance is using a private end
    * Click **Next**.
 1. In the **Resource details** step:
    * Set **Endpoint name** to something unique such as `<your-initials>-nlu`.
-   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service. You can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`. Make sure you do not include any protocol specification (`https://`){: external} or trailing slash (`/`) but only keep the FQDN.
+   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service. You can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`. Make sure you do not include any protocol specification (`https://`) or trailing slash (`/`) but only keep the FQDN.
    * Set **Destination port** to **443** (HTTPS port).
    * Click **Next**.
 1. In the **Protocol** step:
