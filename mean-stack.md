@@ -172,7 +172,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app){: external} determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
 
    ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 
