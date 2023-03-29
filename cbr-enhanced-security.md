@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){:external: target="_blank" .external}.
+This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){: external}.
 {: shortdesc}
 
 The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. You will also learn about criteria on how to define the access strategy for your cloud resources.
@@ -332,7 +332,7 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){:external: target="_blank" .external}
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){:external: target="_blank" .external}
-* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){:external: target="_blank" .external}
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){: external}
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){: external}
+* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){: external}
 * Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
