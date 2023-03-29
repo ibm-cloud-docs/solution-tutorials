@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-27"
+lastupdated: "2023-03-29"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -11,20 +11,7 @@ account-plan: paid
 completion-time: 1h
 
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} with Terraform
 {: #vmware-as-a-service-tf}
@@ -33,7 +20,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -41,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-tf-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 
 In this tutorial, you will learn:
 
@@ -66,14 +53,14 @@ The following diagram presents an overview of the solution to be deployed.
 
 This tutorial is divided into the following steps:
 
-1. [Clone examples repo](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
-2. [Obtain the required information about your virtual data center](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
-3. [Configure Terraform template variables](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
-4. [Init, plan and apply](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
-5. [Connect to the VMware Cloud Director Console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
-6. [Connect to the virtual machines through the Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
+1. [Clone examples repo](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
+2. [Obtain the required information about your virtual data center](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
+3. [Configure Terraform template variables](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
+4. [Init, plan and apply](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
+5. [Connect to the VMware Cloud Director Console](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
+6. [Connect to the virtual machines through the Internet and validate connectivity](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
-An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
+An [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
 {: note}
 
 ## Before you begin
@@ -81,17 +68,17 @@ An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=sol
 
 This tutorial requires:
 
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](https://{DomainName}/docs/vmware-service?topic=vmware-service-getting-started).
-* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering),
-* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding),
-* [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli?topic=cli-getting-started),
-* [{{site.data.keyword.cloud_notm}} API KEY](https://{DomainName}/docs/account?topic=account-userapikey&interface=ui),
-* [`jq` to query JSON files](https://stedolan.github.io/jq/), and
-* [Terraform](https://www.terraform.io) with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs) to use Infrastructure as Code to provision resources.
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
+* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](/docs/vmware-service?topic=vmware-service-getting-started).
+* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering),
+* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding),
+* [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started),
+* [{{site.data.keyword.cloud_notm}} API KEY](/docs/account?topic=account-userapikey&interface=ui),
+* [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
+* [Terraform](https://www.terraform.io){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 
@@ -99,7 +86,7 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-vdc-clonerepo}
 {: step}
 
-The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples).
+The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples){: external}.
 
 Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access.
 
@@ -122,7 +109,7 @@ https://github.com/IBM/vmwaas-terraform-examples.git
 {: #vmware-as-a-service-vdc-vdcinfo}
 {: step}
 
-As a prerequisite, use the [IBM Cloud Console](http://{DomainName}/vmware) to [create your {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more virtual data centers](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
+As a prerequisite, use the [IBM Cloud Console](/vmware) to [create your {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more virtual data centers](/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
 
 Once the instance and virtual data center has been deployed, you can collect the required details and virtual data center IDs from the Console.
 
@@ -203,7 +190,7 @@ You can export these to your shell, or you can get the terraform.tfvars lines to
 {: #vmware-as-a-service-vdc-tfvars}
 {: step}
 
-This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/).
+This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/){: external}.
 
 This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
 
@@ -846,7 +833,7 @@ After provisioning, please make sure you adjust the example firewall rules accor
 {: #vmware-as-a-service-tf-connect-to-console}
 {: step}
 
-Refer to the [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
+Refer to the [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
 
 Get the virtual machines' usernames and passwords from the terraform `output`, for example:
 

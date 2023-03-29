@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-03-02"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-28"
 
 content-type: tutorial
@@ -11,21 +11,7 @@ account-plan: paid
 completion-time: 2h
 
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
-{:beta: .beta}
+{{site.data.keyword.attribute-definition-list}}
 
 # Text analysis with {{site.data.keyword.codeengineshort}}
 {: #text-analysis-code-engine}
@@ -34,7 +20,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -72,13 +58,13 @@ This tutorial requires:
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 
 You can find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-To avoid the installation of these tools, this tutorial will use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools, this tutorial will use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #text-analysis-cloud-shell}
 {: step}
 
-1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
 <!--#/istutorial#-->
 
@@ -88,7 +74,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 {: #text-analysis-code-engine-shell}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
 -->
 <!--#/isworkshop#-->
@@ -99,10 +85,10 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of {{site.data.keyword.codeengineshort}} entities such as applications, jobs, and builds. Projects are used to manage resources and provide access to its entities.
 
-Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](https://{DomainName}/docs/codeengine?topic=codeengine-manage-project).
+Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](/docs/codeengine?topic=codeengine-manage-project).
 
 <!--##istutorial#-->
-1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](https://{DomainName}/codeengine/overview) page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview) page.
 2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
    - Provide a project name.
@@ -167,7 +153,7 @@ We've already built images for the two applications and pushed them to the publi
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
 
    <!--##istutorial#-->
-   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis) for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
+   The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis){: external} for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {: tip}
    
    <!--#/istutorial#-->
@@ -199,7 +185,7 @@ When you created the application with the `application create` command, you only
 
 Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, {{site.data.keyword.codeengineshort}} deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
 
-1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
+1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above.
 2. Click on **Generate load** to generate traffic.
 3. Run the below command to see the instance(pod) count incrementing as part of the autoscaling.
    ```sh
@@ -217,7 +203,7 @@ Most of these values have a default set if nothing is provided as an option when
     {: pre}
     
 5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
-6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
+6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:
     ```sh
@@ -257,7 +243,7 @@ Most of these values have a default set if nothing is provided as an option when
    ```
    {: pre}
 
-   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time. Learn more by reading the [Working with environment variables](https://{DomainName}/docs/codeengine?topic=codeengine-envvar) documentation topic.
+   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud code-engine application create` command for the frontend application if you knew its value at that time. Learn more by reading the [Working with environment variables](/docs/codeengine?topic=codeengine-envvar) documentation topic.
    {: tip}
 
 4. Hard refresh the frontend URL on the browser to test the connection to the backend application. You should see a page with an option to upload a text file(.txt) and also an error message from the backend application as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the text files. Clicking on **Upload text file** should also show a similar error message.
@@ -274,7 +260,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services
 {: #text-analysis-code-engine-create_services}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage)
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos**.
    3. Select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
@@ -306,7 +292,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
       ```
       {: pre}
 
-5. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
+5. Create an instance of [{{site.data.keyword.nlushort}}](/catalog/services/natural-language-understanding)
    1. Select a location and select **Lite** plan.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Read the license agreement and then check **I have read and agree to the following license agreements:**.
@@ -322,9 +308,9 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 ### Create a Service ID
 {: #text-analysis-code-engine-create_service_id}
 
-To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](https://{DomainName}/iam/serviceids) and configure it with the right access policies.
+To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](/iam/serviceids) and configure it with the right access policies.
 
-1. Go the page to manage [Service IDs](https://{DomainName}/iam/serviceids).
+1. Go the page to manage [Service IDs](/iam/serviceids).
 1. **Create** a new service ID with a unique name, e.g `<PROJECT-NAME>-serviceId`.
 1. Click **Details** and make note of the `ID` of the Service ID. You will need it later.
 1. Select the **Access policies** tab.
@@ -413,7 +399,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
    ```
    {: pre}
 
-   You can set the version of {{site.data.keyword.nlushort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/docs/natural-language-understanding?topic=natural-language-understanding-versioning)
+   You can set the version of {{site.data.keyword.nlushort}} service using the `--env` flag. For versioning, check this [link](/docs/natural-language-understanding?topic=natural-language-understanding-versioning)
    {: tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to job
@@ -473,7 +459,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 
 Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a subscription to a bucket, your job receives a separate event for each successful change to that bucket. 
 
-1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](https://{DomainName}/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify-mgr-cos) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
+1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify-mgr-cos) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
 2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
    ```sh
    ibmcloud code-engine subscription cos create --name backend-job-cos-event --destination-type job --destination backend-job --bucket $COS_BUCKETNAME --prefix files --event-type write
@@ -514,22 +500,22 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
    ```
    {: pre}
    
-2. Navigate to [Resource List](https://{DomainName}/resources/)
+2. Navigate to [Resource List](/resources/)
 3. Delete the services you created:
    * {{site.data.keyword.cos_full}}
    * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
 <!--##isworkshop#-->
 <!--
-1. [Delete the Service ID](https://{DomainName}/iam/serviceids) used for the project.
+1. [Delete the Service ID](/iam/serviceids) used for the project.
 -->
 <!--#/isworkshop#-->
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related resources
 {: #text-analysis-code-engine-related_resources}
 
-- [{{site.data.keyword.codeenginefull_notm}} Documentation](https://{DomainName}/docs/codeengine)
-- [Building applications by using buildpacks](https://{DomainName}/docs/codeengine?topic=codeengine-build-app-tutorial)
-- [Getting started with subscriptions](https://{DomainName}/docs/codeengine?topic=codeengine-subscribing-events)
+- [{{site.data.keyword.codeenginefull_notm}} Documentation](/docs/codeengine)
+- [Building applications by using buildpacks](/docs/codeengine?topic=codeengine-build-app-tutorial)
+- [Getting started with subscriptions](/docs/codeengine?topic=codeengine-subscribing-events)

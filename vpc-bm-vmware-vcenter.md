@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-02-20"
+lastupdated: "2023-03-29"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -11,23 +11,7 @@ services: vmwaresolutions, vpc
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:pre: .pre}
-{:deprecated: .deprecated}
-{:important: .important}
-{:note: .note}
-{:tip: .tip}
-{:preview: .preview}
-
+{{site.data.keyword.attribute-definition-list}}
 
 # Provision vCenter Appliance
 {: #vpc-bm-vmware-vcenter}
@@ -36,7 +20,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -51,7 +35,7 @@ In this tutorial, you will deploy a vCenter for a VMware Deployment in {{site.da
 ## Objectives
 {: #vpc-bm-vmware-vcenter-objectives}
 
-In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](https://{DomainName}/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a {{site.data.keyword.vpc_short}} subnet as shown in the following diagram.
+In this tutorial you will provision a vCenter appliance to the ESXi hosts and create the first compute cluster. vCenter will use {{site.data.keyword.bm_is_short}} [VLAN NIC](/docs/vpc?topic=vpc-bare-metal-servers-network#bare-metal-servers-nics-intro) with an IP address allocated from a {{site.data.keyword.vpc_short}} subnet as shown in the following diagram.
 
 ![Provisioning vCenter into a bare metal server](images/solution63-ryo-vmware-on-vpc/Self-Managed-Simple-20210813v1-VPC-vcenter.svg "Provisioning vCenter into a bare metal server"){: caption="Figure 1. Provisioning vCenter into a bare metal server" caption-side="bottom"}
 
@@ -61,17 +45,17 @@ In this tutorial you will provision a vCenter appliance to the ESXi hosts and cr
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
+* Common [prereqs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision IBM Cloud DNS service for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
-* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision IBM Cloud DNS service for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+[Login](/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
+When advised to use Web browser, use the Jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This Jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 The used variables e.g. $VMWARE_SUBNET_MGMT, $VMWARE_BMS001 and $VMWARE_DNS_ZONE are defined in the previous steps of this tutorial.
@@ -136,7 +120,7 @@ While {{site.data.keyword.vpc_short}} provides both IP and MAC addresses, you on
 
 You need to create a temporary port group for vCenter's networking for the Standard Switch, i.e. add a Port Group for VLAN ID `100`. 
 
-1. Login to host BMS001 / esx-001 as user `root` with a Web browser (`https://<ip address>`) using the hosts PCI interface IP address (`echo $VMWARE_BMS001_MGMT_IP`).
+1. Login to host BMS001 / esx-001 as user `root` with a Web browser (`https://<ip address>`){: external} using the hosts PCI interface IP address (`echo $VMWARE_BMS001_MGMT_IP`).
 2. Select **Networking**.
 3. On **Port Groups** tab, click `Add port group`.
 4. For Virtual switch 0, add a Name **pg-mgmt** and select **VLAN ID 100**.
@@ -149,8 +133,8 @@ You need to create a temporary port group for vCenter's networking for the Stand
 
 The vCenter appliance will be deployed next. You can do this via the Jump host's Web browser.
 
-1. Download the latest VMware vCenter Server 7.0 (e.g. [VMware-VCSA-all-7.0.3-20990077.iso](https://customerconnect.vmware.com/downloads/details?downloadGroup=VC70U3J&productId=974&rPId=99434)) into your Windows Jump Machine.
-2. Order vCenter 7.0 license through [IBM Cloud Classic portal](https://{DomainName}/classic/devices/vmwarelicenses).
+1. Download the latest VMware vCenter Server 7.0 (e.g. [VMware-VCSA-all-7.0.3-20990077.iso](https://customerconnect.vmware.com/downloads/details?downloadGroup=VC70U3J&productId=974&rPId=99434){: external}) into your Windows Jump Machine.
+2. Order vCenter 7.0 license through [IBM Cloud Classic portal](/classic/devices/vmwarelicenses).
 3. Mount the iso into the Operating System and note the location (e.g. <drive_letter>:\).
 
 If you do not have access to VMware customer connect, please contact IBM Cloud Support.

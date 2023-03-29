@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-03"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -10,18 +10,8 @@ services: containers, Registry, cis
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
 
 # Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}
 {: #multi-region-k8s-cis}
@@ -30,7 +20,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -74,7 +64,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition, make sure you:
 - own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers.
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
 
 ## Deploy an application to one location
 {: #multi-region-k8s-cis-2}
@@ -92,7 +82,7 @@ When creating the Kubernetes cluster below:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Locate in **North America** and **Dallas**
 
-Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -100,7 +90,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
@@ -119,7 +109,7 @@ While the cluster is getting ready, you are going to prepare the application.
 ### Deploy the application to the Kubernetes cluster
 {: #multi-region-k8s-cis-deploy_application}
 
-The cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
+The cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](/kubernetes/clusters) console.
 
 1. Gain access to your cluster as described on the Access tab of your cluster. Something like:
    ```bash
@@ -128,7 +118,7 @@ The cluster should be ready. You can check its status in the [{{site.data.keywor
    ```
    {: pre}
 
-1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/).
+1. Create the deployment using a pre-built image of the application. The application source code can be found in this [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: external}.
    ```bash
    kubectl create deploy hello-world-deployment --image=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
    ```
@@ -256,7 +246,7 @@ To configure a global load balancer, you will need:
 The first step is to create an instance of {{site.data.keyword.cis_short_notm}} and to point your custom domain to {{site.data.keyword.cis_short_notm}} name servers.
 
 1. If you do not own a domain, you can buy one from a registrar.
-2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Navigate to [{{site.data.keyword.cis_full_notm}}](/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, click on **Add domain**.
 5. Enter your domain name and click **Next**.
@@ -371,13 +361,13 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
+For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/){: external} as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external} or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks
 {: #multi-region-k8s-cis-proxy_setting}
 
-A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
+A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack){: external}) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
 
 1. In the {{site.data.keyword.cis_short_notm}} dashboard, select **Reliability** > **Global Load Balancer**.
 1. Locate the GLB you created in the **Load Balancers** table.
@@ -439,4 +429,4 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [{{site.data.keyword.containershort_notm}}](/docs/containers)
 * [Building containers from images](/docs/containers?topic=containers-images)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
-* [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
+* [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters){: external}

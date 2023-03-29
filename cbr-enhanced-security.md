@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-27"
+lastupdated: "2023-03-29"
 lasttested: "2023-01-26"
 
 content-type: tutorial
@@ -92,7 +92,7 @@ At the moment, not all cloud services support the report-only mode. Moreover, th
 For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone to identify a VPC as traffic source.
 
 1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](/registry/namespaces) and select the region you want to work with. Click **Create** and enter **YOUR_INITIALS-e2esec** as **Name**. Use your initials or something else to make sure the namespace is unique within the region. Last, **Create** the new namespace.
-2. In the [{{site.data.keyword.cloud_notm}}](https://{DomainName}) console, click on the **Manage** menu and select [**Context-based restrictions**](/context-based-restrictions). In the overview page, click on **Create a network zone**.
+2. In the [{{site.data.keyword.cloud_notm}}](/) console, click on the **Manage** menu and select [**Context-based restrictions**](/context-based-restrictions). In the overview page, click on **Create a network zone**.
 3. Enter **VPCzone** as name. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
 4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
 5. Select **{{site.data.keyword.registryshort_notm}}** in the **Service** section and click **Next**.

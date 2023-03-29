@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-02-23"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-08"
 
 content-type: tutorial
@@ -10,14 +10,8 @@ services: containers, Registry, secrets-manager
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
 
 # Scalable web application on Kubernetes
 {: #scalable-webapp-kubernetes}
@@ -26,12 +20,12 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
+This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/cluster). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
 {: shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -65,14 +59,14 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `Helm 3` to deploy charts.
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
 
 ## Create a Kubernetes cluster
 {: #scalable-webapp-kubernetes-create_kube_cluster}
@@ -82,7 +76,7 @@ In addition, make sure you:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation[Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -90,7 +84,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](https://{DomainName}/vpc-ext/network/vpcs)).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
@@ -114,7 +108,7 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 {: #scalable-webapp-kubernetes-3}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
 -->
 <!--#/isworkshop#-->
@@ -123,9 +117,9 @@ Open the [Kubernetes clusters](https://{DomainName}/kubernetes/clusters) and cli
 {: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
-In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev) sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
+In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
 
-1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/) to your machine:
+1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: external} to your machine:
    ```sh
    git clone https://github.com/IBM-Cloud/kubernetes-node-app
    ```
@@ -146,7 +140,7 @@ This sample application code contains all the necessary configuration files for 
 ### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
 
-The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/). Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
+The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/){: external}. Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 Note: If you want to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryshort_notm}} or any other container registry.  
 {: tip}
@@ -321,14 +315,14 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 In this section we will use {{site.data.keyword.secrets-manager_short}}.  With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, we will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret.
 
-You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
+You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
 
 Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
 
-1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](https://{DomainName}/resources) Under **Security**.
+1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](/resources) Under **Security**.
 2. Click on **Secrets** in the left navigation.
 3. Click **Add** and then **TLS certificates**.
-4. You can select either **Import certificate**, **Order a public certificate** or **Create a private certificate**. Detailed steps are available in the [Adding SSL or TLS certificates](https://{DomainName}/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) topic. If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
+4. You can select either **Import certificate**, **Order a public certificate** or **Create a private certificate**. Detailed steps are available in the [Adding SSL or TLS certificates](/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) topic. If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
 5. Locate the secret entry for the imported or ordered certificate and click on it.
    * Verify the domain name matches your $CUSTOM_DOMAIN. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
    * Click the **copy** symbol next to the secret's **ID**.
@@ -361,7 +355,7 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
    ```
    {: pre}
 
-In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/) and configure a service ID and API key for it.  
+In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/){: external} and configure a service ID and API key for it.  
 
 1. Create a service ID and set it as an environment variable:
    ```sh
@@ -428,7 +422,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 {: #scalable-webapp-kubernetes-monitor_application}
 {: step}
 
-1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on your cluster.
+1. To check the health of your application, navigate to [clusters](/kubernetes/clusters) to see a list of clusters and click on your cluster.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
 3. Click  **Pods** on the left then click a **pod-name** matching $MYAPP
    - Examine he CPU and Memory usage.
@@ -441,7 +435,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 {: #scalable-webapp-kubernetes-scale_cluster}
 {: step}
 
-As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
+As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/){: external}. To scale the application to two replicas, run the following command:
 
 ```sh
 kubectl scale deployment kubernetesnodeapp-deployment --replicas=2
@@ -450,7 +444,7 @@ kubectl scale deployment kubernetesnodeapp-deployment --replicas=2
 
 After a short while, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handle the load balancing between the two replicas.
 
-With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
+With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/){: external} to automatically increase or decrease the number of instances of your apps based on CPU.
 
 To create an autoscaler and to define your policy, run the below command
 ```sh
@@ -522,7 +516,7 @@ Once the autoscaler is successfully created, you should see
 ## Related content
 {: #scalable-webapp-kubernetes-20}
 
-* [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers)
-* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
-* [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
-* [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+* [{{site.data.keyword.containerlong_notm}}](/docs/containers)
+* [Continuous Deployment to Kubernetes](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
+* [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment){: external}
+* [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/){: external}

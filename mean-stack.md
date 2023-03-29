@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-27"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-22"
 
 content-type: tutorial
@@ -10,14 +10,7 @@ services: codeengine, databases-for-mongodb
 account-plan: paid
 completion-time: 1h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 
 # Modern web application using MEAN stack
@@ -27,7 +20,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -59,11 +52,11 @@ This tutorial requires:
    * code-engine/ce plugin (`code-engine/ce`) v 1.29.1 or higher - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 * `git` to clone source code repository.
-* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/).
+* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/){: external}.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
@@ -72,7 +65,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #mean-stack-2}
 {: step}
 
-In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is easy to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
+In this section, you will create a {{site.data.keyword.databases-for-mongodb}} instance in the cloud. {{site.data.keyword.databases-for-mongodb}} is a database-as-a-service that is easy to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.Bluemix_notm}} catalog](/catalog?category=databases#services). To create a {{site.data.keyword.databases-for-mongodb}} instance follow the steps below.
 
 1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your preferred {{site.data.keyword.cloud_notm}} region and resource group. In the example below we will use the `ca-tor (Toronto)` region and the `default` resource group.
 
@@ -81,9 +74,9 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
    ```
    {: codeblock}
 
-   You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](https://{DomainName}/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
+   You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](https://{DomainName}/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-sample-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
+2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-sample-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
 
    ```sh
    ibmcloud resource service-instance-create mean-sample-mongodb databases-for-mongodb standard ca-tor
@@ -165,21 +158,21 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Setting up and using secrets and configmaps](https://{DomainName}/docs/codeengine?topic=codeengine-configmap-secret).
+2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Setting up and using secrets and configmaps](/docs/codeengine?topic=codeengine-configmap-secret).
    
    ```sh
    ibmcloud code-engine secret create --name mean-stack-secrets --from-env-file .env
    ```
    {: codeblock}
 
-3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md).
+3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md){: external}.
    
    ```sh
    ibmcloud code-engine application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](https://{DomainName}/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app){: external} determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
 
    ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 
@@ -187,10 +180,10 @@ We've already built a container image for the application and pushed it to the p
 {: #mean-stack-scalecompute}
 {: step}
 
-{{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](https://{DomainName}/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resources, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
+{{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resources, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
 {: shortdesc}
 
-1. Navigate to the Code Engine [Projects page](https://{DomainName}/codeengine/projects).
+1. Navigate to the Code Engine [Projects page](/codeengine/projects).
 2. Click on the **mean-stack** project created earlier.
 2. Under **Summary**, click on **Applications**. 
 3. Click on the **mean-stack-application** created earlier. 
@@ -208,7 +201,7 @@ We've already built a container image for the application and pushed it to the p
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 {: shortdesc}
 
-1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](https://{DomainName}/resources) Under **Databases**.
+1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](/resources) Under **Databases**.
 2. Click on the **Resources** panel.
    ![Scale Resources](images/solution7/MongoDB_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
@@ -239,10 +232,10 @@ To remove resource, follow these steps:
    ```
    {: pre}
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related Content
 {: #mean-stack-7}
 
-- [Text analysis with Code Engine](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine)
+- [Text analysis with Code Engine](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine)

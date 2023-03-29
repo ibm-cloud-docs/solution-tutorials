@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-02-22"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-22"
 
 content-type: tutorial
@@ -10,15 +10,8 @@ services: codeengine, watson-assistant, Db2onCloud
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:note: .note}
-{:tip: .tip}
-{:pre: .pre}
 
 # Build a database-driven Slackbot
 {: #slack-chatbot-database-watson}
@@ -27,7 +20,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -37,7 +30,7 @@ In this tutorial, you are going to build a Slackbot which allows to search and c
 
 The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. A custom extension, written in Python and deployed as serverless {{site.data.keyword.codeengineshort}} app, exposes a REST API against the database backend.
 
-This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions).
+This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions){: external}.
 {: note}
 
 ## Objectives
@@ -51,9 +44,9 @@ This tutorial uses the new experience of {{site.data.keyword.conversationshort}}
 ![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. The user interacts with [{{site.data.keyword.conversationfull}}](https://{DomainName}/docs/watson-assistant), either through Slack or using a web chat client
-2. The chatbot utilizes a custom extension with REST API deployed as Python app on [{{site.data.keyword.codeengineshort}}](https://{DomainName}/docs/codeengine?topic=codeengine-getting-started)
-3. The custom extension app retrieves data from and inserts data into a [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/docs/Db2onCloud) database
+1. The user interacts with [{{site.data.keyword.conversationfull}}](/docs/watson-assistant), either through Slack or using a web chat client
+2. The chatbot utilizes a custom extension with REST API deployed as Python app on [{{site.data.keyword.codeengineshort}}](/docs/codeengine?topic=codeengine-getting-started)
+3. The custom extension app retrieves data from and inserts data into a [{{site.data.keyword.Db2_on_Cloud_short}}](/docs/Db2onCloud) database
 
 
 ## Before you begin
@@ -65,11 +58,11 @@ This tutorial requires:
 * `git` to clone source code repository,
 * `jq` to query JSON data.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 ## Set up services and deploy backend
@@ -78,7 +71,7 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you are going to set up the needed services and deploy the backend app. All of this can be accomplished from the command line interface (CLI) in a terminal.
 
-1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
+1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson){: external} and navigate into the cloned directory:
    ```sh
    git clone https://github.com/IBM-Cloud/slack-chatbot-database-watson
    cd slack-chatbot-database-watson
@@ -94,7 +87,7 @@ In this section, you are going to set up the needed services and deploy the back
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-3. Create a [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/docs/Db2onCloud) instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
+3. Create a [{{site.data.keyword.Db2_on_Cloud_short}}](/docs/Db2onCloud) instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
    ```sh
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
@@ -148,7 +141,7 @@ In this section, you are going to set up the needed services and deploy the back
 
    Note the reported URI for the app. It is needed in the next steps.
 
-   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. See the {{site.data.keyword.codeengineshort}} documentation on [building a container image](https://{DomainName}/docs/codeengine?topic=codeengine-build-image) or [deploying your application code from local source](https://{DomainName}/docs/codeengine?topic=codeengine-migrate-cf-ce-local) for details.
+   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. See the {{site.data.keyword.codeengineshort}} documentation on [building a container image](/docs/codeengine?topic=codeengine-build-image) or [deploying your application code from local source](/docs/codeengine?topic=codeengine-migrate-cf-ce-local) for details.
    {: tip}
 
 7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.
@@ -179,7 +172,7 @@ In this section, you are going to set up the needed services and deploy the back
 In this part of the tutorial you are going to work with the {{site.data.keyword.conversationshort}} service. First, you create a new assistant. Then, you create the custom extension and add it to the assistant. Thereafter, you will create actions and test them using the web preview. Finally, you integrate the chatbot with Slack and perform more tests.
 
 
-1. In the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service under the **AI / Machine Learning** section. Click on its entry to open the service details.
+1. In the [{{site.data.keyword.cloud_notm}} Resource List](/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service under the **AI / Machine Learning** section. Click on its entry to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. 
 3. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing. 
 4. For the first question on deployment pick **Web**. 
@@ -215,7 +208,7 @@ First, you are going to create an action to retrieve information about a single 
 4. The next screen shows the step editor for the action with **Step 1** open. In **Assistant says** type **What is the event name?**. Then, for **Define customer response** pick **Free text** as option. Leave **And then** as **Continue to next step**.
 5. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistant says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
 6. Add a **New step**. At the top change the selection so that **Step 3 is taken with condition**. Under **Conditions** and **If** select **2 Ran successfully**. It refers to a result from using the extension in step 2.
-7. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
+7. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
 8. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
 
    For the sake of simplicity, not all errors and conditions like empty results are handled.
@@ -254,7 +247,7 @@ Similar to retrieving a record it is possible to gather input about an event and
 13. Test the new action by clicking on **Preview** on the left and using the webchat. Type **add new event** and submit. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 
 
-When creating a chatbot, you may want to [publish a chatbot](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows rolling back changes and to continue with development without impacting the chatbot interacting with real customers.
+When creating a chatbot, you may want to [publish a chatbot](/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows rolling back changes and to continue with development without impacting the chatbot interacting with real customers.
 {: tip}
 
 ## Integrate with Slack
@@ -264,7 +257,7 @@ When creating a chatbot, you may want to [publish a chatbot](https://{DomainName
 Now, you will integrate the chatbot with Slack.
 1. On the lower left, click on **Integrations**.
 2. In the integrations overview, in the section **Channels**, locate **Slack** and click **Add**.
-3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/watson-assistant?topic=watson-assistant-deploy-slack).
+3. Follow the step by step instructions to integrate the **Draft** environment of your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](/docs/watson-assistant?topic=watson-assistant-deploy-slack).
 4. Once done, open up your Slack workspace. Begin a direct chat with the bot and say **show me event details**. Then, similar to above, answer with **Think** when prompted for an event name.
 
 ![Slack with the eventbot](images/solution19/Slackbot_event.png){: caption="Slack with the eventbot" caption-side="bottom"}
@@ -276,9 +269,9 @@ Now, you will integrate the chatbot with Slack.
 {: removeresources}
 {: step}
 
-To clean up the resources for this tutorial, go to the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources). Locate the service instances of {{site.data.keyword.conversationshort}} and {{site.data.keyword.Db2_on_Cloud_short}} and delete them. Similarly, locate the {{site.data.keyword.codeengineshort}} project and delete it.
+To clean up the resources for this tutorial, go to the [{{site.data.keyword.cloud_notm}} Resource List](/resources). Locate the service instances of {{site.data.keyword.conversationshort}} and {{site.data.keyword.Db2_on_Cloud_short}} and delete them. Similarly, locate the {{site.data.keyword.codeengineshort}} project and delete it.
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content
@@ -286,5 +279,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 Here are additional resources on the topics covered in this tutorial.
-* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast)
-* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli)
+* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast){: external}
+* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external}

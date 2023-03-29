@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-12-22"
+  years: 2021, 2023
+lastupdated: "2023-03-29"
 lasttested: "2022-11-21"
 
 content-type: tutorial
@@ -10,18 +10,7 @@ services: containers, virtual-servers, cloud-object-storage, Cloudant, terraform
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
+{{site.data.keyword.attribute-definition-list}}
 
 # Plan, create and update deployment environments
 {: #plan-create-update-deployments}
@@ -30,19 +19,19 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.cloud_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
+Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.cloud_notm}} CLI and [Terraform](https://www.terraform.io/){: external} to automate the creation and maintenance of these deployment environments.
 {: shortdesc}
 
-Developers do not like to write the same thing twice. The [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle is one example of this. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Consequently shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and uninteresting tasks.
+Developers do not like to write the same thing twice. The [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself){: external} principle is one example of this. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Consequently shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and uninteresting tasks.
 
 Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a Service (CaaS), Functions as a Service (FaaS) have given developers a high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, Kubernetes clusters, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, to update the configuration over time, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial, we've introduced best practices to organize users, teams and applications](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
+Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial, we've introduced best practices to organize users, teams and applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Objectives
 {: #plan-create-update-deployments-objectives}
@@ -67,13 +56,13 @@ Multiple environments are pretty common in a project to support the different ph
 
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` commands. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 
 With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, {{site.data.keyword.codeengineshort}}, and services, you can provision all of them from the command line.
 
 Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned. It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
-To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs), enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS services, and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
+To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs){: external}, enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS services, and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
 
 ## Write scripts to automate the deployment
 {: #plan-create-update-deployments-scripts}
@@ -81,7 +70,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
 As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code. Thus, store them in a source control management system. Over time this will bring benefits such as using the source control review workflow to validate changes and continuous integration to automatically deploy infrastructure changes.
 
-[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to set up the environments defined earlier. You can clone the repository to follow the next sections detailing the content of the files.
+[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code){: external} has all the configuration files needed to set up the environments defined earlier. You can clone the repository to follow the next sections detailing the content of the files.
 
    ```sh
    git clone https://github.com/IBM-Cloud/multiple-environments-as-code
@@ -92,10 +81,10 @@ The repository is structured as follow:
 
 | Directory | Description |
 | ----------------- | ----------- |
-| [terraform](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform) | Home for the Terraform files |
-| [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) | Terraform files to provision resources common to the three environments |
-| [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
-| [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
+| [terraform](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform){: external} | Home for the Terraform files |
+| [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global){: external} | Terraform files to provision resources common to the three environments |
+| [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment){: external} | Terraform files specific to a given environment |
+| [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles){: external} | Terraform files to configure user policies |
 {: caption="List of folders in the repository and their description" caption-side="bottom"}
 
 ### Heavy lifting with Terraform
@@ -115,7 +104,7 @@ They all share the same type of resources, but differ by the allocated capacity 
 ### Global Configuration
 {: #plan-create-update-deployments-4}
 
-Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) directory, you find the Terraform scripts to provision common resources. It could be an instance of {{site.data.keyword.atracker_full_notm}} (this tutorial won't create such instance). To illustrate what could be done, the file [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the readout of the account ID:
+Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global){: external} directory, you find the Terraform scripts to provision common resources. It could be an instance of {{site.data.keyword.atracker_full_notm}} (this tutorial won't create such instance). To illustrate what could be done, the file [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf){: external} contains the readout of the account ID:
 
 ```sh
 data "ibm_iam_account_settings" "iam_account_settings" {
@@ -123,7 +112,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {
 ```
 {: codeblock}
 
-To fully deploy the environments, you will use a mix of Terraform and the {{site.data.keyword.cloud_notm}} CLI. Shell scripts written with the CLI may need to reference the account ID or region. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
+To fully deploy the environments, you will use a mix of Terraform and the {{site.data.keyword.cloud_notm}} CLI. Shell scripts written with the CLI may need to reference the account ID or region. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf){: external} which will produce a file containing this information as keys/values suitable to be reused in scripting:
 
 ```sh
 # generate a property file suitable for shell scripts with useful variables relating to the environment
@@ -140,9 +129,9 @@ filename = "../outputs/global.env"
 ### Individual Environments
 {: #plan-create-update-deployments-5}
 
-There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html), you could put together common configurations as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository, so that you can reference a specific version of a module in your environment files.
+There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html){: external}, you could put together common configurations as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository, so that you can reference a specific version of a module in your environment files.
 
-Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces). Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces){: external}. Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
 Each environment requires:
 * a dedicated resource group
@@ -151,7 +140,7 @@ Each environment requires:
 * a database
 * a file storage
 
-To access information from the global configuration, you can utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html). It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
+To access information from the global configuration, you can utilize [Terraform remote state](https://www.terraform.io/docs/state/remote.html){: external}. It allows the reference of an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces, leaving the responsibility of individual parts to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf){: external} contains the definition of the *global* remote state used to find the organization created earlier:
 
 ```sh
 data "terraform_remote_state" "global" {
@@ -240,7 +229,7 @@ resource "ibm_resource_instance" "objectstorage" {
 
 All of the operations will be done in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 ### Get the code
@@ -256,9 +245,9 @@ git clone https://github.com/IBM-Cloud/multiple-environments-as-code
 ### Set Platform API key
 {: #plan-create-update-deployments-10}
 
-1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
+1. If you don't already have one, obtain a [Platform API key](/iam/apikeys) and save the API key for future reference.
 
-1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command:
+1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl){: external} to *terraform/credentials.tfvars* by running the below command:
    ```sh
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
    ```
@@ -294,7 +283,7 @@ Once Terraform completes, it will have created:
 * the `terraform.tfstate` file.
 
 
-This tutorial uses the `local` backend provider for Terraform state. It is handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
+This tutorial uses the `local` backend provider for Terraform state. It is handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html){: external} for a list of available options. Some backends even support versioning and locking of Terraform states.
 {: tip}
 
 ### Create per-environment resources
@@ -436,9 +425,9 @@ You can repeat the steps for `testing` and `production`.
 ### Assign user policies
 {: #plan-create-update-deployments-16}
 
-For user policies on resources like the deployed services or a possible Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
+For user policies on resources like the deployed services or a possible Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles){: external} folder in the cloned repo.
 
-For the *Development* environment as discussed in [this tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), the policies to define are:
+For the *Development* environment as discussed in [this tutorial](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), the policies to define are:
 
 |           | IAM Access policies |
 | --------- | ----------- |
@@ -448,7 +437,7 @@ For the *Development* environment as discussed in [this tutorial](https://{Domai
 | Pipeline Service ID | - Resource Group: *Viewer* \n - Platform Access Roles in the Resource Group: *Editor*, *Viewer* |
 {: caption="IAM policies for the Development environment" caption-side="bottom"}
 
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](/docs/account?topic=account-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
 For the *Developer* role in the *Development* environment, this translates to:
 
@@ -506,7 +495,7 @@ resource "ibm_iam_access_group_members" "developers" {
 {: codeblock}
 
 
-The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Service ID* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment,
+The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf){: external} file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Service ID* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment,
 
 1. Change to the `terraform/roles/development` directory
 2. Copy the template `tfvars` file. There is one per environment (you can find the `production` and `testing` templates under their respective folders in `roles` directory)
@@ -580,12 +569,12 @@ You can repeat the steps for `testing` and `production`.
    ```
    {: codeblock}
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content
 {: #plan-create-update-deployments-18}
 
-* [Tutorial with Terraform: PHP web application on a LAMP Stack in VPC](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
-* [Getting started with Terraform on {{site.data.keyword.cloud_notm}}](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-getting-started)
-* [Examples using {{site.data.keyword.cloud_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
+* [Tutorial with Terraform: PHP web application on a LAMP Stack in VPC](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
+* [Getting started with Terraform on {{site.data.keyword.cloud_notm}}](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-getting-started)
+* [Examples using {{site.data.keyword.cloud_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples){: external}
