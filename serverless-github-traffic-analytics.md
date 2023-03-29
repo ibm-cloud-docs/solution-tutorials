@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-11-21"
 
 content-type: tutorial
@@ -208,7 +208,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 {: #serverless-github-traffic-analytics-6}
 {: step}
 
-With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron), the app subscribes to events on the specified schedule (eventing). 
+With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron){: external}, the app subscribes to events on the specified schedule (eventing). 
 
 1. Create the cron subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
    ```sh
@@ -299,7 +299,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ```
    {: pre}
 
-6. Delete the [Github.com token](https://github.com/settings/tokens)
+6. Delete the [Github.com token](https://github.com/settings/tokens){: external}
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}

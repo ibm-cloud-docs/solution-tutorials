@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-21"
 
 content-type: tutorial
@@ -77,7 +77,7 @@ This tutorial comes with sample code to illustrate the different options to prov
 
 It will walk you through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
 
-1. Clone the tutorial [source code repository](https://github.com/IBM-Cloud/vpc-tutorials):
+1. Clone the tutorial [source code repository](https://github.com/IBM-Cloud/vpc-tutorials){: external}:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
@@ -434,7 +434,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 {: #vpc-app-deploy-ansible}
 {: step}
 
-[Ansible](https://www.ansible.com/){: external} is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/){: external} and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
+[Ansible](https://www.ansible.com/){: external} is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/){: external} and [Puppet](https://puppet.com/){: external}, and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
 
 Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 
@@ -610,5 +610,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 - [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 - [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/){: external} 
-- [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/articles/secure-vpc-access-with-a-bastion-host-and-terraform/)
+- [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/articles/secure-vpc-access-with-a-bastion-host-and-terraform/){: external}
 

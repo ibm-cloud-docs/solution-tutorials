@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-11-03"
 
 ---
@@ -153,7 +153,7 @@ The following diagram shows the development, testing, and production resource gr
 
 ![Diagram showing separate clusters and resource groups to isolate environments](./images/solution20-users-teams-applications/multiple-environments.svg){: caption="Separate clusters and resource groups to isolate environments" caption-side="bottom"}
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](/docs/cli?topic=cli-install-ibmcloud-cli), [Terraform](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](/docs/cli?topic=cli-install-ibmcloud-cli), [Terraform](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-about), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm){: external}, Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 The above design utilizes a Kubernetes cluster for each environment. This has the following benefits:
 * no matter the environment, all clusters will tend to look the same,
@@ -181,7 +181,7 @@ When configuring the DevOps pipeline, make sure to use the API key of a service 
 
 During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
-As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain){: external} is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies){: external} will provide a good solution to compose your application.
+As you get acquainted with Kubernetes, [Helm](https://helm.sh/){: external}, the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain){: external} is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies){: external} will provide a good solution to compose your application.
 
 ## Expand the tutorial
 {: #users-teams-applications-7}
@@ -198,7 +198,7 @@ Congratulations, your application can now safely be deployed from dev to product
 * [Best practices for organizing resources in a resource group](/docs/account?topic=account-account_setup)
 * [Analyze logs and monitor health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
-* [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
-* [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
+* [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain){: external}
+* [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain){: external}
 * [Grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam)
 * [Grant permissions to a user to view metrics](/docs/monitoring?topic=monitoring-iam)

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-27"
 
 content-type: tutorial
@@ -659,4 +659,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #big-data-log-analytics-8}
 {: related}
 
-* [Apache Kafka](https://kafka.apache.org/)
+* [Apache Kafka](https://kafka.apache.org/){: external}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -133,7 +133,7 @@ You need to create a temporary port group for vCenter's networking for the Stand
 
 The vCenter appliance will be deployed next. You can do this via the Jump host's Web browser.
 
-1. Download the latest VMware vCenter Server 7.0 (e.g. [VMware-VCSA-all-7.0.3-20990077.iso](https://customerconnect.vmware.com/downloads/details?downloadGroup=VC70U3J&productId=974&rPId=99434)) into your Windows Jump Machine.
+1. Download the latest VMware vCenter Server 7.0 (e.g. [VMware-VCSA-all-7.0.3-20990077.iso](https://customerconnect.vmware.com/downloads/details?downloadGroup=VC70U3J&productId=974&rPId=99434){: external}) into your Windows Jump Machine.
 2. Order vCenter 7.0 license through [IBM Cloud Classic portal](/classic/devices/vmwarelicenses).
 3. Mount the iso into the Operating System and note the location (e.g. <drive_letter>:\).
 

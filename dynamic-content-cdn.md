@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-21"
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -100,7 +100,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
-This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: external} is based on [Beego](https://beego.vip/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
+This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: external} is based on [Beego](https://beego.vip/){: external}, a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
 {: #dynamic-content-cdn-3}

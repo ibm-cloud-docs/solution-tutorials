@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -74,7 +74,7 @@ This tutorial requires:
 * [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding),
 * [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started),
 * [{{site.data.keyword.cloud_notm}} API KEY](/docs/account?topic=account-userapikey&interface=ui),
-* [`jq` to query JSON files](https://stedolan.github.io/jq/), and
+* [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
 * [Terraform](https://www.terraform.io){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
 
 <!--##istutorial#-->

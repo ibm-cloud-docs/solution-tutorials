@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-10-17"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -146,7 +146,7 @@ In the following examples, a specific {{site.data.keyword.cos_short}} instance i
 ![Grant a service-to-service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: caption="Grant a service-to-service authorization" caption-side="bottom"}
 
 
-The following shows the Terraform code to create a [resource with the same IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy):
+The following shows the Terraform code to create a [resource with the same IAM authorization policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy){: external}:
 
 
 ```hcl
@@ -242,6 +242,6 @@ The following document provides details on some cross-account scenarios:
 
 
 Blog posts related to sharing resource across multiple accounts:
-- [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html)
+- [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html){: external}
 - [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external} discusses [**IBMCLOUD_HOME**](/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
 

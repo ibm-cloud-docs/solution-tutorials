@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2021, 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-11-21"
 
 content-type: tutorial
@@ -62,7 +62,7 @@ With `ibmcloud` and its plugins, you can automate the creation and configuration
 
 Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned. It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
-To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs), enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS services, and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
+To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.cloud_notm}} has [its provider for Terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs){: external}, enabling users of {{site.data.keyword.cloud_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.cloud_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS services, and serverless ({{site.data.keyword.openwhisk_short}} and {{site.data.keyword.codeengineshort}}) resources.
 
 ## Write scripts to automate the deployment
 {: #plan-create-update-deployments-scripts}
@@ -129,7 +129,7 @@ filename = "../outputs/global.env"
 ### Individual Environments
 {: #plan-create-update-deployments-5}
 
-There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html), you could put together common configurations as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository, so that you can reference a specific version of a module in your environment files.
+There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html){: external}, you could put together common configurations as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can modify the *development* environment to validate changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository, so that you can reference a specific version of a module in your environment files.
 
 Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces){: external}. Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
@@ -577,4 +577,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 * [Tutorial with Terraform: PHP web application on a LAMP Stack in VPC](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
 * [Getting started with Terraform on {{site.data.keyword.cloud_notm}}](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-getting-started)
-* [Examples using {{site.data.keyword.cloud_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
+* [Examples using {{site.data.keyword.cloud_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples){: external}

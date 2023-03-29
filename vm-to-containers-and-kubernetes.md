@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-01"
 
 ---
@@ -88,7 +88,7 @@ In addition, containers allow you to share the host OS. This reduces duplication
 #### Kubernetes orchestration
 {: #vm-to-containers-and-kubernetes-6}
 
-[Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
+[Kubernetes](http://kubernetes.io/){: external} is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
 
 This [self-paced workshop](https://ibm.github.io/kube101/){: external} can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/){: external} documentation page to learn more about the concepts of Kubernetes.
 
@@ -228,7 +228,7 @@ The following key principles are required:
 {: #vm-to-containers-and-kubernetes-17}
 {: secrets}
 
-It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or SSH keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/){: external}** that hold sensitive information, such as passwords, OAuth tokens, or SSH keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a container image.
 
 One way of using secrets in Kubernetes is by doing something like this:
 
@@ -254,7 +254,7 @@ One way of using secrets in Kubernetes is by doing something like this:
 To containerize your app, you must create a container image.
 {: shortdesc}
 
-An image is created from a [Dockerfile](https://docs.docker.com/engine/reference/builder/#usage), which is a file that contains instructions and commands to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
+An image is created from a [Dockerfile](https://docs.docker.com/engine/reference/builder/#usage){: external}, which is a file that contains instructions and commands to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
 
 To build your own Dockerfile for your existing app, you might use the following commands:
 
@@ -343,7 +343,7 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 
 - [Get started](https://developer.ibm.com/learningpaths/get-started-containers/){: external} with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt){: external}.
-- Kubernetes main [docs](http://kubernetes.io/).
+- Kubernetes main [docs](http://kubernetes.io/){: external}.
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).

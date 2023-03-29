@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-07"
 
 content-type: tutorial
@@ -109,7 +109,7 @@ Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on 
 - The subnet CIDRs further divide the /24 into /26.
 
 The subnets in the transit and spoke are for the different resources:
-- worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift), etc. VPC instances are demonstrated in this tutorial.
+- worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift){: external}, etc. VPC instances are demonstrated in this tutorial.
 - dns - {{site.data.keyword.dns_short}} location appliances used in part two.
 - vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) used in part two.
 - firewall - firewall-router VPC instances.

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-23"
 
 content-type: tutorial
@@ -161,7 +161,7 @@ Later in the tutorial, after all resources have been created, it can be informat
 
 All the operations will be performed in a `bash` shell and making use of `terraform` and `ibmcloud` command. You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-1. Git clone the following [repository](https://github.com/IBM-Cloud/vpc-tg-dns-iam):
+1. Git clone the following [repository](https://github.com/IBM-Cloud/vpc-tg-dns-iam){: external}:
 
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-tg-dns-iam

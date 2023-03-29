@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-24"
 
 content-type: tutorial
@@ -363,7 +363,7 @@ Istio’s traffic routing rules let you easily control the flow of traffic and A
 
 Istio’s traffic management model relies on the Envoy proxies (sidecars) that are deployed along with your services. All traffic that your services send and receive (data plane traffic) is proxied through Envoy, making it easy to direct and control traffic around your mesh without making any changes to your services.
 
-Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/), [Destination Rules](https://istio.io/latest/docs/reference/config/networking/destination-rule/), and [Service Entries](https://istio.io/latest/docs/reference/config/networking/service-entry/){: external}.
+Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/){: external}, [Destination Rules](https://istio.io/latest/docs/reference/config/networking/destination-rule/){: external}, and [Service Entries](https://istio.io/latest/docs/reference/config/networking/service-entry/){: external}.
 
 ### A/B testing with Istio
 {: #openshift-service-mesh-14}
@@ -537,7 +537,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 ## Related content
 {: #openshift-service-mesh-0}
 
-- [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html)
+- [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html){: external}
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
-- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html)- [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
-- [Istio Observability](https://istio.io/docs/concepts/observability/)
+- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html){: external} - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
+- [Istio Observability](https://istio.io/docs/concepts/observability/){: external}

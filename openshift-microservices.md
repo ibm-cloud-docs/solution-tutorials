@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-24"
 
 content-type: tutorial
@@ -1158,4 +1158,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
 - [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant)
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-- [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html)
+- [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html){: external}

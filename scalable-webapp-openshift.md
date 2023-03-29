@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-24"
 
 content-type: tutorial
@@ -725,5 +725,5 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 {: #scalable-webapp-openshift-0}
 
 * [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html)
-* [Secured routes](https://docs.openshift.com/container-platform/4.12/networking/routes/secured-routes.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html){: external}
+* [Secured routes](https://docs.openshift.com/container-platform/4.12/networking/routes/secured-routes.html){: external}

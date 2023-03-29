@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-02"
 
 content-type: tutorial
@@ -80,7 +80,7 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Import data
 {: #create-deploy-retrain-machine-learning-model-import_data}
 
-As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/){: external}. This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 
 ![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: caption="Iris Example" caption-side="bottom"}
 {: style="text-align: center;"}

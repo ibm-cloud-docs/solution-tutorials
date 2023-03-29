@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2023-02-22"
 
 content-type: tutorial
@@ -279,5 +279,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 Here are additional resources on the topics covered in this tutorial.
-* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast)
-* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli)
+* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast){: external}
+* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-02-22"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -210,7 +210,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #solution-template-0}
 
 Want to add to or change this tutorial? Here are some ideas:
-- idea with [link](http://example.com) to resources to help implement the idea
+- idea with [link](http://example.com){: external} to resources to help implement the idea
 - idea with high level steps the user should follow
 - avoid generic ideas you did not test on your own
 - don't throw up ideas that would take days to implement
@@ -220,7 +220,7 @@ Want to add to or change this tutorial? Here are some ideas:
 {: #solution-template-related}
 
 * [Relevant links in IBM Cloud docs](/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
+* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/){: external}
 
 ## Writing guide
 {: #solution-template-writing_guide}

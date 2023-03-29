@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-19"
 
 content-type: tutorial
@@ -372,7 +372,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services){: external}, see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
    
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
@@ -457,7 +457,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor), otherwise AppArmor will block the access. 
+1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor){: external}, otherwise AppArmor will block the access. 
    ```sh
    echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
    ```

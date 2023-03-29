@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-11-16"
 
 ---
@@ -149,13 +149,13 @@ The following resources provide additional insights to security on {{site.data.k
 
 * Tutorial: [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications)
-* Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)
-* Blog: [Onboarding Cloud Projects: Security and Resource Considerations](https://www.ibm.com/cloud/blog/onboarding-cloud-projects-security-and-resource-considerations)
-* Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps)
-* Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2)
-* Blog: [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)
-* Blog: [Increase Information Security for Db2 on IBM Cloud](https://www.ibm.com/cloud/blog/increase-information-security-for-db2-on-ibm-cloud)
-* IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/architecture/architectures/securityArchitecture)
+* Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security){: external}
+* Blog: [Onboarding Cloud Projects: Security and Resource Considerations](https://www.ibm.com/cloud/blog/onboarding-cloud-projects-security-and-resource-considerations){: external}
+* Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps){: external}
+* Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2){: external}
+* Blog: [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project){: external}
+* Blog: [Increase Information Security for Db2 on IBM Cloud](https://www.ibm.com/cloud/blog/increase-information-security-for-db2-on-ibm-cloud){: external}
+* IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/architecture/architectures/securityArchitecture){: external}
 * [{{site.data.keyword.cloud_notm}} platform service CLIs and APIs](/docs/overview?topic=overview-platform-svc-cli-api)
-* [IBM Cloud Compliance Programs](https://www.ibm.com/cloud/compliance)
+* [IBM Cloud Compliance Programs](https://www.ibm.com/cloud/compliance){: external}
 

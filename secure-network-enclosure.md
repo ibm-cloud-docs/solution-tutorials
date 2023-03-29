@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -74,7 +74,7 @@ In this tutorial, the network enclosure created is not visible on the public int
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access){: external} or use a VPN client for [Linux](/docs/iaas-vpn?topic=iaas-vpn-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-windows7).
 
-   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access), such as vpn.ams01.softlayer.com as the gateway address.
+   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access){: external}, such as vpn.ams01.softlayer.com as the gateway address.
    {: tip}
 
 ### Check account permissions
@@ -513,5 +513,5 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 - [IBM Virtual Router Appliance](/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](/docs/subnets?topic=subnets-about-subnets-and-ips#about-subnets-and-ips)
-- [IBM QRadar Security Intelligence Platform](http://www.ibm.com/support/knowledgecenter/SS42VS)
+- [IBM QRadar Security Intelligence Platform](http://www.ibm.com/support/knowledgecenter/SS42VS){: external}
 - [Vyatta documentation](/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)

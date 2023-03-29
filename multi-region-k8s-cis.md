@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-28"
+lastupdated: "2023-03-29"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -367,7 +367,7 @@ For a secured connection with HTTPS, you can either obtain a certificate from [L
 ### Increase performance and protect from Denial of Service attacks
 {: #multi-region-k8s-cis-proxy_setting}
 
-A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
+A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack){: external}) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
 
 1. In the {{site.data.keyword.cis_short_notm}} dashboard, select **Reliability** > **Global Load Balancer**.
 1. Locate the GLB you created in the **Load Balancers** table.
@@ -429,4 +429,4 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [{{site.data.keyword.containershort_notm}}](/docs/containers)
 * [Building containers from images](/docs/containers?topic=containers-images)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
-* [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
+* [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters){: external}
