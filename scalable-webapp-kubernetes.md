@@ -84,7 +84,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs)).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.

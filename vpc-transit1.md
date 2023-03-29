@@ -74,7 +74,7 @@ In addition:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial. See the list of:
    - [required permissions for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
    - [required permissions for creating {{site.data.keyword.tg_short}}](/docs/transit-gateway?topic=transit-gateway-iam).
-   - [required permissions for IP spoofing checks](/docs/)docs/vpc?topic=vpc-ip-spoofing-about).
+   - [required permissions for IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about).
 
 ## IP Address and Subnet Layout
 {: #vpc-transit-ip-address-and-subnet-layout}
