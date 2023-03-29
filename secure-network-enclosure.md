@@ -513,5 +513,5 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 - [IBM Virtual Router Appliance](/docs/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance)
 - [Static and Portable IP Subnets](/docs/subnets?topic=subnets-about-subnets-and-ips#about-subnets-and-ips)
-- [IBM QRadar Security Intelligence Platform](http://www.ibm.com/support/knowledgecenter/SS42VS){: external}
+- [IBM QRadar Security Intelligence Platform](https://www.ibm.com/docs/en/qsip){: external}
 - [Vyatta documentation](/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)

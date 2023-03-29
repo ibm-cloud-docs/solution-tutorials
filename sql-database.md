@@ -61,7 +61,7 @@ You will find instructions to download and install these tools for your operatin
    ```
    {: pre}
 
-2. Go to [GeoNames](http://www.geonames.org/){: external} and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip){: external}. It holds information about cities with a population of more than 1000. You are going to use it as data set.
+2. Go to [GeoNames](https://www.geonames.org/){: external} and download and extract the file [cities1000.zip](https://download.geonames.org/export/dump/cities1000.zip){: external}. It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
 {: #sql-database-2}

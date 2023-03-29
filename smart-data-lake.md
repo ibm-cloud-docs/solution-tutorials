@@ -57,7 +57,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: tip}
 
 Optionally:
-- [Install Aspera Connect](http://downloads.asperasoft.com/connect2/){: external} for high-speed data upload to {{site.data.keyword.cos_short}}.
+- [Install Aspera Connect](https://downloads.asperasoft.com/connect2/){: external} for high-speed data upload to {{site.data.keyword.cos_short}}.
 
 ## Create services
 {: #smart-data-lake-2}
@@ -356,5 +356,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #smart-data-lake-11}
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python){: external}
-- [Jupyter Notebooks](http://jupyter.org/){: external}
-- [Folium](http://python-visualization.github.io/folium/){: external}
+- [Jupyter Notebooks](https://jupyter.org/){: external}
+- [Folium](https://python-visualization.github.io/folium/){: external}
