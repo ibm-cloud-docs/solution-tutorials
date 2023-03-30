@@ -48,6 +48,9 @@ The platform is designed to address the needs of developers who just want their 
 4. User uploads a text file(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
 5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to analyze text by pushing the text to {{site.data.keyword.nlushort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
+You can use the [Code Engine console](https://cloud.ibm.com/codeengine){: external} to view your progress while working through this tutorial.
+{: tip}
+
 <!--##istutorial#-->
 ## Before you begin
 {: #text-analysis-code-engine-prereqs}
