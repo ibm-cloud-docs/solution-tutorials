@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-03-31"
 lasttested: "2022-12-28"
 
 content-type: tutorial
@@ -47,6 +47,9 @@ The platform is designed to address the needs of developers who just want their 
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
 4. User uploads a text file(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
 5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to analyze text by pushing the text to {{site.data.keyword.nlushort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
+
+You can use the [{site.data.keyword.codeengineshort}} console](/codeengine){: external} to view your progress while working through this tutorial.
+{: tip}
 
 <!--##istutorial#-->
 ## Before you begin
