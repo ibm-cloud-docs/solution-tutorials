@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-03-31"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -40,7 +40,7 @@ This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform
 * Increase application performance with caching.
 
 
-![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution32-multi-region-k8s-cis/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

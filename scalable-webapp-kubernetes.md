@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-03-31"
 lasttested: "2023-02-08"
 
 content-type: tutorial
@@ -40,7 +40,7 @@ Containers are a standard way to package apps and all their dependencies so that
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-![Architecture](images/solution2/Architecture.png){: caption="Architecture diagram" caption-side="bottom" class="center" }
+![Architecture](images/solution2/Architecture.svg){: caption="Architecture diagram" caption-side="bottom" class="center" }
 {: style="text-align: center;"}
 
 1. A developer downloads or clones a sample web application.
