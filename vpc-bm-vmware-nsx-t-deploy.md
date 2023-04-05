@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-04-05"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -35,7 +35,7 @@ In this tutorial, NSX-T will be deployed on the VMware Cluster. This includes de
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-deploy-objectives}
 
-In the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics), you deployed required {{site.data.keyword.bm_is_short}} VLAN interfaces. The management IPs were registered to the DNS Service, so that these can be resolved with a name. These IP addresses and FQDNs will be used throughout this tutorial.
+In the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-vlannics#vpc-bm-vmware-nsx-t-vlannics), you deployed required {{site.data.keyword.bm_is_short}} VLAN interfaces. The management IPs were registered to the DNS Service, so that these can be resolved with a name. These IP addresses and FQDNs will be used throughout this tutorial.
 
 In this tutorial, you will first deploy one NSX-T manager on a {{site.data.keyword.bm_is_short}} running VMware ESXi. After the first NSX-T manager has been deployed, you will register the vCenter as a compute manager and you can then deploy the 2nd and 3rd NSX-T managers via the NSX Manager GUI. After the cluster formation, you can configure the NSX-T transport zones and various profiles based on your preference and add the {{site.data.keyword.bm_is_short}} hosts as transport nodes as well as create the edge transport nodes and edge cluster.
 
