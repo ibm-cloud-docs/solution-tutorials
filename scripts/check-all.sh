@@ -13,6 +13,7 @@ TESTS=(
   $SCRIPT_DIR/check-wordsmatter.sh
   $SCRIPT_DIR/check-images-with-no-caption.sh
   $SCRIPT_DIR/check-marked-it.sh
+  $SCRIPT_DIR/check-linkrules.sh
 )
 failedTests=""
 for test in "${TESTS[@]}"; do

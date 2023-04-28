@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2023-01-05"
+  years: 2023
+lastupdated: "2023-04-05"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -11,22 +11,8 @@ services: vpc, vmwaresolutions
 account-plan: paid
 completion-time: 1h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:pre: .pre}
-{:deprecated: .deprecated}
-{:important: .important}
-{:note: .note}
-{:tip: .tip}
-{:preview: .preview}
 
 # Deploy NSX-T Managers 
 {: #vpc-bm-vmware-nsx-t-deploy}
@@ -35,7 +21,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 
 <!--#/istutorial#-->
 
@@ -49,7 +35,7 @@ In this tutorial, NSX-T will be deployed on the VMware Cluster. This includes de
 ## Objectives
 {: #vpc-bm-vmware-nsx-t-deploy-objectives}
 
-In the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics), you deployed required {{site.data.keyword.bm_is_short}} VLAN interfaces. The management IPs were registered to the DNS Service, so that these can be resolved with a name. These IP addresses and FQDNs will be used throughout this tutorial.
+In the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-vlannics#vpc-bm-vmware-nsx-t-vlannics), you deployed required {{site.data.keyword.bm_is_short}} VLAN interfaces. The management IPs were registered to the DNS Service, so that these can be resolved with a name. These IP addresses and FQDNs will be used throughout this tutorial.
 
 In this tutorial, you will first deploy one NSX-T manager on a {{site.data.keyword.bm_is_short}} running VMware ESXi. After the first NSX-T manager has been deployed, you will register the vCenter as a compute manager and you can then deploy the 2nd and 3rd NSX-T managers via the NSX Manager GUI. After the cluster formation, you can configure the NSX-T transport zones and various profiles based on your preference and add the {{site.data.keyword.bm_is_short}} hosts as transport nodes as well as create the edge transport nodes and edge cluster.
 
@@ -61,20 +47,20 @@ In this tutorial, you will first deploy one NSX-T manager on a {{site.data.keywo
 
 This tutorial requires:
 
-* Common [prereqs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
+* Common [prereqs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware#vpc-bm-vmware-prereqs) for VMware Deployment tutorials in {{site.data.keyword.vpc_short}}
 
 This tutorial is part of series, and requires that you have completed the related tutorials. Make sure you have successfully completed the required previous steps:
 
-* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
-* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
-* [Provision bare metal servers for VMware deployment](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
-* [Provision vCenter Appliance](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
-* [Provision vSAN storage cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or [Provision NFS storage and attach to cluster](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
-* [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
+* [Provision a {{site.data.keyword.vpc_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc)
+* [Provision {{site.data.keyword.dns_full_notm}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-dns#vpc-bm-vmware-dns)
+* [Provision bare metal servers for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms)
+* [Provision vCenter Appliance](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vcenter#vpc-bm-vmware-vcenter)
+* [Provision vSAN storage cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vsan#vpc-bm-vmware-vsan) or [Provision NFS storage and attach to cluster](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nfs#vpc-bm-vmware-nfs)
+* [Provision {{site.data.keyword.vpc_short}} network interfaces for NSX-T](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics)
 
-[Login](https://{DomainName}/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
+[Login](/docs/cli?topic=cli-getting-started) with IBM Cloud CLI with username and password, or use the API key. Select your target region and your preferred resource group.
 
-When advised to use Web browser, use the jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
+When advised to use Web browser, use the jump machine provisioned in the [{{site.data.keyword.vpc_short}} provisioning tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-vpc#vpc-bm-vmware-vpc). This jump machine has network access to the hosts, the private DNS service and vCenter IP to be provisioned. Use url with FQDN, e.g. `https://vcenter.vmware.ibmcloud.local` as used in this example.
 {: note}
 
 ## Order a vCenter License from IBM Cloud
@@ -90,7 +76,7 @@ VMware NSX-T™ Data Center SP license editions available include:
 * NSX Data Center SP Advanced
 * NSX Data Center SP Enterprise Plus.
 
-1. From the [{{site.data.keyword.cloud_notm}} Portal > Classic Infrastructure](https://{DomainName}/classic/devices/vmwarelicenses)
+1. From the [{{site.data.keyword.cloud_notm}} Portal > Classic Infrastructure](/classic/devices/vmwarelicenses)
 2. Click **Devices** > **Managed** > **VMware Licenses** > **Order VMware licenses**.
 3. Click the drop-down list under **Order VMware License**. to list the VMware products and number of CPUs for the licenses that you want to order.
 4. List of the VMware products and number of CPUs for the licenses that you want to order. Select **NSX Data Center SP Advanced** .
@@ -105,11 +91,11 @@ VMware NSX-T™ Data Center SP license editions available include:
 
 Before you start the actual NSX-T deployment, review the following requirements: 
 
-1. Review [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+1. Review [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 2. Review the NSX Manager installation requirements. See [NSX Manager Installation](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF.html#GUID-A65FE3DD-C4F1-47EC-B952-DEDF1A3DD0CF){: external}.
 3. Review and configure the necessary ports and protocols in security groups (if detailed rules are applied). See [Ports and Protocols](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-2ABB0F95-E918-43A1-B096-7401979D51AA.html#GUID-2ABB0F95-E918-43A1-B096-7401979D51AA){: external}.
-4. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6).
-5. Collect the IP addresses and FQDNs for the provisioned {{site.data.keyword.bm_is_full_notm}} VLAN interfaces from the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics).
+4. Review the NSX Edge installation requirements. See [NSX Edge Installation Requirements](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6.html#GUID-11417AA2-5EBC-49C7-8A86-EB94604261A6){: external}.
+5. Collect the IP addresses and FQDNs for the provisioned {{site.data.keyword.bm_is_full_notm}} VLAN interfaces from the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics).
 
 
 ## Deploy NSX-T managers and for a cluster
@@ -118,17 +104,17 @@ Before you start the actual NSX-T deployment, review the following requirements:
 
 Follow the recommended order of procedures to deploy NSX-T on {{site.data.keyword.bm_is_full_notm}} with VMware ESXi.
 
-1. Install the NSX Manager. Use the VLAN interface IP for the NSX-T manager 1 which was created in the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics). For more information, see [Install NSX Manager and Available Appliances](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E.html#GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E){: external}.
+1. Install the NSX Manager. Use the VLAN interface IP for the NSX-T manager 1 which was created in the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics). For more information, see [Install NSX Manager and Available Appliances](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E.html#GUID-FA0ABBBD-34D8-4DA9-882D-085E7E0D269E){: external}.
 2. Log in to the newly created NSX Manager using the jump box provisioned earlier. Use e.g. `https://nsx-1.vmware.ibmcloud.local` as the URL to connect. For more information, see [Log In to the Newly Created NSX Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5.html#GUID-BF9FF9E2-47BD-466F-BDD2-8FF5145412E5){: external}.
 3. Configure a compute manager. Add the previously provisioned vCenter as the compute manager. For more information, see [Add a Compute Manager](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E.html#GUID-D225CAFC-04D4-44A7-9A09-7C365AAFCA0E){: external}.
-4. Deploy additional NSX Manager nodes (2 and 3) to form a cluster. Use the IP addresses provisioned in the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics). For more information, see [Deploy NSX Manager Nodes to Form a Cluster from the UI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5.html#GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5){: external}.
-5. Configure a Virtual IP Address for a Cluster. se the IP addresses provisioned in the [previous tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics).For more information, see [Configure a Virtual IP Address for a Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-A8DF27CC-B3A6-45F2-856D-4278A7DBC98E.html?hWord=N4IghgNiBcIG4EsAOIC+Q){: external}.
+4. Deploy additional NSX Manager nodes (2 and 3) to form a cluster. Use the IP addresses provisioned in the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics). For more information, see [Deploy NSX Manager Nodes to Form a Cluster from the UI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5.html#GUID-B89F5831-62E4-4841-BFE2-3F06542D5BF5){: external}.
+5. Configure a Virtual IP Address for a Cluster. se the IP addresses provisioned in the [previous tutorial](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics).For more information, see [Configure a Virtual IP Address for a Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-A8DF27CC-B3A6-45F2-856D-4278A7DBC98E.html?hWord=N4IghgNiBcIG4EsAOIC+Q){: external}.
 6. Create transport zones. For simplicity, you can use the default overlay and VLAN transport zones. For more information, see [Create Transport Zones](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-F739DC79-4358-49F4-9C58-812475F33A66.html#GUID-F739DC79-4358-49F4-9C58-812475F33A66){: external}.
 
-Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
-You can order NSX licenses through [IBM Cloud Classic portal](https://{DomainName}/classic/devices/vmwarelicenses).
+You can order NSX licenses through [IBM Cloud Classic portal](/classic/devices/vmwarelicenses).
 {: note}
 
 If you do not have access to VMware customer connect, please contact IBM Cloud Support to download NSX-T images.
@@ -151,12 +137,12 @@ An NSX Edge Node is a transport node that runs the local control plane daemons a
 
 Follow the recommended order of procedures to add {{site.data.keyword.bm_is_full_notm}} with VMware ESXi as host transport nodes to NSX-T.
 
-1. Create host transport nodes. When configuring the host TEP IPs, configure each host individually by using the [previously provisioned TEP IPs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics) of the related {{site.data.keyword.bm_is_full_notm}} VLAN interface for TEP. For more information, see [Prepare Standalone Hosts as Transport Nodes or Prepare ESXi Cluster Hosts as Transport Nodes](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D7CA778B-6554-4A23-879D-4BC336E01031.html#GUID-D7CA778B-6554-4A23-879D-4BC336E01031){: external}.
+1. Create host transport nodes. When configuring the host TEP IPs, configure each host individually by using the [previously provisioned TEP IPs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics) of the related {{site.data.keyword.bm_is_full_notm}} VLAN interface for TEP. For more information, see [Prepare Standalone Hosts as Transport Nodes or Prepare ESXi Cluster Hosts as Transport Nodes](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-D7CA778B-6554-4A23-879D-4BC336E01031.html#GUID-D7CA778B-6554-4A23-879D-4BC336E01031){: external}.
 
 When you deploy an NSX-T edge, you can think of it as an empty container. The NSX-T edge does not do anything until you create logical routers, it provides the compute backing for Tier 0 and Tier 1 logical routers.
 {: important}
 
-Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
 ## Create a segment and port group for NSX-T edge deployment
@@ -175,7 +161,7 @@ Edge nodes are grouped in one or several clusters, representing a pool of capaci
 
 Follow the recommended order of procedures to install edge transport nodes and form an edge cluster for your logical routers.
 
-1. Install NSX Edges. When configuring the host TEP IPs, configure each host individually by using the [previously provisioned TEP IPs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics) of the related {{site.data.keyword.bm_is_full_notm}} VLAN interface for TEP. For more information, see [Install an NSX Edge on ESXi Using the vSphere GUI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6.html#GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6){: external}.
+1. Install NSX Edges. When configuring the host TEP IPs, configure each host individually by using the [previously provisioned TEP IPs](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-nsx-t-hosts#vpc-bm-vmware-nsx-t-vlannics) of the related {{site.data.keyword.bm_is_full_notm}} VLAN interface for TEP. For more information, see [Install an NSX Edge on ESXi Using the vSphere GUI](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6.html#GUID-AECC66D0-C968-4EF2-9CAD-7772B0245BF6){: external}.
 2. Create an NSX Edge cluster. For more information, see [Create an NSX Edge Cluster](https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.1/installation/GUID-898099FC-4ED2-4553-809D-B81B494B67E7.html#GUID-898099FC-4ED2-4553-809D-B81B494B67E7){: external}.
 
 
@@ -188,7 +174,7 @@ When configuring uplink for TEP traffic in Edges, create a VLAN based segment fo
 When you deploy an NSX-T edge cluster, you can think of it as an empty pool of compute resources. The NSX-T edge cluster does not do anything until you create Tier 0 and/or Tier 1 logical routers into it.
 {: important}
 
-Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](https://{DomainName}/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
+Refer to [VMware Solution Architectures for {{site.data.keyword.vpc_short}}](/docs/vmwaresolutions?topic=vmwaresolutions-vpc-ryo-nsx-t) for naming and architectural considerations.
 {: note}
 
 

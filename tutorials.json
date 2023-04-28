@@ -39,7 +39,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2023-01-02"
+          "lastUpdated": "2023-02-23"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -58,7 +58,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/jpetstore-kubernetes"
           ],
-          "lastUpdated": "2022-12-22"
+          "lastUpdated": "2023-02-03"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -74,7 +74,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2023-01-02"
+          "lastUpdated": "2023-02-21"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -91,7 +91,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/openshift-node-app"
           ],
-          "lastUpdated": "2022-09-22"
+          "lastUpdated": "2023-02-24"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -104,7 +104,7 @@
             "Istio",
             "Telemetry"
           ],
-          "lastUpdated": "2022-09-22"
+          "lastUpdated": "2023-02-24"
         },
         {
           "name": "Deploy microservices with OpenShift",
@@ -120,7 +120,7 @@
             "https://github.com/IBM-Cloud/patient-health-backend",
             "https://github.com/IBM-Cloud/patient-health-frontend"
           ],
-          "lastUpdated": "2022-11-30"
+          "lastUpdated": "2023-02-24"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -151,7 +151,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
           ],
-          "lastUpdated": "2022-12-22"
+          "lastUpdated": "2023-02-21"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -181,7 +181,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/nodejs-MEAN-stack"
           ],
-          "lastUpdated": "2022-12-22"
+          "lastUpdated": "2023-02-21"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -227,7 +227,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/application-log-analysis"
           ],
-          "lastUpdated": "2022-12-22"
+          "lastUpdated": "2023-02-23"
         },
         {
           "name": "Text Analysis with Code Engine",
@@ -263,7 +263,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/slack-chatbot-database-watson"
           ],
-          "lastUpdated": "2022-12-27"
+          "lastUpdated": "2023-02-22"
         }
       ]
     },
@@ -285,7 +285,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2022-12-22"
+          "lastUpdated": "2023-02-21"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -304,7 +304,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
-          "lastUpdated": "2023-01-10"
+          "lastUpdated": "2023-02-21"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -339,7 +339,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
-          "lastUpdated": "2023-01-26"
+          "lastUpdated": "2023-02-21"
         }
       ]
     },
@@ -603,7 +603,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-transit"
           ],
-          "lastUpdated": "2023-01-31"
+          "lastUpdated": "2023-02-08"
         },
         {
           "name": "Centralize communication through a VPC Transit Hub and Spoke architecture - Part two",
@@ -621,7 +621,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-transit"
           ],
-          "lastUpdated": "2023-01-31"
+          "lastUpdated": "2023-02-08"
         }
       ]
     },
@@ -762,7 +762,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-09-20"
+          "lastUpdated": "2023-02-20"
         },
         {
           "name": "VMware vCenter",
@@ -773,7 +773,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-09-20"
+          "lastUpdated": "2023-02-20"
         },
         {
           "name": "VMware VSAN",
@@ -784,7 +784,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-21"
+          "lastUpdated": "2023-01-05"
         },
         {
           "name": "VMware NFS",
@@ -828,7 +828,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-09-20"
+          "lastUpdated": "2023-02-20"
         },
         {
           "name": "VMware Deploy NSX-T Managers",
@@ -839,7 +839,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-01-27"
+          "lastUpdated": "2023-01-05"
         },
         {
           "name": "VMware Routing",
@@ -850,7 +850,7 @@
             "VMware",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2022-09-20"
+          "lastUpdated": "2023-02-20"
         }
       ]
     },
@@ -879,7 +879,7 @@
           "tags": [
             "VMware"
           ],
-          "lastUpdated": "2023-01-26"
+          "lastUpdated": "2023-02-20"
         },
         {
           "name": "Getting Started with IBM Cloud for VMware Shared",

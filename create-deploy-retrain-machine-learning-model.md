@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-02"
+  years: 2023
+lastupdated: "2023-03-29"
 lasttested: "2022-12-02"
 
 content-type: tutorial
@@ -10,18 +10,8 @@ services: cloud-object-storage, ai-openscale
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
 
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
@@ -30,7 +20,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -75,8 +65,8 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Create a project
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
-1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/create).
-1. From the [catalog](https://{DomainName}/catalog), create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
+1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](/catalog) and create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create).
+1. From the [catalog](/catalog), create [{{site.data.keyword.DSX_short}}](/catalog/services/data-science-experience?taxonomyNavigation=app-services)
    1. Select a **region**
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
@@ -90,12 +80,12 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Import data
 {: #create-deploy-retrain-machine-learning-model-import_data}
 
-As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, _The Use of Multiple Measurements in Taxonomic Problems_, and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/){: external}. This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 
 ![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: caption="Iris Example" caption-side="bottom"}
 {: style="text-align: center;"}
 
-**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv) which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
+**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv){: external} which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
 
 1. Under **Data in this project**, click **Drop data files here or browse for files to upload**.
 2. Upload the downloaded `iris_initial.csv`.
@@ -203,7 +193,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 
 1. Under **API reference** tab of the deployment, you can see the _Endpoint_ under Direct link and code snippets in various programming languages.
 2. **Copy** the _Endpoint_ in a notepad for future reference.
-3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
+3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
    ```
@@ -251,7 +241,7 @@ For ease of understanding, the tutorial concentrates only on improving the quali
 
 In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
+1. Create a [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watson-openscale)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan.
    3. Set the service name to **watson-openscale-tutorial**.
@@ -316,7 +306,7 @@ As the tutorial uses a small dataset, configuring Fairness and Drift won't have 
 ### Evaluate the deployed model
 {: #create-deploy-retrain-machine-learning-model-14}
 
-In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
+In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv){: external}.
 
 1. Click on **Actions** and then **Evaluate now**.
 2. Choose **from CSV file** as your import option and click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
@@ -325,7 +315,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    2. Click on the **Number of explanations (2)**, select one of the transactions and click **Explain**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
-   To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
+   To understand the quality metrics, refer to [Quality metric overview](/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
    {: tip}
 
 ## Remove resources
@@ -333,11 +323,11 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 {: removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
+1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](/resources/).
 2. Under **Name**, enter **tutorial** in the search box.
 3. Delete the services which you created for this tutorial.
 
-Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](https://{DomainName}/docs/account?topic=account-resource-reclamation).
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
 ## Related content

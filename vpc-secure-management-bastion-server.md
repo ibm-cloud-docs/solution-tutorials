@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-19"
+  years: 2023
+lastupdated: "2023-03-29"
 lasttested: "2022-12-19"
 
 content-type: tutorial
@@ -10,20 +10,7 @@ services: vpc
 account-plan: paid
 completion-time: 1h
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
@@ -32,7 +19,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -60,8 +47,8 @@ To reduce exposure of servers within the VPC, you will create and use a bastion 
 ## Before you begin
 {: #vpc-secure-management-bastion-server-prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 - The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a VPC in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
@@ -90,7 +77,7 @@ In this section, you will create and configure a bastion host along with a secur
 
 Let's create a security group and configure inbound rules to your bastion VSI (virtual server instance).
 
-1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
+1. Select [**Security groups**](/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
 2. Enter **vpc-secure-bastion-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 3. Now, create the following inbound rules by clicking **Add** in the inbound section. They allow SSH access and Ping (ICMP). The values are shown in the table below.
@@ -147,7 +134,7 @@ ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
-1. Select [**Security groups**](https://{DomainName}/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
+1. Select [**Security groups**](/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
 2. Enter **vpc-secure-maintenance-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 4. Next, add the **inbound** rule shown in the table below. It allows SSH access from the bastion host.
@@ -300,4 +287,4 @@ When using the console, you may need to refresh your browser to see updated stat
 ## Related content
 {: #vpc-secure-management-bastion-server-related}
 
-- [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
+- [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)

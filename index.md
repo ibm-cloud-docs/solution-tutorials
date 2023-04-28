@@ -1,24 +1,12 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-21"
+  years: 2023
+lastupdated: "2023-03-29"
 lasttested: "2022-12-21"
 
 ---
-
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 <!--##istutorial#-->
 # Getting started with solution tutorials
@@ -51,7 +39,7 @@ Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
 * **jq** - a lightweight and flexible command-line JSON processor.
 * **Git** - a free and open source distributed version control system.
 
-To avoid the installation of these tools, you can also use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools, you can also use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 ## Microsoft Windows
@@ -76,7 +64,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### Docker
 {: #getting-started-windows_docker}
 
-1. Docker Desktop on Windows is one option to run container images on Windows. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement) before proceeding with the installation.
+1. Docker Desktop on Windows is one option to run container images on Windows. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify the installation with:
@@ -136,7 +124,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-windows_jq}
@@ -180,7 +168,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### Docker
 {: #getting-started-macos_docker}
 
-1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement) before proceeding with the installation. Other options include [Podman](https://podman.io/getting-started/).
+1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation. Other options include [Podman](https://podman.io/getting-started/){: external}.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
 1. Verify the installation with:
@@ -274,7 +262,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-macos_jq}
@@ -334,7 +322,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {: pre}
 
-   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/install/linux/linux-postinstall/) steps.
+   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/install/linux/linux-postinstall/){: external} steps.
    {: tip}
 
 ### kubectl
@@ -415,7 +403,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {: pre}
 
-To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](https://{DomainName}/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider. Starting with Terraform 0.13, the provider can be automatically downloaded from Terraform plugin registry. Follow the instructions in the [provider documentation](/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-setup_cli#install-provider-v13) to configure the `required_providers` property in your Terraform templates.
 
 ### jq
 {: #getting-started-ubuntu_jq}
@@ -483,8 +471,8 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
 
 {{site.data.keyword.cloud_notm}} provides you with hosted Git repositories built on GitLab Community Edition and accessible with the same credentials used to log in {{site.data.keyword.cloud_notm}}. It is recommended to configure your SSH public key to simplify the command line interactions with the Git repositories.
 
-1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/user/ssh.md#generate-an-ssh-key-pair) to generate a new SSH key pair if you don't have one.
-1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/user/ssh.md#add-an-ssh-key-to-your-gitlab-account) to your Git settings in the region where you plan to host your Git repositories, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/-/profile/keys), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/-/profile/keys) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/-/profile/keys).
+1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/user/ssh.md#generate-an-ssh-key-pair){: external} to generate a new SSH key pair if you don't have one.
+1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/user/ssh.md#add-an-ssh-key-to-your-gitlab-account){: external} to your Git settings in the region where you plan to host your Git repositories, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/-/profile/keys){: external}, [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/-/profile/keys){: external} or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/-/profile/keys){: external}.
 
 To verify the configuration:
 1. Create a new private project in GitLab, select the option to initialize the repository with a README.

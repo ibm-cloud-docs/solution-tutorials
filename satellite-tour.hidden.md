@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-11-07"
+  years: 2023
+lastupdated: "2023-03-29"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -11,23 +11,8 @@ services: satellite
 account-plan: paid
 completion-time: 2h
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:pre: .pre}
-{:deprecated: .deprecated}
-{:important: .important}
-{:note: .note}
-{:tip: .tip}
-{:preview: .preview}
-{:beta: .beta}
 
 # Introduction to {{site.data.keyword.satelliteshort}} locations, clusters, link and config
 {: #satellite-tour}
@@ -36,7 +21,7 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -75,14 +60,14 @@ The application you will deploy will be running in one cluster in the location. 
 {: #satellite-tour-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
 * `oc` to interact with {{site.data.keyword.redhat_openshift_notm}}.
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
@@ -93,7 +78,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #satellite-tour-shell}
 {: step}
 1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
 -->
 <!--#/isworkshop#-->
@@ -107,19 +92,19 @@ In this section, you will walk through the components that make up a {{site.data
 ### Using {{site.data.keyword.cloud_notm}} console
 {: #satellite-tour-architecture-ui}
 
-1. Navigate to [the list of locations](https://{DomainName}/satellite/locations). It lists the location you have been provided access to.
+1. Navigate to [the list of locations](/satellite/locations). It lists the location you have been provided access to.
 2. Select the location. The location is managed from one {{site.data.keyword.cloud_notm}} region, such as Washington DC or London.
 3. Under **Hosts**, you find all hosts that have been attached to the {{site.data.keyword.satelliteshort}} location:
    * a set of hosts has been assigned to the location **Control plane**.
    * other hosts are assigned to {{site.data.keyword.satelliteshort}}-enabled services like **{{site.data.keyword.redhat_openshift_notm}} clusters**.
-   * remaining hosts are unassigned until they are manually or [automatically](https://{DomainName}/docs/satellite?topic=satellite-assigning-hosts#host-autoassign) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
+   * remaining hosts are unassigned until they are manually or [automatically](/docs/satellite?topic=satellite-assigning-hosts#host-autoassign) assigned to {{site.data.keyword.satelliteshort}}-enabled services.
 
 ### Using {{site.data.keyword.cloud_notm}} CLI
 {: #satellite-tour-architecture-cli}
 
 `ibmcloud sat` is the CLI plugin for {{site.data.keyword.satelliteshort}}. It provides commands to work with all {{site.data.keyword.satelliteshort}} components.
 
-1. From [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell), view available commands:
+1. From [{{site.data.keyword.cloud-shell_short}}](/shell), view available commands:
    ```sh
    ibmcloud sat
    ```
@@ -158,11 +143,11 @@ In this section, you will walk through the components that make up a {{site.data
 
 In the following section, you will deploy an application to a {{site.data.keyword.satelliteshort}} cluster and configure this application to access through {{site.data.keyword.satelliteshort}} Link a service running in {{site.data.keyword.cloud_notm}}.
 
-1. Go to [the list of {{site.data.keyword.satelliteshort}} clusters](https://{DomainName}/satellite/clusters).
+1. Go to [the list of {{site.data.keyword.satelliteshort}} clusters](/satellite/clusters).
 1. Select a cluster from your location.
 1. Use the button **Manage cluster** to access the overview page of the {{site.data.keyword.redhat_openshift_notm}} cluster.
 
-   You can also find the cluster directly from [the list of OpenShift clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+   You can also find the cluster directly from [the list of OpenShift clusters](/kubernetes/clusters?platformType=openshift).
    {: tip}
 
 1. To log in the cluster, click the **OpenShift web console** button.
@@ -188,7 +173,7 @@ In this section, you will create an instance of {{site.data.keyword.nlushort}} a
 
 With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any client that runs in your {{site.data.keyword.satelliteshort}} location to connect to a service, server, or app that runs outside of the location, or allow a client that is connected to the {{site.data.keyword.cloud_notm}} private network to connect to a service, server, or app that runs in your location.
 
-1. Create an instance of [{{site.data.keyword.nlushort}}](https://{DomainName}/catalog/services/natural-language-understanding)
+1. Create an instance of [{{site.data.keyword.nlushort}}](/catalog/services/natural-language-understanding)
    1. Select a region and select **Standard** plan.
    2. Set **Service name** to `<your-initials>-satellite-nlu` and select a resource group.
    3. Select **Private Network** under Service Endpoints.
@@ -214,14 +199,14 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 
 Looking at the value for `url`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
-1. Go to [the list of locations](https://{DomainName}/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
+1. Go to [the list of locations](/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
 1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
 1. In the **Destination resource** step:
    * Select **Cloud** as destination.
    * Click **Next**.
 1. In the **Resource details** step:
    * Set **Endpoint name** to something unique such as `<your-initials>-nlu`.
-   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service. You can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`. Make sure you do not include any protocol specification (`https://`) or trailing slash (`/`) but only keep the FQDN.
+   * Set **Destination FQDN or IP** to the fully qualified domain name of the {{site.data.keyword.nlushort}} service. You can find this value in the `url`. For example, if the {{site.data.keyword.nlushort}} service is provisioned in `us-east` region, the FQDN with private endpoint will be `api.private.us-east.natural-language-understanding.watson.cloud.ibm.com`. Make sure you do not include any protocol specification (`https://`){: external} or trailing slash (`/`) but only keep the FQDN.
    * Set **Destination port** to **443** (HTTPS port).
    * Click **Next**.
 1. In the **Protocol** step:
@@ -291,16 +276,16 @@ This simple application demonstrated how you can make any service running in {{s
 
 A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
 
-Under [Logging](https://{DomainName}/observe/logging):
+Under [Logging](/observe/logging):
 1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
 1. Click on **Sources** in the top bar, select `satellite` under Hosts and click **Apply** to view only logs from {{site.data.keyword.satelliteshort}}. To check logs of a specific {{site.data.keyword.satelliteshort}} location, you can filter by setting the `Apps` to the {{site.data.keyword.satelliteshort}} location CRN.
 1. In the search box in the bottom of the view, enter `"conn_type: cloud"` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Launch the application and analyze text a couple of times to see more logs._
 
-   By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-health) for details on how to analyze logs.
+   By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](/docs/satellite?topic=satellite-health) for details on how to analyze logs.
    {: tip}
 
-The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
+The same applies to [Monitoring](/observe/monitoring):
 1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
 1. Under the **Dashboards**, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
@@ -322,19 +307,19 @@ The same applies to [Monitoring](https://{DomainName}/observe/monitoring):
 
 1. Change the time horizon to view past data.
 
-   Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](https://{DomainName}/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.redhat_openshift_notm}} clusters can also be configured to send their [logs](https://{DomainName}/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](https://{DomainName}/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
+   Refer to [Monitoring for {{site.data.keyword.satelliteshort}}](/docs/satellite?topic=satellite-monitor#available-metrics) for an overview of the available metrics. {{site.data.keyword.redhat_openshift_notm}} clusters can also be configured to send their [logs](/docs/satellite?topic=satellite-health#setup-clusters) and [metrics](/docs/satellite?topic=satellite-monitor#setup-clusters) to {{site.data.keyword.cloud_notm}}.
    {: tip}
 
 ## Configure a group of clusters with {{site.data.keyword.satelliteshort}} config
 {: #satellite-tour-config}
 {: step}
 
-With [{{site.data.keyword.satelliteshort}} configurations](https://{DomainName}/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You can define cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
+With [{{site.data.keyword.satelliteshort}} configurations](/docs/satellite?topic=satellite-cluster-config), you can consistently deploy Kubernetes resources across {{site.data.keyword.openshiftlong_notm}} clusters. You can define cluster groups and subscriptions to map the groups to a specific version of a set of Kubernetes resources.
 
 ### Create a cluster group
 {: #satellite-tour-cluster-group}
 
-1. Go to the [Cluster groups](https://{DomainName}/satellite/groups) tab.
+1. Go to the [Cluster groups](/satellite/groups) tab.
 1. Create a new cluster group by clicking on **Create cluster group**. Provide a unique name such as `<your-initials>-cluster-group`.
 1. Select the cluster you previously deployed your app to.
 1. Click on **Create**.
@@ -349,7 +334,7 @@ A Satellite configuration lets you upload or create Kubernetes resource YAML fil
 
 The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
 
-1. Navigate to [{{site.data.keyword.satelliteshort}} Configurations](https://{DomainName}/satellite/configuration).
+1. Navigate to [{{site.data.keyword.satelliteshort}} Configurations](/satellite/configuration).
 1. Create a new configuration by clicking on **Create configuration**:
    * Set **Configuration name** to a unique name such as `<your-initials>-config`.
    * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location and click on **Create**.
@@ -409,7 +394,7 @@ You can also use the {{site.data.keyword.redhat_openshift_notm}} console to view
 
 To deploy an update to the resources, you can create a new version.
 
-1. From the [Configurations](https://{DomainName}/satellite/configuration) page, select the configuration you created.
+1. From the [Configurations](/satellite/configuration) page, select the configuration you created.
 1. Create a new version by duplicating **V1**,
    * Set **Version name** to **V2**.
    * Change `example.property.2` to `you` in the YAML.
@@ -429,9 +414,9 @@ In this example, we deployed a simple ConfigMap but you could be deploying a ful
 {: step}
 
 * In the {{site.data.keyword.redhat_openshift_notm}} console, delete the project or use `oc delete project <your-initials>-tour`.
-* Select the [{{site.data.keyword.satelliteshort}} configuration](https://{DomainName}/satellite/configuration) your created.
+* Select the [{{site.data.keyword.satelliteshort}} configuration](/satellite/configuration) your created.
 * Delete the subscription.
 * Delete the {{site.data.keyword.satelliteshort}} configuration.
-* Delete the [cluster group](https://{DomainName}/satellite/groups).
+* Delete the [cluster group](/satellite/groups).
 * On the {{site.data.keyword.satelliteshort}} location, delete the Link Endpoint exposing the service you provisioned.
 

@@ -1,25 +1,17 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-12-28"
-lasttested: "2022-12-28"
+  years: 2023
+
+lastupdated: "2023-03-29"
+lasttested: "2023-03-27"
 
 content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
 account-plan: paid
 completion-time: 2h
 ---
-
-{:step: data-tutorial-type='step'}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
@@ -28,14 +20,14 @@ completion-time: 2h
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial will incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial will incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning cloud resources when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
-This tutorial provides the automation to create resources that demonstrate Virtual Private Network (VPN) connectivity between on-premises servers and cloud resources like {{site.data.keyword.vpc_full}} Virtual Service Instances (VSIs) and {{site.data.keyword.cloud_notm}} data services.  DNS resolution to cloud resources is also configured. The popular [strongSwan](https://www.strongswan.org/) VPN Gateway is used to represent the on-premises VPN gateway.
+This tutorial provides the automation to create resources that demonstrate Virtual Private Network (VPN) connectivity between on-premises servers and cloud resources like {{site.data.keyword.vpc_full}} Virtual Service Instances (VSIs) and {{site.data.keyword.cloud_notm}} data services.  DNS resolution to cloud resources is also configured. The popular [strongSwan](https://www.strongswan.org/){: external} VPN Gateway is used to represent the on-premises VPN gateway.
 {: shortdesc}
 
 
@@ -57,7 +49,7 @@ A terraform configuration will create the following resources:
 2. The {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} private endpoint gateways to data services.
 3. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 4. A VPC/VPN Gateway is provisioned to allow private connectivity between on-premises resources and cloud resources.
-6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow TLS access to cloud resources including [access to virtual private endpoint gateways](https://{DomainName}/cloud/blog/creating-virtual-private-endpoint-gateways-with-terraform) through a VPN.
+6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow TLS access to cloud resources including [access to virtual private endpoint gateways](/cloud/blog/creating-virtual-private-endpoint-gateways-with-terraform) through a VPN.
 
 ## Before you begin
 {: #vpc-site2site-vpn-prereqs}
@@ -70,12 +62,12 @@ This tutorial requires:
 * `Terraform CLI` to optionally run Terraform on your desktop instead of the Schematics service.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 The on-premises data center in this tutorial will be simulated using a VSI within a VPC.
 
-The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](https://{DomainName}/interconnectivity/transit). Simulation of an on-premises environment with VPC, VSI and VPN is used only for illustration.
+The preferred mechanism to connect VPCs is [{{site.data.keyword.tg_short}}](/interconnectivity/transit). Simulation of an on-premises environment with VPC, VSI and VPN is used only for illustration.
 {: note}
 
 In addition:
@@ -86,8 +78,8 @@ In addition:
 {: #vpc-site2site-vpn-create-ressources}
 {: step}
 
-1. Log in to [{{site.data.keyword.cloud_notm}}](https://{DomainName}).
-1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.2) Under the **Specify Template** section, verify:
+1. Log in to [{{site.data.keyword.cloud_notm}}](/).
+1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.2) Under the **Specify Template** section, verify:
    1.  **Repository URL** is `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn`
    1. **Terraform version** is **terraform_v1.2**
 2. Under **Workspace details**,
@@ -99,12 +91,12 @@ In addition:
 7. Scroll to the top of the page and click **Apply plan**. Check the logs to see the status of the services created.
 
 Explore the resources that were created by clicking below and selecting the instance with matching prefix. Locate all of the resources in the diagram above.
-- [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc-ext/network/vpcs)
-- [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc-ext/compute/vs)
-- [{{site.data.keyword.vpn_short}}](https://{DomainName}/vpc-ext/network/vpngateways)
-- [{{site.data.keyword.vpe_short}}](https://{DomainName}/vpc-ext/network/endpointGateways)
-- [{{site.data.keyword.databases-for-postgresql}} instance in Databases](https://{DomainName}/resources)
-- [{{site.data.keyword.cos_short}}](https://{DomainName}/objectstorage/)
+- [{{site.data.keyword.vpc_short}}](/vpc-ext/network/vpcs)
+- [{{site.data.keyword.vsi_is_short}}](/vpc-ext/compute/vs)
+- [{{site.data.keyword.vpn_short}}](/vpc-ext/network/vpngateways)
+- [{{site.data.keyword.vpe_short}}](/vpc-ext/network/endpointGateways)
+- [{{site.data.keyword.databases-for-postgresql}} instance in Databases](/resources)
+- [{{site.data.keyword.cos_short}}](/objectstorage/)
 
 ## Verify connectivity
 {: #vpc-site2site-vpn-verify-connectivity}
@@ -233,7 +225,7 @@ Test DNS resolution to Postgresql and Object storage through the Virtual Endpoin
    8. Once connected to the cloud object storage instance, issue a `Ctrl+C` to disconnect.
 
 
-If there a problems see the [troubleshoot](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn#troubleshoot) section in the GitHub repository.
+If there a problems see the [troubleshoot](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn#troubleshoot){: external} section in the GitHub repository.
 
 ## Optionally expand the tutorial
 {: #vpc-site2site-vpn-expand-tutorial}
@@ -241,14 +233,14 @@ If there a problems see the [troubleshoot](https://github.com/IBM-Cloud/vpc-tuto
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- In the [GitHub repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn) there is an application that can be deployed that uses the database and cloud object storage. Instructions on how to deploy are in the README.
-- If you deployed the application [add a DNS zone](https://{DomainName}/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
+- In the [GitHub repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn){: external} there is an application that can be deployed that uses the database and cloud object storage. Instructions on how to deploy are in the README.
+- If you deployed the application [add a DNS zone](/docs/dns-svcs?topic=dns-svcs-getting-started) for the application.
 - Run the application on multiple {{site.data.keyword.vsi_is_short}} and add a [load balancer](/docs/vpc?topic=vpc-nlb-vs-elb) to distribute inbound microservice traffic.
 
 ## Remove resources
 {: #vpc-site2site-vpn-remove-resources}
 
-1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](https://{DomainName}/schematics/workspaces), click on your workspace
+1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces), click on your workspace
 1. Click **Actions... > Destroy resources**
 1. Click **Actions... > Delete workspace**
 
@@ -257,4 +249,4 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 - [IBM Cloud CLI plugin for VPC Reference](/docs/vpc?topic=vpc-infrastructure-cli-plugin-vpc-reference)
 - [VPC using the REST APIs](/apidocs/vpc/latest)
-- Solution tutorial: [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+- Solution tutorial: [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)

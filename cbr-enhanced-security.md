@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-26"
+lastupdated: "2023-03-29"
 lasttested: "2023-01-26"
 
 content-type: tutorial
@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){:external: target="_blank" .external}.
+This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){: external}.
 {: shortdesc}
 
 The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. You will also learn about criteria on how to define the access strategy for your cloud resources.
@@ -49,7 +49,6 @@ The following diagram shows the solution architecture as used in the tutorial [A
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-* `git` to clone source code repository,
 * `docker` client to push and pull container images.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
@@ -64,7 +63,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). 
 
-1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics) as described in the companion GitHub repository.
+1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics){: external} as described in the companion GitHub repository.
 
 2. To monitor events for context-based restrictions, you must have an instance of the {{site.data.keyword.cloudaccesstrailshort}} service in the Frankfurt (eu-de) region. For more information, see [Provisioning an instance](/docs/activity-tracker?topic=activity-tracker-provision).
 
@@ -80,6 +79,9 @@ The context for a restriction is made up of network zones and service endpoints.
 
 Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
 
+At the moment, not all cloud services support the report-only mode. Moreover, these service also do not generate any CBR-related log entries when enabled. Check the individual service documentation for details.
+{: note}
+
 ![Context-based restrictions](images/solution67-cbr-enhanced-security/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
 
 
@@ -89,8 +91,8 @@ Network zones can be used for the definition of multiple rules. Rules have an en
 
 For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone to identify a VPC as traffic source.
 
-1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](https://{DomainName}/registry/namespaces) and select the region you want to work with. Click **Create** and enter **YOUR_INITIALS-e2esec** as **Name**. Use your initials or something else to make sure the namespace is unique within the region. Last, **Create** the new namespace.
-2. In the [{{site.data.keyword.cloud_notm}}](https://{DomainName}) console, click on the **Manage** menu and select [**Context-based restrictions**](https://{DomainName}/context-based-restrictions). In the overview page, click on **Create a network zone**.
+1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](/registry/namespaces) and select the region you want to work with. Click **Create** and enter **YOUR_INITIALS-e2esec** as **Name**. Use your initials or something else to make sure the namespace is unique within the region. Last, **Create** the new namespace.
+2. In the [{{site.data.keyword.cloud_notm}}](/) console, click on the **Manage** menu and select [**Context-based restrictions**](/context-based-restrictions). In the overview page, click on **Create a network zone**.
 3. Enter **VPCzone** as name. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
 4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
 5. Select **{{site.data.keyword.registryshort_notm}}** in the **Service** section and click **Next**.
@@ -104,8 +106,8 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 {: #cbr-security-in-action}
 {: step}
 
-1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](https://{DomainName}/observe/activitytracker) to monitor IAM-related events (Frankfurt region).
-2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) in another browser tab.
+1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](/observe/activitytracker) to monitor IAM-related events (Frankfurt region).
+2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](/shell) in another browser tab.
 3. In the shell, perform the following commands:
    Set an environment variable to the cloud region you are going to use for the {{site.data.keyword.registryshort_notm}}, e.g., **us** or **de**.
    ```sh
@@ -147,9 +149,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    ![Verify rules in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
 
-   As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**, below **Permit**.
-
-   ![Decision with Permit value in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_Permit.png){: caption="A CBR rule with decision result Permit in reporting mode" caption-side="bottom"}
+   As discussed, in report mode, all matching requests generate a log entry. In the event details you see an attribute **decision** with a value of either **Permit** or **Deny**. In the screenshot above it is **Deny**.
 
 5. Back in the browser tab with the shell, list the container images in the namespace.
    ```sh
@@ -176,7 +176,7 @@ When working with the {{site.data.keyword.at_short}} logs, you can utilize query
 - In report mode, you can use `"context restriction" permit` to only show access which would have been the permitted. Similarly, use `"context restriction" deny` for denied access.
 - Last, when in **enforced** mode, use a query string like `context restriction rendered` for log lines related to denied access.
 
-Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](https://{DomainName}/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
+Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
 {: tip}
 
 In order to prepare for the deployment of CBR objects with Terraform in a section further down, go to the browser tab with the [CBR rules](/context-based-restrictions/rules). There, delete the previously created rule by clicking on its dot menu and selecting **Remove** and then confirming with **Delete**. Thereafter, click on **Network zones** and delete the previously created zone.
@@ -210,7 +210,7 @@ Thereafter, we are going to define context rules as follows:
 * for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr)
 * for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr)
 
-All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command. Note that the rules are not meant for production use, but as a starter to investigate usage and traffic in report-only mode.
+All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command. Note that the rules are not meant for production use, but as a sample to investigate usage and traffic in report-only mode.
 
 The documentation has a [list of resources which are supported as service references](/docs/account?topic=account-context-restrictions-whatis#service-attribute). You can also retrieve the list using the [CLI command **service-ref-targets**](/docs/cli?topic=cli-cbr-plugin#cbr-cli-service-ref-targets-command) or the related API function [List available service reference targets](/apidocs/context-based-restrictions#list-available-serviceref-targets).
 {: tip}
@@ -220,13 +220,13 @@ The documentation has a [list of resources which are supported as service refere
 {: #cbr-security-terraform}
 {: step}
 
-Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](https://{DomainName}/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration. 
+Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration. 
 
 ### Terraform resources for zones and rules
 {: #cbr-security-terraform-resources}
 
 
-In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone) resource. The following shows a zone specification which identifies the Kubernetes cluster. Such a cluster is one of the [supported service references](https://{DomainName}/docs/account?topic=account-context-restrictions-whatis#service-attribute).
+In the following, you will deploy the Terraform code to create a basic set of network zones and context rules. The code for zones is using the [**ibm_cbr_zone**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_zone){: external} resource. The following shows a zone specification which identifies the Kubernetes cluster. Such a cluster is one of the [supported service references](/docs/account?topic=account-context-restrictions-whatis#service-attribute).
 
 ```hcl
 resource "ibm_cbr_zone" "cbr_zone_k8s" {
@@ -246,7 +246,7 @@ resource "ibm_cbr_zone" "cbr_zone_k8s" {
 {: codeblock}
 
 
-The code for rules is using the [**ibm_cbr_rule**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_rule) resource. The Terraform configuration for a typical rule is shown below.
+The code for rules is using the [**ibm_cbr_rule**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cbr_rule){: external} resource. The Terraform configuration for a typical rule is shown below.
 Similar to the browser UI, it has the following elements:
 * Contexts to specify the zones
 * Enforcement mode
@@ -332,7 +332,7 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){:external: target="_blank" .external}
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){:external: target="_blank" .external}
-* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){:external: target="_blank" .external}
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){: external}
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){: external}
+* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){: external}
 * Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)

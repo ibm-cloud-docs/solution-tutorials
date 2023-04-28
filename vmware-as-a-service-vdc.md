@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-01-26"
+lastupdated: "2023-03-29"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -11,20 +11,7 @@ account-plan: paid
 completion-time: 1h
 
 ---
-
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:important: .important}
-{:note: .note}
+{{site.data.keyword.attribute-definition-list}}
 
 # Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} using the VMware Cloud Director Console
 {: #vmware-as-a-service-vdc}
@@ -33,7 +20,7 @@ completion-time: 1h
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -41,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/est
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
 
-The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 
 In this tutorial, you will learn:
 
@@ -56,15 +43,15 @@ The following diagram presents an overview of the solution to be deployed.
 
 This tutorial is divided into the following steps:
 
-1. [Log in to the instance's VMware Cloud Director Console and deploy virtual data center networks](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
-2. [Create virtual machines](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
-3. [Create IP Sets and Static Groups](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-ip-set-sg) 
-4. [Create NAT rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-nat)
-5. [Create firewall rules](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-fw)
-6. [Connect to the virtual machine using integrated web console](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vmconsole)
-7. [Connect to the virtual machine through the Internet and validate connectivity](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vm)
+1. [Log in to the instance's VMware Cloud Director Console and deploy virtual data center networks](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-network)
+2. [Create virtual machines](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-create-vm)
+3. [Create IP Sets and Static Groups](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-deploy-ip-set-sg) 
+4. [Create NAT rules](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-nat)
+5. [Create firewall rules](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-configure-fw)
+6. [Connect to the virtual machine using integrated web console](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vmconsole)
+7. [Connect to the virtual machine through the Internet and validate connectivity](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc#vmware-as-a-service-vdc-connect-to-vm)
 
-An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) with Terraform is also available.
+An [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) with Terraform is also available.
 {: note}
 
 ## Before you begin
@@ -72,10 +59,10 @@ An [alternative tutorial](https://{DomainName}/docs/solution-tutorials?topic=sol
 
 This tutorial requires:
 
-* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](https://{DomainName}/docs/vmware-service?topic=vmware-service-getting-started).
-* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-tenant-ordering), and
-* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-adding).
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
+* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](/docs/vmware-service?topic=vmware-service-getting-started).
+* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering), and
+* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding).
 
 
 ## Log in to the instance and deploy the initial network
@@ -95,11 +82,12 @@ Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instan
 
 Next, you will create the following virtual data center networks: 
 
-Network type     | Name                | IP subnet
------------------|---------------------|-------------------
-routed network   | `net-application`   | `192.168.100.1/24`
-routed network   | `net-db`            | `192.168.101.1/24`
-isolated         | `net-isolated-db`   | `192.168.102.1/24`
+| Network type     | Name                | IP subnet
+| -----------------|---------------------|-------------------
+| routed network   | `net-application`   | `192.168.100.1/24`
+| routed network   | `net-db`            | `192.168.101.1/24`
+| isolated         | `net-isolated-db`   | `192.168.102.1/24`
+{: caption="Virtual data center networks" caption-side="bottom"}
 
 Routed virtual data center networks are attached to the edge gateway while an isolated virtual data center network is a standalone network without any platform provided routing capabilities. You can create more networks based on your needs by following the same logic and steps.
 
@@ -128,11 +116,12 @@ In this step, you will create a few virtual machines inside your virtual data ce
 
 You will create the following virtual machines:
 
-Virtual machine name   | Operating System     | Networks
------------------------|----------------------|-------------------------------
-`jump-server-1`        | Windows Server 2022  | `net-application`
-`application-server-1` | RedHat Linux 8       | `net-application`
-`db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
+| Virtual machine name   | Operating System     | Networks
+| -----------------------|----------------------|-------------------------------
+| `jump-server-1`        | Windows Server 2022  | `net-application`
+| `application-server-1` | RedHat Linux 8       | `net-application`
+| `db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
+{: caption="Virtual machines" caption-side="bottom"}
 
 The first server will be used as a jump server, which you can optionally reach through the public Internet. The other two servers are examples of application and database servers.
 
@@ -152,7 +141,7 @@ To create a virtual machine:
 
 The new virtual machine will be created. Provisioning of the virtual machine may take several minutes to complete. Upon completion, the virtual machine will automatically power on. Repeat the process for the other virtual machines, `application-server-1` and `db-server-1`.
 
-Virtual machine `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html). After the virtual machine has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the virtual machine and attach that to the correct network segment.
+Virtual machine `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external}. After the virtual machine has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the virtual machine and attach that to the correct network segment.
 {: tip}
 
 Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external} for more details.  
@@ -165,19 +154,19 @@ Review the other hardware options and see what you can change and how. See [Edit
 
 IP Sets and Static Groups are used as part of configuration of the firewall rules are required. Unlike with some other firewalls, you must use Static Groups and IP Sets to configure firewalls to identify sources and destinations, IP addresses cannot be used directly in the rules.
 
-Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](https://{DomainName}/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses.
+Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses.
 
 In these examples, `public-ip-0` refers to the first IP address provided in the list of available IP addresses, and should be noted as a normal IP address notation `aaa.bbb.ccc.ddd`. Likewise, `public-ip-1` refers to the second IP address and so on.
 {: note}
 
 You will create the following IP Sets and Static Groups:
 
-Type            | Name                  | Members or IP addresses
-----------------|-----------------------|--------------------------------
-IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
-IP Set          | `ipset-snat`          | `public-ip-1`
-Static Group    | `sg-private-networks` | `net-application` and `net-db`
-
+| Type            | Name                  | Members or IP addresses
+| ----------------|-----------------------|--------------------------------
+| IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
+| IP Set          | `ipset-snat`          | `public-ip-1`
+| Static Group    | `sg-private-networks` | `net-application` and `net-db`
+{: caption="IP Sets and Static Groups" caption-side="bottom"}
 
 To create an IP Set:
 
@@ -209,11 +198,12 @@ The next step is to create NAT rules to allow your virtual machines to access th
 
 You will create the following NAT rules in this tutorial.
 
-Name               | Type            | External IP       | Internal IP         | Application
--------------------|-----------------|-------------------|---------------------|-----------------------
-`dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
-`snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
-`snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+| Name               | Type            | External IP       | Internal IP         | Application
+| -------------------|-----------------|-------------------|---------------------|-----------------------
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+{: caption="NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
 {: important} 
@@ -257,12 +247,12 @@ The new NAT rule will be created. This may take a few seconds to complete. Repea
 
 The next step is to create firewall rules. By default, the {{site.data.keyword.vmware-service_full}} – single tenant instance has been provisioned with a default firewall rule that will drop all traffic for ensuring basic network security. Additional rules must be put in place to allow the traffic from the previously created network to access the Public Internet and for you to access the virtual machine from the Public Internet.
 
-
-Name             | Applications       | Source                | Destination          | Action     | IP protocol
------------------|--------------------|-----------------------|----------------------|------------|-----------
-`dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
-`egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
-`default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
+| Name             | Applications       | Source                | Destination          | Action     | IP protocol
+| -----------------|--------------------|-----------------------|----------------------|------------|-----------
+| `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
+| `egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
+| `default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
+{: caption="Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}

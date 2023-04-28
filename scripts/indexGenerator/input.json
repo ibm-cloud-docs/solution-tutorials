@@ -1163,6 +1163,20 @@
                ]
             },
             {
+               "hidden": true,
+               "name": "Creating a VPN between virtual data center edge gateway and on-premises VPN gateway",
+               "url": "vmware-as-a-service-vpn-vsrx.hidden.html",
+               "description": "",
+               "imgSrc": "images/solution66-vmware-as-a-service/vmwaas-solution-tutorial-diagrams-ui-vmwaas-vdc-vpn.svg",
+               "tags": [
+                  "VMware"
+               ],
+               "requirements": [
+                  "vmware",
+                  "schematics"
+               ]
+            },
+            {
                "name": "Getting Started with IBM Cloud for VMware Shared",
                "url": "vmware-solutions-shared-getting-started.html",
                "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",

@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2022-06-24"
+  years: 2023
+lastupdated: "2023-03-29"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -10,19 +10,8 @@ services: virtual-router-appliance, virtual-servers, vlans
 account-plan: paid
 completion-time:
 ---
+{{site.data.keyword.attribute-definition-list}}
 
-{:step: data-tutorial-type='step'}
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-{:note: .note}
 
 # Linking secure private networks over the IBM network
 {: #linking-secure-network-enclosures}
@@ -30,18 +19,18 @@ completion-time:
 {: toc-services="virtual-router-appliance, virtual-servers, vlans"}
 {: toc-completion-time=""}
 
-This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](https://{DomainName}/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](https://{DomainName}/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](https://{DomainName}/docs/vpc?topic=vpc-vsi_best_practices), [security groups](https://{DomainName}/docs/vpc?topic=vpc-using-security-groups), [network ACLs](https://{DomainName}/docs/vpc?topic=vpc-using-acls) and [transit gateway](https://{DomainName}/docs/transit-gateway).
+This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](/docs/vpc?topic=vpc-vsi_best_practices), [security groups](/docs/vpc?topic=vpc-using-security-groups), [network ACLs](/docs/vpc?topic=vpc-using-acls) and [transit gateway](/docs/transit-gateway).
 {: note}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/) enables users to link workloads hosted in secure private networks across data centers and locations.
+As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/){: external} enables users to link workloads hosted in secure private networks across data centers and locations.
 
-This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://{DomainName}/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service.
+This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning](/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service.
 {: shortdesc}
 
 ## Objectives
@@ -64,15 +53,15 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 ## Before you begin
 {: #linking-secure-network-enclosures-prereqs}
 
-This tutorial is based on the tutorial, [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure). That tutorial and its prerequisites should be reviewed before commencing.
+This tutorial is based on the tutorial, [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure). That tutorial and its prerequisites should be reviewed before commencing.
 
 ## Configure secure private network sites
 {: #linking-secure-network-enclosures-private_network}
 {: step}
 
-The tutorial [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites.
+The tutorial [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites.
 
-The [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) tutorial can be followed without change for each selected data center, recording the following information for later steps.
+The [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) tutorial can be followed without change for each selected data center, recording the following information for later steps.
 
 | Item  | Datacenter1 | Datacenter2 |
 |:------ |:--- | :--- |
@@ -85,10 +74,10 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 | APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
 {: caption="Network details to write down for next steps" caption-side="bottom"}
 
-1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page.
-2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
+1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](/classic/network/gatewayappliances) page.
+2. Locate the Gateway VLANs section and click on the Gateway [VLAN](/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
 3. The provisioned VRA will be seen under the **Devices** section. From under the **Subnets** section, make a note of the VRA private subnet IP address and CIDR (/26). The subnet will be of type primary with 64 IPs. These details are required later for routing configuration.
-4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network that was associated to create the secure network and APP zone.
+4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN](/classic/network/vlans) on the **Private** network that was associated to create the secure network and APP zone.
 5. The provisioned VSI will be seen under the **Devices** section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the &lt;APP Zone subnet/CIDR&gt;.
 
 
@@ -98,14 +87,14 @@ The [Isolate workloads with a secure private network](https://{DomainName}/docs/
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers.
 
-The [VLAN spanning]( https://{DomainName}/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets. By enabling VLAN spanning, all of your routed traffic can travel between all private subnets, across all private VLANs on your account.
+The [VLAN spanning](/docs/vlans?topic=vlans-vlan-spanning#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets. By enabling VLAN spanning, all of your routed traffic can travel between all private subnets, across all private VLANs on your account.
 It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate.
 
 VLANs not associated with the secure private networks created by the VRAs, are ‘spanned’ allowing interconnection of these ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. Hence allowing VRAs to communicate across data centers when VLAN spanning is enabled. With VRA to VRA connectivity, the VRA firewall and routing configuration enable servers within the secure networks to connect.
 
 Enable VLAN Spanning:
 
-1. Proceed to the [VLANs]( https://{DomainName}/classic/network/vlans) page.
+1. Proceed to the [VLANs](/classic/network/vlans) page.
 2. Select the **VLAN Spanning** tab at the top of the page
 3. Switch the VLAN Spanning toggle to ‘Enable’. This will take a number of minutes for the network change to complete.
 4. Confirm that the two VRAs can now communicate:
@@ -185,7 +174,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    ```
    {: codeblock}
 
-   If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs.
+   If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs.
 
 ## Remove resources
 {: #linking-secure-network-enclosures-removeresources}
@@ -193,7 +182,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/classic/network/gatewayappliances) page.
 {: tip}
 
 1. Cancel any virtual servers or bare-metal servers
@@ -203,12 +192,12 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 {: #linking-secure-network-enclosures-7}
 
 This tutorial can be used in conjunction with the
-[VPN into a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial.
+[VPN into a secure private network](/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial.
 
 
 ## Related material
 {: #linking-secure-network-enclosures-8}
 {: related}
 
-1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using [{{site.data.keyword.BluDirectLink}}](https://{DomainName}/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://{DomainName}/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud)
-2. [The IBM Cloud network](https://www.ibm.com/cloud/data-centers/)
+1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using [{{site.data.keyword.BluDirectLink}}](/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](/docs/direct-link?topic=direct-link-overview-of-virtual-routing-and-forwarding-vrf-on-ibm-cloud)
+2. [The IBM Cloud network](https://www.ibm.com/cloud/data-centers/){: external}

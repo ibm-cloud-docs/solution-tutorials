@@ -118,6 +118,7 @@ toc:
                 topics:
                 - vmware-as-a-service-tf.md
                 - vmware-as-a-service-vdc.md
+                - vmware-as-a-service-vpn-vsrx.hidden.md
                 - vmware-solutions-shared-getting-started.md
 
         - topicgroup:
