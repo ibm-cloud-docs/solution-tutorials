@@ -2,13 +2,15 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: "2022-12-16"
 
 content-type: tutorial
 services: CDN, cloud-object-storage
 account-plan: paid
 completion-time: 2h
+use-case:
+   - ApplicationPerformance
 ---
 {{site.data.keyword.attribute-definition-list}}
 

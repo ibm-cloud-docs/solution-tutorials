@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: "2022-12-21"
-
 content-type: tutorial
 services: vmwaresolutions, schematics
 account-plan: paid
 completion-time: 2h
-
+use-case:
+   - ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -25,7 +25,9 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
+On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types:
+{: shortdesc}
+
 - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
 - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
 {: shortdesc}

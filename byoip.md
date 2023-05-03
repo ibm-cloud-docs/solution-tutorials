@@ -2,9 +2,10 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: "2019-04-23"
-
+use-case:
+   - ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
