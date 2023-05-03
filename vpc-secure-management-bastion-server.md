@@ -2,13 +2,15 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: "2022-12-19"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 1h
+use-case:
+   - Cybersecurity
 ---
 {{site.data.keyword.attribute-definition-list}}
 

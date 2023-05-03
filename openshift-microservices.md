@@ -2,13 +2,15 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-31"
+lastupdated: "2023-05-03"
 lasttested: "2023-02-24"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 3h
+use-case:
+   - ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 

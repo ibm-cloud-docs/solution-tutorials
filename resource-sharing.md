@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: "2022-10-17"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -10,6 +10,9 @@ content-type: tutorial
 services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage
 account-plan: paid
 completion-time: 1h
+use-case:
+   - ApplicationIntegration
+   - Cybersecurity
 ---
 
 {{site.data.keyword.attribute-definition-list}}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-03"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -10,6 +10,8 @@ content-type: tutorial
 services: vpc, vmwaresolutions, vpc-file-storage
 account-plan: paid
 completion-time: 1h
+use-case:
+   - ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
