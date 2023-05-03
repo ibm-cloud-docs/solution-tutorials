@@ -9,7 +9,9 @@ content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
 account-plan: paid
 completion-time: 2h
-use-case: Analytics, ApplicationModernization
+use-case: 
+   - Analytics
+   - ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
