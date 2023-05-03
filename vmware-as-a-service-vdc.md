@@ -26,11 +26,11 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
+This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+{: shortdesc}
+
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
-
-The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
-{: shortdesc}
 
 In this tutorial, you will learn:
 
