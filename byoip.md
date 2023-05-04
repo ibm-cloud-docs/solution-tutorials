@@ -6,9 +6,9 @@ lastupdated: "2023-05-04"
 lasttested: "2019-04-23"
 
 content-type: tutorial
-services: 
+services: virtual-servers
 account-plan: paid
-completion-time:
+completion-time: 1h
 use-case:
    - ApplicationModernization
 ---

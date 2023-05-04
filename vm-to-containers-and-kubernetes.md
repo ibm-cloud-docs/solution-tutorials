@@ -6,9 +6,9 @@ lastupdated: "2023-05-04"
 lasttested: "2022-12-01"
 
 content-type: tutorial
-services: 
+services: containers
 account-plan: paid
-completion-time:
+completion-time: 2h
 use-case:
    - ApplicationModernization
 ---

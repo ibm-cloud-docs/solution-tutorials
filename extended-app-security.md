@@ -6,9 +6,9 @@ lastupdated: "2023-05-04"
 lasttested: "2022-11-16"
 
 content-type: tutorial
-services: 
+services: openshift, containers
 account-plan: paid
-completion-time:
+completion-time: 1h
 use-case:
    - Cybersecurity
 ---
