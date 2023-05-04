@@ -17,6 +17,9 @@ use-case:
 
 # Best practices for organizing users, teams, applications
 {: #users-teams-applications}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, log-analysis, monitoring, containers, Cloudant"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.

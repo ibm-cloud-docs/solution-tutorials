@@ -17,6 +17,9 @@ use-case:
 
 # Enhance security of your deployed application
 {: #extended-app-security}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, containers"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.

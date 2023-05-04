@@ -16,6 +16,9 @@ use-case:
 
 # Moving a VM based app to Kubernetes
 {: #vm-to-containers-and-kubernetes}
+{: toc-content-type="tutorial"}
+{: toc-services="containers"}
+{: toc-completion-time="2h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
