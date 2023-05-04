@@ -2,8 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-04"
 lasttested: "2019-04-23"
+
+content-type: tutorial
+services: 
+account-plan: paid
+completion-time:
 use-case:
    - ApplicationModernization
 ---

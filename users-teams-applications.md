@@ -2,8 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-04"
 lasttested: "2022-11-03"
+
+content-type: tutorial
+services: 
+account-plan: paid
+completion-time:
 use-case:
    - Cybersecurity
    - ITServiceManagement
