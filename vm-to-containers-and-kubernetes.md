@@ -9,7 +9,7 @@ content-type: tutorial
 services: containers
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationModernization
+use-case: ApplicationModernization, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 

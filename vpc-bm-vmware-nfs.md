@@ -10,7 +10,7 @@ content-type: tutorial
 services: vpc, vmwaresolutions, vpc-file-storage
 account-plan: paid
 completion-time: 1h
-use-case: ApplicationModernization
+use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 

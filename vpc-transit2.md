@@ -9,7 +9,7 @@ content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationModernization, Cybersecurity
+use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

@@ -10,7 +10,7 @@ content-type: tutorial
 services: vpc, databases-for-postgresql, schematics, cloud-object-storage
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationModernization, Cybersecurity
+use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

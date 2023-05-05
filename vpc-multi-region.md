@@ -9,7 +9,7 @@ content-type: tutorial
 services: vpc, cis, secrets-manager
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationIntegration, Cybersecurity
+use-case: ApplicationIntegration, Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

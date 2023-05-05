@@ -9,7 +9,7 @@ content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationIntegration, ApplicationModernization, Cybersecurity
+use-case: ApplicationIntegration, ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

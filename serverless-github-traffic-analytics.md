@@ -9,7 +9,7 @@ content-type: tutorial
 services: codeengine, Db2onCloud, appid
 account-plan: paid
 completion-time: 1h
-use-case: Analytics, Cybersecurity
+use-case: Analytics, Cybersecurity, AIAndML
 ---
 {{site.data.keyword.attribute-definition-list}}
 

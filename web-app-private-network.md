@@ -9,7 +9,7 @@ content-type: tutorial
 services: virtual-router-appliance, loadbalancer-service, virtual-servers
 account-plan: paid
 completion-time:
-use-case: Cybersecurity
+use-case: Cybersecurity, CloudInfrastructure
 ---
 {{site.data.keyword.attribute-definition-list}}
 

@@ -9,7 +9,7 @@ content-type: tutorial
 services: vmware-service
 account-plan: paid
 completion-time: 1h
-use-case: ApplicationModernization
+use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 

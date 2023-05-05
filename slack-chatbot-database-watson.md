@@ -9,7 +9,7 @@ content-type: tutorial
 services: codeengine, watson-assistant, Db2onCloud
 account-plan: paid
 completion-time: 2h
-use-case: AIAndML
+use-case: AIAndML, Chatbots
 ---
 {{site.data.keyword.attribute-definition-list}}
 

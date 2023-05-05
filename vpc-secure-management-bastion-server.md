@@ -9,7 +9,7 @@ content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 1h
-use-case: Cybersecurity
+use-case: Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

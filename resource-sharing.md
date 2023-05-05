@@ -10,7 +10,7 @@ content-type: tutorial
 services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage
 account-plan: paid
 completion-time: 1h
-use-case: ApplicationIntegration, Cybersecurity
+use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 ---
 
 {{site.data.keyword.attribute-definition-list}}

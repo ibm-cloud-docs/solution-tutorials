@@ -9,7 +9,7 @@ content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect
 account-plan: paid
 completion-time: 3h
-use-case: Analytics, Cybersecurity
+use-case: Analytics, Cybersecurity, AIAndML
 ---
 {{site.data.keyword.attribute-definition-list}}
 

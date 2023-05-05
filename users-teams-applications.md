@@ -9,7 +9,7 @@ content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 1h
-use-case: Cybersecurity, ITServiceManagement
+use-case: Cybersecurity, ITServiceManagement, IdentityAndAccessManagement
 ---
 {{site.data.keyword.attribute-definition-list}}
 

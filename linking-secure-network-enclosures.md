@@ -9,7 +9,7 @@ content-type: tutorial
 services: virtual-router-appliance, virtual-servers, vlans
 account-plan: paid
 completion-time:
-use-case: ApplicationPerformance, Cybersecurity
+use-case: ApplicationPerformance, Cybersecurity, CloudInfrastructure
 ---
 {{site.data.keyword.attribute-definition-list}}
 

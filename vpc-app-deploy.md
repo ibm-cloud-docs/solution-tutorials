@@ -9,7 +9,7 @@ content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationModernization, DevOpsS
+use-case: ApplicationModernization, DevOpsS, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 

@@ -9,7 +9,7 @@ content-type: tutorial
 services: virtual-servers
 account-plan: paid
 completion-time: 1h
-use-case: ApplicationModernization
+use-case: ApplicationModernization, CloudInfrastructure
 ---
 {{site.data.keyword.attribute-definition-list}}
 
