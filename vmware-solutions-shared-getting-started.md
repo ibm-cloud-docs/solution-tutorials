@@ -2,14 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-05"
 lasttested: "2022-12-21"
 content-type: tutorial
 services: vmwaresolutions, schematics
 account-plan: paid
 completion-time: 2h
-use-case:
-   - ApplicationModernization
+use-case: ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 

@@ -2,15 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-05"
 lasttested: "2023-02-22"
 
 content-type: tutorial
 services: codeengine, watson-assistant, Db2onCloud
 account-plan: paid
 completion-time: 2h
-use-case:
-   - AIAndML
+use-case: AIAndML
 ---
 {{site.data.keyword.attribute-definition-list}}
 

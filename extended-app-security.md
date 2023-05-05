@@ -2,15 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-04"
+lastupdated: "2023-05-05"
 lasttested: "2022-11-16"
 
 content-type: tutorial
 services: openshift, containers
 account-plan: paid
 completion-time: 1h
-use-case:
-   - Cybersecurity
+use-case: Cybersecurity
 ---
 {{site.data.keyword.attribute-definition-list}}
 

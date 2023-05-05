@@ -2,16 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-05"
 lasttested: "2023-02-21"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
 account-plan: paid
 completion-time: 1h
-use-case:
-   - ApplicationModernization
-   - DevOps
+use-case: ApplicationModernization, DevOps
 ---
 {{site.data.keyword.attribute-definition-list}}
 

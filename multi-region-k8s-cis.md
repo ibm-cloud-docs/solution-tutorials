@@ -2,17 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-05-04"
+lastupdated: "2023-05-05"
 lasttested: "2022-12-08"
 
 content-type: tutorial
 services: containers, Registry, cis
 account-plan: paid
 completion-time: 2h
-use-case:
-   - ApplicationModernization
-   - Cybersecurity
-   - Containers
+use-case: ApplicationModernization, Cybersecurity, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 

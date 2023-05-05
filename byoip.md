@@ -2,15 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-05-04"
+lastupdated: "2023-05-05"
 lasttested: "2019-04-23"
 
 content-type: tutorial
 services: virtual-servers
 account-plan: paid
 completion-time: 1h
-use-case:
-   - ApplicationModernization
+use-case: ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 

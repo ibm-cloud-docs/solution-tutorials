@@ -2,15 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-05"
 lasttested: "2019-04-23"
 
 content-type: tutorial
 services: virtual-router-appliance
 account-plan: paid
 completion-time:
-use-case:
-   - Cybersecurity
+use-case: Cybersecurity
 ---
 {{site.data.keyword.attribute-definition-list}}
 

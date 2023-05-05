@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-05"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -10,7 +10,7 @@ content-type: tutorial
 services: service1, service2
 account-plan: paid
 completion-time: 2h
-# use-case is a comma-separated list or yaml bullet format ?? (validating with Jenifer and testing). Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column.
+# use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column.
 use-case: usecase1, usecase2 
 ---
 
