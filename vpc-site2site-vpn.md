@@ -10,10 +10,7 @@ content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
 account-plan: paid
 completion-time: 2h
-use-case:
-   - Cybersecurity
-   - Databases
-   - ObjectStorage
+use-case: Cybersecurity, DatabaseManagement, ObjectStorage
 ---
 {{site.data.keyword.attribute-definition-list}}
 
