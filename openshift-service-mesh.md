@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-03"
+lastupdated: "2023-05-04"
 lasttested: "2023-02-24"
 
 content-type: tutorial
@@ -11,6 +11,7 @@ account-plan: paid
 completion-time: 2h
 use-case:
    - ApplicationModernization
+   - Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
