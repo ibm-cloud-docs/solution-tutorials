@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-05-08"
 lasttested: "2022-11-03"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 1h
-use-case: Cybersecurity, ITServiceManagement, IdentityAndAccessManagement
+use-case: Cybersecurity, IdentityAndAccessManagement
 ---
 {{site.data.keyword.attribute-definition-list}}
 

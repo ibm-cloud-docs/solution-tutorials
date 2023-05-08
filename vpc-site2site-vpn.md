@@ -3,14 +3,14 @@ subcollection: solution-tutorials
 copyright:
   years: 2023
 
-lastupdated: "2023-05-05"
+lastupdated: "2023-05-08"
 lasttested: "2023-03-27"
 
 content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
 account-plan: paid
 completion-time: 2h
-use-case: Cybersecurity, DatabaseManagement, ObjectStorage, VirtualPrivateCloud
+use-case: Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 
