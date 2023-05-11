@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 COMMIT_MESSAGE=`date +"%Y-%m-%d %T%z"`' ('`git rev-parse HEAD`')'
 
 # get the publish branch
@@ -33,6 +35,7 @@ tar cf - \
 # remove the custom markup used by tutorials-to-gitbook conversion
 (cd scripts/remove-markup && npm install)
 for source in build/*.md; do
+  echo "Removing markup from $source..."
   node scripts/remove-markup/main.js $source $source
 done
 

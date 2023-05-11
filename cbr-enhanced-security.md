@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-05-11"
 lasttested: "2023-01-26"
 
 content-type: tutorial
@@ -42,8 +42,6 @@ The following diagram shows the solution architecture as used in the tutorial [A
 
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
-
-<!--##istutorial#-->
 ## Before you begin
 {: #cbr-security-prereqs}
 
