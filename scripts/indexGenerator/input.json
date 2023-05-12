@@ -49,7 +49,7 @@
                "name": "Scalable web app on Kubernetes",
                "url": "scalable-webapp-kubernetes.html",
                "description": "Run a web application locally in a container, build a container image and push the image to a private registry and then deploy it to a Kubernetes cluster",
-               "imgSrc": "images/solution2/Architecture.png",
+               "imgSrc": "images/solution2/Architecture.svg",
                "tags": [
                   "Kubernetes",
                   "Container Service",
@@ -161,7 +161,7 @@
                "name": "Deploy microservices with OpenShift",
                "url": "openshift-microservices.html",
                "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-               "imgSrc": "images/solution55-openshift-microservices/Architecture.png",
+               "imgSrc": "images/solution55-openshift-microservices/Architecture.svg",
                "tags": [
                   "OpenShift",
                   "Log Analysis",
@@ -1180,7 +1180,7 @@
                "name": "Getting Started with IBM Cloud for VMware Shared",
                "url": "vmware-solutions-shared-getting-started.html",
                "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",
-               "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+               "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.svg",
                "tags": [
                   "VMware"
                ],
