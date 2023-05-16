@@ -1,0 +1,188 @@
+---
+subcollection: solution-tutorials
+copyright:
+  years: 2023
+lastupdated: "2023-05-16"
+lasttested: "2023-05-16"
+
+content-type: tutorial
+services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
+account-plan: paid
+completion-time: 2h
+use-case: IdentityAndAccessManagement, ApplicationIntegration
+---
+
+{{site.data.keyword.attribute-definition-list}}
+
+# Deploy an architecture pattern into an account secured by a trusted profile
+{: #deployable-architecture-trusted-profile}
+{: toc-content-type="tutorial"}
+{: toc-services="containers, Cloudant"}
+{: toc-completion-time="2h"}
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+{: tip}
+
+<!--#/istutorial#-->
+
+Turn an existing solution into a deployable architecture. Then, deploy it into other accounts. Access is facilitated through trusted profiles.
+{: shortdesc}
+
+## Objectives
+{: #solution-template-objectives}
+
+* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
+* Short and informational (do not use sentences)
+
+![Architecture](images/solution1/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+{: style="text-align: center;"}
+
+1. The user does this
+2. Then that
+3. Create a .drawio file in diagrams/ directory with the same name as the tutorial.md only tutorial.drawio with a separate tab for each diagram
+
+![Ingress](images/solution2/Ingress.png){: caption="Ingress" caption-side="bottom"}{: class="center"}
+{: style="text-align: center;"}
+
+## Before you begin
+{: #solution-template-prereqs}
+
+This tutorial requires:
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
+   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
+   * `dev` plugin,
+* a Docker engine,
+* `kubectl` to interact with Kubernetes clusters,
+* `oc` to interact with OpenShift,
+* `helm` to deploy charts,
+* `terraform` to use Infrastructure as Code to provision resources,
+* `jq` to query JSON files,
+* `git` to clone source code repository,
+* a GitHub account,
+* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+{: tip}
+
+<!--#/istutorial#-->
+
+In addition, make sure you have:
+- a **namespace** created in the {{site.data.keyword.registryfull_notm}}
+- and Android Studio installed.
+
+<!--##isworkshop#-->
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+{: #solution-template-2}
+{: step}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
+1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
+
+-->
+<!--#/isworkshop#-->
+
+## Create services
+{: #solution-template-setup}
+{: step}
+
+In this section, you will create the services required to ...
+
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](/docs/cli?topic=cloud-cli-getting-started).
+    
+2. Create an instance of [Service A](/catalog/services/the-service-name).
+    ```sh
+    ibmcloud resource service-instance-create service-instance-name service-name lite global
+    ```
+3. Create an instance of [Service B](/catalog/services/the-service-name).
+
+## Solution Specific Section
+{: #solution-template-section_one}
+{: step}
+
+Introductory statement that overviews the section
+
+1. Step 1 Click **This** and enter your name.
+
+   This is a tip.
+   {: tip}
+
+2. Keep each step as short as possible.
+3. Do not use blank lines between steps except for tips or images.
+4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
+5. Do not use "I", "We will", "Let's", "We'll", etc.
+6. Another step
+7. Try to limit to 7 steps.
+
+
+## Another Solution Specific Section
+{: #solution-template-section_two}
+{: step}
+
+Introductory statement that overviews the section
+
+### Another sub section
+{: #solution-template-7}
+
+## Remove resources
+{: #solution-template-removeresources}
+{: step}
+
+Steps to take to remove the resources created in this tutorial
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
+{: tip}
+
+## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+{: #solution-template-0}
+
+Want to add to or change this tutorial? Here are some ideas:
+- idea with [link](http://example.com){: external} to resources to help implement the idea
+- idea with high level steps the user should follow
+- avoid generic ideas you did not test on your own
+- don't throw up ideas that would take days to implement
+- this section is optional
+
+## Related content
+{: #solution-template-related}
+
+* [Relevant links in IBM Cloud docs](/docs/cli?topic=blah)
+* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/){: external}
+
+## Writing guide
+{: #solution-template-writing_guide}
+
+### Creating links
+{: #solution-template-12}
+
+For anchors within the same document always only use the following format:
+   [link_description](#anchor_name)
+
+For anchors or any links to external documents, even for those are are within our tutorials use the following format:
+   [following these steps](/docs/cli?topic=cloud-cli-getting-started#overview)
+
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+
+Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/writing?topic=writing-link-format
+
+### Conrefs
+{: #solution-template-13}
+
+Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+
+#### Terraform
+{: #solution-template-19}
+
+```terraform
+resource "ibm_is_vpc" "myvpc" {
+  name = "the name using terraform"
+}
+```
+{: codeblock}

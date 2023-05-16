@@ -31,6 +31,15 @@
                "imgSrc": ""
             },
             {
+               "name": "Deploy an architecture pattern into an account secured by a trusted profile",
+               "url": "deployable-architecture-trusted-profile.hidden.html",
+               "description": "Turn an existing solution into a deployable architecture. Then, deploy it into other accounts. Access is facilitated through trusted profiles.",
+               "imgSrc": "images/solution67-cbr-enhanced-security/architecture-e2e-security.svg",
+               "repos": [
+                  "https://github.com/IBM-Cloud/secure-file-storage"
+               ]
+            },
+            {
                "name": "Introduction to Satellite locations, clusters, link and config",
                "url": "satellite-tour.hidden.html",
                "description": "Get familiar with Satellite architecture and capabilities.",

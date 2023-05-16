@@ -25,6 +25,7 @@ toc:
                 label: (Hidden) Work In Progress
                 topics:
                 - solution-template.md
+                - deployable-architecture-trusted-profile.hidden.md
                 - satellite-tour.hidden.md
 
             - topicgroup:
