@@ -54,27 +54,42 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 
 
-## Create services
-{: #deployable-architecture-trusted-profile-setup}
+## Create a deployable architecture
+{: #deployable-architecture-trusted-profile-create-da}
 {: step}
 
-In this section, you will create the services required to ...
+create a DA from an existing solution or app template
+- what is needed (prereqs) to create the DA
+- what are the steps
+- walk through them
 
 
-## Solution Specific Section
-{: #deployable-architecture-trusted-profile_one}
+## Add deployable architecture to private catalog
+{: #deployable-architecture-trusted-profile-add-da-catalog}
 {: step}
 
-Introductory statement that overviews the section
+add the DA to a private catalog
+- walk through the steps
+- compliance and security aspects
 
 
 
-
-## Another Solution Specific Section
-{: #deployable-architecture-trusted-profile_two}
+## Deploy from catalog
+{: #deployable-architecture-trusted-profile-deploy-da}
 {: step}
 
-Introductory statement that overviews the section
+deploy the DA from the private catalog
+- create the trusted profile
+- set up the privileges, what are the best practices
+- deploy
+
+## Manage resources
+{: #deployable-architecture-trusted-profile-manage-resources}
+{: step}
+
+- What resources are created for all the steps above?
+- When and how can they be deleted?
+
 
 
 ## Remove resources
@@ -85,11 +100,6 @@ Steps to take to remove the resources created in this tutorial
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
-
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-{: #deployable-architecture-trusted-profile-0}
-
-Want to add to or change this tutorial? Here are some ideas:
 
 
 ## Related content
