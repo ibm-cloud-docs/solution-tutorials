@@ -20,11 +20,10 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {: toc-services="containers, Cloudant"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
+
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 Turn an existing solution into a deployable architecture. Then, deploy it into other accounts. Access is facilitated through trusted profiles.
 {: shortdesc}
@@ -44,24 +43,10 @@ Turn an existing solution into a deployable architecture. Then, deploy it into o
 {: #deployable-architecture-trusted-profile-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `oc` to interact with OpenShift,
-* `helm` to deploy charts,
-* `terraform` to use Infrastructure as Code to provision resources,
-* `jq` to query JSON files,
-* `git` to clone source code repository,
-* a GitHub account,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts)
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
@@ -91,8 +76,6 @@ Introductory statement that overviews the section
 
 Introductory statement that overviews the section
 
-### Another sub section
-{: #solution-template-7}
 
 ## Remove resources
 {: #deployable-architecture-trusted-profile-removeresources}
@@ -111,3 +94,5 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related content
 {: #deployable-architecture-trusted-profile-related}
+
+some content here
