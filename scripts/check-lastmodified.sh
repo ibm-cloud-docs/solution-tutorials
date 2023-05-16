@@ -13,10 +13,6 @@ for source in *.md; do
     continue
   fi
 
-  if [ "$source" == "solution-template.md" ]; then
-    continue
-  fi
-
   # skip hidden tutorials
   if [[ "$source" == *"hidden.md" ]]; then
     continue
