@@ -29,7 +29,7 @@ Turn an existing solution into a deployable architecture. Then, deploy it into o
 {: shortdesc}
 
 ## Objectives
-{: #solution-template-objectives}
+{: #deployable-architecture-trusted-profile-objectives}
 
 * Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
 * Short and informational (do not use sentences)
