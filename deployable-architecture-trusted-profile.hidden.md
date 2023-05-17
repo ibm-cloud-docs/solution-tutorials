@@ -63,6 +63,14 @@ create a DA from an existing solution or app template
 - what are the steps
 - walk through them
 
+The [{{site.data.keyword.cloud_notm}} documentation](/docs/secure-enterprise?topic=secure-enterprise-understanding-projects) defines deployable architecture as follows:
+> Cloud automation for deploying a common architectural pattern that combines one or more cloud resources that is designed for easy deployment, scalability, and modularity.
+
+
+why:
+- You can even lock down access to your most sensitive accounts and require changes to be made by using projects.
+- maintain compliance
+
 
 ## Add deployable architecture to private catalog
 {: #deployable-architecture-trusted-profile-add-da-catalog}
@@ -70,7 +78,7 @@ create a DA from an existing solution or app template
 
 add the DA to a private catalog
 - walk through the steps
-- compliance and security aspects
+- compliance and security aspects, how to configure compliance
 
 
 
