@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-05-09"
+lastupdated: "2023-05-16"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -236,9 +236,9 @@ For anchors within the same document always only use the following format:
 For anchors or any links to external documents, even for those are are within our tutorials use the following format:
    [following these steps](/docs/cli?topic=cloud-cli-getting-started#overview)
 
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, such as [this one](/docs/tutorials/serverless-api-webapp.html), you will be redirected to the new ?topic= format which is [this link](/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp)
 
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/writing?topic=writing-link-format
+Finally refer to [the link topic under the content and design documentation](/docs/writing?topic=writing-link-format) if you have any other questions.
 
 ### Conrefs
 {: #solution-template-13}

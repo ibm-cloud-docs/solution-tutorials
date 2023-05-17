@@ -11,7 +11,7 @@ LINK_RULES=( \
 )
 for rule in "${LINK_RULES[@]}"
 do
-  if grep -rI "$rule" --exclude=README.md --exclude solution-template.md *.md
+  if grep -rI "$rule" --exclude=README.md *.md
   then
     echo "  -> Found references to $rule. Check related links."
     errorCode=1
