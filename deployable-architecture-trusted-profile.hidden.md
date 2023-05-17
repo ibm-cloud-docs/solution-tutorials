@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-16"
-lasttested: "2023-05-16"
+lastupdated: "2023-05-17"
+lasttested: "2023-05-17"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -72,6 +72,9 @@ why:
 - maintain compliance
 
 
+
+
+
 ## Add deployable architecture to private catalog
 {: #deployable-architecture-trusted-profile-add-da-catalog}
 {: step}
@@ -80,6 +83,7 @@ add the DA to a private catalog
 - walk through the steps
 - compliance and security aspects, how to configure compliance
 
+[onboarding a product to a private catalog](/docs/secure-enterprise?topic=secure-enterprise-manifest&interface=ui)
 
 
 ## Deploy from catalog
@@ -90,6 +94,9 @@ deploy the DA from the private catalog
 - create the trusted profile
 - set up the privileges, what are the best practices
 - deploy
+
+[customize a DA](/docs/secure-enterprise?topic=secure-enterprise-customize-from-catalog)
+
 
 ## Manage resources
 {: #deployable-architecture-trusted-profile-manage-resources}
