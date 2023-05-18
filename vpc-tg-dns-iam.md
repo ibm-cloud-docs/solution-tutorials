@@ -841,7 +841,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-Provide a DNS CNAME record `shared.widgets.example.com` to identify the load balancer so the applications continue to work without source code changes:
+1. Provide a DNS CNAME record `shared.widgets.example.com` to identify the load balancer so the applications continue to work without source code changes:
 
    ```terraform
    # shared.widgets.example.com
