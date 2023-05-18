@@ -828,7 +828,19 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: pre}
 
-1. Optionally investigate the Terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the `lb.tf` for the implementation. The DNS record is this snippet:
+1. Optionally investigate the Terraform configuration files. The {{site.data.keyword.loadbalancer_short}} for VPC service distributes traffic among multiple server instances within the same region of your VPC. The *shared* team can balance load between multiple instances. For now the load balancer pool will only have the single instance created earlier. See the `lb.tf` for the implementation.  In the `ibm_is_lb` resource use the dns clause to identify the private DNS zone to place the the load balancer DNS address:
+
+   ```terraform
+   resource "ibm_is_lb" "shared_lb" {
+     ...
+     dns {
+       instance_crn = local.network_context.dns.crn
+       zone_id      = local.network_context.dns.zone_id
+     }
+   }
+   ```
+
+Provide a DNS CNAME record `shared.widgets.example.com` to identify the load balancer so the applications continue to work without source code changes:
 
    ```terraform
    # shared.widgets.example.com
@@ -843,7 +855,7 @@ The Admin team has provided them just the right amount of permissions to create 
    }
    ```
 
-   The same `count = var.shared_lb ? 1 : 0` is a used. Notice a CNAME record is initialized with the load balancer hostname: `ibm_is_lb.shared_lb[0].hostname`
+   The same `count = var.shared_lb ? 1 : 0` is a used. The load balancer hostname will be something like `b7911a41-us-south.widgets.example.com`.  The CNAME record will be used by the applications.
 
 1. Edit the `terraform.tfvars` file and uncomment `shared_lb = true`. Then apply the changes:
 
