@@ -839,6 +839,7 @@ The Admin team has provided them just the right amount of permissions to create 
      }
    }
    ```
+   {: pre}
 
 Provide a DNS CNAME record `shared.widgets.example.com` to identify the load balancer so the applications continue to work without source code changes:
 
@@ -854,6 +855,7 @@ Provide a DNS CNAME record `shared.widgets.example.com` to identify the load bal
      ttl         = 3600
    }
    ```
+   {: pre}
 
    The same `count = var.shared_lb ? 1 : 0` is a used. The load balancer hostname will be something like `b7911a41-us-south.widgets.example.com`.  The CNAME record will be used by the applications.
 
