@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-17"
-lasttested: "2023-05-17"
+lastupdated: "2023-05-19"
+lasttested: "2023-05-19"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -14,7 +14,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 
 {{site.data.keyword.attribute-definition-list}}
 
-# Deploy an architecture pattern into an account secured by a trusted profile
+# Use trusted profiles as foundation for secure cloud environments
 {: #deployable-architecture-trusted-profile}
 {: toc-content-type="tutorial"}
 {: toc-services="containers, Cloudant"}
@@ -25,14 +25,15 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 {: tip}
 
 
-Turn an existing solution into a deployable architecture. Then, deploy it into other accounts. Access is facilitated through trusted profiles.
+Learn about trusted profiles as building block for secure cloud environments
 {: shortdesc}
 
 ## Objectives
 {: #deployable-architecture-trusted-profile-objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Learn use cases for trusted profiles
+* Create a trusted profile and assign access
+* Use a trusted profile for secure enterprise deployment
 
 
 
@@ -54,36 +55,17 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 
 
-## Create a deployable architecture
+## Trusted profile use cases
 {: #deployable-architecture-trusted-profile-create-da}
 {: step}
 
-create a DA from an existing solution or app template
-- what is needed (prereqs) to create the DA
-- what are the steps
-- walk through them
-
-The [{{site.data.keyword.cloud_notm}} documentation](/docs/secure-enterprise?topic=secure-enterprise-understanding-projects) defines deployable architecture as follows:
-> Cloud automation for deploying a common architectural pattern that combines one or more cloud resources that is designed for easy deployment, scalability, and modularity.
-
-
-why:
-- You can even lock down access to your most sensitive accounts and require changes to be made by using projects.
-- maintain compliance
+Learn about trusted profiles
+- what is a TP
+- what are the supported use cases
+- what is needed to use a TP
 
 
 
-
-
-## Add deployable architecture to private catalog
-{: #deployable-architecture-trusted-profile-add-da-catalog}
-{: step}
-
-add the DA to a private catalog
-- walk through the steps
-- compliance and security aspects, how to configure compliance
-
-[onboarding a product to a private catalog](/docs/secure-enterprise?topic=secure-enterprise-manifest&interface=ui)
 
 
 ## Deploy from catalog
