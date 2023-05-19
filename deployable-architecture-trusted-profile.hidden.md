@@ -64,8 +64,28 @@ Learn about trusted profiles
 - what are the supported use cases
 - what is needed to use a TP
 
+[TP based on](/docs/account?topic=account-create-trusted-profile&interface=ui)
+- federated ID (IdP)
+- compute resource
+- cloud service with CRN
+- service ID
 
 
+federated ID
+- bring in users from corporate directory (LDAP, Active Directory)
+- uses SAML or OIDC via App ID
+- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
+
+compute resource
+- avoid using API keys, but perform (administrative) tasks
+- access to a compute resource indicates privilege
+- compute resource can obtain token, turn into IAM token and perform the action
+
+cloud service
+- could be a Project identified by its CRN
+
+service ID
+- initiate work (in a different account) authorized by the originating service ID
 
 
 ## Deploy from catalog
