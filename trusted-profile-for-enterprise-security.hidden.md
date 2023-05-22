@@ -25,6 +25,11 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 {: tip}
 
 
+{{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, typically users and service IDs are involved. But there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
+
+In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Learn how to use trusted profiles as foundation for secure cloud environments. They can serve as building block for secure cloud solutions.
+
+
 Learn about trusted profiles as building block for secure cloud environments
 {: shortdesc}
 
@@ -58,6 +63,9 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 ## Trusted profile use cases
 {: #trusted-profile-for-enterprise-security-use-cases}
 {: step}
+
+Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted in IAM policies.
+
 
 Learn about trusted profiles
 - what is a TP
