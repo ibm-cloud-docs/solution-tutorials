@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-19"
-lasttested: "2023-05-19"
+lastupdated: "2023-05-22"
+lasttested: "2023-05-22"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -15,7 +15,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {{site.data.keyword.attribute-definition-list}}
 
 # Use trusted profiles as foundation for secure cloud environments
-{: #deployable-architecture-trusted-profile}
+{: #trusted-profile-for-enterprise-security}
 {: toc-content-type="tutorial"}
 {: toc-services="containers, Cloudant"}
 {: toc-completion-time="2h"}
@@ -29,7 +29,7 @@ Learn about trusted profiles as building block for secure cloud environments
 {: shortdesc}
 
 ## Objectives
-{: #deployable-architecture-trusted-profile-objectives}
+{: #trusted-profile-for-enterprise-security-objectives}
 
 * Learn use cases for trusted profiles
 * Create a trusted profile and assign access
@@ -41,7 +41,7 @@ Learn about trusted profiles as building block for secure cloud environments
 
 
 ## Before you begin
-{: #deployable-architecture-trusted-profile-prereqs}
+{: #trusted-profile-for-enterprise-security-prereqs}
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts)
@@ -56,7 +56,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 
 ## Trusted profile use cases
-{: #deployable-architecture-trusted-profile-create-da}
+{: #trusted-profile-for-enterprise-security-use-cases}
 {: step}
 
 Learn about trusted profiles
@@ -82,35 +82,29 @@ compute resource
 - compute resource can obtain token, turn into IAM token and perform the action
 
 cloud service
-- could be a Project identified by its CRN
+- could be a Project identified by its CR^
 
 service ID
 - initiate work (in a different account) authorized by the originating service ID
 
 
-## Deploy from catalog
-{: #deployable-architecture-trusted-profile-deploy-da}
+## Federated identity
+{: #trusted-profile-for-enterprise-security-federated-id}
 {: step}
 
-deploy the DA from the private catalog
-- create the trusted profile
-- set up the privileges, what are the best practices
-- deploy
 
-[customize a DA](/docs/secure-enterprise?topic=secure-enterprise-customize-from-catalog)
+details on federated ID, including resources and blogs, why should I use it?
+
+- bring in users from corporate directory (LDAP, Active Directory)
+- uses SAML or OIDC via App ID
+- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
 
 
-## Manage resources
-{: #deployable-architecture-trusted-profile-manage-resources}
-{: step}
-
-- What resources are created for all the steps above?
-- When and how can they be deleted?
 
 
 
 ## Remove resources
-{: #deployable-architecture-trusted-profile-removeresources}
+{: #trusted-profile-for-enterprise-security-removeresources}
 {: step}
 
 Steps to take to remove the resources created in this tutorial
@@ -120,6 +114,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 
 ## Related content
-{: #deployable-architecture-trusted-profile-related}
+{: #trusted-profile-for-enterprise-security-related}
 
 some content here

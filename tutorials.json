@@ -120,7 +120,7 @@
             "https://github.com/IBM-Cloud/patient-health-backend",
             "https://github.com/IBM-Cloud/patient-health-frontend"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-05-18"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -565,7 +565,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tg-dns-iam"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-05-18"
         },
         {
           "name": "Scale workloads in shared and dedicated VPC environments",

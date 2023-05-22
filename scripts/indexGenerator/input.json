@@ -31,9 +31,9 @@
                "imgSrc": ""
             },
             {
-               "name": "Deploy an architecture pattern into an account secured by a trusted profile",
-               "url": "deployable-architecture-trusted-profile.hidden.html",
-               "description": "Turn an existing solution into a deployable architecture. Then, deploy it into other accounts. Access is facilitated through trusted profiles.",
+               "name": "Trusted profiles as building block for secure cloud environments",
+               "url": "trusted-profile-for-enterprise-security.hidden.html",
+               "description": "Learn about trusted profiles as building block for secure cloud environments.",
                "imgSrc": "images/solution67-cbr-enhanced-security/architecture-e2e-security.svg",
                "repos": [
                   "https://github.com/IBM-Cloud/secure-file-storage"
