@@ -63,15 +63,16 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #trusted-profile-for-enterprise-security-use-cases}
 {: step}
 
-Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. You can accomplish this using the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or via the {{site.data.keyword.cloud_notm}} console. In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. 
+Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or the {{site.data.keyword.cloud_notm}} console. 
 
-The following screenshot shows the second step of the dialog to create a trusted profile. You can configure which entity can assume the identity of the trusted profile. It is one or more of:
+In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure which entity can assume the identity of the trusted profile](/docs/account?topic=account-create-trusted-profile). It is one or more of:
 - Federated users
 - Compute resources
 - {{site.data.keyword.cloud_notm}} services
 - Service IDs
 
 ![Trusted profile entity type](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted profile types" caption-side="bottom"}
+
 
 
 
@@ -90,7 +91,7 @@ Learn about trusted profiles
 federated ID
 - bring in users from corporate directory (LDAP, Active Directory)
 - uses SAML or OIDC via App ID
-- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
+- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges / access groups
 
 compute resource
 - avoid using API keys, but perform (administrative) tasks
