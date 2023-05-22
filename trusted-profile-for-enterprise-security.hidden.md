@@ -36,10 +36,9 @@ Learn about trusted profiles as building block for secure cloud environments
 ## Objectives
 {: #trusted-profile-for-enterprise-security-objectives}
 
-* Learn use cases for trusted profiles
-* Create a trusted profile and assign access
-* Use a trusted profile for secure enterprise deployment
-
+* Learn about use cases for trusted profiles
+* Create trusted profiles and manage access to cloud resources
+* Deepen your Identity and Access Management (IAM) knowledge
 
 
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
@@ -64,7 +63,16 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #trusted-profile-for-enterprise-security-use-cases}
 {: step}
 
-Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted in IAM policies.
+Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. You can accomplish this using the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or via the {{site.data.keyword.cloud_notm}} console. In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. 
+
+The following screenshot shows the second step of the dialog to create a trusted profile. You can configure which entity can assume the identity of the trusted profile. It is one or more of:
+- Federated users
+- Compute resources
+- {{site.data.keyword.cloud_notm}} services
+- Service IDs
+
+![Trusted profile entity type](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted profile types" caption-side="bottom"}
+
 
 
 Learn about trusted profiles
