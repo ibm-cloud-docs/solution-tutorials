@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-22"
-lasttested: "2023-05-22"
+lastupdated: "2023-05-23"
+lasttested: "2023-05-23"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -59,13 +59,13 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 
 
-## Trusted profile use cases
-{: #trusted-profile-for-enterprise-security-use-cases}
+## Overview: Trusted profiles
+{: #trusted-profile-for-enterprise-security-overview}
 {: step}
 
 Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or the {{site.data.keyword.cloud_notm}} console. 
 
-In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure which entity can assume the identity of the trusted profile](/docs/account?topic=account-create-trusted-profile). It is one or more of:
+In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure which entity can assume the identity of the trusted profile](/docs/account?topic=account-create-trusted-profile), one or more of:
 - Federated users
 - Compute resources
 - {{site.data.keyword.cloud_notm}} services
@@ -74,35 +74,25 @@ In the console, as part of the IAM category, [trusted profiles](/iam/trusted-pro
 ![Trusted profile entity type](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted profile types" caption-side="bottom"}
 
 
-
-
 Learn about trusted profiles
 - what is a TP
 - what are the supported use cases
 - what is needed to use a TP
 
-[TP based on](/docs/account?topic=account-create-trusted-profile&interface=ui)
-- federated ID (IdP)
-- compute resource
-- cloud service with CRN
-- service ID
+## Trusted profile use cases
+{: #trusted-profile-for-enterprise-security-use-cases}
+{: step}
+
+Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. Their distinguishing feature is the ability to configure trusted profiles, so that specific identities or resources can act under their identity. These identities and resources might be even located in other accounts. The following scenarios are typical use cases for trusted profiles.
+
+- **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges / access groups
+- **Perform administrative tasks from dedicated compute resources**: avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
+- **Perform administrative tasks from a well-known service ID**: initiate work (in a different account) authorized by the originating service ID
+- **Deploy cloud resources from an instance of a special cloud service**: not a compute resource but similar, Project
 
 
-federated ID
-- bring in users from corporate directory (LDAP, Active Directory)
-- uses SAML or OIDC via App ID
-- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges / access groups
 
-compute resource
-- avoid using API keys, but perform (administrative) tasks
-- access to a compute resource indicates privilege
-- compute resource can obtain token, turn into IAM token and perform the action
 
-cloud service
-- could be a Project identified by its CR^
-
-service ID
-- initiate work (in a different account) authorized by the originating service ID
 
 
 ## Federated identity
