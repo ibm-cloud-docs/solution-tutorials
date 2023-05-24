@@ -41,6 +41,8 @@ Learn about trusted profiles as building block for secure cloud environments
 * Deepen your Identity and Access Management (IAM) knowledge
 
 
+diagram should show {{site.data.keyword.cloud_notm}} account with the four identities / users to point to a trusted profile to assume its identity
+
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
 
@@ -98,7 +100,7 @@ The following scenarios are such use cases for trusted profiles, differing by th
 [Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use {{site.data.keyword.cloud_notm}} and continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
 
 
-ederated identities can be used in two ways
+federated identities can be used in two ways, add a user to the account or have the user log in through a TP
 
 
 [perform operations work in the console under the umbrella of a trusted profile](/docs/account?topic=account-federated_id&interface=ui#login_console_trustedprofile)
@@ -122,9 +124,23 @@ federated ID, bring in users from corporate directory (LDAP, Active Directory), 
 
 avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
 
+## Service ID
+{: #trusted-profile-for-enterprise-security-service-id}
+
+designate a service ID to perform administrative tasks in a different account, assume identity of trusted profile, inherit that environment with privileges
+
+
+## Cloud service instance
+{: #trusted-profile-for-enterprise-security-service-instance}
+
+- CRN
+- enterprise project, deployable architecture
+- enterprise account with hierarchy, deploy into sub or peer account
+
+
 ## Remove resources
 {: #trusted-profile-for-enterprise-security-removeresources}
-{: step}
+
 
 Steps to take to remove the resources created in this tutorial
 
