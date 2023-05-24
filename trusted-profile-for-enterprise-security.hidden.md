@@ -81,7 +81,12 @@ Learn about trusted profiles
 ## Trusted profile use cases
 {: #trusted-profile-for-enterprise-security-use-cases}
 
-Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. Their distinguishing feature is the ability to configure trusted profiles, so that specific identities or resources can act under their identity. These identities and resources might be even located in other accounts. The following scenarios are typical use cases for trusted profiles.
+Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure trusted profiles, so that specific identities or resources can act under their identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
+- with a given set of privileges
+- under a specific identity
+- for identities or resources identified by a set of properties configured as part of the trusted profile.
+
+The following scenarios are such use cases for trusted profiles, differing by the way the trust is established:
 
 - **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
 - **Perform administrative tasks from dedicated compute resources**: avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
