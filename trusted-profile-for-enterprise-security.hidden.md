@@ -81,22 +81,16 @@ Learn about trusted profiles
 ## Trusted profile use cases
 {: #trusted-profile-for-enterprise-security-use-cases}
 
-Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure trusted profiles, so that specific identities or resources can act under their identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
+Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure a trusted profiles, so that specific identities or resources can act under its identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
 - with a given set of privileges
 - under a specific identity
 - for identities or resources identified by a set of properties configured as part of the trusted profile.
 
 The following scenarios are such use cases for trusted profiles, differing by the way the trust is established:
-
-- **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
-- **Perform administrative tasks from dedicated compute resources**: avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
-- **Perform administrative tasks from a well-known service ID**: initiate work (in a different account) authorized by the originating service ID
-- **Deploy cloud resources from an instance of a special cloud service**: not a compute resource but similar, Project
-
-
-
-
-
+- **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: Configure a trusted profile to let users of a federated identity provider assume its identity. You can define which IdP and what user attributes to consider.
+- **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
+- **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
+- **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an{{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
 
 ## Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
@@ -115,6 +109,8 @@ details on federated ID, including resources and blogs, why should I use it?
 - uses SAML or OIDC via App ID
 - use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
 
+federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
+
 
 ## Compute resource
 {: #trusted-profile-for-enterprise-security-compute-resource}
@@ -124,7 +120,7 @@ details on federated ID, including resources and blogs, why should I use it?
 - how to develop app for using CR token locally, see blog post
 - [IAM condition properties](docs/account?topic=account-iam-condition-properties)
 
-
+avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
 
 ## Remove resources
 {: #trusted-profile-for-enterprise-security-removeresources}
