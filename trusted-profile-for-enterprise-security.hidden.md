@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-23"
-lasttested: "2023-05-23"
+lastupdated: "2023-05-24"
+lasttested: "2023-05-24"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -83,7 +83,7 @@ Learn about trusted profiles
 
 Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. Their distinguishing feature is the ability to configure trusted profiles, so that specific identities or resources can act under their identity. These identities and resources might be even located in other accounts. The following scenarios are typical use cases for trusted profiles.
 
-- **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups
+- **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
 - **Perform administrative tasks from dedicated compute resources**: avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
 - **Perform administrative tasks from a well-known service ID**: initiate work (in a different account) authorized by the originating service ID
 - **Deploy cloud resources from an instance of a special cloud service**: not a compute resource but similar, Project
@@ -96,7 +96,13 @@ Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They ca
 ## Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
 
+[Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use {{site.data.keyword.cloud_notm}} and continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
 
+
+ederated identities can be used in two ways
+
+
+[perform operations work in the console under the umbrella of a trusted profile](/docs/account?topic=account-federated_id&interface=ui#login_console_trustedprofile)
 
 details on federated ID, including resources and blogs, why should I use it?
 
