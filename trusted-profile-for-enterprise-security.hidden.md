@@ -80,7 +80,7 @@ Learn about trusted profiles
 - what are the supported use cases
 - what is needed to use a TP
 
-## Trusted profile use cases
+### Trusted profile use cases
 {: #trusted-profile-for-enterprise-security-use-cases}
 
 Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure a trusted profiles, so that specific identities or resources can act under its identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
@@ -94,7 +94,7 @@ The following scenarios are such use cases for trusted profiles, differing by th
 - **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
 - **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an{{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
 
-## Federated identity
+### Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
 
 [Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use with {{site.data.keyword.cloud_notm}} and can continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
@@ -114,7 +114,7 @@ details on federated ID, including resources and blogs, why should I use it?
 federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
 
 
-## Compute resource
+### Compute resource
 {: #trusted-profile-for-enterprise-security-compute-resource}
 
 Instead of through user properties supplied by an identity provider, in this case, trust is established through [attributes of compute resources](/docs/account?topic=account-iam-condition-properties#cr-attribute-names). You can configure to only trust an app running in, e.g., a specific namespace and pod in a Kubernetes cluster, or a virtual server instance in a VPC with a specific combination of values for resource group, region, subnet, and zone. That trusted app can assume the identity of the trusted profile and perform tasks with the assigned privileges.
@@ -125,18 +125,23 @@ The benefit of utilizing a trusted profile based on a compute resource is that t
 - how to develop app for using CR token locally, see blog post
 
 
-## Service ID
+### Service ID
 {: #trusted-profile-for-enterprise-security-service-id}
 
-designate a service ID to perform administrative tasks in a different account, assume identity of trusted profile, inherit that environment with privileges
+Another method to establish trust is by specifying a service ID. The service ID can be from the same or other account. Because service IDs are unique identities across all {{site.data.keyword.cloud_notm}} accounts, no further attributes need to be configured. With that setup in place, a service ID from an account A can now request to assume the identity of a trusted profile in account B and perform (administrative) tasks.
 
 
-## Cloud service instance
+### Cloud service instance
 {: #trusted-profile-for-enterprise-security-service-instance}
 
-- CRN
-- enterprise project, deployable architecture
-- enterprise account with hierarchy, deploy into sub or peer account
+Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
+
+
+## Perform a task (which one?)
+{: #trusted-profile-for-enterprise-security-task1}
+
+deploy an architecture from within a project
+
 
 
 ## Remove resources
