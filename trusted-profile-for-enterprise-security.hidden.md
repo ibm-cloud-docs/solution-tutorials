@@ -59,14 +59,14 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: tip}
 
 
-
-
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
 
-Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or the {{site.data.keyword.cloud_notm}} console. 
+Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. They can assume the identity of that trusted profile. 
 
-In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure which entity can assume the identity of the trusted profile](/docs/account?topic=account-create-trusted-profile), one or more of:
+You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or the {{site.data.keyword.cloud_notm}} console. 
+
+In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure how to establish trust](/docs/account?topic=account-create-trusted-profile), which entity can assume the identity of the trusted profile. It is one or more of:
 - Federated users
 - Compute resources
 - {{site.data.keyword.cloud_notm}} services
@@ -75,15 +75,10 @@ In the console, as part of the IAM category, [trusted profiles](/iam/trusted-pro
 ![Trusted profile entity type](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted profile types" caption-side="bottom"}
 
 
-Learn about trusted profiles
-- what is a TP
-- what are the supported use cases
-- what is needed to use a TP
-
-### Trusted profile use cases
+## Trusted profile use cases
 {: #trusted-profile-for-enterprise-security-use-cases}
 
-Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure a trusted profiles, so that specific identities or resources can act under its identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
+Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They can be members of IAM access groups and thereby have assigned access privileges. Similar to users and service IDs, you can also directly assign access to trusted profiles. The distinguishing feature is the ability to configure a trusted profile, so that specific identities or resources can act under its identity. These identities and resources might be even located in other accounts. Thus, on a high level, ***the*** use case for using trusted profiles is to allow administrative work
 - with a given set of privileges
 - under a specific identity
 - for identities or resources identified by a set of properties configured as part of the trusted profile.
@@ -93,6 +88,11 @@ The following scenarios are such use cases for trusted profiles, differing by th
 - **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
 - **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
 - **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an{{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
+
+## Establish trust
+{: #trusted-profile-for-enterprise-security-trust}
+
+As outlined in the overview, there are different options available on how to establish trust, how an entity can assume the identity of a trusted profile.
 
 ### Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
@@ -121,8 +121,8 @@ Instead of through user properties supplied by an identity provider, in this cas
 
 The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
 
-
-- how to develop app for using CR token locally, see blog post
+See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/cloud/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
+{: tip}
 
 
 ### Service ID
@@ -140,7 +140,9 @@ Similar to a service ID, it is possible to configure the cloud resource name (CR
 ## Perform a task (which one?)
 {: #trusted-profile-for-enterprise-security-task1}
 
-deploy an architecture from within a project
+- deploy an architecture from within a project
+- retrieve resource information to set up a runtime environment?
+- work in a learning environment / lab which does not require distinction of users
 
 
 
