@@ -100,18 +100,11 @@ As outlined in the overview, there are different options available on how to est
 [Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use with {{site.data.keyword.cloud_notm}} and can continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
 
 
-
-
-
-[perform operations work in the console under the umbrella of a trusted profile](/docs/account?topic=account-federated_id&interface=ui#login_console_trustedprofile)
-
-details on federated ID, including resources and blogs, why should I use it?
-
-- bring in users from corporate directory (LDAP, Active Directory)
-- uses SAML or OIDC via App ID
-- use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
-
-federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
+> [perform operations work in the console under the umbrella of a trusted profile](/docs/account?topic=account-federated_id&interface=ui#login_console_trustedprofile), details on federated ID, including resources and blogs, why should I use it?
+> - bring in users from corporate directory (LDAP, Active Directory)
+> - uses SAML or OIDC via App ID
+> - use dynamic rule in Access Group to determine which users to map to IBM Cloud privileges
+> federated ID, bring in users from corporate directory (LDAP, Active Directory), uses SAML or OIDC via App ID, use rules to determine which users to map to IBM Cloud privileges / access groups - need to distinguish between dynamic rule in AG (login) and rules / conditions in TP, can operate either under TP or add user to account
 
 
 ### Compute resource
