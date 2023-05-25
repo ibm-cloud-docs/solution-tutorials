@@ -137,12 +137,25 @@ Another method to establish trust is by specifying a service ID. The service ID 
 Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
-## Perform a task (which one?)
+## Deploy an architecture
 {: #trusted-profile-for-enterprise-security-task1}
 
 - deploy an architecture from within a project
 - retrieve resource information to set up a runtime environment?
 - work in a learning environment / lab which does not require distinction of users
+
+
+### Create Project
+{: #trusted-profile-for-enterprise-security-da1}
+{: step}
+
+### Create TP
+{: #trusted-profile-for-enterprise-security-da2}
+{: step}
+
+### Deploy DA
+{: #trusted-profile-for-enterprise-security-da3}
+{: step}
 
 
 
