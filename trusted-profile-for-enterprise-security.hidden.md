@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-24"
-lasttested: "2023-05-24"
+lastupdated: "2023-05-25"
+lasttested: "2023-05-25"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -97,10 +97,10 @@ The following scenarios are such use cases for trusted profiles, differing by th
 ## Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
 
-[Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use {{site.data.keyword.cloud_notm}} and continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
+[Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use with {{site.data.keyword.cloud_notm}} and can continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
 
 
-federated identities can be used in two ways, add a user to the account or have the user log in through a TP
+
 
 
 [perform operations work in the console under the umbrella of a trusted profile](/docs/account?topic=account-federated_id&interface=ui#login_console_trustedprofile)
@@ -117,12 +117,13 @@ federated ID, bring in users from corporate directory (LDAP, Active Directory), 
 ## Compute resource
 {: #trusted-profile-for-enterprise-security-compute-resource}
 
-- supported CR
+Instead of through user properties supplied by an identity provider, in this case, trust is established through [attributes of compute resources](/docs/account?topic=account-iam-condition-properties#cr-attribute-names). You can configure to only trust an app running in, e.g., a specific namespace and pod in a Kubernetes cluster, or a virtual server instance in a VPC with a specific combination of values for resource group, region, subnet, and zone. That trusted app can assume the identity of the trusted profile and perform tasks with the assigned privileges.
+
+The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
+
 - how to obtain the token
 - how to develop app for using CR token locally, see blog post
-- [IAM condition properties](docs/account?topic=account-iam-condition-properties)
 
-avoid using API keys, but perform (administrative) tasks, access to a compute resource indicates privilege, compute resource can obtain token, turn into IAM token and perform the action
 
 ## Service ID
 {: #trusted-profile-for-enterprise-security-service-id}
