@@ -121,7 +121,7 @@ Instead of through user properties supplied by an identity provider, in this cas
 
 The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
 
-- how to obtain the token
+
 - how to develop app for using CR token locally, see blog post
 
 
