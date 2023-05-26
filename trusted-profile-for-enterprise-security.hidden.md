@@ -72,7 +72,7 @@ In the console, as part of the IAM category, [trusted profiles](/iam/trusted-pro
 - {{site.data.keyword.cloud_notm}} services
 - Service IDs
 
-![Trusted profile entity type](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted profile types" caption-side="bottom"}
+![Trusted profile entity types](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted entity types" caption-side="bottom"}
 
 
 ## Trusted profile use cases
@@ -139,21 +139,32 @@ In this first test of trusted profiles, you are going to authorize a containeriz
 The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
 {: tip}
 
-### Create Kubernetes cluster
+### Create a Kubernetes cluster (compute resource)
 {: #trusted-profile-for-enterprise-security-cr1}
 
 First, you are going to create a free Kubernetes cluster:
-1. In the {{site.data.keyword.cloud_notm}} console with you logged in, go to the catalog and the containers section to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
-2. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
-3. Next, the cluster is provisioned which takes a moment. You can move on to the next steps nonetheless.
+1. Make sure to be logged in to the {{site.data.keyword.cloud_notm}} console.
+2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
+3. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
+4. Next, the cluster is provisioned which takes a moment. You can move on to the next steps nonetheless.
 
-### Create TP
+### Create a trusted profile
 {: #trusted-profile-for-enterprise-security-cr2}
 
 
-1. Use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview.
+1. Use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
+2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
+3. In the second tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
+4. Next, you can decide between either all or specific service resources. Click on **Specific resources** and the next form field appears. In **Enter or select an instance** and the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. Finish by clicking **Continue**.
+5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally on **Add**.
+6. Review the **Summary** on the right side, then **Create** the trusted profile with the shown trust relationship and the listed access privileges.
 
-- create TP for CR, configure the cluster and namespace
+
+[Utilizing an access group to assign access is best practices](/docs/account?topic=account-account_setup#limit-policies). For the sake of simplicity, we opted for assigning read-only access through a direct access policy. The recommendation is to create an access group with assigned privileges, then make the trusted profile a member of it.
+{: important}
+
+
+
 
 
 ### Deploy and utilize app
