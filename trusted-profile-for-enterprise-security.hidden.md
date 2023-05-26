@@ -133,27 +133,32 @@ Similar to a service ID, it is possible to configure the cloud resource name (CR
 
 ## Authorize an administrative app
 {: #trusted-profile-for-enterprise-security-task1}
-{: step}
 
-go through that use case
+In this first test of trusted profiles, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile.
 
-### Create a compute resource
+The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
+{: tip}
+
+### Create Kubernetes cluster
 {: #trusted-profile-for-enterprise-security-cr1}
-{: step}
 
-create a free cluster, a namespace,
-
+First, you are going to create a free Kubernetes cluster:
+1. In the {{site.data.keyword.cloud_notm}} console with you logged in, go to the catalog and the containers section to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
+2. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
+3. Next, the cluster is provisioned which takes a moment. You can move on to the next steps nonetheless.
 
 ### Create TP
 {: #trusted-profile-for-enterprise-security-cr2}
-{: step}
+
+
+1. Use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview.
 
 - create TP for CR, configure the cluster and namespace
 
 
 ### Deploy and utilize app
 {: #trusted-profile-for-enterprise-security-cr3}
-{: step}
+
 
 - deploy the pre-built container app from our icr.io, configure app / config map to read CR token
 - test the app and change privileges assigned to the TP
@@ -163,7 +168,7 @@ create a free cluster, a namespace,
 
 ## Deploy an architecture
 {: #trusted-profile-for-enterprise-security-task2}
-{: step}
+
 
 - deploy an architecture from within a project
 - retrieve resource information to set up a runtime environment?
@@ -172,19 +177,19 @@ create a free cluster, a namespace,
 
 ### Create Project
 {: #trusted-profile-for-enterprise-security-da1}
-{: step}
+
 
 enterprise project, what DA to deploy?
 
 ### Create TP
 {: #trusted-profile-for-enterprise-security-da2}
-{: step}
+
 
 simulate different account, create the TP
 
 ### Deploy DA
 {: #trusted-profile-for-enterprise-security-da3}
-{: step}
+
 
 deploy the simple DA and authorize via TP
 
@@ -202,4 +207,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #trusted-profile-for-enterprise-security-related}
 
-some content here
+- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity)
+- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons)
