@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-25"
-lasttested: "2023-05-25"
+lastupdated: "2023-05-26"
+lasttested: "2023-05-26"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -130,8 +130,40 @@ Another method to establish trust is by specifying a service ID. The service ID 
 Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
-## Deploy an architecture
+
+## Authorize an administrative app
 {: #trusted-profile-for-enterprise-security-task1}
+{: step}
+
+go through that use case
+
+### Create a compute resource
+{: #trusted-profile-for-enterprise-security-cr1}
+{: step}
+
+create a free cluster, a namespace,
+
+
+### Create TP
+{: #trusted-profile-for-enterprise-security-cr2}
+{: step}
+
+- create TP for CR, configure the cluster and namespace
+
+
+### Deploy and utilize app
+{: #trusted-profile-for-enterprise-security-cr3}
+{: step}
+
+- deploy the pre-built container app from our icr.io, configure app / config map to read CR token
+- test the app and change privileges assigned to the TP
+
+
+
+
+## Deploy an architecture
+{: #trusted-profile-for-enterprise-security-task2}
+{: step}
 
 - deploy an architecture from within a project
 - retrieve resource information to set up a runtime environment?
@@ -142,14 +174,19 @@ Similar to a service ID, it is possible to configure the cloud resource name (CR
 {: #trusted-profile-for-enterprise-security-da1}
 {: step}
 
+enterprise project, what DA to deploy?
+
 ### Create TP
 {: #trusted-profile-for-enterprise-security-da2}
 {: step}
+
+simulate different account, create the TP
 
 ### Deploy DA
 {: #trusted-profile-for-enterprise-security-da3}
 {: step}
 
+deploy the simple DA and authorize via TP
 
 
 ## Remove resources
