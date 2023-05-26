@@ -161,11 +161,7 @@ First, you are going to create a free Kubernetes cluster:
 
 
 [Utilizing an access group to assign access is best practices](/docs/account?topic=account-account_setup#limit-policies). For the sake of simplicity, we opted for assigning read-only access through a direct access policy. The recommendation is to create an access group with assigned privileges, then make the trusted profile a member of it.
-{: important}
-
-
-
-
+{: attention}
 
 ### Deploy and utilize app
 {: #trusted-profile-for-enterprise-security-cr3}
@@ -173,9 +169,24 @@ First, you are going to create a free Kubernetes cluster:
 
 - deploy the pre-built container app from our icr.io, configure app / config map to read CR token
 - test the app and change privileges assigned to the TP
+- testing similar to how done for blog post, connect into pod and use curl, rationale is to not expose any account resources
 
+for the namespace
 
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tptest
+  labels:
+    name: tptest
+```
+{: codeblock}
 
+```sh
+kubectl exec --namespace tptest --stdin --tty tp-demo -- /bin/bash
+```
+{: pre}
 
 ## Deploy an architecture
 {: #trusted-profile-for-enterprise-security-task2}
