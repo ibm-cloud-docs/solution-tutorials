@@ -199,6 +199,8 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 
   The result can be different from above, depending on where you deployed other resources in your account. You might want to go back to step 6 and edit the access policy again, then retest.
 
+NEED TO VERIFY in Activity Tracker, {{site.data.keyword.atracker_short}} / {{site.data.keyword.at_short}}
+
 
 
 ## Deploy an architecture
