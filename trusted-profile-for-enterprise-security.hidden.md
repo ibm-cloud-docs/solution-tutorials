@@ -171,33 +171,33 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 2. On the upper right, click on **+** to create a new resource. Paste the content of [this configuration file](https://raw.githubusercontent.com/data-henrik/trusted-profile-tests/main/app.yaml) into the text form **Create from input**. Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
 3. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, click on the menu with three dots on the right and select **Exec**. It opens a shell for the running container.
 4. Run the following command in the shell to test the app:
-  ```sh
-  curl -s localhost:8080
-  ```
-  {: pre}
+   ```sh
+   curl -s localhost:8080
+   ```
+   {: pre}
   
-  The above should return a JSON object with the **codeversion** and **result**. Next, run the following command:
-  ```sh
-  curl -s localhost:8080/api/listresources | jq
-  ```
-  {: pre}
+   The above should return a JSON object with the **codeversion** and **result**. Next, run the following command:
+   ```sh
+   curl -s localhost:8080/api/listresources | jq
+   ```
+   {: pre}
 
-  The command invokes the app, trying to retrieve the list of resources in the account for a configured trusted profile name **TPTest**, different from the one you created earlier. The result should be a formatted JSON object with an error message.
+   The command invokes the app, trying to retrieve the list of resources in the account for a configured trusted profile name **TPTest**, different from the one you created earlier. The result should be a formatted JSON object with an error message.
 5. Repeat the above command, but now specify which trusted profile to use:
-  ```sh
-  curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
-  ```
-  {: pre}
+   ```sh
+   curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
+   ```
+   {: pre}
 
-  Now, the result should be formatted JSON object with information about the resources in your account. Leave the browser tab open.
+   Now, the result should be formatted JSON object with information about the resources in your account. Leave the browser tab open.
 6. Switch to the browser tab with the trusted profile configuration for **TPwithCR**. Click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
 7. Move back to the browser tab with the shell for the running container and run command again to list resources:
-  ```sh
-  curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
-  ```
-  {: pre}
+   ```sh
+   curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
+   ```
+   {: pre}
 
-  The result can be different from above, depending on where you deployed other resources in your account. You might want to go back to step 6 and edit the access policy again, then retest.
+   The result can be different from above, depending on where you deployed other resources in your account. You might want to go back to step 6 and edit the access policy again, then retest.
 
 NEED TO VERIFY in Activity Tracker, {{site.data.keyword.atracker_short}} / {{site.data.keyword.at_short}}
 
