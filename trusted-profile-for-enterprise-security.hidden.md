@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-26"
-lasttested: "2023-05-26"
+lastupdated: "2023-05-30"
+lasttested: "2023-05-30"
 
 content-type: tutorial
 services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
@@ -146,13 +146,13 @@ First, you are going to create a free Kubernetes cluster:
 1. Make sure to be logged in to the {{site.data.keyword.cloud_notm}} console.
 2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
 3. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
-4. Next, the cluster is provisioned which takes a moment. You can move on to the next steps nonetheless.
+4. Next, the cluster is provisioned which takes a moment. Leave the browser tab open and available for later. You can move on to the next steps nonetheless.
 
 ### Create a trusted profile
 {: #trusted-profile-for-enterprise-security-cr2}
 
 
-1. Use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
+1. In a new browser tab, use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
 2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
 3. In the second tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
 4. Next, you can decide between either all or specific service resources. Click on **Specific resources** and the next form field appears. In **Enter or select an instance** and the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. Finish by clicking **Continue**.
@@ -166,27 +166,13 @@ First, you are going to create a free Kubernetes cluster:
 ### Deploy and utilize app
 {: #trusted-profile-for-enterprise-security-cr3}
 
+With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app.
+1. In the browser tab with the Kubernetes cluster information, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard**.
+2. On the upper right, click on **+** to create a new resource. Paste the content of [this configuration file](https://raw.githubusercontent.com/data-henrik/trusted-profile-tests/main/app.yaml) into the text form **Create from input**. Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
+3. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, click on the menu with three dots on the right and select **Exec**.
+4. 
 
-- deploy the pre-built container app from our icr.io, configure app / config map to read CR token
-- test the app and change privileges assigned to the TP
-- testing similar to how done for blog post, connect into pod and use curl, rationale is to not expose any account resources
 
-for the namespace
-
-```yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: tptest
-  labels:
-    name: tptest
-```
-{: codeblock}
-
-```sh
-kubectl exec --namespace tptest --stdin --tty tp-demo -- /bin/bash
-```
-{: pre}
 
 ## Deploy an architecture
 {: #trusted-profile-for-enterprise-security-task2}
