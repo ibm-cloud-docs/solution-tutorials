@@ -231,53 +231,58 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
    {: codeblock}
 
    Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
-4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container.
+4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, move on to the next section.
    
 
 ## Test the trusted profile
 {: #trusted-profile-for-enterprise-security-cr4}
 {: step}
 
-1. In the browser tab *container shell*, run the following command in the shell to test the app:
+With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.at_short}} logs.
+
+1. In the currently active tab *Kubernetes dashboard* right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. Last, open a tab with the [{{site.data.keyword.at_short}} services](/observe/activitytracker){: external} and select the Frankfurt instance (*{{site.data.keyword.at_short}} logs*). 
+2. In the browser tab *container shell*, run the following command in the shell to test the app:
    ```sh
    curl -s localhost:8080
    ```
    {: pre}
   
-   The above should return a JSON object with the **codeversion** and **result**. Next, run the following command:
+   The above should return a JSON object with the **codeversion** and **result**. You should see some new log activity in the *Kubernetes dashboard* tab with logs. Next, in the *container shell*, run the following command:
    ```sh
    curl -s localhost:8080/api/listresources | jq
    ```
    {: pre}
 
    The command invokes the app, trying to retrieve the list of resources in the account for a configured trusted profile name **TPTest**, different from the one you created earlier. The result should be a formatted JSON object with an error message.
-2. Repeat the above command, but now specify which trusted profile to use:
+3. Repeat the above command, but now specify which trusted profile to use:
    ```sh
    curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
    ```
    {: pre}
 
-   Now, the result should be formatted JSON object with information about the resources in your account. Leave the browser tab open.
-3. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
-4. Move back to the browser tab *container shell* and run this command again to list resources:
+   Now, the result should be formatted JSON object with information about the resources in your account.
+4. Switch to the *{{site.data.keyword.at_short}} logs* browser tab and use the search box at the bottom to look for the term **profile**. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. Expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
+   
+   ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
+
+5. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
+6. Move back to the browser tab *container shell* and run this command again to list resources:
    ```sh
    curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
    ```
    {: pre}
 
-   The result can be different from above, depending on where you deployed other resources in your account. You might want to go back to step 6 and edit the access policy again, then retest.
-
-NEED TO VERIFY in  {{site.data.keyword.at_short}}
-![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
-
-
+   The result can be different from above, depending on where you deployed other resources in your account. Revisit the *{{site.data.keyword.at_short}} logs* and *Kubernetes dashboard* browser tabs for new log activity.
+7. You might want to go back to step 5 and edit the access policy again, then retest with step 6.
 
 
 ## Remove resources
 {: #trusted-profile-for-enterprise-security-removeresources}
 
+When you are done testing the above scenario with trusted profiles and compute resources, you can remove the resources by following these steps:
+1. To delete the Kubernetes cluster, click on **Actions** in the top right in the browser tab *cluster overview*, then **Delete cluster**.
+2. In the tab *IAM trusted profiles* with the trusted profile **TPwithCR**, click on **Actions** and **Remove** to delete the trusted profile.
 
-Steps to take to remove the resources created in this tutorial
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
