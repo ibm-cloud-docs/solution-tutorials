@@ -130,11 +130,11 @@ Another method to establish trust is by specifying a service ID. The service ID 
 Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
-## Create a Kubernetes cluster (compute resource)
+## Kubernetes cluster as compute resource for trusted profile
 {: #trusted-profile-for-enterprise-security-cr1}
 {: step}
 
-To test trusted profiles, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile.
+To put theory into praxis, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile.
 
 The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
 {: tip}
@@ -154,7 +154,7 @@ First, you are going to create a free Kubernetes cluster:
 2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
 3. In the second tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
 4. Next, you can decide between either all or specific service resources. Click on **Specific resources** and the next form field appears. In **Enter or select an instance** and the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. Finish by clicking **Continue**.
-5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally on **Add**.
+5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally **Add**.
 6. Review the **Summary** on the right side, then **Create** the trusted profile with the shown trust relationship and the listed access privileges. Leave the browser tab open for later.
 
 
@@ -167,8 +167,9 @@ First, you are going to create a free Kubernetes cluster:
 
 With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app.
 1. In the browser tab with the Kubernetes cluster information, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard**.
-2. On the upper right, click on **+** to create a new resource. Paste the content of [this configuration file](https://raw.githubusercontent.com/data-henrik/trusted-profile-tests/main/app.yaml) into the text form **Create from input**. Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
-3. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, click on the menu with three dots on the right and select **Exec**. It opens a shell for the running container.
+2. In the top left, find the namespace selector and switch to **All namespaces**.
+3. On the upper right, click on **+** to create a new resource. Paste the content of [this configuration file](https://raw.githubusercontent.com/data-henrik/trusted-profile-tests/main/app.yaml) into the text form **Create from input**. Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
+4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, click on the menu with three dots on the right and select **Exec**. It opens a shell for the running container.
    
 
 ## Test the trusted profile
@@ -204,8 +205,8 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 
    The result can be different from above, depending on where you deployed other resources in your account. You might want to go back to step 6 and edit the access policy again, then retest.
 
-NEED TO VERIFY in Activity Tracker, {{site.data.keyword.atracker_short}} / {{site.data.keyword.at_short}}
-
+NEED TO VERIFY in  {{site.data.keyword.at_short}}
+![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
 
 
