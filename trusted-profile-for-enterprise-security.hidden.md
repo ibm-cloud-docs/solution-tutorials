@@ -6,7 +6,7 @@ lastupdated: "2023-05-31"
 lasttested: "2023-05-31"
 
 content-type: tutorial
-services: secure-enterprise, containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant
+services: secure-enterprise, containers, activity-tracker, Registry
 account-plan: paid
 completion-time: 2h
 use-case: IdentityAndAccessManagement, ApplicationIntegration
@@ -17,7 +17,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 # Use trusted profiles as foundation for secure cloud environments
 {: #trusted-profile-for-enterprise-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, Cloudant"}
+{: toc-services="containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
 
 
@@ -130,29 +130,32 @@ Another method to establish trust is by specifying a service ID. The service ID 
 Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
-## Kubernetes cluster as compute resource for trusted profile
-{: #trusted-profile-for-enterprise-security-cr1}
+## Trusted profile with compute resource
+{: #trusted-profile-for-enterprise-security-cr0}
 {: step}
 
-To put theory into praxis, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile.
+To put theory into praxis, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile. You can perform all the following steps in a web browser with multiple open tabs. Make sure to leave the browser tabs open as instructed.
 
 The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
 {: tip}
 
+## Kubernetes cluster as compute resource
+{: #trusted-profile-for-enterprise-security-cr1}
+{: step}
 
 First, you are going to create a free Kubernetes cluster:
 1. Make sure to be logged in to the {{site.data.keyword.cloud_notm}} console.
 2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
 3. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
-4. Next, the cluster is provisioned which takes a moment. Leave the browser tab open and available for later. You can move on to the next steps nonetheless.
+4. Next, the cluster is provisioned which takes a moment. Leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
 
 ## Create a trusted profile
 {: #trusted-profile-for-enterprise-security-cr2}
 {: step}
 
-1. In a new browser tab, use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
+1. In a new browser tab (*IAM trusted profile*), use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
 2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
-3. In the second tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
+3. In the second form tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
 4. Next, you can decide between either all or specific service resources. Click on **Specific resources** and the next form field appears. In **Enter or select an instance** and the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. Finish by clicking **Continue**.
 5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally **Add**.
 6. Review the **Summary** on the right side, then **Create** the trusted profile with the shown trust relationship and the listed access privileges. Leave the browser tab open for later.
@@ -166,17 +169,76 @@ First, you are going to create a free Kubernetes cluster:
 {: step}
 
 With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app.
-1. In the browser tab with the Kubernetes cluster information, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard**.
+1. In the browser tab *cluster overview*, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
 2. In the top left, find the namespace selector and switch to **All namespaces**.
-3. On the upper right, click on **+** to create a new resource. Paste the content of [this configuration file](https://raw.githubusercontent.com/data-henrik/trusted-profile-tests/main/app.yaml) into the text form **Create from input**. Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
-4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, click on the menu with three dots on the right and select **Exec**. It opens a shell for the running container.
+3. On the upper right, click on **+** to create a new resource. Paste the following content into the text form **Create from input**.
+   ```yaml
+   apiVersion: v1
+   kind: Namespace
+   metadata:
+     name: tptest
+     labels:
+       name: tptest
+   ---
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: trustedprofile-test
+     namespace: tptest
+   spec:
+     ports:
+     - port: 8080
+       targetPort: 8080
+       protocol: TCP
+     type: ClusterIP
+     selector:
+       app: tptest
+   ---
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: trustedprofile-test-deployment
+     namespace: tptest
+   spec:
+     selector:
+       matchLabels:
+         app: tptest
+     replicas: 1
+     template:
+       metadata:
+         labels:
+           app: tptest
+       spec:
+         containers:
+         - name: tptest-container
+           image: icr.io/solution-tutorials/trustedprofile-test:latest
+           imagePullPolicy: Always
+           ports:
+           - containerPort: 8080
+           volumeMounts:
+           - mountPath: /var/run/secrets/tokens
+             name: sa-token
+         serviceAccountName: default
+         volumes:
+         - name: sa-token
+           projected:
+             sources:
+             - serviceAccountToken:
+                 path: sa-token
+                 expirationSeconds: 3600
+                 audience: iam
+   ```
+   {: codeblock}
+
+   Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
+4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container.
    
 
 ## Test the trusted profile
 {: #trusted-profile-for-enterprise-security-cr4}
 {: step}
 
-1. Run the following command in the shell to test the app:
+1. In the browser tab *container shell*, run the following command in the shell to test the app:
    ```sh
    curl -s localhost:8080
    ```
@@ -196,8 +258,8 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
    {: pre}
 
    Now, the result should be formatted JSON object with information about the resources in your account. Leave the browser tab open.
-3. Switch to the browser tab with the trusted profile configuration for **TPwithCR**. Click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
-4. Move back to the browser tab with the shell for the running container and run command again to list resources:
+3. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
+4. Move back to the browser tab *container shell* and run this command again to list resources:
    ```sh
    curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
    ```
