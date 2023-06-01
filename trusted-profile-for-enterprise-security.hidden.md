@@ -50,7 +50,7 @@ REPLACE
 ## Before you begin
 {: #trusted-profile-for-enterprise-security-prereqs}
 
-This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](https://{DomainName/}){: external}.
+This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](/){: external}.
 
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
