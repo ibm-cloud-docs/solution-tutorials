@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-31"
-lasttested: "2023-05-31"
+lastupdated: "2023-06-01"
+lasttested: "2023-06-01"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -27,10 +27,10 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 {{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, typically users and service IDs are involved. But there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
 
-In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Learn how to use trusted profiles as foundation for secure cloud environments. They can serve as building block for secure cloud solutions.
+In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Use trusted profiles as foundation for secure cloud environments. They can serve as building block for secure cloud solutions. You are going to create a trusted profile which is utilized by an app to perform administrative tasks.
 
 
-Learn about trusted profiles as building block for secure cloud environments
+Learn about trusted profiles as building block for secure cloud environments.
 {: shortdesc}
 
 ## Objectives
@@ -43,20 +43,8 @@ Learn about trusted profiles as building block for secure cloud environments
 
 diagram should show {{site.data.keyword.cloud_notm}} account with the four identities / users to point to a trusted profile to assume its identity
 
+REPLACE
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
-
-
-## Before you begin
-{: #trusted-profile-for-enterprise-security-prereqs}
-
-This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts)
-
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-
-
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
-{: tip}
 
 
 ## Overview: Trusted profiles
@@ -136,6 +124,8 @@ Similar to a service ID, it is possible to configure the cloud resource name (CR
 
 To put theory into praxis, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile. You can perform all the following steps in a web browser with multiple open tabs. Make sure to leave the browser tabs open as instructed.
 
+For security reasons, the app is operating in a read-only mode. It tries to gather a list of your deployed resources. You will assign privileges to the app which determine which resources it can read. Moreover, you will deploy the app in a way, so that it is accessible from within the Kubernetes cluster only, not from the public internet.
+
 The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
 {: tip}
 
@@ -211,7 +201,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
        spec:
          containers:
          - name: tptest-container
-           image: icr.io/solution-tutorials/trustedprofile-test:latest
+           image: icr.io/solution-tutorials/trustedprofile-test:v2.3.5
            imagePullPolicy: Always
            ports:
            - containerPort: 8080
@@ -247,7 +237,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    ```
    {: pre}
   
-   The above should return a JSON object with the **codeversion** and **result**. You should see some new log activity in the *Kubernetes dashboard* tab with logs. Next, in the *container shell*, run the following command:
+   The above should return a JSON object with the **codeversion** and **result**. You should see some new log activity in the *Kubernetes dashboard* tab with the logs. Next, in the *container shell* tab, run the following command:
    ```sh
    curl -s localhost:8080/api/listresources | jq
    ```
