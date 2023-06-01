@@ -47,6 +47,11 @@ REPLACE
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
 
+## Before you begin
+{: #trusted-profile-for-enterprise-security-prereqs}
+
+This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](https://{DomainName/}){: external}.
+
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
 
@@ -201,7 +206,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
        spec:
          containers:
          - name: tptest-container
-           image: icr.io/solution-tutorials/trustedprofile-test:v2.3.5
+           image: icr.io/solution-tutorials/tutorial-trusted-profile-enterprise-security:v1.0.1
            imagePullPolicy: Always
            ports:
            - containerPort: 8080
@@ -221,6 +226,10 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
    {: codeblock}
 
    Then, click **Upload** to create the resources for the app. It includes a new Kubernetes namespace **tptest**, a deployment and a service with a pod.
+
+   You can find the [source code for the above YAML configuration on GitHub](https://raw.githubusercontent.com/IBM-Cloud/trusted-profile-enterprise-security/main/app.yaml){: external}.
+   {: tip}
+
 4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, move on to the next section.
    
 
@@ -230,7 +239,9 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 
 With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.at_short}} logs.
 
-1. In the currently active tab *Kubernetes dashboard* right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. Last, open a tab with the [{{site.data.keyword.at_short}} services](/observe/activitytracker){: external} and select the Frankfurt instance (*{{site.data.keyword.at_short}} logs*). 
+1. In the currently active tab *Kubernetes dashboard* right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. In the new three dots menu enable **Auto refresh**.
+  
+   Last, open a tab with the [{{site.data.keyword.at_short}} services](/observe/activitytracker){: external} and select the Frankfurt instance (*{{site.data.keyword.at_short}} logs*). 
 2. In the browser tab *container shell*, run the following command in the shell to test the app:
    ```sh
    curl -s localhost:8080
