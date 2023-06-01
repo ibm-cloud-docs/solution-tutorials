@@ -266,15 +266,16 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    
    ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
-5. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
-6. Move back to the browser tab *container shell* and run this command again to list resources:
+5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/cloud/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
+6. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
+7. Move back to the browser tab *container shell* and run this command again to list resources:
    ```sh
    curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
    ```
    {: pre}
 
    The result can be different from above, depending on where you deployed other resources in your account. Revisit the *{{site.data.keyword.at_short}} logs* and *Kubernetes dashboard* browser tabs for new log activity.
-7. You might want to go back to step 5 and edit the access policy again, then retest with step 6.
+8. You might want to go back to step 6 and edit the access policy again, then retest with step 7.
 
 
 ## Remove resources
