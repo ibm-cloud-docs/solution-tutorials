@@ -238,7 +238,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 
 With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.at_short}} logs.
 
-1. In the currently active tab *Kubernetes dashboard* right-click on the menu with three dots on the right and *right-click* on **Exec** and choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. In the new three dots menu enable **Auto refresh**.
+1. In the currently active tab *Kubernetes dashboard* with the pods, click on the menu with three dots on the right and *right-click* on **Exec** in that menu. Choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. In the new three dots menu enable **Auto refresh**.
   
    Last, open a tab with the [{{site.data.keyword.at_short}} services](/observe/activitytracker){: external} and select the Frankfurt instance (*{{site.data.keyword.at_short}} logs*). 
 2. In the browser tab *container shell*, run the following command in the shell to test the app:
