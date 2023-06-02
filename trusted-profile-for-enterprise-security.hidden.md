@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-01"
-lasttested: "2023-06-01"
+lastupdated: "2023-06-02"
+lasttested: "2023-06-02"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -57,7 +57,7 @@ This tutorial does not require any installation and is only using the [{{site.da
 
 Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. They can assume the identity of that trusted profile. 
 
-You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs or the {{site.data.keyword.cloud_notm}} console. 
+You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs, Terraform or the {{site.data.keyword.cloud_notm}} console. 
 
 In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure how to establish trust](/docs/account?topic=account-create-trusted-profile), which entity can assume the identity of the trusted profile. It is one or more of:
 - Federated users
@@ -78,7 +78,7 @@ Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They ca
 
 The following scenarios are such use cases for trusted profiles, differing by the way the trust is established:
 - **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: Configure a trusted profile to let users of a federated identity provider assume its identity. You can define which IdP and what user attributes to consider.
-- **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
+- **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster (including{{site.data.keyword.openshiftlong_notm}}) or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
 - **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
 - **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an{{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
 
@@ -120,7 +120,7 @@ Another method to establish trust is by specifying a service ID. The service ID 
 ### Cloud service instance
 {: #trusted-profile-for-enterprise-security-service-instance}
 
-Similar to a service ID, it is possible to configure the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
+Similar to a service ID, it is possible to specify the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance, so that the instance is a trusted resource. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
 ## Trusted profile with compute resource
@@ -140,7 +140,7 @@ The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ib
 
 First, you are going to create a free Kubernetes cluster:
 1. Make sure to be logged in to the {{site.data.keyword.cloud_notm}} console.
-2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a{{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
+2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a {{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
 3. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
 4. Next, the cluster is provisioned which takes a moment. Leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
 
@@ -151,7 +151,11 @@ First, you are going to create a free Kubernetes cluster:
 1. In a new browser tab (*IAM trusted profile*), use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
 2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
 3. In the second form tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
-4. Next, you can decide between either all or specific service resources. Click on **Specific resources** and the next form field appears. In **Enter or select an instance** and the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. Finish by clicking **Continue**.
+4. Next, you can decide between either all or specific service resources. 
+   - Click on **Specific resources** and the next form field appears.
+   - In **Enter or select an instance**, click **Add resource**. Then, in the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. 
+   - Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. 
+   - Finish by clicking **Continue**.
 5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally **Add**.
 6. Review the **Summary** on the right side, then **Create** the trusted profile with the shown trust relationship and the listed access privileges. Leave the browser tab open for later.
 
