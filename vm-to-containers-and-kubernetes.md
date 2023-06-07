@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-06-07"
 lasttested: "2022-12-01"
 
 content-type: tutorial
@@ -161,7 +161,7 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 ### Learn how to create persistent data storage for your app
 {: #vm-to-containers-and-kubernetes-12}
 
-You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/features){: external} or [block storage](https://www.ibm.com/cloud/block-storage){: external} by using native Kubernetes persistent volumes.
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/products/file-storage){: external} or [block storage](https://www.ibm.com/cloud/block-storage){: external} by using native Kubernetes persistent volumes.
 {: shortdesc}
 
 To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM to provide high availability for your data.
