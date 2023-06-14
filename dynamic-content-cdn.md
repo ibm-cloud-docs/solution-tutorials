@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-06-14"
 lasttested: "2022-12-21"
 content-type: tutorial
 services: CDN, containers, Registry, dns
@@ -100,7 +100,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
-This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: external} is based on [Beego](https://beego.vip/){: external}, a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
+This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: external} is based on [Beego](https://github.com/beego/beego){: external}, a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
 ### Build the application
 {: #dynamic-content-cdn-3}
@@ -216,7 +216,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
    * Uncheck HTTP port.
    * Check HTTPS port and select **Wildcard** SSL certificate.
 
-      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, https://cdnakaivlnqidbg4.cdn.appdomain.cloud){: external}. 
+      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, `https://cdnakaivlnqidbg4.cdn.appdomain.cloud`){: external}. 
       {: note}
 
 1. Accept the **Master Service Agreement** and click **Create**.
@@ -263,8 +263,8 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 {: #dynamic-content-cdn-7}
 {: step}
 
-* Delete the application from the [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/cluster).
-* Delete the image from the [{{site.data.keyword.registryshort_notm}}](/kubernetes/catalog/registry).
+* Delete the application from the [{{site.data.keyword.containershort_notm}}](/kubernetes/clusters).
+* Delete the image from the [{{site.data.keyword.registryshort_notm}}](/registry/images).
 * Delete the [{{site.data.keyword.cdn_full}} service](/classic/network/cdn).
 
 ## Related content

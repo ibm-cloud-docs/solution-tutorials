@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-08"
+lastupdated: "2023-06-14"
 lasttested: "2022-11-03"
 
 content-type: tutorial
@@ -125,7 +125,7 @@ Some services also provide IAM-based data access controls, i.e. IAM groups combi
 Note that by default accounts are configured for [unrestricted user view access](/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](/iam/settings) to a restrictive mode.
 {: tip}
 
-A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/){: external} to configure in-cluster authorizations.
+A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/){: external} to configure in-cluster authorizations.
 
 For the Development environment, the user responsibilities defined earlier could translate to the following:
 
