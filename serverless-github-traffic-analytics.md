@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-11-21"
+lastupdated: "2023-06-16"
+lasttested: "2023-06-16"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid
@@ -61,27 +61,31 @@ You will find instructions to download and install these tools for your operatin
 
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment (terminal).
 
-1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. You can reconfirm the details and set the resource group and region by running `ibmcloud target` command.
-2. Create an {{site.data.keyword.cloud_notm}} IAM API key and save it to the file **ghstatsAPIKEY.json**.
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively.
+
+2. St the resource group and region by running `ibmcloud target` command.
    ```sh
-   ibmcloud iam api-key-create ghstatsAPIKEY -d "API key for tutorial" --file ghstatsAPIKEY.json --output json
+   RESOURCE_GROUP_NAME=Default
+   REGION=us-south
+   ibmcloud target -r $REGION -g $RESOURCE_GROUP_NAME
    ```
    {: pre}
 
 3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance with the **free** (lite) plan and name it **ghstatsDB**.
    ```sh
-   ibmcloud resource service-instance-create ghstatsDB dashdb-for-transactions free us-south
+   ibmcloud resource service-instance-create ghstatsDB dashdb-for-transactions free $REGION
    ```
    {: pre}
    
 4. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
    ```sh
-   ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier us-south
+   ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier $REGION
    ```
    {: pre}
  
-5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. The namespace needs to be unique across a IBM Coud accounts in the same region.
+5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. There is one global registry as well as regional registries.  Use the global registry.
    ```sh
+   ibmcloud cr region-set global
    NAMESPACE=ghstatsYourInitials
    ibmcloud cr namespace-add $NAMESPACE
    ```
@@ -100,15 +104,15 @@ With the services provisioned and the general setup done, next is to create the 
    ```
    {: pre}
 
-2. Create metadata for the {{site.data.keyword.registryshort}}. By default, the [command](/docs/codeengine?topic=codeengine-cli#cli-registry) assumes the server **us.icr.io** and the username **iamapikey**. The registry information is needed to build and pull container images. The API key is in the file previously stored in **ghstatsAPIKEY.json**.
+2. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats){: external} and stores the image in the registry in the previously created  namespace using the registered user information.
    ```sh
-   ibmcloud ce registry create --name usicr --password-from-json-file ./ghstatsAPIKEY.json
+   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image private.icr.io/$NAMESPACE/codeengine-ghstats
    ```
    {: pre}
 
-3. Create a {{site.data.keyword.codeengineshort}} build configuration, i.e., set up the project to build the container image for you. It takes the code from the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats){: external} and stores the image in the registry in the previously created  namespace using the registered user information.
+3. Notice the build create command had the side effect of creating a registry access secret that will allow the project to write and read the {{site.data.keyword.registrylong}}.
    ```sh
-   ibmcloud ce build create --name ghstats-build --source https://github.com/IBM-Cloud/github-traffic-stats  --context-dir /backend --commit master --image us.icr.io/$NAMESPACE/codeengine-ghstats --registry-secret usicr
+   ibmcloud ce registry list
    ```
    {: pre}
 
@@ -130,7 +134,7 @@ With the services provisioned and the general setup done, next is to create the 
 Once the build is ready, you can use the container image to deploy the app, thereafter bind the previously provisioned services.
 1. To deploy the app means to [create a {{site.data.keyword.codeengineshort}} app](/docs/codeengine?topic=codeengine-cli#cli-application-create) named **ghstats-app**. It pulls the image from the given registry and namespace.
    ```sh
-   ibmcloud ce app create --name ghstats-app --image us.icr.io/$NAMESPACE/codeengine-ghstats:latest --registry-secret usicr
+   ibmcloud ce app create --name ghstats-app --image private.icr.io/$NAMESPACE/codeengine-ghstats:latest --registry-secret ce-auto-icr-private-global
    ```
    {: pre}
 
@@ -290,13 +294,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
 
 4. Delete the {{site.data.keyword.registryshort_notm}} namespace
    ```sh
-   ibmcloud cr namespace-rm $NAMESPACE
-   ```
-   {: pre}
-
-5. Remove the ./ghstatsAPIKEY.json
-   ```sh
-   rm $NAMESPACE
+   ibmcloud cr namespace-rm $NAMESPACE -f
    ```
    {: pre}
 
