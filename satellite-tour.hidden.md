@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-06-16"
 lasttested: "2021-11-15"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -178,18 +178,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
    2. Set **Service name** to `<your-initials>-satellite-nlu` and select a resource group.
    3. Select **Private Network** under Service Endpoints.
    4. Check the license agreement and click on **Create**.
-1. Under **Service credentials**, click on **New credential**
-   1. Set the name to `nlu-for-satellite` and select **Writer** as the role.
-   1. Click `Advanced Options` and set the **Inline configuration parameters** to the following:
-      ```json
-      {
-        "service-endpoints": "private"
-      }
-      ```
-      {: pre}
-
-   2. Click **Add**.
-1. In the **Service credentials**, locate the credentials you created for use with {{site.data.keyword.satelliteshort}}.
+1. In the **Service credentials**, locate the credentials that were automatically generated for use with {{site.data.keyword.satelliteshort}}.
 1. Make note of the values for the following keys as you will need them in a later step:
    * `apikey`
    * `url`
@@ -200,7 +189,7 @@ With {{site.data.keyword.satelliteshort}} Link endpoints, you can allow any clie
 Looking at the value for `url`, notice that this instance is using a private endpoint so it can only be accessed within {{site.data.keyword.Bluemix_notm}} private network. {{site.data.keyword.satelliteshort}} Link will be used to expose the service to your location.
 
 1. Go to [the list of locations](/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
-1. Under **Link endpoints**, click **Create an endpoint** to start the creation wizard.
+1. Under **Link endpoints**, click **Create endpoint** to start the creation wizard.
 1. In the **Destination resource** step:
    * Select **Cloud** as destination.
    * Click **Next**.
@@ -276,17 +265,21 @@ This simple application demonstrated how you can make any service running in {{s
 
 A {{site.data.keyword.satelliteshort}} location and the {{site.data.keyword.cloud_notm}} services that run in the location can be set up to send logs to {{site.data.keyword.loganalysislong_notm}} and metrics to {{site.data.keyword.monitoringlong_notm}}.
 
-Under [Logging](/observe/logging):
-1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance marked as **Platform logs** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+For Logging:
+1. Go to [the list of locations](/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
+1. Under **Overview**, scroll to **Integrations**
+1. Locate the {{site.data.keyword.loganalysislong_notm}} service instance.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location logs.
 1. Click on **Sources** in the top bar, select `satellite` under Hosts and click **Apply** to view only logs from {{site.data.keyword.satelliteshort}}. To check logs of a specific {{site.data.keyword.satelliteshort}} location, you can filter by setting the `Apps` to the {{site.data.keyword.satelliteshort}} location CRN.
-1. In the search box in the bottom of the view, enter `"conn_type: cloud"` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Launch the application and analyze text a couple of times to see more logs._
+1. In the search box in the bottom of the view, enter `watson` and hit enter or return on your keyboard. You should see logs specific to the `Cloud` destination link endpoint including the NLU link endpoint. _Launch the application and analyze text a couple of times to see more logs._
 
    By default, three types of logs are automatically generated for your {{site.data.keyword.satelliteshort}} location: R00XX-level error messages, the status of whether resource deployment to the location is enabled, and the status of {{site.data.keyword.satelliteshort}} Link. Refer to [Logging for {{site.data.keyword.satelliteshort}}](/docs/satellite?topic=satellite-health) for details on how to analyze logs.
    {: tip}
 
-The same applies to [Monitoring](/observe/monitoring):
-1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance marked as **Platform metrics** for the region from which the {{site.data.keyword.satelliteshort}} location is managed.
+The same applies to Monitoring:
+1. Go to [the list of locations](/satellite/locations) and select your {{site.data.keyword.satelliteshort}} location.
+1. Under **Overview**, scroll to **Integrations**
+1. Locate the {{site.data.keyword.monitoringlong_notm}} service instance.
 1. Click the **Open dashboard** link to access the {{site.data.keyword.satelliteshort}} location metrics.
 1. Under the **Dashboards**, select **Satellite Link - Overview** to get a global overview of {{site.data.keyword.satelliteshort}} link metrics like the number of tunnels or the location and endpoint traffic.
 1. Select the `<your-initials>-nlu` link endpoint from the **ibm_satellite_link_endpoint_name** dropdown and scroll to check the Endpoint Connection Count, Endpoint Traffic To Cloud [Bytes/s] and other metrics. Launch the application and analyze text a couple of times to generate more load on the endpoint or use the following script to call the application over and over:
@@ -332,14 +325,14 @@ You have now defined set of clusters to consistently deploy Kubernetes resources
 
 A Satellite configuration lets you upload or create Kubernetes resource YAML file versions that you want to deploy to a group of {{site.data.keyword.openshiftlong_notm}} clusters. 
 
-The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
+The next step is to create a {{site.data.keyword.satelliteshort}} configuration and to deploy it to a set of clusters.
 
 1. Navigate to [{{site.data.keyword.satelliteshort}} Configurations](/satellite/configuration).
 1. Create a new configuration by clicking on **Create configuration**:
+   * Select **Direct upload** as the configuration type.
    * Set **Configuration name** to a unique name such as `<your-initials>-config`.
-   * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location and click on **Create**.
-1. Select the configuration.
-1. Under **Versions**, click on **Add version**.
+   * For **Satellite Config data location** use the same value as your {{site.data.keyword.satelliteshort}} location and click **Next**.
+1. Under **Version**:
    * Set **Version name** to **V1**.
    * Set the YAML content to the following, making sure the `namespace` matches the name of the OpenShift project you created earlier:
      ```yaml
@@ -354,20 +347,11 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration.
      ```
      {: pre}
 
-   * Click on **Add**.
-
-### Subscribe clusters to the version
-{: #satellite-tour-version}
-
-The version that you upload is not applied to your cluster until you add a subscription to your configuration.
-
-Finally, you will map the version to a set of clusters.
-
-1. Go back to the **Overview** page for the configuration.
-1. Click on **Create subscription**.
+   * Click **Next**.
+1. Under **Subscription**:
    * Set **Subscription name** to a unique name such as `<your-initials>-latest`.
-   * Set **Version** to **V1**. If the version does not appear in the list, refresh the browser page.
    * Select the cluster group previously created.
+   * Click **Next**
 1. Click on **Create**.
 
 {{site.data.keyword.satelliteshort}} will now deploy the resources described in the YAML to the clusters.
@@ -395,11 +379,11 @@ You can also use the {{site.data.keyword.redhat_openshift_notm}} console to view
 To deploy an update to the resources, you can create a new version.
 
 1. From the [Configurations](/satellite/configuration) page, select the configuration you created.
-1. Create a new version by duplicating **V1**,
+1. Under **Versions**, create a new version by duplicating **V1**,
    * Set **Version name** to **V2**.
    * Change `example.property.2` to `you` in the YAML.
-1. Click on **Add**.
-1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2**.
+1. Click on **Create**.
+1. Back to the **Overview** page for the configuration, edit the existing subscription and change its **Version** to **V2** and **Save**.
 1. In the {{site.data.keyword.redhat_openshift_notm}} console or from the shell, watch for updates to the existing Config Map. From the shell, run the below command and look under the **Data** section for the changes
    ```sh
    oc describe configmap example
@@ -419,4 +403,4 @@ In this example, we deployed a simple ConfigMap but you could be deploying a ful
 * Delete the {{site.data.keyword.satelliteshort}} configuration.
 * Delete the [cluster group](/satellite/groups).
 * On the {{site.data.keyword.satelliteshort}} location, delete the Link Endpoint exposing the service you provisioned.
-
+* Delete the {{site.data.keyword.nlushort}} service instance.
