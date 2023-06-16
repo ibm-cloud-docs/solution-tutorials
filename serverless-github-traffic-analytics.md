@@ -277,18 +277,18 @@ To clean up the resources used for this tutorial, you can delete the related pro
 
 2. Delete the project and its components.
    ```sh
-   ibmcloud ce project delete --name ghstats
+   ibmcloud ce project delete --name ghstats --hard -f
    ```
    {: pre}
 
 3. Delete the services:
    ```sh
-   ibmcloud resource service-instance-delete ghstatsDB
+   ibmcloud resource service-instance-delete -f ghstatsDB
    ```
    {: pre}
    
    ```sh
-   ibmcloud resource service-instance-delete ghstatsAppID
+   ibmcloud resource service-instance-delete -f ghstatsAppID
    ```
    {: pre}
 
