@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-02"
-lasttested: "2023-06-02"
+lastupdated: "2023-06-19"
+lasttested: "2023-06-19"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -20,18 +20,16 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {: toc-services="containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
 
+Learn about trusted profiles as building block for secure cloud environments.
+{: shortdesc}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
+{{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, often, users and service IDs are involved. Yet, there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
 
-{{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, typically users and service IDs are involved. But there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
+In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Trusted profiles can serve as foundation for secure cloud environments, as building block for secure cloud solutions. As part of this tutorial, you will create a trusted profile which is utilized by an app to perform administrative tasks.
 
-In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Use trusted profiles as foundation for secure cloud environments. They can serve as building block for secure cloud solutions. You are going to create a trusted profile which is utilized by an app to perform administrative tasks.
-
-
-Learn about trusted profiles as building block for secure cloud environments.
-{: shortdesc}
 
 ## Objectives
 {: #trusted-profile-for-enterprise-security-objectives}
@@ -51,6 +49,8 @@ REPLACE
 {: #trusted-profile-for-enterprise-security-prereqs}
 
 This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](/){: external}.
+
+An instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started#gs_objectives) in the Frankfurt region is required.
 
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
