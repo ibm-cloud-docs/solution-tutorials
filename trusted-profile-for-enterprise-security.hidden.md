@@ -162,7 +162,8 @@ First, you are going to create a free Kubernetes cluster:
 {: #trusted-profile-for-enterprise-security-cr3}
 {: step}
 
-With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app.
+With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external} You don't need it for the deployment, but might be interested in how it works nonetheless.
+
 1. In the browser tab *cluster overview*, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
 2. In the top left, find the namespace selector and switch to **All namespaces**.
 3. On the upper right, click on **+** to create a new resource. Paste the following content into the text form **Create from input**.
