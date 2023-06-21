@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-19"
-lasttested: "2023-06-19"
+lastupdated: "2023-06-21"
+lasttested: "2023-06-21"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -205,7 +205,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
        spec:
          containers:
          - name: tptest-container
-           image: icr.io/solution-tutorials/tutorial-trusted-profile-enterprise-security:v1.0.1
+           image: icr.io/solution-tutorials/tutorial-trusted-profile-enterprise-security:v1.0.2
            imagePullPolicy: Always
            ports:
            - containerPort: 8080
@@ -249,18 +249,18 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
   
    The above should return a JSON object with the **codeversion** and **result**. You should see some new log activity in the *Kubernetes dashboard* tab with the logs. Next, in the *container shell* tab, run the following command:
    ```sh
-   curl -s localhost:8080/api/listresources | jq
+   curl -s localhost:8080/api/listresources_crn | jq
    ```
    {: pre}
 
-   The command invokes the app, trying to retrieve the list of resources in the account for a configured trusted profile name **TPTest**, different from the one you created earlier. The result should be a formatted JSON object with an error message.
+   The command invokes the app, trying to retrieve the list of resources in the account, but no trusted profile name is provided. The result should be a formatted JSON object with an error message.
 3. Repeat the above command, but now specify which trusted profile to use:
    ```sh
-   curl -s localhost:8080/api/listresources?tpname=TPwithCR | jq
+   curl -s localhost:8080/api/listresources_crn?tpname=TPwithCR | jq
    ```
    {: pre}
 
-   Now, the result should be formatted JSON object with information about the resources in your account.
+   Now, the result should be formatted JSON object with information about the resources in your account. For readability, only the resource CRNs are returned. Use `localhost:8080/api/listresources` for the full object details. You may also want to try a different, non-existing trusted profile name and examine the error message.
 4. Switch to the *{{site.data.keyword.at_short}} logs* browser tab and use the search box at the bottom to look for the term **profile**. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. Expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
    
    ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
@@ -274,7 +274,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    {: pre}
 
    The result can be different from above, depending on where you deployed other resources in your account. Revisit the *{{site.data.keyword.at_short}} logs* and *Kubernetes dashboard* browser tabs for new log activity.
-8. You might want to go back to step 6 and edit the access policy again, then retest with step 7.
+8. You might want to go back to step 6 and edit the access policy again, then retest with step 7. Some ideas for editing the access policy would be to add regions or restrict to specific services instead of **All Identity and Access enabled services**.
 
 
 ## Remove resources
@@ -292,5 +292,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #trusted-profile-for-enterprise-security-related}
 
-- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity)
-- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons)
+- The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}
+- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
+- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}
