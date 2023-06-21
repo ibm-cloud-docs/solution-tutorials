@@ -38,12 +38,14 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 * Create trusted profiles and manage access to cloud resources
 * Deepen your Identity and Access Management (IAM) knowledge
 
+![Architecture](images/trusted-profiles-hidden/TrustedProfile_with_CR_architecture.svg){: caption="Solution architecture" caption-side="bottom"}
 
-diagram should show {{site.data.keyword.cloud_notm}} account with the four identities / users to point to a trusted profile to assume its identity
-
-REPLACE
-![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
-
+- The user connects to {{site.data.keyword.cloud_notm}} and uses a web console
+  - to deploy an app to the Kubernetes cluster and interact with it,
+  - to configure privileges with IAM,
+  - and to inspect {{site.data.keyword.at_short}} records.
+- The container image is pulled from the {{site.data.keyword.registryshort_notm}} and deployed to the Kubernetes cluster.
+- IAM logs events to {{site.data.keyword.at_short}}.
 
 ## Before you begin
 {: #trusted-profile-for-enterprise-security-prereqs}
