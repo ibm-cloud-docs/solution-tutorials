@@ -16,7 +16,7 @@
           "url": "index.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2023-03-29"
+          "lastUpdated": "2023-06-14"
         }
       ]
     },
@@ -58,7 +58,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/jpetstore-kubernetes"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-07"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -91,7 +91,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/openshift-node-app"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-14"
         },
         {
           "name": "Service Mesh on OpenShift",
@@ -151,7 +151,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-14"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -211,7 +211,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/serverless-guestbook"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-16"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -376,7 +376,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-14"
         },
         {
           "name": "Serverless web app and eventing for data retrieval and analytics",
@@ -392,7 +392,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/github-traffic-stats"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-16"
         },
         {
           "name": "Build, deploy, test and monitor a predictive machine learning model",
@@ -409,7 +409,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/ml-iris-classification"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-06-14"
         }
       ]
     },
@@ -431,7 +431,7 @@
             "Security"
           ],
           "guide": true,
-          "lastUpdated": "2023-05-08"
+          "lastUpdated": "2023-06-14"
         },
         {
           "name": "Resource sharing across accounts",

@@ -34,9 +34,9 @@
                "name": "Trusted profiles as building block for secure cloud environments",
                "url": "trusted-profile-for-enterprise-security.hidden.html",
                "description": "Learn about trusted profiles as building block for secure cloud environments.",
-               "imgSrc": "images/solution67-cbr-enhanced-security/architecture-e2e-security.svg",
+               "imgSrc": "images/trusted-profiles-hidden/TrustedProfile_with_CR_architecture.svg",
                "repos": [
-                  "https://github.com/IBM-Cloud/secure-file-storage"
+                  "https://github.com/IBM-Cloud/trusted-profile-enterprise-security"
                ]
             },
             {
