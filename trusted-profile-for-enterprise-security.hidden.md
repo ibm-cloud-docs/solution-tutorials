@@ -255,6 +255,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    {: pre}
 
    The command invokes the app, trying to retrieve the list of resources in the account, but no trusted profile name is provided. The result should be a formatted JSON object with an error message.
+
 3. Repeat the above command, but now specify which trusted profile to use:
    ```sh
    curl -s localhost:8080/api/listresources_crn?tpname=TPwithCR | jq
@@ -262,6 +263,11 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    {: pre}
 
    Now, the result should be formatted JSON object with information about the resources in your account. For readability, only the resource CRNs are returned. Use `localhost:8080/api/listresources` for the full object details. You may also want to try a different, non-existing trusted profile name and examine the error message.
+
+   When invoked, the app first reads the token for the compute resource. Then, it turns the token into an IAM access token for the specified trusted profile. Last, it calls the {{site.data.keyword.cloud_notm}} resource controller API to retrieve information about service instances. The result depends on the trusted profile's configured privileges. If interested, examine the [app source code](https://github.com/IBM-Cloud/trusted-profile-enterprise-security/blob/main/app.py){: external}.
+   {: note}
+
+
 4. Switch to the *{{site.data.keyword.at_short}} logs* browser tab and use the search box at the bottom to look for the term **profile**. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. Expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
    
    ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
