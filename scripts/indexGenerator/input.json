@@ -31,15 +31,6 @@
                "imgSrc": ""
             },
             {
-               "name": "Trusted profiles as building block for secure cloud environments",
-               "url": "trusted-profile-for-enterprise-security.hidden.html",
-               "description": "Learn about trusted profiles as building block for secure cloud environments.",
-               "imgSrc": "images/trusted-profiles-hidden/TrustedProfile_with_CR_architecture.svg",
-               "repos": [
-                  "https://github.com/IBM-Cloud/trusted-profile-enterprise-security"
-               ]
-            },
-            {
                "name": "Introduction to Satellite locations, clusters, link and config",
                "url": "satellite-tour.hidden.html",
                "description": "Get familiar with Satellite architecture and capabilities.",
@@ -478,6 +469,27 @@
                "supportsCloudShell": false,
                "repos": [
                   "https://github.com/IBM-Cloud/secure-file-storage"
+               ]
+            },
+            {
+               "name": "Trusted profiles as building block for secure cloud environments",
+               "url": "trusted-profile-for-enterprise-security.html",
+               "description": "Learn about trusted profiles as building block for secure cloud environments.",
+               "imgSrc": "images/solution68-trusted-profile-for-enterprise-security/TrustedProfile_with_CR_architecture.svg",
+               "tags": [
+                  "Kubernetes",
+                  "Security",
+                  "container_registry",
+                  "Activity Tracker"
+               ],
+               "requirements": [
+                  "kubernetes_service",
+                  "container_registry",
+                  "logdna"
+               ],
+               "supportsCloudShell": false,
+               "repos": [
+                  "https://github.com/IBM-Cloud/trusted-profile-enterprise-security"
                ]
             }
          ]

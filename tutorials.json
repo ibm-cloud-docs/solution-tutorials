@@ -340,6 +340,22 @@
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
           "lastUpdated": "2023-05-11"
+        },
+        {
+          "name": "Trusted profiles as building block for secure cloud environments",
+          "url": "trusted-profile-for-enterprise-security.html",
+          "description": "Learn about trusted profiles as building block for secure cloud environments.",
+          "imgSrc": "images/solution68-trusted-profile-for-enterprise-security/TrustedProfile_with_CR_architecture.svg",
+          "tags": [
+            "Kubernetes",
+            "Security",
+            "container_registry",
+            "Activity Tracker"
+          ],
+          "repos": [
+            "https://github.com/IBM-Cloud/trusted-profile-enterprise-security"
+          ],
+          "lastUpdated": "2023-06-22"
         }
       ]
     },

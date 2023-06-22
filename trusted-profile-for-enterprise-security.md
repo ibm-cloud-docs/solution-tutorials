@@ -35,7 +35,7 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 * Create trusted profiles and manage access to cloud resources
 * Deepen your Identity and Access Management (IAM) knowledge
 
-![Architecture](images/trusted-profiles-hidden/TrustedProfile_with_CR_architecture.svg){: caption="Solution architecture" caption-side="bottom"}
+![Architecture](images/solution68-trusted-profile-for-enterprise-security/TrustedProfile_with_CR_architecture.svg){: caption="Solution architecture" caption-side="bottom"}
 
 - The user connects to {{site.data.keyword.cloud_notm}} and uses a web console / browser
   - to deploy an app into a namespace of a Kubernetes cluster,
@@ -65,7 +65,7 @@ In the console, as part of the IAM category, [trusted profiles](/iam/trusted-pro
 - {{site.data.keyword.cloud_notm}} services
 - Service IDs
 
-![Trusted profile entity types](images/trusted-profiles-hidden/IAM_TrustedProfile_create.png){: caption="Trusted entity types" caption-side="bottom"}
+![Trusted profile entity types](images/solution68-trusted-profile-for-enterprise-security/IAM_TrustedProfile_create.png){: caption="Trusted entity types" caption-side="bottom"}
 
 
 ## Trusted profile use cases
@@ -270,7 +270,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
 
 4. Switch to the *{{site.data.keyword.at_short}} logs* browser tab and use the search box at the bottom to look for the term **profile**. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. Expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
    
-   ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/trusted-profiles-hidden/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
+   ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
 5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/cloud/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
 6. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
