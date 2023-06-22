@@ -37,12 +37,9 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 
 ![Architecture](images/solution68-trusted-profile-for-enterprise-security/TrustedProfile_with_CR_architecture.svg){: caption="Solution architecture" caption-side="bottom"}
 
-- The user connects to {{site.data.keyword.cloud_notm}} and uses a web console / browser
-  - to deploy an app into a namespace of a Kubernetes cluster,
-  - to interact with the app,
-  - to configure privileges with IAM,
-  - and to inspect {{site.data.keyword.at_short}} records.
-- The container image is pulled from the {{site.data.keyword.registryshort_notm}} and deployed to the Kubernetes cluster.
+- The container image for the application is pulled from the {{site.data.keyword.registryshort_notm}} and deployed to the Kubernetes cluster into a namespace.
+- The user connects to the application.
+- The application reads a special access token from the Kubernetes environment and turns it into an IAM access token for a trusted profile.
 - IAM logs events to {{site.data.keyword.at_short}}.
 
 ## Before you begin
