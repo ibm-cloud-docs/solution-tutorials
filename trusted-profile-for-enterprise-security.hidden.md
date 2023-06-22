@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-21"
-lasttested: "2023-06-21"
+lastupdated: "2023-06-22"
+lasttested: "2023-06-22"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -19,9 +19,6 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {: toc-content-type="tutorial"}
 {: toc-services="containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
-
-Learn about trusted profiles as building block for secure cloud environments.
-{: shortdesc}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
@@ -40,8 +37,9 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 
 ![Architecture](images/trusted-profiles-hidden/TrustedProfile_with_CR_architecture.svg){: caption="Solution architecture" caption-side="bottom"}
 
-- The user connects to {{site.data.keyword.cloud_notm}} and uses a web console
-  - to deploy an app to the Kubernetes cluster and interact with it,
+- The user connects to {{site.data.keyword.cloud_notm}} and uses a web console / browser
+  - to deploy an app into a namespace of a Kubernetes cluster,
+  - to interact with the app,
   - to configure privileges with IAM,
   - and to inspect {{site.data.keyword.at_short}} records.
 - The container image is pulled from the {{site.data.keyword.registryshort_notm}} and deployed to the Kubernetes cluster.
@@ -52,7 +50,7 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 
 This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](/){: external}.
 
-An instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started#gs_objectives) in the Frankfurt region is required.
+An instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started#gs_objectives) in the Frankfurt region is required to see global IAM events produced when utilizing trusted profiles. An instance with streaming logs is sufficient, but persisted logs are recommended.
 
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
@@ -80,9 +78,9 @@ Trusted profiles are identities within {{site.data.keyword.cloud_notm}}. They ca
 
 The following scenarios are such use cases for trusted profiles, differing by the way the trust is established:
 - **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: Configure a trusted profile to let users of a federated identity provider assume its identity. You can define which IdP and what user attributes to consider.
-- **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster (including{{site.data.keyword.openshiftlong_notm}}) or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
+- **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster (including {{site.data.keyword.openshiftlong_notm}}) or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
 - **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
-- **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an{{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
+- **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an {{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
 
 ## Establish trust
 {: #trusted-profile-for-enterprise-security-trust}
