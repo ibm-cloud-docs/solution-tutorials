@@ -264,7 +264,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
 
    Now, the result should be formatted JSON object with information about the resources in your account. For readability, only the resource CRNs are returned. Use `localhost:8080/api/listresources` for the full object details. You may also want to try a different, non-existing trusted profile name and examine the error message.
 
-   When invoked, the app first reads the token for the compute resource. Then, it turns the token into an IAM access token for the specified trusted profile. Last, it calls the {{site.data.keyword.cloud_notm}} resource controller API to retrieve information about service instances. The result depends on the trusted profile's configured privileges. If interested, examine the [app source code](https://github.com/IBM-Cloud/trusted-profile-enterprise-security/blob/main/app.py){: external}.
+   When invoked, the app first reads the token for the compute resource. Then, it [turns the token into an IAM access token](/apidocs/iam-identity-token-api#gettoken-crtoken){: external} for the specified trusted profile. Last, it calls the [{{site.data.keyword.cloud_notm}} resource controller API](/apidocs/resource-controller/resource-controller){: external} to retrieve information about service instances. The result depends on the trusted profile's configured privileges. If interested, examine the [app source code](https://github.com/IBM-Cloud/trusted-profile-enterprise-security/blob/main/app.py){: external}.
    {: note}
 
 
