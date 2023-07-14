@@ -58,7 +58,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/jpetstore-kubernetes"
           ],
-          "lastUpdated": "2023-06-07"
+          "lastUpdated": "2023-06-22"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -339,7 +339,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/secure-file-storage"
           ],
-          "lastUpdated": "2023-05-11"
+          "lastUpdated": "2023-06-28"
         },
         {
           "name": "Trusted profiles as building block for secure cloud environments",
@@ -355,7 +355,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/trusted-profile-enterprise-security"
           ],
-          "lastUpdated": "2023-06-22"
+          "lastUpdated": "2023-07-14"
         }
       ]
     },

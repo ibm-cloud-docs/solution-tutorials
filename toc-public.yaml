@@ -76,7 +76,6 @@ toc:
                 - vpc-app-deploy.md
                 - vpc-secure-management-bastion-server.md
                 - lamp-stack-on-vpc.md
-                - /containers/containers-vpc_ks_tutorial
                 - vpc-tg-dns-iam.md
                 - vpc-scaling-dedicated-compute.md
                 - vpc-transit1.md
@@ -133,7 +132,6 @@ toc:
                 - cbr-enhanced-security.md
                 - trusted-profile-for-enterprise-security.md
                 - users-teams-applications.md
-                - /containers/containers-vpc_ks_tutorial
 
             - topicgroup:
                 label: OpenShift

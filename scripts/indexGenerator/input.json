@@ -755,13 +755,6 @@
                ]
             },
             {
-               "url": "/containers/containers-vpc_ks_tutorial",
-               "tags": [
-                  "Virtual Private Cloud",
-                  "Kubernetes"
-               ]
-            },
-            {
                "name": "Team based privacy using IAM, VPC, Transit Gateway and DNS",
                "url": "vpc-tg-dns-iam.html",
                "description": "Connect multiple VPCs with Transit Gateway. Use DNS name resolution for microservices. Work in isolated teams with IAM",
