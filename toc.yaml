@@ -140,7 +140,7 @@ toc:
                 - cbr-enhanced-security.md
                 - trusted-profile-for-enterprise-security.md
                 - users-teams-applications.md
-                - include: ../containers/containers-vpc_ks_tutorial.md
+                - include: ../containers/cs_tutorial_vpc.md
 
             - topicgroup:
                 label: OpenShift
