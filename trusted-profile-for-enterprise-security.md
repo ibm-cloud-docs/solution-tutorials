@@ -132,7 +132,7 @@ The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ib
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing `Standard` cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **mycluster-tpcr**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.21.**
+Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **mycluster-tpcr**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.21.**
 {: tip}
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. A **minimum Kubernetes version of 1.21 is required**. Make sure to select an appropriate version when creating the cluster.
