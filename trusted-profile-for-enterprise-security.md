@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-22"
+lastupdated: "2023-07-14"
 lasttested: "2023-06-22"
 
 content-type: tutorial
@@ -130,11 +130,36 @@ The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ib
 {: #trusted-profile-for-enterprise-security-cr1}
 {: step}
 
-First, you are going to create a free Kubernetes cluster:
-1. Make sure to be logged in to the {{site.data.keyword.cloud_notm}} console.
-2. Go to the [catalog](https://{DomainName}/catalog){: external}, select the **Containers** category and the **Kubernetes Service** tile to [create a {{site.data.keyword.containershort_notm}} cluster](https://{DomainName}/kubernetes/catalog/create){: external}.
-3. Select **Free tier cluster** under **Plan details**. Leave the rest as is and click **Create** to create the Kubernetes cluster.
-4. Next, the cluster is provisioned which takes a moment. Leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
+{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
+
+Skip this section if you have an existing `Standard` cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **mycluster-tpcr**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.21.**
+{: tip}
+
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. A **minimum Kubernetes version of 1.21 is required**. Make sure to select an appropriate version when creating the cluster.
+
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+- Click **Standard tier cluster**
+- For Kubernetes on VPC infrastructure see the reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
+   - Click **Create VPC**:
+      - Enter a **name** for the VPC.
+      - Chose the same resource group as the cluster.
+      - Click **Create**.
+   - Attach a Public Gateway to each of the subnets that you create:
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      - Click the previously created VPC used for the cluster.
+      - Scroll down to subnets section and click a subnet.
+      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      - Click the browser **back** button to return to the VPC details page.
+      - Repeat the previous three steps to attach a public gateway to each subnet.
+- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
+- Choose a resource group.
+- Uncheck all zones except one.
+- Scale down to 1 **Worker nodes per zone**.
+- Choose the smallest **Worker Pool flavor**.
+- Enter a **Cluster name** **mycluster-tpcr**.
+- Click **Create**.
+  
+When the cluster is provisioned, leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
 
 ## Create a trusted profile
 {: #trusted-profile-for-enterprise-security-cr2}
@@ -145,7 +170,7 @@ First, you are going to create a free Kubernetes cluster:
 3. In the second form tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
 4. Next, you can decide between either all or specific service resources. 
    - Click on **Specific resources** and the next form field appears.
-   - In **Enter or select an instance**, click **Add resource**. Then, in the field **Allow access to** select the newly created Kubernetes cluster **mycluster-free**. 
+   - In **Enter or select an instance**, click **Add resource**. Then, in the field **Allow access to** select the Kubernetes cluster **mycluster-tpcr**. 
    - Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. 
    - Finish by clicking **Continue**.
 5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally **Add**.
