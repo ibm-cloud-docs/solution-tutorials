@@ -14,6 +14,7 @@ TESTS=(
   $SCRIPT_DIR/check-images-with-no-caption.sh
   $SCRIPT_DIR/check-marked-it.sh
   $SCRIPT_DIR/check-linkrules.sh
+  $SCRIPT_DIR/check-with-vale.sh
 )
 failedTests=""
 for test in "${TESTS[@]}"; do
