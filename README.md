@@ -13,8 +13,8 @@
 
 ## I want to contribute a new tutorial
 
-1. Fork this https://github.ibm.com/cloud-docs/tutorials
-1. Use https://github.ibm.com/cloud-docs/tutorials/blob/draft/solution-template.md as a starting point
+1. Fork this https://github.ibm.com/cloud-docs-solutions/solution-tutorials
+1. Use https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/solution-template.md as a starting point
 1. Follow the guidelines https://test.cloud.ibm.com/docs/writing?topic=writing-creating-tutorials.
 1. Use draw.io to create your architecture diagram https://www.diagrams.net/.
 1. When ready send a pull request.
