@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-05-10"
+lastupdated: "2023-07-25"
 lasttested: "2022-12-08"
 
 content-type: tutorial
@@ -79,11 +79,11 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 
-When creating the Kubernetes cluster below:
+When creating the following Kubernetes cluster:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Locate in **North America** and **Dallas**
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the following documentation for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -170,7 +170,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 ### Configure the Ingress for your DNS subdomain
 {: #multi-region-k8s-cis-ingress}
 
-It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.example.com `<glb_name> = hello-world-service` and `<your_domain_name> = example.com`
+It will be required to have your own DNS domain name and a global load balancer subdomain will be created in the following task: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.example.com `<glb_name> = hello-world-service` and `<your_domain_name> = example.com`
 
 1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
    ```bash
@@ -219,7 +219,7 @@ It will be required to have your own DNS domain name and a global load balancer 
 {: #multi-region-k8s-cis-0}
 {: step}
 
-Repeat the steps from above for the London location with the following replacements:
+Repeat the previous steps for the London location with the following replacements:
 * In [Create a Kubernetes cluster](#multi-region-k8s-cis-3) replace:
    * the cluster name **my-us-cluster** with **my-uk-cluster**;
    * the location from **North America** and **Dallas** with **Europe** and **London**.
@@ -233,7 +233,7 @@ Repeat the steps from above for the London location with the following replaceme
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
-In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one stop-shop service providing *Global Load Balancer (GLB)*, *Caching*, *Web Application Firewall (WAF)* and *Page rule* to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one-stop shopping service providing *Global Load Balancer (GLB)*, *Caching*, *Web Application Firewall (WAF)* and *Page rule* to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
@@ -263,7 +263,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 
 Health Checks monitor responses to HTTP/HTTPS requests from origin pools on a set interval. They are used with origin pools to determine if the pools are still running properly.
 
-1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the left navigation menu to select **Reliability** > **Global Load Balancers**.
+1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the navigation menu to select **Reliability** > **Global Load Balancers**.
 1. Select the **Health checks** tab and click **Create**.
    1. Set **Name** to **hello-world-service**
    1. Set **Monitor Type** to **HTTP**.
