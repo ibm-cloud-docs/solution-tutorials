@@ -127,7 +127,7 @@ To run a production app in the cloud by using Kubernetes, consider the following
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
 9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
-To make the above more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
+To make the preceeding steps more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (for example 2 CPU's, 4GB of RAM and one worker node for each cluster).
@@ -144,7 +144,7 @@ With Kubernetes, you have two options for handling databases:
    - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml){: external}.
 2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services). To use this option, you would need to do the following:
    - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
-   - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
+   - Store database credentials inside a secret. You will learn more on secrets in the [Store credentials in Kubernetes secrets](#vm-to-containers-and-kubernetes-17) section.
    - Use the database-as-a-service (DBaaS) in your application.
 
 ## Decide where to store application files
@@ -230,7 +230,7 @@ The following key principles are required:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
 - **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
-- **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
+- **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials later.
 
 ### Store credentials in Kubernetes secrets
 {: #vm-to-containers-and-kubernetes-17}
@@ -249,7 +249,7 @@ One way of using secrets in Kubernetes is by doing something like this:
    ```
    {: codeblock}
 
-2. Then, create a Kubernetes secret by running a command below and verify that the secret is created by using `kubectl get secrets` after running the command below:
+2. Then, create a Kubernetes secret by running the following command and verify that the secret is created by using `kubectl get secrets` after running the following command:
 
    ```sh
    kubectl create secret generic cloud-service-secret --from-file=cloud-secrets.txt=./cloud-secrets.txt
@@ -278,7 +278,7 @@ Images are typically stored in a registry that can either be accessible by the p
 
 To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
-1. You would need to create a Dockerfile, below is an example of a Dockerfile.
+1. You would need to create a Dockerfile, the following code is an example of a Dockerfile.
    ```sh
    # Build JPetStore war
    FROM openjdk:8 as builder
@@ -319,7 +319,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/){: external} for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
-3. Next, you can use below commands to create and view the deployment and services created:
+3. Next, you can use following commands to create and view the deployment and services created:
 
    ```sh
    kubectl create -f <filepath/deployment.yaml>
