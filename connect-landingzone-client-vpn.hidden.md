@@ -89,7 +89,7 @@ It creates and configures the following infrastructure:
    - Attaches the `client-to-site-sg` to the client-to-site VPN gateway.
    - With routes configured to allow accessing the landing zone VPCs (management and workload).
 
-![Architecture](images/connect-landingzone-client-vpn/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/connect-landingzone-client-vpn-hidden/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 
 
 ## Before you begin
@@ -105,7 +105,7 @@ The terraform module creates a secret manager instance if you don’t already ha
 
 A quick way to locate the secret manager GUID in your account is to use the resource explorer view, enter “secret” in the Product filter and a list of secrets manager instances will be shown. Next, click the item to show the sidebar details for the secrets manager instance you want to use and press the copy action to the right of the GUID field as shown in this screenshot:
 
-![Example of resource list](images/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
+![Example of resource list](images/connect-landingzone-client-vpn-hidden/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
 
 ## Set up by using Terraform on a local workstation
 {: #solution-connect-client-vpn-local-setup}
