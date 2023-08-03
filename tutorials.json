@@ -58,7 +58,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/jpetstore-kubernetes"
           ],
-          "lastUpdated": "2023-06-22"
+          "lastUpdated": "2023-07-25"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -74,7 +74,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2023-05-08"
+          "lastUpdated": "2023-07-25"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -285,7 +285,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/kubernetes-node-app"
           ],
-          "lastUpdated": "2023-05-10"
+          "lastUpdated": "2023-07-25"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -526,7 +526,7 @@
           "repos": [
             "https://github.com/IBM-Cloud/vpc-tutorials"
           ],
-          "lastUpdated": "2023-05-05"
+          "lastUpdated": "2023-07-24"
         },
         {
           "name": "Securely access remote instances with a bastion host",

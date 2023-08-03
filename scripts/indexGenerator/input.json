@@ -38,6 +38,12 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
+            },
+            {
+               "name": "Connect to a VPC landing zone by using a client to site VPN",
+               "url": "connect-landingzone-client-vpn.hidden.html",
+               "description": "Connect to a VPC landing zone by using a client to site VPN",
+               "imgSrc": ""
             }
          ]
       },
