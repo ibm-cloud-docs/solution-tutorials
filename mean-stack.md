@@ -60,8 +60,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-This tutorial demonstrates the use of the command line to create the database, {{site.data.keyword.codeenginefull}} project and application. There are instructions in the companion [GitHub repository](https://github.com/IBM-Cloud/nodejs-MEAN-stack) to provision with terraform locally on you workstation or even simpler provision with {{site.data.keyword.bpshort}} in just a few clicks.
-
+This tutorial demonstrates the use of the command line to create the database, {{site.data.keyword.codeenginefull}} project and application. There are instructions in the companion [GitHub repository](https://github.com/IBM-Cloud/nodejs-MEAN-stack) to provision with terraform locally on your workstation or even simpler provision with {{site.data.keyword.bpshort}} in just a few clicks.
 
 <!--#/istutorial#-->
 
