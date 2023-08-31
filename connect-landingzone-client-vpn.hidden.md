@@ -22,7 +22,7 @@ use-case: usecase1, usecase2
 {: toc-completion-time="2h"}
 
 
-This tutorial dives into the fastest option to get up and running with [Client-to-Site VPC VPN connectivity](/docs/vpc?topic=vpc-vpn-client-to-site-overview). Rather than doing manual steps, we show you how to set up an automated way to create a client-to-site VPN connection to one or more landing zones in your accounts by using Terraform.
+This tutorial dives into the fastest option to get up and running with [Client-to-Site VPC VPN connectivity](/docs/vpc?topic=vpc-vpn-client-to-site-overview). Rather than doing manual steps, this tutorial shows you how to set up an automated way to create a client-to-site VPN connection to one or more landing zones in your accounts by using Terraform.
 {: shortdesc}
 
 ## Problem
