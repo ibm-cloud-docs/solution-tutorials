@@ -27,7 +27,6 @@ toc:
                 - solution-template.md
                 - satellite-tour.hidden.md
                 - connect-landingzone-client-vpn.hidden.md
-                - connect-landingzone-site2site.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
