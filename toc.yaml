@@ -27,6 +27,7 @@ toc:
                 - solution-template.md
                 - satellite-tour.hidden.md
                 - connect-landingzone-client-vpn.hidden.md
+                - connect-landingzone-site2site.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
@@ -176,4 +177,3 @@ toc:
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
                 - web-app-private-network.md
-
