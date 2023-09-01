@@ -41,13 +41,16 @@ To Do: Add the objectives or problem solved
 {: #solution-connect-site-vpn-prereqs}
 
 - Deploy an instance of a VPC landing zone deployable architecture. For more information, see [Deploying a landing zone deployable architecture](/docs/secure-infrastructure-vpc?topic=secure-infrastructure-vpc-deploy).
-- Create a VSI with any Linux-based OS on a different VPC. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
+- Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Ensure that the VSI is assigned a floating IP, which will be used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
+
+Note: The following steps are specific to CentOS. And the assumation is that the VPN gateway is deployed on the landing zone VPC named `management-vpc`
+{: remember}
 
 ## Set up Strongswan
 {: #strongswan-setup}
 {: step}
 
-The following steps are specific to CentOS. For more information about how to install strongSwan on a different operating system, see the [installation documentation](https://docs.strongswan.org/docs/5.9/install/install.html).{: external}
+For more information about how to install strongSwan on a different operating system, see the [installation documentation](https://docs.strongswan.org/docs/5.9/install/install.html).{: external}
 {: tip}
 
 1.  Enable IP forwarding:
@@ -69,12 +72,12 @@ The following steps are specific to CentOS. For more information about how to in
 1.  Install strongSwan:
 
     ```sh
-    sudo dnf install epel-release
+    sudo dnf install epel-release -y
     ```
     {: pre}
 
     ```sh
-    sudo dnf install strongswan
+    sudo dnf install strongswan -y
     ```
     {: pre}
 
@@ -105,12 +108,12 @@ The following steps are specific to CentOS. For more information about how to in
              esp=aes256-sha256!
              ike=aes256-sha256-modp2048!
              left=%any
-             leftsubnet=10.160.x.x/26      <== Subnet of your on-premises network
-             rightsubnet=192.168.x.x/28    <== 1. Subnet in which VPN gateway is deployed
-             right=169.61.x.x              <== 2. Public IP of the VPN gateway
+             leftsubnet=10.160.x.x/26      #<== 1. Subnet CIDR of your on-premises network
+             rightsubnet=10.30.20.0/24     #<== 2. Subnet CIDR of the Landing Zone VPN gateway
+             right=169.61.x.x              #<== 3. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"           <== Public IP of your strongSwan server
+             leftid="169.45.x.x"           #<== 4. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
@@ -120,6 +123,27 @@ The following steps are specific to CentOS. For more information about how to in
         ```
         {: codeblock}
 
+        1. Subnet of your on-premises network:
+           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Virtual server instances** from the **Compute** section.
+           - Select the VSI which has strongSwan gateway installed.
+           - Scroll down in the Instance details page.
+           - Click the highlighted subnet name of the interface which has the floating IP assigned to it in the **Network Interfaces** section.
+           - Here you can find the **Subnet CIDR of your on-premises network** under IP range.
+        1. Subnet CIDR of the Landing Zone VPN gateway:
+           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
+           - Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
+           - In the VPN gateway details page, click on Subnet.
+           - This will take you to the subnet associated with your VPN gateway.
+           - Here you can find the **Subnet CIDR of the Landing Zone VPN gateway** under IP range.
+        1. Public IP of the VPN gateway:
+           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
+           - Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
+           - In the VPN gateway details page, click on any one of the Public IP to copy it. Make sure to use that same IP on the strongSwan server side.
+        1. Public IP of your strongSwan server:
+           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Virtual server instances** from the **Compute** section.
+           - Select the VSI which has strongSwan gateway installed.
+           - Scroll down in the Instance details page.
+           - Click the Floating IP associated with the subnet you chose in the Step 1 the **Network Interfaces** section.
 1.  Configure a pre-shared key (PSK) for peer-to-peer authentication.
     1.  Generate a strong PSK for the peers to use for authentication:
 
@@ -131,7 +155,8 @@ The following steps are specific to CentOS. For more information about how to in
     1.  Add the PSK to the `/etc/strongswan/ipsec.secrets` file.
 
         ```text
-        169.45.x.x  169.61.x.x : PSK "***********"
+        # <Public IP of your strongSwan server> <Public IP of the Landing Zone VPN gateway> : PSK "***********" 
+        169.45.x.x  169.61.x.x : PSK "***********" 
         ```
         {: codeblock}
 
@@ -142,17 +167,21 @@ The following steps are specific to CentOS. For more information about how to in
     ```
     {: pre}
 
-    ```sh
-    strongswan status
+    ```bash
+    ❯ strongswan status
+    Security Associations (0 up, 0 connecting):
+        none
     ```
     {: pre}
+
+    It's normal for the status to show '0 up, 0 connecting' since we haven't set up the connection on the landing zone side.
 
 ## Edit the ACLs to allow connections from strongSwan
 {: #solution-connect-site-vpn-strongswan-acls}
 {: step}
 
 1.  Click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Access control lists** from the **Network** section.
-1.  Select the ACL that is associated with your VPC landing zone deployable architecture.
+1.  Select the ACL `management-acl` that is associated with your landing zone deployable architecture `management-vpc` VPC.
 
 1.  Create inbound rules for the on-premises subnet and public IP to access the VPN subnet.
     1.  Click **Create** in the inbound rules section.
@@ -160,8 +189,8 @@ The following steps are specific to CentOS. For more information about how to in
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |----------|------------|----------|--------|-------------|
-        | 1 | Allow | ALL | 169.45.74.119/32 | Any IP |
-        | 2 | Allow | ALL | 10.160.26.64/26 | Any IP |
+        | 1 | Allow | ALL | 169.45.x.x/32 | Any IP |
+        | 2 | Allow | ALL | 10.160.x.x/26 | Any IP |
         {: caption="Table 1. Inbound ACL rules" caption-side="bottom"}
 
 1.  Create Outbound Rules for the VPN subnet and public IP to access the on-premises subnet.
@@ -170,48 +199,48 @@ The following steps are specific to CentOS. For more information about how to in
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |--------------|-----------|------|------|------|
-        | 1 | Allow | ALL | Any IP | 10.160.26.64/26 |
-        | 2 | Allow | ALL | Any IP | 169.45.74.119/32 |
+        | 1 | Allow | ALL | Any IP | 10.160.x.x/26 |
+        | 2 | Allow | ALL | Any IP | 169.45.x.x/32 |
         {: caption="Table 2. Outbound ACL rules" caption-side="bottom"}
+
+1.169.45.x.x/32 is the Public IP of your strongSwan server
+2.10.160.x.x/26 is Subnet CIDR of your on-premises strongSwan server network
+{: note}
 
 ## Create a VPN connection in the {{site.data.keyword.cloud_notm}} VPN
 {: #create-vpn}
 {: step}
-
+1.  Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
+1.  Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
 1.  On the gateway details page, click **Create** in the VPN connections section.
 1.  Define a connection between this gateway and a network outside your VPC by specifying the following information:
     - **VPN connection name**: Enter a name for the connection, such as `my-connection`.
-        - **Peer gateway address**: Specify the IP address of the VPN gateway for the network outside your VPC.
-    - **Pre-shared key**: Specify the authentication key of the VPN gateway for the network outside your VPC. The pre-shared key is a string of hexadecimal digits, or a passphrase of printable ASCII characters. To be compatible with most peer gateway types, the string must follow these rules:
-        - A combination of digits, lowercase or uppercase characters, or the following special characters: `- + & ! @ # $ % ^ - ( ) . , :`.
-        - Between 6 - 128 characters in length.
-        - Cannot start with `0x` or `0s`.
+    - **Peer gateway address**: Specify the floating IP address of the strongSwan server.
+    - **Pre-shared key**: Specify the authentication key of the VPN gateway. Make sure that you use the same pre-shared key that is mentioned in the strongSwan secrets.
 
-        Make sure that you use the same pre-shared key that is mentioned in the strongSwan secrets.
-        {: remember}
+    - **Create an IKE policy**
+        1.  From the VPN connection for VPC page, select **Create IKE policy**.
+        1.  Specify the following information:
+            - **Name**: Enter a name for the IKE policy.
+            - **Resource group**: Select the resource group for this IKE policy.
+            - **IKE version**: Set the IKE protocol version to `2`.
+            - **Encryption**: Encryption algorithm to use for IKE Phase 1. Set Encryption to `aes256`.
+            - **Authentication**: Authentication algorithm to use for IKE Phase 1. Set Authentication to `sha256`.
+            - **Diffie-Hellman group**: DH group to use for IKE Phase 1. Set DH group to `14`
+            - **Key lifetime**: Lifetime in number of seconds of Phase 1 tunnel. Set Key lifetime to `36000`
+        1.  Click **Create**.
 
-1.  Create an IKE policy.
-    1.  From the VPN connection for VPC page, select **Create IKE policy**.
-    1.  Specify the following information:
-        - **Name**: Enter a name for the IKE policy.
-        - **Resource group**: Select the resource group for this IKE policy.
-        - **IKE version**: Set the IKE protocol version to `2`. Some vendors do not support both IKE versions. Check with peer vendor documentation to verify IKE version support.
-        - **Encryption**: Encryption algorithm to use for IKE Phase 1. Set Encryption to `aes256`.
-        - **Authentication**: Authentication algorithm to use for IKE Phase 1. Set Authentication to `sha256`.
-        - **Diffie-Hellman group**: DH group to use for IKE Phase 1. Set DH group to `14`
-        - **Key lifetime**: Lifetime in number of seconds of Phase 1 tunnel. Set Key lifetime to `36000`
-    1.  Click **Create**.
-1.  Create an IPsec policy.
-    1.  From the VPN connection for VPC page, select **Create IPsec policy**.
-    1.  Specify the following information:
-        - **Name**: Enter a name for the IPsec policy.
-        - **Resource group**: Select the resource group for this IPsec policy.
-        - **Encryption**: Encryption algorithm to use for IKE Phase 2. Set Encryption to `aes256`.
-        - **Authentication**: Authentication algorithm to use for IKE Phase 2. Set Authentication to `sha256`.
-        - **Perfect Forward Secrecy**: Disable PFS.
-        - **Diffie-Hellman Group (If PFS is enabled)**: DH group to use for IKE Phase 2 key exchange. When PFS is disabled, the DH group is set to `14` by default.
-        - **Key lifetime**: Lifetime in number of seconds of the Phase 2 tunnel. Set the lifetime to `10800`.
-    1.  Click **Create**.
+    -  **Create an IPsec policy**
+        1.  From the VPN connection for VPC page, select **Create IPsec policy**.
+        1.  Specify the following information:
+            - **Name**: Enter a name for the IPsec policy.
+            - **Resource group**: Select the resource group for this IPsec policy.
+            - **Encryption**: Encryption algorithm to use for IKE Phase 2. Set Encryption to `aes256`.
+            - **Authentication**: Authentication algorithm to use for IKE Phase 2. Set Authentication to `sha256`.
+            - **Perfect Forward Secrecy**: Disable PFS.
+            - **Diffie-Hellman Group (If PFS is enabled)**: DH group to use for IKE Phase 2 key exchange. When PFS is disabled, the DH group is set to `14` by default.
+            - **Key lifetime**: Lifetime in number of seconds of the Phase 2 tunnel. Set the lifetime to `10800`.
+        1.  Click **Create**.
 1.  Click **Create VPN connection**.
 
 ## Create a route in the UI
@@ -221,11 +250,12 @@ The following steps are specific to CentOS. For more information about how to in
 Follow these steps to create a route to control how the destination network traffic is directed.
 
 1.  Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Routing tables** from the **Network** section.
-1.  Select the VPC that is associated with the instance of your VPC landing zone deployable architecture.
-1.  Scroll to the Routes section and click **Create**.
+1.  Select the `management-vpc`.
+1.  Click on the default routing table associated with the `management-vpc`. Note, that name can be created using a combination of random names.
+1.  In Routes section and click **Create**.
 1.  In the Create route panel, specify the following information:
     - **Name**: Type a name for the new route.
-    - **Destination CIDR**: Specify a destination CIDR range for the destination network. For example, for an on-premises network, enter the IPv4 CIDR range of the site-to-site gateway connection.
+    - **Destination CIDR**: Specify the subnet CIDR of your on-premises strongSwan network
     - **Action**: Select **Deliver** when the route destination is in the VPC or if an on-premises private subnet is connected with a VPN gateway.
     - **Next hop type**: Click **VPN connection** and select the VPN connection that you created in the previous step.
 1.  Click **Save**.
