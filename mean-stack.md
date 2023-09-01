@@ -145,6 +145,9 @@ In this section, you will clone a MEAN sample code and run the application local
    ```
    {: codeblock}
 
+Using the cloud shell it is possible to open the application by clicking on the **eye** icon in the upper right and clicking the preview on port **8080**.
+{: note}
+
 ## Deploy app to the cloud
 {: #mean-stack-4}
 {: step}
