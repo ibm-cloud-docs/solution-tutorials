@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-08-31"
 lasttested: "2023-02-22"
 
 content-type: tutorial
@@ -142,7 +142,7 @@ In this section, you are going to set up the needed services and deploy the back
 
    Note the reported URI for the app. It is needed in the next steps.
 
-   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. See the {{site.data.keyword.codeengineshort}} documentation on [building a container image](/docs/codeengine?topic=codeengine-build-image) or [deploying your application code from local source](/docs/codeengine?topic=codeengine-migrate-cf-ce-local) for details.
+   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. You can modify the create command to build from source: `ibmcloud ce application create --name slackbot-backend --build-source . --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;"` using the `Dockerfile` found in the repository. See the {{site.data.keyword.codeengineshort}} documentation on [deploying your app from local source code](/docs/codeengine?topic=codeengine-app-local-source-code) for additional details.
    {: tip}
 
 7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.

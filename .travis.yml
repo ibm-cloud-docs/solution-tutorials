@@ -7,12 +7,27 @@ branches:
   - master
   - draft
 
+# BRANCH_WHERE_WE_WORK
+#   --> travis --> BRANCH_FOR_PAGES
+#   --> PR --> BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH --> travis --> BRANCH_FOR_PUBLISH
+env:
+  global:
+    # the place where we do our daily commits
+    - BRANCH_WHERE_WE_WORK=draft
+    # the place where we copy files before they get sent to publication
+    # we remove the labinabox markup, hidden files, scripts...
+    - BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH=master
+    # the place where we push the files for publication
+    - BRANCH_FOR_PUBLISH=publish
+    # the place for the quick builds
+    - BRANCH_FOR_PAGES=gh-pages
+
 script:
   - echo "Current branch is ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
-  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "$BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH" ]; then
     ./scripts/sync.sh;
     fi
-  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "draft" ]; then
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "$BRANCH_WHERE_WE_WORK" ]; then
     ./scripts/check-all.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
     fi
 

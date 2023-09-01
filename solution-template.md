@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-05-16"
+lastupdated: "2023-09-01"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -240,10 +240,10 @@ If you have an old format html link that you are trying to translate to the new 
 
 Finally refer to [the link topic under the content and design documentation](/docs/writing?topic=writing-link-format) if you have any other questions.
 
-### Conrefs
+### Keyrefs
 {: #solution-template-13}
 
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+Use keyrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the keyrefs will magically update them. Check the [keyrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., keyref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}. Check out the [using keyrefs for product names](https://github.ibm.com/cloud-docs-internal/writing/blob/draft/keyrefs.md) in the content writing repository for additional details.
 
 ## Markup for workshops
 {: #solution-template-10}
