@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-08-31"
-lasttested: "2022-12-22"
+lastupdated: "2023-09-01"
+lasttested: "2023-09-01"
 
 content-type: tutorial
 services: codeengine, databases-for-mongodb
@@ -80,24 +80,24 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
 
    You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-sample-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
+2. Create an instance of {{site.data.keyword.databases-for-mongodb}} via the [command line](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=cli) or use the [console UI](/docs/databases-for-mongodb?topic=databases-for-mongodb-provisioning&interface=ui). The service name must be named **mean-stack-mongodb** as the application used in this tutorial is configured to look for the service by this name. For `<region>`, you can choose a region that is closer to you, however we will use `ca-tor` in this tutorial.
 
    ```sh
-   ibmcloud resource service-instance-create mean-sample-mongodb databases-for-mongodb standard ca-tor
+   ibmcloud resource service-instance-create mean-stack-mongodb databases-for-mongodb standard ca-tor
    ```
    {: codeblock}
 
 3. Wait for the instance to be ready. You can check the provisioning status with the following command:
    
    ```sh
-   ibmcloud resource service-instance mean-sample-mongodb
+   ibmcloud resource service-instance mean-stack-mongodb
    ```
    {: codeblock}
 
 4. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key.
   
    ```sh
-   ibmcloud resource service-key-create mean-sample-mongodb-key --instance-name mean-sample-mongodb
+   ibmcloud resource service-key-create mean-stack-mongodb-key --instance-name mean-stack-mongodb
    ```
    {: codeblock} 
 
@@ -126,7 +126,7 @@ In this section, you will clone a MEAN sample code and run the application local
 1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command:
   
    ```sh
-   ibmcloud resource service-key mean-sample-mongodb-key --output json
+   ibmcloud resource service-key mean-stack-mongodb-key --output json
    ```
    {: codeblock}
 
@@ -226,13 +226,13 @@ To remove resource, follow these steps:
 
 2. Delete the {{site.data.keyword.databases-for-mongodb}} service key.
    ```sh
-   ibmcloud resource service-key-delete mean-sample-mongodb-key
+   ibmcloud resource service-key-delete mean-stack-mongodb-key
    ```
    {: pre}
 
 3. Delete the {{site.data.keyword.databases-for-mongodb}} service.
    ```sh
-   ibmcloud resource service-instance-delete mean-sample-mongodb
+   ibmcloud resource service-instance-delete mean-stack-mongodb
    ```
    {: pre}
 
