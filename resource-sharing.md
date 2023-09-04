@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-10-17"
+lastupdated: "2023-09-04"
+lasttested: "2023-09-04"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -82,7 +82,7 @@ In almost all environments, data is stored encrypted. By default, encryption is 
 ### {{site.data.keyword.compliance_short}}
 {: #resource-sharing-security-scc}
 
-The [{{site.data.keyword.compliance_short}}](/security-compliance/overview) features Posture Management and Configuration Governance functionality. It helps to monitor deployed environments for security and assess them against compliance goals. Moreover, it can provide configuration defaults or even enforce settings of newly deployed resources. While the latter only applies to the current account, you can [utilize {{site.data.keyword.compliance_short}} to monitor and assess multiple accounts](/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) from a central instance. With custom collectors in place, the current security posture of multiple cloud accounts can be assessed and necessary actions taken.
+The [{{site.data.keyword.compliance_short}}](/security-compliance/overview) features Posture Management functionality. It helps to monitor deployed environments for security and assess them against compliance goals. In an enterprise, you can [define scopes to monitor and assess multiple accounts or account groups](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) from a central instance.
 
 
 ### {{site.data.keyword.at_short}}
@@ -175,7 +175,7 @@ ibmcloud iam authorization-policy-create cloud-object-storage kms Reader --sourc
 
 The console, the Terraform provider and the CLI all use the [IAM policy management API](/apidocs/iam-policy-management#create-policy) to create the policy.
 
-As a next step, with the authorization policy in place, an encrypted storage bucket using a {{site.data.keyword.keymanagementserviceshort}} root key could then be created. The following shows the Terraform code utilizing the resource[**ibm_cos_bucket**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket#example-usage-2){: external}. The attribute **key_protect** holds the CRN of the root key.
+As a next step, with the authorization policy in place, an encrypted storage bucket using a {{site.data.keyword.keymanagementserviceshort}} root key could then be created. The following shows the Terraform code utilizing the resource [**ibm_cos_bucket**](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket#example-usage-2){: external}. The attribute **key_protect** holds the CRN of the root key.
 
 ```hcl
 resource "ibm_cos_bucket" "cos_bucket" {
@@ -215,8 +215,8 @@ Accessing resources in different accounts, even sharing resources is common prac
 | Service | Capability |
 | ------- | ---------- |
 | **Security and Observability** | |
-| {{site.data.keyword.compliance_short}} | [Scan multiple accounts from a single {{site.data.keyword.compliance_short}}](/docs/security-compliance?topic=security-compliance-scanning-multiple-accounts-from-a-single-account) |
-| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account](/docs/activity-tracker?topic=activity-tracker-getting-started-routing-2)|
+| {{site.data.keyword.compliance_short}} | [Scan multiple accounts or account groups in an enterprise](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) |
+| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarioss-3)|
 | {{site.data.keyword.la_short}} | Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
 | {{site.data.keyword.keymanagementserviceshort}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
@@ -244,5 +244,5 @@ The following document provides details on some cross-account scenarios:
 
 Blog posts related to sharing resource across multiple accounts:
 - [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html){: external}
-- [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external} discusses [**IBMCLOUD_HOME**](/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
+- [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/blog/tips-and-tricks-for-using-the-ibm-cloud-cli/){: external} discusses [**IBMCLOUD_HOME**](/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
 
