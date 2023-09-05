@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-16"
-lasttested: "2023-06-16"
+lastupdated: "2023-09-05"
+lasttested: "2023-09-05"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -103,7 +103,7 @@ In this section, you will create the serverless backend app with {{site.data.key
    2. Click **Create**.
    3. Click **IBM Cloud service instance** and choose your database from the drop down.
    4. Click **Add**.
-8. Wait for the provioning to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
+8. Wait for the provisioning to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
 
 Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](/docs/codeengine?topic=codeengine-deploy-app-private). You can find the source at https://github.com/IBM-Cloud/serverless-guestbook/tree/ce
 {: tip}
@@ -146,7 +146,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
    {: note}
 
 1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
-1. Navigate to the **Configuration** tab for the bucket. In the endpoints section locate the **Static website hosting endpoints** section. Copy the **Public** endpoint into a browser tab.
+1. Navigate to the **Configuration** tab for the bucket. In the **Endpoints** section locate the **Static website hosting endpoints** section. Copy the **Public** endpoint into a browser tab.
 1. You should see the guestbook page.
 1. Add new entries to the guestbook.
 
@@ -166,12 +166,12 @@ To delete the created bucket and {{site.data.keyword.cos_short}} service:
 1. In the upper right of the {{site.data.keyword.cos_short}} instance **Actions** menu select **Delete Instance**
 
 To delete the created {{site.data.keyword.cloudant_short_notm}} service,
-1. Navigate to [resource list](/resources)
-2. Under **Services**, click on the action menu next to `<yourinitials>-guestbook-db` service
+1. Navigate to the [resource list](/resources)
+2. Under **Databases**, click on the action menu next to `<yourinitials>-guestbook-db` service
 3. Click **Delete**
 
 To delete the application and project {{site.data.keyword.codeengineshort}},
-1. Navigate to [{{site.data.keyword.codeengineshort}}](/codeengine/) landing page.
+1. Navigate to the [{{site.data.keyword.codeengineshort}}](/codeengine/) landing page.
 2. On the left pane, click on **Projects**.
 3. In the list of projects, check the guestbook project, then click **Delete**.
 
