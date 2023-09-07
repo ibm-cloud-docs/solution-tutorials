@@ -200,7 +200,7 @@ For more information about how to install strongSwan on a different operating sy
         | 1 | Allow | ALL | strongswan vsi public IP | LZ s2s VPN gateway's subnet |
         | 2 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
         | 3 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
-        | 4 (optional) | Allow | ALL | strongswan vsi public IP | management vsi subnet CIDR |
+        | 4 | Allow | ALL | strongswan vsi public IP | management vsi subnet CIDR |
         {: caption="Table 1. Inbound ACL rules" caption-side="bottom"}
 
 1.  Create Outbound Rules for the VPN subnet and public IP to access the on-premises subnet.
@@ -212,7 +212,7 @@ For more information about how to install strongSwan on a different operating sy
         | 1 | Allow | ALL | LZ s2s VPN gateway's subnet | strongswan vsi public IP |
         | 2 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
         | 3 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
-        | 4 (optional) | Allow | ALL | management vsi subnet CIDR | strongswan vsi public IP |      
+        | 4 | Allow | ALL | management vsi subnet CIDR | strongswan vsi public IP |      
         {: caption="Table 2. Outbound ACL rules" caption-side="bottom"}
 
 ## Create a VPN connection in the {{site.data.keyword.cloud_notm}} VPN
