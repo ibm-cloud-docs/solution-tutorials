@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-12-19"
+lastupdated: "2023-09-07"
+lasttested: "2023-09-07"
 
 content-type: tutorial
 services: vpc
@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives
@@ -58,7 +58,7 @@ This tutorial requires:
 * `git` to clone source code repository,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 {: tip}
 
 <!--#/istutorial#-->
@@ -67,13 +67,13 @@ You will find instructions to download and install these tools for your operatin
 {: #lamp-stack-on-vpc-2}
 {: step}
 
-In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
+In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell){: external} and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
 If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview){: external}.
 {: tip}
 
-1. From the [{{site.data.keyword.Bluemix_notm}} Console](/), launch the [{{site.data.keyword.cloud-shell_notm}}](/shell).
-1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
+1. While logged in to your [{{site.data.keyword.Bluemix_notm}} account](/){: external}, launch the [{{site.data.keyword.cloud-shell_notm}}](/shell){: external}.
+1. In the shell, you are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
    ```sh
    ibmcloud target -r <region-name> -g <resource-group>
    ```
