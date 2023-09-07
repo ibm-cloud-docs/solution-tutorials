@@ -7,11 +7,11 @@ lasttested: "2023-08-28"
 
 content-type: tutorial
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
-services: vpc, openshift
+services: vpc, virtual-servers
 account-plan: paid
 completion-time: 1h
 # use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy.
-use-case: usecase1, usecase2
+use-case: Cybersecurity, VirtualPrivateCloud, VirtualMachines
 ---
 
 {{site.data.keyword.attribute-definition-list}}
@@ -30,12 +30,18 @@ strongSwan is an open source IPsec-based VPN solution. For more information abou
 ## Objectives
 {: #solution-connect-site-vpn-objectives}
 
-You deployed one of the {{site.data.keyword.cloud_notm}} landing zone deployable architectures, such as [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy.
+You deployed [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} {{site.data.keyword.cloud_notm}} landing zone deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the virtual servers are created and healthy.
 
-Next ...
+By default, network access to the VPC landing zone topology is locked down for security compliance reasons. Hence, you won't be able to access any of the management or workload VSIs. So, how to we go about deploying our application in the workload VSIs located in the workload VPC?
 
-To Do: Add the objectives or problem solved
-{: attention}
+To resolve this, you give operator access through the Management VPC. You have several options to give operator access, with varying level of security, compliance, and ease of enablement.
+
+- [Client to Site with IBM Cloud VPN Server and VPN Client](/docs/vpc?topic=vpc-vpn-client-to-site-overview) - Configure a VPN client application on your device to create a secure connection to your VPC network that uses IBM Cloud VPN Server. The IBM Cloud VPN Server service has high availability mode for production use and is managed by IBM.
+- [Site to Site VPC VPN Gateway](/docs/vpc?topic=vpc-using-vpn&interface=cli) - Configure your on-premises VPN to connect to an IBM Cloud VPN Gateway by using a statically route-based VPN or a policy-based VPN to set up an IPsec site-to-site tunnel between your VPC and your on-premises private network or another VPC.
+- [Direct Link](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - A direct network connection can be established between your on-premises network and IBM Cloud Direct Link.
+- [Access from another VPC by using Transit Gateway](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another IBM Cloud VPC to your VPC can be achieved by using a Transit Gateway.
+
+In this tutorial, we can learn on how to setup a site-to-site VPN connection to your on-premises network.
 
 ## Before you begin
 {: #solution-connect-site-vpn-prereqs}
@@ -334,5 +340,4 @@ Follow these steps to verify that you have a working site-to-site gateway.
 ## Summary
 {: #solution-connect-site-vpn-summary}
 
-To Do: Add a summary or next steps. Perhaps link to the client-to-site tutorial?
-{: attention}
+Once you have the site-to-site VPN setup to the management VPC. You can go ahead access the workload VPC through the manangement VSIs with the necessary ACL rules in place. Hence, with a established connnection to the workload VPC you can go ahead with deploying your application on the workload VSIs.  
