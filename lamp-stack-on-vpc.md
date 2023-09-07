@@ -256,13 +256,13 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    ```
    {: pre}
 
-1. Run the following script to secure the MySQL database.
+1. Run the following script to secure the MySQL database. Choose the options that best fit your preferences or simply press the ENTER key to quickly steps through the setup.
    ```sh
    mysql_secure_installation
    ```
    {: pre}
 
-1. Additionally you can quickly create a PHP info page with the following command.
+1. Additionally, you can quickly create a PHP info page with the following command.
    ```sh
    echo "<?php phpinfo(); ?>" > /var/www/html/info.php
    ```
@@ -525,3 +525,13 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {: tip}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
+{: tip}
+
+## Related Content
+{: #lamp-stack-on-vpc-related}
+
+- [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external}
+- [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
+- [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
