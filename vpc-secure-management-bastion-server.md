@@ -103,7 +103,7 @@ With the subnet and security group already in place, next, create the bastion vi
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
 2. Click on **Attached resources** and under **Attached instances**, click **Create** to provision a new virtual server called **vpc-secure-bastion-vsi** under the same resource group as your subnet.
 3. Select **Architecture** as **Intel**. Pick a **Location** and make sure to later use the same location again.
-4. Select **Ubuntu Linux** as your Operating System. You can pick any version of the image.
+4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
 5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 6. Create a new **SSH key**, click **New key**
    - Enter **vpc-ssh-key** as key name.
@@ -208,15 +208,15 @@ To create a virtual server instance in the newly created subnet:
    1. Enter a unique name, **vpc-secure-private-vsi** and resource group as earlier.
    2. Select the same **Location** already used by the bastion virtual server.
    3. Select **Public** type of virtual server.
-   4. Set the **Operating System** to **Ubuntu Linux**. You can pick any version of the image.
-   5. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **View all profiles**.
+   4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
+   5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
    6. For **SSH keys** pick the SSH key you created earlier for the bastion.
 1. Scroll to **Networking** and select the VPC your created.
 1. Under **Network interfaces**, click on the **Edit** icon
       - Select **vpc-secure-private-subnet** as the subnet.
       - Uncheck the default security and group and activate **vpc-secure-private-sg**.
       - Click **Save**.
-1. Click **Create virtual server instance**.
+1. Click **Create virtual server**.
 
 ### Add virtual server instance(s) to the maintenance security group
 {: #vpc-secure-management-bastion-server-add-vsi-to-maintenance}
@@ -226,7 +226,7 @@ For administrative work on the servers, you have to associate the specific virtu
 Let's enable the maintenance security group for the server.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.
-2. Click on the**Attached resources** tab, then **Edit interfaces**.
+2. Click on the **Attached resources** tab, then **Edit interfaces**.
 3. Expand the virtual server instances and check the selection in the **Interfaces** column for **vpc-secure-private-vsi**.
 4. Click **Save** for the changes to be applied.
 
@@ -289,3 +289,4 @@ When using the console, you may need to refresh your browser to see updated stat
 {: #vpc-secure-management-bastion-server-related}
 
 - [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
+- [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
