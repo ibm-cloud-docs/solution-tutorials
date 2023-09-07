@@ -22,7 +22,13 @@ for test in "${TESTS[@]}"; do
   if $test; then
     echo "✅ Passed - $testBasename"
   else
-    echo "❌ Failed - $testBasename"
+    echo "❌
+❌
+❌
+❌ Failed - $testBasename
+❌
+❌
+❌"
     failedTests="$testBasename $failedTests"
     errorCode=1
   fi
