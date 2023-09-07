@@ -43,7 +43,10 @@ To Do: Add the objectives or problem solved
 - Deploy an instance of a VPC landing zone deployable architecture. For more information, see [Deploying a landing zone deployable architecture](/docs/secure-infrastructure-vpc?topic=secure-infrastructure-vpc-deploy).
 - Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Ensure that the VSI is assigned a floating IP, which will be used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
 
-Note: The following steps are specific to CentOS. And the assumation is that the VPN gateway is deployed on the landing zone VPC named `management-vpc`
+Here are some of the assumptions before we begin with the tutorial:
+1. Steps are specific to CentOS.
+1. VPN gateway is deployed on the landing zone VPC named `management-vpc`.
+1. Your deployable architecture includes a VSI in the management-vpc. For this, you can deploy `VSI on VPC landing zone` from the catalog.
 {: remember}
 
 ## Set up Strongswan
@@ -108,12 +111,12 @@ For more information about how to install strongSwan on a different operating sy
              esp=aes256-sha256!
              ike=aes256-sha256-modp2048!
              left=%any
-             leftsubnet=10.160.x.x/26      #<== 1. Subnet CIDR of your on-premises network
-             rightsubnet=10.30.20.0/24     #<== 2. Subnet CIDR of the Landing Zone VPN gateway
-             right=169.61.x.x              #<== 3. Public IP of the VPN gateway
+             leftsubnet=10.160.x.x/26                    #<== 1. Subnet CIDR of your on-premises network
+             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== 2. Subnet CIDR of the Landing Zone VPN gateway, Subnet CIDR of the Management VSI
+             right=169.61.x.x                            #<== 3. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"           #<== 4. Public IP of your strongSwan server
+             leftid="169.45.x.x"                         #<== 4. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
@@ -135,6 +138,11 @@ For more information about how to install strongSwan on a different operating sy
            - In the VPN gateway details page, click on Subnet.
            - This will take you to the subnet associated with your VPN gateway.
            - Here you can find the **Subnet CIDR of the Landing Zone VPN gateway** under IP range.
+        1. Subnet CIDR of the Management VSI:
+           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Subnets** from the **Network** section.
+           - Search for subnets assoicated with the `management-vpc`.
+           - From the list of subnets choose the subnet which has the management vsi deployed.
+           - Copy the values from the IP range column.
         1. Public IP of the VPN gateway:
            - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
            - Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
@@ -169,12 +177,12 @@ For more information about how to install strongSwan on a different operating sy
 
     ```bash
     ❯ strongswan status
-    Security Associations (0 up, 0 connecting):
-        none
+      Security Associations (0 up, 1 connecting):
+            all[1]: CONNECTING, 10.160.x.x[%any]...169.61.x.x[%any]
     ```
     {: pre}
 
-    It's normal for the status to show '0 up, 0 connecting' since we haven't set up the connection on the landing zone side.
+    It's normal for the status to show '0 up, 1 connecting' since we haven't set up the connection on the landing zone side.
 
 ## Edit the ACLs to allow connections from strongSwan
 {: #solution-connect-site-vpn-strongswan-acls}
@@ -189,8 +197,10 @@ For more information about how to install strongSwan on a different operating sy
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |----------|------------|----------|--------|-------------|
-        | 1 | Allow | ALL | 169.45.x.x/32 | Any IP |
-        | 2 | Allow | ALL | 10.160.x.x/26 | Any IP |
+        | 1 | Allow | ALL | strongswan vsi public IP | LZ s2s VPN gateway's subnet |
+        | 2 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
+        | 3 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
+        | 4 (optional) | Allow | ALL | strongswan vsi public IP | management vsi subnet CIDR |
         {: caption="Table 1. Inbound ACL rules" caption-side="bottom"}
 
 1.  Create Outbound Rules for the VPN subnet and public IP to access the on-premises subnet.
@@ -199,13 +209,11 @@ For more information about how to install strongSwan on a different operating sy
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |--------------|-----------|------|------|------|
-        | 1 | Allow | ALL | Any IP | 10.160.x.x/26 |
-        | 2 | Allow | ALL | Any IP | 169.45.x.x/32 |
+        | 1 | Allow | ALL | LZ s2s VPN gateway's subnet | strongswan vsi public IP |
+        | 2 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
+        | 3 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
+        | 4 (optional) | Allow | ALL | management vsi subnet CIDR | strongswan vsi public IP |      
         {: caption="Table 2. Outbound ACL rules" caption-side="bottom"}
-
-1.169.45.x.x/32 is the Public IP of your strongSwan server
-2.10.160.x.x/26 is Subnet CIDR of your on-premises strongSwan server network
-{: note}
 
 ## Create a VPN connection in the {{site.data.keyword.cloud_notm}} VPN
 {: #create-vpn}
@@ -254,34 +262,72 @@ Follow these steps to create a route to control how the destination network traf
 1.  Click on the default routing table associated with the `management-vpc`. Note, that name can be created using a combination of random names.
 1.  In Routes section and click **Create**.
 1.  In the Create route panel, specify the following information:
+    - **Zone**: Select the zone on which VPN gateway is deployed.
     - **Name**: Type a name for the new route.
-    - **Destination CIDR**: Specify the subnet CIDR of your on-premises strongSwan network
+    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan vsi network.
     - **Action**: Select **Deliver** when the route destination is in the VPC or if an on-premises private subnet is connected with a VPN gateway.
     - **Next hop type**: Click **VPN connection** and select the VPN connection that you created in the previous step.
 1.  Click **Save**.
+1. Similarly, create a seperate route for the management vsi zone.
+    - **Zone**: Select the zone on which management vsi is deployed.
+    - **Name**: Type a name for the new route.
+    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan vsi network.
+    - **Action**: Select **Deliver** when the route destination is in the VPC or if an on-premises private subnet is connected with a VPN gateway.
+    - **Next hop type**: Click **VPN connection** and select the VPN connection that you created in the previous step.
+1.  Click **Save**.
+
+## Check Strongswan Status
+{: #strongswan-status}
+{: step}
+
+Once all the above setup is complete, you can check the status of the strongswan process in the strongswan vsi.
+1. Restart the strongSwan service.
+
+    ```sh
+    systemctl restart strongswan
+    ```
+    {: pre}
+
+1. Check the status of connections.
+    ```bash
+    ❯ strongswan status
+      Security Associations (1 up, 0 connecting):
+            all[1]: ESTABLISHED 59 minutes ago, 10.160.x.x[169.45.x.x]...169.61.x.x[169.61.x.x]
+            all{1}:  INSTALLED, TUNNEL, reqid 1, ESP in UDP SPIs: cfbbd5d9_i c864dc75_o
+            all{1}:   10.160.x.x/24 === 10.10.10.0/24 10.20.10.0/24
+    ```
+    {: pre}
 
 ## Test the site-to-site gateway setup
 {: #test-connection}
 {: step}
 
-The following steps assume that your deployable architecture includes a private Red Hat OpenShift cluster that can be accessed only from the private network.
-{: tip}
-
 Follow these steps to verify that you have a working site-to-site gateway.
 
-1.  Install the `kubectl` command-line tool on your computer.
-1.  Download the `kubeconfig` configuration file for the Red Hat OpenShift cluster. For more information, see [Accessing Red Hat OpenShift clusters](https://cloud.ibm.com/docs/openshift?topic=openshift-access_cluster).
-1.  Test the connection with the following commands:
-
+1.  Access the strongswan vsi. On your computer, issue the following command from the terminal or command window:
     ```sh
-    kubectl get pods
+    ssh -i <private-key> root@<Floating IP of strongswan vsi>
     ```
     {: pre}
 
-1.  Verify the cluster information with the following command:
-
-    ```sh
-    kubectl cluster-info
+1.  Access the Management VSI by completing the following steps:
+    1. Go to **Virtual server instances** for VPC. Take note of the private IP(“Reserved IP”) for the VSI labeled <management-server-2> (10.20.10.4 in this example).
+    1. On the strongswan vsi, you can ping the management vsi.
+       ```bash
+       ❯ ping 10.20.10.4
+       PING 10.20.10.4 (10.20.10.4) 56(84) bytes of data.
+       64 bytes from 10.20.10.4: icmp_seq=1 ttl=62 time=99.5 ms
+       64 bytes from 10.20.10.4: icmp_seq=2 ttl=62 time=99.4 ms
+       64 bytes from 10.20.10.4: icmp_seq=3 ttl=62 time=99.4 ms
+       ^C
+       --- 10.20.10.4 ping statistics ---
+       3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+       rtt min/avg/max/mdev = 99.415/99.462/99.502/0.035 ms
+       ```
+       {: pre}
+    1. You could also get ssh access to the <management-server-2>. Copy the private key that corresponds to the public key used to deploy the landing zone to the strongswan vsi and run the following command in the strongswan terminal:
+    ```
+    ssh -i <private-key> root@10.20.10.4
     ```
     {: pre}
 
