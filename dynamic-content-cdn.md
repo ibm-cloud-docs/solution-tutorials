@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-14"
-lasttested: "2022-12-21"
+lastupdated: "2023-09-08"
+lasttested: "2023-09-08"
 content-type: tutorial
 services: CDN, containers, Registry, dns
 account-plan: paid
@@ -57,7 +57,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Before you begin
 {: #dynamic-content-cdn-prereqs}
 
-This tutorial requires:
+You can run the tutorial in the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console. If you want to run it on your machine, it requires the following:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
@@ -66,13 +66,14 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
+
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 <!--#/istutorial#-->
 
 In addition: A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -80,7 +81,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs){: external}.
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
@@ -105,6 +106,8 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: 
 ### Build the application
 {: #dynamic-content-cdn-3}
 
+Open a terminal in the [{{site.data.keyword.cloud-shell_short}}](/shell){: external}, then follow these steps:
+
 1. Clone the application
    ```bash
    git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
@@ -117,7 +120,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: 
    ```
    {: pre}
 
-1. Identify the cluster. `ibmcloud ks cluster ls` will return cluster names.
+1. Being logged in to the CLI environment, identify the cluster.  `ibmcloud ks cluster ls` will return cluster names.
    ```bash
    ibmcloud ks cluster ls
    ```
@@ -142,7 +145,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: 
    ```
    {: pre}
 
-   Set the variable to a name you want to used as a new namespace:
+   Set the variable to a name you want to use as a new namespace or an existing namespace:
    ```bash
    MYNAMESPACE=<my_container_registry_namespace>
    ```
@@ -208,23 +211,23 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist){: 
 
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
-1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
+1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](/catalog/infrastructure/cdn-powered-by-akamai){: external} from the Network section. Click **Create**.
    * Set **Hostname** to a custom domain, for this tutorial it is not required to be a domain you own as we will not be using it, you can set it to `todo.example.com`.
    * Leave the **Custom CNAME** prefix empty, it will default to a generated unique name, this is the entry we will use to test the CDN.
    * Leave **Host header** and **Path** empty.
-   * Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
+   * Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example `cdn-with-cda-todolist.<ingress-subdomain>`.
    * Uncheck HTTP port.
    * Check HTTPS port and select **Wildcard** SSL certificate.
 
-      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, `https://cdnakaivlnqidbg4.cdn.appdomain.cloud`){: external}. 
+      With the [**Wildcard** certificate](/docs/CDN?topic=CDN-about-https#wildcard-certificate-support), you will access your app through the Custom CNAME. The Wildcard certificate is the simplest way to deliver web content to your users securely. The Custom CNAME is added to the wildcard certificate maintained on the CDN Edge server and becomes the only way for users to use HTTPS for your CDN (for example, `https://cdnakaivlnqidbg4.cdn.appdomain.cloud`). 
       {: note}
 
-1. Accept the **Master Service Agreement** and click **Create**.
+1. Accept the **Terms and Conditions** and click **Create**.
 
 After you have successfully created the CDN mapping:
 * **CNAME configuration required** may display in the Status column, you can ignore it and check the status again by selecting **Get status** from the overflow menu. It should change to *Running* after a few minutes.
-* To view your CDN instance, select the CDN instance [in the list](/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-* You application is now accessible through the CNAME only: `https://<CNAME>`. You may need to wait a few minutes for all configuration to complete and for the CNAME to work.
+* To view your CDN instance, select the CDN instance [in the list](/cdn){: external}. The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+* Your application is now accessible through the CNAME only: `https://<CNAME>`. You may need to wait a few minutes for all configuration to complete and for the CNAME to work.
 
 ## Enable Dynamic Content Acceleration (DCA)
 {: #dynamic-content-cdn-6}
@@ -247,9 +250,9 @@ To activate DCA:
 {: #dynamic-content-cdn-5}
 {: step}
 
-You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/){: external} to compare the website response time before and after DCA is turned on.
+You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/){: external} to compare the website response time before and after DCA is turned on. Use the path `/test-dca` along with the original URL and the CDN-based URL from above.
 
-After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](/cdn) page.
+After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](/cdn){: external} page.
 
 ## Conclusion
 {: #dynamic-content-cdn-conclusion}
@@ -263,13 +266,13 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 {: #dynamic-content-cdn-7}
 {: step}
 
-* Delete the application from the [{{site.data.keyword.containershort_notm}}](/kubernetes/clusters).
-* Delete the image from the [{{site.data.keyword.registryshort_notm}}](/registry/images).
-* Delete the [{{site.data.keyword.cdn_full}} service](/classic/network/cdn).
+* Delete the [{{site.data.keyword.cdn_full}} service](/cdn){: external}.
+* Delete the application from the [{{site.data.keyword.containershort_notm}}](/kubernetes/clusters){: external}.
+* Delete the container image from the [{{site.data.keyword.registryshort_notm}}](/registry/images){: external}.
 
 ## Related content
 {: #dynamic-content-cdn-10}
 
-* [Getting Started with CDN](/docs/CDN?topic=CDN-getting-started#getting-started)
+* [Getting started with Content Delivery Network (CDN)](/docs/CDN?topic=CDN-getting-started#getting-started)
 * [{{site.data.keyword.containerfull_notm}}](/docs/containers)
 * [{{site.data.keyword.registryfull_notm}}](/docs/Registry?topic=Registry-getting-started#getting-started)
