@@ -85,7 +85,7 @@ You need a table to hold the sample data. Create it using the console.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar. 
 2. Click on the **+** symbol (**Add a new script**) next to the **Untitled - 1** tab.
-3. Click on **From file** and select the file `cityschema.txt` from the Github repository that was previously cloned to your local directory and open it.
+3. Click on **From file** and select the file `cityschema.txt` from the GitHub repository that was previously cloned to your local directory and open it.
 4. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
@@ -126,7 +126,7 @@ The data has been loaded into the relational database. There were no errors, but
    ```
    {: codeblock}
 
-   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the results section the same number of rows as reported by the load process should be shown.   
+   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the section with results, the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```sql
    select countrycode, count(name) from cities
@@ -202,7 +202,7 @@ In addition to the traditional administration options the [{{site.data.keyword.d
 {: #sql-database-8}
 {: step}
 
-The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name - names are case sensitive - and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
+The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name - names are case sensitive - and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The `cityname` is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
 
 ## Cleanup
 {: #sql-database-9}
