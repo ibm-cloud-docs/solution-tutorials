@@ -76,10 +76,11 @@ You can create a project to add data and open a data asset in the data refiner f
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
    4. Select a **resource group** and click **Create**
-2. Click on the **Launch in {{site.data.keyword.cpd_full_notm}}** button.
-3. Create a **project** by clicking on **New project** under the **Projects** tile and then in the subsequent page click **Create an empty project**.
-4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service.
+2. Click on the **Launch in** twisty and select **IBM watsonx**.
+3. Create a **project** by clicking on the upper left hamburger menu and selecting **Projects > Vew all projects** then **New project**.
+3. In the subsequent page click **Create an empty project**.
+4. Provide **iris_project** as the project name.
+5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service verified to exist a few steps earlier.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -101,7 +102,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: #create-deploy-retrain-machine-learning-model-associate_services}
 {: step}
 
-1. In the top navigation menu, click on `iris-project`, click on **Manage** in the top bar and select the **Services & integrations** section on left.
+1. In the top navigation menu, of the `iris-project` click on **Manage** then select the **Services & integrations** section on left.
 2. Click **Associate Service**.  
 3. If you have an existing **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** service instance, skip to the next step. Otherwise continue with the following steps to create a new instance.
    1. Click **New service** and then click on the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** tile.
@@ -115,9 +116,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: step}
 
 1. In the top navigation menu, click on `iris-project`, click on **Assets** in the top bar.
-1. Click on **New task +** and select **AutoAI**.
+1. Click on **New task +** and search for **auto**.
    1. Click on the **Build machine models automatically** tile.
-   2. Set the name to **iris_model**.
+   2. Set the name to **iris_auto**.
    3. Under **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service instance**, notice the service previously associated.
 2. Click **Create**.
 
@@ -149,8 +150,6 @@ Once the experiment completes running,
    1. Click **Create**.
 6. From the received notification, click **View in project**.
 
-The accuracy of the model will be improved in the later part of the tutorial.
-
 ## Deploy and test your model
 {: #create-deploy-retrain-machine-learning-model-deploy_model}
 {: step}
@@ -165,9 +164,9 @@ In this section, you will deploy the saved model and test the deployed model,
    3. Click **Create**.
 2. Click on **Promote**.
 3. From the received notification, navigate to the **deployment space**.
-4. Under the deployment space, click on the name of the model you just created.
-4. Select the **Assets** tab.
-4. Click the model you created earlier.
+
+In the **Deployments > iris_deployment_space**:
+1. Click on the name of the model you just created.
 5. Click the **New deployment** button.
 6. Select **Online** as the Deployment type, provide **iris_deployment** as the name and then click **Create**.
 7. Under **Deployments** tab, once the status changes to **Deployed**, Click on the **Name** in the table.  The properties of the deployed web service for the model will be displayed.
@@ -299,6 +298,7 @@ Click **Actions** > **Configure monitors**
       ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
       ```
       {: pre}
+
       1. Copy and paste the Credentials resource_instance_id.  It will begin with **crn** and end with two colons **::**.
       1. Copy and paste the Credentials api key without any trailing spaces.
       1. Click **Connect**.
@@ -360,7 +360,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #create-deploy-retrain-machine-learning-model-8}
 {: related}
 
-- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
+- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics){: external}
 - [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
 - [Machine learning & AI](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/wml-ai.html?context=analytics)
 - [{{site.data.keyword.aios_short}} documentation](https://dataplatform.{DomainName}/docs/content/wsj/model/getting-started.html?context=analytics)
