@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-12-12"
+lastupdated: "2023-09-12"
+lasttested: "2023-09-12"
 
 content-type: tutorial
 services: vpc
@@ -138,14 +138,13 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the backend subnet under [**Subnets**](/vpc-ext/network/subnets).
 1. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
-   1. Set the **name** to **vpc-pubpriv-backend-vsi**.
-   2. Select the resource group as earlier.
-   3. Select the same **Location** as before.
-   4. Select **Public** type of virtual server.
-   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
-   6. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
-   7. Set **SSH keys** to the the SSH key you created earlier.
-   8. Set **User data** to
+   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   2. Set the **name** to **vpc-pubpriv-backend-vsi**.
+   3. Select the resource group as earlier.
+   4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
+   5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+   6. Set **SSH keys** to the SSH key you created earlier.
+   7. Under **Advanced options** set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
@@ -156,12 +155,12 @@ To create a virtual server instance in the newly created subnet:
       {: pre}
 
       This will install a simple web server into the instance.
-1. Under **Networking**, select the VPC your created.
-1. Under **Network interfaces**, click on the **Edit** icon
+2. Under **Networking**, select the VPC your created.
+3. Under **Network interfaces**, click on the **Edit** icon
    1. Select **vpc-pubpriv-backend-subnet** as the subnet.
    2. Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
    3. Click **Save**.
-1. Click **Create virtual server instance**.
+4. Click **Create virtual server instance**.
 
 ## Create a frontend security group and VSI
 {: #vpc-public-app-private-backend-frontend-subnet-vsi}
@@ -186,14 +185,13 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the frontend subnet under [**Subnets**](/vpc-ext/network/subnets).
 2. Click **Attached resources**, under **Attached instances** click **Create**.
 3. To configure the instance:
-   1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
-   2. Select the resource group as earlier.
-   3. Select the same **Location** as before.
-   4. Select **Public** type of virtual server.
-   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
-   6. Select **Compute** with 2 vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
-   7. Set **SSH keys** to the the SSH key you created earlier.
-   8. Set **User data** to
+   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   2. Set the **name** to **vpc-pubpriv-frontend-vsi**.
+   3. Select the resource group as earlier.
+   4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
+   5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+   6. Set **SSH keys** to the the SSH key you created earlier.
+   7. Under **Advanced options** set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
