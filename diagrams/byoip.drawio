@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-09-07T17:42:22.834Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="BdWZU5c_xN981dHBU1eZ" version="21.6.8" type="device">
+<mxfile host="Electron" modified="2023-09-12T15:13:05.962Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="079V1c4KGQ0Fwd1_aTJ7" version="21.6.8" type="device">
   <diagram name="Page-1" id="CTSBTtlPjF7ZJka6tU7G">
-    <mxGraphModel dx="1001" dy="566" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -8,7 +8,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="190" y="130" width="20" height="20" as="geometry" />
+          <mxGeometry x="185" y="130" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="4ODZif7YlOPQW65o_ZpC-3" target="4ODZif7YlOPQW65o_ZpC-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -27,10 +27,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-3" value="Is NAT problematic for your application?" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="140" y="180" width="120" height="60" as="geometry" />
+          <mxGeometry x="140" y="180" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-5" value="NAT" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="10" y="490" width="120" height="60" as="geometry" />
+          <mxGeometry x="29" y="490" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="4ODZif7YlOPQW65o_ZpC-7" target="4ODZif7YlOPQW65o_ZpC-11" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -49,10 +49,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-7" value="Is 10.0.0.0/8 used on-premises?" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="260" width="120" height="60" as="geometry" />
+          <mxGeometry x="271" y="260" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-11" value="GRE Tunneling &lt;br&gt;(No address overlapping)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="160" y="490" width="120" height="60" as="geometry" />
+          <mxGeometry x="160" y="490" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="4ODZif7YlOPQW65o_ZpC-13" target="4ODZif7YlOPQW65o_ZpC-19" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -71,10 +71,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-13" value="Are there overlapping-safe subnets in the IBM Cloud network available?" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="570" y="340" width="170" height="60" as="geometry" />
+          <mxGeometry x="543" y="340" width="170" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-19" value="GRE Tunneling&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(Partial address overlapping)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="760" y="490" width="120" height="60" as="geometry" />
+          <mxGeometry x="714" y="490" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="4ODZif7YlOPQW65o_ZpC-21" target="4ODZif7YlOPQW65o_ZpC-23" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -93,13 +93,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-21" value="Is IP alias problematic?" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="440" y="420" width="120" height="60" as="geometry" />
+          <mxGeometry x="411" y="420" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-23" value="GRE Tunneling&amp;nbsp;&lt;br&gt;+ IP Alias" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="490" width="120" height="60" as="geometry" />
+          <mxGeometry x="300" y="490" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4ODZif7YlOPQW65o_ZpC-25" value="Virtual Overlay Network" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="580" y="490" width="120" height="60" as="geometry" />
+          <mxGeometry x="522" y="490" width="110" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
