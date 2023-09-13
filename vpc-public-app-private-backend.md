@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-12"
+lastupdated: "2023-09-13"
 lasttested: "2023-09-12"
 
 content-type: tutorial
@@ -321,3 +321,10 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {: tip}
+
+## Related content
+{: #vpc-public-app-private-backend-related}
+
+- [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
+- [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+- [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
