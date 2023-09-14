@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-13"
-lasttested: "2023-09-13"
+lastupdated: "2023-09-14"
+lasttested: "2023-09-14"
 
 content-type: tutorial
 services: containers, Registry, secrets-manager
@@ -65,16 +65,16 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-In addition, make sure you:
-- To have a {{site.data.keyword.secrets-manager_short}} instance. With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, you will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret. You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
-- [Set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
+In addition:
+- You will need a {{site.data.keyword.secrets-manager_short}} instance. With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, you will use a Kubernetes Operator to retrieve a TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret. You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
+- Optionally [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup). It is only needed if you will build your own custom container image.
 - [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
 
 ## Enable service-to-service communication with {{site.data.keyword.secrets-manager_short}}
 {: #secrets-mgr_setup_s2s} 
 {: step}
 
-Integrating {{site.data.keyword.secrets-manager_short}} with your {{site.data.keyword.containerlong_notm}} cluster requires service-to-service communication authorization. Follow the steps to set up the authorization. For additional info, see [Integrations for {{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-integrations#create-authorization).
+Integrating {{site.data.keyword.secrets-manager_short}} with your {{site.data.keyword.containerlong_notm}} cluster requires service-to-service communication authorization. Follow these steps to set up the authorization. For more information, see [Integrations for {{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-integrations#create-authorization).
 
 1. In the {{site.data.keyword.cloud_notm}} console, click **Manage > Access (IAM)**.
 2. Click **Authorizations**.
@@ -90,14 +90,12 @@ Integrating {{site.data.keyword.secrets-manager_short}} with your {{site.data.ke
 {: #scalable-webapp-kubernetes-create_kube_cluster}
 {: step}
 
-{{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
-
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
+The {{site.data.keyword.containerlong_notm}} is a managed offering to create your own Kubernetes cluster of compute hosts to deploy and manage containerized apps on IBM Cloud. A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
 
 2. Create a cluster on your choice of **Infrastructure**. 
-   - Select **VPC** for Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
+   - These steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
       1. Click **Create VPC**.
       2. Under the **Location** section, select a **Geography** and **Region**, for example `Europe` and `London`.
       3. Enter a **Name** of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
@@ -105,34 +103,22 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
       5. Uncheck **Create subnet in every zone**.
       5. Click on **Create**.
       6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
-      7. Set the **Worker nodes per zone** to `1`.
+      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
       8. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
       8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
       9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-      10. Attach a Public Gateway to each of the subnets that you create:
-         1. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
-         2. Click the previously created VPC used for the cluster.
-         3. Scroll down to subnets section and click the subnet created earlier.
-         4. In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
+      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
+      13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
 
-   - Select **Classic** for Kubernetes on Classic infrastructure and reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
-
+   - These steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
       1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `Europe` and `London`.
-      2. Under **Worker zones and VLANs**, uncheck two zones out of the three zones.
-      3. Set the **Worker nodes per zone** to `1`.
+      2. Under **Worker zones and VLANs**, uncheck all zones except for one.
+      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
       4. Under **Master service endpoint**, select **Both private & public endpoints**.
       5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
-      6. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
+      6. Enter a **Cluster name** and select the **Resource group** to create these resources under.
       7. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-
-      - Choose a resource group.
-      - Uncheck all zones except one.
-      - Scale down to 1 **Worker nodes per zone**.
-      - Choose the smallest **Worker Pool flavor**.
-      - Enter a **Cluster name**.
-      - Click **Create**.
-{: #create_cluster}
-
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
