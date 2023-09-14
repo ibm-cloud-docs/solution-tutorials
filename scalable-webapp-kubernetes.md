@@ -95,7 +95,7 @@ The {{site.data.keyword.containerlong_notm}} is a managed offering to create you
 1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
 
 2. Create a cluster on your choice of **Infrastructure**. 
-   - These steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
+   - The following steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
       1. Click **Create VPC**.
       2. Under the **Location** section, select a **Geography** and **Region**, for example `Europe` and `London`.
       3. Enter a **Name** of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
@@ -111,7 +111,7 @@ The {{site.data.keyword.containerlong_notm}} is a managed offering to create you
       11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
       13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
 
-   - These steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
+   - The following steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
       1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `Europe` and `London`.
       2. Under **Worker zones and VLANs**, uncheck all zones except for one.
       3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
