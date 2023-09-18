@@ -7,7 +7,7 @@
 <meta name="dcterms.date" content="{{ lastupdated }}">
 <meta name="source.format" content="markdown">
 
-<meta name="github.edit" content="yes" repo="https://github.ibm.com/Bluemix/docs/blob/draft">
+<meta name="github.edit" content="yes" repo="https://github.ibm.com/Bluemix/docs/blob/review">
 
 <!-- Licensed Materials - Property of IBM -->
 <!-- US Government Users Restricted Rights -->

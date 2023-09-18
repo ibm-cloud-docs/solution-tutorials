@@ -7,4 +7,4 @@ git config --global user.name "autobuild"
 (cd builddocs/output && touch .nojekyll)
 
 # commit to gh-pages
-(cd builddocs/output && git add . && [[ -z $(git status -uno --porcelain) ]] || (git commit -m "changes in draft" && git push))
+(cd builddocs/output && git add . && [[ -z $(git status -uno --porcelain) ]] || (git commit -m "changes in $BRANCH_WHERE_WE_WORK" && git push))

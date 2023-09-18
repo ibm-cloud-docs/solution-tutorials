@@ -277,7 +277,7 @@ This section will only appear in a workshop and not in the tutorial.
 <!--#/isworkshop#-->
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/scripts/sync.sh#L32){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/review/scripts/sync.sh#L35){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
 {: #solution-template-18}
