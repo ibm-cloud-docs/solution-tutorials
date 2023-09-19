@@ -129,7 +129,7 @@ The toolchain will build your application and deploy it to the cluster.
    - Enter **Name**: HELM_UPGRADE_EXTRA_ARGS.
    - Enter **Value**: --set ingress.enabled=true,ingress.hosts={dev.INGRESS_SUBDOMAIN} something like: --set ingress.enabled=true,ingress.hosts={dev.vpc-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud}.
 1. Click Save.
-1. Click the **play** button on DEPLOY stage.
+1. Click the **play** button on DEPLOY stage. The `Check health` job will continue to fail, but it will be possible to access the application.
 1. In a browser tab paste the dev.INGRESS_SUBDOMAIN of the cluster.  The message from the application should be returned: **Welcome to IBM Cloud DevOps with Docker, Kubernetes and Helm Charts. Lets go use the Continuous Delivery Service**.
 1. Switch back to the pipeline tab.
 
@@ -171,17 +171,15 @@ There are [different options](/docs/solution-tutorials?topic=solution-tutorials-
 7. **Save** the stage.
 8. Click the **Play** button on the **Deploy prod** stage just created.
 
-You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
+You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. Later you would include unit tests and integration tests as part of the pipeline.
    ![Toolchain with dev and prod stages](images/solution21/full-deploy.png){: caption="Toolchain with dev and prod stages" caption-side="bottom"}
-
-You now have the full deployment setup. To deploy from dev to production, you manually run the `Run Pipeline`. This is a simplification process stage over a more advanced scenario where you would include unit tests, integration tests and automated deployment as part of the pipeline. 
 
 ## Setup Slack notifications
 {: #continuous-deployment-to-kubernetes-setup_slack}
 {: step}
 
 1. For **Slack webhook**, follow the steps in this [link](https://api.slack.com/messaging/webhooks){: external}. You need to login with your Slack credentials and provide an existing channel name or create a new one. Copy the **Webhook URL** for later use.
-2. Go back to view the list of [toolchains](/devops/toolchains) and select your toolchain, then click on **Add**.
+2. Go back to the `Overview` panel of your toolchain and click on **Add**.
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
@@ -189,7 +187,7 @@ You now have the full deployment setup. To deploy from dev to production, you ma
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. for example, kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
     ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png){: caption="Toolchain with new Slack integration" caption-side="bottom"}
-8. From now on, whenever your toolchain executes, you should see Slack notifications in the channel you configured.
+8. From now on, whenever your toolchain delivery pipeline executes, you should see Slack notifications in the channel you configured.
     ![Slack app with notification](images/solution21/slack_channel.png){: caption="Slack app with notification" caption-side="bottom"}
 
 ## Remove resources
