@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-07-25"
-lasttested: "2023-02-21"
+lastupdated: "2023-09-17"
+lasttested: "2023-09-17"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
