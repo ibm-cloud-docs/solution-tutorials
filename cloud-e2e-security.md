@@ -98,7 +98,7 @@ In the next section, you are going to create the services used by the applicatio
 ### Decide where to deploy the application
 {: #cloud-e2e-security-4}
 
-The **location** and **resource group** of the resources should match the kubernetes cluster.
+The **location** and **resource group** of all resources that you create should match with the **location** and **resource group** of the Kubernetes cluster.
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -116,12 +116,12 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 ### Create a cluster for the application
 {: #cloud-e2e-security-6}
 
-{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
+The {{site.data.keyword.containerfull_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
 
 Skip this section if you have an existing `Standard` cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.19.**
 {: tip}
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. A **minimum Kubernetes version of 1.19 is required**. Make sure to select an appropriate version when creating the cluster.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
 
@@ -135,7 +135,6 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
       5. Click on **Create**.
       6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
       7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
-      8. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
       8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
       9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
       10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
@@ -147,9 +146,8 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
       2. Under **Worker zones and VLANs**, uncheck all zones except for one.
       3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
       4. Under **Master service endpoint**, select **Both private & public endpoints**.
-      5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
-      6. Enter a **Cluster name** and select the **Resource group** to create these resources under.
-      7. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
+      5. Enter a **Cluster name** and select the **Resource group** to create these resources under.
+      6. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 <!--#/istutorial#-->
@@ -191,7 +189,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    3. Under **Advanced options**, check **Include HMAC Credential**. This is required to generate pre-signed URLs.
    4. Click **Add**.
    5. Make note of the credentials. You will need them in a later step.
-3. Click **Endpoints** from the menu:
+3. Click **Endpoints** from the navigation sidebar:
    1. Set **Resiliency** to **Regional** and set the **Location** to the target location:
    2. For Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
    3. For VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
@@ -242,7 +240,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    4. Keep the default values for the the remaining fields.
    5. Click **Add**.
 3. Expand the newly created credentials and make note of the values. You will need them in a later step.
-4. Under **Manage**, launch the Cloudant dashboard.
+4. Under **Manage**, click on **Launch Dashboard**.
 5. Click **Create Database** to create a **Non-partitioned** database named `secure-file-storage-metadata`.
 
 ### Authenticate users
@@ -283,7 +281,7 @@ You should customize the identity providers used as well as the login and user m
 {: #cloud-e2e-security-deploy}
 {: step}
 
-All services have been configured. In this section you will deploy the tutorial application to the cluster.
+All services have been configured. In this section you will deploy the tutorial application to the cluster. All of this can be accomplished from a shell environment (terminal).
 
 ### Get the code
 {: #cloud-e2e-security-13}
@@ -316,36 +314,55 @@ All services have been configured. In this section you will deploy the tutorial 
       When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
       {: tip}
 
-   3. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
+   3. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your {{site.data.keyword.cloud_notm}} region and resource group.
+
+      ```sh
+      ibmcloud target -r <region> -g <resource_group>
+      ```
+      {: codeblock}
+
+      You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
+
+   4. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
       1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
          ```sh
          export MYCLUSTER=<YOUR_CLUSTER_NAME>
          ```
          {: pre}
 
-      2. Set the ingress subdomain and ingress secret using `ibmcloud ks` commands:
+      2. Set the ingress subdomain using `ibmcloud ks` commands:
          ```sh
          export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
+         ```
+         {: pre}
+
+      3. Set the ingress secret using `ibmcloud ks` commands:
+         ```sh
          export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
          ```
          {: pre}
 
-      3. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
+      4. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
          ```sh
          export IMAGE_REPOSITORY=icr.io/solution-tutorials/tutorial-cloud-e2e-security
          ```
          {: pre}
 
-      4. Set additional environment variables by replacing the default values:
+      5. Set additional environment variables by replacing the default values:
          ```sh
          export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
+         ```
+         {: pre}
+
+      6. Set the namespace to use:
+         ```sh
          export TARGET_NAMESPACE=default
          ```
          {: pre}
 
-      5. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
+      7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
-   4. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
+   5. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
       ```sh
       ./generate_yaml.sh
       ```
