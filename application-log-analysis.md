@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-15"
-lasttested: "2023-09-15"
+lastupdated: "2023-09-17"
+lasttested: "2023-09-17"
 
 content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
