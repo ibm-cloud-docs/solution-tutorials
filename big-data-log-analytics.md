@@ -113,9 +113,9 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
 ### Encrypt your data and secure your keys
 {: #big-data-log-analytics-new-kp}
 
-{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.cloud_notm}} services. 
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.cloud_notm}} services. Instead of using system-managed encryption keys, you can then use your own keys.
 
-In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will be used to encrypt the storage bucket, stored {{site.data.keyword.sqlquery_short}} jobs and securely store the service ID for stream landing.
+In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service and your keys will be used to encrypt the storage bucket, stored {{site.data.keyword.sqlquery_short}} jobs and securely store the service ID for stream landing.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms).
    1. Select a **location**.
@@ -136,7 +136,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service will b
    3. Select the same **Resource group** as the above service and click **Create**.
 2. Under **Service credentials**, click on **New credential**
    1. Provide a name for the credential - `cos-for-log-analysis` and select **Writer** as the role
-   2. Expand the **Advanced options** then set Include HMAC Credential to **On** and click **Add**.
+   2. Expand the **Advanced options** then set **Include HMAC Credential** to **On** and click **Add**.
    3. Make note of the **access_key_id** and **secret_access_key** values or remember where they can be located.
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
