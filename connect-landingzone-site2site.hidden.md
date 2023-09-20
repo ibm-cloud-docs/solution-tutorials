@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-08-28"
+lastupdated: "2023-09-20"
 lasttested: "2023-08-28"
 
 content-type: tutorial
@@ -19,7 +19,7 @@ use-case: Cybersecurity, VirtualPrivateCloud, VirtualMachines
 # Connect a VPC landing zone to a network by using a site-to-site VPN
 {: #connect-landingzone-site-vpn}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, openshift, iaas-vpn"}
+{: toc-services="vpc, virtual-servers"}
 {: toc-completion-time="1h"}
 
 In this tutorial, you use {{site.data.keyword.cloud_notm}} {{site.data.keyword.vpn_vpc_short}} to connect your VPC landing zone deployable architectures securely to an on-premises network through a site-to-site VPN tunnel. You configure a strongSwan VPN gateway to connect to {{site.data.keyword.vpn_vpc_short}}.
@@ -30,36 +30,36 @@ strongSwan is an open source IPsec-based VPN solution. For more information abou
 ## Objectives
 {: #solution-connect-site-vpn-objectives}
 
-You deployed one of the {{site.data.keyword.cloud_notm}} landing zone deployable architectures, like [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, you can see that the virtual servers are created and healthy.
+You deployed one of the {{site.data.keyword.cloud_notm}} landing zone deployable architectures, like [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}. The virtual servers are created and working correctly.
 
-By default, network access to the VPC landing zone topology is locked down for security compliance reasons. Hence, you won't be able to access any of the management or workload VSIs. So, how to we go about deploying our application in the workload VSIs located in the workload VPC?
+By default, network access to the VPC landing zone topology is locked down for security compliance reasons, so you can't access the management or workload VSIs. How can you deploy your application in the workload VSIs that are located in the workload VPC?
 
-To resolve this, you give operator access through the Management VPC. You have several options to give operator access, with varying level of security, compliance, and ease of enablement.
+The answer is by assigning operator access through the Management VPC. You have several options to give operator access, with varying levels of security, compliance, and ease of enablement.
 
-- [Client to Site with IBM Cloud VPN Server and VPN Client](/docs/vpc?topic=vpc-vpn-client-to-site-overview) - Configure a VPN client application on your device to create a secure connection to your VPC network that uses IBM Cloud VPN Server. The IBM Cloud VPN Server service has high availability mode for production use and is managed by IBM.
-- [Site to Site VPC VPN Gateway](/docs/vpc?topic=vpc-using-vpn&interface=cli) - Configure your on-premises VPN to connect to an IBM Cloud VPN Gateway by using a statically route-based VPN or a policy-based VPN to set up an IPsec site-to-site tunnel between your VPC and your on-premises private network or another VPC.
-- [Direct Link](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - A direct network connection can be established between your on-premises network and IBM Cloud Direct Link.
-- [Access from another VPC by using Transit Gateway](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another IBM Cloud VPC to your VPC can be achieved by using a Transit Gateway.
+- [Client to Site with {{site.data.keyword.cloud_notm}} VPN Server and VPN Client](/docs/vpc?topic=vpc-vpn-client-to-site-overview) - Configure a VPN client application on your device to create a secure connection to your VPC network that uses {{site.data.keyword.cloud_notm}} VPN server. The VPN server service has a high availability mode for production use and is managed by IBM.
+- [Site to Site VPC VPN Gateway](/docs/vpc?topic=vpc-using-vpn&interface=cli) - Configure your on-premises VPN to connect to an {{site.data.keyword.cloud_notm}} VPN Gateway by using a statically route-based VPN or a policy-based VPN to set up an IPsec site-to-site tunnel between your VPC and your on-premises private network or another VPC.
+- [{{site.data.keyword.dl_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - You can establish a direct network connection between your on-premises network and {{site.data.keyword.dl_full_notm}}.
+- [Access from another VPC by using Transit Gateway](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.cloud_notm}} Transit Gateway.
 
-In this tutorial, we can learn on how to setup a site-to-site VPN connection to your on-premises network.
+In this tutorial, we can learn on how to set up a site-to-site VPN connection to your on-premises network.
 
 ## Before you begin
 {: #solution-connect-site-vpn-prereqs}
 
 - Deploy an instance of a VPC landing zone deployable architecture. For more information, see [Deploying a landing zone deployable architecture](/docs/secure-infrastructure-vpc?topic=secure-infrastructure-vpc-deploy).
-- Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Ensure that the VSI is assigned a floating IP, which will be used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
+- Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Make sure that the VSI is assigned a floating IP, which is used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
 
-Here are some of the assumptions before we begin with the tutorial:
-1. Steps are specific to CentOS.
-1. VPN gateway is deployed on the landing zone VPC named `management-vpc`.
-1. Your deployable architecture includes a VSI in the management-vpc. For this, you can deploy `VSI on VPC landing zone` from the catalog.
-{: remember}
+The tutorial steps have the following assumptions:
+
+- The operating system is CentOS.
+- The VPN gateway is deployed on a landing zone VPC that is named `management-vpc`.
+- Your deployable architecture includes a VSI in `management-vpc` that is supported by the VSI on VPC landing zone deployable architecture in the {{site.data.keyword.cloud_notm}} catalog.
 
 ## Set up Strongswan
 {: #strongswan-setup}
 {: step}
 
-For more information about how to install strongSwan on a different operating system, see the [installation documentation](https://docs.strongswan.org/docs/5.9/install/install.html).{: external}
+For more information about how to install strongSwan on an operating system other than CentOS, see the [installation documentation](https://docs.strongswan.org/docs/5.9/install/install.html).{: external}
 {: tip}
 
 1.  Enable IP forwarding:
@@ -110,6 +110,12 @@ For more information about how to install strongSwan on a different operating sy
 1.  Configure security gateways:
     1.  Open the `/etc/strongswan/ipsec.conf` file:
 
+        In the following example, a connection is defined between these subnets:
+
+        - The on-premises subnet `10.160.x.x/26` with the IP address `169.61.x.x` for the strongSwan VPN gateway
+        - The deployable architecture VPN gateway and management VSI subnets `10.10.30.0/24,10.20.10.0/24` with a {{site.data.keyword.vpn_vpc_short}} gateway IP address `169.61.x.x`
+
+
         ```text
          conn all
              type=tunnel
@@ -118,11 +124,11 @@ For more information about how to install strongSwan on a different operating sy
              ike=aes256-sha256-modp2048!
              left=%any
              leftsubnet=10.160.x.x/26                    #<== 1. Subnet CIDR of your on-premises network
-             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== 2. Subnet CIDR of the Landing Zone VPN gateway, Subnet CIDR of the Management VSI
-             right=169.61.x.x                            #<== 3. Public IP of the VPN gateway
+             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== 2, 3. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
+             right=169.61.x.x                            #<== 4. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"                         #<== 4. Public IP of your strongSwan server
+             leftid="169.45.x.x"                         #<== 5. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
@@ -132,34 +138,36 @@ For more information about how to install strongSwan on a different operating sy
         ```
         {: codeblock}
 
-        1. Subnet of your on-premises network:
-           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Virtual server instances** from the **Compute** section.
-           - Select the VSI which has strongSwan gateway installed.
-           - Scroll down in the Instance details page.
-           - Click the highlighted subnet name of the interface which has the floating IP assigned to it in the **Network Interfaces** section.
-           - Here you can find the **Subnet CIDR of your on-premises network** under IP range.
-        1. Subnet CIDR of the Landing Zone VPN gateway:
-           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
-           - Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
-           - In the VPN gateway details page, click on Subnet.
-           - This will take you to the subnet associated with your VPN gateway.
-           - Here you can find the **Subnet CIDR of the Landing Zone VPN gateway** under IP range.
-        1. Subnet CIDR of the Management VSI:
-           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Subnets** from the **Network** section.
-           - Search for subnets assoicated with the `management-vpc`.
-           - From the list of subnets choose the subnet which has the management vsi deployed.
-           - Copy the values from the IP range column.
-        1. Public IP of the VPN gateway:
-           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
-           - Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
-           - In the VPN gateway details page, click on any one of the Public IP to copy it. Make sure to use that same IP on the strongSwan server side.
-        1. Public IP of your strongSwan server:
-           - Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Virtual server instances** from the **Compute** section.
-           - Select the VSI which has strongSwan gateway installed.
-           - Scroll down in the Instance details page.
-           - Click the Floating IP associated with the subnet you chose in the Step 1 the **Network Interfaces** section.
+    1.  Click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Virtual server instances** from the **Compute** section.
+    1.  Specify the subnet of your on-premises network:
+        1.  Select the VSI that has the strongSwan gateway installed.
+        1.  In the **Network Interfaces** section, click the subnet name of the interface that has the floating IP assigned to it.
+        1.  Copy the subnet IP range of your on-premises network to the `leftsubnet` property in the `ipsec.conf` file.
+    1.  Specify the CIDR of the management VSI:
+        1.  Click **Subnets** in the **Network** section to open the Subnets for VPC page.
+        1.  Search for subnets associated with the management VPC (in our example, `management-vpc`).
+        1.  From the list of subnets, click the subnet name with the management VSI deployed.
+        1.  Copy the subnet IP range column to the `rightsubnet` property in the `ipsec.conf` file.
+    1.  Specify the CIDRs of the landing zone VPN gateway:
+        1.  Click **VPNs** in the **Network** section to open the VPNs for VPC page.
+        1.  Make sure that the **Site-to-site gateways** > **VPN gateways** tabs are selected.
+        1.  Select the site-to-site VPN associated with your landing zone deployable architecture (in our example, `management-gateway`).
+        1.  On the VPN gateway details page, click **Subnet** to see details about the subnet associated with your VPN gateway.
+        1.  Copy the subnet IP range column of the deployable architecture VPN gateway.
+
+            Copy the IP range to the beginning of the `rightsubnet` property in the `ipsec.conf` file. Separate this range from the CIDR of the management VSI with a comma, as shown in the example.
+    1.  Specify the public IP address of the VPN gateway:
+        1.  On the VPNs for VPC page, make sure that the **Site-to-site gateways** > **VPN gateways** tabs are selected.
+        1.  Select the site-to-site VPN associated with your landing zone deployable architecture again (in our example, `management-gateway`).
+        1.  In the VPN gateway details page, click any Public IP to copy it and paste it in the `right` property in the `ipsec.conf` file.
+    1.  Verify the public IP of your strongSwan server:
+        - Click **Virtual server instances** in the **Compute** section.
+        - Click the name of the VSI that has the strongSwan gateway installed.
+        - Click the Floating IP that is associated with the subnet you chose in the Step 1 in the **Network Interfaces** section.
+        - Make sure that the IP address is the same as in the previous step for the public IP of the VPN gateway.
+        - Paste the IP address in the `leftid` property to identify the IP address of the strongSwan server.
 1.  Configure a pre-shared key (PSK) for peer-to-peer authentication.
-    1.  Generate a strong PSK for the peers to use for authentication:
+    1.  On the command line, issue the following command to generate a strong PSK for the peers to use:
 
         ```sh
         head -c 24 /dev/urandom | base64
@@ -169,8 +177,8 @@ For more information about how to install strongSwan on a different operating sy
     1.  Add the PSK to the `/etc/strongswan/ipsec.secrets` file.
 
         ```text
-        # <Public IP of your strongSwan server> <Public IP of the Landing Zone VPN gateway> : PSK "***********" 
-        169.45.x.x  169.61.x.x : PSK "***********" 
+        # <Public IP of your strongSwan server> <Public IP of the Landing Zone VPN gateway> : PSK "***********"
+        169.45.x.x  169.61.x.x : PSK "***********"
         ```
         {: codeblock}
 
@@ -181,21 +189,21 @@ For more information about how to install strongSwan on a different operating sy
     ```
     {: pre}
 
-    ```bash
+    ```sh
     ❯ strongswan status
       Security Associations (0 up, 1 connecting):
             all[1]: CONNECTING, 10.160.x.x[%any]...169.61.x.x[%any]
     ```
-    {: pre}
+    {: screen}
 
-    It's normal for the status to show '0 up, 1 connecting' since we haven't set up the connection on the landing zone side.
+    It's normal for the status to show '0 up, 1 connecting' because the connection on the landing zone side is not yet set up.
 
 ## Edit the ACLs to allow connections from strongSwan
 {: #solution-connect-site-vpn-strongswan-acls}
 {: step}
 
-1.  Click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Access control lists** from the **Network** section.
-1.  Select the ACL `management-acl` that is associated with your landing zone deployable architecture `management-vpc` VPC.
+1.  In the {{site.data.keyword.cloud_notm}} console, click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Access control lists** from the **Network** section.
+1.  Select the ACL `management-acl` that is associated with your landing zone deployable architecture VPC (in our example, `management-vpc`).
 
 1.  Create inbound rules for the on-premises subnet and public IP to access the VPN subnet.
     1.  Click **Create** in the inbound rules section.
@@ -203,36 +211,37 @@ For more information about how to install strongSwan on a different operating sy
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |----------|------------|----------|--------|-------------|
-        | 1 | Allow | ALL | strongswan vsi public IP | LZ s2s VPN gateway's subnet |
-        | 2 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
-        | 3 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
-        | 4 | Allow | ALL | strongswan vsi public IP | management vsi subnet CIDR |
+        | 1 | Allow | ALL | strongSwan VSI public IP | LZ s2s VPN gateway's subnet |
+        | 2 | Allow | ALL | strongSwan VSI subnet CIDR | LZ VPC CIDR |
+        | 3 | Allow | ALL | LZ VPC CIDR | strongSwan VSI subnet CIDR |
+        | 4 | Allow | ALL | strongSwan VSI public IP | Management VSI subnet CIDR |
         {: caption="Table 1. Inbound ACL rules" caption-side="bottom"}
 
-1.  Create Outbound Rules for the VPN subnet and public IP to access the on-premises subnet.
+1.  Create outbound rules for the VPN subnet and public IP to access the on-premises subnet.
     1.  Click **Create** in the Outbound rules section.
     1.  Add two outbound rules with the following values:
 
         | Priority | Allow or deny | Protocol | Source | Destination |
         |--------------|-----------|------|------|------|
-        | 1 | Allow | ALL | LZ s2s VPN gateway's subnet | strongswan vsi public IP |
-        | 2 | Allow | ALL | LZ VPC CIDR | strongswan vsi subnet CIDR |
-        | 3 | Allow | ALL | strongswan vsi subnet CIDR | LZ VPC CIDR |
-        | 4 | Allow | ALL | management vsi subnet CIDR | strongswan vsi public IP |      
+        | 1 | Allow | ALL | LZ s2s VPN gateway's subnet | strongSwan VSI public IP |
+        | 2 | Allow | ALL | LZ VPC CIDR | strongSwan VSI subnet CIDR |
+        | 3 | Allow | ALL | strongSwan VSI subnet CIDR | LZ VPC CIDR |
+        | 4 | Allow | ALL | Management VSI subnet CIDR | strongSwan VSI public IP |
         {: caption="Table 2. Outbound ACL rules" caption-side="bottom"}
 
 ## Create a VPN connection in the {{site.data.keyword.cloud_notm}} VPN
 {: #create-vpn}
 {: step}
-1.  Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
-1.  Select the site-to-site VPN associated with your Landing Zone. For example: `management-gateway`
+
+1.  Click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **VPN** from the **Network** section.
+1.  Select the site-to-site VPN that is associated with your landing zone deployable architecture (in our example, `management-gateway`).
 1.  On the gateway details page, click **Create** in the VPN connections section.
 1.  Define a connection between this gateway and a network outside your VPC by specifying the following information:
     - **VPN connection name**: Enter a name for the connection, such as `my-connection`.
     - **Peer gateway address**: Specify the floating IP address of the strongSwan server.
     - **Pre-shared key**: Specify the authentication key of the VPN gateway. Make sure that you use the same pre-shared key that is mentioned in the strongSwan secrets.
 
-    - **Create an IKE policy**
+    1.  Create an IKE policy:
         1.  From the VPN connection for VPC page, select **Create IKE policy**.
         1.  Specify the following information:
             - **Name**: Enter a name for the IKE policy.
@@ -243,8 +252,7 @@ For more information about how to install strongSwan on a different operating sy
             - **Diffie-Hellman group**: DH group to use for IKE Phase 1. Set DH group to `14`
             - **Key lifetime**: Lifetime in number of seconds of Phase 1 tunnel. Set Key lifetime to `36000`
         1.  Click **Create**.
-
-    -  **Create an IPsec policy**
+    1.  Create an IPsec policy:
         1.  From the VPN connection for VPC page, select **Create IPsec policy**.
         1.  Specify the following information:
             - **Name**: Enter a name for the IPsec policy.
@@ -263,21 +271,25 @@ For more information about how to install strongSwan on a different operating sy
 
 Follow these steps to create a route to control how the destination network traffic is directed.
 
-1.  Click to the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Routing tables** from the **Network** section.
-1.  Select the `management-vpc`.
-1.  Click on the default routing table associated with the `management-vpc`. Note, that name can be created using a combination of random names.
-1.  In Routes section and click **Create**.
-1.  In the Create route panel, specify the following information:
-    - **Zone**: Select the zone on which VPN gateway is deployed.
+1.  Click the **Navigation menu** icon ![Navigation menu icon](../icons/icon_hamburger.svg "Menu"), and then click **VPC Infrastructure** > **Routing tables** from the **Network** section.
+1.  Select the management VPC (in our example, `management-vpc`).
+1.  Click the default routing table that is associated with `management-vpc`.
+1.  In the Routes section, click **Create**.
+1.  On the Create route page, specify the following information:
+    - **Zone**: Select the zone on which the VPN gateway is deployed.
     - **Name**: Type a name for the new route.
-    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan vsi network.
+
+        You can create a name by using a combination of random names.
+        {: tip}
+
+    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan VSI network.
     - **Action**: Select **Deliver** when the route destination is in the VPC or if an on-premises private subnet is connected with a VPN gateway.
     - **Next hop type**: Click **VPN connection** and select the VPN connection that you created in the previous step.
 1.  Click **Save**.
-1. Similarly, create a seperate route for the management vsi zone.
-    - **Zone**: Select the zone on which management vsi is deployed.
+1.  Similarly, create a separate route for the management VSI zone.
+    - **Zone**: Select the zone on which management VSI is deployed.
     - **Name**: Type a name for the new route.
-    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan vsi network.
+    - **Destination CIDR**: Specify the subnet CIDR of your strongSwan VSI network.
     - **Action**: Select **Deliver** when the route destination is in the VPC or if an on-premises private subnet is connected with a VPN gateway.
     - **Next hop type**: Click **VPN connection** and select the VPN connection that you created in the previous step.
 1.  Click **Save**.
@@ -286,16 +298,17 @@ Follow these steps to create a route to control how the destination network traf
 {: #strongswan-status}
 {: step}
 
-Once all the above setup is complete, you can check the status of the strongswan process in the strongswan vsi.
-1. Restart the strongSwan service.
+After you complete the previous steps, check the status of the strongSwan process in the strongSwan VSI.
+
+1.  Restart the strongSwan service.
 
     ```sh
     systemctl restart strongswan
     ```
     {: pre}
 
-1. Check the status of connections.
-    ```bash
+1.  Check the status of connections.
+    ```sh
     ❯ strongswan status
       Security Associations (1 up, 0 connecting):
             all[1]: ESTABLISHED 59 minutes ago, 10.160.x.x[169.45.x.x]...169.61.x.x[169.61.x.x]
@@ -310,16 +323,18 @@ Once all the above setup is complete, you can check the status of the strongswan
 
 Follow these steps to verify that you have a working site-to-site gateway.
 
-1.  Access the strongswan vsi. On your computer, issue the following command from the terminal or command window:
+1.  Access the strongSwan VSI. On your computer, issue the following command on the command line:
+
     ```sh
-    ssh -i <private-key> root@<Floating IP of strongswan vsi>
+    ssh -i <private-key> root@<Floating IP of strongswan VSI>
     ```
     {: pre}
 
-1.  Access the Management VSI by completing the following steps:
-    1. Go to **Virtual server instances** for VPC. Take note of the private IP(“Reserved IP”) for the VSI labeled <management-server-2> (10.20.10.4 in this example).
-    1. On the strongswan vsi, you can ping the management vsi.
-       ```bash
+1.  Access the management VSI by completing the following steps:
+    1.  Go to **Virtual server instances** for VPC. Copy the private IP (“Reserved IP”) for the VSI that's labeled `<management-server-2>` (10.20.10.4 in this example).
+    1.  On the strongSwan VSI, ping the management VSI.
+
+       ```sh
        ❯ ping 10.20.10.4
        PING 10.20.10.4 (10.20.10.4) 56(84) bytes of data.
        64 bytes from 10.20.10.4: icmp_seq=1 ttl=62 time=99.5 ms
@@ -331,8 +346,10 @@ Follow these steps to verify that you have a working site-to-site gateway.
        rtt min/avg/max/mdev = 99.415/99.462/99.502/0.035 ms
        ```
        {: pre}
-    1. You could also get ssh access to the <management-server-2>. Copy the private key that corresponds to the public key used to deploy the landing zone to the strongswan vsi and run the following command in the strongswan terminal:
-    ```
+
+    1.  You can also SSH to `<management-server-2>`. Copy the private key that corresponds to the public key used to deploy the landing zone to the strongSwan VSI and run the following command on the strongSwan command line:
+
+    ```sh
     ssh -i <private-key> root@10.20.10.4
     ```
     {: pre}
@@ -340,4 +357,4 @@ Follow these steps to verify that you have a working site-to-site gateway.
 ## Summary
 {: #solution-connect-site-vpn-summary}
 
-Once you have the site-to-site VPN setup to the management VPC. You can go ahead access the workload VPC through the manangement VSIs with the necessary ACL rules in place. Hence, with a established connnection to the workload VPC you can go ahead with deploying your application on the workload VSIs.  
+After you set up the site-to-site VPN to the management VPC, you can access the workload VPC through the management VSIs with the necessary ACL rules in place. With an established connection to the workload VPC, you can deploy your application on the workload VSIs.
