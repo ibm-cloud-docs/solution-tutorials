@@ -82,9 +82,9 @@ Platform logs are generally useful for troubleshooting resources and will be req
 You can have multiple {{site.data.keyword.loganalysislong_notm}} instances, however, only one instance in a region can be configured to receive platform logs from [enabled cloud services](/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} region.
 {: important}
 
-1. Navigate to the [Observability](/observe) page and click **Logging**, look for any existing log analysis services with `Platform logs` enabled.  If there is a platform logging instance in the region no further configuration is required.
+1. Navigate to the [Observability](/observe){: external} page and click **Logging**, look for any existing log analysis services with `Platform logs` enabled.  If there is a platform logging instance in the region no further configuration is required.
 2. To create a new {{site.data.keyword.loganalysislong_notm}} click the **Options** then **Create**. Continue to create a logging instance with 7-day plan.  If not visible hit the **refresh** button.
-3. Back in the [Observability](/observe) page and click **Logging** on the left pane.
+3. Back in the [Observability](/observe){: external} page and click **Logging** on the left pane.
    1. Click on **Options > Edit platform** and **select** the region.
    2. Select the log analysis service instance created for platform logs **Select**.
 
@@ -95,12 +95,12 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
 ### Stream messages in real-time
 {: #big-data-log-analytics-new-eventstreams}
 
-1. Create an instance of [{{site.data.keyword.messagehub}}](/catalog/services/event-streams).
+1. Create an instance of [{{site.data.keyword.messagehub}}](/catalog/services/event-streams){: external}.
    1. Select the region.
    2. Select the **Standard** plan.
    3. Set the **Service name** to **log-analysis-es**.
    4. Select a **Resource group** and click **Create**.
-   5. Access the newly created service instance from the [Resource List](/resources) under the **Integration** section.
+   5. Access the newly created service instance from the [Resource List](/resources){: external} under the **Integration** section.
 2. Go to **Topics** and click **Create topic**.
    1. Set the **Topic Name** to `webserver` and click **Next**.
    2. Select **1** partition and click **Next**.
@@ -117,7 +117,7 @@ For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platfo
 
 In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service and your keys will be used to encrypt the storage bucket, stored {{site.data.keyword.sqlquery_short}} jobs and securely store the service ID for stream landing.
 
-1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms).
+1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
    2. Set the name to **log-analysis-kp**.
    3. Select the same **resource group** as earlier.
@@ -130,7 +130,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service and yo
 ### Setup storage to persist the messages from {{site.data.keyword.messagehub}}
 {: #big-data-log-analytics-new-cos}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage).
+1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}.
    1. Select the **Standard** plan.
    2. Set **Service name** to **log-analysis-cos**.
    3. Select the same **Resource group** as the above service and click **Create**.
@@ -141,7 +141,7 @@ In this tutorial, {{site.data.keyword.keymanagementserviceshort}} service and yo
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
-1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
+1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations){: external} in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. Switch to **Resources based on selected attributes**, check **Source service instance** and select the {{site.data.keyword.cos_short}} service instance previously created.
@@ -150,8 +150,8 @@ Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} s
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
 
-Finally create the bucket.
-1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources) Under **Storage**.
+Finally, create the bucket.
+1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources){: external} Under **Storage**.
 2. Under **Buckets**, click **Create bucket**
    * Click **Customize your bucket**
    * Enter a  unique name, like `<your-initial>-log-analysis`.
@@ -167,7 +167,7 @@ The bucket will be referenced below as ABC-log-analysis
 ### Stream land the log data to {{site.data.keyword.cos_short}}
 {: #big-data-log-analytics-new-sqlquery}
 
-1. Create an instance of [{{site.data.keyword.sqlquery_short}}](/catalog/services/sql-query).
+1. Create an instance of [{{site.data.keyword.sqlquery_short}}](/catalog/services/sql-query){: external}.
    1. Select a region.
    2. Select the **Standard** plan.
    3. Set the **Service name** to **log-analysis-sql**.
@@ -178,7 +178,7 @@ The bucket will be referenced below as ABC-log-analysis
    The **Encryption** section is indicating a warning. The {{site.data.keyword.sqlquery_short}} service instance needs **Reader** authorization to access the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance. We will add this authorization next.
    {: note}
 
-1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
+1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations){: external} in the {{site.data.keyword.cloud_notm}} console.
    1. Click the **Create** button.
    1. In the **Source service** menu, select **{{site.data.keyword.sqlquery_short}} (previously SQL Query)**.
    1. Switch to **Resources based on selected attributes**, check **Source service instance** and select the **log-analysis-sql** {{site.data.keyword.sqlquery_short}} service instance just created.
@@ -190,7 +190,7 @@ The bucket will be referenced below as ABC-log-analysis
 ### Inspect log data with {{site.data.keyword.iae_short}}
 {: #big-data-log-analytics-new-iae}
 
-1. Create an instance of [{{site.data.keyword.iae_short}}](/catalog/services/analytics-engine).
+1. Create an instance of [{{site.data.keyword.iae_short}}](/catalog/services/analytics-engine){: external}.
    1. Select a region.
    2. Select the **Standard Serverless for Apache Spark** plan.
    3. Set the **Service name** to **log-analysis-iae**.
@@ -211,7 +211,7 @@ In this section, you will learn how to run a fully-managed stream data ingestion
 
 [Parquet](https://parquet.apache.org/docs/){: external} is an open source file format for nested data structures in a flat columnar format. Compared to the traditional approach where data is stored in rows, Parquet is more efficient in terms of storage and performance.
 
-1. In your browser, navigate to the [resource list](/resources) and under **Integration**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
+1. In your browser, navigate to the [resource list](/resources){: external} and under **Integration**, click on {{site.data.keyword.messagehub}} `log-analysis-es` service.
 2. Select **Topics** from the navigation pane on the left.
 3. Select the context menu (three vertical dots) for your topic `webserver` and click **Create stream landing configuration**.
    ![Event Streams topics](images/solution31/event_streams_topics.png){: caption="Event Streams topics" caption-side="bottom"}
@@ -268,7 +268,7 @@ The streaming job is currently idle and awaiting messages. In this section, you 
 
 You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and also in the {{site.data.keyword.cos_short}} bucket.
 
-1. Navigate to the [resource list](/resources) and under **Databases**, click on `log-analysis-sql` service.
+1. Navigate to the [resource list](/resources){: external} and under **Databases**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
 3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
    ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png){: caption="{{site.data.keyword.sqlquery_short}} console" caption-side="bottom"}
@@ -296,7 +296,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
    The query saves the result to a `CSV` file under a different bucket with name `sql-<SQL_QUERY_GUID>`. Check the `INTO` part of the query.
    {: tip}
 
-### Increasing message load
+### Increase message load
 {: #big-data-log-analytics-streamsload}
 
 For later analysis purposes increase the message volume sent to {{site.data.keyword.messagehub}}. The provided script simulates a flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}}, you will increase the throughput of log messages.
@@ -348,7 +348,7 @@ For later analysis purposes increase the message volume sent to {{site.data.keyw
    If you are using Docker, replace the part after the `|` accordingly.
 
 4. The script configuration above pushes about 10 lines/second. Stop the script after the desired number of messages have been streamed using `control+C`.
-5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and the **Details** tab. There, click on **Query the result** and then click **Run** to see some of the received messages under the `Results` tab of the batch job. 
+5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and the **Details** tab. There, click on **Query the result** and then click **Run** to see some received messages under the `Results` tab of the batch job. 
 6. You can experiment with {{site.data.keyword.messagehub}} by increasing or decreasing the number of lines value.
 
 ## Investigating log data using {{site.data.keyword.sqlquery_short}}
@@ -454,7 +454,7 @@ The data stream landed to cos can be also queried using Apache Spark that is par
 
 Open the analytics engine service:
 
-1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](/resources) under **Analytics**.
+1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](/resources){: external} under **Analytics**.
 2. Click the **Applications** tab.
 
 
@@ -496,7 +496,7 @@ Back in the {{site.data.keyword.iae_short}} instance on the **Applications** cli
 
 Open the platform logs for the region:
 
-1. Navigate to the [Observability](/observe) page and click **Logging**, look for the existing log analysis service in the region with `Platform logs` enabled.
+1. Navigate to the [Observability](/observe){: external} page and click **Logging**, look for the existing log analysis service in the region with `Platform logs` enabled.
 2. Click **Open dashboard**.
 3. In a few minutes you should see the logs associated with the program
 
@@ -525,7 +525,7 @@ if __name__ == '__main__':
 
 Then upload hello.py to your bucket `ABC-log-analysis`
 
-1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources) Under **Storage**.
+1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources){: external} under **Storage**.
 2. Under **Buckets**, select your bucket.
 3. Drag and drop hello.py into the bucket.
 
@@ -592,7 +592,7 @@ if __name__ == '__main__':
 ```
 {: codeblock}
 
-Now submit the spark application that accesses the data in the same bucket. Note that you will need to substitute in your jobid instead of `01234567-0123-0123-0123-012345678901`.  Double check the full path to the jobid in the COS bucket
+Now submit the spark application that accesses the data in the same bucket. Note that you will need to substitute in your jobid instead of `01234567-0123-0123-0123-012345678901`. Recheck the full path to the jobid in the COS bucket
 
 ```sh
 jobid=01234567-0123-0123-0123-012345678901
@@ -638,20 +638,20 @@ Check out the platform log and look for something that looks like this:
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
 * Follow the [Build a data lake using {{site.data.keyword.cos_short}}](/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake) tutorial to add a dashboard to log data.
-* Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](/catalog/services/app-connect).
+* Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](/catalog/services/app-connect){: external}.
 
 ## Remove services
 {: #big-data-log-analytics-removal}
 {: step}
 
-1. From the [Resource List](/resources?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
+1. From the [Resource List](/resources?search=log-analysis){: external}, use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
    * log-analysis-es
    * log-analysis-sql
    * log-analysis-cos
    * log-analysis-iae
 2. Before deleting the `log-analysis-kp` service, delete the root key.
-3. Navigate to [Manage > Access (IAM) > Service IDs](/iam/serviceids) in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
+3. Navigate to [Manage > Access (IAM) > Service IDs](/iam/serviceids){: external} in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
