@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-20"
+lastupdated: "2023-09-21"
 lasttested: "2023-08-28"
 
 content-type: tutorial
@@ -110,11 +110,7 @@ For more information about how to install strongSwan on an operating system othe
 1.  Configure security gateways:
     1.  Open the `/etc/strongswan/ipsec.conf` file:
 
-        In the following example, a connection is defined between these subnets:
-
-        - The on-premises subnet `10.160.x.x/26` with the IP address `169.61.x.x` for the strongSwan VPN gateway
-        - The deployable architecture VPN gateway and management VSI subnets `10.10.30.0/24,10.20.10.0/24` with a {{site.data.keyword.vpn_vpc_short}} gateway IP address `169.61.x.x`
-
+        In the following example, a connection is defined between the on-premises subnet `10.160.x.x/26` with the IP address `169.61.x.x` for the strongSwan VPN gateway and the deployable architecture VPN gateway and management VSI subnets `10.10.30.0/24,10.20.10.0/24` with a {{site.data.keyword.vpn_vpc_short}} gateway IP address `169.61.x.x`.
 
         ```text
          conn all
@@ -123,12 +119,12 @@ For more information about how to install strongSwan on an operating system othe
              esp=aes256-sha256!
              ike=aes256-sha256-modp2048!
              left=%any
-             leftsubnet=10.160.x.x/26                    #<== 1. Subnet CIDR of your on-premises network
-             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== 2, 3. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
-             right=169.61.x.x                            #<== 4. Public IP of the VPN gateway
+             leftsubnet=10.160.x.x/26                    #<== a. Subnet CIDR of your on-premises network
+             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== b, c. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
+             right=169.61.x.x                            #<== d. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"                         #<== 5. Public IP of your strongSwan server
+             leftid="169.45.x.x"                         #<== e. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
@@ -164,7 +160,6 @@ For more information about how to install strongSwan on an operating system othe
         - Click **Virtual server instances** in the **Compute** section.
         - Click the name of the VSI that has the strongSwan gateway installed.
         - Click the Floating IP that is associated with the subnet you chose in the Step 1 in the **Network Interfaces** section.
-        - Make sure that the IP address is the same as in the previous step for the public IP of the VPN gateway.
         - Paste the IP address in the `leftid` property to identify the IP address of the strongSwan server.
 1.  Configure a pre-shared key (PSK) for peer-to-peer authentication.
     1.  On the command line, issue the following command to generate a strong PSK for the peers to use:
