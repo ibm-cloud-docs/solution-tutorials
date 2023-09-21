@@ -765,10 +765,8 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #cloud-e2e-security-12}
 {: related}
 
-* [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture){: external}
 * [{{site.data.keyword.Bluemix_notm}} Platform security](/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security){: external}
-* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * Blog: [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external}
 * Blog: [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/cloud/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security){: external}
 * Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2){: external}
