@@ -542,8 +542,7 @@ Create a DNS entry in the {{site.data.keyword.cis_short_notm}} instance using yo
 4. Scroll down to the DNS Records section and click **Add** to create a new record:
    1. Type: **CNAME**
    2. Name: **secure-file-storage**
-   3. Alias: The **Ingress subdomain** of your cluster
-   Something like YOUR-CLUSTER-NAME-e012345678901234f61a87aaaaaaaa3a-0000.us-south.containers.appdomain.cloud. You can obtain the correct value in the shell by executing the following command:
+   3. Alias: The **Ingress subdomain** of your cluster. You can obtain the correct value in the shell by executing the following command:
       ```sh
       echo $INGRESS_SUBDOMAIN
       ```
@@ -554,7 +553,7 @@ Create a DNS entry in the {{site.data.keyword.cis_short_notm}} instance using yo
 Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
 1. A Let's Encrypt ACME account and associated **.pem** file is required. Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
    1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account) contains instructions and a link to the creation tool.
-   2. Run **acme-account-creation-tool** to create an account specifically for this secure-file-storage example. Below is an example session for a Mac.:
+   2. Run **acme-account-creation-tool** to create an account specifically for this secure-file-storage example. Below is an example:
       ```sh
       $ ./acme-account-creation-tool-darwin-amd64 -e YOUREMAIL -o secure-file-storage.example.com -d letsencrypt-prod
       INFO[2022-12-28T13:30:00-08:00] Registering a new account with the CA
@@ -575,12 +574,12 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
       $ ls
       secure-file-storage.example.com-account-info.json secure-file-storage.example.com-private-key.pem
       ```
-2. Connect the Let's Encrypt ACME account to the {{site.data.keyword.secrets-manager_short}} instance.  See [Adding a certificate authority configuration in the UI](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui#add-certificate-authority-ui) for more details:
+2. Connect the Let's Encrypt ACME account to the {{site.data.keyword.secrets-manager_short}} instance. See [Adding a certificate authority configuration in the UI](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui#add-certificate-authority-ui) for more details:
    1. Open the {{site.data.keyword.secrets-manager_short}} service instance, you can find it in the [Resource List](/resources).
    2. Open **Secrets engines** on the left and click **Public certificates**.
    3. Under **Certificate authorities** click **Add**.
    4. **Name**: LetsEncrypt and **Certificate authority**: Let's Encrypt.
-   5. For the Private key under **Select file** click **Add file** and choose the **secure-file-storage.example.com-private-key.pem** or your existing **.pem** file from the chooser.
+   5. Under **Select file** click **Add file** and choose the **secure-file-storage.example.com-private-key.pem** or your existing **.pem** file from the chooser.
    6. Click **Add**.
 3. Connect the {{site.data.keyword.cis_short_notm}} as a DNS provider:
    1. Under DNS providers click **Add**.
@@ -591,21 +590,20 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
 4. Order a certificate in {{site.data.keyword.secrets-manager_short}}
    1. Open the {{site.data.keyword.secrets-manager_short}} service and select **Secrets** on the left.
    2. Click **Add**.
-   3. If you are using a new {{site.data.keyword.secrets-manager_short}} instance you will need to configure it prior to ordering your certificate. Follow the steps outlined under [Preparing to order public certificates](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui). 
-   4. Click on **Public certificate** and then click on **Next**.
-   5. Complete the form:
-     - **Name** - type a name you can remember.
-     - **Description** - enter a description of your choice.
-     - Click on **Next**.
-     - Under **Certificate authority** select your configured **Let's Encrypt** certificate authority engine.
-     - Under **Key algorithm**, pick your preferred algorithm,
-     - **Bundle certificates** - leave off
-     - **Automatic certificate rotation** - leave off
-     - Under **DNS provider** select your configured DNS provider instance
-     - Click on **Select domains** check the **Select with wildcard** and leave the domain itself unchecked and click on **Done**.
-   6. Click **Next**.
-   7. Review your selections and click on **Add**.
-   8. Click the three vertical dots menu for the active secret and choose **Details** and copy the **ID** from the dialog. Export the value in the shell. It will look something like this:
+   3. Click on **Public certificate** and then click on **Next**.
+   4. Complete the form:
+         - **Name** - type a name you can remember.
+         - **Description** - enter a description of your choice.
+         - Click on **Next**.
+         - Under **Certificate authority** select your configured **Let's Encrypt** certificate authority engine.
+         - Under **Key algorithm**, pick your preferred algorithm,
+         - **Bundle certificates** - leave off
+         - **Automatic certificate rotation** - leave off
+         - Under **DNS provider** select your configured DNS provider instance
+         - Click on **Select domains** check the **Select with wildcard** and leave the domain itself unchecked and click on **Done**.
+   5. Click **Next**.
+   6. Review your selections and click on **Add**.
+   7. Click the three vertical dots menu for the active secret and choose **Details** and copy the **ID** from the dialog. Export the value in the shell. It will look something like this:
       ```sh   
       export PUBLIC_CERT_ID=01234567-abcd-abcd-abcd-01234567abcd
       ```
