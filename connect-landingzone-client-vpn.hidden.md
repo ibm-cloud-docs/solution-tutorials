@@ -198,7 +198,7 @@ Make sure you have your development environment configured:
     Don't check in this file to version control because it contains the API key secret. If you don't want to save the information in the file, you can pass the variable to Terraform through command-line arguments.
     {: important}
 
-1.  Save the `terraform.tfvars` file, and then run the following commands:
+1.  Save the `terraform.tfvars` file, and then run the following commands. Enter **yes** to apply the plan when prompted:
 
     ```bash
     terraform init
@@ -207,7 +207,6 @@ Make sure you have your development environment configured:
     ```
     {: pre}
 
-    Enter **yes** to apply the plan when prompted.
 
     The script takes approximately 15 minutes to complete.
 
@@ -309,7 +308,7 @@ Validate the latest version of the deployable architecture in your private catal
         This list identifies users who are authorized to access the network that uses the new VPN connection. Make sure that they are members of your {{site.data.keyword.cloud_notm}} account.
 1.  Click **Validate**.
 
-        After a few minutes, if the inputs are correct and the validation completes successfully, the client-to-site VPN-related cloud resources are deployed in your account.
+    After a few minutes, if the inputs are correct and the validation completes successfully, the client-to-site VPN-related cloud resources are deployed in your account.
 1.  Share the deployable architecture:
 
     Now that the client-to-site VPN deployable architecture is imported and validated in your private catalog, you can share the deployable architecture with other developers in your organization. By sharing the deployable architecture, you save them the time of finding and testing the automation for the VPN connectivity each time that they stand up a new landing zone.
@@ -354,6 +353,11 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
 1.  Go to http://iam.cloud.ibm.com/identity/passcode in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
+### Using client certificates rather than one-time passcodes
+{: #client-certifications}
+
+If you want to configure client certs on the VPN rather than using a one-time-passcode, follow the instructions in the [Managing VPN server and client certifications](/docs/vpc?topic=vpc-client-to-site-authentication#creating-cert-manager-instance-import) section of the client-to-site documentation.
+
 ## Test access to the Red Hat OpenShift web console
 {: #solution-connect-client-vpn-rh}
 {: step}
@@ -365,18 +369,13 @@ If your landing zone includes a Red Hat OpenShift cluster, you can now test that
 1.  Click **OpenShift Web Console** in the upper right to access your Red Hat OpenShift web console.
 1.  Repeat steps (2) and (3) to test connectivity to the landing zone’s workload cluster.
 
-### Using client certifications rather than one-time passcodes
-{: #client-certifications}
-
-If you want to configure client certs on the VPN rather than using a one-time-passcode, follow the instructions in the [Managing VPN server and client certifications](/docs/vpc?topic=vpc-client-to-site-authentication#creating-cert-manager-instance-import) section of the client-to-site documentation.
-
 ### Test your VPN connection
 {: #vpn-connection}
 
-On the device that has the OpenVPN client, ping the `10.*` network (which is in your management VPC)
+On the device that has the OpenVPN client, ping the `10.*` network (which is in your management VPC).
 
 ```bash
-❯ ping 10.0.0.1
+ping 10.0.0.1
 PING 10.0.0.1 (10.0.0.1): 56 data bytes
 64 bytes from 10.0.0.1: icmp_seq=0 ttl=64 time=19.920 ms
 64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=19.301 ms
@@ -389,7 +388,7 @@ PING 10.0.0.1 (10.0.0.1): 56 data bytes
 round-trip min/avg/max/stddev = 13.938/17.709/20.896/2.904 ms
 ```
 
-If no errors, the ping confirms that your local workstation now has connectivity to the VPC’s private network.
+If you see no timeouts or other errors, your local workstation has connectivity to the VPC’s private network.
 
 ### Solving connectivity issues
 {: #connectivity-issues}
