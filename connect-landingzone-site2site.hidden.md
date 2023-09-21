@@ -110,7 +110,7 @@ For more information about how to install strongSwan on an operating system othe
 1.  Configure security gateways:
     1.  Open the `/etc/strongswan/ipsec.conf` file:
 
-        In the following example, a connection is defined between the on-premises subnet `10.160.x.x/26` with the IP address `169.61.x.x` for the strongSwan VPN gateway and the deployable architecture VPN gateway and management VSI subnets `10.10.30.0/24,10.20.10.0/24` with a {{site.data.keyword.vpn_vpc_short}} gateway IP address `169.61.x.x`.
+        In the following example, a connection is defined between the on-premises subnet `10.160.x.x/26` with the IP address `169.45.x.x` for the strongSwan VPN gateway and the deployable architecture VPN gateway and management VSI subnets `10.10.30.0/24,10.20.10.0/24` with a {{site.data.keyword.vpn_vpc_short}} gateway IP address `169.61.x.x`.
 
         ```text
          conn all
