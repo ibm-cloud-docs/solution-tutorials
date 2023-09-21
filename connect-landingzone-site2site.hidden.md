@@ -164,7 +164,6 @@ For more information about how to install strongSwan on an operating system othe
         - Click **Virtual server instances** in the **Compute** section.
         - Click the name of the VSI that has the strongSwan gateway installed.
         - Click the Floating IP that is associated with the subnet you chose in the Step 1 in the **Network Interfaces** section.
-        - Make sure that the IP address is the same as in the previous step for the public IP of the VPN gateway.
         - Paste the IP address in the `leftid` property to identify the IP address of the strongSwan server.
 1.  Configure a pre-shared key (PSK) for peer-to-peer authentication.
     1.  On the command line, issue the following command to generate a strong PSK for the peers to use:
