@@ -119,12 +119,12 @@ For more information about how to install strongSwan on an operating system othe
              esp=aes256-sha256!
              ike=aes256-sha256-modp2048!
              left=%any
-             leftsubnet=10.160.x.x/26                    #<== a. Subnet CIDR of your on-premises network
-             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== b, c. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
-             right=169.61.x.x                            #<== d. Public IP of the VPN gateway
+             leftsubnet=10.160.x.x/26                    #<== b. Subnet CIDR of your on-premises network
+             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== c, d. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
+             right=169.61.x.x                            #<== e. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"                         #<== e. Public IP of your strongSwan server
+             leftid="169.45.x.x"                         #<== f. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
@@ -353,3 +353,8 @@ Follow these steps to verify that you have a working site-to-site gateway.
 {: #solution-connect-site-vpn-summary}
 
 After you set up the site-to-site VPN to the management VPC, you can access the workload VPC through the management VSIs with the necessary ACL rules in place. With an established connection to the workload VPC, you can deploy your application on the workload VSIs.
+
+## Related content
+{: #connect-site-vpn-related}
+
+Tutorial: [Connect to a VPC landing zone by using a client-to-site VPN](/docs/solution-tutorials?topic=solution-tutorials-connect-landingzone-client-vpn)
