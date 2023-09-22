@@ -62,7 +62,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-In addition if you are not the Admin of your account you will require IAM priviliges to create the resources, and an Admin will need to:
+In addition if you are not the Admin of your account you will require IAM privileges to create the resources, and an Admin will need to:
 - [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_logdna)
 * and [grant permissions to a user to view monitoring metrics](/docs/monitoring?topic=monitoring-iam#iam_users)
 
