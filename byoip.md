@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022
-lastupdated: "2023-05-05"
-lasttested: "2019-04-23"
+lastupdated: "2023-09-07"
+lasttested: "2023-09-07"
 
 content-type: tutorial
 services: virtual-servers
@@ -37,7 +37,7 @@ Bring Your own IP (BYOIP) is a frequent requirement where its desired to connect
 ## Objectives
 {: #byoip-objectives}
 
-* Understand BYOIP implementation patterns
+* Understand BYOIP implementation patterns.
 * Select implementation pattern for {{site.data.keyword.Bluemix_notm}}.
 
 ## {{site.data.keyword.Bluemix_notm}} IP addressing
@@ -57,17 +57,15 @@ The choice of pattern is determined by the applications intended to be hosted on
 {: #byoip-patterns_overview}
 
 1. **NAT**: NAT address translation at the on-premises client router. Perform on-premises NAT to translate the client addressing scheme to the IP addresses assigned by {{site.data.keyword.Bluemix_notm}} to provisioned IaaS services.
-2. **GRE Tunneling**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between {{site.data.keyword.Bluemix_notm}} and the on-premise network, typically via VPN. This is the scenario illustrated in [this tutorial](/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN).
+2. **GRE Tunneling**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between {{site.data.keyword.Bluemix_notm}} and the on-premises network, typically via VPN. This is the scenario illustrated in the [VPN into a secure private network tutorial](/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN).
 
    There are two sub-patterns depending on the potential for address space overlap.
-     * No Address Overlapping: when there’s no address overlap of address ranges and risk of conflict between the networks.
-     * Partial Address Overlapping: when the client and {{site.data.keyword.Bluemix_notm}} IP address spaces use the same address range and there is potential for overlap and conflict. In this case client subnet addresses are chosen which don’t overlap in {{site.data.keyword.Bluemix_notm}} private network.
+     * No Address Overlapping: When there’s no address overlap of address ranges and risk of conflict between the networks.
+     * Partial Address Overlapping: When the client and {{site.data.keyword.Bluemix_notm}} IP address spaces use the same address range and there is potential for overlap and conflict. In this case client subnet addresses are chosen which don’t overlap in {{site.data.keyword.Bluemix_notm}} private network.
 
-3. GRE Tunneling + IP alias
-   The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premises network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
+3. **GRE Tunneling + IP alias**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premises network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}}. This is a special case of the scenario illustrated in the [VPN into a secure private network tutorial](/docs/solution-tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
 
-4. Virtual Overlay Network
-   [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](/docs/vpc?topic=vpc-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
+4. **Virtual Overlay Network**: [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](/docs/vpc?topic=vpc-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in the [Isolating workloads with a secure private network tutorial](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
 
 Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](/docs/vmware?topic=vmware-vmware-getting-started).
 
@@ -76,7 +74,7 @@ Alternatively consider a solution such as VMware NSX that implements a virtual o
 
 The decision tree here can be used to determine the appropriate implement pattern.
 
-![Pattern decision tree](images/solution37-byoip/byoipdecision.png){: caption="Pattern decision tree" caption-side="bottom"}
+![Pattern decision tree](images/solution37-byoip/byoipdecision.svg){: caption="Figure 1. Pattern decision tree" caption-side="bottom"}{: external download="byoipdecision.svg"}
 {: style="text-align: center;"}
 
 The following notes provide further guidance:
@@ -87,7 +85,7 @@ The following notes provide further guidance:
 There are following two distinctive cases where NAT could be problematic. In these cases, NAT should not be used.
 
 - Some applications such as Microsoft AD domain communication, and P2P applications could have technical problems with NAT.
-- Where unknown servers need to communicate with the {{site.data.keyword.Bluemix_notm}} or hundreds of bidirectional connections between {{site.data.keyword.Bluemix_notm}} and on-premise servers are required. In this case all the mapping cannot be configured on the client router/NAT table because of an inability to identify the mapping beforehand.
+- Where unknown servers need to communicate with the {{site.data.keyword.Bluemix_notm}} or hundreds of bidirectional connections between {{site.data.keyword.Bluemix_notm}} and on-premises servers are required. In this case all the mapping cannot be configured on the client router/NAT table because of an inability to identify the mapping beforehand.
 
 
 ### No address overlapping

@@ -94,6 +94,9 @@ The module creates and configures the following infrastructure:
     - Attaches the `client-to-site-sg` to the client-to-site VPN gateway
     - Configures routes to allow access to the landing zone VPCs (management and workload)
 
+### Architecture
+{: #solution-connect-client-vpn-architecture}
+
 ![Architecture](images/connect-landingzone-client-vpn-hidden/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 
 ## Before you begin
@@ -394,8 +397,6 @@ If you see no timeouts or other errors, your local workstation has connectivity 
 {: #connectivity-issues}
 
 In the following error, OpenVPN has an active connection, but can't reach a server on your private VPN subnet. Check the local network that your device connect through. Some newer routers allocate IP addresses in `10.*` range rather than `192.168.*`.
-
-If you get an error when you test your VPN connectivity, such as in the following example,
 
 ```text
 error: dial tcp: lookup YOUR_SERVER_URL on 10.0.0.1:53: read udp 10.0.0.2:0->10.0.0.1:53: i/o timeout - verify you have provided the correct host and port and that the server is currently running.

@@ -5,20 +5,35 @@ node_js:
 branches:
   only:
   - master
-  - draft
+  - review
+
+# BRANCH_WHERE_WE_WORK
+#   --> travis --> BRANCH_FOR_PAGES
+#   --> PR --> BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH --> travis --> BRANCH_FOR_PUBLISH
+env:
+  global:
+    # the place where we do our daily commits
+    - BRANCH_WHERE_WE_WORK=review
+    # the place where we copy files before they get sent to publication
+    # we remove the labinabox markup, hidden files, scripts...
+    - BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH=master
+    # the place where we push the files for publication
+    - BRANCH_FOR_PUBLISH=publish
+    # the place for the quick builds
+    - BRANCH_FOR_PAGES=gh-pages
 
 script:
   - echo "Current branch is ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
-  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "$BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH" ]; then
     ./scripts/sync.sh;
     fi
-  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "draft" ]; then
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "$BRANCH_WHERE_WE_WORK" ]; then
     ./scripts/check-all.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
     fi
 
 notifications:
   slack:
     rooms:
-      - secure: IJWxonXnrQAwqIYeRkPsXbvYAy6Ui4RXS0Ttdp+2WdK2um1ig1EqfwsKr2PqysY3gQ9A0iohBflK3PaF9DyoLP82L0VwZrKdLjZ3I0CkJnh/HYm+sXi+ZT+JuGKt21uKJdnCE+Rszj1MJxOXsG8YY7hbrkLNymLA9Ni9IBU5LK61zuvE/wMP3xXDuFmF2o8ekF3aQq+364IcP9mW3OJcT/TM7CP0yMlgbTvbVgQNV72FXG50AZ1ul526doXLD/IhnMHNn++B5yluLVZHX/n1Q+s+h72UZu/uwU/tHiCR4C0/4Kj4tuFoVes60ExBIDN0gsIcvd2HfTt7nEpzFbda2TMG3zasw2cRMmfyi/xPpuiJhBYE1C0KzYjdJe/9wkIwlO8SdwzXOCgPZHwsFz0j7qwUCP2n4bFOTychYhMEjkQAZMQx7BkxHX9IIhjOGSsAopdqt+i1uHa+csYZx7IyvI3yMnywMO4ejfnrCEAldOoCYZCHNW0zjBhLmS5PcyrSC9lybZ5gIx4HPFMjAenWyzse7BhY1q4KJHr5K3MObg9Erf75g/UuPY1dhK3PPdVvnJn6oUL812ABg4ymwoBViD0iaiisUgBREFQc7oiRZeHzuQZrivnTLIz1k5M/5Xdoo95ew5SAJJ6AhZFKN5HnoOAjx7RJMi49R3YrFUN7a5Q=
+      - secure: IyX56EdqhbI90ygUaGcqZEIUZ1eJ1z5PmxjVZdZVg4dq1jiglVZXmtzHZtxm3imKcEUevFwb10hN8OY/Vj1DwQwlN2eagGfoiXfkN/zvhqWLggIjJF477GH0gQ0D1b1hVScWI/FudvbA7VHiPnDdZNbFzU5qm7nBDAQMmLcmR6TWzP3Yj0bUhNzEJkn5y26Hbn0D8pvPzH/EfcbZ3zjWGO0cCBegoDlaRSmKPD0P9RRCVKB21wC0x05qsbCrGwnctjzWPWbFn+9EFEwrEAKrMvSdfCs9KcvGzxETbtEHRfCnjoZMTCK2vitce7RooLVg5T6McFUqp6q6xQXGjx0JfUFaRHOnqaGcFfe99sbE4zvVTRyb7ToBfqzFgo95fw9oBOWtjnc2RajUl19eaNKHY5Ki1IsOiKn8YaTQopL4g3r5CQI0ZjsgvfLBtpIdlBY5a24ruzWwEbDrgvdR9ijIY/vqBrvOM13Dur3eguiRcDREs4kmJZPyrSE1hDwnJ+RbPSxOLIitB4ogXMTbdGuDfXNx9apQbtq9nQsmuNNxtpnKV5K/ZnxwL1FGHDnaFnP7l0c/RL5ECoNf3xte8+WtInYIHTaobgvOxcCWDJcTAQ2maWmdxxEmdeFrwHp1VdbhbcgnqxTmqwku4jJwAp0mpITw1II7usRJrhS+vIaTDk4=
     on_success: change
     on_failure: always

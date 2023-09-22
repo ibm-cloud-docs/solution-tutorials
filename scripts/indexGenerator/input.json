@@ -44,6 +44,12 @@
                "url": "connect-landingzone-client-vpn.hidden.html",
                "description": "Connect to a VPC landing zone by using a client to site VPN",
                "imgSrc": ""
+            },
+            {
+               "name": "Connect a VPC landing zone to a network by using a site-to-site VPN",
+               "url": "connect-landingzone-site2site.hidden.html",
+               "description": "Connect a VPC landing zone to a network by using a site-to-site VPN",
+               "imgSrc": ""
             }
          ]
       },
@@ -226,27 +232,6 @@
                "supportsCloudShell": false,
                "repos": [
                   "https://github.com/IBM-Cloud/cdn-with-cda-todolist"
-               ]
-            },
-            {
-               "name": "Plan, create and update deployment environments",
-               "url": "plan-create-update-deployments.html",
-               "description": "Automate the creation and maintenance of multiple deployment environments with IBM Cloud CLI and Terraform.",
-               "imgSrc": "images/solution26-plan-create-update-deployments/architecture.png",
-               "tags": [
-                  "Terraform",
-                  "Kubernetes",
-                  "Identity and Access Management"
-               ],
-               "requirements": [
-                  "virtual_servers",
-                  "cloud_object_storage",
-                  "cloudant",
-                  "terraform"
-               ],
-               "supportsCloudShell": "yes_with_modifications",
-               "repos": [
-                  "https://github.com/IBM-Cloud/multiple-environments-as-code"
                ]
             },
             {
@@ -602,23 +587,6 @@
          "name": "Identity and Access Management",
          "anchor": "iam",
          "solutions": [
-            {
-               "name": "Best practices for organizing users, teams, applications",
-               "url": "users-teams-applications.html",
-               "description": "An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.",
-               "imgSrc": "images/solution20-users-teams-applications/one-environment.svg",
-               "tags": [
-                  "Identity and Access Management",
-                  "Kubernetes",
-                  "Container Service",
-                  "Container Registry",
-                  "DevOps",
-                  "Security"
-               ],
-               "requirements": [],
-               "guide": true,
-               "supportsCloudShell": "not_applicable"
-            },
             {
                "name": "Resource sharing across accounts",
                "url": "resource-sharing.html",

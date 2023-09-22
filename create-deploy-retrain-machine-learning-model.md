@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-14"
-lasttested: "2022-12-02"
+lastupdated: "2023-09-12"
+lasttested: "2022-09-12"
 
 content-type: tutorial
 services: cloud-object-storage, ai-openscale
@@ -67,15 +67,20 @@ You can create a project to add data and open a data asset in the data refiner f
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
 1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](/catalog) and create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create).
+
+   Insure the {{site.data.keyword.cos_short}} **One Rate** plan is not selected.  The **One Rate** plan is not currently supported for model deployment.
+   {: note}
+
 1. From the [catalog](/catalog), create [{{site.data.keyword.DSX_short}}](/catalog/services/data-science-experience?taxonomyNavigation=app-services)
    1. Select a **region**
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
    4. Select a **resource group** and click **Create**
-2. Click on the **Launch in {{site.data.keyword.cpd_full_notm}}** button.
-3. Create a **project** by clicking on **New project** under the **Projects** tile and then in the subsequent page click **Create an empty project**.
-4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service.
+2. Click on the **Launch in** twisty and select **IBM watsonx**.
+3. Create a **project** by clicking on the upper left hamburger menu and selecting **Projects > Vew all projects** then **New project**.
+3. In the subsequent page click **Create an empty project**.
+4. Provide **iris_project** as the project name.
+5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service verified to exist a few steps earlier.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -88,6 +93,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 **Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/raw/master/data/iris_initial.csv){: external} which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
 
+1. Select the **Assets** tab if not already selected.
 1. Under **Data in this project**, click **Drop data files here or browse for files to upload**.
 2. Upload the downloaded `iris_initial.csv`.
 3. Once added, you should see `iris_initial.csv` under the **All assets** section of the project.
@@ -96,7 +102,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: #create-deploy-retrain-machine-learning-model-associate_services}
 {: step}
 
-1. In the top navigation menu, click on `iris-project`, click on **Manage** in the top bar and select the **Services & integrations** section.
+1. In the top navigation menu, of the `iris-project` click on **Manage** then select the **Services & integrations** section on left.
 2. Click **Associate Service**.  
 3. If you have an existing **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** service instance, skip to the next step. Otherwise continue with the following steps to create a new instance.
    1. Click **New service** and then click on the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** tile.
@@ -110,10 +116,10 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: step}
 
 1. In the top navigation menu, click on `iris-project`, click on **Assets** in the top bar.
-1. Click on **New asset +** and select **AutoAI**.
-   1. On the left pane, click **+New**.
-   2. Set the name to **iris_model**.
-   3. Under **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service instance**, select the service previously associated.
+1. Click on **New task +** and search for **auto**.
+   1. Click on the **Build machine models automatically** tile.
+   2. Set the name to **iris_auto**.
+   3. Under **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service instance**, notice the service previously associated.
 2. Click **Create**.
 
 Once the model is created,
@@ -124,30 +130,25 @@ Once the model is created,
 2. Select **Species** as your **What do you want to predict?**.
 3. Click **Experiment settings**.
 1. Select **Data source**.
-1. Under **Training data split**, set **Holdout data split** to **15%** by moving the slider.
+1. Under **Training and holdout method**, set **Holdout data split** to **14%** by moving the slider.
 4. On the left menu, Click on **Prediction**:
    1. Set **Prediction type** to **Multiclass classification**.
    2. Set **Optimized metric** as **Accuracy**.
    3. Click on **Save settings**.
 5. Click on **Run experiment**.
-6. The **AutoAI experiment** may take up to 5 minutes to select the right Algorithm for your model. Click on **Swap view** to see the Relationship map.
+6. The **AutoAI experiment** may take up to 5 minutes to select the right Algorithm for your model.
 
    Each model pipeline is scored for a variety of metrics and then ranked. The default ranking metric for binary classification models is the area under the ROC curve, for multi-class classification models is accuracy, and for for regression models is the root mean-squared error (RMSE). The highest-ranked pipelines are displayed in a leaderboard, so you can view more information about them. The leaderboard also provides the option to save select model pipelines after reviewing them.
    {: tip}
 
 Once the experiment completes running,
-1. Click on **Pipeline comparison** to view how the top pipelines compare.
-2. Sort the leaderboard by a different metric by clicking on the various column headers.
-3. Click a pipeline to view more detail about the metrics and performance.
-
-   Sorting by different metrics may not change the leaderboard rankings as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary.
-   {: tip}
-
-4. Next to the model with _Rank 1_ when sorted by Accuracy, click on **Save as** > **Model**.
-5. Check the details of the model and click **Create**.
+1. Scroll down to the **Pipeline leaderboard**.
+1. Click a pipeline to view more detail about the metrics and performance.  When finished dismiss by clicking the **X**.
+4. Next to the model with _Rank 1_ click on **Save as**
+   1. Select **Model**.
+   1. Keep the default name.
+   1. Click **Create**.
 6. From the received notification, click **View in project**.
-
-The accuracy of the model will be improved in the later part of the tutorial.
 
 ## Deploy and test your model
 {: #create-deploy-retrain-machine-learning-model-deploy_model}
@@ -158,14 +159,17 @@ In this section, you will deploy the saved model and test the deployed model,
 1. Under the created model, click on **Promote to deployment space**.
 1. Under **Target Space**, select **Create a new deployment space**. _You use deployment spaces to deploy models and manage your deployments._
    1. Set the **Name** to **iris_deployment_space**.
-   2. Select the {{site.data.keyword.cos_short}} service you use in previous steps and the `machine-learning-tutorial` service from the respective dropdowns.
+   2. Select the {{site.data.keyword.cos_short}} storage service used in previous steps in the corresponding drop down.
+   3. Select the `machine-learning-tutorial` service in the corresponding drop down.
    3. Click **Create**.
 2. Click on **Promote**.
 3. From the received notification, navigate to the **deployment space**.
-4. Under the deployment space, click on the name of the model you just created.
+
+In the **Deployments > iris_deployment_space**:
+1. Click on the name of the model you just created.
 5. Click the **New deployment** button.
 6. Select **Online** as the Deployment type, provide **iris_deployment** as the name and then click **Create**.
-7. Under **Deployments** tab, once the status changes to **Deployed**, Click on the **Name** of the new web service to check the details.
+7. Under **Deployments** tab, once the status changes to **Deployed**, Click on the **Name** in the table.  The properties of the deployed web service for the model will be displayed.
 
 ### Test the deployed model
 {: #create-deploy-retrain-machine-learning-model-7}
@@ -211,7 +215,8 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
 
 5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
-   export IAM_TOKEN='<IAM_TOKEN>'
+   export IAM_TOKEN=$(ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token)
+   echo $IAM_TOKEN
    ```
    {: pre}
 
@@ -263,41 +268,63 @@ In this section, as part of preparing your model for monitoring you will set up 
    3. In the **Deployment space** dropdown, select the deployment space `iris_deployment_space` you created above.
    4. Leave the Environment type to **Pre-production**.
    5. Click **Save**.
-3. On the left pane:
-   1. Click on **Insights dashboard**(first icon) to add a deployment
-   2. Click on **Add to dashboard** and select `iris_deployment`
-   3. Click on **Configure**.
-4. Click on **Configure monitors** to setup your monitors.
+3. On the far left pane:
+   1. Click the icon for **Insights dashboard**(first icon) to add a deployment
+   2. Click on **Add to dashboard** to start the wizard on the **Select model location** page.
+      1. On the **Deployment spaces** tab click on the `iris_deployment_space` radio button
+      1. Click **Next**
+   3. On the **Select deployed model** page:
+      1. Click **iris_deployment**
+      2. Click **Next**
+   3. On the **Provide model information** page:
+      1. Data type: **Numerical/categorical**
+      2. Algorithm type: **Multi-class classification**
+      3. Click **View summary**
+   4. Click **Finish**
 
-### Provide model details
-{: #create-deploy-retrain-machine-learning-model-13}
+The **iris_deployment** pre production dashboard is now displayed.
 
-Provide information about your model so that {{site.data.keyword.aios_full_notm}} can access the database and understand how the model is set up.
+Click **Actions** > **Configure monitors** 
 
-1. Provide the Model details by clicking the **edit** icon on the **Model input** tile and select
-   1. Data type: **Numerical/categorical**
-   2. Algorithm type: **Multi-class classification**
-   3. Click **Save and continue**
-2. Click the **edit** icon on the **Training data** tile and select
-   1. Storage type: **Database or cloud storage**
-   2. Location: **Cloud Object Storage**
-   3. For Resource instance ID and API key, run the below command in the Cloud Shell. Make sure to change the value after `--instance-name` to match the name of the {{site.data.keyword.cos_short}} instance you have been using for this tutorial. 
+1. Click the **pencil** icon on the **Training data** tile to start the wizard.
+   1. In the **Select configuration** method page
+      1. Click **Use manual setup**
+      1. Click **Next**
+   1. In the **Specify training data** method page
+      1. For Training data option choose **Database or cloud storage**
+      1. For Location choose **Cloud Object Storage**
+      1. For Resource instance ID and API key, run the below command in the Cloud Shell. Make sure to change the value after `--instance-name` to match the name of the {{site.data.keyword.cos_short}} instance you have been using for this tutorial. 
       ```sh
       ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
       ```
       {: pre}
-      
-   4. Copy and paste the credentials without any trailing spaces and click **Connect**
-   5. Select the Bucket that starts with `irisproject-donotdelete-`
-   6. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-3.  Select **species** as your label column and click **Next**.
-4.  Select **all** the four training features and click **Next**.
-5.  Select **Automatic logging** as the **Scoring method** and back on your cloud shell, [repeat the **cURL** code to generate the prediction results for logging](#create-deploy-retrain-machine-learning-model-try_api). Click **Check now** to see **Logging is active Click Next**.
-6. Check whether both **Prediction** and **Probability** are checked and click **Save** to complete the model details.
-7. On the left pane, click on **Quality** under Evaluations and click the **edit** icon on the **Quality threshold** tile
-    1. Threshold value: Accuracy - **0.98** and click **Next**
-    2. Minimum sample size (number of transactions) - **10** and click **Save**
-    3. On the left pane, Click on **Go to model summary**
+
+      1. Copy and paste the Credentials resource_instance_id.  It will begin with **crn** and end with two colons **::**.
+      1. Copy and paste the Credentials api key without any trailing spaces.
+      1. Click **Connect**.
+      1. Select the Bucket that starts with `irisproject-donotdelete-`.
+      6. Select `iris_initial.csv` from the Data set dropdown.
+      1. Click **Next**
+   1. In the **Select the feature columns and label column** method page
+      1. The defaults should be correct.  Species as the Label/Target and the rest as Features.
+      1. Click **Next**
+   1. In the **Select model output** method page
+      1. The defaults should be correct, prediction for Prediction and probability for Probability.
+      1. Click **View summary**
+   1. Click **Finish**
+1. Click the **pencil** icon on the **Model output details** tile to start the wizard.
+   1. In the **Specify model output details** method page
+      1. The defaults should be correct.
+      1. Click **Save**
+1. On the left pane, click on **Quality** under Evaluations and click the **edit** icon on the **Quality thresholds** tile
+   1. In the **Quality thresholds** page set the following values:
+      1. Accuracy **0.98**
+      1. Click **Next**
+   1. In the **Sample size** page
+      1. Set Minimum sample size to **10**
+      1. Click **Save**
+
+On the left pane, Click on **Go to model summary**
 
    The quality monitor (previously known as the accuracy monitor) reveals how well your model predicts outcomes.
    {: tip}
@@ -310,14 +337,12 @@ As the tutorial uses a small dataset, configuring Fairness and Drift won't have 
 In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv){: external}.
 
 1. Click on **Actions** and then **Evaluate now**.
-2. Choose **from CSV file** as your import option and click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
+2. Choose **from CSV file** as your import option and click on **browse**, upload the `iris_retrain.csv` file.
+2. Click  and click on **Upload and evaluate**.
 3. After the evaluation is completed, you should see the dashboard with different metrics.
-   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on **iris_deployment** in the navigation menu.
-   2. Click on the **Number of explanations (2)**, select one of the transactions and click **Explain**.
-   3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
-   To understand the quality metrics, refer to [Quality metric overview](/docs/ai-openscale?topic=ai-openscale-anlz_metrics)
-   {: tip}
+To understand the quality metrics, refer to [Quality metric overview](https://dataplatform.cloud.ibm.com/docs/content/wsj/model/wos-quality-overview.html?context=cpdaas)
+{: tip}
 
 ## Remove resources
 {: #create-deploy-retrain-machine-learning-model-0}
@@ -335,7 +360,7 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #create-deploy-retrain-machine-learning-model-8}
 {: related}
 
-- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics)
+- [{{site.data.keyword.cpd_full_notm}} Overview](https://dataplatform.{DomainName}/docs/content/wsj/getting-started/welcome-main.html?context=analytics){: external}
 - [Automatic model creation](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/autoai-overview.html?context=analytics)
 - [Machine learning & AI](https://dataplatform.{DomainName}/docs/content/wsj/analyze-data/wml-ai.html?context=analytics)
 - [{{site.data.keyword.aios_short}} documentation](https://dataplatform.{DomainName}/docs/content/wsj/model/getting-started.html?context=analytics)
