@@ -245,7 +245,7 @@ Make sure you have your development environment configured:
     /*
     The following list identifies users who are authorized to access
     the network that uses the new VPN connection. Make sure that
-    they are members of your {{site.data.keyword.cloud_notm}} account.
+    they are members of your IBM Cloud account.
     */
     vpn_client_access_group_users  = ["user1@example.com",”user2@example.com”]
     ```
