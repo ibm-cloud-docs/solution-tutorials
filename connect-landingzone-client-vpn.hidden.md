@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-22"
-lasttested: "2023-07-28"
+lastupdated: "2023-09-23"
+lasttested: "2023-08-16"
 
 content-type: tutorial
 services: vpc, openshift, iaas-vpn
@@ -122,19 +122,75 @@ This tutorial requires the following setup:
 
     ![Example of resource list](images/connect-landingzone-client-vpn-hidden/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
 
-## Set up the module or deployable architecture
+## Set up the deployable architecture
 {: #client-vpn-setup}
 {: step}
+
+A deployable architecture is IAC that's designed for easy deployment, scalability, and modularity. In this case, the deployable architecture represents a repeatable way to create client-to-site VPN connections for more than one landing zone in your org. It also simplifies how others in your company can set up more VPN connections for their landing zones.
+
+A deployable architecture is a simple and repeatable way to create VPN connections for more than one landing zone in your org. However, you can set up the infrastructure by running Terraform on your computer. Skip to [Set up by using Terraform](#solution-connect-client-vpn-local-setup).
+{: note}
+
+A private catalog hosts your deployable architectures for users in your organization.
+
+Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up a deployable architecture with the {{site.data.keyword.cloud_notm}} console and add it to a private catalog.
+
+1.  Create a private catalog to hold your organization’s custom deployable architectures.
+
+    1.  Go to **Manage** > **Catalogs** > **Private Catalogs** in the {{site.data.keyword.cloud_notm}} console.
+    1.  Click **Create**.
+
+        If your organization has a private catalog for deployable architectures, select the catalog and click **Add**.
+    1.  Give the catalog a name. For example, "My deployable architectures".
+    1.  Click **Create**.
+
+1.  Select the catalog and click **Add** to add the client-to-site VPN to the new private catalog with the following settings.
+
+    Alternatively, you can use the {{site.data.keyword.cloud_notm}} CLI. See [Onboard a deployable architecture to a private catalog by using the CLI](client-vpn-onboard-cat-cli).
+    {: tip}
+
+    Update the information for `Source URL` and `Software Version` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
+
+    - Product type: Deployable architecture
+    - Delivery method: Terraform
+    - Repository type: Public repository
+    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz
+    - Variation: Standard
+    - Software Version: 1.4.12
+1.  Click **Add product**.
+1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
+
+### Onboard a deployable architecture to a private catalog by using the CLI
+{: #client-vpn-onboard-cat-cli}
+
+If you already added your deployable architecture to your private catalog in the previous section, skip to [Validate the deployable architecture](client-vpn-validate-da).
+{: tip}
+
+Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboard a deployable architecture to a private catalog with the {{site.data.keyword.cloud_notm}} CLI.
+
+1.  Make sure that you have a recent version of the [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-install-ibmcloud-cli) installed.
+1.  Run the following command:
+
+    - Edit the `--catalog` option to match the name of your private catalog.
+    - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
+
+    ```sh
+    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.12 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
+    ```
+    {: pre}
+
+1.  When the command finishes successfully, go to your private catalog in the {{site.data.keyword.cloud_notm}} console and verify that the new version is listed in `Draft` state.
+1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
 
 ### Set up by using Terraform
 {: #solution-connect-client-vpn-local-setup}
 
-If you want a simpler setup, skip to the next section, [Set up by using a deployable architecture](#solution-client-vpn-da-setup).
+This section includes steps to use Terraform on your computer to set up the infrastructure. If you [set up a deployable architecture in the previous section](#client-vpn-setup), skip to the next section, [Validate the deployable architecture](#client-vpn-validate-da).
 {: fast-path}
 
-To manually set up the VPN server cloud resources by using Terraform on your workstation, follow these steps.
+To set up the VPN server cloud resources by using Terraform on your workstation, follow these steps.
 
-##### Before you begin with the Terraform setup
+#### Before you begin with the Terraform setup
 {: #client-vpn-local-prereqs}
 
 Make sure you have your development environment configured:
@@ -231,63 +287,11 @@ Make sure you have your development environment configured:
     If the script runs successfully, the cloud VPN resources now exist and are configured.
 1.  Skip to [Configure the OpenVPN client](#solution-connect-client-vpn-openvpn).
 
-### Set up by using a deployable architecture
-{: #solution-connect-client-vpn-da-setup}
-{: step}
-
-A deployable architecture is IAC that's designed for easy deployment, scalability, and modularity. In this case, the deployable architecture represents a repeatable way to create client-to-site VPN connections for more than one landing zone in your org. It also simplifies how others in your company can set up more VPN connections for their landing zones.
-
-#### Onboard to a private catalog by using the UI
-{: #client-vpn-onboard-cat-ui}
-
-A private catalog hosts your deployable architectures for users in your organization.
-
-Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboard a deployable architecture to
-
-1.  Create a private catalog to hold your organization’s custom deployable architectures.
-
-    1.  Go to **Manage** > **Catalogs** > **Private Catalogs** in the {{site.data.keyword.cloud_notm}} console.
-    1.  Click **Create**.
-
-        If your organization has a private catalog for deployable architectures, select the catalog and click **Add**.
-    1.  Give the catalog a name. For example, "My deployable architectures".
-    1.  Click **Create**.
-
-1.  (Optional) Select the catalog and click **Add** to add the client-to-site VPN to the new private catalog with the following settings.
-
-    Update the information for `Source URL` and `Software Version` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
-
-    - Product type: Deployable architecture
-    - Delivery method: Terraform
-    - Repository type: Public repository
-    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz
-    - Variation: Standard
-    - Software Version: 1.4.12
-1.  Click **Add product**.
-
-#### Onboard a deployable architecture to a private catalog by using the CLI
-{: #client-vpn-onboard-cat-cli}
-
-You can also onboard the deployable architecture into your private catalog by using the {{site.data.keyword.cloud_notm}} CLI instead of the UI.
-
-1.  Make sure that you have a recent version of the [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-install-ibmcloud-cli) installed.
-1.  Run the following command:
-
-    - Edit the `--catalog` option to match the name of your private catalog.
-    - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
-
-    ```sh
-    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.12 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
-    ```
-    {: pre}
-
-1.  When the command finishes successfully, go to your private catalog in the {{site.data.keyword.cloud_notm}} console and verify that the new version is listed in `Draft` state.
-
 ## Validate the deployable architecture
 {: #client-vpn-validate-da}
 {: step}
 
-The deployable architecture is not visible to other users until you validate the deployable architecture and make sure that users can provision your deployable architecture with your default input variables. To validate a deployable architecture in a private catalog, you specify input values that are passed to {{site.data.keyword.bpshort}}, which then runs the Terraform plan and apply steps in {{site.data.keyword.cloud_notm}} to make sure that the deployable architecture runs successfully.
+The deployable architecture isn't visible to others until you validate it and make sure that users can provision it with your default input variables. To validate a deployable architecture in a private catalog, you specify input values that are passed to {{site.data.keyword.bpshort}}, which then runs the Terraform plan and apply steps in {{site.data.keyword.cloud_notm}} to make sure that the deployable architecture runs successfully.
 
 Validate the latest version of the deployable architecture in your private catalog.
 
@@ -297,10 +301,10 @@ Validate the latest version of the deployable architecture in your private catal
 1.  Specify the input values that are specific to your landing zone:
 
     - API key: Select an API key from your {{site.data.keyword.secrets-manager_short}} instance.
-    - vpc_id = "<VPC ID>"
+    - vpc_id = "\<VPC ID>"
 
         Not VPC name. You can find the information in the Optional inputs section of the console.
-    - region = "<Where the existing VPC is located>"
+    - region = "\<Where the existing VPC is located>"
 
         Set this field to the region referred to by the `vpc_id` input variable, where the VPC is located.
     - resource_group = "<landingzone_prefix>-management-rg"
@@ -318,9 +322,9 @@ Validate the latest version of the deployable architecture in your private catal
 
     1.  Add configurations of the client-to-site VPN deployable architecture to the project:
 
-        From your private catalog, you can add configurations to the same project that contains your landing zone VPC deployments. Each configuration has a different set of users who have access by using VPN profiles that are specific to each landing zone VPC configuration.
+        From your private catalog, you can add configurations to the same project that contains your landing zone VPC deployments. Each configuration can support a different set of users with access by using VPN profiles that are specific to each configuration.
 
-    If you have other Terraform automation that you would like to package as a deployable architecture for your teams to reuse, check out [Turn Your Terraform Templates Into Deployable Architectures](https://www.ibm.com/cloud/blog/turn-your-terraform-templates-into-deployable-architectures){: external}.
+    If you have other Terraform automation that you want to package as a deployable architecture for your teams to reuse, check out [Turn your Terraform templates into deployable architectures](https://www.ibm.com/cloud/blog/turn-your-terraform-templates-into-deployable-architectures){: external}.
 
 ## Configure the OpenVPN client
 {: #solution-connect-client-vpn-openvpn}
@@ -357,12 +361,12 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
-{: #client-certifications}
+{: #connect-client-vpn-certs}
 
 If you want to configure client certs on the VPN rather than using a one-time-passcode, follow the instructions in the [Managing VPN server and client certifications](/docs/vpc?topic=vpc-client-to-site-authentication#creating-cert-manager-instance-import) section of the client-to-site documentation.
 
 ## Test access to the Red Hat OpenShift web console
-{: #solution-connect-client-vpn-rh}
+{: #connect-client-vpn-rh}
 {: step}
 
 If your landing zone includes a Red Hat OpenShift cluster, you can now test that you have access to the web console.
@@ -372,8 +376,9 @@ If your landing zone includes a Red Hat OpenShift cluster, you can now test that
 1.  Click **OpenShift Web Console** in the upper right to access your Red Hat OpenShift web console.
 1.  Repeat steps (2) and (3) to test connectivity to the landing zone’s workload cluster.
 
-### Test your VPN connection
-{: #vpn-connection}
+## Test your VPN connection
+{: #connect-client-vpn-connection}
+{: step}
 
 On the device that has the OpenVPN client, ping the `10.*` network (which is in your management VPC).
 
@@ -394,9 +399,9 @@ round-trip min/avg/max/stddev = 13.938/17.709/20.896/2.904 ms
 If you see no timeouts or other errors, your local workstation has connectivity to the VPC’s private network.
 
 ### Solving connectivity issues
-{: #connectivity-issues}
+{: #connect-client-vpn-connectivity}
 
-In the following error, OpenVPN has an active connection, but can't reach a server on your private VPN subnet. Check the local network that your device connect through. Some newer routers allocate IP addresses in `10.*` range rather than `192.168.*`.
+In the following error, OpenVPN has an active connection, but can't reach a server on your private VPN subnet. Check the local network that your device connects through. Some newer routers allocate IP addresses in `10.*` range rather than `192.168.*`.
 
 ```text
 error: dial tcp: lookup YOUR_SERVER_URL on 10.0.0.1:53: read udp 10.0.0.2:0->10.0.0.1:53: i/o timeout - verify you have provided the correct host and port and that the server is currently running.
@@ -404,9 +409,9 @@ error: dial tcp: lookup YOUR_SERVER_URL on 10.0.0.1:53: read udp 10.0.0.2:0->10.
 {: screen}
 
 ## Summary
-{: #solution-connect-client-vpn-summary}
+{: #connect-client-vpn-summary}
 
-Automating the creation of client-to-site VPN connections to your secure landing zones is made straightforward by using the capabilities of deployable architectures on {{site.data.keyword.cloud_notm}}.
+Automating the creation of client-to-site VPN connections to your secure landing zones is straightforward when you use the capabilities of deployable architectures on {{site.data.keyword.cloud_notm}}.
 
 ## Related content
 {: #connect-client-vpn-related}
