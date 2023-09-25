@@ -119,12 +119,12 @@ For more information about how to install strongSwan on an operating system othe
              esp=aes256-sha256!
              ike=aes256-sha256-modp2048!
              left=%any
-             leftsubnet=10.160.x.x/26                    #<== b. Subnet CIDR of your on-premises network
-             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== c, d. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
-             right=169.61.x.x                            #<== e. Public IP of the VPN gateway
+             leftsubnet=10.160.x.x/26                    #<== c. Subnet CIDR of your on-premises network
+             rightsubnet=10.10.30.0/24,10.20.10.0/24     #<== d, e. Subnet CIDR of the deployable architecture VPN gateway. Subnet CIDR of the Management VSI
+             right=169.61.x.x                            #<== f. Public IP of the VPN gateway
              leftauth=psk
              rightauth=psk
-             leftid="169.45.x.x"                         #<== f. Public IP of your strongSwan server
+             leftid="169.45.x.x"                         #<== g. Public IP of your strongSwan server
              keyexchange=ikev2
              lifetime=10800s
              ikelifetime=36000s
