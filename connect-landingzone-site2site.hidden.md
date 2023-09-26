@@ -22,7 +22,7 @@ use-case: Cybersecurity, VirtualPrivateCloud, VirtualMachines
 {: toc-services="vpc, virtual-servers"}
 {: toc-completion-time="1h"}
 
-In this tutorial, you use {{site.data.keyword.cloud_notm}} {{site.data.keyword.vpn_vpc_short}} to connect your VPC landing zone deployable architectures securely to an on-premises network through a site-to-site VPN tunnel. You configure a strongSwan VPN gateway to connect to {{site.data.keyword.vpn_vpc_short}}.
+In this tutorial, you will use an {{site.data.keyword.cloud_notm}} {{site.data.keyword.vpn_vpc_short}} to connect your VPC landing zone deployable architectures securely to an on-premises network through a site-to-site VPN tunnel. You configure a strongSwan VPN gateway to connect to {{site.data.keyword.vpn_vpc_short}}.
 {: shortdesc}
 
 strongSwan is an open source IPsec-based VPN solution. For more information about strongSwan, see [Introduction to strongSwan](https://docs.strongswan.org/docs/5.9/howtos/introduction.html){: external}.
@@ -51,7 +51,7 @@ In this tutorial, we can learn on how to set up a site-to-site VPN connection to
 
 The tutorial steps have the following assumptions:
 
-- The operating system is CentOS.
+- The operating system is CentOS. For other VPN configurations, see [Configuring the on-premises VPN gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway)
 - The VPN gateway is deployed on a landing zone VPC that is named `management-vpc`.
 - Your deployable architecture includes a VSI in `management-vpc` that is supported by the VSI on VPC landing zone deployable architecture in the {{site.data.keyword.cloud_notm}} catalog.
 
