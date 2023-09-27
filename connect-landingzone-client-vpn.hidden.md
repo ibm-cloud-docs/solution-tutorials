@@ -204,7 +204,7 @@ Make sure you have your development environment configured:
 1.  Clone the relevant modules to your computer. Update the `--branch` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```bash
-    git clone -branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
+    git clone --branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
     ```
     {: pre}
 
