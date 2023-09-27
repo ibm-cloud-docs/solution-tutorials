@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-23"
-lasttested: "2023-08-16"
+lastupdated: "2023-09-27"
+lasttested: "2023-09-26"
 
 content-type: tutorial
 services: vpc, openshift, iaas-vpn
@@ -38,7 +38,7 @@ Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC lan
 
 > It is not possible to access the Red Hat OpenShift console because the cluster is accessible only on the management VPC’s private network, which is locked down and not accessible from the internet.
 
-You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} and they don’t include a Red Hat OpenShift cluster.
+You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, or the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture.
 
 For example, you ping the network but it times out:
 
@@ -154,9 +154,9 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
     - Product type: Deployable architecture
     - Delivery method: Terraform
     - Repository type: Public repository
-    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz
+    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz
     - Variation: Standard
-    - Software Version: 1.4.12
+    - Software Version: 1.4.13
 1.  Click **Add product**.
 1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
 
@@ -175,7 +175,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboar
     - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```sh
-    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.12 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
+    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.13 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
     ```
     {: pre}
 
@@ -201,10 +201,10 @@ Make sure you have your development environment configured:
 #### Clone the repo and configure the module
 {: #client-vpn-local-configure}
 
-1.  Clone the relevant modules to your computer.
+1.  Clone the relevant modules to your computer. Update the `--branch` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```bash
-    git clone https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
+    git clone --branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
     ```
     {: pre}
 
