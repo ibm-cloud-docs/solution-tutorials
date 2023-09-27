@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-12-28"
+lastupdated: "2023-09-27"
+lasttested: "2023-09-27"
 
 content-type: tutorial
 services: codeengine, containers, cloud-object-storage, natural-language-understanding
@@ -61,13 +61,13 @@ This tutorial requires:
    * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
 
 You can find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-To avoid the installation of these tools, this tutorial will use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools, this tutorial will use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #text-analysis-cloud-shell}
 {: step}
 
-1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
+1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 
 <!--#/istutorial#-->
 
@@ -91,7 +91,7 @@ In this section, you will create a {{site.data.keyword.codeengineshort}} project
 Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](/docs/codeengine?topic=codeengine-manage-project).
 
 <!--##istutorial#-->
-1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview) page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
 2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
    - Provide a project name.
@@ -263,7 +263,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services
 {: #text-analysis-code-engine-create_services}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage)
+1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos**.
    3. Select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
@@ -295,7 +295,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
       ```
       {: pre}
 
-5. Create an instance of [{{site.data.keyword.nlushort}}](/catalog/services/natural-language-understanding)
+5. Create an instance of [{{site.data.keyword.nlushort}}](/catalog/services/natural-language-understanding){: external}
    1. Select a location and select **Lite** plan.
    2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Read the license agreement and then check **I have read and agree to the following license agreements:**.
@@ -346,13 +346,13 @@ Now that you have configured the service ID, you need to update the {{site.data.
 
 Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables for your application or job.
 
-1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. The **bind** command creates a service credential in the service instance and from that initiaizes the environment variables of the application with the credentials. _Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. The **bind** command creates a service credential in the service instance and from that initializes the environment variables of the application with the credentials. _Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
    ```sh
    ibmcloud code-engine application bind --name backend --service-instance $COS_INSTANCE_NAME --role Writer --prefix COS
    ```
    {: pre}
 
-2. You will also need to provide the application with your Bucket name where you want to store the text files, as well as your COS endpoint. Both of these were defined in an earlier step.  The endppoint for us-south for the **Smart tier** is **s3.direct.us-south.cloud-object-storage.appdomain.cloud**.
+2. You will also need to provide the application with your Bucket name where you want to store the text files, as well as your COS endpoint. Both of these were defined in an earlier step.  The endpoint for us-south for the **Smart tier** is **s3.direct.us-south.cloud-object-storage.appdomain.cloud**.
 
    Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.  Verify that you captured these earlier and create the configmap:
    ```sh
@@ -503,7 +503,7 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
    ```
    {: pre}
    
-2. Navigate to [Resource List](/resources/)
+2. Navigate to [Resource List](/resources/){: external}
 3. Delete the services you created:
    * {{site.data.keyword.cos_full}}
    * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
