@@ -28,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying a text analysis with {{site.data.keyword.nlushort}} application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} entities - applications and jobs - to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} entities. You will also understand the auto-scaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {: shortdesc}
 
-{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. {{site.data.keyword.codeengineshort}} even builds container images for you from your source code. Because these workloads are all hosted within the same Kubernetes infrastructure, all of them can seamlessly work together. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure that is needed to host it.
+[{{site.data.keyword.codeenginefull_notm}}](/docs/codeengine) is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. {{site.data.keyword.codeengineshort}} even builds container images for you from your source code. Because these workloads are all hosted within the same Kubernetes infrastructure, all of them can seamlessly work together. The {{site.data.keyword.codeengineshort}} experience is designed so that you can focus on writing code and not on the infrastructure that is needed to host it.
 
 The platform is designed to address the needs of developers who just want their code to run. {{site.data.keyword.codeengineshort}} abstracts the operational burden of building, deploying, and managing workloads in Kubernetes so that developers can focus on what matters most to them: the source code.
 
@@ -67,7 +67,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 {: #text-analysis-cloud-shell}
 {: step}
 
-1. From the {{site.data.keyword.cloud_notm}} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
+From the [{{site.data.keyword.cloud_notm}}](/){: external} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 
 <!--#/istutorial#-->
 
@@ -88,7 +88,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 
 In this section, you will create a {{site.data.keyword.codeengineshort}} project. A project is a grouping of {{site.data.keyword.codeengineshort}} entities such as applications, jobs, and builds. Projects are used to manage resources and provide access to its entities.
 
-Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. To understand what a project is, check the [documentation](/docs/codeengine?topic=codeengine-manage-project).
+Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. For more details read the [documentation on {{site.data.keyword.codeengineshort}} projects](/docs/codeengine?topic=codeengine-manage-project).
 
 <!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
@@ -140,7 +140,7 @@ Putting entities into a single project enables you to manage access control more
 {: #text-analysis-code-engine-deploy_app}
 {: step}
 
-{{site.data.keyword.codeengineshort}} Applications run your code to serve HTTP requests, automatically scale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
+{{site.data.keyword.codeengineshort}} applications run your code to serve HTTP requests, automatically scale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the public {{site.data.keyword.registryshort_notm}}. You will use these pre-built container images to deploy the respective applications. Creation of your own applications will be covered in a later step.
 
@@ -153,7 +153,7 @@ We've already built images for the two applications and pushed them to the publi
    ```
    {: pre}
 
-   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle all of the complexities of configuring it and managing it for you. As there's no load, you should see the instances with `Terminating` status.
+   After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Copy or make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle the complexities of configuring it and managing it for you.
 
    <!--##istutorial#-->
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis){: external} for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
@@ -161,7 +161,7 @@ We've already built images for the two applications and pushed them to the publi
    
    <!--#/istutorial#-->
 
-2. Copy the URL from the `application create` output and open it in a browser to see an output similar to this:
+2. Open the application URL from the previous step in a browser to see an output similar to this:
    ![Frontend is running](images/solution54-code-engine/frontend-501.png){: caption="Frontend is running" caption-side="bottom"}
 
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
@@ -169,7 +169,7 @@ We've already built images for the two applications and pushed them to the publi
 
 3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
    
-   If you do not see any running instances, make sure to open the url from step 2 to run the application.
+   If you do not see any running instances, make sure to open the application URL from step 2 again.
    {: tip}
 
    ```sh
@@ -188,7 +188,7 @@ When you created the application with the `application create` command, you only
 
 Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, {{site.data.keyword.codeengineshort}} deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
 
-1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients hitting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above.
+1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients requesting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above.
 2. Click on **Generate load** to generate traffic.
 3. Run the below command to see the instance(pod) count incrementing as part of the autoscaling.
    ```sh
@@ -270,7 +270,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
    4. Click on **Create**.
    5. Capture the service name in a shell variable:
       ```sh
-      COS_INSTANCE_NAME=YourServiceName
+      COS_INSTANCE_NAME=<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos
       ```
       {: pre}
 
