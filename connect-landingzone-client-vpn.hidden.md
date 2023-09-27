@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-23"
-lasttested: "2023-08-16"
+lastupdated: "2023-09-27"
+lasttested: "2023-09-26"
 
 content-type: tutorial
 services: vpc, openshift, iaas-vpn
