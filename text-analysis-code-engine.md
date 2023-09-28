@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-09-27"
+lastupdated: "2023-09-28"
 lasttested: "2023-09-27"
 
 content-type: tutorial
@@ -111,7 +111,7 @@ Putting entities into a single project enables you to manage access control more
    ```
    {: pre}
 
-6. Make the command line tooling point to your project
+6. Make the command line tooling point to your project by [selecting](/docs/codeengine?topic=codeengine-cli#cli-project-select) it.
    ```sh
    ibmcloud code-engine project select --name $PROJECT_NAME
    ```
@@ -140,7 +140,7 @@ Putting entities into a single project enables you to manage access control more
 {: #text-analysis-code-engine-deploy_app}
 {: step}
 
-{{site.data.keyword.codeengineshort}} applications run your code to serve HTTP requests, automatically scale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
+[{{site.data.keyword.codeengineshort}} applications](/docs/codeengine?topic=codeengine-application-workloads) run your code to serve HTTP requests, automatically scale up and back down to zero, and offer traffic routing to multiple revisions. In this section, you will deploy your frontend and backend applications to the {{site.data.keyword.codeengineshort}} project. The **frontend** web application will allow users to upload text files, while the **backend** application will write the file to {{site.data.keyword.cos_full_notm}}.
 
 We've already built images for the two applications and pushed them to the public {{site.data.keyword.registryshort_notm}}. You will use these pre-built container images to deploy the respective applications. Creation of your own applications will be covered in a later step.
 
@@ -167,7 +167,7 @@ We've already built images for the two applications and pushed them to the publi
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
    {: tip}
 
-3. For troubleshooting and to check the logs of your application, run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
+3. For troubleshooting and to [check the logs of your application](/docs/codeengine?topic=codeengine-view-logs), run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
    
    If you do not see any running instances, make sure to open the application URL from step 2 again.
    {: tip}
@@ -184,7 +184,7 @@ Congratulations!! You've just deployed a web application to {{site.data.keyword.
 ### Scale the application
 {: #text-analysis-code-engine-5}
 
-When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a number of other knobs you have control over. Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
+When you created the application with the `application create` command, you only passed in an image to use and a name for your application. While this is the minimum amount of information to deploy an application, there are a [number of other knobs you have control over](/docs/codeengine?topic=codeengine-app-scale). Among others, you can set the number of requests that can be processed concurrently per instance, the amount of CPU for the instance of the application, the amount of memory set for the instance of the application, the environment variables for the application, the maximum and minimum number of instances that can be used for this application, and the port where the application listens for requests.
 
 Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, {{site.data.keyword.codeengineshort}} deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
 
@@ -265,16 +265,16 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos**.
+   2. Set **Service name** to **your-initials-code-engine-cos**.
    3. Select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    4. Click on **Create**.
    5. Capture the service name in a shell variable:
       ```sh
-      COS_INSTANCE_NAME=<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-cos
+      COS_INSTANCE_NAME=your-initials-code-engine-cos
       ```
       {: pre}
 
-3. Click **Buckets** then **Customize your bucket**
+3. Under **Create Bucket** click **Create Bucket**, then under **Create a Custom Bucket** select **Create**.
 
    _When you create buckets or add objects, be sure to avoid the use of Personally Identifiable Information (PII).Note: PII is information that can identify any user (natural person) by name, location, or any other means._
    1. Enter **Unique bucket name** such as `<your-initials>-bucket-code-engine`.
@@ -287,9 +287,9 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
       ```
       {: pre}
 
-4. Click to open the bucket.
+4. On the bucket page.
    1. Click the **Configuration** tab
-   2. The Direct endpoint will keep data within the IBM cloud.  Capture the direct endpoint in a shell variable.  In the Dallas, us-south, region it might be:
+   2. The **Direct** endpoint will keep data within {{site.data.keyword.cloud_notm}}. Capture the direct endpoint in a shell variable.  In the Dallas, us-south, region it might be:
       ```sh
       COS_ENDPOINT=s3.direct.us-south.cloud-object-storage.appdomain.cloud
       ```
@@ -344,7 +344,7 @@ Now that you have configured the service ID, you need to update the {{site.data.
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #text-analysis-code-engine-9}
 
-Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables for your application or job.
+Now, you will need to pass in the credentials for the {{site.data.keyword.cos_full_notm}} instance you just created into your backend application. You will do this by [binding](/docs/codeengine?topic=codeengine-service-binding) the {{site.data.keyword.cos_short}} service to your application, which automatically adds credentials for a service to the environment variables for your application or job.
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application. The **bind** command creates a service credential in the service instance and from that initializes the environment variables of the application with the credentials. _Each service binding can be configured to use a custom environment variable prefix by using the `--prefix` flag._
    ```sh
@@ -352,9 +352,9 @@ Now, you will need to pass in the credentials for the {{site.data.keyword.cos_fu
    ```
    {: pre}
 
-2. You will also need to provide the application with your Bucket name where you want to store the text files, as well as your COS endpoint. Both of these were defined in an earlier step.  The endpoint for us-south for the **Smart tier** is **s3.direct.us-south.cloud-object-storage.appdomain.cloud**.
+2. You will also need to provide the application with your bucket name where you want to store the text files, as well as your COS endpoint. Both of these were defined in an earlier step.  The endpoint for us-south for the **Smart tier** is **s3.direct.us-south.cloud-object-storage.appdomain.cloud**.
 
-   Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.  Verify that you captured these earlier and create the configmap:
+   [Define a configmap](/docs/codeengine?topic=codeengine-configmap) to hold the bucket name and the endpoint as the information isn't sensitive. ConfigMaps are a Kubernetes object, which allows you to decouple configuration artifacts from image content to keep containerized applications portable. You could create this configmap from a file or from a key value pair -- for now we'll use a key value pair with the `--from-literal` flag.  Verify that you captured these earlier and create the configmap:
    ```sh
    echo bucket $COS_BUCKETNAME endpoint $COS_ENDPOINT
    ```
@@ -392,7 +392,7 @@ Now, you have the backend application connected to the frontend application. You
 ### Create a job
 {: #text-analysis-code-engine-11}
 
-Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. When you create a `job`, you can specify workload configuration information that is used each time the job is run. You can create a job from the console or with the CLI.
+[Jobs](/docs/codeengine?topic=codeengine-job-plan), unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. When you create a `job`, you can specify workload configuration information that is used each time the job is run. You can create a job from the console or with the CLI.
 
 This job will read text files from {{site.data.keyword.cos_full_notm}}, and then analyze them using the {{site.data.keyword.nlushort}} Service. It will need to have access to service credentials for both services.
 
@@ -429,7 +429,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 ### Run the job
 {: #text-analysis-code-engine-13}
 
-1. To run a job with the configuration created above, use the `jobrun submit` command,
+1. To [run a job](/docs/codeengine?topic=codeengine-run-job) with the configuration created above, use the `jobrun submit` command,
    ```sh
    ibmcloud code-engine jobrun submit --name backend-jobrun --job backend-job
    ```
@@ -460,7 +460,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 ### Automate the job run
 {: #text-analysis-code-engine-automate}
 
-Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a subscription to a bucket, your job receives a separate event for each successful change to that bucket. 
+Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a [subscription](/docs/codeengine?topic=codeengine-subscribing-events) to a bucket, your job receives a separate event for each successful change to that bucket. 
 
 1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify-mgr-cos) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
 2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
@@ -485,7 +485,7 @@ echo $BACKEND_PRIVATE_URL
 ```
 {: pre}
 
-You can change some of the source code to verify.  The second occurrence of `Text analysis with Code Engine` in the **body** of public/index.html and public/501.html can be changed to add in your name.  Create the container image in a code engine namespace and create the application in one command:
+You can change some of the source code to verify. The second occurrence of `Text analysis with Code Engine` in the **body** of public/index.html and public/501.html can be changed to add in your name. Create the container image in a code engine namespace and create the application in one command:
 ```sh
 ibmcloud ce application create --name frontend-fromsource --build-source . --env BACKEND_URL=$BACKEND_PRIVATE_URL
 ```
@@ -497,14 +497,13 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
 {: #text-analysis-code-engine-cleanup}
 {: step}
 
-1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
+1. With the command below, delete the project to delete all its components (applications, jobs etc.).
    ```sh
    ibmcloud code-engine project delete --name $PROJECT_NAME
    ```
    {: pre}
    
-2. Navigate to [Resource List](/resources/){: external}
-3. Delete the services you created:
+2. Navigate to [Resource List](/resources/){: external}, then delete the services you created:
    * {{site.data.keyword.cos_full}}
    * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
 <!--##isworkshop#-->
