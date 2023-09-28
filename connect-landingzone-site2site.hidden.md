@@ -39,7 +39,7 @@ The answer is by assigning operator access through the Management VPC. You have 
 - [Client to Site with {{site.data.keyword.cloud_notm}} VPN Server and VPN Client](/docs/vpc?topic=vpc-vpn-client-to-site-overview) - Configure a VPN client application on your device to create a secure connection to your VPC network that uses {{site.data.keyword.cloud_notm}} VPN server. The VPN server service has a high availability mode for production use and is managed by IBM.
 - [Site to Site VPC VPN Gateway](/docs/vpc?topic=vpc-using-vpn&interface=cli) - Configure your on-premises VPN to connect to an {{site.data.keyword.cloud_notm}} VPN Gateway by using a statically route-based VPN or a policy-based VPN to set up an IPsec site-to-site tunnel between your VPC and your on-premises private network or another VPC.
 - [{{site.data.keyword.dl_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - You can establish a direct network connection between your on-premises network and {{site.data.keyword.dl_full_notm}}.
-- [Access from another VPC by using Transit Gateway](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.cloud_notm}} Transit Gateway.
+- [Access from another VPC by using {{site.data.keyword.tg_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.tg_full_notm}}.
 
 In this tutorial, we can learn on how to set up a site-to-site VPN connection to your on-premises network.
 
