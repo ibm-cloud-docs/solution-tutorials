@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-27"
+lastupdated: "2023-09-28"
 lasttested: "2023-09-26"
 
 content-type: tutorial
-services: vpc, openshift, iaas-vpn
+services: vpc, openshift, iaas-vpn, secrets-manager, direct-link, security-groups, schematics
 account-plan: paid
 completion-time: 2h
 # use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy.
