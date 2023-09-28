@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-27"
+lastupdated: "2023-09-28"
 lasttested: "2023-09-26"
 
 content-type: tutorial
-services: vpc, openshift, iaas-vpn
+services: vpc, openshift, secrets-manager, direct-link, schematics
 account-plan: paid
 completion-time: 2h
 # use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy.
@@ -18,9 +18,8 @@ use-case: usecase1, usecase2
 # Connect to a VPC landing zone by using a client-to-site VPN
 {: #connect-landingzone-client-vpn}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, openshift, iaas-vpn"}
+{: toc-services="vpc, openshift, secrets-manager, direct-link, schematics"}
 {: toc-completion-time="2h"}
-
 
 This tutorial dives into the fastest option to get up and running with a [client VPN for VPC](/docs/vpc?topic=vpc-vpn-client-to-site-overview) connectivity. Rather than doing manual steps, you set up an automated way to create a client-to-site VPN connection to one or more landing zones in your account by using Terraform.
 {: shortdesc}
