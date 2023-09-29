@@ -33,11 +33,11 @@ This tutorial dives into the fastest option to get up and running with a [client
 ### Problem
 {: #solution-connect-client-vpn-problem}
 
-Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
+Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
 
 > It is not possible to access the Red Hat OpenShift console because the cluster is accessible only on the management VPC’s private network, which is locked down and not accessible from the internet.
 
-You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, or the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture.
+You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VSI on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, or the [Red Hat OpenShift Container Platform on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture.
 
 For example, you ping the network but it times out:
 
@@ -356,7 +356,7 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
     1.  Download and install the OpenVPN client application from https://openvpn.net.
     1.  Open the OpenVPN client application, and import the `client2site-vpn.ovpn` file.
     1.  Enter one of the {{site.data.keyword.cloud_notm}} email addresses that was configured to access the VPN as the user ID.
-1.  Go to http://iam.cloud.ibm.com/identity/passcode in your browser to generate a passcode. Copy the passcode.
+1.  Go to http://iam.{DomainName}/identity/passcode in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
@@ -370,7 +370,7 @@ If you want to configure client certs on the VPN rather than using a one-time-pa
 
 If your landing zone includes a Red Hat OpenShift cluster, you can now test that you have access to the web console.
 
-1.  Open https://cloud.ibm.com/kubernetes/clusters in your browser.
+1.  Open https://{DomainName}/kubernetes/clusters in your browser.
 1.  Select the cluster details for the management cluster in your landing zone.
 1.  Click **OpenShift Web Console** in the upper right to access your Red Hat OpenShift web console.
 1.  Repeat steps (2) and (3) to test connectivity to the landing zone’s workload cluster.
