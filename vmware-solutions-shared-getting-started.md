@@ -324,7 +324,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 ### {{site.data.keyword.bplong_notm}}
 {: #vmware-solutions-shared-getting-started-create-schematics}
 
-1. Navigate to the [{{site.data.keyword.bplong_notm}}](/schematics/overview) overview page and click **Create a workspace**.
+1. Navigate to the [{{site.data.keyword.bplong_notm}}](/schematics/overview){: external} overview page and click **Create a workspace**.
 2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
 3. Select `terraform_v1.1` as the **Terraform version**. Click **Next**.
 4. Enter the workspace name for your workspace, for example `vmware-tutorial`.
