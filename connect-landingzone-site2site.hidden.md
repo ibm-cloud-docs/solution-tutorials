@@ -41,7 +41,7 @@ The answer is by assigning operator access through the Management VPC. You have 
 - [{{site.data.keyword.dl_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - You can establish a direct network connection between your on-premises network and {{site.data.keyword.dl_full_notm}}.
 - [Access from another VPC by using {{site.data.keyword.tg_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.tg_full_notm}}.
 
-![Architecture diagram of site-to-site-VPN connection with strongSwan](images/connect-landingzone-site2site/s2s-strongswan-architecture.svg){: caption="Figure 1. Connect a VPC landing zone deployable architecture to a network with a site-to-site VPN and strongSwan" caption-side="bottom"}
+![Architecture diagram of site-to-site-VPN connection with strongSwan](images/connect-landingzone-site2site-hidden/s2s-strongswan-architecture.svg){: caption="Figure 1. VPC landing zone connected to a network with a site-to-site VPN and strongSwan" caption-side="bottom"}
 
 In this tutorial, we can learn on how to set up a site-to-site VPN connection to your on-premises network.
 
