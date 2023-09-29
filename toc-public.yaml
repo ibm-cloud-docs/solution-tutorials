@@ -78,6 +78,7 @@ toc:
                 - vpc-scaling-dedicated-compute.md
                 - vpc-transit1.md
                 - vpc-transit2.md
+                - connect-landingzone-client-vpn.md
 
             - topicgroup:
                 label: Classic Infrastructure

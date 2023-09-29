@@ -96,7 +96,7 @@ The module creates and configures the following infrastructure:
 ### Architecture
 {: #solution-connect-client-vpn-architecture}
 
-![Architecture](images/connect-landingzone-client-vpn-hidden/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/connect-landingzone-client-vpn/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 
 ## Before you begin
 {: #solution-connect-client-vpn-prereqs}
@@ -119,7 +119,7 @@ This tutorial requires the following setup:
     1.  Click the item to show the sidebar details for the {{site.data.keyword.secrets-manager_short}} instance that you want to use.
     1.  Press the copy action to the right of the GUID field as shown in this screenshot:
 
-    ![Example of resource list](images/connect-landingzone-client-vpn-hidden/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
+    ![Example of resource list](images/connect-landingzone-client-vpn/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
 
 ## Set up the deployable architecture
 {: #client-vpn-setup}
