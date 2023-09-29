@@ -349,8 +349,8 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 2. Test connectivity to the Internet by pinging known addresses on the Internet, for example `ping 8.8.8.8`. 
 3. Test connectivity to the IBM Cloud by pinging internal addresses, for example [IBM Cloud private DNS resolver endpoint](/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
-   If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
-    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](/infrastructure/vmware-solutions/console/instances) page.
+   If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#vmware-solutions-shared-getting-started-create_ssh_rules), you can use the following steps instead to access the virtual machine.
+    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](/infrastructure/vmware-solutions/console/instances/vdc){: external} page.
     - Click on the instance `vmware-tutorial` instance.
     - Click on the **vCloud Director console** button found on the top right of the page.
     - Click on **Virtual Machines** 
@@ -363,11 +363,11 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 {: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.bpshort}}](/schematics/workspaces) workspaces and select your workspace.
+1. Navigate to [{{site.data.keyword.bpshort}}](/schematics/workspaces){: external} workspaces and select your workspace.
 2. Click on the **Actions...** drop down and click **Destroy resources** to clean up all the resources that were provisioned via Schematics.
 3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
-4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](/infrastructure/vmware-solutions/console/instances).
-5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
+4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances page](/infrastructure/vmware-solutions/console/instances/vdc){: external}.
+5. Delete the `vmware-tutorial` instance.
 
 ## Expand the tutorial 
 {: #vmware-solutions-shared-getting-started-7}
