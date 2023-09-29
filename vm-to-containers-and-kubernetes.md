@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-09-05"
+lastupdated: "2023-09-29"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -118,7 +118,7 @@ As you design your cluster architecture, you want to balance costs against avail
 To run a production app in the cloud by using Kubernetes, consider the following items:
 
 1. Do you expect traffic from a specific geographic location? If yes, select the location that is physically closest to you for best performance.
-2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications-5) solution guide for creating multiple environments.
+2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing resources and assigning access](/docs/account?topic=account-account_setup) solution guide for creating multiple environments.
 3. What [hardware](/docs/containers?topic=containers-planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
@@ -352,7 +352,7 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt){: external}.
 - Kubernetes main [docs](https://kubernetes.io/){: external}.
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
-- [Best practices solution guide](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
+- [Best practices solution guide](/docs/account?topic=account-account_setup) for organizing resources and assigning access.
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
 - Use [multiple clusters across multiple locations](/docs/containers?topic=containers-regions-and-zones) for high availability.
