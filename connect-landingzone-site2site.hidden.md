@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-25"
-lasttested: "2023-08-28"
+lastupdated: "2023-09-29"
+lasttested: "2023-09-27"
 
 content-type: tutorial
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -39,7 +39,11 @@ The answer is by assigning operator access through the Management VPC. You have 
 - [Client to Site with {{site.data.keyword.cloud_notm}} VPN Server and VPN Client](/docs/vpc?topic=vpc-vpn-client-to-site-overview) - Configure a VPN client application on your device to create a secure connection to your VPC network that uses {{site.data.keyword.cloud_notm}} VPN server. The VPN server service has a high availability mode for production use and is managed by IBM.
 - [Site to Site VPC VPN Gateway](/docs/vpc?topic=vpc-using-vpn&interface=cli) - Configure your on-premises VPN to connect to an {{site.data.keyword.cloud_notm}} VPN Gateway by using a statically route-based VPN or a policy-based VPN to set up an IPsec site-to-site tunnel between your VPC and your on-premises private network or another VPC.
 - [{{site.data.keyword.dl_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - You can establish a direct network connection between your on-premises network and {{site.data.keyword.dl_full_notm}}.
-- [Access from another VPC by using Transit Gateway](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.cloud_notm}} Transit Gateway.
+- [Access from another VPC by using {{site.data.keyword.tg_short}}](/docs/vpc?topic=vpc-end-to-end-private-connectivity-vpe&interface=cli) - Access from another {{site.data.keyword.vpc_short}} to your VPC can be achieved by using {{site.data.keyword.tg_full_notm}}.
+
+<!--
+![Architecture diagram of site-to-site-VPN connection with strongSwan](images/connect-landingzone-site2site-hidden/s2s-strongswan-architecture.svg){: caption="Figure 1. VPC landing zone connected to a network with a site-to-site VPN and strongSwan" caption-side="bottom"}
+ -->
 
 In this tutorial, we can learn on how to set up a site-to-site VPN connection to your on-premises network.
 
@@ -49,9 +53,9 @@ In this tutorial, we can learn on how to set up a site-to-site VPN connection to
 - Deploy an instance of a VPC landing zone deployable architecture. For more information, see [Deploying a landing zone deployable architecture](/docs/secure-infrastructure-vpc?topic=secure-infrastructure-vpc-deploy).
 - Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Make sure that the VSI is assigned a floating IP, which is used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
 
-The tutorial steps have the following assumptions:
+The tutorial is based on the following assumptions:
 
-- The operating system is CentOS.
+- The operating system is CentOS. For more information about other VPN configurations, see [Configuring the on-premises VPN gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway).
 - The VPN gateway is deployed on a landing zone VPC that is named `management-vpc`.
 - Your deployable architecture includes a VSI in `management-vpc` that is supported by the VSI on VPC landing zone deployable architecture in the {{site.data.keyword.cloud_notm}} catalog.
 
