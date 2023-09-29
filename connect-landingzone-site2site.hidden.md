@@ -30,7 +30,7 @@ strongSwan is an open source IPsec-based VPN solution. For more information abou
 ## Objectives
 {: #solution-connect-site-vpn-objectives}
 
-You deployed one of the {{site.data.keyword.cloud_notm}} landing zone deployable architectures, like [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}. The virtual servers are created and working correctly.
+You deployed one of the {{site.data.keyword.cloud_notm}} landing zone deployable architectures, like [Red Hat OpenShift Container Platform on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}. The virtual servers are created and working correctly.
 
 By default, network access to the VPC landing zone topology is locked down for security compliance reasons, so you can't access the management or workload VSIs. How can you deploy your application in the workload VSIs that are located in the workload VPC?
 
@@ -55,7 +55,7 @@ In this tutorial, we can learn on how to set up a site-to-site VPN connection to
 
 The tutorial is based on the following assumptions:
 
-- The operating system is CentOS. For more information about other VPN configurations, see [Configuring the on-premises VPN gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway).
+- The operating system is CentOS. For more information about other VPN configurations, see [Configuring the on-premises VPN gateway](https://{DomainName}/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway).
 - The VPN gateway is deployed on a landing zone VPC that is named `management-vpc`.
 - Your deployable architecture includes a VSI in `management-vpc` that is supported by the VSI on VPC landing zone deployable architecture in the {{site.data.keyword.cloud_notm}} catalog.
 
