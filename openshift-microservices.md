@@ -519,6 +519,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ibmcloud oc cluster ls
    ```
    {: pre}
+
 Output looks something like this:
    ```
    $ ibmcloud oc cluster ls
