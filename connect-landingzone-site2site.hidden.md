@@ -53,9 +53,9 @@ In this tutorial, we can learn on how to set up a site-to-site VPN connection to
 - Deploy an instance of a VPC landing zone deployable architecture. For more information, see [Deploying a landing zone deployable architecture](/docs/secure-infrastructure-vpc?topic=secure-infrastructure-vpc-deploy).
 - Create a VSI with any Linux-based OS in different Virtual Private Cloud(VPC), subnet, with default ACL rules, and a security group that allows SSH access. Make sure that the VSI is assigned a floating IP, which is used for SSH access to the machine. To simulate an on-premises network, these steps assume that a VSI is deployed onto a separate VPC.
 
-The tutorial steps have the following assumptions:
+The tutorial is based on the following assumptions:
 
-- The operating system is CentOS. For more information about other VPN configurations, see [Configuring the on-premises VPN gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway)
+- The operating system is CentOS. For more information about other VPN configurations, see [Configuring the on-premises VPN gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-onprem-example#configuring-onprem-gateway).
 - The VPN gateway is deployed on a landing zone VPC that is named `management-vpc`.
 - Your deployable architecture includes a VSI in `management-vpc` that is supported by the VSI on VPC landing zone deployable architecture in the {{site.data.keyword.cloud_notm}} catalog.
 
