@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-12-21"
+lastupdated: "2023-09-29"
+lasttested: "2023-09-29"
 content-type: tutorial
 services: vmwaresolutions, schematics
 account-plan: paid
@@ -78,16 +78,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 ### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
-1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](/infrastructure/vmware-solutions/console).
+1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](/vmware){: external}.
 2. In the **Platforms** section, click the **VMware Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, for example `vmware-tutorial`.
 5. Select the **Resource group** where to create the service instance.
-6. In the **Deployment topology** section, click the **Single-zone Vmware virtual data center** card.
+6. In the **Deployment topology** section, click the **Single-zone VMware virtual data center** card.
 7. Select the {{site.data.keyword.Bluemix_notm}} geography to host the instance.
 8. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
 9. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
-10. After having read and agreed to the third-party service agreements, click on **Create**. 
+10. After having read and agreed to the third-party service agreements, click on **Create**. You might need to click the **refresh** icon to see the entry for the new instance, then unfold for the **Status** field.
 
 While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 {: tip}
@@ -95,7 +95,7 @@ While waiting for the instance to create, proceed to review the Terraform templa
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
 
-1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](/infrastructure/vmware-solutions/console/instances/vdc) page.
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](/infrastructure/vmware-solutions/console/instances/vdc){: external} page.
 2. Click on the {{site.data.keyword.vmwaresolutions_short}} Site, for example `Dallas Director 01`.
 3. Click on **Reset site admin password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
