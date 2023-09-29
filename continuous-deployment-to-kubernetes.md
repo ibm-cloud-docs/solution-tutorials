@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-09-20"
+lastupdated: "2023-09-29"
 lasttested: "2023-09-17"
 
 content-type: tutorial
@@ -159,7 +159,7 @@ If you don't see your application updating, confirm all the steps passed and rev
 
 In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
-There are [different options](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
+There are [different options](/docs/account?topic=account-account_setup) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 2. Rename the **DEPLOY** stage to `Deploy dev` by clicking on the settings icon, then **Configure Stage**.
