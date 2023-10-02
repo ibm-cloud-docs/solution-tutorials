@@ -79,6 +79,7 @@ toc:
                 - vpc-transit1.md
                 - vpc-transit2.md
                 - connect-landingzone-client-vpn.md
+                - connect-landingzone-site2site.md
 
             - topicgroup:
                 label: Classic Infrastructure
@@ -165,4 +166,3 @@ toc:
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
                 - web-app-private-network.md
-
