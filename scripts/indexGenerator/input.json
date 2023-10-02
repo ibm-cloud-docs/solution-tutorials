@@ -40,10 +40,8 @@
                ]
             },
             {
-               "name": "Connect a VPC landing zone to a network by using a site-to-site VPN",
-               "url": "connect-landingzone-site2site.hidden.html",
-               "description": "Connect a VPC landing zone to a network by using a site-to-site VPN",
-               "imgSrc": ""
+              "name"
+              "url": ""
             }
          ]
       },
@@ -819,7 +817,13 @@
                "url": "connect-landingzone-client-vpn.html",
                "description": "Connect to a VPC landing zone by using a client-to-site VPN",
                "imgSrc": ""
-            }
+            },
+            {
+              "name": "Connect a VPC landing zone to a network by using a site-to-site VPN",
+              "url": "connect-landingzone-site-vpn.html",
+              "description": "Connect a VPC landing zone to a network by using a site-to-site VPN",
+              "imgSrc": ""
+           }
          ]
       },
       {
