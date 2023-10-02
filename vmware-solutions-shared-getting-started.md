@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2022-12-21"
+lastupdated: "2023-09-29"
+lasttested: "2023-09-29"
 content-type: tutorial
 services: vmwaresolutions, schematics
 account-plan: paid
@@ -78,16 +78,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 ### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started-create-vmware-solutions-shared}
 
-1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](/infrastructure/vmware-solutions/console).
+1. Navigate to [{{site.data.keyword.vmwaresolutions_short}}](/vmware){: external}.
 2. In the **Platforms** section, click the **VMware Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, for example `vmware-tutorial`.
 5. Select the **Resource group** where to create the service instance.
-6. In the **Deployment topology** section, click the **Single-zone Vmware virtual data center** card.
+6. In the **Deployment topology** section, click the **Single-zone VMware virtual data center** card.
 7. Select the {{site.data.keyword.Bluemix_notm}} geography to host the instance.
 8. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
 9. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
-10. After having read and agreed to the third-party service agreements, click on **Create**. 
+10. After having read and agreed to the third-party service agreements, click on **Create**. You might need to click the **refresh** icon to see the entry for the new instance, then unfold for the **Status** field.
 
 While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 {: tip}
@@ -95,7 +95,7 @@ While waiting for the instance to create, proceed to review the Terraform templa
 ### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #vmware-solutions-shared-getting-started-access-vmware-solutions-shared}
 
-1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](/infrastructure/vmware-solutions/console/instances/vdc) page.
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared](/infrastructure/vmware-solutions/console/instances/vdc){: external} page.
 2. Click on the {{site.data.keyword.vmwaresolutions_short}} Site, for example `Dallas Director 01`.
 3. Click on **Reset site admin password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
@@ -324,7 +324,7 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 ### {{site.data.keyword.bplong_notm}}
 {: #vmware-solutions-shared-getting-started-create-schematics}
 
-1. Navigate to the [{{site.data.keyword.bplong_notm}}](/schematics/overview) overview page and click **Create a workspace**.
+1. Navigate to the [{{site.data.keyword.bplong_notm}}](/schematics/overview){: external} overview page and click **Create a workspace**.
 2. On the page, enter the link to our GitHub repository where our Terraform template for this tutorial is stored, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
 3. Select `terraform_v1.1` as the **Terraform version**. Click **Next**.
 4. Enter the workspace name for your workspace, for example `vmware-tutorial`.
@@ -349,8 +349,8 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 2. Test connectivity to the Internet by pinging known addresses on the Internet, for example `ping 8.8.8.8`. 
 3. Test connectivity to the IBM Cloud by pinging internal addresses, for example [IBM Cloud private DNS resolver endpoint](/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
-   If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
-    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](/infrastructure/vmware-solutions/console/instances) page.
+   If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#vmware-solutions-shared-getting-started-create_ssh_rules), you can use the following steps instead to access the virtual machine.
+    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](/infrastructure/vmware-solutions/console/instances/vdc){: external} page.
     - Click on the instance `vmware-tutorial` instance.
     - Click on the **vCloud Director console** button found on the top right of the page.
     - Click on **Virtual Machines** 
@@ -363,11 +363,11 @@ In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` fr
 {: #vmware-solutions-shared-getting-started-removeresources}
 {: step}
 
-1. Navigate to [{{site.data.keyword.bpshort}}](/schematics/workspaces) workspaces and select your workspace.
+1. Navigate to [{{site.data.keyword.bpshort}}](/schematics/workspaces){: external} workspaces and select your workspace.
 2. Click on the **Actions...** drop down and click **Destroy resources** to clean up all the resources that were provisioned via Schematics.
 3. Click on the **Actions...** drop down and click **Delete workspace** to delete the workspace.
-4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](/infrastructure/vmware-solutions/console/instances).
-5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
+4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances page](/infrastructure/vmware-solutions/console/instances/vdc){: external}.
+5. Delete the `vmware-tutorial` instance.
 
 ## Expand the tutorial 
 {: #vmware-solutions-shared-getting-started-7}

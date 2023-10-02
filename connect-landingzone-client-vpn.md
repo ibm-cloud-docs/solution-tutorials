@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-23"
-lasttested: "2023-08-16"
+lastupdated: "2023-09-29"
+lasttested: "2023-09-26"
 
 content-type: tutorial
-services: vpc, openshift, iaas-vpn
+services: vpc, openshift, secrets-manager, dl, schematics
 account-plan: paid
 completion-time: 2h
 # use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy.
@@ -18,9 +18,8 @@ use-case: usecase1, usecase2
 # Connect to a VPC landing zone by using a client-to-site VPN
 {: #connect-landingzone-client-vpn}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, openshift, iaas-vpn"}
+{: toc-services="vpc, openshift, secrets-manager, dl, schematics"}
 {: toc-completion-time="2h"}
-
 
 This tutorial dives into the fastest option to get up and running with a [client VPN for VPC](/docs/vpc?topic=vpc-vpn-client-to-site-overview) connectivity. Rather than doing manual steps, you set up an automated way to create a client-to-site VPN connection to one or more landing zones in your account by using Terraform.
 {: shortdesc}
@@ -34,11 +33,11 @@ This tutorial dives into the fastest option to get up and running with a [client
 ### Problem
 {: #solution-connect-client-vpn-problem}
 
-Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
+Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
 
 > It is not possible to access the Red Hat OpenShift console because the cluster is accessible only on the management VPC’s private network, which is locked down and not accessible from the internet.
 
-You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} or [VSI on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} and they don’t include a Red Hat OpenShift cluster.
+You might also have connectivity issues to the VPC's private networks if you deploy the [VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, [VSI on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external}, or the [Red Hat OpenShift Container Platform on VPC landing zone](https://{DomainName}/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture.
 
 For example, you ping the network but it times out:
 
@@ -97,7 +96,7 @@ The module creates and configures the following infrastructure:
 ### Architecture
 {: #solution-connect-client-vpn-architecture}
 
-![Architecture](images/connect-landingzone-client-vpn-hidden/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/connect-landingzone-client-vpn/c2s-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 
 ## Before you begin
 {: #solution-connect-client-vpn-prereqs}
@@ -120,7 +119,7 @@ This tutorial requires the following setup:
     1.  Click the item to show the sidebar details for the {{site.data.keyword.secrets-manager_short}} instance that you want to use.
     1.  Press the copy action to the right of the GUID field as shown in this screenshot:
 
-    ![Example of resource list](images/connect-landingzone-client-vpn-hidden/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
+    ![Example of resource list](images/connect-landingzone-client-vpn/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
 
 ## Set up the deployable architecture
 {: #client-vpn-setup}
@@ -154,9 +153,9 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
     - Product type: Deployable architecture
     - Delivery method: Terraform
     - Repository type: Public repository
-    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz
+    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz
     - Variation: Standard
-    - Software Version: 1.4.12
+    - Software Version: 1.4.13
 1.  Click **Add product**.
 1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
 
@@ -175,7 +174,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboar
     - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```sh
-    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.12 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.12.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
+    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.13 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
     ```
     {: pre}
 
@@ -201,10 +200,10 @@ Make sure you have your development environment configured:
 #### Clone the repo and configure the module
 {: #client-vpn-local-configure}
 
-1.  Clone the relevant modules to your computer.
+1.  Clone the relevant modules to your computer. Update the `--branch` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```bash
-    git clone https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
+    git clone --branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
     ```
     {: pre}
 
@@ -357,7 +356,7 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
     1.  Download and install the OpenVPN client application from https://openvpn.net.
     1.  Open the OpenVPN client application, and import the `client2site-vpn.ovpn` file.
     1.  Enter one of the {{site.data.keyword.cloud_notm}} email addresses that was configured to access the VPN as the user ID.
-1.  Go to http://iam.cloud.ibm.com/identity/passcode in your browser to generate a passcode. Copy the passcode.
+1.  Go to http://iam.{DomainName}/identity/passcode in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
@@ -371,7 +370,7 @@ If you want to configure client certs on the VPN rather than using a one-time-pa
 
 If your landing zone includes a Red Hat OpenShift cluster, you can now test that you have access to the web console.
 
-1.  Open https://cloud.ibm.com/kubernetes/clusters in your browser.
+1.  Open https://{DomainName}/kubernetes/clusters in your browser.
 1.  Select the cluster details for the management cluster in your landing zone.
 1.  Click **OpenShift Web Console** in the upper right to access your Red Hat OpenShift web console.
 1.  Repeat steps (2) and (3) to test connectivity to the landing zone’s workload cluster.
@@ -404,7 +403,9 @@ If you see no timeouts or other errors, your local workstation has connectivity 
 In the following error, OpenVPN has an active connection, but can't reach a server on your private VPN subnet. Check the local network that your device connects through. Some newer routers allocate IP addresses in `10.*` range rather than `192.168.*`.
 
 ```text
-error: dial tcp: lookup YOUR_SERVER_URL on 10.0.0.1:53: read udp 10.0.0.2:0->10.0.0.1:53: i/o timeout - verify you have provided the correct host and port and that the server is currently running.
+error: dial tcp: lookup YOUR_SERVER_URL on 10.0.0.1:53:
+read udp 10.0.0.2:0->10.0.0.1:53:
+i/o timeout- verify you have provided the correct host and port and that the server is currently running.
 ```
 {: screen}
 

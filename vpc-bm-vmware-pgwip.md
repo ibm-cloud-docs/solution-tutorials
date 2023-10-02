@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
+lastupdated: "2023-09-27"
 lasttested: ""
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -111,7 +111,7 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 2. If you provisioned the VM's VLAN interface with the default {{site.data.keyword.vpc_short}} security group, use following commands:
 
    ```sh
-   VMWARE_VM_FIP_SG=$(ic is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
+   VMWARE_VM_FIP_SG=$(ibmcloud is vpc $VMWARE_VPC --output json | jq -r .default_security_group.id)
    ```
    {: codeblock}
    
@@ -123,7 +123,7 @@ If you want to access the VMware Virtual Machines directly from the Internet, yo
 3. If you provisioned a new security group for the VLAN interface e.g. with a name 'your-security-group', use can use following commands:
 
    ```sh
-   VMWARE_VM_FIP_SG=$(ic is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)
+   VMWARE_VM_FIP_SG=$(ibmcloud is bm-nic $ESX1 $VMWARE_VNIC_VM1 --output json | jq -r '.security_groups[] | select(.name == "your-security-group")'.id)
    ```
    {: codeblock}
    

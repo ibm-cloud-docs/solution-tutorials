@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-26"
+lastupdated: "2023-09-29"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -519,6 +519,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ibmcloud oc cluster ls
    ```
    {: pre}
+
 Output looks something like this:
    ```
    $ ibmcloud oc cluster ls
