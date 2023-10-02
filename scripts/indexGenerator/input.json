@@ -38,10 +38,6 @@
                "repos": [
                   "https://github.com/IBM/satellite-link-example"
                ]
-            },
-            {
-              "name"
-              "url": ""
             }
          ]
       },
