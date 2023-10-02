@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-21"
-lasttested: "2023-09-21"
+lastupdated: "2023-10-02"
+lasttested: "2023-10-02"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
@@ -209,7 +209,7 @@ Finally create the bucket.
 
 1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources) Under **Storage**.
 2. Click **Create bucket** and then **Customize your bucket**.
-   1. Set the **name** to a unique value, such as `&lt;your-initials&gt;-secure-file-upload`.
+   1. Set the **name** to a unique value, such as `<your-initials>-secure-file-upload`.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the {{site.data.keyword.keymanagementserviceshort}} service instance.
    4. Set **Storage class** to **Standard**
@@ -261,13 +261,13 @@ Now, Create an instance of the {{site.data.keyword.appid_short}} service.
 1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID) service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
-   3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid`.
+   3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;--><!--#/isworkshop#-->sfsappid`.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
-2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`. For example:
+2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback`. For example:
    * with the ingress subdomain: `mycluster-1234-d123456789.us-south.containers.appdomain.cloud`
-   * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback`.
+   * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback`.
 
    {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
    {: tip}
@@ -360,7 +360,13 @@ All services have been configured. In this section you will deploy the tutorial 
          ```
          {: pre}
 
-      7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
+      7. Set the name for the {{site.data.keyword.appid_short}} instance to use:
+         ```sh
+         export APPID_INSTANCE=sfsappid
+         ```
+         {: pre}
+
+      8. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
    5. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
       ```sh
@@ -428,7 +434,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 
 6. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
    ```sh
-   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service sfsappid
    ```
    {: codeblock}
 
@@ -474,7 +480,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 
 5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
-   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service YOUR-INITIALS-secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service <YOUR-INITIALS>sfsappid
    ```
    {: codeblock}
 
@@ -689,7 +695,7 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
-   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
+   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
 <!--#/istutorial#-->
