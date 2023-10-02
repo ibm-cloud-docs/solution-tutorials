@@ -85,6 +85,7 @@ toc:
                 - vpc-transit1.md
                 - vpc-transit2.md
                 - connect-landingzone-client-vpn.md
+                - connect-landingzone-site-vpn.md
 
             - topicgroup:
                 label: Classic Infrastructure
