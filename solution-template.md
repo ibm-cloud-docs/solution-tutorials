@@ -293,7 +293,7 @@ resource "ibm_is_vpc" "myvpc" {
 {: codeblock}
 
 ## The following images are referenced by Lab in a box
-{: #solution-template-15}
+{: #solution-template-labinabox}
 
 DO NOT REMOVE THESE FILES. They are referenced in https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/src/static/tutorials.json
 
