@@ -61,9 +61,6 @@
 <div data-hd-programlang="swift">Text in this color only show for Swift</div>
 <a href="index.html">HOME</a> -
 <a href="conref-table.html">CONREF TABLE</a> -
-<a href="vscodesnippets.json">VS CODE SNIPPETS</a> -
-<a href="solution-table.html">SOLUTIONS TABLE</a> -
-<a href="salesplay.html">SALES PLAY</a> -
-<a href="solution-to-services.html">SOLUTION TO SERVICES</a>
+<a href="vscodesnippets.json">VS CODE SNIPPETS</a>
 
 <article aria-labelledby="{{ document.title.id }}" role="article">
