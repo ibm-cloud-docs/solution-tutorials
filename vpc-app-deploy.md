@@ -123,6 +123,8 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is zones
       ```
       {: pre}
+   
+   * `TF_VAR_ssh_agent` indicates that a passphrase-protected SSH key is used. Enable the variable by uncommenting it. Then, use `ssh-add ~/.ssh/id_rsa` to add the SSH key to the authentication agent.
 
 6. Load the variables into the environment:
    ```sh
