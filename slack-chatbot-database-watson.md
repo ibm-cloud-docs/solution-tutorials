@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-29"
+lastupdated: "2023-10-09"
 lasttested: "2023-09-29"
 
 content-type: tutorial
@@ -153,7 +153,7 @@ In this section, you are going to set up the needed services and deploy the back
 
    Note the reported URI for the app. It is referenced in the next steps as $APP_URL. You can use a shell variable:
 
-   ```
+   ```sh
    APP_URL=$(ibmcloud ce app get -n slackbot-backend --output json | jq -r .status.url)
    echo $APP_URL
    ```
@@ -181,7 +181,7 @@ In this section, you are going to set up the needed services and deploy the back
    {: pre}
 
 8. Note the Project ID it will be required in a future step.
-   ```
+   ```sh
    ibmcloud ce app get -n slackbot-backend --output json |  jq -r .metadata.namespace
    ```
    {: pre}
