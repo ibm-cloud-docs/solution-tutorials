@@ -181,8 +181,8 @@ The following sections assume you are running macOS High Sierra or later under a
 ### kubectl
 {: #getting-started-macos_kubectl}
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos.
-1. Make the kubectl binary executable.
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-macos.
+1. Make the `kubectl` binary executable.
    ```sh
    chmod +x ./kubectl
    ```
@@ -204,9 +204,9 @@ The following sections assume you are running macOS High Sierra or later under a
 {: #getting-started-macos_oc}
 
 1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
-2. Extract `openshift-client-mac.tar.gz`:
+2. Extract `openshift-client-mac.tar.gz` (Intel) or `openshift-install-mac-arm64.tar.gz` (Apple Silicon):
    ```sh
-   tar zxvf openshift-client-mac.tar.gz oc
+   tar zxvf openshift-client-mac*.tar.gz oc
    ```
    {: pre}
 
@@ -222,7 +222,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/oc`.
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/oc`.
    {: tip}
 
 ### Helm 3
@@ -242,7 +242,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/helm`.
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/helm`.
    {: tip}
 
 ### Terraform
@@ -269,6 +269,12 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 
 1. Download `jq` from https://jqlang.github.io/jq/.
 1. Rename the downloaded file to `jq`.
+1. Make the `jq` binary executable.
+   ```sh
+   chmod +x ./jq
+   ```
+   {: pre}
+
 1. Move the `jq` binary to your PATH.
    ```sh
    sudo mv ./jq /usr/local/bin/jq
@@ -280,6 +286,9 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    jq --version
    ```
    {: pre}
+
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `jq` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/jq`.
+   {: tip}
 
 ### Git
 {: #getting-started-macos_git}
@@ -329,7 +338,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 {: #getting-started-ubuntu_kubectl}
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux.
-1. Make the kubectl binary executable.
+1. Make the `kubectl` binary executable.
    ```sh
    chmod +x ./kubectl
    ```
