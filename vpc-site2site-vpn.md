@@ -4,7 +4,7 @@ copyright:
   years: 2023
 
 lastupdated: "2023-10-10"
-lasttested: "2023-03-27"
+lasttested: "2023-10-10"
 
 content-type: tutorial
 services: schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs
@@ -80,7 +80,7 @@ In addition:
 {: step}
 
 1. Log in to [{{site.data.keyword.cloud_notm}}](/).
-1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.2) Under the **Specify Template** section, verify:
+1. Navigate to [Create {{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn&terraform_version=terraform_v1.5) Under the **Specify Template** section, verify:
    1.  **Repository URL** is `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-site2site-vpn`
    1. **Terraform version** is **terraform_v1.2**
 2. Under **Workspace details**,
