@@ -151,12 +151,12 @@ Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Cre
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
       - Click the browser **back** button to return to the VPC details page.
       - Repeat the previous three steps to attach a public gateway to each subnet.
-- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
+- For Kubernetes on Classic infrastructure see the reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
 - Choose a resource group.
 - Uncheck all zones except one.
 - Scale down to 1 **Worker nodes per zone**.
 - Choose the smallest **Worker Pool flavor**.
-- Enter a **Cluster name** **mycluster-tpcr**.
+- For the **Cluster name** use **mycluster-tpcr**.
 - Click **Create**.
   
 When the cluster is provisioned, leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
@@ -184,7 +184,7 @@ When the cluster is provisioned, leave the browser (*cluster overview*) tab open
 {: #trusted-profile-for-enterprise-security-cr3}
 {: step}
 
-With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external} You don't need it for the deployment, but might be interested in how it works nonetheless.
+With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the GitHub repository [**trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}. You don't need it for the deployment, but might be interested in how it works nonetheless.
 
 1. In the browser tab *cluster overview*, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
 2. In the top left, find the namespace selector and switch to **All namespaces**.
