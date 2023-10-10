@@ -323,7 +323,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 {: #getting-started-ubuntu_docker}
 
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
-1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
+1. Install Docker Engine on Ubuntu following the instructions from https://docs.docker.com/engine/install/ubuntu/.
 1. Verify the installation with:
    ```sh
    docker --version
@@ -331,13 +331,13 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {: pre}
 
-   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/install/linux/linux-postinstall/){: external} steps.
+   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/engine/install/linux-postinstall/){: external} steps.
    {: tip}
 
 ### kubectl
 {: #getting-started-ubuntu_kubectl}
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux.
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-linux.
 1. Make the `kubectl` binary executable.
    ```sh
    chmod +x ./kubectl
