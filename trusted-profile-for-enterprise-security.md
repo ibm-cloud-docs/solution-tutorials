@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-22"
-lasttested: "2023-07-14"
+lastupdated: "2023-10-10"
+lasttested: "2023-10-10"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -99,7 +99,7 @@ Instead of through user properties supplied by an identity provider, in this cas
 
 The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
 
-See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/cloud/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
+See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
 {: tip}
 
 
@@ -123,7 +123,7 @@ To put theory into praxis, you are going to authorize a containerized app to per
 
 For security reasons, the app is operating in a read-only mode. It tries to gather a list of your deployed resources. You will assign privileges to the app which determine which resources it can read. Moreover, you will deploy the app in a way, so that it is accessible from within the Kubernetes cluster only, not from the public internet.
 
-The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
+The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
 {: tip}
 
 ## Kubernetes cluster as compute resource
@@ -294,7 +294,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    
    ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
-5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/cloud/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
+5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
 6. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
 7. Move back to the browser tab *container shell* and run this command again to list resources:
    ```sh
@@ -322,5 +322,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #trusted-profile-for-enterprise-security-related}
 
 - The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}
-- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
-- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}
+- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
+- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}

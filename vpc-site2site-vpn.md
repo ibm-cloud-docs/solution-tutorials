@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2023
 
-lastupdated: "2023-05-08"
+lastupdated: "2023-10-10"
 lasttested: "2023-03-27"
 
 content-type: tutorial
@@ -50,7 +50,7 @@ A terraform configuration will create the following resources:
 2. The {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} private endpoint gateways to data services.
 3. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 4. A VPC/VPN Gateway is provisioned to allow private connectivity between on-premises resources and cloud resources.
-6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow TLS access to cloud resources including [access to virtual private endpoint gateways](/cloud/blog/creating-virtual-private-endpoint-gateways-with-terraform) through a VPN.
+6. The on-premises DNS resolver is connected to the cloud DNS Resolver Location to allow TLS access to cloud resources including [access to virtual private endpoint gateways](https://www.ibm.com/blog/creating-virtual-private-endpoint-gateways-with-terraform){: external} through a VPN.
 
 ## Before you begin
 {: #vpc-site2site-vpn-prereqs}

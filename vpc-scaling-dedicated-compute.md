@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-04"
+lastupdated: "2023-10-10"
 lasttested: "2023-10-04"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -325,7 +325,7 @@ In this section, you will also expand the block storage volume attached to the V
 {: #vpc-scaling-dedicated-compute-dedicated-next}
 {: step}
 
-Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones){: external}.
+Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones){: external}.
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}

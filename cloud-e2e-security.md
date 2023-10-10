@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-02"
+lastupdated: "2023-10-10"
 lasttested: "2023-10-02"
 
 content-type: tutorial
@@ -773,6 +773,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 * [{{site.data.keyword.Bluemix_notm}} Platform security](/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security){: external}
-* Blog: [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external}
-* Blog: [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/cloud/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security){: external}
-* Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/cloud/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2){: external}
+* Blog: [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external}
+* Blog: [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security){: external}
+* Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2){: external}

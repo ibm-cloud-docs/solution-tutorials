@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-29"
+lastupdated: "2023-10-10"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -323,7 +323,7 @@ Validate the latest version of the deployable architecture in your private catal
 
         From your private catalog, you can add configurations to the same project that contains your landing zone VPC deployments. Each configuration can support a different set of users with access by using VPN profiles that are specific to each configuration.
 
-    If you have other Terraform automation that you want to package as a deployable architecture for your teams to reuse, check out [Turn your Terraform templates into deployable architectures](https://www.ibm.com/cloud/blog/turn-your-terraform-templates-into-deployable-architectures){: external}.
+    If you have other Terraform automation that you want to package as a deployable architecture for your teams to reuse, check out [Turn your Terraform templates into deployable architectures](https://www.ibm.com/blog/turn-your-terraform-templates-into-deployable-architectures){: external}.
 
 ## Configure the OpenVPN client
 {: #solution-connect-client-vpn-openvpn}

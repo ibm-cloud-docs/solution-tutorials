@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-28"
+lastupdated: "2023-10-10"
 lasttested: "2023-01-26"
 
 content-type: tutorial
@@ -330,7 +330,7 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){: external}
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){: external}
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/blog/towards-zero-trust-with-context-based-restrictions){: external}
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/blog/announcements/introducing-context-based-restrictions){: external}
 * [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){: external}
 * Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)

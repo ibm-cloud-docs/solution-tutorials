@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-18"
+lastupdated: "2023-10-10"
 lasttested: "2023-05-18"
 
 content-type: tutorial
@@ -949,7 +949,7 @@ The second *application* team environment is identical to the first. **Optionall
 ### Continuous Delivery
 {: #vpc-tg-dns-iam-expand_cd}
 
-- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered. [Application Deployment to a Virtual Private Cloud with a DevOps Toolchain](https://www.ibm.com/cloud/blog/application-deployment-to-a-virtual-private-cloud-with-a-devops-toolchain){: external} demonstrates one solution.
+- Installation of software is currently done when the VPC instance is created. The delivery of new versions of software to production has not been considered.
 - For shared microservices, a new VSI could be created with a new version and after verification DNS could be adjusted or the shared load balancer could be used to switch to the new version.
 
 ### Automation, Staging, and Development
