@@ -147,6 +147,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc get ns
    ```
    {: pre}
+
 8. From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command. The project will hold the application created after installing the service mesh.
    ```sh
    oc new-project bookinfo
