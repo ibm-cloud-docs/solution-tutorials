@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-02-24"
+lastupdated: "2023-10-11"
+lasttested: "2023-10-11"
 
 content-type: tutorial
 services: openshift, containers
@@ -63,7 +63,7 @@ This tutorial requires:
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.12.x`). If they do not match, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.13.x`). If they do not match, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
 <!--#/istutorial#-->
@@ -79,7 +79,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
 1. Log into your {{site.data.keyword.cloud_notm}} account and create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **4.12.x version of {{site.data.keyword.openshiftshort}}**.
+2. Set the **Orchestration service** to **4.13.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
@@ -123,7 +123,7 @@ Take a note of the resource group selected above.  This same resource group will
 ### Access the cluster using the {{site.data.keyword.cloud-shell_notm}}
 {: #openshift-service-mesh-3}
 
-The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html){: external} exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/getting-started-cli.html){: external} exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
 
@@ -141,18 +141,30 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
 
-6. The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
+6. The version needs to be at minimum 4.13.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 7. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
    ```
    {: pre}
+8. From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command. The project will hold the application created after installing the service mesh.
+   ```sh
+   oc new-project bookinfo
+   ```
+   {: pre}
+
+   In {{site.data.keyword.redhat_openshift_notm}}, a project is a Kubernetes namespace with additional annotations.
+   {: tip}
+
 
 ## Install Service Mesh - Istio
 {: #openshift-service-mesh-install_istio}
 {: step}
 
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
+
+Some of the projects have multiple operators.  Be careful to install the ones specified below
+{: note}
 
 **Elasticsearch** - Based on the open source Elasticsearch project that enables you to configure and manage an Elasticsearch cluster for tracing and logging with Jaeger.
 
@@ -241,16 +253,7 @@ The end-to-end architecture of the application is shown below.
 
 {{site.data.keyword.redhat_openshift_notm}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
-1. From your **{{site.data.keyword.cloud-shell_short}}**, create a project called "bookinfo" with `oc new-project` command
-   ```sh
-   oc new-project bookinfo
-   ```
-   {: pre}
-
-   In {{site.data.keyword.redhat_openshift_notm}}, a project is a Kubernetes namespace with additional annotations.
-   {: tip}
-
-2. Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.redhat_openshift_notm}} cluster. This deploys both the v1 and v2 versions of the app,
+1. Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.redhat_openshift_notm}} cluster. This deploys all the microservice applications including versions v1, v2 and v3 of the reviews app.
    ```sh
    oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-2.2/samples/bookinfo/platform/kube/bookinfo.yaml
    ```
@@ -258,7 +261,7 @@ The end-to-end architecture of the application is shown below.
 
    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for {{site.data.keyword.redhat_openshift_notm}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-   An installation of {{site.data.keyword.redhat_openshift_notm}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-vs-community.html){: external} comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. {{site.data.keyword.redhat_openshift_notm}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+   An installation of {{site.data.keyword.redhat_openshift_notm}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-vs-community.html){: external} comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. {{site.data.keyword.redhat_openshift_notm}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
    {: tip}
 
 3. Verify that the pods are up and running.
@@ -289,9 +292,7 @@ Your bookinfo app is running, but you can't access it as the service is not yet 
 {: #openshift-service-mesh-ingress_gateway_route}
 {: step}
 
-The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer or node port on each service.
-
-An Ingress Gateway resource can be created to allow external requests through the Istio Ingress Gateway to the backing services.
+The components deployed on the service mesh by default are not exposed outside the cluster. An Ingress Gateway resource can be created to allow external requests through the Istio Ingress Gateway to the backing services.
 
 1. Configure the bookinfo default route with the Istio Ingress Gateway.
    ```sh
@@ -338,7 +339,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    ```
    {: pre}
 
-This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
+Open each twisty to see more of the dashboard. Choose different services in the **Service** drop down. This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
 ### Observe your Service mesh with Kiali
 {: #openshift-service-mesh-12}
@@ -538,7 +539,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 ## Related content
 {: #openshift-service-mesh-0}
 
-- [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html){: external}
+- [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external}
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
-- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.12/service_mesh/v2x/ossm-architecture.html){: external} - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
+- [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external} - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
 - [Istio Observability](https://istio.io/docs/concepts/observability/){: external}
