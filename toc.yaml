@@ -54,7 +54,6 @@ toc:
                 topics:
                 - multi-region-k8s-cis.md
                 - cloud-e2e-security.md
-                - extended-app-security.md
                 - cbr-enhanced-security.md
                 - trusted-profile-for-enterprise-security.md
 
