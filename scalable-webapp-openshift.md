@@ -682,15 +682,14 @@ In this step, you will automate the build and deploy process. Whenever you updat
    - **Replace** `<secret>` in the webhook GitLab URL with the secret value under _gitlab_ in the above command output.
 3. Open your private git repo in a browser using the Git repo HTTPS link then click on **Settings** and click **Webhooks**.
 4. Paste the **URL**, select **Push events** as the **Trigger** and click on **Add webhook**. You should see `Webhook was created` message.
-5. Scroll to the bottom of the page, test the URL by clicking on **Test** and selecting **Push events**. You should see `Hook executed successfully: HTTP 200` message. This triggers a new build.
-6. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
+5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
    oc tag $MYREGISTRY/$MYNAMESPACE/${PRIVREPO}:latest ${PRIVREPO}:latest --scheduled=true
    ```
    {: pre}
 
-7. Open the cloned repository in an IDE to update the `h1` tag of local _public/index.html_ file and change it to `Congratulations! <insert your name>`.
-8. Save and push the code to the repository.
+6. Open the cloned repository in an IDE to update the `h1` tag of local _public/index.html_ file and change it to `Congratulations! <insert your name>`.
+7. Save and push the code to the repository.
    ```sh
     git add public/index.html
    ```
@@ -706,7 +705,7 @@ In this step, you will automate the build and deploy process. Whenever you updat
    ```
    {: pre}
 
-9. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
+8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $PRIVREPO` command. Refer to this [link](https://docs.openshift.com/container-platform/4.13/registry/#registry-third-party-registries_registry-overview){: external} for more info.
    {: tip}
