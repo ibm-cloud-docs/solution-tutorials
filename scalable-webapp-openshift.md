@@ -780,6 +780,6 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 ## Related content
 {: #scalable-webapp-openshift-0}
 
-* [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
+* [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-getting-started)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.13/nodes/pods/nodes-pods-autoscaling.html){: external}
 * [Secured routes](https://docs.openshift.com/container-platform/4.13/networking/routes/secured-routes.html){: external}
