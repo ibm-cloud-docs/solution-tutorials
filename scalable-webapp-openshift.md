@@ -772,6 +772,11 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    - Click on **Expand** next to **Advanced**.
    - Click on **Delete project** and confirm the deletion of the project.
 
+* Delete container image(s) from the 
+   - Using your browser, navigate to the repositories page for the [{{site.data.keyword.registryshort_notm}}](/registry/repos).
+   - Select the image(s) created as part of this tutorial and delete them.
+
+
 <!--##istutorial#-->
 * Delete the cluster you created.
 
