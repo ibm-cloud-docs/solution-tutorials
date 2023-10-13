@@ -753,6 +753,8 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 * Delete all resource objects specific to an application:
    ```sh
    oc delete all --selector app=$PRIVREPO
+   oc delete all --selector app=$PRIVREG
+   oc delete all --selector app=$MYPROJECT
    ```
    {: pre}
 
@@ -761,7 +763,7 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
 
 * Delete the project:
    ```sh
-   oc delete project $PRIVREPO
+   oc delete project $MYPROJECT
    ```
    {: pre}
 
