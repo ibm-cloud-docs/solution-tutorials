@@ -767,12 +767,12 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    ```
    {: pre}
 
-* Delete the application repository
+* Delete the application repository:
    - In the navigation panel of the Git repository page, click **Settings** > **General**.
    - Click on **Expand** next to **Advanced**.
    - Click on **Delete project** and confirm the deletion of the project.
 
-* Delete container image(s) from the 
+* Delete container image(s) from the {{site.data.keyword.registryshort_notm}}:
    - Using your browser, navigate to the repositories page for the [{{site.data.keyword.registryshort_notm}}](/registry/repos).
    - Select the image(s) created as part of this tutorial and delete them.
 
