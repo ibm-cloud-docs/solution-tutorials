@@ -767,6 +767,11 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    ```
    {: pre}
 
+* Delete the application repository
+   - In the navigation panel of the Git repository page, click **Settings** > **General**.
+   - Click on **Expand** next to **Advanced**.
+   - Click on **Delete project** and confirm the deletion of the project.
+
 <!--##istutorial#-->
 * Delete the cluster you created.
 
