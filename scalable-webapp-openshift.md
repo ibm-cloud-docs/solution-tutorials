@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-14"
-lasttested: "2023-10-14"
+lastupdated: "2023-10-16"
+lasttested: "2023-10-16"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -273,7 +273,7 @@ OpenShift Container Platform ships with a pre-configured and self-updating monit
    while sleep 1; do curl --max-time 2 -s http://$HOST/load/50; done
    ```
    {: pre}
-   
+
 2. In the **OpenShift web console**, switch to the **Administrator** view.
 3. Under **Observe**, select **Metrics**.
 4. In the expression box, enter the expression below, replace `<MYPROJECT>` by your project name and click **Run queries** to see the total container cpu usage in seconds in a graph.
