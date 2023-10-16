@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-13"
-lasttested: "2023-10-13"
+lastupdated: "2023-10-14"
+lasttested: "2023-10-14"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -48,7 +48,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes cluster
 
 1. The developer deploys a web application using the code from a remote Git repository. Optionally, the developer can also push the code to a private Git repository on {{site.data.keyword.Bluemix_notm}}.
 2. A container image is built from the code.
-3. The image is pushed to a local container registry that comes with the cluster or to a namespace in {{site.data.keyword.registrylong_notm}}.
+3. The image is pushed to a local container registry that comes with the cluster or to a namespace in the {{site.data.keyword.registrylong_notm}}.
 4. The application is deployed to a {{site.data.keyword.openshiftshort}} cluster by pulling the image.
 5. Users access the application through a public route.
 
@@ -101,20 +101,19 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](/kubernetes/catalog/create?platformType=openshift).
 2. Under **Infrastructure** choose **VPC** or **Classic**,
-   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the cluster. Create or us an existing VPC keeping in mind the following requirements:
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the cluster. Create or use an existing VPC keeping in mind the following requirements:
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name.
-      - Public gateway is attached to the subnet, for more details, see [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen2&interface=ui).
-   - Select the desired VPC.
-   - Select an existing **Cloud Object Storage** service or create one if required and then select.
+      - A public gateway is attached to the subnet, for more details, see [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen2&interface=ui).
 3. Under **Location**,
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure
       - Uncheck the inapplicable zones and subnets.
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions:
+   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure:
       - Select a **Resource group**.
       - Select a **Geography**.
       - Select **Single zone** as **Availability**.
       - Choose a **Worker zone**.
+      - For more details, see the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
 4. Set the **OpenShift version** to **4.13.x**.
 5. Select your **OpenShift Container Platform (OCP) license**.      
 6. Under **Worker pool**,
@@ -135,8 +134,8 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 
 1. When the cluster is ready, click on **OpenShift web console** to open the console.
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
-3. **Copy** the text under Log in with this token.
-4. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster.
+3. **Copy** the text found under **Log in with this token**.
+4. Once logged-in using the `oc login` command, run the command below to see all the namespaces in your cluster.
    ```sh
    oc get ns
    ```
@@ -162,7 +161,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 1. Navigate to your cluster from the [cluster list](/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
 1. Open the **{{site.data.keyword.openshiftshort}} web console**.
 1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your local terminal.
-1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
+1. Once logged-in using the `oc login` command, run the command below to see all the namespaces in your cluster
    ```sh
    oc get ns
    ```
@@ -194,7 +193,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    ```
    {: pre}
 
-   After creating a project using the above command, you are automatically switched to that project and all commands that follow run in the context of that project. If you need to switch projects or go back into that project at a later stage, use the `oc project <your-project>` command.
+   After creating a project using the above command, you are automatically switched to that project and all commands that follow run in the context of that project. If you need to switch projects or go back into that project at a later stage, use the `oc project $MYPROJECT` command.
    {: tip}
 
 ### Deploy an application
@@ -208,10 +207,10 @@ With the `oc new-app` command you can create applications from source code in a 
    ```
    {: pre}
 
-   If a Jenkins file exists in the root or specified context directory of the source repository when creating a new application, {{site.data.keyword.openshiftshort}} generates a `pipeline` build strategy. Otherwise, it generates a `source` build strategy.You can always override the build strategy by setting the `--strategy` flag.
+   If a Jenkins file exists in the root or specified context directory of the source repository when creating a new application, {{site.data.keyword.openshiftshort}} generates a `pipeline` build strategy. Otherwise, it generates a `source` build strategy. You can always override the build strategy by setting the `--strategy` flag.
    {: tip}
 
-2. To check the builder container image creation and pushing to the Internal {{site.data.keyword.openshiftshort}} Container Registry (OCR), run the command below.
+2. To check the builder container image creation and pushing to the internal {{site.data.keyword.openshiftshort}} Container Registry (OCR), run the command below.
    ```sh
    oc logs -f buildconfig/$MYPROJECT
    ```
@@ -220,7 +219,7 @@ With the `oc new-app` command you can create applications from source code in a 
    Your cluster is set up with the internal {{site.data.keyword.openshiftshort}} Container Registry so that {{site.data.keyword.openshiftshort}} can automatically build, deploy, and manage your application lifecycle from within the cluster. 
    {: tip}
 
-3. Wait till the build is successful and the image is pushed. You can check the status of deployment and service by running the command below.
+3. Wait until the build is successful and the image is pushed. You can check the status of deployment and service by running the command below.
    ```sh
    oc status
    ```
@@ -229,15 +228,15 @@ With the `oc new-app` command you can create applications from source code in a 
 ### Access the application through IBM provided domain
 {: #scalable-webapp-openshift-16}
 
-To access the app, you need to create a route. A route announces your service to the world.
+To access the application, you need to create a route. A route announces your service to the world.
 
-1. Create a route by running the below command in a terminal.
+1. Create a route by running the command below in a terminal.
    ```sh
    oc expose service/$MYPROJECT
    ```
    {: pre}
 
-2. You can access the application through IBM provided domain. Run the below command to obtain the URL.
+2. You can access the application through an IBM provided domain. Run the command below to obtain the URL.
    ```sh
    oc get route/$MYPROJECT
    ```
@@ -348,7 +347,7 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
 
 {{site.data.keyword.registrylong_notm}} provides a multi-tenant, highly available, scalable, and encrypted private image registry that is hosted and managed by {{site.data.keyword.IBM_notm}}. You can use {{site.data.keyword.registrylong_notm}} by setting up your own image namespace and pushing container images to your namespace.
 
-1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run:
    ```sh
    ibmcloud cr region
    ```
@@ -378,7 +377,7 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
    ```
    {: pre}
 
-5. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
+5. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key:
 
    ```sh
    export API_KEY=<YOUR_API_KEY>
@@ -400,7 +399,7 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
    ```
    {: pre}
 
-8. For the image pull secret to take effect, you need to add it in the `default` service account
+8. For the image pull secret to take effect, you need to add it in the `default` service account:
    ```sh
    oc secrets link serviceaccount/default secrets/all-icr-io --for=pull
    ```
@@ -411,13 +410,13 @@ In this section, you will learn how to use a remote private {{site.data.keyword.
 
 In this section, you will clone a GitHub repository which comes with a template file and a shell script to generate a `yaml` file from your previously created environment variables. The generated file is used to build a container image, push the image to the private container registry and deploy a new application.
 
-1. In a terminal, run the below command to clone the GitHub repository to your machine:
+1. In a terminal, run the command below to clone the GitHub repository to your machine:
    ```sh
    git clone https://github.com/IBM-Cloud/openshift-node-app
    ```
    {: pre}
 
-2. Change to the application directory,
+2. Change to the application directory:
    ```sh
    cd openshift-node-app
    ```
@@ -491,19 +490,19 @@ In this step, you run a script to update the sections of the `openshift.template
 
 In this section, you will deploy the application to the cluster using the generated **openshift_private_registry.yaml** file. Once deployed, you will access the application by creating a route. 
 
-1. Create a new OpenShift application along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+1. Create a new OpenShift application along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml.
    ```sh
    oc apply -f openshift_private_registry.yaml
    ```
    {: pre}
 
-2. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
+2. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the command below.
    ```sh
    oc logs -f bc/$PRIVREG
    ```
    {: pre}
 
-   In the logs, you should see the below message if the container image is pushed to the private container registry 
+   In the logs, you should see the below message if the container image is pushed to the private container registry.
    ```sh
    Pushing image us.icr.io/mods15/vmac-openshift-app-registry:latest ...
    Getting image source signatures
@@ -524,7 +523,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {: screen}
 
-3. You can check the status of deployment and service using
+3. You can check the status of deployment and service.
    ```sh
    oc status
    ```
@@ -545,7 +544,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {: pre}
 
-6. You can access the application through IBM provided domain. Run the below command to obtain the URL.
+6. You can access the application through IBM provided domain. Run the command below to obtain the URL.
    ```sh
    oc get route/$PRIVREG
    ```
@@ -645,7 +644,7 @@ To generate a deploy token:
    {: pre}   
 
 
-8. You can access the application through IBM provided domain. Run the below command to obtain the URL.
+8. You can access the application through IBM provided domain. Run the command below to obtain the URL.
    ```sh
    oc get route/$PRIVREPO
    ```
