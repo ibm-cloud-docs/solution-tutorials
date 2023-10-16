@@ -204,15 +204,15 @@ For this tutorial, we are going to define the following network zones:
 
 Thereafter, we are going to define context rules as follows:
 * for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr) from zones:
-  * {{site.data.keyword.containershort_notm}} cluster
-  * {{site.data.keyword.cos_short}}
+   * {{site.data.keyword.containershort_notm}} cluster
+   * {{site.data.keyword.cos_short}}
 * for the access to the [{{site.data.keyword.cos_short}} instance and its bucket](/docs/cloud-object-storage?topic=cloud-object-storage-setting-a-firewall) from zones:
-  * {{site.data.keyword.containershort_notm}} cluster
-  * homezone
+   * {{site.data.keyword.containershort_notm}} cluster
+   * homezone
 * for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr) from zones:
-  * {{site.data.keyword.containershort_notm}} cluster
+   * {{site.data.keyword.containershort_notm}} cluster
 * for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr) from zones:
-  * homezone
+   * homezone
 
 All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command. Note that the rules are not meant for production use, but as a sample to investigate usage and traffic in report-only mode.
 
