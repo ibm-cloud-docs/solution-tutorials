@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-21"
-lasttested: "2023-09-21"
+lastupdated: "2023-10-24"
+lasttested: "2023-10-24"
 
 content-type: tutorial
 services: cloud-object-storage, EventStreams, AnalyticsEngine, sql-query, key-protect
@@ -154,7 +154,7 @@ You now see the status `Queued` for your topic. It may take up to 5 minutes unti
 1. Open [{{site.data.keyword.cloud-shell_short}}](/shell).
 1. Define `WORKSPACE_ID`
    ```sh
-   export WORKSPACE_ID=<your workspace id>
+   WORKSPACE_ID=<your workspace id>
    ```
    {: pre}
 
@@ -287,7 +287,6 @@ For later analysis purposes increase the message volume sent to {{site.data.keyw
 
 Depending on how long you ran the transfer, the number of files on {{site.data.keyword.cos_short}} has certainly grown. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
-
 1. Back in the **Details** view edit the {{site.data.keyword.sqlquery_short}}.
    * Click on the drop down next to **Jobs** and select **Streaming**.
    * Open the **Details** and click on the **Query the result**.
@@ -382,203 +381,130 @@ Depending on how long you ran the transfer, the number of files on {{site.data.k
 
 The data stream landed to {{site.data.keyword.cos_short}} can be also queried using Apache Spark that is part of the {{site.data.keyword.iae_short}} serverless instance. Programs will need to be loaded into a bucket and executed from the command line. The pyspark python environment will be used in this tutorial.
 
-Open the analytics engine service:
+### Submit a simple job to the Spark runtime
+{: #big-data-log-analytics-simple-spark}
 
-1. Access the {{site.data.keyword.iae_short}} service instance from the [Resource List](/resources){: external} under **Analytics**.
-2. Click the **Applications** tab.
+1. In case your {{site.data.keyword.cloud-shell_short}} connection has expired, reconnect the session and restore the environment variables:
+   ```sh
+   WORKSPACE_ID=<your workspace id>
+   OUTPUTS_JSON=$(ibmcloud schematics output -id $WORKSPACE_ID --output json)
+   ```
+   {: pre}
 
+1. Get the variables to set for the next steps:
+   ```sh
+   echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_01_env_variables | .value'
+   ```
+   {: pre}
 
-Try the following:
+1. Copy and paste the result in {{site.data.keyword.cloud-shell_short}}.
+1. Run a program that is built into the IBM spark runtime to print some output:
+   ```sh
+   eval "$(echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_02_run_word_count | .value')"
+   ```
+   {: pre}
 
-If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target the region and resource group you have been using (edit for your specifics):
-```sh
-ibmcloud target -r <region> -g <resource group>
-```
-{: codeblock}
+   To view the command before they get executed run `echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_02_run_word_count | .value'`
+   {: tip}
 
-Record the guid of the {{site.data.keyword.iae_short}} and set a shell variable:
-```sh
-ibmcloud resource service-instance log-analysis-iae
-```
-{: codeblock}
+1. Back in the {{site.data.keyword.iae_short}} instance on the **Applications** click refresh to see the status of the application. Notice the submitted job. Eventually it gets marked as **Finished**.
 
-```sh
-GUID=<YOUR GUID>
-```
-{: codeblock}
+### View the simple job output
+{: #big-data-log-analytics-view-spark-log}
 
-Enable output to the platform logs that you created earlier in the region:
-
-```sh
-ibmcloud ae-v3 log-config update --instance-id $GUID --enable=true
-```
-{: codeblock}
-
-Run a program that is built into the IBM spark runtime to print some output:
-```sh
-ibmcloud ae-v3 spark-app submit --instance-id $GUID \
-  --app "/opt/ibm/spark/examples/src/main/python/wordcount.py" \
-  --arg '["/opt/ibm/spark/examples/src/main/resources/people.txt"]'
-```
-{: codeblock}
-
-Back in the {{site.data.keyword.iae_short}} instance on the **Applications** click refresh to see the status of the application.
-
-Open the platform logs for the region:
-
-1. Navigate to the [Observability](/observe){: external} page and click **Logging**, look for the existing log analysis service in the region with `Platform logs` enabled.
+1. Navigate to the [Logging](/observe/logging){: external} page, look for the existing {{site.data.keyword.la_short}} service in the region with `Platform logs` enabled.
 2. Click **Open dashboard**.
-3. In a few minutes you should see the logs associated with the program
+3. In a few minutes you should see the logs associated with the program.Search for `host:ibmanalyticsengine`. There will be a lot of output. Look for:
 
-Search for `host:ibmanalyticsengine`. There will be a lot of output. Look for:
-```text
-Michael,: 1
-29: 1
-Andy,: 1
-30: 1
-Justin,: 1
-19: 1
-```
-{: codeblock}
+   ```text
+   Michael,: 1
+   29: 1
+   Andy,: 1
+   30: 1
+   Justin,: 1
+   19: 1
+   ```
+   {: codeblock}
 
-On your laptop create the following file with the name hello.py:
+### Run hello world
+{: #big-data-log-analytics-hello-world}
 
-hello.py:
-```python
-def main():
-  print("hello world")
+During provisioning, {{site.data.keyword.bpshort}} created a simple `hello.py` file in the {{site.data.keyword.cos_short}} bucket.
 
-if __name__ == '__main__':
-  main()
-```
-{: codeblock}
+1. Run the `hello.py` script as an application in the IBM spark runtime:
+   ```sh
+   eval "$(echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_03_run_hello_world | .value')"
+   ```
+   {: pre}
 
-Then upload hello.py to your bucket `ABC-log-analysis`
+   To view the command before they get executed run `echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_03_run_hello_world | .value'`
+   {: tip}
 
-1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources){: external} under **Storage**.
-2. Under **Buckets**, select your bucket.
-3. Drag and drop hello.py into the bucket.
+1. In the {{site.data.keyword.iae_short}} instance on the **Applications**, click refresh to see the status of the application. Wait for it to finish.
+1. Look for `hello world` in the Platform Logs.
 
-To run the hello.py application just uploaded to the bucket locate the **HMAC** credentials associated with the {{site.data.keyword.cos_short}} instance created earlier. Click on the **Service credentials** tab and open the **cos-for-log-analysis** credentials. Create corresponding shell variables for the cos_hmac_keys and your bucket name. Learn more about the service variable in the [stocator](https://github.com/CODAIT/stocator#stocator-and-ibm-cloud-object-storage-ibm-cos){: external} project.
+### Run an application going through the files created by the stream landing configuration
+{: #big-data-log-analytics-cos-app}
 
-Click **Buckets** on the left, and select your bucket. Open the **Configuration** tag and scroll down to the **Endpoints** section and notice the **Direct** endpoint. Fill in these shell variables. Something like the following:
+The final step is to submit the spark application that accesses the data in the same bucket. The `solution.py` Python script has already been created by {{site.data.keyword.bpshort}} in the {{site.data.keyword.cos_short}} bucket.
 
-```sh
-# GUID= set earlier
-service=hello
-access_key_id="0012345678901234567899550cfa9a60"
-secret_access_key="00f02d12345678948bc82602c123456789963849c68c0f19"
-endpoint=s3.direct.us-south.cloud-object-storage.appdomain.cloud
-bucket=ABC-log-analysis
-```
-{: codeblock}
+The script requires you to provide the ID of the {{site.data.keyword.sqlquery_short}} job used by stream landing.
 
-Submit the hello application. Notice the single and double quotes, it is a little tricky:
-```sh
-ibmcloud ae-v3 spark-app submit --instance-id $GUID \
-  --app "cos://$bucket.$service/hello.py" \
-  --conf '{
-        "spark.hadoop.fs.cos.'$service'.endpoint": "https://'$endpoint'",
-        "spark.hadoop.fs.cos.'$service'.access.key": "'$access_key_id'",
-        "spark.hadoop.fs.cos.'$service'.secret.key": "'$secret_access_key'"
-        }' 
-```
-{: codeblock}
+1. Navigate to the [resource list](/resources){: external} and under **Storage**, click on `log-analysis-cos` service.
+1. Select the bucket ending with `-bucket`
+1. Click the second object.
+1. In the side panel, the full object name is visible with a format similar to `logs-stream-landing/topic=webserver/jobid=123456-aaa-4444-bbbb-08f3d1626c46`. Write down the job ID. In this example the job ID is `123456-aaa-4444-bbbb-08f3d1626c46`
+1. In {{site.data.keyword.cloud-shell_short}}, define a JOB_ID variable:
+   ```sh
+   JOB_ID=<the value you got from the bucket object>
+   ```
+   {: pre}
 
-Again verify the results in the platform log.
+1. Run the `solution.py` application
+   ```sh
+   eval "$(echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_04_run_solution | .value')"
+   ```
+   {: pre}
 
-The final step is to submit the spark application that accesses the data in the same bucket. Create a file, solution.py, with the following contents and upload it to the bucket. Notice the COS_PARQUET environment variable that will be initialized in the next step.
+   To view the command before they get executed run `echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .iae_04_run_solution | .value'`
+   {: tip}
 
-solution.py:
+1. In the {{site.data.keyword.iae_short}} instance on the **Applications**, click refresh to see the status of the application. Wait for it to finish.
+1. Look for the application logs in the Platform Logs. 
 
-```python
-from pyspark.sql import SparkSession
-from pyspark.sql import SQLContext
-import os
-import sys
-
-def main():
-  # COS_PARQUET in format: cos://<bucket>.<service>/landing_folder/topic=<topic>/jobid=<jobid>/
-  # like cos://ABC-log-analysis.solution/logs-stream-landing/topic=webserver/jobid=48914a16-1d33-4d3e-93e3-7efb855b662e/
-  print("solution v1.0")
-  if "COS_PARQUET" not in os.environ:
-    print("COS_PARQUET must be in environment")
-    return 1
-  cos_parquet = os.environ["COS_PARQUET"]
-  print(f"cos_parquet: {cos_parquet}")
-
-  spark = SparkSession.builder.appName("solution").getOrCreate()
-  sc = spark.sparkContext
-  sqlContext = SQLContext(sc)
-
-  df = spark.read.parquet(cos_parquet)
-  sqlContext.registerDataFrameAsTable(df, "Table")
-  df_query = sqlContext.sql("SELECT * FROM Table LIMIT 10")
-  df_query.show(10)
-  return 0
-
-if __name__ == '__main__':
-  sys.exit(main())
-```
-{: codeblock}
-
-Now submit the spark application that accesses the data in the same bucket. Note that you will need to substitute in your jobid instead of `01234567-0123-0123-0123-012345678901`. Recheck the full path to the jobid in the {{site.data.keyword.cos_short}} bucket
-
-```sh
-jobid=01234567-0123-0123-0123-012345678901
-service=solution
-endpoint=s3.direct.us-south.cloud-object-storage.appdomain.cloud
-ibmcloud ae-v3 spark-app submit --instance-id $GUID \
-  --app "cos://$bucket.$service/solution.py" \
-  --conf '{
-        "spark.hadoop.fs.cos.'$service'.endpoint": "https://'$endpoint'",
-        "spark.hadoop.fs.cos.'$service'.access.key": "'$access_key_id'",
-        "spark.hadoop.fs.cos.'$service'.secret.key": "'$secret_access_key'"
-        }' \
-  --env '{
-        "COS_PARQUET": "cos://'$bucket'.'$service'/logs-stream-landing/topic=webserver/jobid='$jobid'/"
-        }'
-```
-{: codeblock}
-
-Check out the platform log and look for something that looks like this:
-
-```text
-+---------------------------+-----+--------------------+--------------------+------------+--------------------+
-|_corrupt_or_schema_mismatch|bytes|                host|             request|responseCode|          time_stamp|
-+---------------------------+-----+--------------------+--------------------+------------+--------------------+
-|                       null| 9867|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
-|                       null| 7634|piweba3y.prodigy.com|GET /shuttle/miss...|         200|[01/Jul/1995:04:1...|
-|                       null|25218|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
-|                       null| 4441|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
-|                       null| 1414|      ntigate.nt.com|GET /images/const...|         200|[01/Jul/1995:04:1...|
-|                       null|45308|line03.pm1.abb.mi...|GET /shuttle/miss...|         200|[01/Jul/1995:04:1...|
-|                       null|  669|  source.iconz.co.nz|GET /images/WORLD...|         200|[01/Jul/1995:04:1...|
-|                       null|  234|  source.iconz.co.nz|GET /images/USA-l...|         200|[01/Jul/1995:04:1...|
-|                       null|  363|  source.iconz.co.nz|GET /images/MOSAI...|         200|[01/Jul/1995:04:1...|
-|                       null|13372|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
-+---------------------------+-----+--------------------+--------------------+------------+--------------------+
-
-```
-{: codeblock}
+   ```text
+   +---------------------------+-----+--------------------+--------------------+------------+--------------------+
+   |_corrupt_or_schema_mismatch|bytes|                host|             request|responseCode|          time_stamp|
+   +---------------------------+-----+--------------------+--------------------+------------+--------------------+
+   |                       null| 9867|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
+   |                       null| 7634|piweba3y.prodigy.com|GET /shuttle/miss...|         200|[01/Jul/1995:04:1...|
+   |                       null|25218|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
+   |                       null| 4441|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
+   |                       null| 1414|      ntigate.nt.com|GET /images/const...|         200|[01/Jul/1995:04:1...|
+   |                       null|45308|line03.pm1.abb.mi...|GET /shuttle/miss...|         200|[01/Jul/1995:04:1...|
+   |                       null|  669|  source.iconz.co.nz|GET /images/WORLD...|         200|[01/Jul/1995:04:1...|
+   |                       null|  234|  source.iconz.co.nz|GET /images/USA-l...|         200|[01/Jul/1995:04:1...|
+   |                       null|  363|  source.iconz.co.nz|GET /images/MOSAI...|         200|[01/Jul/1995:04:1...|
+   |                       null|13372|      ntigate.nt.com|GET /software/win...|         200|[01/Jul/1995:04:1...|
+   +---------------------------+-----+--------------------+--------------------+------------+--------------------+
+   ```
+   {: codeblock}
 
 ## Expand the tutorial
 {: #big-data-log-analytics-expand}
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Follow the [Build a data lake using {{site.data.keyword.cos_short}}](/docs/solution-tutorials?topic=solution-tutorials-smart-data-lake) tutorial to add a dashboard to log data.
 
-
 ## Remove services
 {: #big-data-log-analytics-removal}
 {: step}
 
-1. From the [Resource List](/resources?search=log-analysis){: external}, use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
-
-   * log-analysis-es
-   * log-analysis-sql
-   * log-analysis-cos
-   * log-analysis-iae
-2. Before deleting the `log-analysis-kp` service, delete the root key.
+1. From the [Resource List](/resources?search=log-analysis){: external}, select the *log-analysis-kp** service instance.
+1. Delete the key with a name starting with `streaming-job`. This key was created outside of {{site.data.keyword.bpshort}} and should be deleted first.
+1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces) and select your workspace.
+1. Under **Actions**, select **Destroy resources**.
+1. Wait for {{site.data.keyword.bpshort}} to destroy all resources.
+1. Delete the workspace.
 3. Navigate to [Manage > Access (IAM) > Service IDs](/iam/serviceids){: external} in the {{site.data.keyword.cloud_notm}} console and **Remove** the `log-stream-landing-service-id` serviceID.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
