@@ -74,7 +74,6 @@ In this section, you will create the services required to perform analysis of lo
 {{site.data.keyword.iae_short}} serverless instance has limited availability. Dallas, `us-south`, was verified for this tutorial.
 {: note}
 
-
 ### Enable Platform Logs
 {: #big-data-log-analytics-platform-logs}
 
@@ -147,31 +146,38 @@ In this section, you will learn how to run a fully-managed stream data ingestion
 
 You now see the status `Queued` for your topic. It may take up to 5 minutes until the streaming job is fully dispatched and up and running. You will see the status switch to `Running` at that point. In the context menu, you find a new option called `View stream landing configuration`.
 
+### Prepare {{site.data.keyword.cloud-shell_short}}
+{: #big-data-log-analytics-prepare-shell}
+
+1. In [{{site.data.keyword.bpshort}}](/schematics/workspaces), select the workspace you created.
+1. In **Settings**, locate the **Workspace ID**.
+1. Open [{{site.data.keyword.cloud-shell_short}}](/shell).
+1. Define `WORKSPACE_ID`
+   ```sh
+   export WORKSPACE_ID=<your workspace id>
+   ```
+   {: pre}
+
+1. Retrieve all the outputs produced by the workspace. They include useful command lines you will be able to execute
+   ```sh
+   OUTPUTS_JSON=$(ibmcloud schematics output -id $WORKSPACE_ID --output json)
+   ```
+   {: pre}
+
 ### Using kcat with {{site.data.keyword.messagehub}}
 {: #big-data-log-analytics-kafkatools}
 
 The streaming job is currently idle and awaiting messages. In this section, you will configure the tool [kcat](https://github.com/edenhill/kcat){: external} to work with {{site.data.keyword.messagehub}}. kcat allows you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}. Below the Kafka message feed will be persisted in your data lake on {{site.data.keyword.cos_full_notm}} .
 
-1. Either [install kcat](https://github.com/edenhill/kcat){: external} on your machine or use it via Docker.
-2. Change into a new directory and create a text file named `kcat.config` with the following contents. The value for `bootstrap.servers` is the comma-separated list of brokers from the **es-for-log-analysis** service credentials created earlier in the {{site.data.keyword.messagehub}} service without any quotes, brackets, or newline characters.
+1. Create the configuration file for `kcat` for on output from {{site.data.keyword.bpshort}}:
    ```sh
-   bootstrap.servers=<value of property kafka_brokers_sasl in your credentials>
-   sasl.mechanism=PLAIN
-   security.protocol=SASL_SSL
-   sasl.username=token
-   sasl.password=<value of property password in your credentials>
-   ```
-   {: codeblock}
-
-3. If you installed kcat, run the following command:
-   ```sh
-   kcat -F kcat.config -P -t webserver
+   echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .kcat_config | .value' > kcat.config
    ```
    {: pre}
 
-   If you use Docker, run:
+1. Run `kcat`
    ```sh
-   docker run -v  ${PWD}:/bdla -w /bdla -it --network=host edenhill/kcat:1.7.0 -F kcat.config -P -t webserver
+   docker run -v  ${PWD}:/bdla -w /bdla -it edenhill/kcat:1.7.0 -F kcat.config -P -t webserver
    ```
    {: pre}
 
@@ -190,7 +196,7 @@ You can check the landed data in the {{site.data.keyword.sqlquery_short}} UI and
 
 1. Navigate to the [resource list](/resources){: external} and under **Databases**, click on `log-analysis-sql` service.
 2. Click on **Launch {{site.data.keyword.sqlquery_short}} UI** to open the {{site.data.keyword.sqlquery_short}} UI. You should see the streaming job `Running`. 
-3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing.  Notice the **Result location** it will be used shortly to query the data.
+3. Click on the **Details** tab to see the actual SQL statement that was submitted to {{site.data.keyword.sqlquery_short}} for the stream landing. Notice the **Result location** it will be used shortly to query the data.
    ![{{site.data.keyword.sqlquery_short}} console](images/solution31/sql_query_console.png){: caption="{{site.data.keyword.sqlquery_short}} console" caption-side="bottom"}
 
    The Select statement would looks like 
@@ -259,13 +265,17 @@ For later analysis purposes increase the message volume sent to {{site.data.keyw
 
    The script accepts a file name, the number of lines to output as chunk, and how many seconds to wait in between.
 
-3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines:
+1. Make the script executable:
    ```sh
-   ./rate_limit.sh NASA_logs.json 10 1 | kcat -F kcat.config -P -t webserver
+   chmod +x rate_limit.sh
    ```
    {: pre}
 
-   If you are using Docker, replace the part after the `|` accordingly.
+3. Run the following command to send lines each from the access log to {{site.data.keyword.messagehub}}. It uses the converted log file from above, sends 10 lines each and waits 1 second before sending the next lines:
+   ```sh
+   ./rate_limit.sh NASA_logs.json 10 1 | docker run -v  ${PWD}:/bdla -w /bdla -i edenhill/kcat:1.7.0 -F kcat.config -P -t webserver
+   ```
+   {: pre}
 
 4. The script configuration above pushes about 10 lines/second. Stop the script after the desired number of messages have been streamed using `control+C`.
 5. In your browser, return to the {{site.data.keyword.sqlquery_short}} UI and the **Details** tab. There, click on **Query the result** and then click **Run** to see some received messages under the `Results` tab of the batch job. 
