@@ -169,7 +169,7 @@ You now see the status `Queued` for your topic. It may take up to 5 minutes unti
 
 The streaming job is currently idle and awaiting messages. In this section, you will configure the tool [`kcat`](https://github.com/edenhill/kcat){: external} to work with {{site.data.keyword.messagehub}}. `kcat` allows you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}. Below the Kafka message feed will be persisted in your data lake on {{site.data.keyword.cos_full_notm}} .
 
-1. Either [install `kcat`](https://github.com/edenhill/kcat){: external} on your machine or use it via Docker.
+1. Either [install `kcat`](https://github.com/edenhill/kcat){: external} on your machine or use it via Docker. The tutorial uses the Docker image.
 2. Change into a new directory and create a text file named `kcat.config` with the following contents. The value for `bootstrap.servers` is the comma-separated list of brokers from the **es-for-log-analysis** service credentials created earlier in the {{site.data.keyword.messagehub}} service without any quotes, brackets, or newline characters.
    ```sh
    echo $OUTPUTS_JSON | jq -r '.[] | .output_values | .[] | .kcat_config | .value' > kcat.config
