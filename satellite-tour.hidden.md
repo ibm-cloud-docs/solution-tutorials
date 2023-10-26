@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-16"
-lasttested: "2021-11-15"
+lastupdated: "2023-10-26"
+lasttested: "2023-10-26"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -364,6 +364,8 @@ The next step is to create a {{site.data.keyword.satelliteshort}} configuration 
    ```sh
    oc get configmaps
    ```
+   {: pre}
+
 1. The config map was automatically deployed to this cluster by {{site.data.keyword.satelliteshort}} Config. Retrieve its values and check the **Data** section:
    ```sh
    oc describe configmap example
