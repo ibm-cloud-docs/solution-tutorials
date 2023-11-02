@@ -418,3 +418,4 @@ Automating the creation of client-to-site VPN connections to your secure landing
 {: #connect-client-vpn-related}
 
 Tutorial: [Connect a VPC landing zone to a network by using a site-to-site VPN](/docs/solution-tutorials?topic=solution-tutorials-connect-landingzone-site-vpn)
+
