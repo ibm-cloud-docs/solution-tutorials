@@ -153,9 +153,9 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
     - Product type: Deployable architecture
     - Delivery method: Terraform
     - Repository type: Public repository
-    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz
+    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.6.1.tar.gz
     - Variation: Standard
-    - Software Version: 1.4.13
+    - Software Version: 1.6.1
 1.  Click **Add product**.
 1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
 
@@ -174,7 +174,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboar
     - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```sh
-    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.13 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
+    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.6.1 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.6.1.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
     ```
     {: pre}
 
@@ -203,7 +203,7 @@ Make sure you have your development environment configured:
 1.  Clone the relevant modules to your computer. Update the `--branch` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```bash
-    git clone --branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
+    git clone --branch v1.6.1 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
     ```
     {: pre}
 
@@ -236,7 +236,7 @@ Make sure you have your development environment configured:
     Set to the region referred to by the `vpc_id`
     input variable, where the VPC is located.
     */
-    region                         = "<region where the existing VPC is located>”
+    region                         = "<region where the existing VPC is located>"
     resource_group                 = "<landingzone_prefix>-management-rg"
     existing_sm_instance_guid      = "<secretmgr_guid>"
     existing_sm_instance_region    = "<secretmgr_region>"
@@ -246,7 +246,7 @@ Make sure you have your development environment configured:
     the network that uses the new VPN connection. Make sure that
     they are members of your IBM Cloud account.
     */
-    vpn_client_access_group_users  = ["user1@example.com",”user2@example.com”]
+    vpn_client_access_group_users  = ["user1@example.com","user2@example.com"]
 
     /*
     CIDR range to use from the first and second zone in the region to 
