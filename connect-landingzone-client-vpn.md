@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-10"
+lastupdated: "2023-11-02"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -82,14 +82,14 @@ The module creates and configures the following infrastructure:
     - Configures a private certificate engine in the {{site.data.keyword.secrets-manager_short}} instance
     - Creates a secret group
     - Creates a private certificate (the "secret") from the private certificate engine in the secret group
-- Creates a subnet named `client-to-site-subnet` in the landing zone management VPC.
+- Creates a subnet named `client-to-site-subnet-1` in the landing zone management VPC.
 
    The network ACL on this subnet grants all access from any source.
 - Creates a security group named `client-to-site-sg` that allows all incoming requests from any source.
 - Creates an IAM access group that allows users to authenticate and connect to the client-to-site VPN gateway.
 - Creates a client-to-site VPN gateway:
     - Uses the private certificate that is generated and stored in the {{site.data.keyword.secrets-manager_short}} instance
-    - Locates the gateway in the `client-to-site-subnet` subnet
+    - Locates the gateway in the `client-to-site-subnet-1` subnet
     - Attaches the `client-to-site-sg` to the client-to-site VPN gateway
     - Configures routes to allow access to the landing zone VPCs (management and workload)
 
@@ -153,9 +153,9 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
     - Product type: Deployable architecture
     - Delivery method: Terraform
     - Repository type: Public repository
-    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz
+    - Source URL: https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.6.1.tar.gz
     - Variation: Standard
-    - Software Version: 1.4.13
+    - Software Version: 1.6.1
 1.  Click **Add product**.
 1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
 
@@ -174,7 +174,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboar
     - Update the `--target-version` and `--zipurl` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```sh
-    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.4.13 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.4.13.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
+    ibmcloud catalog offering create --catalog "My deployable architectures" --name "deploy-arch-ibm-slz-c2s-vpn" --target-version 1.6.1 --zipurl https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn/archive/refs/tags/v1.6.1.tar.gz --include-config  --variation "standard"  --format-kind terraform  --product-kind solution --install-type extension`
     ```
     {: pre}
 
@@ -203,7 +203,7 @@ Make sure you have your development environment configured:
 1.  Clone the relevant modules to your computer. Update the `--branch` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
 
     ```bash
-    git clone --branch v1.4.13 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
+    git clone --branch v1.6.1 https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn
     ```
     {: pre}
 
@@ -236,7 +236,7 @@ Make sure you have your development environment configured:
     Set to the region referred to by the `vpc_id`
     input variable, where the VPC is located.
     */
-    region                         = "<region where the existing VPC is located>”
+    region                         = "<region where the existing VPC is located>"
     resource_group                 = "<landingzone_prefix>-management-rg"
     existing_sm_instance_guid      = "<secretmgr_guid>"
     existing_sm_instance_region    = "<secretmgr_region>"
@@ -246,7 +246,28 @@ Make sure you have your development environment configured:
     the network that uses the new VPN connection. Make sure that
     they are members of your IBM Cloud account.
     */
-    vpn_client_access_group_users  = ["user1@example.com",”user2@example.com”]
+    vpn_client_access_group_users  = ["user1@example.com","user2@example.com"]
+
+    /*
+    CIDR range to use from the first and second zone in the region to 
+    enable HA. If vpn_subnet_cidr_zone_2 not specified, VPN will only be 
+    deployed to a single zone (standalone deployment).
+    */
+    vpn_subnet_cidr_zone_1         = "<cidr_zone_1>"
+    vpn_subnet_cidr_zone_2         = "<cidr_zone_2>"
+
+    /*
+    Optionally pass a list of existing subnet names 
+    (supports a maximum of 2) to use for the client-to-site VPN. If 
+    no subnets passed, new subnets will be created using the CIDR 
+    ranges specified in the vpn_subnet_cidr_zone_1 and 
+    vpn_subnet_cidr_zone_2 variables.
+
+    existing_subnet_names = [
+        "<landingzone_prefix>-management-vsi-zone-1",
+        "<landingzone_prefix>-management-vsi-zone-2"
+    ]
+    */
     ```
     {: codeblock}
 
@@ -255,6 +276,9 @@ Make sure you have your development environment configured:
 
     Don't check in this file to version control because it contains the API key secret. If you don't want to save the information in the file, you can pass the variable to Terraform through command-line arguments.
     {: important}
+
+    In order to support HA (high availability), you need to set the value for `vpn_subnet_cidr_zone_2` variable.
+    {: tip}
 
 1.  Save the `terraform.tfvars` file, and then run the following commands. Enter **yes** to apply the plan when prompted:
 
