@@ -249,13 +249,19 @@ Make sure you have your development environment configured:
     vpn_client_access_group_users  = ["user1@example.com",”user2@example.com”]
 
     /*
-    CIDR range to use from the first and second zone in the region to enable HA. If vpn_subnet_cidr_zone_2 not specified, VPN will only be deployed to a single zone (standalone deployment)
+    CIDR range to use from the first and second zone in the region to 
+    enable HA. If vpn_subnet_cidr_zone_2 not specified, VPN will only be 
+    deployed to a single zone (standalone deployment).
     */
     vpn_subnet_cidr_zone_1         = "<cidr_zone_1>"
     vpn_subnet_cidr_zone_2         = "<cidr_zone_2>"
 
     /*
-    Optionally pass a list of existing subnet names (supports a maximum of 2) to use for the client-to-site VPN. If no subnets passed, new subnets will be created using the CIDR ranges specified in the vpn_subnet_cidr_zone_1 and vpn_subnet_cidr_zone_2 variables.
+    Optionally pass a list of existing subnet names 
+    (supports a maximum of 2) to use for the client-to-site VPN. If 
+    no subnets passed, new subnets will be created using the CIDR 
+    ranges specified in the vpn_subnet_cidr_zone_1 and 
+    vpn_subnet_cidr_zone_2 variables.
 
     existing_subnet_names = [
         "<landingzone_prefix>-management-vsi-zone-1",
