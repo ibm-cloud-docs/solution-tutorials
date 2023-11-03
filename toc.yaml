@@ -26,6 +26,7 @@ toc:
                 topics:
                 - solution-template.md
                 - satellite-tour.hidden.md
+                - vpc-transit-power.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
