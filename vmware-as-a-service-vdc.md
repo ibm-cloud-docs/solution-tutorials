@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-13"
+lastupdated: "2023-10-15"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -200,11 +200,11 @@ The next step is to create NAT rules to allow your virtual machines to access th
 You will create the following NAT rules in this tutorial.
 
 | Name               | Type            | External IP       | Internal IP         | Priority  | Application
-| -------------------|-----------------|-------------------|---------------------|-----------------------
-| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | `90`  | N/A
-| `dnat-to-app-1`    | DNAT            | `public-ip-2`     | `192.168.100.20/32` | `90`  | N/A
-| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | `100` | N/A
-| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | `100` | N/A
+| -------------------|-----------------|-------------------|---------------------|-----------|-----------
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | `90`      | N/A
+| `dnat-to-app-1`    | DNAT            | `public-ip-2`     | `192.168.100.20/32` | `90`      | N/A
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | `100`     | N/A
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | `100`     | N/A
 {: caption="NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
