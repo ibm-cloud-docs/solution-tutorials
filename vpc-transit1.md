@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-02-07"
+lastupdated: "2023-10-05"
+lasttested: "2023-10-05"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
@@ -31,10 +31,10 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 This is part one of a two part tutorial. This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
 
 - The hub is a central point of traffic routing between enterprise and the cloud.
-- Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through Network Function Virtualization (NFV) appliance running inside the hub.
-- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
-- The hub can be the repository for shared microservices used by spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
+- Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through a Network Function Virtualization (NFV) appliance running inside the hub.
+- The hub can monitor all or some of the traffic: spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
+- The hub can hold shared microservices used by spokes.
+- The hub can hold shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can hold the VPN resources that are shared by the spokes.
 
 ([Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)) will extend this tutorial by routing all VPC to VPC traffic through the hub, implement a highly available firewall-router and route traffic to {{site.data.keyword.cloud_notm}} service instances with DNS resolution.
@@ -168,6 +168,8 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
+The VPCs and subnets have been created.  Open the [Virtual Private Clouds](/vpc-ext/network/vpcs) in the browser. Open the tvpc-transit VPC and note the CIDR blocks for address prefixes and subnets.
+
 ## Create test instances
 {: #vpc-transit-create-test-instances}
 {: step}
@@ -300,7 +302,7 @@ Provision a {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_sho
 
 {{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the {{site.data.keyword.cloud_notm}}. In this tutorial {{site.data.keyword.tg_short}} is used for distribution. The use of {{site.data.keyword.tg_short}} is optional for an on-premises connection.
 
-The enterprise in this tutorial is simulated in the form of another VPC. Connecting this simulated enterprise (actually another VPC) via the {{site.data.keyword.tg_short}} will ensure an experience very close to what you would experience with a {{site.data.keyword.dl_short}}.
+The enterprise in this tutorial is simulated with another VPC. Connecting this simulated enterprise (actually another VPC) via the {{site.data.keyword.tg_short}} will ensure an experience very close to what you would experience with a {{site.data.keyword.dl_short}}.
 
 1. Apply the enterprise_link_tf layer:
    ```sh
@@ -331,7 +333,7 @@ Provision the firewall-router appliances. An ingress route table for {{site.data
 ![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
 {: style="text-align: center;"}
 
-Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
+Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is performed.
 
 The Terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](/docs/vpc?topic=vpc-ip-spoofing-about). You must [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
@@ -352,7 +354,7 @@ The Terraform configuration will configure the firewall-router instance with [al
    ```
    {: codeblock}
 
-   [Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial will route all VPC <-> different VPC traffic through the router and resolve these issues. But first it is important to learn what is happening.
+   [Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial will route all VPC <-> different VPC traffic through the firewall-router and resolve these issues. But first it is important to learn what is happening.
 
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
@@ -599,7 +601,7 @@ Floating IPs were attached to all test instances to support connectivity tests v
 
 [Implement context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) rules to further control access to all resources.
 
-In this tutorial you created a hub VPC and a set of spoke VPCs. You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs. You created a transit VPC firewall-router in each zone for centralized monitoring. Test instances were used to verify connectivity and identify potential problems. Routing table routes were used to identify the traffic paths required.
+In this tutorial you created a hub VPC and a set of spoke VPCs. You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs. You created a transit VPC firewall-router in each zone to forwards traffic. Test instances were used to verify connectivity and identify potential problems. Routing table routes were used to identify the traffic paths required.
 
 ## Remove resources
 {: #vpc-transit-remove-resources}

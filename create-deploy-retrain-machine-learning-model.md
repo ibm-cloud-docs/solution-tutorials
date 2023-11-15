@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-12"
+lastupdated: "2023-09-22"
 lasttested: "2022-09-12"
 
 content-type: tutorial
@@ -293,11 +293,11 @@ Click **Actions** > **Configure monitors**
    1. In the **Specify training data** method page
       1. For Training data option choose **Database or cloud storage**
       1. For Location choose **Cloud Object Storage**
-      1. For Resource instance ID and API key, run the below command in the Cloud Shell. Make sure to change the value after `--instance-name` to match the name of the {{site.data.keyword.cos_short}} instance you have been using for this tutorial. 
-      ```sh
-      ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
-      ```
-      {: pre}
+      1. For Resource instance ID and API key, run the below command in the Cloud Shell. Make sure to change the value after `--instance-name` to match the name of the {{site.data.keyword.cos_short}} instance you have been using for this tutorial.
+         ```sh
+         ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
+         ```
+         {: pre}
 
       1. Copy and paste the Credentials resource_instance_id.  It will begin with **crn** and end with two colons **::**.
       1. Copy and paste the Credentials api key without any trailing spaces.

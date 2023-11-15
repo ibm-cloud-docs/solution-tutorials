@@ -32,7 +32,6 @@ toc:
                 - openshift-microservices.md
                 - static-files-cdn.md
                 - dynamic-content-cdn.md
-                - plan-create-update-deployments.md
                 - mean-stack.md
                 - sql-database.md
                 - serverless-webapp.md
@@ -49,7 +48,6 @@ toc:
                 topics:
                 - multi-region-k8s-cis.md
                 - cloud-e2e-security.md
-                - extended-app-security.md
                 - cbr-enhanced-security.md
                 - trusted-profile-for-enterprise-security.md
 
@@ -64,7 +62,6 @@ toc:
             - topicgroup:
                 label: Identity and Access Management
                 topics:
-                - users-teams-applications.md
                 - resource-sharing.md
 
             - topicgroup:
@@ -80,6 +77,8 @@ toc:
                 - vpc-scaling-dedicated-compute.md
                 - vpc-transit1.md
                 - vpc-transit2.md
+                - connect-landingzone-client-vpn.md
+                - connect-landingzone-site-vpn.md
 
             - topicgroup:
                 label: Classic Infrastructure
@@ -125,13 +124,11 @@ toc:
                 - vm-to-containers-and-kubernetes.md
                 - continuous-deployment-to-kubernetes.md
                 - dynamic-content-cdn.md
-                - plan-create-update-deployments.md
                 - application-log-analysis.md
                 - multi-region-k8s-cis.md
                 - cloud-e2e-security.md
                 - cbr-enhanced-security.md
                 - trusted-profile-for-enterprise-security.md
-                - users-teams-applications.md
 
             - topicgroup:
                 label: OpenShift
@@ -168,4 +165,3 @@ toc:
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
                 - web-app-private-network.md
-

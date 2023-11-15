@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-08-31"
-lasttested: "2023-02-22"
+lastupdated: "2023-10-30"
+lasttested: "2023-09-29"
 
 content-type: tutorial
 services: codeengine, watson-assistant, Db2onCloud
@@ -30,9 +30,6 @@ In this tutorial, you are going to build a Slackbot which allows to search and c
 {: shortdesc}
 
 The Slack integration sends messages between Slack and {{site.data.keyword.conversationshort}}. A custom extension, written in Python and deployed as serverless {{site.data.keyword.codeengineshort}} app, exposes a REST API against the database backend.
-
-This tutorial uses the new experience of {{site.data.keyword.conversationshort}} and an action skill. A former version was based on the dialog skill and the database was integrated using {{site.data.keyword.openwhisk}} with code written in Node.js. You can find that version of the tutorial in the [**cloud-functions** branch of the related code repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson/tree/cloud-functions){: external}.
-{: note}
 
 ## Objectives
 {: #slack-chatbot-database-watson-objectives}
@@ -108,13 +105,24 @@ In this section, you are going to set up the needed services and deploy the back
    ```
    {: pre}
 
-   The output is stored in the file `slackbotkey.json` and needed at a later step. Run this command to extract the database connection URL:
+   The slackbotkey.json file contains the `service key` also called `service credentials`. This clear text file contains the administrative password and connection strings for the **eventDB** service instance.
+   {: note}
+
+   The output is stored in the file `slackbotkey.json` and needed in this step. Run this command to extract the database connection URL:
    ```sh
-    cat slackbotkey.json | jq '.credentials.connection.db2 | "ibm_db_sa://" + (.authentication.username + ":" + .authentication.password + "@" + .hosts[0].hostname + ":" + (.hosts[0].port | tostring) + "/" + .database + "?Security=SSL")'
+   jq -r '.credentials.connection.db2 | "ibm_db_sa://" + (.authentication.username + ":" + .authentication.password + "@" + .hosts[0].hostname + ":" + (.hosts[0].port | tostring) + "/" + .database + "?Security=SSL;")' slackbotkey.json
    ```
    {: pre}
 
-   The output should be of the following format: `ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;`.
+   It will be referenced as $DB2_URI and can be stored in a shell variable if supported on your workstation or cloud shell and exported in case you are running the application locally.
+   ```sh
+    export DB2_URI=$(jq -r '.credentials.connection.db2 | "ibm_db_sa://" + (.authentication.username + ":" + .authentication.password + "@" + .hosts[0].hostname + ":" + (.hosts[0].port | tostring) + "/" + .database + "?Security=SSL;")' slackbotkey.json)
+    echo $DB2_URI
+   ```
+   {: pre}
+
+
+   The output should be of the following format: `ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;` and is in the shell variable DB2_URI.
 
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventAssistant** as name and the free Lite plan. Adapt **us-south** to your location.
    ```sh
@@ -134,37 +142,46 @@ In this section, you are going to set up the needed services and deploy the back
    ```
    {: pre}
 
-   Then, deploy the app naming it **slackbot-backend**. Replace the value for the **API_TOKEN** (**MY_SECRET**) with your own secret. It is used to secure the calls to the REST API. For **DB2_URI** replace the parts with the database connection URL from above.
+   Then, deploy the app naming it **slackbot-backend**. Replace the value for the **API_TOKEN** (**MY_SECRET**). Use your own text for MY_SECRET if you wish and make substitutions in all future steps. It is used to secure the calls to the REST API.
    ```sh
-   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;" 
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI" 
    ```
    {: pre}
 
-   Note the reported URI for the app. It is needed in the next steps.
+   Note the reported URI for the app. It is referenced in the next steps as $APP_URL. You can use a shell variable:
 
-   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. You can modify the create command to build from source: `ibmcloud ce application create --name slackbot-backend --build-source . --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="ibm_db_sa://username:password@database-hostname:port/bludb?Security=SSL;"` using the `Dockerfile` found in the repository. See the {{site.data.keyword.codeengineshort}} documentation on [deploying your app from local source code](/docs/codeengine?topic=codeengine-app-local-source-code) for additional details.
+   ```sh
+   APP_URL=$(ibmcloud ce app get -n slackbot-backend --output json | jq -r .status.url)
+   echo $APP_URL
+   ```
+   {: pre}
+
+   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. You can modify the create command to build from source: `ibmcloud ce app create --name slackbot-backend --build-source . --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI"` using the `Dockerfile` found in the repository. See the {{site.data.keyword.codeengineshort}} documentation on [deploying your app from local source code](/docs/codeengine?topic=codeengine-app-local-source-code) for additional details.
    {: tip}
 
-7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records. Replace **projectid**, **region**, and **MY_SECRET** accordingly.
+7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records.
    ```sh
-   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
+   curl -X 'POST' "$APP_URL/database/recreate" -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
    {: pre}
 
    The above request should return an error message that the confirmation is missing. Now try again with a query parameter:
    ```sh
-   curl -X 'POST' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/database/recreate?confirmation=True' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
+   curl -X 'POST' "$APP_URL/database/recreate?confirmation=True" -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
    {: pre}
 
    The request should succeed and indicate that the database was recreated. Time for another test:
    ```sh
-   curl -X 'GET' 'https://slackbot-backend.projectid.region.codeengine.appdomain.cloud/events' -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
+   curl -X 'GET' "$APP_URL/events" -H 'accept: application/json' -H 'API_TOKEN: MY_SECRET'
    ```
    {: pre}
 
-
-
+8. Note the Project ID it will be required in a future step.
+   ```sh
+   ibmcloud ce app get -n slackbot-backend --output json |  jq -r .metadata.namespace
+   ```
+   {: pre}
 
 ## Create an assistant
 {: #slack-chatbot-database-watson-4}
@@ -207,7 +224,7 @@ First, you are going to create an action to retrieve information about a single 
 2. Click on the **Start from scratch** tile.
 3. In the **New action** dialog, enter **show me event details** as example and click **Save**.
 4. The next screen shows the step editor for the action with **Step 1** open. In **Assistant says** type **What is the event name?**. Then, for **Define customer response** pick **Free text** as option. Leave **And then** as **Continue to next step**.
-5. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistant says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** the value **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
+5. Click **New step** on the lower left to add **Step 2**. Leave the first parts (**Assistant says**, **Define customer response**) untouched, but under **And then** select **Use an extension**. In the dropdowns pick the **events** extension and its **Event record by name** operation. Thereafter, **Parameters** will show the possible inputs. By using the dropdown, assign for **Set short_name** to the value ****Action step variables** > **1. What is the event name?**. It refers to the customer input from the previous step. Click on **Apply** to finish this step.
 6. Add a **New step**. At the top change the selection so that **Step 3 is taken with condition**. Under **Conditions** and **If** select **2 Ran successfully**. It refers to a result from using the extension in step 2.
 7. Under **Assistants says**, you can compose the answer with the event details by referring to the output fields of the API call to the deployed app. Use **I got these event details:** followed by the `Enter` key to get to the next line. [The editor supports Markdown format](/docs/watson-assistant?topic=watson-assistant-respond#respond-formatting). Thus, use the `-` key to create a bulleted list. Add a list item with **Name:**, then click on the **Insert a variable** icon. From the dropdown select **2 body.shortname**. Use the `Enter` key again to get to a new line with a list item. Add **Location:** with **2 body.location** from the variables dropdown. Repeat for **Begins**, **Ends**, and **Contact**. Once done, set **And then** to **End the action**.
 8. To handle errors in the extension, create another step with a condition. Now let the step react to **2 Ran successfully** being **false**. Let the Assistant say **Sorry, there was a problem** and then end the action again.
@@ -245,7 +262,7 @@ Similar to retrieving a record it is possible to gather input about an event and
 11. In a new step, which should be step 8, react to the confirmation being **Yes**. Under **And then** select **Use an extension**. Configure the events extension with **Insert a new event record** as operation. Match the parameters to the Action variables for the steps, for example, **shortname** to **1. How do you want to name the event?**
 12. Create a new step with a condition **8 Ran successfully** being true. Let the Assistant say **A new record with ID VARIABLE was created**. For **VARIABLE** select **8 body.eid** from **events (Step 8)**. End the action under **And then**. 
 13. Create a new step with the condition for **8 Ran successfully** being false. Use something like **It seems there was a problem creating the new event record** for the Assistant to say and end the action under **And then**. Save and close the action with the icons in the upper right.
-13. Test the new action by clicking on **Preview** on the left and using the webchat. Type **add new event** and submit. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
+13. Save the action and then test the new action by clicking on **Preview** on the left and using the webchat. Type **add new event** and submit. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 
 
 When creating a chatbot, you may want to [publish a chatbot](/docs/watson-assistant?topic=watson-assistant-publish). It is the controlled release of a version which allows rolling back changes and to continue with development without impacting the chatbot interacting with real customers.
@@ -280,5 +297,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 Here are additional resources on the topics covered in this tutorial.
-* [Build Great Chatbots, Fast](https://www.ibm.com/cloud/blog/build-great-chatbots-fast){: external}
-* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/cloud/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external}
+* [Build Great Chatbots, Fast](https://www.ibm.com/blog/build-great-chatbots-fast){: external}
+* [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/blog/tips-and-tricks-for-using-the-ibm-cloud-cli){: external}

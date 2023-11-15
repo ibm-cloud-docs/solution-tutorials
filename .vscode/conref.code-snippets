@@ -64,6 +64,32 @@
 		],
     "description": "IBM"
 	},
+	"IBMz": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Z&reg;",
+			"ibm.IBM Z&reg;",
+			"site.IBM Z&reg;",
+      "{{site.data.keyword.IBMz}}"
+		],
+		"body": [
+			"{{site.data.keyword.IBMz}}"
+		],
+    "description": "IBM Z&reg;"
+	},
+	"IBMz_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Z",
+			"ibm.IBM Z",
+			"site.IBM Z",
+      "{{site.data.keyword.IBMz_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.IBMz_notm}}"
+		],
+    "description": "IBM Z"
+	},
 	"cloud": {
 	  "scope": "markdown",
 		"prefix": [
@@ -1302,28 +1328,28 @@
 	"backup_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; Backup",
-			"ibm.IBM Cloud&reg; Backup",
-			"site.IBM Cloud&reg; Backup",
+			"IBM Cloud&reg; Backup for Classic",
+			"ibm.IBM Cloud&reg; Backup for Classic",
+			"site.IBM Cloud&reg; Backup for Classic",
       "{{site.data.keyword.backup_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.backup_full}}"
 		],
-    "description": "IBM Cloud&reg; Backup"
+    "description": "IBM Cloud&reg; Backup for Classic"
 	},
 	"backup_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Backup",
-			"ibm.IBM Cloud Backup",
-			"site.IBM Cloud Backup",
+			"IBM Cloud Backup for Classic",
+			"ibm.IBM Cloud Backup for Classic",
+			"site.IBM Cloud Backup for Classic",
       "{{site.data.keyword.backup_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.backup_notm}}"
 		],
-    "description": "IBM Cloud Backup"
+    "description": "IBM Cloud Backup for Classic"
 	},
 	"baremetal_short": {
 	  "scope": "markdown",
@@ -1484,28 +1510,28 @@
 	"blockstorageshort": {
 	  "scope": "markdown",
 		"prefix": [
-			"Block Storage",
-			"ibm.Block Storage",
-			"site.Block Storage",
+			"Block Storage for Classic",
+			"ibm.Block Storage for Classic",
+			"site.Block Storage for Classic",
       "{{site.data.keyword.blockstorageshort}}"
 		],
 		"body": [
 			"{{site.data.keyword.blockstorageshort}}"
 		],
-    "description": "Block Storage"
+    "description": "Block Storage for Classic"
 	},
 	"blockstoragefull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; Block Storage",
-			"ibm.IBM Cloud&reg; Block Storage",
-			"site.IBM Cloud&reg; Block Storage",
+			"IBM Cloud&reg; Block Storage for Classic",
+			"ibm.IBM Cloud&reg; Block Storage for Classic",
+			"site.IBM Cloud&reg; Block Storage for Classic",
       "{{site.data.keyword.blockstoragefull}}"
 		],
 		"body": [
 			"{{site.data.keyword.blockstoragefull}}"
 		],
-    "description": "IBM Cloud&reg; Block Storage"
+    "description": "IBM Cloud&reg; Block Storage for Classic"
 	},
 	"Bluemix_dedicated": {
 	  "scope": "markdown",
@@ -1705,41 +1731,41 @@
 	"cvad_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"Citrix Virtual Apps and Desktops for IBM Cloud&reg;",
-			"ibm.Citrix Virtual Apps and Desktops for IBM Cloud&reg;",
-			"site.Citrix Virtual Apps and Desktops for IBM Cloud&reg;",
+			"Citrix DaaS for IBM Cloud&reg;",
+			"ibm.Citrix DaaS for IBM Cloud&reg;",
+			"site.Citrix DaaS for IBM Cloud&reg;",
       "{{site.data.keyword.cvad_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.cvad_full}}"
 		],
-    "description": "Citrix Virtual Apps and Desktops for IBM Cloud&reg;"
+    "description": "Citrix DaaS for IBM Cloud&reg;"
 	},
 	"cvad_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"Citrix Virtual Apps and Desktops for IBM Cloud",
-			"ibm.Citrix Virtual Apps and Desktops for IBM Cloud",
-			"site.Citrix Virtual Apps and Desktops for IBM Cloud",
+			"Citrix DaaS for IBM Cloud",
+			"ibm.Citrix DaaS for IBM Cloud",
+			"site.Citrix DaaS for IBM Cloud",
       "{{site.data.keyword.cvad_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.cvad_full_notm}}"
 		],
-    "description": "Citrix Virtual Apps and Desktops for IBM Cloud"
+    "description": "Citrix DaaS for IBM Cloud"
 	},
 	"cvad_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Citrix Virtual Apps and Desktops",
-			"ibm.Citrix Virtual Apps and Desktops",
-			"site.Citrix Virtual Apps and Desktops",
+			"Citrix DaaS",
+			"ibm.Citrix DaaS",
+			"site.Citrix DaaS",
       "{{site.data.keyword.cvad_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.cvad_short}}"
 		],
-    "description": "Citrix Virtual Apps and Desktops"
+    "description": "Citrix DaaS"
 	},
 	"castironlivefull": {
 	  "scope": "markdown",
@@ -4097,15 +4123,15 @@
 	"dcp_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Assistant Discovery Extension for IBM Cloud Private",
-			"ibm.IBM Watson&trade; Assistant Discovery Extension for IBM Cloud Private",
-			"site.IBM Watson&trade; Assistant Discovery Extension for IBM Cloud Private",
+			"IBM Watson&reg; Assistant Discovery Extension for IBM Cloud Private",
+			"ibm.IBM Watson&reg; Assistant Discovery Extension for IBM Cloud Private",
+			"site.IBM Watson&reg; Assistant Discovery Extension for IBM Cloud Private",
       "{{site.data.keyword.dcp_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.dcp_long}}"
 		],
-    "description": "IBM Watson&trade; Assistant Discovery Extension for IBM Cloud Private"
+    "description": "IBM Watson&reg; Assistant Discovery Extension for IBM Cloud Private"
 	},
 	"dcp_short": {
 	  "scope": "markdown",
@@ -4500,15 +4526,15 @@
 	"discovery-data_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Discovery for IBM Cloud Pak&reg; for Data",
-			"ibm.IBM Watson&trade; Discovery for IBM Cloud Pak&reg; for Data",
-			"site.IBM Watson&trade; Discovery for IBM Cloud Pak&reg; for Data",
+			"IBM Watson&reg; Discovery for IBM Cloud Pak&reg; for Data",
+			"ibm.IBM Watson&reg; Discovery for IBM Cloud Pak&reg; for Data",
+			"site.IBM Watson&reg; Discovery for IBM Cloud Pak&reg; for Data",
       "{{site.data.keyword.discovery-data_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.discovery-data_long}}"
 		],
-    "description": "IBM Watson&trade; Discovery for IBM Cloud Pak&reg; for Data"
+    "description": "IBM Watson&reg; Discovery for IBM Cloud Pak&reg; for Data"
 	},
 	"discovery-data_short": {
 	  "scope": "markdown",
@@ -4929,41 +4955,41 @@
 	"filestorage_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"File Storage",
-			"ibm.File Storage",
-			"site.File Storage",
+			"File Storage for Classic",
+			"ibm.File Storage for Classic",
+			"site.File Storage for Classic",
       "{{site.data.keyword.filestorage_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.filestorage_short}}"
 		],
-    "description": "File Storage"
+    "description": "File Storage for Classic"
 	},
 	"filestorage_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; File Storage",
-			"ibm.IBM Cloud&reg; File Storage",
-			"site.IBM Cloud&reg; File Storage",
+			"IBM Cloud&reg; File Storage for Classic",
+			"ibm.IBM Cloud&reg; File Storage for Classic",
+			"site.IBM Cloud&reg; File Storage for Classic",
       "{{site.data.keyword.filestorage_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.filestorage_full}}"
 		],
-    "description": "IBM Cloud&reg; File Storage"
+    "description": "IBM Cloud&reg; File Storage for Classic"
 	},
 	"filestorage_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud File Storage",
-			"ibm.IBM Cloud File Storage",
-			"site.IBM Cloud File Storage",
+			"IBM Cloud File Storage for Classic",
+			"ibm.IBM Cloud File Storage for Classic",
+			"site.IBM Cloud File Storage for Classic",
       "{{site.data.keyword.filestorage_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.filestorage_full_notm}}"
 		],
-    "description": "IBM Cloud File Storage"
+    "description": "IBM Cloud File Storage for Classic"
 	},
 	"filestorage_vpc_short": {
 	  "scope": "markdown",
@@ -5940,32 +5966,6 @@
 		],
     "description": "JSONDB"
 	},
-	"kabanero": {
-	  "scope": "markdown",
-		"prefix": [
-			"Kabanero&trade;",
-			"ibm.Kabanero&trade;",
-			"site.Kabanero&trade;",
-      "{{site.data.keyword.kabanero}}"
-		],
-		"body": [
-			"{{site.data.keyword.kabanero}}"
-		],
-    "description": "Kabanero&trade;"
-	},
-	"kabanero_notm": {
-	  "scope": "markdown",
-		"prefix": [
-			"Kabanero",
-			"ibm.Kabanero",
-			"site.Kabanero",
-      "{{site.data.keyword.kabanero_notm}}"
-		],
-		"body": [
-			"{{site.data.keyword.kabanero_notm}}"
-		],
-    "description": "Kabanero"
-	},
 	"ke": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6056,6 +6056,45 @@
 			"{{site.data.keyword.keymanagementservicefull_notm}}"
 		],
     "description": "IBM Key Protect for IBM Cloud"
+	},
+	"lakehouse_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; watsonx.data",
+			"ibm.IBM&reg; watsonx.data",
+			"site.IBM&reg; watsonx.data",
+      "{{site.data.keyword.lakehouse_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.lakehouse_full}}"
+		],
+    "description": "IBM&reg; watsonx.data"
+	},
+	"lakehouse_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM watsonx.data",
+			"ibm.IBM watsonx.data",
+			"site.IBM watsonx.data",
+      "{{site.data.keyword.lakehouse_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.lakehouse_full_notm}}"
+		],
+    "description": "IBM watsonx.data"
+	},
+	"lakehouse_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx.data",
+			"ibm.watsonx.data",
+			"site.watsonx.data",
+      "{{site.data.keyword.lakehouse_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.lakehouse_short}}"
+		],
+    "description": "watsonx.data"
 	},
 	"languageidentificationshort": {
 	  "scope": "markdown",
@@ -6788,15 +6827,15 @@
 	"mobilefirst": {
 	  "scope": "markdown",
 		"prefix": [
-			"MobileFirst&trade;",
-			"ibm.MobileFirst&trade;",
-			"site.MobileFirst&trade;",
+			"MobileFirst",
+			"ibm.MobileFirst",
+			"site.MobileFirst",
       "{{site.data.keyword.mobilefirst}}"
 		],
 		"body": [
 			"{{site.data.keyword.mobilefirst}}"
 		],
-    "description": "MobileFirst&trade;"
+    "description": "MobileFirst"
 	},
 	"mobilefirst_notm": {
 	  "scope": "markdown",
@@ -6814,15 +6853,15 @@
 	"mfp_oc_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"MobileFirst&trade; Operations Console",
-			"ibm.MobileFirst&trade; Operations Console",
-			"site.MobileFirst&trade; Operations Console",
+			"MobileFirst Operations Console",
+			"ibm.MobileFirst Operations Console",
+			"site.MobileFirst Operations Console",
       "{{site.data.keyword.mfp_oc_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfp_oc_short}}"
 		],
-    "description": "MobileFirst&trade; Operations Console"
+    "description": "MobileFirst Operations Console"
 	},
 	"mfp_oc_short_notm": {
 	  "scope": "markdown",
@@ -6840,15 +6879,15 @@
 	"mfp_cli_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Command Line Interface",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Command Line Interface",
-			"site.IBM&reg; MobileFirst&trade; Platform Command Line Interface",
+			"IBM MobileFirst&reg; Platform Command Line Interface",
+			"ibm.IBM MobileFirst&reg; Platform Command Line Interface",
+			"site.IBM MobileFirst&reg; Platform Command Line Interface",
       "{{site.data.keyword.mfp_cli_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfp_cli_long}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Command Line Interface"
+    "description": "IBM MobileFirst&reg; Platform Command Line Interface"
 	},
 	"mfp_cli_long_notm": {
 	  "scope": "markdown",
@@ -6866,15 +6905,15 @@
 	"mfp_dr_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Device Runtime",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Device Runtime",
-			"site.IBM&reg; MobileFirst&trade; Platform Device Runtime",
+			"IBM MobileFirst&reg; Platform Device Runtime",
+			"ibm.IBM MobileFirst&reg; Platform Device Runtime",
+			"site.IBM MobileFirst&reg; Platform Device Runtime",
       "{{site.data.keyword.mfp_dr_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfp_dr_long}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Device Runtime"
+    "description": "IBM MobileFirst&reg; Platform Device Runtime"
 	},
 	"mfp_dr_long_notm": {
 	  "scope": "markdown",
@@ -6892,15 +6931,15 @@
 	"mfp_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Foundation",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Foundation",
-			"site.IBM&reg; MobileFirst&trade; Platform Foundation",
+			"IBM MobileFirst&reg; Platform Foundation",
+			"ibm.IBM MobileFirst&reg; Platform Foundation",
+			"site.IBM MobileFirst&reg; Platform Foundation",
       "{{site.data.keyword.mfp_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfp_full}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Foundation"
+    "description": "IBM MobileFirst&reg; Platform Foundation"
 	},
 	"mfp_full_notm": {
 	  "scope": "markdown",
@@ -6918,28 +6957,28 @@
 	"mf-starter-image_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Foundation Getting Started Image V7.1",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Foundation Getting Started Image V7.1",
-			"site.IBM&reg; MobileFirst&trade; Platform Foundation Getting Started Image V7.1",
+			"IBM MobileFirst&reg; Platform Foundation Getting Started Image V7.1",
+			"ibm.IBM MobileFirst&reg; Platform Foundation Getting Started Image V7.1",
+			"site.IBM MobileFirst&reg; Platform Foundation Getting Started Image V7.1",
       "{{site.data.keyword.mf-starter-image_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.mf-starter-image_full}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Foundation Getting Started Image V7.1"
+    "description": "IBM MobileFirst&reg; Platform Foundation Getting Started Image V7.1"
 	},
 	"mfp_oc_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Operations Console",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Operations Console",
-			"site.IBM&reg; MobileFirst&trade; Platform Operations Console",
+			"IBM MobileFirst&reg; Platform Operations Console",
+			"ibm.IBM MobileFirst&reg; Platform Operations Console",
+			"site.IBM MobileFirst&reg; Platform Operations Console",
       "{{site.data.keyword.mfp_oc_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfp_oc_long}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Operations Console"
+    "description": "IBM MobileFirst&reg; Platform Operations Console"
 	},
 	"mfp_oc_long_notm": {
 	  "scope": "markdown",
@@ -6957,15 +6996,15 @@
 	"mfserver_long": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Platform Server",
-			"ibm.IBM&reg; MobileFirst&trade; Platform Server",
-			"site.IBM&reg; MobileFirst&trade; Platform Server",
+			"IBM MobileFirst&reg; Platform Server",
+			"ibm.IBM MobileFirst&reg; Platform Server",
+			"site.IBM MobileFirst&reg; Platform Server",
       "{{site.data.keyword.mfserver_long}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfserver_long}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Platform Server"
+    "description": "IBM MobileFirst&reg; Platform Server"
 	},
 	"mfserver_long_notm": {
 	  "scope": "markdown",
@@ -6983,15 +7022,15 @@
 	"mfserver_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"MobileFirst&trade; Server",
-			"ibm.MobileFirst&trade; Server",
-			"site.MobileFirst&trade; Server",
+			"MobileFirst Server",
+			"ibm.MobileFirst Server",
+			"site.MobileFirst Server",
       "{{site.data.keyword.mfserver_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.mfserver_short}}"
 		],
-    "description": "MobileFirst&trade; Server"
+    "description": "MobileFirst Server"
 	},
 	"mfserver_short_notm": {
 	  "scope": "markdown",
@@ -7009,15 +7048,15 @@
 	"mobilefirstbp": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; MobileFirst&trade; Services",
-			"ibm.IBM&reg; MobileFirst&trade; Services",
-			"site.IBM&reg; MobileFirst&trade; Services",
+			"IBM MobileFirst&reg; Services",
+			"ibm.IBM MobileFirst&reg; Services",
+			"site.IBM MobileFirst&reg; Services",
       "{{site.data.keyword.mobilefirstbp}}"
 		],
 		"body": [
 			"{{site.data.keyword.mobilefirstbp}}"
 		],
-    "description": "IBM&reg; MobileFirst&trade; Services"
+    "description": "IBM MobileFirst&reg; Services"
 	},
 	"mobilefoundation_short": {
 	  "scope": "markdown",
@@ -7555,28 +7594,28 @@
 	"openpages_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM OpenPages&reg; with Watson&trade; as a Service",
-			"ibm.IBM OpenPages&reg; with Watson&trade; as a Service",
-			"site.IBM OpenPages&reg; with Watson&trade; as a Service",
+			"IBM OpenPages&reg; as a Service",
+			"ibm.IBM OpenPages&reg; as a Service",
+			"site.IBM OpenPages&reg; as a Service",
       "{{site.data.keyword.openpages_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.openpages_full}}"
 		],
-    "description": "IBM OpenPages&reg; with Watson&trade; as a Service"
+    "description": "IBM OpenPages&reg; as a Service"
 	},
 	"openpages_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM OpenPages with Watson as a Service",
-			"ibm.IBM OpenPages with Watson as a Service",
-			"site.IBM OpenPages with Watson as a Service",
+			"IBM OpenPages as a Service",
+			"ibm.IBM OpenPages as a Service",
+			"site.IBM OpenPages as a Service",
       "{{site.data.keyword.openpages_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.openpages_full_notm}}"
 		],
-    "description": "IBM OpenPages with Watson as a Service"
+    "description": "IBM OpenPages as a Service"
 	},
 	"openpages_short": {
 	  "scope": "markdown",
@@ -7838,18 +7877,57 @@
 		],
     "description": "IBM Planning Analytics with Watson for IBM Cloud"
 	},
+	"PA_SaaS_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Planning Analytics&reg; as a Service",
+			"ibm.IBM Planning Analytics&reg; as a Service",
+			"site.IBM Planning Analytics&reg; as a Service",
+      "{{site.data.keyword.PA_SaaS_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.PA_SaaS_full}}"
+		],
+    "description": "IBM Planning Analytics&reg; as a Service"
+	},
+	"PA_SaaS_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Planning Analytics as a Service",
+			"ibm.IBM Planning Analytics as a Service",
+			"site.IBM Planning Analytics as a Service",
+      "{{site.data.keyword.PA_SaaS_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.PA_SaaS_notm}}"
+		],
+    "description": "IBM Planning Analytics as a Service"
+	},
+	"PA_SaaS_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Planning Analytics as a Service",
+			"ibm.Planning Analytics as a Service",
+			"site.Planning Analytics as a Service",
+      "{{site.data.keyword.PA_SaaS_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.PA_SaaS_short}}"
+		],
+    "description": "Planning Analytics as a Service"
+	},
 	"framework-fs_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud Framework for Financial Services&trade;",
-			"ibm.IBM Cloud Framework for Financial Services&trade;",
-			"site.IBM Cloud Framework for Financial Services&trade;",
+			"IBM Cloud Framework for Financial Services",
+			"ibm.IBM Cloud Framework for Financial Services",
+			"site.IBM Cloud Framework for Financial Services",
       "{{site.data.keyword.framework-fs_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.framework-fs_full}}"
 		],
-    "description": "IBM Cloud Framework for Financial Services&trade;"
+    "description": "IBM Cloud Framework for Financial Services"
 	},
 	"framework-fs_notm": {
 	  "scope": "markdown",
@@ -7893,28 +7971,28 @@
 	"powerSysFull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Power Systems&trade; Virtual Server",
-			"ibm.IBM&reg; Power Systems&trade; Virtual Server",
-			"site.IBM&reg; Power Systems&trade; Virtual Server",
+			"IBM&reg; Power&reg; Systems Virtual Server",
+			"ibm.IBM&reg; Power&reg; Systems Virtual Server",
+			"site.IBM&reg; Power&reg; Systems Virtual Server",
       "{{site.data.keyword.powerSysFull}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysFull}}"
 		],
-    "description": "IBM&reg; Power Systems&trade; Virtual Server"
+    "description": "IBM&reg; Power&reg; Systems Virtual Server"
 	},
 	"powerSysShort": {
 	  "scope": "markdown",
 		"prefix": [
-			"Power Systems&trade; Virtual Server",
-			"ibm.Power Systems&trade; Virtual Server",
-			"site.Power Systems&trade; Virtual Server",
+			"Power&reg; Systems Virtual Server",
+			"ibm.Power&reg; Systems Virtual Server",
+			"site.Power&reg; Systems Virtual Server",
       "{{site.data.keyword.powerSysShort}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysShort}}"
 		],
-    "description": "Power Systems&trade; Virtual Server"
+    "description": "Power&reg; Systems Virtual Server"
 	},
 	"powerSys_notm": {
 	  "scope": "markdown",
@@ -8725,41 +8803,41 @@
 	"scale_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Spectrum Scale",
-			"ibm.IBM&reg; Spectrum Scale",
-			"site.IBM&reg; Spectrum Scale",
+			"IBM&reg; Storage Scale",
+			"ibm.IBM&reg; Storage Scale",
+			"site.IBM&reg; Storage Scale",
       "{{site.data.keyword.scale_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.scale_full}}"
 		],
-    "description": "IBM&reg; Spectrum Scale"
+    "description": "IBM&reg; Storage Scale"
 	},
 	"scale_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Spectrum Scale",
-			"ibm.IBM Spectrum Scale",
-			"site.IBM Spectrum Scale",
+			"IBM Storage Scale",
+			"ibm.IBM Storage Scale",
+			"site.IBM Storage Scale",
       "{{site.data.keyword.scale_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.scale_full_notm}}"
 		],
-    "description": "IBM Spectrum Scale"
+    "description": "IBM Storage Scale"
 	},
 	"scale_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Spectrum Scale",
-			"ibm.Spectrum Scale",
-			"site.Spectrum Scale",
+			"Storage Scale",
+			"ibm.Storage Scale",
+			"site.Storage Scale",
       "{{site.data.keyword.scale_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.scale_short}}"
 		],
-    "description": "Spectrum Scale"
+    "description": "Storage Scale"
 	},
 	"searchshort": {
 	  "scope": "markdown",
@@ -9281,6 +9359,45 @@
 		],
     "description": "Slurm"
 	},
+	"se_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Solution Editor",
+			"ibm.IBM Cloud&reg; Solution Editor",
+			"site.IBM Cloud&reg; Solution Editor",
+      "{{site.data.keyword.se_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.se_full}}"
+		],
+    "description": "IBM Cloud&reg; Solution Editor"
+	},
+	"se_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Solution Editor",
+			"ibm.IBM Cloud Solution Editor",
+			"site.IBM Cloud Solution Editor",
+      "{{site.data.keyword.se_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.se_full_notm}}"
+		],
+    "description": "IBM Cloud Solution Editor"
+	},
+	"se_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Solution Editor",
+			"ibm.Solution Editor",
+			"site.Solution Editor",
+      "{{site.data.keyword.se_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.se_short}}"
+		],
+    "description": "Solution Editor"
+	},
 	"speechrecog": {
 	  "scope": "markdown",
 		"prefix": [
@@ -9349,41 +9466,41 @@
 	"speechtotextfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Speech to Text",
-			"ibm.IBM Watson&trade; Speech to Text",
-			"site.IBM Watson&trade; Speech to Text",
+			"IBM Watson&reg; Speech to Text",
+			"ibm.IBM Watson&reg; Speech to Text",
+			"site.IBM Watson&reg; Speech to Text",
       "{{site.data.keyword.speechtotextfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.speechtotextfull}}"
 		],
-    "description": "IBM Watson&trade; Speech to Text"
+    "description": "IBM Watson&reg; Speech to Text"
 	},
 	"speechtotextdatafull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Speech to Text",
-			"ibm.IBM Watson&trade; Speech to Text",
-			"site.IBM Watson&trade; Speech to Text",
+			"IBM Watson&reg; Speech to Text",
+			"ibm.IBM Watson&reg; Speech to Text",
+			"site.IBM Watson&reg; Speech to Text",
       "{{site.data.keyword.speechtotextdatafull}}"
 		],
 		"body": [
 			"{{site.data.keyword.speechtotextdatafull}}"
 		],
-    "description": "IBM Watson&trade; Speech to Text"
+    "description": "IBM Watson&reg; Speech to Text"
 	},
 	"texttospeechdatafull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Text to Speech",
-			"ibm.IBM Watson&trade; Text to Speech",
-			"site.IBM Watson&trade; Text to Speech",
+			"IBM Watson&reg; Text to Speech",
+			"ibm.IBM Watson&reg; Text to Speech",
+			"site.IBM Watson&reg; Text to Speech",
       "{{site.data.keyword.texttospeechdatafull}}"
 		],
 		"body": [
 			"{{site.data.keyword.texttospeechdatafull}}"
 		],
-    "description": "IBM Watson&trade; Text to Speech"
+    "description": "IBM Watson&reg; Text to Speech"
 	},
 	"sqldb": {
 	  "scope": "markdown",
@@ -9475,6 +9592,32 @@
 			"{{site.data.keyword.staticanalyzerfull}}"
 		],
     "description": "IBM&reg; Static Analyzer for IBM Cloud&reg;"
+	},
+	"cvoaas_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Cloud Storage Service for NetApp ONTAP",
+			"ibm.IBM&reg; Cloud Storage Service for NetApp ONTAP",
+			"site.IBM&reg; Cloud Storage Service for NetApp ONTAP",
+      "{{site.data.keyword.cvoaas_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.cvoaas_full}}"
+		],
+    "description": "IBM&reg; Cloud Storage Service for NetApp ONTAP"
+	},
+	"cvoaas_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Storage Service for NetApp ONTAP",
+			"ibm.IBM Cloud Storage Service for NetApp ONTAP",
+			"site.IBM Cloud Storage Service for NetApp ONTAP",
+      "{{site.data.keyword.cvoaas_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.cvoaas_full_notm}}"
+		],
+    "description": "IBM Cloud Storage Service for NetApp ONTAP"
 	},
 	"streaminganalyticsshort": {
 	  "scope": "markdown",
@@ -9570,28 +9713,41 @@
 	"sysdigsecure_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"Sysdig Secure on IBM Cloud",
-			"ibm.Sysdig Secure on IBM Cloud",
-			"site.Sysdig Secure on IBM Cloud",
+			"IBM Cloud Security and Compliance Center Workload Protection",
+			"ibm.IBM Cloud Security and Compliance Center Workload Protection",
+			"site.IBM Cloud Security and Compliance Center Workload Protection",
       "{{site.data.keyword.sysdigsecure_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.sysdigsecure_full_notm}}"
 		],
-    "description": "Sysdig Secure on IBM Cloud"
+    "description": "IBM Cloud Security and Compliance Center Workload Protection"
 	},
 	"sysdigsecure_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"Sysdig Secure on IBM Cloud&reg;",
-			"ibm.Sysdig Secure on IBM Cloud&reg;",
-			"site.Sysdig Secure on IBM Cloud&reg;",
+			"IBM Cloud&reg; Security and Compliance Center Workload Protection",
+			"ibm.IBM Cloud&reg; Security and Compliance Center Workload Protection",
+			"site.IBM Cloud&reg; Security and Compliance Center Workload Protection",
       "{{site.data.keyword.sysdigsecure_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.sysdigsecure_full}}"
 		],
-    "description": "Sysdig Secure on IBM Cloud&reg;"
+    "description": "IBM Cloud&reg; Security and Compliance Center Workload Protection"
+	},
+	"sysdigsecure_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Workload Protection",
+			"ibm.Workload Protection",
+			"site.Workload Protection",
+      "{{site.data.keyword.sysdigsecure_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.sysdigsecure_short}}"
+		],
+    "description": "Workload Protection"
 	},
 	"ta": {
 	  "scope": "markdown",
@@ -9661,15 +9817,15 @@
 	"texttospeechfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Text to Speech",
-			"ibm.IBM Watson&trade; Text to Speech",
-			"site.IBM Watson&trade; Text to Speech",
+			"IBM Watson&reg; Text to Speech",
+			"ibm.IBM Watson&reg; Text to Speech",
+			"site.IBM Watson&reg; Text to Speech",
       "{{site.data.keyword.texttospeechfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.texttospeechfull}}"
 		],
-    "description": "IBM Watson&trade; Text to Speech"
+    "description": "IBM Watson&reg; Text to Speech"
 	},
 	"tg_full": {
 	  "scope": "markdown",
@@ -10207,15 +10363,15 @@
 	"ibmwatson": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade;",
-			"ibm.IBM Watson&trade;",
-			"site.IBM Watson&trade;",
+			"IBM Watson&reg;",
+			"ibm.IBM Watson&reg;",
+			"site.IBM Watson&reg;",
       "{{site.data.keyword.ibmwatson}}"
 		],
 		"body": [
 			"{{site.data.keyword.ibmwatson}}"
 		],
-    "description": "IBM Watson&trade;"
+    "description": "IBM Watson&reg;"
 	},
 	"ibmwatson_notm": {
 	  "scope": "markdown",
@@ -10246,15 +10402,15 @@
 	"client_insight_wealth": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Client Insight for Wealth Management",
-			"ibm.IBM Watson&trade; Client Insight for Wealth Management",
-			"site.IBM Watson&trade; Client Insight for Wealth Management",
+			"IBM Watson&reg; Client Insight for Wealth Management",
+			"ibm.IBM Watson&reg; Client Insight for Wealth Management",
+			"site.IBM Watson&reg; Client Insight for Wealth Management",
       "{{site.data.keyword.client_insight_wealth}}"
 		],
 		"body": [
 			"{{site.data.keyword.client_insight_wealth}}"
 		],
-    "description": "IBM Watson&trade; Client Insight for Wealth Management"
+    "description": "IBM Watson&reg; Client Insight for Wealth Management"
 	},
 	"client_insight_wealth_notm": {
 	  "scope": "markdown",
@@ -10285,15 +10441,15 @@
 	"cncfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Compare and Comply",
-			"ibm.IBM Watson&trade; Compare and Comply",
-			"site.IBM Watson&trade; Compare and Comply",
+			"IBM Watson&reg; Compare and Comply",
+			"ibm.IBM Watson&reg; Compare and Comply",
+			"site.IBM Watson&reg; Compare and Comply",
       "{{site.data.keyword.cncfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.cncfull}}"
 		],
-    "description": "IBM Watson&trade; Compare and Comply"
+    "description": "IBM Watson&reg; Compare and Comply"
 	},
 	"cncfullnotm": {
 	  "scope": "markdown",
@@ -10324,41 +10480,41 @@
 	"conceptexpansionfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Concept Expansion",
-			"ibm.IBM Watson&trade; Concept Expansion",
-			"site.IBM Watson&trade; Concept Expansion",
+			"IBM Watson&reg; Concept Expansion",
+			"ibm.IBM Watson&reg; Concept Expansion",
+			"site.IBM Watson&reg; Concept Expansion",
       "{{site.data.keyword.conceptexpansionfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.conceptexpansionfull}}"
 		],
-    "description": "IBM Watson&trade; Concept Expansion"
+    "description": "IBM Watson&reg; Concept Expansion"
 	},
 	"conceptinsightsfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Concept Insights for IBM Cloud&reg;",
-			"ibm.IBM Watson&trade; Concept Insights for IBM Cloud&reg;",
-			"site.IBM Watson&trade; Concept Insights for IBM Cloud&reg;",
+			"IBM Watson&reg; Concept Insights for IBM Cloud&reg;",
+			"ibm.IBM Watson&reg; Concept Insights for IBM Cloud&reg;",
+			"site.IBM Watson&reg; Concept Insights for IBM Cloud&reg;",
       "{{site.data.keyword.conceptinsightsfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.conceptinsightsfull}}"
 		],
-    "description": "IBM Watson&trade; Concept Insights for IBM Cloud&reg;"
+    "description": "IBM Watson&reg; Concept Insights for IBM Cloud&reg;"
 	},
 	"watsoncontent_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Content",
-			"ibm.IBM Watson&trade; Content",
-			"site.IBM Watson&trade; Content",
+			"IBM Watson&reg; Content",
+			"ibm.IBM Watson&reg; Content",
+			"site.IBM Watson&reg; Content",
       "{{site.data.keyword.watsoncontent_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.watsoncontent_full}}"
 		],
-    "description": "IBM Watson&trade; Content"
+    "description": "IBM Watson&reg; Content"
 	},
 	"watsoncontent_full_notm": {
 	  "scope": "markdown",
@@ -10376,15 +10532,15 @@
 	"watsoncontent_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Watson&trade; Content",
-			"ibm.Watson&trade; Content",
-			"site.Watson&trade; Content",
+			"Watson Content",
+			"ibm.Watson Content",
+			"site.Watson Content",
       "{{site.data.keyword.watsoncontent_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.watsoncontent_short}}"
 		],
-    "description": "Watson&trade; Content"
+    "description": "Watson Content"
 	},
 	"watsoncontent_short_notm": {
 	  "scope": "markdown",
@@ -10399,44 +10555,70 @@
 		],
     "description": "Watson Content"
 	},
-	"conversationshort": {
-	  "scope": "markdown",
-		"prefix": [
-			"Watson Assistant",
-			"ibm.Watson Assistant",
-			"site.Watson Assistant",
-      "{{site.data.keyword.conversationshort}}"
-		],
-		"body": [
-			"{{site.data.keyword.conversationshort}}"
-		],
-    "description": "Watson Assistant"
-	},
 	"conversationfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Assistant",
-			"ibm.IBM Watson&trade; Assistant",
-			"site.IBM Watson&trade; Assistant",
+			"IBM&reg; watsonx&trade; Assistant",
+			"ibm.IBM&reg; watsonx&trade; Assistant",
+			"site.IBM&reg; watsonx&trade; Assistant",
       "{{site.data.keyword.conversationfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.conversationfull}}"
 		],
-    "description": "IBM Watson&trade; Assistant"
+    "description": "IBM&reg; watsonx&trade; Assistant"
+	},
+	"conversationshort": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Assistant",
+			"ibm.watsonx Assistant",
+			"site.watsonx Assistant",
+      "{{site.data.keyword.conversationshort}}"
+		],
+		"body": [
+			"{{site.data.keyword.conversationshort}}"
+		],
+    "description": "watsonx Assistant"
+	},
+	"assistant_classic_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Watson&reg; Assistant",
+			"ibm.IBM Watson&reg; Assistant",
+			"site.IBM Watson&reg; Assistant",
+      "{{site.data.keyword.assistant_classic_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.assistant_classic_full}}"
+		],
+    "description": "IBM Watson&reg; Assistant"
+	},
+	"assistant_classic_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Watson Assistant",
+			"ibm.Watson Assistant",
+			"site.Watson Assistant",
+      "{{site.data.keyword.assistant_classic_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.assistant_classic_short}}"
+		],
+    "description": "Watson Assistant"
 	},
 	"watsondatakits_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Data Kits",
-			"ibm.IBM Watson&trade; Data Kits",
-			"site.IBM Watson&trade; Data Kits",
+			"IBM Watson&reg; Data Kits",
+			"ibm.IBM Watson&reg; Data Kits",
+			"site.IBM Watson&reg; Data Kits",
       "{{site.data.keyword.watsondatakits_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.watsondatakits_full}}"
 		],
-    "description": "IBM Watson&trade; Data Kits"
+    "description": "IBM Watson&reg; Data Kits"
 	},
 	"watsondatakits_full_notm": {
 	  "scope": "markdown",
@@ -10454,15 +10636,15 @@
 	"watsondatakits_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Watson&trade; Data Kits",
-			"ibm.Watson&trade; Data Kits",
-			"site.Watson&trade; Data Kits",
+			"Watson Data Kits",
+			"ibm.Watson Data Kits",
+			"site.Watson Data Kits",
       "{{site.data.keyword.watsondatakits_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.watsondatakits_short}}"
 		],
-    "description": "Watson&trade; Data Kits"
+    "description": "Watson Data Kits"
 	},
 	"watsondatakits_short_notm": {
 	  "scope": "markdown",
@@ -10480,15 +10662,15 @@
 	"dialogfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Dialog for IBM Cloud&reg;",
-			"ibm.IBM Watson&trade; Dialog for IBM Cloud&reg;",
-			"site.IBM Watson&trade; Dialog for IBM Cloud&reg;",
+			"IBM Watson&reg; Dialog for IBM Cloud&reg;",
+			"ibm.IBM Watson&reg; Dialog for IBM Cloud&reg;",
+			"site.IBM Watson&reg; Dialog for IBM Cloud&reg;",
       "{{site.data.keyword.dialogfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.dialogfull}}"
 		],
-    "description": "IBM Watson&trade; Dialog for IBM Cloud&reg;"
+    "description": "IBM Watson&reg; Dialog for IBM Cloud&reg;"
 	},
 	"discoveryshort": {
 	  "scope": "markdown",
@@ -10506,15 +10688,15 @@
 	"discoveryfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Discovery",
-			"ibm.IBM Watson&trade; Discovery",
-			"site.IBM Watson&trade; Discovery",
+			"IBM Watson&reg; Discovery",
+			"ibm.IBM Watson&reg; Discovery",
+			"site.IBM Watson&reg; Discovery",
       "{{site.data.keyword.discoveryfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.discoveryfull}}"
 		],
-    "description": "IBM Watson&trade; Discovery"
+    "description": "IBM Watson&reg; Discovery"
 	},
 	"discoverynewsshort": {
 	  "scope": "markdown",
@@ -10532,41 +10714,41 @@
 	"discoverynewsfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Discovery News",
-			"ibm.IBM Watson&trade; Discovery News",
-			"site.IBM Watson&trade; Discovery News",
+			"IBM Watson&reg; Discovery News",
+			"ibm.IBM Watson&reg; Discovery News",
+			"site.IBM Watson&reg; Discovery News",
       "{{site.data.keyword.discoverynewsfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.discoverynewsfull}}"
 		],
-    "description": "IBM Watson&trade; Discovery News"
+    "description": "IBM Watson&reg; Discovery News"
 	},
 	"documentconversionfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Document Conversion",
-			"ibm.IBM Watson&trade; Document Conversion",
-			"site.IBM Watson&trade; Document Conversion",
+			"IBM Watson&reg; Document Conversion",
+			"ibm.IBM Watson&reg; Document Conversion",
+			"site.IBM Watson&reg; Document Conversion",
       "{{site.data.keyword.documentconversionfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.documentconversionfull}}"
 		],
-    "description": "IBM Watson&trade; Document Conversion"
+    "description": "IBM Watson&reg; Document Conversion"
 	},
 	"emotionanalysisfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Emotion Analysis for IBM Cloud&reg;",
-			"ibm.IBM Watson&trade; Emotion Analysis for IBM Cloud&reg;",
-			"site.IBM Watson&trade; Emotion Analysis for IBM Cloud&reg;",
+			"IBM Watson&reg; Emotion Analysis for IBM Cloud&reg;",
+			"ibm.IBM Watson&reg; Emotion Analysis for IBM Cloud&reg;",
+			"site.IBM Watson&reg; Emotion Analysis for IBM Cloud&reg;",
       "{{site.data.keyword.emotionanalysisfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.emotionanalysisfull}}"
 		],
-    "description": "IBM Watson&trade; Emotion Analysis for IBM Cloud&reg;"
+    "description": "IBM Watson&reg; Emotion Analysis for IBM Cloud&reg;"
 	},
 	"hisinstranalshort": {
 	  "scope": "markdown",
@@ -10610,41 +10792,41 @@
 	"iotmapinsights_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; IoT Context Mapping",
-			"ibm.IBM Watson&trade; IoT Context Mapping",
-			"site.IBM Watson&trade; IoT Context Mapping",
+			"IBM Watson&reg; IoT Context Mapping",
+			"ibm.IBM Watson&reg; IoT Context Mapping",
+			"site.IBM Watson&reg; IoT Context Mapping",
       "{{site.data.keyword.iotmapinsights_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.iotmapinsights_full}}"
 		],
-    "description": "IBM Watson&trade; IoT Context Mapping"
+    "description": "IBM Watson&reg; IoT Context Mapping"
 	},
 	"iotdriverinsights_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; IoT Driver Behavior",
-			"ibm.IBM Watson&trade; IoT Driver Behavior",
-			"site.IBM Watson&trade; IoT Driver Behavior",
+			"IBM Watson&reg; IoT Driver Behavior",
+			"ibm.IBM Watson&reg; IoT Driver Behavior",
+			"site.IBM Watson&reg; IoT Driver Behavior",
       "{{site.data.keyword.iotdriverinsights_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.iotdriverinsights_full}}"
 		],
-    "description": "IBM Watson&trade; IoT Driver Behavior"
+    "description": "IBM Watson&reg; IoT Driver Behavior"
 	},
 	"iot_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Watson&trade; IoT Platform",
-			"ibm.Watson&trade; IoT Platform",
-			"site.Watson&trade; IoT Platform",
+			"Watson IoT Platform",
+			"ibm.Watson IoT Platform",
+			"site.Watson IoT Platform",
       "{{site.data.keyword.iot_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.iot_short}}"
 		],
-    "description": "Watson&trade; IoT Platform"
+    "description": "Watson IoT Platform"
 	},
 	"iot_short_notm": {
 	  "scope": "markdown",
@@ -10662,41 +10844,41 @@
 	"iot_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; IoT Platform",
-			"ibm.IBM Watson&trade; IoT Platform",
-			"site.IBM Watson&trade; IoT Platform",
+			"IBM Watson&reg; IoT Platform",
+			"ibm.IBM Watson&reg; IoT Platform",
+			"site.IBM Watson&reg; IoT Platform",
       "{{site.data.keyword.iot_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.iot_full}}"
 		],
-    "description": "IBM Watson&trade; IoT Platform"
+    "description": "IBM Watson&reg; IoT Platform"
 	},
 	"iotrtinsights_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; IoT Platform Analytics Real-Time Insights",
-			"ibm.IBM Watson&trade; IoT Platform Analytics Real-Time Insights",
-			"site.IBM Watson&trade; IoT Platform Analytics Real-Time Insights",
+			"IBM Watson&reg; IoT Platform Analytics Real-Time Insights",
+			"ibm.IBM Watson&reg; IoT Platform Analytics Real-Time Insights",
+			"site.IBM Watson&reg; IoT Platform Analytics Real-Time Insights",
       "{{site.data.keyword.iotrtinsights_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.iotrtinsights_full}}"
 		],
-    "description": "IBM Watson&trade; IoT Platform Analytics Real-Time Insights"
+    "description": "IBM Watson&reg; IoT Platform Analytics Real-Time Insights"
 	},
 	"knowledgestudiofull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Knowledge Studio",
-			"ibm.IBM Watson&trade; Knowledge Studio",
-			"site.IBM Watson&trade; Knowledge Studio",
+			"IBM Watson&reg; Knowledge Studio",
+			"ibm.IBM Watson&reg; Knowledge Studio",
+			"site.IBM Watson&reg; Knowledge Studio",
       "{{site.data.keyword.knowledgestudiofull}}"
 		],
 		"body": [
 			"{{site.data.keyword.knowledgestudiofull}}"
 		],
-    "description": "IBM Watson&trade; Knowledge Studio"
+    "description": "IBM Watson&reg; Knowledge Studio"
 	},
 	"knowledgestudioshort": {
 	  "scope": "markdown",
@@ -10714,15 +10896,15 @@
 	"languageidentificationfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Language Identification",
-			"ibm.IBM Watson&trade; Language Identification",
-			"site.IBM Watson&trade; Language Identification",
+			"IBM Watson&reg; Language Identification",
+			"ibm.IBM Watson&reg; Language Identification",
+			"site.IBM Watson&reg; Language Identification",
       "{{site.data.keyword.languageidentificationfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.languageidentificationfull}}"
 		],
-    "description": "IBM Watson&trade; Language Identification"
+    "description": "IBM Watson&reg; Language Identification"
 	},
 	"wts": {
 	  "scope": "markdown",
@@ -10753,15 +10935,15 @@
 	"languagetranslationfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Language Translator",
-			"ibm.IBM Watson&trade; Language Translator",
-			"site.IBM Watson&trade; Language Translator",
+			"IBM Watson&reg; Language Translator",
+			"ibm.IBM Watson&reg; Language Translator",
+			"site.IBM Watson&reg; Language Translator",
       "{{site.data.keyword.languagetranslationfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.languagetranslationfull}}"
 		],
-    "description": "IBM Watson&trade; Language Translator"
+    "description": "IBM Watson&reg; Language Translator"
 	},
 	"languagetranslatorshort": {
 	  "scope": "markdown",
@@ -10779,15 +10961,15 @@
 	"languagetranslatorfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Language Translator",
-			"ibm.IBM Watson&trade; Language Translator",
-			"site.IBM Watson&trade; Language Translator",
+			"IBM Watson&reg; Language Translator",
+			"ibm.IBM Watson&reg; Language Translator",
+			"site.IBM Watson&reg; Language Translator",
       "{{site.data.keyword.languagetranslatorfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.languagetranslatorfull}}"
 		],
-    "description": "IBM Watson&trade; Language Translator"
+    "description": "IBM Watson&reg; Language Translator"
 	},
 	"pm_short": {
 	  "scope": "markdown",
@@ -10805,15 +10987,15 @@
 	"pm_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Machine Learning",
-			"ibm.IBM Watson&trade; Machine Learning",
-			"site.IBM Watson&trade; Machine Learning",
+			"IBM Watson&reg; Machine Learning",
+			"ibm.IBM Watson&reg; Machine Learning",
+			"site.IBM Watson&reg; Machine Learning",
       "{{site.data.keyword.pm_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.pm_full}}"
 		],
-    "description": "IBM Watson&trade; Machine Learning"
+    "description": "IBM Watson&reg; Machine Learning"
 	},
 	"machinetranslationshort": {
 	  "scope": "markdown",
@@ -10831,28 +11013,28 @@
 	"machinetranslationfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Machine Translator",
-			"ibm.IBM Watson&trade; Machine Translator",
-			"site.IBM Watson&trade; Machine Translator",
+			"IBM Watson&reg; Machine Translator",
+			"ibm.IBM Watson&reg; Machine Translator",
+			"site.IBM Watson&reg; Machine Translator",
       "{{site.data.keyword.machinetranslationfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.machinetranslationfull}}"
 		],
-    "description": "IBM Watson&trade; Machine Translator"
+    "description": "IBM Watson&reg; Machine Translator"
 	},
 	"messageresonancefull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Message Resonance",
-			"ibm.IBM Watson&trade; Message Resonance",
-			"site.IBM Watson&trade; Message Resonance",
+			"IBM Watson&reg; Message Resonance",
+			"ibm.IBM Watson&reg; Message Resonance",
+			"site.IBM Watson&reg; Message Resonance",
       "{{site.data.keyword.messageresonancefull}}"
 		],
 		"body": [
 			"{{site.data.keyword.messageresonancefull}}"
 		],
-    "description": "IBM Watson&trade; Message Resonance"
+    "description": "IBM Watson&reg; Message Resonance"
 	},
 	"usermodelshort": {
 	  "scope": "markdown",
@@ -10870,80 +11052,80 @@
 	"nlclassifierfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Natural Language Classifier",
-			"ibm.IBM Watson&trade; Natural Language Classifier",
-			"site.IBM Watson&trade; Natural Language Classifier",
+			"IBM Watson&reg; Natural Language Classifier",
+			"ibm.IBM Watson&reg; Natural Language Classifier",
+			"site.IBM Watson&reg; Natural Language Classifier",
       "{{site.data.keyword.nlclassifierfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.nlclassifierfull}}"
 		],
-    "description": "IBM Watson&trade; Natural Language Classifier"
+    "description": "IBM Watson&reg; Natural Language Classifier"
 	},
 	"nlufull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Natural Language Understanding",
-			"ibm.IBM Watson&trade; Natural Language Understanding",
-			"site.IBM Watson&trade; Natural Language Understanding",
+			"IBM Watson&reg; Natural Language Understanding",
+			"ibm.IBM Watson&reg; Natural Language Understanding",
+			"site.IBM Watson&reg; Natural Language Understanding",
       "{{site.data.keyword.nlufull}}"
 		],
 		"body": [
 			"{{site.data.keyword.nlufull}}"
 		],
-    "description": "IBM Watson&trade; Natural Language Understanding"
+    "description": "IBM Watson&reg; Natural Language Understanding"
 	},
 	"personalityinsightsfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Personality Insights",
-			"ibm.IBM Watson&trade; Personality Insights",
-			"site.IBM Watson&trade; Personality Insights",
+			"IBM Watson&reg; Personality Insights",
+			"ibm.IBM Watson&reg; Personality Insights",
+			"site.IBM Watson&reg; Personality Insights",
       "{{site.data.keyword.personalityinsightsfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.personalityinsightsfull}}"
 		],
-    "description": "IBM Watson&trade; Personality Insights"
+    "description": "IBM Watson&reg; Personality Insights"
 	},
 	"questionandanswerfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Question and Answer",
-			"ibm.IBM Watson&trade; Question and Answer",
-			"site.IBM Watson&trade; Question and Answer",
+			"IBM Watson&reg; Question and Answer",
+			"ibm.IBM Watson&reg; Question and Answer",
+			"site.IBM Watson&reg; Question and Answer",
       "{{site.data.keyword.questionandanswerfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.questionandanswerfull}}"
 		],
-    "description": "IBM Watson&trade; Question and Answer"
+    "description": "IBM Watson&reg; Question and Answer"
 	},
 	"relationshipextractionfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Relationship Extraction",
-			"ibm.IBM Watson&trade; Relationship Extraction",
-			"site.IBM Watson&trade; Relationship Extraction",
+			"IBM Watson&reg; Relationship Extraction",
+			"ibm.IBM Watson&reg; Relationship Extraction",
+			"site.IBM Watson&reg; Relationship Extraction",
       "{{site.data.keyword.relationshipextractionfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.relationshipextractionfull}}"
 		],
-    "description": "IBM Watson&trade; Relationship Extraction"
+    "description": "IBM Watson&reg; Relationship Extraction"
 	},
 	"searchfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Search",
-			"ibm.IBM Watson&trade; Search",
-			"site.IBM Watson&trade; Search",
+			"IBM Watson&reg; Search",
+			"ibm.IBM Watson&reg; Search",
+			"site.IBM Watson&reg; Search",
       "{{site.data.keyword.searchfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.searchfull}}"
 		],
-    "description": "IBM Watson&trade; Search"
+    "description": "IBM Watson&reg; Search"
 	},
 	"simhistinstruanalshort": {
 	  "scope": "markdown",
@@ -11000,28 +11182,28 @@
 	"DSX_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Watson&trade; Studio",
-			"ibm.Watson&trade; Studio",
-			"site.Watson&trade; Studio",
+			"Watson Studio",
+			"ibm.Watson Studio",
+			"site.Watson Studio",
       "{{site.data.keyword.DSX_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.DSX_short}}"
 		],
-    "description": "Watson&trade; Studio"
+    "description": "Watson Studio"
 	},
 	"DSX_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Studio",
-			"ibm.IBM Watson&trade; Studio",
-			"site.IBM Watson&trade; Studio",
+			"IBM Watson&reg; Studio",
+			"ibm.IBM Watson&reg; Studio",
+			"site.IBM Watson&reg; Studio",
       "{{site.data.keyword.DSX_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.DSX_full}}"
 		],
-    "description": "IBM Watson&trade; Studio"
+    "description": "IBM Watson&reg; Studio"
 	},
 	"DSX": {
 	  "scope": "markdown",
@@ -11039,54 +11221,54 @@
 	"tradeoffanalyticsfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Tradeoff Analytics",
-			"ibm.IBM Watson&trade; Tradeoff Analytics",
-			"site.IBM Watson&trade; Tradeoff Analytics",
+			"IBM Watson&reg; Tradeoff Analytics",
+			"ibm.IBM Watson&reg; Tradeoff Analytics",
+			"site.IBM Watson&reg; Tradeoff Analytics",
       "{{site.data.keyword.tradeoffanalyticsfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.tradeoffanalyticsfull}}"
 		],
-    "description": "IBM Watson&trade; Tradeoff Analytics"
+    "description": "IBM Watson&reg; Tradeoff Analytics"
 	},
 	"toneanalyzerfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Tone Analyzer",
-			"ibm.IBM Watson&trade; Tone Analyzer",
-			"site.IBM Watson&trade; Tone Analyzer",
+			"IBM Watson&reg; Tone Analyzer",
+			"ibm.IBM Watson&reg; Tone Analyzer",
+			"site.IBM Watson&reg; Tone Analyzer",
       "{{site.data.keyword.toneanalyzerfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.toneanalyzerfull}}"
 		],
-    "description": "IBM Watson&trade; Tone Analyzer"
+    "description": "IBM Watson&reg; Tone Analyzer"
 	},
 	"usermodelfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; User Modeling",
-			"ibm.IBM Watson&trade; User Modeling",
-			"site.IBM Watson&trade; User Modeling",
+			"IBM Watson&reg; User Modeling",
+			"ibm.IBM Watson&reg; User Modeling",
+			"site.IBM Watson&reg; User Modeling",
       "{{site.data.keyword.usermodelfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.usermodelfull}}"
 		],
-    "description": "IBM Watson&trade; User Modeling"
+    "description": "IBM Watson&reg; User Modeling"
 	},
 	"iva_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Voice Agent with Watson&trade;",
-			"ibm.IBM&reg; Voice Agent with Watson&trade;",
-			"site.IBM&reg; Voice Agent with Watson&trade;",
+			"IBM&reg; Voice Agent with Watson",
+			"ibm.IBM&reg; Voice Agent with Watson",
+			"site.IBM&reg; Voice Agent with Watson",
       "{{site.data.keyword.iva_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.iva_full}}"
 		],
-    "description": "IBM&reg; Voice Agent with Watson&trade;"
+    "description": "IBM&reg; Voice Agent with Watson"
 	},
 	"iva_full_notm": {
 	  "scope": "markdown",
@@ -11130,54 +11312,54 @@
 	"virtualagentfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Virtual Agent",
-			"ibm.IBM Watson&trade; Virtual Agent",
-			"site.IBM Watson&trade; Virtual Agent",
+			"IBM Watson&reg; Virtual Agent",
+			"ibm.IBM Watson&reg; Virtual Agent",
+			"site.IBM Watson&reg; Virtual Agent",
       "{{site.data.keyword.virtualagentfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.virtualagentfull}}"
 		],
-    "description": "IBM Watson&trade; Virtual Agent"
+    "description": "IBM Watson&reg; Virtual Agent"
 	},
 	"visualinsightsfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Visual Insights for IBM Cloud&reg;",
-			"ibm.IBM Watson&trade; Visual Insights for IBM Cloud&reg;",
-			"site.IBM Watson&trade; Visual Insights for IBM Cloud&reg;",
+			"IBM Watson&reg; Visual Insights for IBM Cloud&reg;",
+			"ibm.IBM Watson&reg; Visual Insights for IBM Cloud&reg;",
+			"site.IBM Watson&reg; Visual Insights for IBM Cloud&reg;",
       "{{site.data.keyword.visualinsightsfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.visualinsightsfull}}"
 		],
-    "description": "IBM Watson&trade; Visual Insights for IBM Cloud&reg;"
+    "description": "IBM Watson&reg; Visual Insights for IBM Cloud&reg;"
 	},
 	"visualrecognitionfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Visual Recognition",
-			"ibm.IBM Watson&trade; Visual Recognition",
-			"site.IBM Watson&trade; Visual Recognition",
+			"IBM Watson&reg; Visual Recognition",
+			"ibm.IBM Watson&reg; Visual Recognition",
+			"site.IBM Watson&reg; Visual Recognition",
       "{{site.data.keyword.visualrecognitionfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.visualrecognitionfull}}"
 		],
-    "description": "IBM Watson&trade; Visual Recognition"
+    "description": "IBM Watson&reg; Visual Recognition"
 	},
 	"visualizationrenderingfull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Visualization Rendering",
-			"ibm.IBM Watson&trade; Visualization Rendering",
-			"site.IBM Watson&trade; Visualization Rendering",
+			"IBM Watson&reg; Visualization Rendering",
+			"ibm.IBM Watson&reg; Visualization Rendering",
+			"site.IBM Watson&reg; Visualization Rendering",
       "{{site.data.keyword.visualizationrenderingfull}}"
 		],
 		"body": [
 			"{{site.data.keyword.visualizationrenderingfull}}"
 		],
-    "description": "IBM Watson&trade; Visualization Rendering"
+    "description": "IBM Watson&reg; Visualization Rendering"
 	},
 	"vpc-plus-migration": {
 	  "scope": "markdown",
@@ -11256,6 +11438,71 @@
 			"{{site.data.keyword.wanclouds}}"
 		],
     "description": "VPC+ by Wanclouds"
+	},
+	"waziaas_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Wazi as a Service",
+			"ibm.IBM&reg; Wazi as a Service",
+			"site.IBM&reg; Wazi as a Service",
+      "{{site.data.keyword.waziaas_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.waziaas_full}}"
+		],
+    "description": "IBM&reg; Wazi as a Service"
+	},
+	"waziaas_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Wazi as a Service",
+			"ibm.IBM Wazi as a Service",
+			"site.IBM Wazi as a Service",
+      "{{site.data.keyword.waziaas_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.waziaas_full_notm}}"
+		],
+    "description": "IBM Wazi as a Service"
+	},
+	"waziaas_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Wazi aaS",
+			"ibm.IBM Wazi aaS",
+			"site.IBM Wazi aaS",
+      "{{site.data.keyword.waziaas_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.waziaas_short}}"
+		],
+    "description": "IBM Wazi aaS"
+	},
+	"wca_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM watsonx&reg; Code Assistant",
+			"ibm.IBM watsonx&reg; Code Assistant",
+			"site.IBM watsonx&reg; Code Assistant",
+      "{{site.data.keyword.wca_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.wca_full}}"
+		],
+    "description": "IBM watsonx&reg; Code Assistant"
+	},
+	"wca_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Code Assistant",
+			"ibm.watsonx Code Assistant",
+			"site.watsonx Code Assistant",
+      "{{site.data.keyword.wca_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.wca_full_notm}}"
+		],
+    "description": "watsonx Code Assistant"
 	},
 	"wearablefitness": {
 	  "scope": "markdown",
@@ -11338,15 +11585,15 @@
 	"wh-acd_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Annotator for Clinical Data",
-			"ibm.IBM Watson&trade; Annotator for Clinical Data",
-			"site.IBM Watson&trade; Annotator for Clinical Data",
+			"IBM Watson&reg; Annotator for Clinical Data",
+			"ibm.IBM Watson&reg; Annotator for Clinical Data",
+			"site.IBM Watson&reg; Annotator for Clinical Data",
       "{{site.data.keyword.wh-acd_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.wh-acd_full}}"
 		],
-    "description": "IBM Watson&trade; Annotator for Clinical Data"
+    "description": "IBM Watson&reg; Annotator for Clinical Data"
 	},
 	"wh-acd_full_notm": {
 	  "scope": "markdown",
@@ -11377,15 +11624,15 @@
 	"wh-iml_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Watson&trade; Insights for Medical Literature",
-			"ibm.IBM Watson&trade; Insights for Medical Literature",
-			"site.IBM Watson&trade; Insights for Medical Literature",
+			"IBM Watson&reg; Insights for Medical Literature",
+			"ibm.IBM Watson&reg; Insights for Medical Literature",
+			"site.IBM Watson&reg; Insights for Medical Literature",
       "{{site.data.keyword.wh-iml_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.wh-iml_full}}"
 		],
-    "description": "IBM Watson&trade; Insights for Medical Literature"
+    "description": "IBM Watson&reg; Insights for Medical Literature"
 	},
 	"wh-iml_full_notm": {
 	  "scope": "markdown",
@@ -11728,14 +11975,14 @@
 	"attribute-definition-list": {
 	  "scope": "markdown",
 		"prefix": [
-			"{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:external: target=\"_blank\" .external}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
-			"ibm.{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:external: target=\"_blank\" .external}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
-			"site.{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:external: target=\"_blank\" .external}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
+			"{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:attention: .attention}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:exception: .exception}\n{:external: target=\"_blank\" .external}\n{:fast-path: .fast-path}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:remember: .remember}\n{:requirement: .requirement}\n{:restriction: .restriction}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:tag-security: .tag data-tag-color=\"red\"}\n{:tag-devops: .tag data-tag-color=\"magenta\"}\n{:tag-app: .tag data-tag-color=\"purple\"}\n{:tag-datastore: .tag data-tag-color=\"blue\"}\n{:tag-network: .tag data-tag-color=\"cyan\"}\n{:tag-management: .tag data-tag-color=\"teal\"}\n{:tag-vpc: .tag data-tag-color=\"dark-teal\"}\n{:tag-compute: .tag data-tag-color=\"green\"}\n{:tag-ibm-cloud: .tag data-tag-color=\"blue\"}\n{:tag-cp4d: .tag data-tag-color=\"magenta\"}\n{:tag-iks: .tag data-tag-color=\"blue\"}\n{:tag-roks: .tag data-tag-color=\"red\"}\n{:tag-schematics: .tag data-tag-color=\"purple\"}\n{:tag-classic-inf: .tag data-tag-color=\"warm-gray\"}\n{:tag-satellite: .tag data-tag-color=\"magenta\"}\n{:tag-linux: .tag data-tag-color=\"red\"}\n{:tag-macos: .tag data-tag-color=\"cool-gray\"}\n{:tag-windows: .tag data-tag-color=\"cyan\"}\n{:tag-new: .tag data-tag-color=\"green\"}\n{:tag-updated: .tag data-tag-color=\"blue\"}\n{:tag-deprecated: .tag data-tag-color=\"red\"}\n{:tag-red: .tag data-tag-color=\"red\"}\n{:tag-magenta: .tag data-tag-color=\"magenta\"}\n{:tag-purple: .tag data-tag-color=\"purple\"}\n{:tag-blue: .tag data-tag-color=\"blue\"}\n{:tag-cyan: .tag data-tag-color=\"cyan\"}\n{:tag-teal: .tag data-tag-color=\"teal\"}\n{:tag-dark-teal: .tag data-tag-color=\"dark-teal\"}\n{:tag-green: .tag data-tag-color=\"green\"}\n{:tag-cool-gray: .tag data-tag-color=\"cool-gray\"}\n{:tag-warm-gray: .tag data-tag-color=\"warm-gray\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
+			"ibm.{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:attention: .attention}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:exception: .exception}\n{:external: target=\"_blank\" .external}\n{:fast-path: .fast-path}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:remember: .remember}\n{:requirement: .requirement}\n{:restriction: .restriction}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:tag-security: .tag data-tag-color=\"red\"}\n{:tag-devops: .tag data-tag-color=\"magenta\"}\n{:tag-app: .tag data-tag-color=\"purple\"}\n{:tag-datastore: .tag data-tag-color=\"blue\"}\n{:tag-network: .tag data-tag-color=\"cyan\"}\n{:tag-management: .tag data-tag-color=\"teal\"}\n{:tag-vpc: .tag data-tag-color=\"dark-teal\"}\n{:tag-compute: .tag data-tag-color=\"green\"}\n{:tag-ibm-cloud: .tag data-tag-color=\"blue\"}\n{:tag-cp4d: .tag data-tag-color=\"magenta\"}\n{:tag-iks: .tag data-tag-color=\"blue\"}\n{:tag-roks: .tag data-tag-color=\"red\"}\n{:tag-schematics: .tag data-tag-color=\"purple\"}\n{:tag-classic-inf: .tag data-tag-color=\"warm-gray\"}\n{:tag-satellite: .tag data-tag-color=\"magenta\"}\n{:tag-linux: .tag data-tag-color=\"red\"}\n{:tag-macos: .tag data-tag-color=\"cool-gray\"}\n{:tag-windows: .tag data-tag-color=\"cyan\"}\n{:tag-new: .tag data-tag-color=\"green\"}\n{:tag-updated: .tag data-tag-color=\"blue\"}\n{:tag-deprecated: .tag data-tag-color=\"red\"}\n{:tag-red: .tag data-tag-color=\"red\"}\n{:tag-magenta: .tag data-tag-color=\"magenta\"}\n{:tag-purple: .tag data-tag-color=\"purple\"}\n{:tag-blue: .tag data-tag-color=\"blue\"}\n{:tag-cyan: .tag data-tag-color=\"cyan\"}\n{:tag-teal: .tag data-tag-color=\"teal\"}\n{:tag-dark-teal: .tag data-tag-color=\"dark-teal\"}\n{:tag-green: .tag data-tag-color=\"green\"}\n{:tag-cool-gray: .tag data-tag-color=\"cool-gray\"}\n{:tag-warm-gray: .tag data-tag-color=\"warm-gray\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
+			"site.{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:attention: .attention}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:exception: .exception}\n{:external: target=\"_blank\" .external}\n{:fast-path: .fast-path}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:remember: .remember}\n{:requirement: .requirement}\n{:restriction: .restriction}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:tag-security: .tag data-tag-color=\"red\"}\n{:tag-devops: .tag data-tag-color=\"magenta\"}\n{:tag-app: .tag data-tag-color=\"purple\"}\n{:tag-datastore: .tag data-tag-color=\"blue\"}\n{:tag-network: .tag data-tag-color=\"cyan\"}\n{:tag-management: .tag data-tag-color=\"teal\"}\n{:tag-vpc: .tag data-tag-color=\"dark-teal\"}\n{:tag-compute: .tag data-tag-color=\"green\"}\n{:tag-ibm-cloud: .tag data-tag-color=\"blue\"}\n{:tag-cp4d: .tag data-tag-color=\"magenta\"}\n{:tag-iks: .tag data-tag-color=\"blue\"}\n{:tag-roks: .tag data-tag-color=\"red\"}\n{:tag-schematics: .tag data-tag-color=\"purple\"}\n{:tag-classic-inf: .tag data-tag-color=\"warm-gray\"}\n{:tag-satellite: .tag data-tag-color=\"magenta\"}\n{:tag-linux: .tag data-tag-color=\"red\"}\n{:tag-macos: .tag data-tag-color=\"cool-gray\"}\n{:tag-windows: .tag data-tag-color=\"cyan\"}\n{:tag-new: .tag data-tag-color=\"green\"}\n{:tag-updated: .tag data-tag-color=\"blue\"}\n{:tag-deprecated: .tag data-tag-color=\"red\"}\n{:tag-red: .tag data-tag-color=\"red\"}\n{:tag-magenta: .tag data-tag-color=\"magenta\"}\n{:tag-purple: .tag data-tag-color=\"purple\"}\n{:tag-blue: .tag data-tag-color=\"blue\"}\n{:tag-cyan: .tag data-tag-color=\"cyan\"}\n{:tag-teal: .tag data-tag-color=\"teal\"}\n{:tag-dark-teal: .tag data-tag-color=\"dark-teal\"}\n{:tag-green: .tag data-tag-color=\"green\"}\n{:tag-cool-gray: .tag data-tag-color=\"cool-gray\"}\n{:tag-warm-gray: .tag data-tag-color=\"warm-gray\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n",
       "{{site.data.keyword.attribute-definition-list}}"
 		],
 		"body": [
 			"{{site.data.keyword.attribute-definition-list}}"
 		],
-    "description": "{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:external: target=\"_blank\" .external}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n"
+    "description": "{:android: data-hd-operatingsystem=\"android\"}\n{:api: .ph data-hd-interface=\"api\"}\n{:audio: .audio}\n{:attention: .attention}\n{:authenticated-content: .authenticated-content}\n{:beta: .beta}\n{:c#: .ph data-hd-programlang=\"c#\"}\n{:cli: .ph data-hd-interface=\"cli\"}\n{:codeblock: .codeblock}\n{:curl: .ph data-hd-programlang=\"curl\"}\n{:deprecated: .deprecated}\n{:dotnet-standard: .ph data-hd-programlang=\"dotnet-standard\"}\n{:experimental: .experimental}\n{:exception: .exception}\n{:external: target=\"_blank\" .external}\n{:fast-path: .fast-path}\n{:faq: data-hd-content-type=\"faq\"}\n{:generic: data-hd-programlang=\"generic\"}\n{:go: .ph data-hd-programlang=\"go\"}\n{:help: data-hd-content-type=\"help\"}\n{:here: .ph data-hd-vposition=\"here\"}\n{:hide-dashboard: .hide-dashboard}\n{:hide-in-docs: .hide-in-docs}\n{:important: .important}\n{:ios: data-hd-operatingsystem=\"ios\"}\n{:java: .ph data-hd-programlang=\"java\"}\n{:javascript: .ph data-hd-programlang=\"javascript\"}\n{:middle: .ph data-hd-position=\"middle\"}\n{:node: .ph data-hd-programlang=\"node\"}\n{:note: .note}\n{:objectc: .ph data-hd-programlang=\"Objective C\"}\n{:php: .ph data-hd-programlang=\"PHP\"}\n{:pre: .pre}\n{:preview: .preview}\n{:python: .ph data-hd-programlang=\"python\"}\n{:release-note: data-hd-content-type=\"release-note\"}\n{:remember: .remember}\n{:requirement: .requirement}\n{:restriction: .restriction}\n{:right: .ph data-hd-position=\"right\"}\n{:row-headers: .row-headers}\n{:ruby: .ph data-hd-programlang=\"ruby\"}\n{:screen: .screen}\n{:shortdesc: .shortdesc}\n{:step: data-tutorial-type=\"step\"}\n{:support: data-reuse=\"support\"}\n{:swift: .ph data-hd-programlang=\"swift\"}\n{:tag-security: .tag data-tag-color=\"red\"}\n{:tag-devops: .tag data-tag-color=\"magenta\"}\n{:tag-app: .tag data-tag-color=\"purple\"}\n{:tag-datastore: .tag data-tag-color=\"blue\"}\n{:tag-network: .tag data-tag-color=\"cyan\"}\n{:tag-management: .tag data-tag-color=\"teal\"}\n{:tag-vpc: .tag data-tag-color=\"dark-teal\"}\n{:tag-compute: .tag data-tag-color=\"green\"}\n{:tag-ibm-cloud: .tag data-tag-color=\"blue\"}\n{:tag-cp4d: .tag data-tag-color=\"magenta\"}\n{:tag-iks: .tag data-tag-color=\"blue\"}\n{:tag-roks: .tag data-tag-color=\"red\"}\n{:tag-schematics: .tag data-tag-color=\"purple\"}\n{:tag-classic-inf: .tag data-tag-color=\"warm-gray\"}\n{:tag-satellite: .tag data-tag-color=\"magenta\"}\n{:tag-linux: .tag data-tag-color=\"red\"}\n{:tag-macos: .tag data-tag-color=\"cool-gray\"}\n{:tag-windows: .tag data-tag-color=\"cyan\"}\n{:tag-new: .tag data-tag-color=\"green\"}\n{:tag-updated: .tag data-tag-color=\"blue\"}\n{:tag-deprecated: .tag data-tag-color=\"red\"}\n{:tag-red: .tag data-tag-color=\"red\"}\n{:tag-magenta: .tag data-tag-color=\"magenta\"}\n{:tag-purple: .tag data-tag-color=\"purple\"}\n{:tag-blue: .tag data-tag-color=\"blue\"}\n{:tag-cyan: .tag data-tag-color=\"cyan\"}\n{:tag-teal: .tag data-tag-color=\"teal\"}\n{:tag-dark-teal: .tag data-tag-color=\"dark-teal\"}\n{:tag-green: .tag data-tag-color=\"green\"}\n{:tag-cool-gray: .tag data-tag-color=\"cool-gray\"}\n{:tag-warm-gray: .tag data-tag-color=\"warm-gray\"}\n{:term: .term}\n{:terraform: .ph data-hd-interface=\"terraform\"}\n{:tip: .tip}\n{:troubleshoot: data-hd-content-type=\"troubleshoot\"}\n{:tsCauses: .tsCauses}\n{:tsResolve: .tsResolve}\n{:tsSymptoms: .tsSymptoms}\n{:tutorial: data-hd-content-type=\"tutorial\"}\n{:ui: .ph data-hd-interface=\"ui\"}\n{:unity: .ph data-hd-programlang=\"unity\"}\n{:vbnet: .ph data-hd-programlang=\"vb.net\"}\n{:video: .video}\n"
 	}
 }

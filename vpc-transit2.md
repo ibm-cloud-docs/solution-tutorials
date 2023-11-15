@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-02-07"
+lastupdated: "2023-10-05"
+lasttested: "2023-10-05"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
@@ -181,8 +181,8 @@ Dallas 3|0.0.0.0/0|10.3.0.196
 To observe this:
 1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
 1. Select the **transit VPC** and notice the Address prefixes displayed.
-1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
-
+1. Click **Manage routing tables**
+1. Click on the transit gateway ingress route table
 
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
@@ -195,7 +195,7 @@ Dallas 1|10.0.0.0/8|10.1.0.196
 Dallas 2|10.0.0.0/8|10.2.0.196
 Dallas 3|10.0.0.0/8|10.3.0.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.0.4 (Dallas 1) attempting contact with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.
+Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.0.4 (Dallas 1) attempting to connect with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
@@ -237,14 +237,15 @@ What about the firewall-router itself? This was not mentioned earlier but in ant
 ### Apply and Test More Firewall
 {: #vpc-transit2-apply-and-test-more-firewall}
 
-1. Apply all the layers through the all_firewall_tf:
+1. Apply the layer:
    ```sh
    ./apply.sh all_firewall_tf
    ```
    {: codeblock}
 
 3. Run the test suite.
-   - Expected fail: cross zone transit <-> spoke and spoke <-> spoke.
+
+   **Your expected results are:** cross zone transit <-> spoke and spoke <-> spoke will be **FAILED**:
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"
@@ -254,7 +255,7 @@ What about the firewall-router itself? This was not mentioned earlier but in ant
 ### Fix cross zone routing
 {: #vpc-transit2-fix-cross-zone-routing}
 
-As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added. The problem for spoke 00 to spoke 1 traffic is shown in this diagram
+As mentioned earlier for a system to be resilient across zonal failures it is best to eliminate cross zone traffic. If cross zone support is required additional egress routes can be added. The problem for spoke 0 to spoke 1 traffic is shown in this diagram:
 
 ![Fixing cross zone routing](images/vpc-transit/vpc-transit-asymmetric-spoke-fw.svg){: caption="Fixing cross zone routing" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -350,7 +351,7 @@ Verify resiliency:
    2. Uncheck the x-fw-inall-outall
    3. Check the x-fw-in22-outall
    4. Click **Save**
-2. Run the **pytest** again. It will indicate failures. It will take a few minutes for the NLB to stop routing traffic to the instance, at which point all tests will pass. Continue waiting and running **pytest** until all tests pass.
+2. Run the **pytest** again. It will indicate failures. It will take a few minutes for the NLB to stop routing traffic to the unresponsive instance, at which point all tests will pass. Continue waiting and running **pytest** until all tests pass.
 
 The NLB firewall is no longer required. Remove the NLB firewall:
 1. Change these two variables in config_tf/terraform.tfvars:
@@ -442,6 +443,8 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    {: codeblock}
 
 1. There is a set of **vpe** and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-redis}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access the {{site.data.keyword.databases-for-redis}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
+   - Expected fail: cross vpc access to the redis DNS names.
+
    ```sh
    pytest -m 'vpe or vpedns' -k spoke0-z1
    ```
@@ -449,11 +452,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
    Notice the failing vpedns tests like this one:
 
-   ```sh
-   FAILED py/test_transit.py::test_vpe_dns_resolution[redis spoke0-z1 -> transit 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud] - AssertionError: 166.9.48.220 not in ['10.1.0.128/26', '10.2.0.128/26', '10.3.0.128/26'] from 3bcc88e4-2a0a-4cc5-898c-4f7674205605.c9v38t1d0icro20vjc5g.private.databases.appdomain.cloud
-   ```
-
-   These are failing due to DNS resolution. In the example above the Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE that is in the CIDR block 10.1.0.128/26 or 10.2.0.128/26. The error message asserts the Redis name is resolving to the address 166.9.38.220 which is a Cloud [Service Endpoint](/docs/vpc?topic=vpc-service-endpoints-for-vpc#cloud-service-endpoints). The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
+   These are failing due to DNS resolution. A Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE. The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.

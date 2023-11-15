@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-07-24"
-lasttested: "2022-12-21"
+lastupdated: "2023-10-09"
+lasttested: "2023-10-09"
 
 content-type: tutorial
 services: vpc
@@ -123,6 +123,8 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is zones
       ```
       {: pre}
+   
+   * `TF_VAR_ssh_agent` indicates that a passphrase-protected SSH key is used. Enable the variable by uncommenting it. Then, use `ssh-add ~/.ssh/id_rsa` to add the SSH key to the authentication agent.
 
 6. Load the variables into the environment:
    ```sh
@@ -201,13 +203,13 @@ In such cases, you can use the SSH connection to the server to upload files with
 
 The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh){: external} which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
 
-In the next sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash){: external} to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
+In later sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash){: external} to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
 
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #vpc-app-deploy-cli}
 {: step}
 
-The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}. This section explains how to use these commands, but you are not going to create any resources. It is recommended to use Terraform to deploy full solutions.
+The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}. **This section explains how to use these commands, but you are not going to create any resources.** It is recommended to use Terraform to deploy full solutions.
 
 ### Before you begin
 {: #vpc-app-deploy-cli-before-you-begin}

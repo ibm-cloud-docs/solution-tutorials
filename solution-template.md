@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-09-01"
+lastupdated: "2023-10-03"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -277,7 +277,7 @@ This section will only appear in a workshop and not in the tutorial.
 <!--#/isworkshop#-->
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/scripts/sync.sh#L32){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/review/scripts/sync.sh#L35){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
 {: #solution-template-18}
@@ -291,3 +291,32 @@ resource "ibm_is_vpc" "myvpc" {
 }
 ```
 {: codeblock}
+
+## The following images are referenced by Lab in a box
+{: #solution-template-labinabox}
+
+DO NOT REMOVE THESE FILES. They are referenced in https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/src/static/tutorials.json
+
+![Architecture](images/gettingstarted/logo.jpg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution12/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution21/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution2/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution34-cloud-e2e-security/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution55-openshift-microservices/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution57-openshift-service-mesh/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution-satellite-tour-hidden/architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
