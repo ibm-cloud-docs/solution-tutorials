@@ -27,6 +27,7 @@ toc:
                 - solution-template.md
                 - satellite-tour.hidden.md
                 - vpc-transit-power.hidden.md
+                - vpc-pps-basics.hidden.md
 
             - topicgroup:
                 label: Websites and Web Apps
