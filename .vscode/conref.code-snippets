@@ -7971,41 +7971,41 @@
 	"powerSysFull": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM&reg; Power&reg; Systems Virtual Server",
-			"ibm.IBM&reg; Power&reg; Systems Virtual Server",
-			"site.IBM&reg; Power&reg; Systems Virtual Server",
+			"IBM&reg; Power&reg; Virtual Server",
+			"ibm.IBM&reg; Power&reg; Virtual Server",
+			"site.IBM&reg; Power&reg; Virtual Server",
       "{{site.data.keyword.powerSysFull}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysFull}}"
 		],
-    "description": "IBM&reg; Power&reg; Systems Virtual Server"
+    "description": "IBM&reg; Power&reg; Virtual Server"
 	},
 	"powerSysShort": {
 	  "scope": "markdown",
 		"prefix": [
-			"Power&reg; Systems Virtual Server",
-			"ibm.Power&reg; Systems Virtual Server",
-			"site.Power&reg; Systems Virtual Server",
+			"Power&reg; Virtual Server",
+			"ibm.Power&reg; Virtual Server",
+			"site.Power&reg; Virtual Server",
       "{{site.data.keyword.powerSysShort}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSysShort}}"
 		],
-    "description": "Power&reg; Systems Virtual Server"
+    "description": "Power&reg; Virtual Server"
 	},
 	"powerSys_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"Power Systems Virtual Server",
-			"ibm.Power Systems Virtual Server",
-			"site.Power Systems Virtual Server",
+			"Power Virtual Server",
+			"ibm.Power Virtual Server",
+			"site.Power Virtual Server",
       "{{site.data.keyword.powerSys_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.powerSys_notm}}"
 		],
-    "description": "Power Systems Virtual Server"
+    "description": "Power Virtual Server"
 	},
 	"predmarketscenario_full": {
 	  "scope": "markdown",
@@ -11503,6 +11503,32 @@
 			"{{site.data.keyword.wca_full_notm}}"
 		],
     "description": "watsonx Code Assistant"
+	},
+	"wcaal_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
+			"ibm.IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
+			"site.IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
+      "{{site.data.keyword.wcaal_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaal_full}}"
+		],
+    "description": "IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed"
+	},
+	"wcaal_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"ibm.watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"site.watsonx Code Assistant for Red Hat Ansible Lightspeed",
+      "{{site.data.keyword.wcaal_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaal_full_notm}}"
+		],
+    "description": "watsonx Code Assistant for Red Hat Ansible Lightspeed"
 	},
 	"wearablefitness": {
 	  "scope": "markdown",
