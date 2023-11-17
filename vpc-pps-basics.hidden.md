@@ -86,15 +86,15 @@ In this section, you will create the services required to ...
 3. Create an instance of [Service B](/catalog/services/the-service-name).
 
 ## Review Provider side
-{: #vpc-pps-basics-section_one}
+{: #vpc-pps-basics-review-provider}
 {: step}
 
 ## Review Consumer side
-{: #vpc-pps-basics-section_one}
+{: #vpc-pps-basics-review-consumer}
 {: step}
 
 ## Test connectivity from consumer to provider
-{: #vpc-pps-basics-section_one}
+{: #vpc-pps-basics-test-connectivity}
 {: step}
 
 ## Remove resources
