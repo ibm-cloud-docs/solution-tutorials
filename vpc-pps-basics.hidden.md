@@ -49,7 +49,7 @@ This tutorial walks you through the steps to set up a Private Path service betwe
 {: #vpc-pps-basics-prereqs}
 
 This tutorial requires:
-* An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
+* Two {{site.data.keyword.cloud_notm}} [billable accounts](/docs/account?topic=account-accounts), one for the provider, one for the consumer. The tutorial will also work with only one account to host both the provider and the consumer resources.
 * A VPC SSH key to connect to the virtual server instances provisioned in the tutorial.
 
 ### Create a VPC SSH key
@@ -66,20 +66,21 @@ When provisioning virtual server instances, an SSH key will be injected into the
 
 In this tutorial, you will first act as a provider and implement an application. In a second phase, you will be in the role of the consumer and call the application. For simplicity, the application is a simple `nginx` web server.
 
-* In the provider account
-* Go to Schematics
-* Point to the `provider` directory in the example repo
-* Set variables, prefix for resources, SSH key, API key (optional?)
-* Deploy
-the application you are going to share with 
+In the provider account:
+1. Go to Schematics.
+1. Point to the `provider` directory in the example repo.
+1. Set variables, prefix for resources, SSH key, API key (optional?).
+1. Click **Deploy**.
 
 ## Review the provider resources and application
 {: #vpc-pps-basics-provider-review}
 {: step}
 
-* Check the resource group that was created
-* See the nginx through floating IP (maybe make it an optional)
-* Get the PPS CRN
+1. Review Schematics output.
+1. Check the resource group that was created.
+1. See the nginx through floating IP (maybe make it an optional step?).
+1. Make note of the PPS CRN to pass on to consumers.
+1. Publish the PPS.
 
 ## Create the consumer resources
 {: #vpc-pps-basics-consumer-deploy}
@@ -87,41 +88,42 @@ the application you are going to share with
 
 Prereq: an SSH key to connect to the VSI we deploy
 
-* In the consumer account -- note that for testing purposes, it can be the same account
-* Go to Schematics
-* Point to the `consumer` directory in the example repo
-* Set variables, prefix for resources, PPS CRN, SSH key, API key (optional?)
-* Deploy
-the application you are going to share with 
+In the consumer account -- note that for testing purposes, it can be the same account:
+1. Go to Schematics.
+1. Point to the `consumer` directory in the example repo.
+1. Set variables, prefix for resources, PPS CRN, SSH key, API key (optional?).
+1. Click **Deploy**.
 
 ## Review the consumer resources and application
 {: #vpc-pps-basics-consumer-review}
 {: step}
 
-- Show a diagram of the consumer resources
-- Notice the VPE is waiting for approval
+1. Show a diagram of the consumer resources.
+1. Notice the VPE is waiting for approval.
 
 ## Approve the consumer request
 {: #vpc-pps-basics-provider-approve}
 {: step}
 
-- In the Provider account, review the PPS request.
-- Approve the consumer
-- In consumer, the VPE turns active
+In the provider account,
+1. review the PPS request.
+1. approve the consumer.
 
 ## Test connectivity from consumer to provider
 {: #vpc-pps-basics-test-connectivity}
 {: step}
 
-- In consumer account, ssh to consumer vsi
-- From VSI, `curl` the VPE address, it goes to the provider VSI
+In consumer account,
+1. the VPE turns active.
+1. ssh to consumer vsi
+1. From VSI, `curl` the VPE address, it goes to the provider VSI
 
 ## Remove resources
 {: #vpc-pps-basics-removeresources}
 {: step}
 
-- Go to consumer account, use Schematics to delete resources and workspace.
-- Go to provider account, use Schematics to delete resources and workspace.
+1. Go to consumer account, use Schematics to delete resources and workspace.
+1. Go to provider account, use Schematics to delete resources and workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
