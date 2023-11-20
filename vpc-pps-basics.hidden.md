@@ -33,7 +33,7 @@ This tutorial walks you through the steps to set up a Private Path service betwe
 {: #vpc-pps-basics-objectives}
 
 * Understand the basics of Private Path Service.
-* Deploy an application in one account without exposing any private endpoints.
+* Deploy an application in one account without exposing any public endpoints.
 * Expose the application with Private Path service.
 * Access the application from another account through private connectivity only.
 
