@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial is an introduction to Private Path Service.
+This tutorial walks you through the steps to set up a Private Path service between a provider and a set of consumers. With Private Path service, the application or service implemented by the provider will be accessed by consumers through the IBM backbone without traversing the internet.
 {: shortdesc}
 
 ## Objectives
@@ -60,20 +60,20 @@ When provisioning virtual server instances, an SSH key will be injected into the
 1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
 1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
-## Create the Provider resources and application
+## Create the provider resources and application
 {: #vpc-pps-basics-provider-deploy}
 {: step}
 
-In this tutorial, you will first act as a Provider and implement an application. In a second phase, you will be in the role of the Consumer and call the application. For simplicity, the application is a simple `nginx` web server.
+In this tutorial, you will first act as a provider and implement an application. In a second phase, you will be in the role of the consumer and call the application. For simplicity, the application is a simple `nginx` web server.
 
-* In the Provider account
+* In the provider account
 * Go to Schematics
 * Point to the `provider` directory in the example repo
 * Set variables, prefix for resources, SSH key, API key (optional?)
 * Deploy
 the application you are going to share with 
 
-## Review the Provider resources and application
+## Review the provider resources and application
 {: #vpc-pps-basics-provider-review}
 {: step}
 
@@ -81,47 +81,47 @@ the application you are going to share with
 * See the nginx through floating IP (maybe make it an optional)
 * Get the PPS CRN
 
-## Create the Consumer resources
+## Create the consumer resources
 {: #vpc-pps-basics-consumer-deploy}
 {: step}
 
 Prereq: an SSH key to connect to the VSI we deploy
 
-* In the Consumer account -- note that for testing purposes, it can be the same account
+* In the consumer account -- note that for testing purposes, it can be the same account
 * Go to Schematics
 * Point to the `consumer` directory in the example repo
 * Set variables, prefix for resources, PPS CRN, SSH key, API key (optional?)
 * Deploy
 the application you are going to share with 
 
-## Review the Consumer resources and application
+## Review the consumer resources and application
 {: #vpc-pps-basics-consumer-review}
 {: step}
 
 - Show a diagram of the consumer resources
 - Notice the VPE is waiting for approval
 
-## Approve the Consumer request
+## Approve the consumer request
 {: #vpc-pps-basics-provider-approve}
 {: step}
 
 - In the Provider account, review the PPS request.
-- Approve the Consumer
-- In Consumer, the VPE turns active
+- Approve the consumer
+- In consumer, the VPE turns active
 
 ## Test connectivity from consumer to provider
 {: #vpc-pps-basics-test-connectivity}
 {: step}
 
-- In Consumer account, ssh to consumer vsi
+- In consumer account, ssh to consumer vsi
 - From VSI, `curl` the VPE address, it goes to the provider VSI
 
 ## Remove resources
 {: #vpc-pps-basics-removeresources}
 {: step}
 
-- Go to Consumer account, use Schematics to delete resources and workspace.
-- Go to Provider account, use Schematics to delete resources and workspace.
+- Go to consumer account, use Schematics to delete resources and workspace.
+- Go to provider account, use Schematics to delete resources and workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
