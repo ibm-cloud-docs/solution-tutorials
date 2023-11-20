@@ -50,26 +50,15 @@ This tutorial is an introduction to Private Path Service.
 
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-   * {{site.data.keyword.containerfull_notm}} plugin (`container-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `oc` to interact with OpenShift,
-* `helm` to deploy charts,
-* `terraform` to use Infrastructure as Code to provision resources,
-* `jq` to query JSON files,
-* `git` to clone source code repository,
-* a GitHub account,
-* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+* A VPC SSH key to connect to the virtual server instances provisioned in the tutorial.
 
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
+### Create a VPC SSH key
+{: #vpc-pps-basics-create-ssh-key}
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
-{: tip}
+When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
+
+1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
 ## Create the Provider resources and application
 {: #vpc-pps-basics-provider-deploy}
@@ -80,9 +69,8 @@ In this tutorial, you will first act as a Provider and implement an application.
 * In the Provider account
 * Go to Schematics
 * Point to the `provider` directory in the example repo
-* Set variables, prefix for resources
+* Set variables, prefix for resources, SSH key, API key (optional?)
 * Deploy
-* Set API key (optional)
 the application you are going to share with 
 
 ## Review the Provider resources and application
@@ -102,9 +90,8 @@ Prereq: an SSH key to connect to the VSI we deploy
 * In the Consumer account -- note that for testing purposes, it can be the same account
 * Go to Schematics
 * Point to the `consumer` directory in the example repo
-* Set variables, prefix for resources, PPS CRN
+* Set variables, prefix for resources, PPS CRN, SSH key, API key (optional?)
 * Deploy
-* Set API key (optional)
 the application you are going to share with 
 
 ## Review the Consumer resources and application
