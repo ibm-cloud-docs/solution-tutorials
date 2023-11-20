@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-17"
+lastupdated: "2023-11-20"
 lasttested: "2023-01-01"
 
 content-type: tutorial
@@ -32,7 +32,7 @@ This tutorial is an introduction to Private Path Service.
 ## Objectives
 {: #vpc-pps-basics-objectives}
 
-* Understand the basis of Private Path Service.
+* Understand the basics of Private Path Service.
 * Deploy an application in one account without exposing any private endpoints.
 * Expose the application with Private Path service.
 * Access the application from another account through private connectivity only.
@@ -71,37 +71,70 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-## Create services
-{: #vpc-pps-basics-setup}
+## Create the Provider resources and application
+{: #vpc-pps-basics-provider-deploy}
 {: step}
 
-In this section, you will create the services required to ...
+In this tutorial, you will first act as a Provider and implement an application. In a second phase, you will be in the role of the Consumer and call the application. For simplicity, the application is a simple `nginx` web server.
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](/docs/cli?topic=cloud-cli-getting-started).
-    
-2. Create an instance of [Service A](/catalog/services/the-service-name).
-    ```sh
-    ibmcloud resource service-instance-create service-instance-name service-name lite global
-    ```
-3. Create an instance of [Service B](/catalog/services/the-service-name).
+* In the Provider account
+* Go to Schematics
+* Point to the `provider` directory in the example repo
+* Set variables, prefix for resources
+* Deploy
+* Set API key (optional)
+the application you are going to share with 
 
-## Review Provider side
-{: #vpc-pps-basics-review-provider}
+## Review the Provider resources and application
+{: #vpc-pps-basics-provider-review}
 {: step}
 
-## Review Consumer side
-{: #vpc-pps-basics-review-consumer}
+* Check the resource group that was created
+* See the nginx through floating IP (maybe make it an optional)
+* Get the PPS CRN
+
+## Create the Consumer resources
+{: #vpc-pps-basics-consumer-deploy}
 {: step}
+
+Prereq: an SSH key to connect to the VSI we deploy
+
+* In the Consumer account -- note that for testing purposes, it can be the same account
+* Go to Schematics
+* Point to the `consumer` directory in the example repo
+* Set variables, prefix for resources, PPS CRN
+* Deploy
+* Set API key (optional)
+the application you are going to share with 
+
+## Review the Consumer resources and application
+{: #vpc-pps-basics-consumer-review}
+{: step}
+
+- Show a diagram of the consumer resources
+- Notice the VPE is waiting for approval
+
+## Approve the Consumer request
+{: #vpc-pps-basics-provider-approve}
+{: step}
+
+- In the Provider account, review the PPS request.
+- Approve the Consumer
+- In Consumer, the VPE turns active
 
 ## Test connectivity from consumer to provider
 {: #vpc-pps-basics-test-connectivity}
 {: step}
 
+- In Consumer account, ssh to consumer vsi
+- From VSI, `curl` the VPE address, it goes to the provider VSI
+
 ## Remove resources
 {: #vpc-pps-basics-removeresources}
 {: step}
 
-Steps to take to remove the resources created in this tutorial
+- Go to Consumer account, use Schematics to delete resources and workspace.
+- Go to Provider account, use Schematics to delete resources and workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
