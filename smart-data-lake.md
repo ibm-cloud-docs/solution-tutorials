@@ -35,7 +35,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - Query data directly from {{site.data.keyword.cos_short}} using {{site.data.keyword.sqlquery_short}} (previously SQL Query)
 - Refine and analyze data in {{site.data.keyword.DSX_full}}
 
-![Architecture](images/solution29/Smart-Data-Lake-Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution29/architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}.
@@ -302,15 +302,6 @@ In this section, you will visualize the previous result set using a folium heat 
 
 3. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
-## Share your dataset with the organization
-{: #smart-data-lake-7}
-{: step}
-
-Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake. Tools with analytic capabilities or for visualization can import data stored in CSV files. Application developers can make use of [{{site.data.keyword.dynamdashbemb_notm}}](/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial) to let users build and use feature-rich dashboards. Such a dashboard for the traffic data is shown below. 
-
-![Dashboard Chart](images/solution29/dashboard-chart.png){: caption="Dashboard Chart" caption-side="bottom"}
-{: style="text-align: center;"}
-
 ## Expand the tutorial
 {: #smart-data-lake-9}
 {: step}
@@ -319,7 +310,6 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 
 - Experiment with additional datasets using {{site.data.keyword.sqlquery_short}}
 - Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](/docs/solution-tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
-- Build a web app with a dashboard for line of business users utilizing [{{site.data.keyword.dynamdashbemb_notm}}](/docs/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-gettingstartedtutorial).
 
 ## Remove resources
 {: #smart-data-lake-10}
