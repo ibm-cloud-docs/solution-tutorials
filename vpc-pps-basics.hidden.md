@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-20"
+lastupdated: "2023-11-28"
 lasttested: "2023-01-01"
 
 content-type: tutorial
@@ -35,7 +35,7 @@ This tutorial walks you through the steps to set up a Private Path service betwe
 * Understand the basics of Private Path Service.
 * Deploy an application in one account without exposing any public endpoints.
 * Expose the application with Private Path service.
-* Access the application from another account through private connectivity only.
+* Access the application from a consumer application through private connectivity only.
 
 ![Architecture](images/vpc-pps-basics-hidden/architecture.png){: caption="Figure 1. Architecture showing Private Path service" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -66,7 +66,7 @@ When provisioning virtual server instances, an SSH key will be injected into the
 
 In this tutorial, you will first act as a provider and implement an application. In a second phase, you will be in the role of the consumer and call the application. For simplicity, the application is a simple `nginx` web server.
 
-In the provider account:
+Acting as the provider for the application:
 1. Go to Schematics.
 1. Point to the `provider` directory in the example repo.
 1. Set variables, prefix for resources, SSH key, API key (optional?).
@@ -80,15 +80,16 @@ In the provider account:
 1. Check the resource group that was created.
 1. See the nginx through floating IP (maybe make it an optional step?).
 1. Make note of the PPS CRN to pass on to consumers.
-1. Publish the PPS.
 
 ## Create the consumer resources
 {: #vpc-pps-basics-consumer-deploy}
 {: step}
 
+To verify that the PPS is correctly setup you are going to deploy virtual servers to access the application.
+
 Prereq: an SSH key to connect to the VSI we deploy
 
-In the consumer account -- note that for testing purposes, it can be the same account:
+Acting as a consumer for the application,
 1. Go to Schematics.
 1. Point to the `consumer` directory in the example repo.
 1. Set variables, prefix for resources, PPS CRN, SSH key, API key (optional?).
@@ -100,32 +101,40 @@ In the consumer account -- note that for testing purposes, it can be the same ac
 
 1. Show a diagram of the consumer resources.
 1. Notice the VPE is waiting for approval.
+1. If you were to try to access the service it would not work just yet.
 
 ## Approve the consumer request
 {: #vpc-pps-basics-provider-approve}
 {: step}
 
-In the provider account,
+Acting as the provider,
 1. review the PPS request.
-1. approve the consumer.
+1. permit the connection request.
 
 ## Test connectivity from consumer to provider
 {: #vpc-pps-basics-test-connectivity}
 {: step}
 
-In consumer account,
-1. the VPE turns active.
+Acting as the consumer,
+1. notice the VPE turns active.
 1. ssh to consumer vsi
-1. From VSI, `curl` the VPE address, it goes to the provider VSI
+1. From VSI, `curl` the VPE fqdn address, notice it goes to the provider VSIs
+1. Repeat the `curl`, notice it round-robin as configured on the PPS NLB!
+
+## Next steps?
+
+* Here we tested in the same account. This is the first step in validating your PPS.
+* To allow users from other accounts to access it, you need to publish the PPS.
+* Once published, you can onboard consumers
+* You can also set policies to automatically approve requests from specific accounts.
 
 ## Remove resources
 {: #vpc-pps-basics-removeresources}
 {: step}
 
-1. Go to consumer account, use Schematics to delete resources and workspace.
-1. Go to provider account, use Schematics to delete resources and workspace.
+Go to Schematics,
+1. Delete the consumer resources and workspace.
+1. Delete the producer resources and workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
-
-
