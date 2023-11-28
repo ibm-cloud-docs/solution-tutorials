@@ -8,7 +8,7 @@ lasttested: "2023-01-01"
 content-type: tutorial
 services: vpc
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
 use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 ---
 
@@ -18,7 +18,7 @@ use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 {: #vpc-pps-basics}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
-{: toc-completion-time="2h"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
@@ -49,7 +49,7 @@ This tutorial walks you through the steps to set up a Private Path service betwe
 {: #vpc-pps-basics-prereqs}
 
 This tutorial requires:
-* Two {{site.data.keyword.cloud_notm}} [billable accounts](/docs/account?topic=account-accounts), one for the provider, one for the consumer. The tutorial will also work with only one account to host both the provider and the consumer resources.
+* One {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts) to host both the provider and the consumer resources.
 * A VPC SSH key to connect to the virtual server instances provisioned in the tutorial.
 
 ### Create a VPC SSH key
