@@ -122,6 +122,8 @@ Acting as the consumer,
 1. Repeat the `curl`, notice it round-robin as configured on the PPS NLB!
 
 ## Next steps?
+{: #vpc-pps-basics-next}
+{: step}
 
 * Here we tested in the same account. This is the first step in validating your PPS.
 * To allow users from other accounts to access it, you need to publish the PPS.
