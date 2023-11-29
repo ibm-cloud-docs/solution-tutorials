@@ -11,7 +11,6 @@ account-plan: paid
 completion-time: 1h
 use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 ---
-
 {{site.data.keyword.attribute-definition-list}}
 
 # Expose services to consumers through private connectivity
@@ -74,6 +73,7 @@ In this tutorial, you will first act as a provider and implement an application.
    1. Set the **repository URL** to `https://github.ibm.com/portfolio-solutions/vpc-pps-basics/tree/main/provider`.
    1. Make sure **Use full repository** is checked.
    1. Set **Personal access token** to a token with `repo:public_repo` created from https://github.ibm.com/settings/tokens
+
       This will no longer be needed when the tutorial is made public
       {: beta}
 
@@ -131,6 +131,7 @@ Given that an _unpublished_ Private Path service can only be accessed within the
    1. Set the **repository URL** to `https://github.ibm.com/portfolio-solutions/vpc-pps-basics/tree/main/consumer`.
    1. Make sure **Use full repository** is checked.
    1. Set **Personal access token** to a token with `repo:public_repo` created from https://github.ibm.com/settings/tokens
+
       This will no longer be needed when the tutorial is made public
       {: beta}
 
@@ -185,6 +186,7 @@ Acting as the provider of the application,
 1. Select the Private Path service.
 1. In the **Connection requests** table, locate the request from the consumer.
 1. Use the menu (︙) to **Permit** the connection.
+
    The *Permit connection request* dialog gives you an option to create a policy to automatically permit all requests from the same account ID. Leave it unchecked for now. In the future this can streamlined the process of consumers requesting connections from this account.
    {: tip}
 
@@ -220,22 +222,31 @@ Acting as the consumer again,
 
 Congratulations! Your Private Path service is working as expected and is ready to be published for others to consume.
 
-## Next steps?
+## Expand the tutorial
 {: #vpc-pps-basics-next}
 {: step}
 
-* Here we tested in the same account. This is the first step in validating your PPS.
-* To allow users from other accounts to access it, you need to publish the PPS.
-* Once published, you can onboard consumers
-* You can also set policies to automatically approve requests from specific accounts.
+This tutorial focuses on the basics of Private Path service with a provider application in one VPC and a consumer in another VPC, all within the same account.
+
+Once your provider application is ready for consumption by others, it is likely that it will be accessed by clients running in other {{site.data.keyword.cloud_notm}} accounts.
+
+You will need to [publish](/docs/vpc?topic=vpc-pps-activating&interface=ui) the Private Path service to enable this scenario.
+
+[Communicating connection information to consumers](/docs/vpc?topic=vpc-pps-ui-communicate&interface=ui), [reviewing connection requests](/docs/vpc?topic=vpc-pps-ui-reviewing&interface=ui) and streamlining the process with [account policies](/docs/vpc?topic=vpc-pps-about-account-policies&interface=ui) will also be part of the successful onboarding of consumers.
 
 ## Remove resources
 {: #vpc-pps-basics-removeresources}
 {: step}
 
-Go to Schematics,
-1. Delete the consumer resources and workspace.
-1. Delete the producer resources and workspace.
+To remove the resources created for this tutorial:
+1. Go to {{site.data.keyword.bpshort}}
+   1. Select the `pps-consumer` workspace.
+   1. From the **Actions...**, select **Destroy resources**.
+   1. Type `pps-consumer` and click **Destroy**.
+   1. Wait for {{site.data.keyword.bpshort}} to complete the job.
+   1. Once completed, select **Delete workspace** from the **Actions...** menu.
+   1. Type `pps-consumer` and click **Delete**.
+1. Repeat the same steps with the `pps-provider` workspace.
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
