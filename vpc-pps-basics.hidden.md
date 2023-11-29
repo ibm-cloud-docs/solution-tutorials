@@ -187,7 +187,7 @@ Acting as the provider of the application,
 1. In the **Connection requests** table, locate the request from the consumer.
 1. Use the menu (︙) to **Permit** the connection.
 
-   The *Permit connection request* dialog gives you an option to create a policy to automatically permit all requests from the same account ID. Leave it unchecked for now. In the future this can streamlined the process of consumers requesting connections from this account.
+   The *Permit connection request* dialog gives you an option to create a policy to automatically permit all requests from the same account ID. **Leave it unchecked for now**. In the future this can accelerate the process of consumers requesting connections from this account.
    {: tip}
 
 1. Click **Permit**.
