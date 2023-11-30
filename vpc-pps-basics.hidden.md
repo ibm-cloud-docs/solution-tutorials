@@ -66,12 +66,12 @@ When provisioning virtual server instances, an SSH key is injected into the inst
 {: #vpc-pps-basics-provider-deploy}
 {: step}
 
-In this tutorial, you first act as a provider and implement an application. In a second phase, you take the role of the consumer and call the application. For simplicity, the application is a simple `nginx` web server.
+In this tutorial, you first act as a provider and implement an application. In a second phase, you take the role of the consumer and call the application. The application is a simple `nginx` web server.
 
 1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create) to create a new workspace.
 1. In the **Specify template** step:
    1. Set the **repository URL** to `https://github.ibm.com/portfolio-solutions/vpc-pps-basics/tree/main/provider`.
-   1. Make sure **Use full repository** is checked.
+   1. Make sure to check **Use full repository**.
    1. Set **Personal access token** to a token with `repo:public_repo` created from https://github.ibm.com/settings/tokens
 
       This will no longer be needed when the tutorial is made public
@@ -100,7 +100,7 @@ Finally create the resources:
 {: #vpc-pps-basics-provider-review}
 {: step}
 
-Running {{site.data.keyword.bpshort}} for the provider has created the following resources:
+Running {{site.data.keyword.bpshort}} for the provider creates the following resources:
 * one virtual private cloud (VPC),
 * three subnets, one for each zone,
 * a minimum of one virtual server instance in each subnet,
@@ -114,7 +114,7 @@ Running {{site.data.keyword.bpshort}} for the provider has created the following
 1. Find the Private Path NLB under [Load balancers](/vpc-ext/network/loadBalancers).
 1. In [Private Path services](/vpc-ext/network/privatePathServices), select the created Private Path service.
 1. In the Private Path Service details, notice the **Service endpoint** set to `vpc-pps.example.com`. Note that it might be different if you specified a custom `basename` during the workspace configuration. This is the endpoint used by consumers to interact with your application.
-1. Make note of the CRN as you need to pass this information to consumers. Consumers use the CRN to identify your application when creating virtual private endpoint gateways.
+1. Make note of the **CRN** as you need to pass this information to consumers. Consumers use the CRN to identify your application when creating virtual private endpoint gateways.
 
 Your Private Path service is almost ready to be shared with consumers. But before [publishing the Private Path service](/docs/vpc?topic=vpc-pps-activating&interface=ui), it is recommended to test that it is working as expected.
 
@@ -162,7 +162,7 @@ Finally create the resources:
 {: #vpc-pps-basics-consumer-review}
 {: step}
 
-Running {{site.data.keyword.bpshort}} for the consumer has created the following resources:
+Running {{site.data.keyword.bpshort}} for the consumer creates the following resources:
 * one virtual private cloud (VPC),
 * two subnets,
 * one virtual server instance in each subnet,
@@ -204,13 +204,13 @@ Acting as the consumer again,
    ```sh
    ssh root@<floating-ip>
    ```
-   {: codeblock}
+   {: pre}
 
 1. Access the provider application by calling the service endpoint.
    ```sh
    curl http://vpc-pps.example.com
    ```
-   {: codeblock}
+   {: pre}
 
    The output should look like:
    ```text
@@ -218,7 +218,7 @@ Acting as the consumer again,
    ```
    {: screen}
 
-1. Repeat the `curl` command several times. Notice how it returns a different name as it goes through all the virtual server instances attached to the backend pool of the Private Path Service NLB.
+1. Repeat the `curl` command several times. Notice how it shows a different output as it goes through all the virtual server instances attached to the backend pool of the Private Path Service NLB.
 
 Congratulations, your Private Path service is working as expected and is ready to be published for others to consume.
 
