@@ -380,7 +380,7 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
     1.  Download and install the OpenVPN client application from https://openvpn.net.
     1.  Open the OpenVPN client application, and import the `client2site-vpn.ovpn` file.
     1.  Enter one of the {{site.data.keyword.cloud_notm}} email addresses that was configured to access the VPN as the user ID.
-1.  Go to [http://iam.{DomainName}/identity/passcode](http://iam.{DomainName}/identity/passcode) in your browser to generate a passcode. Copy the passcode.
+1.  Go to [https://iam.{DomainName}/identity/passcode](https://iam.{DomainName}/identity/passcode) in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
