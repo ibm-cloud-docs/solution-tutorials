@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-02"
+lastupdated: "2023-12-06"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -145,7 +145,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
 
 1.  Select the catalog and click **Add** to add the client-to-site VPN to the new private catalog with the following settings.
 
-    Alternatively, you can use the {{site.data.keyword.cloud_notm}} CLI. See [Onboard a deployable architecture to a private catalog by using the CLI](client-vpn-onboard-cat-cli).
+    Alternatively, you can use the {{site.data.keyword.cloud_notm}} CLI. See [Onboard a deployable architecture to a private catalog by using the CLI](#client-vpn-onboard-cat-cli).
     {: tip}
 
     Update the information for `Source URL` and `Software Version` to match the latest release of the [client-to-site VPN](https://github.com/terraform-ibm-modules/terraform-ibm-client-to-site-vpn) GitHub module.
@@ -157,12 +157,12 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to set up
     - Variation: Standard
     - Software Version: 1.6.1
 1.  Click **Add product**.
-1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
+1.  Skip to [Validate the deployable architecture](#client-vpn-validate-da).
 
 ### Onboard a deployable architecture to a private catalog by using the CLI
 {: #client-vpn-onboard-cat-cli}
 
-If you already added your deployable architecture to your private catalog in the previous section, skip to [Validate the deployable architecture](client-vpn-validate-da).
+If you already added your deployable architecture to your private catalog in the previous section, skip to [Validate the deployable architecture](#client-vpn-validate-da).
 {: tip}
 
 Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboard a deployable architecture to a private catalog with the {{site.data.keyword.cloud_notm}} CLI.
@@ -179,7 +179,7 @@ Follow these steps to use the {{site.data.keyword.cloud_notm}} console to onboar
     {: pre}
 
 1.  When the command finishes successfully, go to your private catalog in the {{site.data.keyword.cloud_notm}} console and verify that the new version is listed in `Draft` state.
-1.  Skip to [Validate the deployable architecture](client-vpn-validate-da).
+1.  Skip to [Validate the deployable architecture](#client-vpn-validate-da).
 
 ### Set up by using Terraform
 {: #solution-connect-client-vpn-local-setup}
@@ -249,18 +249,18 @@ Make sure you have your development environment configured:
     vpn_client_access_group_users  = ["user1@example.com","user2@example.com"]
 
     /*
-    CIDR range to use from the first and second zone in the region to 
-    enable HA. If vpn_subnet_cidr_zone_2 not specified, VPN will only be 
+    CIDR range to use from the first and second zone in the region to
+    enable HA. If vpn_subnet_cidr_zone_2 not specified, VPN will only be
     deployed to a single zone (standalone deployment).
     */
     vpn_subnet_cidr_zone_1         = "<cidr_zone_1>"
     vpn_subnet_cidr_zone_2         = "<cidr_zone_2>"
 
     /*
-    Optionally pass a list of existing subnet names 
-    (supports a maximum of 2) to use for the client-to-site VPN. If 
-    no subnets passed, new subnets will be created using the CIDR 
-    ranges specified in the vpn_subnet_cidr_zone_1 and 
+    Optionally pass a list of existing subnet names
+    (supports a maximum of 2) to use for the client-to-site VPN. If
+    no subnets passed, new subnets will be created using the CIDR
+    ranges specified in the vpn_subnet_cidr_zone_1 and
     vpn_subnet_cidr_zone_2 variables.
 
     existing_subnet_names = [
@@ -380,7 +380,7 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
     1.  Download and install the OpenVPN client application from https://openvpn.net.
     1.  Open the OpenVPN client application, and import the `client2site-vpn.ovpn` file.
     1.  Enter one of the {{site.data.keyword.cloud_notm}} email addresses that was configured to access the VPN as the user ID.
-1.  Go to http://iam.{DomainName}/identity/passcode in your browser to generate a passcode. Copy the passcode.
+1.  Go to [http://iam.{DomainName}/identity/passcode](http://iam.{DomainName}/identity/passcode) in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
