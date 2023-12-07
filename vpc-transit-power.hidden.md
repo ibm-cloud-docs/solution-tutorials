@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-03"
-lasttested: "2023-11-03"
+lastupdated: "2023-12-07"
+lasttested: "2023-12-07"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, power-iaas
@@ -22,7 +22,12 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-A {: site.data.keyword.powerSysFull} is used to host Power Virtual Machines running a variety of different operating environments like I, Linux, AIX TODO.  A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. PVC can connect to VPCs via a TGW and utilize the VPC network to access Virtual server instances in the VPC or networkdevices like a VPN or Virtual private endpoint gateways. A VPC or PVC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
+- site.data.keyword.powerSysFull {{site.data.keyword.powerSysFull}}
+- site.data.keyword.powerSys_notm {{site.data.keyword.powerSys_notm}}
+- site.data.keyword.powerSysShort {{site.data.keyword.powerSysShort}}
+
+The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances (.i.e virtual server instances) running a variety of different operating environments like Linux, AIX and I. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC) which provides network isolation and security in the {{site.data.keyword.cloud_notm}}. {{site.data.keyword.powerSys_notm}} can connect to VPCs via a TGW and utilize the VPC network to access Virtual server instances in the VPC or networkdevices like a VPN or Virtual private endpoint gateways. A VPC or {{site.data.keyword.powerSys_notm}} can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
+
 
 ![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -53,10 +58,10 @@ A layered architecture will introduce resources and demonstrate connectivity. Ea
 ## Objectives
 {: #vpc-transit-power-objectives}
 
-* Understand the concepts behind a PVC networking.
-* Utilize the TGW for connecting PVC to VPC.
-* Routing PVC traffic to on premises through a VPC site to site VPN, TGW or DL.
-* Connect PVC computers through virtual private endpoint gateways to services.
+* Understand the concepts behind a {{site.data.keyword.powerSys_notm}} networking.
+* Utilize the TGW for connecting {{site.data.keyword.powerSys_notm}} to VPC.
+* Routing {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN, TGW or DL.
+* Connect {{site.data.keyword.powerSys_notm}} computers through virtual private endpoint gateways to services.
 * Utilize the DNS service routing and forwarding rules to build an architecturally sound name resolution system.
 
 ## Before you begin
@@ -66,7 +71,7 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
 * Implementing a firewall-router will require that you [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
-* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. Keep your public SSH key handy it will be required to be created a PVC SSH key in a later step.
+* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. Keep your public SSH key handy it will be required to be created a {{site.data.keyword.powerSys_notm}} SSH key in a later step.
 
 See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to easily create the prerequisite environment.
 
@@ -150,9 +155,9 @@ For the rest of this tutorial a transit VPC, a spoke VPC and a PVS spoke in the 
    ```
    {: codeblock}
 
-The PVC has been created along with the VPCs and VPC VPN.
+The {{site.data.keyword.powerSys_notm}} has been created along with the VPCs and VPC VPN.
 
-Open the PVC [workspaces](https://cloud.ibm.com/power/workspaces) and then open the spoke workspace.  Under **Networking** open **Subnets** and note the public and private subnet.  Note the CIDR block for the private subnet: 10.1.2.4 — 10.1.2.62.
+Open the {{site.data.keyword.powerSys_notm}} [workspaces](https://cloud.ibm.com/power/workspaces) and then open the spoke workspace.  Under **Networking** open **Subnets** and note the public and private subnet.  Note the CIDR block for the private subnet: 10.1.2.4 — 10.1.2.62.
 
 ## Virtual server instance configuration
 {: #vpc-transit-power-server-instance-configuration}
