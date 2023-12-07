@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-30"
-lasttested: "2023-01-01"
+lastupdated: "2023-12-06"
+lasttested: "2023-12-06"
 
 content-type: tutorial
 services: vpc
@@ -28,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps to set up a Private Path service between a provider and a set of consumers. With Private Path service, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
+This tutorial walks you through the steps to set up a [Private Path service](/docs/vpc?topic=vpc-using-private-path-services) between a provider and a set of consumers. With Private Path service, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
 {: shortdesc}
 
 ## Objectives
@@ -110,7 +110,7 @@ Running {{site.data.keyword.bpshort}} for the provider creates the following res
 ![Architecture](images/vpc-pps-basics-hidden/provider.png){: caption="Figure 2. Architecture of the provider resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. Navigate to [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned instances.
+1. Navigate to [Virtual Private Clouds](/vpc-ext/network/vpcs), [Subnets](/vpc-ext/network/subnets) and [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned resources.
 1. Find the Private Path NLB under [Load balancers](/vpc-ext/network/loadBalancers).
 1. In [Private Path services](/vpc-ext/network/privatePathServices), select the created Private Path service.
 1. In the Private Path Service details, notice the **Service endpoint** set to `vpc-pps.example.com`. Note that it might be different if you specified a custom `basename` during the workspace configuration. This is the endpoint used by consumers to interact with your application.
@@ -124,7 +124,7 @@ Your Private Path service is almost ready to be shared with consumers. But befor
 
 To verify that the Private Path service is correctly set up, you are going to deploy virtual servers to access the application, just like any consumer of a Private Path service would do.
 
-Given that an _unpublished_ Private Path service can only be accessed within the same account where it was created, the consumer side of this tutorial is provisioned in the same account.
+Until a Private Path service [gets published](/docs/vpc?topic=vpc-pps-activating), it can only be accessed within the same account where it is created. It offers a good opportunity to test the service before sharing it with others. This is the reason why, at this stage, the consumer side of this tutorial is provisioned in the same account as the provider application.
 
 1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create) to create a new workspace.
 1. In the **Specify template** step:
@@ -187,7 +187,7 @@ Acting as the provider of the application,
 1. In the **Connection requests** table, locate the request from the consumer.
 1. Use the menu (︙) to **Permit** the connection.
 
-   The *Permit connection request* dialog gives you an option to create a policy to automatically permit all requests from the same account ID. **Leave it unchecked for now**. In the future this can speed up the process of consumers requesting connections from this account.
+   The *Permit connection request* dialog gives you an option to create [a policy to automatically permit all requests from the same account ID](/docs/vpc?topic=vpc-pps-about-account-policies). **Leave it unchecked for now**. In the future this can speed up the process of consumers requesting connections from this account.
    {: tip}
 
 1. Click **Permit**.
