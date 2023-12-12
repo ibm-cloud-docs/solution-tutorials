@@ -147,17 +147,22 @@ The provision created two files one for each member of the key pair required to 
 
 
 The public key was used to create two SSH keys in the cloud:
-- [SSH keys for VPC](/vpc-ext/compute/sshKeys)
-- [Power SSH keys](/power/ssh-keys).
+- Power SSH keys
+- SSH keys for VPC
 
-Visit each of these.  Look for the key that has your initials.  You could verify that the contents of the cloud ssh key matches the content of the public key file.
+Verify the Power SSH key:
+- Navigate to [Power SSH keys](/power/ssh-keys).
+- On the left side navigation panel select the workspace with your initials.
 
+Find the key that has your initials.  Optionally verify that the contents of the cloud ssh key matches the content of the public key file.
+
+Locate the key with the same name in [SSH keys for VPC](/vpc-ext/compute/sshKeys)
 
 ## Virtual server instance configuration
 {: #vpc-transit-power-server-instance-configuration}
 {: step}
 
-The terraform configuration created a Linux Virtual server instance but was not able to fully configure it.  It is now possible to change the ip route tables and install an nginx server to allow some simple testing.
+The terraform configuration created a {{site.data.keyword.powerSys_notm}} linux Virtual server instance but was not able to fully configure it.  It is now possible to configure the ip route tables and install an nginx server to support testing.
 
 ```
 cd power_tf; # should be in the .../vpc-transit/power_tf directory
@@ -194,12 +199,12 @@ This experience will look something like this:
 ```
 
 Simply copy/paste the commands a line at a time.  Here is what is happening:
-- The ssh command will log in to the virtual server instance using the private ssh key created earlier.
-- The **ip route** commands executed on the Power Linux server will route all [Private network](https://en.wikipedia.org/wiki/Private_network) CIDR blocks through the private subnet (eth0).  Notice these include both the 10.0.0.0/16 cloud CIDR block and the 192.168.0.0/16 enterprise CIDR block.
-- The default route captures all other addresses will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server
-- To verify the public route is working exit ssh
-- Use ssh to directly login to the instance using the public IP address.
-- The final step is to install nginx and postgresql.  Nginx is used to host a web page that is verified using a curl command. The test suite will access the web page to verify connectivity.
+- The ssh command will log in to the virtual server instance using the private ssh key created earlier.  It is required to **jump** through an intermediate transit VPC virtual server.  The -oProxyCommand configures the jump server.
+- The **ip route** commands executed on the Power Linux server will route all [Private network](https://en.wikipedia.org/wiki/Private_network) CIDR blocks through the private subnet (eth0).  Notice these include both the 10.0.0.0 cloud CIDR block and the 192.168.0.0 enterprise CIDR block.
+- The default route captures will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server
+- Quit the ssh session.
+- Use ssh to directly login to the instance using the public IP address.  This verifies that the iptable configuration is correct.
+- The final step is to install nginx and postgresql.  Nginx is a http server that will host a web page that is verified using a curl command. The test suite will access the web page to verify connectivity.  The postgreql command line tool is used by the test suite to test connectivity to the {{site.data.keyword.postgresql}} instances.
 
 ## Test network connectivity
 {: #vpc-transit-power-test-network-connectivity}
@@ -207,7 +212,7 @@ Simply copy/paste the commands a line at a time.  Here is what is happening:
 
 A **pytest** test suite will be used to exhaustively tests communication paths.
 
-It is not required for the reader to use **pytest** to verify the results. It is straight forward to reproduce the test results shown below by hand. For each line of output in the example below find the resource in the [Resources](/resources) view of the {{site.data.keyword.cloud_notm}} console and navigate to the resource, and find the public IP addresses and use it as the address for ssh.  Then on that and the shell prompt of the cloud instance execute a curl command to the private IP address of the instance on the right.
+It is not required for the reader to use **pytest** to verify the results. It is straight forward to reproduce the test results shown below by hand but quite tedious. For each line of the example output in the example below find the resource in the [Resources](/resources) view of the {{site.data.keyword.cloud_notm}} console and navigate to the left resource and locate the public IP addresses for an ssh session. Using the shell of the cloud instance execute a curl command to the private IP address of the instance on the right: curl `A.B.C.D/name`.
 {: note}
 
 There are a couple of different ways to install and use python as covered in the [README.md](https://github.com/IBM-Cloud/vpc-transit).
@@ -290,8 +295,6 @@ py/test_transit.py::test_vpe[postgresql spoke0-z1 -> spoke0 8443e306-55bb-4373-a
 
 The first test, `py/test_transit.py::test_vpe[postgresql spoke1 -> transit 14d0604b-288b-40af-8e9a-5cf3021c333d.bn2a2uid0up8mv7mv2ig.private.databases.appdomain.cloud] ` is stating that the test will `ssh` into spoke1 and then execute a postgresql command against the DNS name of the postgresql instance 14d0604b-288b-40af-8e9a-5cf3021c333d.bn2a2uid0up8mv7mv2ig.private.databases.appdomain.cloud`. This instance has a {{site.data.keyword.vpe_short}} in the transit VPC. You will notice in a future step that this is through the VPC Virtual private endpoint gateway path.
 
-In the rest of the tutorial the highlights of the connectivity will be inspected using the {{site.data.keyword.cloud_notm}} console.
-
 ## Transit gateway
 {: #vpc-transit-power-transit-gateway}
 {: step}
@@ -371,7 +374,9 @@ The diagram shows an arrow from this DNS resolver to spoke0.  Verify this by fol
 1. Click the **Forwarding rules** tab at the top.
 1. Find the DNS name **GUID.private.databases.appdomain.cloud** and note the IP address of the forwarding IP addresses.
 
-Repeat the process to find the {{site.data.keyword.dns_short}} instance custom resolver in the spoke that is resolving the postgresql DNS address. In the spoke there will be no forwarding rule since the spoke instance will resolve the DNS address.
+Also note the forwarding rules for the spoke0.com subdomain. It is forwarded to the same resolvers. The forwarding rules for the enterprise.com subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.
+
+Optionally find the {{site.data.keyword.dns_short}} instance custom resolvers in the spoke. In the spoke there will be no forwarding rule for the postgresql DNS name since the spoke instance will resolve the DNS address using the VPC virtual private endpoint gateway address.
 
 ## x content
 {: #vpc-transit-power-x}
