@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-11-15"
+lastupdated: "2023-12-12"
 lasttested: "2023-01-24"
 
 content-type: tutorial
 services: vmware-service
 account-plan: paid
 completion-time: 1h
-use-case: ApplicationModernization, Vmware
+
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -25,11 +25,10 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
-{: shortdesc}
-
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
+
+The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 
 In this tutorial, you will learn:
 
@@ -122,7 +121,7 @@ You will create the following virtual machines:
 | `jump-server-1`        | Windows Server 2022  | `net-application`
 | `application-server-1` | RedHat Linux 8       | `net-application`
 | `db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
-{: caption="Virtual machines" caption-side="bottom"}
+{: caption="Table 1. Virtual machines" caption-side="bottom"}
 
 The first server will be used as a jump server, which you can optionally reach through the public Internet. The other two servers are examples of application and database servers.
 
@@ -155,7 +154,7 @@ Review the other hardware options and see what you can change and how. See [Edit
 
 IP Sets and Static Groups are used as part of configuration of the firewall rules are required. Unlike with some other firewalls, you must use Static Groups and IP Sets to configure firewalls to identify sources and destinations, IP addresses cannot be used directly in the rules.
 
-Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](/docs/vmware-service?topic=vmware-service-tenant-viewing-vdc#tenant-viewing-vdc-details) to obtain the allocated public IP addresses.
+Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses.
 
 In these examples, `public-ip-0` refers to the first IP address provided in the list of available IP addresses, and should be noted as a normal IP address notation `aaa.bbb.ccc.ddd`. Likewise, `public-ip-1` refers to the second IP address and so on.
 {: note}
@@ -167,7 +166,7 @@ You will create the following IP Sets and Static Groups:
 | IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
 | IP Set          | `ipset-snat`          | `public-ip-1`
 | Static Group    | `sg-private-networks` | `net-application` and `net-db`
-{: caption="IP Sets and Static Groups" caption-side="bottom"}
+{: caption="Table 2. IP Sets and Static Groups" caption-side="bottom"}
 
 To create an IP Set:
 
@@ -199,13 +198,12 @@ The next step is to create NAT rules to allow your virtual machines to access th
 
 You will create the following NAT rules in this tutorial.
 
-| Name               | Type            | External IP       | Internal IP         | Priority  | Application
-| -------------------|-----------------|-------------------|---------------------|-----------|-----------
-| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | `90`      | N/A
-| `dnat-to-app-1`    | DNAT            | `public-ip-2`     | `192.168.100.20/32` | `90`      | N/A
-| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | `100`     | N/A
-| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | `100`     | N/A
-{: caption="NAT rules" caption-side="bottom"}
+| Name               | Type            | External IP       | Internal IP         | Application
+| -------------------|-----------------|-------------------|---------------------|-----------------------
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+{: caption="Table 3. NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
 {: important} 
@@ -254,7 +252,7 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 | `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
 | `egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
 | `default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
-{: caption="Firewall rules" caption-side="bottom"}
+{: caption="Table 4. Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}
