@@ -89,7 +89,7 @@ Next, you will create the following virtual data center networks:
 | routed network   | `net-application`   | `192.168.100.1/24`
 | routed network   | `net-db`            | `192.168.101.1/24`
 | isolated         | `net-isolated-db`   | `192.168.102.1/24`
-{: caption="Virtual data center networks" caption-side="bottom"}
+{: caption="Table 1. Virtual data center networks" caption-side="bottom"}
 
 Routed virtual data center networks are attached to the edge gateway while an isolated virtual data center network is a standalone network without any platform provided routing capabilities. You can create more networks based on your needs by following the same logic and steps.
 
@@ -123,7 +123,7 @@ You will create the following virtual machines:
 | `jump-server-1`        | Windows Server 2022  | `net-application`
 | `application-server-1` | RedHat Linux 8       | `net-application`
 | `db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
-{: caption="Table 1. Virtual machines" caption-side="bottom"}
+{: caption="Table 2. Virtual machines" caption-side="bottom"}
 
 The first server will be used as a jump server, which you can optionally reach through the public Internet. The other two servers are examples of application and database servers.
 
@@ -168,7 +168,7 @@ You will create the following IP Sets and Static Groups:
 | IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
 | IP Set          | `ipset-snat`          | `public-ip-1`
 | Static Group    | `sg-private-networks` | `net-application` and `net-db`
-{: caption="Table 2. IP Sets and Static Groups" caption-side="bottom"}
+{: caption="Table 3. IP Sets and Static Groups" caption-side="bottom"}
 
 To create an IP Set:
 
@@ -206,7 +206,7 @@ You will create the following NAT rules in this tutorial.
 | `dnat-to-app-1`    | DNAT            | `public-ip-2`     | `192.168.100.20/32` | `90`      | N/A
 | `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | `100`     | N/A
 | `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | `100`     | N/A
-{: caption="Table 3. NAT rules" caption-side="bottom"}
+{: caption="Table 4. NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
 {: important} 
@@ -255,7 +255,7 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 | `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
 | `egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
 | `default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
-{: caption="Table 4. Firewall rules" caption-side="bottom"}
+{: caption="Table 5. Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}
