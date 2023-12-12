@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-07"
+lastupdated: "2023-12-12"
 lasttested: "2023-12-07"
 
 content-type: tutorial
@@ -33,7 +33,7 @@ This tutorial will walk through the implementation of a hub and spoke architectu
 
 TODO UPDATE DIAGRAM:
 
-![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This tutorial is stand alone but layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture.  See [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power). If you find yourself struggling through VPC concepts like network IP layout and planning in the {{site.data.keyword.cloud_notm}}, {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or VPC ingress routing - check out the foundation tutorials.
@@ -91,7 +91,7 @@ The address layout for the us-south region is shown below.  Notice:
 - There is an address prefixin the transit for the enterprise. This is required to advertise the routes through the transit gateway.
 
 TODO UPDATE DIAGRAM
-![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
+![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Provision resources
@@ -302,7 +302,7 @@ The first test, `py/test_transit.py::test_vpe[postgresql spoke1 -> transit 14d06
 This diagram has a green line showing the traffic path from the Power instance to the enterprise instance:
 
 TODO UPDATE DIAGRAM
-![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
+![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Open [Transit gateway](/interconnectivity/transit) and select the **initials-tgw**. Ignore the **initials-tgw-link** if visible, it is used to simulate the direct link connection from the enterprise to the transit VPC.  Notice:
@@ -333,7 +333,7 @@ This diagram has blue line showing the DNS resolution chains used by the Power i
 
 TODO UPDATE DIAGRAM
 
-![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
+![zones](images/transit-powe-hiddenr/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
 {: style="text-align: center;"}
 
 First find the DNS name of the postgresql database VPC Virtual private endpoint gateway in the spoke:
