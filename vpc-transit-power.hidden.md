@@ -138,7 +138,7 @@ TODO UPDATE DIAGRAM
 The {{site.data.keyword.powerSys_notm}} has been created along with the VPCs and the enterprise connection: either VPC VPN or {{site.data.keyword.tg_short}} or {{site.data.keyword.tg_short}} depending on the configured.
 
 ## SSH keys
-{: #vpc-transit-power-server-instance-configuration}
+{: #vpc-transit-power-server-ssh-keys}
 {: step}
 
 The provision created two files one for each member of the key pair required to ssh:
