@@ -9,6 +9,7 @@ content-type: tutorial
 services: vmware-service
 account-plan: paid
 completion-time: 1h
+use-case: ApplicationModernization, Vmware
 
 ---
 {{site.data.keyword.attribute-definition-list}}
@@ -25,10 +26,11 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
+This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+{: shortdesc}
+
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
-
-The objective of this tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 
 In this tutorial, you will learn:
 
@@ -154,7 +156,7 @@ Review the other hardware options and see what you can change and how. See [Edit
 
 IP Sets and Static Groups are used as part of configuration of the firewall rules are required. Unlike with some other firewalls, you must use Static Groups and IP Sets to configure firewalls to identify sources and destinations, IP addresses cannot be used directly in the rules.
 
-Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](/docs/vmware-service?topic=vmware-service-vdc-view-delete) to obtain the allocated public IP addresses.
+Before configuring IP Sets, find out your Public IP addresses assigned for your virtual data center. [Use the {{site.data.keyword.cloud_notm}} portal](/docs/vmware-service?topic=vmware-service-vdc-tenant-viewing-vdc#tenant-viewing-vdc-details) to obtain the allocated public IP addresses.
 
 In these examples, `public-ip-0` refers to the first IP address provided in the list of available IP addresses, and should be noted as a normal IP address notation `aaa.bbb.ccc.ddd`. Likewise, `public-ip-1` refers to the second IP address and so on.
 {: note}
@@ -198,11 +200,12 @@ The next step is to create NAT rules to allow your virtual machines to access th
 
 You will create the following NAT rules in this tutorial.
 
-| Name               | Type            | External IP       | Internal IP         | Application
-| -------------------|-----------------|-------------------|---------------------|-----------------------
-| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
-| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
-| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+| Name               | Type            | External IP       | Internal IP         | Priority  | Application
+| -------------------|-----------------|-------------------|--------------------------------|-----------
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | `90`      | N/A
+| `dnat-to-app-1`    | DNAT            | `public-ip-2`     | `192.168.100.20/32` | `90`      | N/A
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | `100`     | N/A
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | `100`     | N/A
 {: caption="Table 3. NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
