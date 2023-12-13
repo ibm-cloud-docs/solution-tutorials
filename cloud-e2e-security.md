@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-10"
-lasttested: "2023-10-02"
+lastupdated: "2023-12-13"
+lasttested: "2023-12-13"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
@@ -21,7 +21,7 @@ use-case: Cybersecurity
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator/review){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -72,7 +72,7 @@ This tutorial requires:
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--#/istutorial#-->
@@ -123,7 +123,7 @@ Skip this section if you have an existing `Standard` cluster you want to reuse w
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
+1. Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Create cluster**. 
 
 2. Create a cluster on your choice of **Infrastructure**. 
    - The following steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
@@ -137,7 +137,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
       7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
       8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
       9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs){: external}.
       11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
       13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
 
@@ -157,7 +157,7 @@ While the cluster is being provisioned, you will create the other services requi
 
 {{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](/docs/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
 
-1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms).
+1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
    2. Set the name to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-kp`.
    3. Select the **resource group** where to create the service instance and click **Create**.
@@ -180,7 +180,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 #### A bucket for the content
 {: #cloud-e2e-security-9}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage).
+1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}.
    1. Select a **Standard** plan and Set the **name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cos`.
    2. Use the same **resource group** as for the previous services and click **Create**.
 2. Under **Service credentials**, create a *New credential*.
@@ -196,7 +196,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 
 Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
-1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations) in the {{site.data.keyword.cloud_notm}} console.
+1. Go to [Manage > Access (IAM) > Authorizations](/iam/authorizations){: external} in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. Switch to **Resources based on selected attributes**, check **Source service instance** and select the {{site.data.keyword.cos_short}} service instance previously created.
@@ -205,11 +205,11 @@ Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} s
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
 
-Finally create the bucket.
+Finally, create the bucket.
 
-1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources) Under **Storage**.
+1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](/resources){: external} Under **Storage**.
 2. Click **Create bucket** and then **Customize your bucket**.
-   1. Set the **name** to a unique value, such as `<your-initials>-secure-file-upload`.
+   1. Use a unique value for **name**, such as `<your-initials>-secure-file-upload`.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the {{site.data.keyword.keymanagementserviceshort}} service instance.
    4. Set **Storage class** to **Standard**
@@ -226,7 +226,7 @@ Finally create the bucket.
 
 The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for all files uploaded from the application.
 
-1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant) service.
+1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant){: external} service.
    1. Select **Cloudant** as the offering. 
    2. Select a **Multitenant** environment and a **region** same as the previous services.
    3. Set the **name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant`.
@@ -237,7 +237,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    1. Under **Service credentials**, create **New credential**.
    2. Set the **name** to `secure-file-storage-cloudant-acckey`.
    3. For **Role** select **Manager**.
-   4. Keep the default values for the the remaining fields.
+   4. Keep the default values for the remaining fields.
    5. Click **Add**.
 3. Expand the newly created credentials and make note of the values. You will need them in a later step.
 4. Under **Manage**, click on **Launch Dashboard**.
@@ -246,11 +246,11 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 ### Authenticate users
 {: #cloud-e2e-security-11}
 
-With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} [integrates](/docs/containers?topic=containers-comm-ingress-annotations#app-id) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
+With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. As an alternative not used in this tutorial, {{site.data.keyword.appid_short}} can [integrate](/docs/containers?topic=containers-comm-ingress-annotations#app-id) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
 Before creating the {{site.data.keyword.appid_short}} service, grant service access to {{site.data.keyword.keymanagementserviceshort}} service. You must be the account owner or an administrator for the instance of {{site.data.keyword.keymanagementserviceshort}} that you're working with. You must also have at least Viewer access for the {{site.data.keyword.appid_short}} service.
 
-1. Go to [Manage > Access IAM > Authorizations](/iam/authorizations) and click **Create**.
+1. Go to [Manage > Access IAM > Authorizations](/iam/authorizations){: external} and click **Create**.
 2. Select the **{{site.data.keyword.appid_short}}** service as your source service.
 3. Select **{{site.data.keyword.keymanagementserviceshort}}** as your target service.
 4. Switch to **Resources based on selected attributes**, check **Instance ID**, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
@@ -258,21 +258,28 @@ Before creating the {{site.data.keyword.appid_short}} service, grant service acc
 6. Click **Authorize** to confirm the delegated authorization.
 
 Now, Create an instance of the {{site.data.keyword.appid_short}} service.
-1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID) service creation page.
+1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID){: external} service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
    3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;--><!--#/isworkshop#-->sfsappid`.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
-2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback`. For example:
+2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. The URL format is `https://secure-file-storage.<Ingress subdomain>/redirect_uri`. For example:
    * with the ingress subdomain: `mycluster-1234-d123456789.us-south.containers.appdomain.cloud`
-   * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback`.
+   * the redirect URL is `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/redirect_uri`.
 
-   {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+   [{{site.data.keyword.appid_short}} requires the web redirect URL](/docs/appid?topic=appid-managing-idp#add-redirect-uri) to be **https** or **http**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
    {: tip}
 
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
+4. Create service credentials:
+   1. Under **Service credentials**, create **New credential**.
+   2. Set the **name** to `secure-file-storage-appid-acckey`.
+   3. For **Role** select **Manager**.
+   4. Keep the default values for the remaining fields.
+   5. Click **Add**.
+
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
 {: tip}
@@ -309,7 +316,8 @@ All services have been configured. In this section you will deploy the tutorial 
 
    2. Edit `credentials.env` and fill in the blanks with these values:
       * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-      * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
+      * the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**,
+      * and the credentials for {{site.data.keyword.appid_short}}.
 
       When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
       {: tip}
@@ -426,19 +434,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-5. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
-    ```sh
-    kubectl edit cm ibm-k8s-controller-config -n kube-system
-    ```
-    {: pre}
-
-6. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`. Replace **default** namespace if using a different namespace.
-   ```sh
-   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service sfsappid
-   ```
-   {: codeblock}
-
-7. Deploy the app.
+5. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -472,19 +468,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-4. Edit the ALB's ConfigMap (`kube-system/ibm-k8s-controller-config`) and change `allow-snippet-annotations: "false"` to `allow-snippet-annotations: "true"`.
-    ```sh
-    kubectl edit cm ibm-k8s-controller-config -n kube-system
-    ```
-    {: pre}
-
-5. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
-   ```sh
-   ibmcloud ks cluster service bind --cluster $MYCLUSTER --namespace default --service <YOUR-INITIALS>sfsappid
-   ```
-   {: codeblock}
-
-6. Deploy the app.
+4. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -524,7 +508,7 @@ Now that the application and its services have been successfully deployed, you c
 {: #cloud-e2e-security-19}
 {: step}
 
-By default, the application is accessible on a generic subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. There are various combinations of services that can be used to manage DNS names and TLS certificates for integration into a kubernetes application. This tutorial will use the following services:
+By default, the application is accessible on a generic subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. There are various combinations of services that can be used to manage DNS names and TLS certificates for integration into a Kubernetes application. This tutorial will use the following services:
 - DNS subdomain, **secure-file-storage**, of your own custom DNS domain, that is managed by {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service. For the purpose of simplifying the steps in this tutorial, we will use **example.com** for the name of the custom DNS domain, make sure to substitute with your custom DNS domain in all steps.
 - [Let's Encrypt](https://letsencrypt.org/){: external} to generate the TLS certificates.
 - {{site.data.keyword.secrets-manager_full_notm}} to integrate with Let's Encrypt to generate the TLS certificate for **secure-file-storage.example.com** and securely store it.
