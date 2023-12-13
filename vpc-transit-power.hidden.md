@@ -25,16 +25,18 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial will walk through an example implementation and explore the architecture depicted in this high-level view:
 {: shortdesc}
 
+TODO UPDATE DIAGRAM
+
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. A transit VPC and component resources is created.
-1. VPN connectivity is added between the VPC and enterprise network.
-1. A {{site.data.keyword.tg_short}} is provisioned and connected to the transit VPC.
+1. A transit VPC and component resources are created.
 1. VPC virtual private endpoint gateways are used to access cloud service instances.
+1. A {{site.data.keyword.tg_short}} is provisioned and connected to the transit VPC.
+1. {{site.data.keyword.vpn_short}} VPN connectivity is added between the VPC and enterprise network.
 1. {{site.data.keyword.powerSys_notm}} can access everything through the attached {{site.data.keyword.tg_short}}
 
-This tutorial is stand alone but layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power).
+This tutorial is stand alone but conceptually layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power).
 
 ## Objectives
 {: #vpc-transit-power-objectives}
@@ -128,7 +130,7 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC and notice:
    - The address prefix 10.1.0.0/16 is defined to advertise the routes for entire zone over VPN to the enterprise.
-      - The address prefix 192.168.0.0/24 is used to advertise the routes for the enterprise over {{site.data.keyword.tg_short}} to the {{site.data.keyword.powerSysShort}} workspace.
+   - The address prefix 192.168.0.0/24 is used to advertise the routes for the enterprise over {{site.data.keyword.tg_short}} to the {{site.data.keyword.powerSysShort}} workspace.
 
 ## SSH keys
 {: #vpc-transit-power-server-ssh-keys}
@@ -140,8 +142,8 @@ The provision created two files one for each member of the key pair required to 
 
 
 The public key was used to create two SSH keys in the cloud:
-- Power SSH keys
-- SSH keys for VPC
+- Power SSH key
+- SSH key for VPC
 
 Locate the Power SSH key:
 - Navigate to [Power SSH keys](/power/ssh-keys).
@@ -157,7 +159,7 @@ Locate VPC SSH key:
 {: #vpc-transit-power-server-instance-configuration}
 {: step}
 
-The terraform configuration created a {{site.data.keyword.powerSys_notm}} linux Virtual server instance but was not able to fully configure it.  It is now possible to configure the ip route tables and install an nginx server to support testing.
+The terraform configuration created a {{site.data.keyword.powerSys_notm}} linux Virtual server instance but was not able to fully configure.  It is now possible to configure the ip route tables and install an nginx server to support testing.
 
 ```sh
 cd power_tf; # should be in the .../vpc-transit/power_tf directory
@@ -210,7 +212,7 @@ Keep this shell available for use in future steps.
 
 A **pytest** test suite will be used to exhaustively tests communication paths.
 
-It is not required for the reader to use **pytest** to verify the results. It is straight forward to reproduce the test results shown below by hand but tedious. For each line of the example output in the example below find the resource in the [Resources](/resources) view of the {{site.data.keyword.cloud_notm}} console and navigate to the left resource and locate the public IP addresses for an ssh session. Using the shell of the cloud instance execute a curl command to the private IP address of the instance on the right: curl `A.B.C.D/name`.
+It is not required for the reader to use **pytest** to verify the results. It is straight forward to reproduce the test results shown below by hand but tedious. For each line of the example output below find the resource in the [Resources](/resources) view of the {{site.data.keyword.cloud_notm}} console and navigate to the left resource and locate the public IP addresses for an ssh session. Using the shell of the cloud instance execute a curl command to the private IP address of the instance on the right: curl `A.B.C.D/name`.
 {: note}
 
 There are a couple of different ways to install and use python as covered in the [README.md](https://github.com/IBM-Cloud/vpc-transit).
@@ -281,8 +283,8 @@ Each test will ssh to the instance on the left side of the arrow '->' and access
 - test_ping - ping ip address
 - test_curl - curl ip address
 - test_curl_dns - curl the DNS name
-- test_vpe_dns_resolution - verify the VPE name DNS name resolves to an IP address in the CIDR block of the cloud (this test does not actually access the right side.)
-- test_vpe - exercise the resource using the vpe DNS name
+- test_vpe_dns_resolution - verify the VPC virtual private endpoint (VPE) name DNS name resolves to an IP address in the CIDR block of the cloud (this test does not actually access the right side.)
+- test_vpe - exercise the resource using the DNS name and the resource specific tool (psql for postgresql)
 
 
 ## Transit gateway
@@ -291,7 +293,7 @@ Each test will ssh to the instance on the left side of the arrow '->' and access
 
 This diagram has a green line showing the traffic path from the Power instance to the enterprise instance:
 
-![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Figure 3. Power to enterprise data path" caption-side="bottom"}
+![zones](images/transit-power-hidden/vpc-transit-overview-power-to_enterprise.svg){: caption="Figure 3. Power to enterprise data path" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Inspect the transit {{site.data.keyword.tg_short}}:
