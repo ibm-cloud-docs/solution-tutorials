@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Power Systems communication through a VPC Transit Hub and Spoke architecture
+# Power Systems communication through a VPC Transit Hub
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis, power-iaas"}
@@ -22,44 +22,26 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
 {: tip}
 
-- site.data.keyword.powerSysFull {{site.data.keyword.powerSysFull}}
-- site.data.keyword.powerSys_notm {{site.data.keyword.powerSys_notm}}
-- site.data.keyword.powerSysShort {{site.data.keyword.powerSysShort}}
-
-The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances (.i.e virtual server instances) running a variety of different operating environments like Linux, AIX and IBM i. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC) which provides network isolation and security in the {{site.data.keyword.cloud_notm}}. {{site.data.keyword.powerSys_notm}} can connect to VPCs via a TGW and utilize the VPC network to access Virtual server instances in the VPC or networkdevices like a VPN or Virtual private endpoint gateways. A VPC or {{site.data.keyword.powerSys_notm}} workspace can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. This may create the need to route traffic through centralized firewall-gateway appliances.
+The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial will walk through an example implementation and explore the architecture depicted in this high-level view:
 {: shortdesc}
-
-This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
-
-TODO UPDATE DIAGRAM:
 
 ![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-This tutorial is stand alone but layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture.  See [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power). If you find yourself struggling through VPC concepts like network IP layout and planning in the {{site.data.keyword.cloud_notm}}, {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or VPC ingress routing - check out the foundation tutorials.
+1. A transit VPC and component resources is created.
+1. VPN connectivity is added between the VPC and enterprise network.
+1. A {{site.data.keyword.tg_short}} is provisioned and connected to the transit VPC.
+1. VPC virtual private endpoint gateways are used to access cloud service instances.
+1. {{site.data.keyword.powerSys_notm}} can access everything through the attached {{site.data.keyword.tg_short}}
 
-Private DNS is used for name resolution of microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
-
-The hub and spoke model supports a number of different scenarios:
-- The hub can be the repository for shared micro services used by spokes and enterprise.
-- The hub can be a central point of traffic between enterprise and the cloud.  VPN or Direct link connections can terminate in the hub and be shared by the spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
-
-There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit){: external} that divides the connectivity into a number of incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
-
-The following will be explored:
-- {{site.data.keyword.powerSysShort}} communication with VPC instances
-- {{site.data.keyword.powerSysShort}} communication with on premises servers
-- DNS resolution.
-- {{site.data.keyword.powerSysShort}} access to VPC virtual private endpoint gateway
-
+This tutorial is stand alone but layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power).
 
 ## Objectives
 {: #vpc-transit-power-objectives}
 
 * Understand the concepts behind a {{site.data.keyword.powerSys_notm}} networking.
-* Utilize the{{site.data.keyword.tg_full_notm}} for connecting {{site.data.keyword.powerSys_notm}} to VPC.
-* Routing {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN, TGW or DL.
+* Utilize the {{site.data.keyword.tg_full_notm}} for connecting {{site.data.keyword.powerSys_notm}} to VPC.
+* Route {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN, TGW or DL.
 * Connect {{site.data.keyword.powerSys_notm}} instances through virtual private endpoint gateways to services.
 * Utilize the DNS service routing and forwarding rules to build an architecturally sound name resolution system.
 
@@ -73,7 +55,7 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
 
-See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to easily create the prerequisite environment.
+See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to build the prerequisite environment.
 
 In addition:
 
@@ -81,18 +63,6 @@ In addition:
    - [required permissions for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
    - [required permissions for creating {{site.data.keyword.tg_short}}](/docs/transit-gateway?topic=transit-gateway-iam).
    - [required permissions for {{site.data.keyword.powerSys_notm}}](/docs/power-iaas?topic=power-iaas-managing-resources-and-users)
-
-## Routing and Zones
-{: #vpc-transit-power-routing-and-zones}
-
-The address layout for the us-south region is shown below.  Notice:
-- An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
-- The address space for transit, spoke0 and spoke1 do not overlap.
-- There is an address prefixin the transit for the enterprise. This is required to advertise the routes through the transit gateway.
-
-TODO UPDATE DIAGRAM
-![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Components and connections" caption-side="bottom"}
-{: style="text-align: center;"}
 
 ## Provision resources
 {: #vpc-transit-power-provision-resources}
@@ -112,7 +82,7 @@ TODO UPDATE DIAGRAM
    ```
    {: codeblock}
 
-1. Edit **config_tf/terraform.tfvars**. Use the comments in that file as your guide.
+1. Edit **config_tf/terraform.tfvars**. Use the comments in that file as your guide. Change the values of **resource_group_name**, **basename** and optionally the others.
 
 1. It is possible to provision the architecture a layer at a time. A shell command **./apply.sh** is provided to install the layers in order. The following will display help:
 
@@ -135,7 +105,31 @@ TODO UPDATE DIAGRAM
    ```
    {: codeblock}
 
-The {{site.data.keyword.powerSys_notm}} has been created along with the VPCs and the enterprise connection: either VPC VPN or {{site.data.keyword.tg_short}} or {{site.data.keyword.tg_short}} depending on the configured.
+It may take 30 minutes to create the resources in the diagram.  The enterprise is simulated using a VPC.
+
+## IP address layout
+{: #vpc-transit-power-ip-address-layout}
+{: step}
+
+The address layout is shown below:
+
+![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
+{: style="text-align: center;"}
+
+Notice:
+- An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
+- The address space for enterprise, transit, spoke0 not overlap.
+- There is an address prefix in the transit for the enterprise.  No subnets will be added to this address prefix. This is required to advertise the routes through the transit gateway.
+
+
+Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
+
+1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
+1. Select the enterprise VPC and notice the two address prefixes that together define 192.168.0.0/24
+1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
+1. Select the transit VPC and notice:
+   - The address prefix 10.1.0.0/16 is defined to advertise the routes for entire zone over VPN to the enterprise.
+      - The address prefix 192.168.0.0/24 is used to advertise the routes for the enterprise over {{site.data.keyword.tg_short}} to the {{site.data.keyword.powerSysShort}} workspace.
 
 ## SSH keys
 {: #vpc-transit-power-server-instance-configuration}
@@ -325,6 +319,10 @@ This shows that traffic heading towards 192.168.0.0/24 should actually be sent t
 1. Navigate to [VPN](/vpc-ext/network/vpngateways) and select the transit VPN gateway.
 1. Inspect the **Gateway member** section.  The **Private IP** should match.
 
+## VPC virtual private endpoint gateway
+{: #vpc-transit-power-virtual-private-endpoint-gateway}
+{: step}
+
 ## Power DNS resolution
 {: #vpc-transit-power-dns-resolution}
 {: step}
@@ -378,6 +376,15 @@ Also note the forwarding rules for the spoke0.com subdomain. It is forwarded to 
 
 Optionally find the {{site.data.keyword.dns_short}} instance custom resolvers in the spoke. In the spoke there will be no forwarding rule for the postgresql DNS name since the spoke instance will resolve the DNS address using the VPC virtual private endpoint gateway address.
 
+## VPC Security
+{: #vpc-transit-power-security}
+{: step}
+VPCs have [network Access Control Lists (ACLs)](/docs/vpc?topic=vpc-using-acls) for subnets and [Security groups](/docs/vpc?topic=vpc-using-security-groups) for network interfaces that can be configured to limit access to network resources.
+
+Introduce a security group rule to restrict access to the VPC virtual private endpoint gateway from just the {{site.data.keyword.powerSys_notm}} instances.
+
+
+
 ## x content
 {: #vpc-transit-power-x}
 {: step}
@@ -391,3 +398,22 @@ Optionally find the {{site.data.keyword.dns_short}} instance custom resolvers in
 * [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Network Function Virtualization](/docs/vpc?topic=vpc-about-vnf)
 * [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](/docs/vpc?topic=vpc-about-vnf-ha)
+
+(.i.e virtual server instances) running a variety of different operating environments like Linux, AIX and IBM i.
+
+through the VPC.of the VPC network to access resources Virtual server instances in the VPC or networkdevices like a VPN or Virtual private endpoint gateways. A VPC or {{site.data.keyword.powerSys_notm}} workspace can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. This may create the need to route traffic through centralized firewall-gateway appliances.
+
+Private DNS is used for name resolution of microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
+
+The hub and spoke model supports a number of different scenarios:
+- The hub can be the repository for shared micro services used by spokes and enterprise.
+- The hub can be a central point of traffic between enterprise and the cloud.  VPN or Direct link connections can terminate in the hub and be shared by the spokes.
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
+
+There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit){: external} that divides the connectivity into a number of incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
+
+The following will be explored:
+- {{site.data.keyword.powerSysShort}} communication with VPC instances
+- {{site.data.keyword.powerSysShort}} communication with on premises servers
+- DNS resolution.
+- {{site.data.keyword.powerSysShort}} access to VPC virtual private endpoint gateway
