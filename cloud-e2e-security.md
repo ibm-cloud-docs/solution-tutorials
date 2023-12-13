@@ -261,7 +261,7 @@ Now, Create an instance of the {{site.data.keyword.appid_short}} service.
 1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID){: external} service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
-   3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;--><!--#/isworkshop#-->sfsappid`.
+   3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid`.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
@@ -368,13 +368,7 @@ All services have been configured. In this section you will deploy the tutorial 
          ```
          {: pre}
 
-      7. Set the name for the {{site.data.keyword.appid_short}} instance to use:
-         ```sh
-         export APPID_INSTANCE=sfsappid
-         ```
-         {: pre}
-
-      8. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
+      7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
    5. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
       ```sh
@@ -679,7 +673,7 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
-   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>--><!--#/isworkshop#-->sfsappid/callback` as another URL.
+   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
 <!--#/istutorial#-->
