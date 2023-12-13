@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial will walk through an example implementation and explore the architecture depicted in this high-level view:
 {: shortdesc}
 
-![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. A transit VPC and component resources is created.
@@ -113,7 +113,7 @@ It may take 30 minutes to create the resources in the diagram.  The enterprise i
 
 The address layout is shown below:
 
-![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
+![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Notice:
