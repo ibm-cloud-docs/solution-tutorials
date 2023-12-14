@@ -145,17 +145,30 @@ The public key was used to create two SSH keys in the cloud:
 - Power SSH key
 - SSH key for VPC
 
+Locate VPC SSH key:
+- Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys)
+- On the left side navigation panel select the workspace with your initials.
+
 Locate the Power SSH key:
 - Navigate to [Power SSH keys](/power/ssh-keys).
 - On the left side navigation panel select the workspace with your initials.
 
 Optionally verify that the contents of the cloud ssh key matches the content of the public key file.
 
-Locate VPC SSH key:
-- Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys)
-- On the left side navigation panel select the workspace with your initials.
+## {{site.data.keyword.powerSysShort}} Workspace
+{: #vpc-transit-power-server-workspace}
+{: step}
+
+Along with the ssh keys, the provision created a {{site.data.keyword.powerSysShort}} workspace, subnets and instance.
+
+TODO check words/spelling below
+
+- Navigate to [{{site.data.keyword.powerSysShort}}](/power) and select the workspace with your initials.
+- Click on the **Network and Subnets** on the left and notice the public and private subnets that have been created.
+- Click on the **Instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
 ## Virtual server instance configuration
+r
 {: #vpc-transit-power-server-instance-configuration}
 {: step}
 
