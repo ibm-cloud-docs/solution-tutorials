@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-13"
+lastupdated: "2023-12-14"
 lasttested: "2023-12-13"
 
 content-type: tutorial
@@ -392,19 +392,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 {: #cloud-e2e-security-16}
 
 <!--##istutorial#-->
-1. If not present, enable the [ALB OAuth Proxy add-on](/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
-   ```sh
-   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster $MYCLUSTER
-   ```
-   {: codeblock}
-
-   You can check for existing add-ons with this command:
-   ```sh
-   ibmcloud ks cluster addon ls --cluster $MYCLUSTER
-   ```
-   {: codeblock}
-
-2. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
+1. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
    ```sh
    ibmcloud ks ingress secret ls -c $MYCLUSTER
    ```
@@ -416,19 +404,19 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}   
 
-3. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+2. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: codeblock}
 
-4. Create the secret used by the application to obtain service credentials:
+3. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 
-5. Deploy the app.
+4. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -438,31 +426,19 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 
 <!--##isworkshop#-->
 <!--
-1. If not present, enable the [ALB OAuth Proxy add-on](/docs/containers?topic=containers-comm-ingress-annotations#app-id) in your cluster.
-   ```sh
-   ibmcloud ks cluster addon enable alb-oauth-proxy --cluster $MYCLUSTER
-   ```
-   {: codeblock}
-
-   You can check for existing add-ons with this command:
-   ```sh
-   ibmcloud ks cluster addon ls --cluster $MYCLUSTER
-   ```
-   {: codeblock}
-
-2. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
    ibmcloud ks cluster config --cluster $MYCLUSTER
    ```
    {: codeblock}
 
-3. Create the secret used by the application to obtain service credentials:
+2. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic YOUR-INITIALS-secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 
-4. Deploy the app.
+3. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -673,7 +649,7 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
 
 7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
-   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/oauth2-<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid/callback` as another URL.
+   * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/redirect_uri` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
 <!--#/istutorial#-->
