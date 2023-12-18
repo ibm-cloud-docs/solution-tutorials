@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-09-22"
-lasttested: "2022-09-12"
+lastupdated: "2023-12-18"
+lasttested: "2022-12-18"
 
 content-type: tutorial
 services: cloud-object-storage, ai-openscale
@@ -66,21 +66,15 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Create a project
 {: #create-deploy-retrain-machine-learning-model-create_project}
 
-1. If you do not have an existing {{site.data.keyword.cos_short}} service, go to the [{{site.data.keyword.Bluemix_short}} catalog](/catalog) and create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create).
-
-   Insure the {{site.data.keyword.cos_short}} **One Rate** plan is not selected.  The **One Rate** plan is not currently supported for model deployment.
-   {: note}
-
 1. From the [catalog](/catalog), create [{{site.data.keyword.DSX_short}}](/catalog/services/data-science-experience?taxonomyNavigation=app-services)
    1. Select a **region**
    2. Select a **Lite** pricing plan
    3. Change the **Service name** to **watson-studio-tutorial**
    4. Select a **resource group** and click **Create**
 2. Click on the **Launch in** twisty and select **IBM watsonx**.
-3. Create a **project** by clicking on the upper left hamburger menu and selecting **Projects > Vew all projects** then **New project**.
-3. In the subsequent page click **Create an empty project**.
+3. Create a **project** by clicking **+ Create a new project** in the **Projects** section.
 4. Provide **iris_project** as the project name.
-5. Under **Storage**, choose an **existing** {{site.data.keyword.cos_short}} service verified to exist a few steps earlier.
+5. In the  **Define storage**, **Add** a new instance of a {{site.data.keyword.cos_short}} service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -115,8 +109,8 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {: #create-deploy-retrain-machine-learning-model-build_model}
 {: step}
 
-1. In the top navigation menu, click on `iris-project`, click on **Assets** in the top bar.
-1. Click on **New task +** and search for **auto**.
+1. In the top navigation menu, click **Assets**.
+1. Click on **New asset +** and search for **auto**.
    1. Click on the **Build machine models automatically** tile.
    2. Set the name to **iris_auto**.
    3. Under **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service instance**, notice the service previously associated.
@@ -124,9 +118,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 Once the model is created,
 1. Add training data by clicking **Select data from project**.
-   1. Choose the **iris_initial.csv** file under **Data asset**.
+   1. Choose the **Data asset** under **Categories** and check **iris_initial.csv**.
    2. Click **Select asset**.
-1. If prompted, answer **No** to **Create a time series forecast?**.
+1. If prompted, answer **No** to **Create a time series analysis?**.
 2. Select **Species** as your **What do you want to predict?**.
 3. Click **Experiment settings**.
 1. Select **Data source**.
@@ -156,8 +150,8 @@ Once the experiment completes running,
 
 In this section, you will deploy the saved model and test the deployed model,
 
-1. Under the created model, click on **Promote to deployment space**.
-1. Under **Target Space**, select **Create a new deployment space**. _You use deployment spaces to deploy models and manage your deployments._
+1. In the **Assets** tab open **Models** on the left.
+1. In the **Modes** table locate the model and click on the hamburger menu and choose **Promote to space**. _You use deployment spaces to deploy models and manage your deployments._
    1. Set the **Name** to **iris_deployment_space**.
    2. Select the {{site.data.keyword.cos_short}} storage service used in previous steps in the corresponding drop down.
    3. Select the `machine-learning-tutorial` service in the corresponding drop down.
@@ -197,7 +191,7 @@ In the **Deployments > iris_deployment_space**:
 Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
 
 1. Under **API reference** tab of the deployment, you can see the _Endpoint_ under Direct link and code snippets in various programming languages.
-2. **Copy** the _Endpoint_ in a notepad for future reference.
+2. **Copy** the _Public endpoint_ in a notepad for future reference.
 3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
@@ -247,21 +241,24 @@ For ease of understanding, the tutorial concentrates only on improving the quali
 
 In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
-1. Create a [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watson-openscale)
+1. Create a watsonx.governance [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watsonxgovernance)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan.
    3. Set the service name to **watson-openscale-tutorial**.
    1. Select a resource group.
    4. Click **Create**.
-2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
+2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Watson OpenScale**.
 3. Click on **Manual setup** to manually setup the monitors.
 
-### Selecting a deployment
+### System setup
 {: #create-deploy-retrain-machine-learning-model-12}
 
 In this section, as part of preparing your model for monitoring you will set up and enable monitors for each deployment that you are tracking with {{site.data.keyword.aios_full_notm}}.
 
-1. By clicking on the **Edit** icon on the **Database** tile, choose **Free lite plan database** as your Database type and click **Save**. _This is to store your model transactions and model evaluation results._
+1. Click on **Database**.  _This is to store your model transactions and model evaluation results._ (it may already be selected)
+   1. Click the **Edit** icon on the **Database** tile
+   1. Choose **Free lite plan database** as your Database type
+   1. Click **Save**.
 2. Click on **Machine learning providers**
    1. Click on **Add machine learning provider** and click the edit icon on the **Connection** tile.
    2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}(V2)** as your service provider type.
