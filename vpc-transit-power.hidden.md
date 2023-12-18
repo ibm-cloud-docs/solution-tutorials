@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-13"
-lasttested: "2023-12-13"
+lastupdated: "2023-12-18"
+lasttested: "2023-12-18"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, power-iaas
@@ -168,7 +168,6 @@ TODO check words/spelling below
 - Click on the **Instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
 ## Virtual server instance configuration
-r
 {: #vpc-transit-power-server-instance-configuration}
 {: step}
 
