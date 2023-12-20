@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-14"
+lastupdated: "2023-12-20"
 lasttested: "2023-12-13"
 
 content-type: tutorial
@@ -21,7 +21,7 @@ use-case: Cybersecurity
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review){: external} to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -155,7 +155,7 @@ While the cluster is being provisioned, you will create the other services requi
 ### Use your own encryption keys
 {: #cloud-e2e-security-7}
 
-{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](/docs/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](/docs/key-protect/integrations?topic=key-protect-integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
@@ -180,7 +180,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 #### A bucket for the content
 {: #cloud-e2e-security-9}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}.
+1. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create){: external}.
    1. Select a **Standard** plan and Set the **name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cos`.
    2. Use the same **resource group** as for the previous services and click **Create**.
 2. Under **Service credentials**, create a *New credential*.
@@ -246,7 +246,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 ### Authenticate users
 {: #cloud-e2e-security-11}
 
-With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. As an alternative not used in this tutorial, {{site.data.keyword.appid_short}} can [integrate](/docs/containers?topic=containers-comm-ingress-annotations#app-id) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
+With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. As an alternative not used in this tutorial, {{site.data.keyword.appid_short}} can [integrate](/docs/containers?topic=containers-comm-ingress-annotations#app-id-authentication) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
 Before creating the {{site.data.keyword.appid_short}} service, grant service access to {{site.data.keyword.keymanagementserviceshort}} service. You must be the account owner or an administrator for the instance of {{site.data.keyword.keymanagementserviceshort}} that you're working with. You must also have at least Viewer access for the {{site.data.keyword.appid_short}} service.
 
@@ -487,7 +487,7 @@ By default, the application is accessible on a generic subdomain of `containers.
 ### Provision a {{site.data.keyword.cis_short_notm}} and {{site.data.keyword.secrets-manager_short}} instance
 {: #cloud-e2e-security-cis-instance}
 
-- A [{{site.data.keyword.cis_full_notm}}](/catalog/services/internet-services) instance is required. Use an existing instance or create one from this [catalog entry](/catalog/services/internet-services).  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (perhaps not in {{site.data.keyword.cloud_notm}}) to use the CIS-provided domain name servers. Export the custom domain in the shell window:
+- A [{{site.data.keyword.cis_full_notm}}](/catalog/services/internet-services){: external} instance is required. Use an existing instance or create one from this [catalog entry](/catalog/services/internet-services){: external}.  A number of pricing plans are available, including a free trial. The provisioning process of a new {{site.data.keyword.cis_short_notm}} will explain how to configure your existing DNS registrar (perhaps not in {{site.data.keyword.cloud_notm}}) to use the CIS-provided domain name servers. Export the custom domain in the shell window:
    ```sh
    export MYDOMAIN=example.com
    ```
@@ -683,13 +683,13 @@ Security is never done. Try the below suggestions to enhance the security of you
 If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](/docs/account?topic=account-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](/docs/account?topic=account-userroles) to either a user, a service ID, or to an [access group](/docs/account?topic=account-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
 
 You can find information on the individual services and their available IAM access roles here:
-* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access_reference#service). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). 
+* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access_reference). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). 
 * [{{site.data.keyword.registryshort_notm}}](/docs/Registry?topic=Registry-iam#iam)
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)
 * [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
 * [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-iam)
-* [{{site.data.keyword.keymanagementserviceshort}}](/docs/key-protect?topic=key-protect-manage-access#service-access-roles)
+* [{{site.data.keyword.keymanagementserviceshort}}](/docs/key-protect?topic=key-protect-manage-access)
 * [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-iam)
 
 To get started, check out the [best practices for access management and how to define access groups](/docs/account?topic=account-account_setup#resource-group-strategy).
