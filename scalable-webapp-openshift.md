@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-10-16"
+lastupdated: "2023-12-20"
 lasttested: "2023-10-16"
 
 content-type: tutorial
@@ -21,12 +21,12 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
 
-This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/openshiftcluster) cluster from a remote Git repository, expose the application on a route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to the application.
+This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift) cluster from a remote Git repository, expose the application on a route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to the application.
 {: shortdesc}
 
 With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes clusters with worker nodes that come installed with the OpenShift Container Platform. For more information about the OpenShift Container Platform architecture, see the [{{site.data.keyword.redhat_openshift_notm}} docs](https://docs.openshift.com/container-platform/4.13/architecture/architecture.html){: external}. You get all the [advantages of a managed service](/docs/openshift?topic=openshift-responsibilities_iks) for your cluster.
@@ -113,7 +113,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Geography**.
       - Select **Single zone** as **Availability**.
       - Choose a **Worker zone**.
-      - For more details, see the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+      - For more details, see the [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic) instructions.
 4. Set the **OpenShift version** to **4.13.x**.
 5. Select your **OpenShift Container Platform (OCP) license**.      
 6. Under **Worker pool**,
@@ -157,7 +157,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
    ```
    {: pre}
 
-1. If the version does not match your cluster version, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+1. If the version does not match your cluster version, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 1. Navigate to your cluster from the [cluster list](/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
 1. Open the **{{site.data.keyword.openshiftshort}} web console**.
 1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your local terminal.
@@ -174,7 +174,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 {: #scalable-webapp-openshift-create_openshift_app}
 {: step}
 
-In this section, you will create a {{site.data.keyword.openshiftshort}} project and then deploy an application from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/){: external}. The code for this application is a simple [Node.js](https://nodejs.dev){: external} landing page and two API endpoints to get started. You can always extend this application based on your own exploration requirements.
+In this section, you will create a {{site.data.keyword.openshiftshort}} project and then deploy an application from a [GitHub repository](https://github.com/IBM-Cloud/openshift-node-app/){: external}. The code for this application is a simple [Node.js](https://nodejs.org/en){: external} landing page and two API endpoints to get started. You can always extend this application based on your own exploration requirements.
 
 ### Create a project
 {: #scalable-webapp-openshift-create-project}
@@ -288,7 +288,7 @@ OpenShift Container Platform ships with a pre-configured and self-updating monit
 8. Set **Time Range** to **Last 5 minutes**.
 9. Check the CPU and memory usage.
 10. Stop the above script using `control+C`. 
-11. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.13/logging/viewing-resource-logs.html){: external} to learn about the usage of `oc logs`.
+11. For logging, you can use the in-built `oc logs` command. Check [viewing logs for a resource](https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/developer-cli-commands.html#oc-logs){: external} to learn about the usage of `oc logs`.
 
    You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-health) to setup logging and monitoring add-ons to monitor cluster health.
    {: tip}
