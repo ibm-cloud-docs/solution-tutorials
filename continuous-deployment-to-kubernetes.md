@@ -104,7 +104,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-1. From the [{{site.data.keyword.cloud_notm}} console](/), from the menu and select [DevOps](/devops/getting-started).
+1. From the [{{site.data.keyword.cloud_notm}} console](/), from the menu and select [DevOps](/devops/toolchains).
 2. Click **Create toolchain**.
 3. In the **search box** type **kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
