@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
 lastupdated: "2023-12-21"
-lasttested: "2022-12-14"
+lasttested: "2022-09-14"
 
 content-type: tutorial
 services: containers, Registry, cis
