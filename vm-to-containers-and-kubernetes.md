@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
 lastupdated: "2023-09-29"
-lasttested: "2023-09-05"
+lasttested: "2023-012-21"
 
 content-type: tutorial
 services: containers
@@ -20,7 +20,7 @@ use-case: ApplicationModernization, Containers
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
