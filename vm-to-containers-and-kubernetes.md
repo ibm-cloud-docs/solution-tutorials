@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-09-29"
-lasttested: "2023-012-21"
+lastupdated: "2023-12-21"
+lasttested: "2023-09-05"
 
 content-type: tutorial
 services: containers
