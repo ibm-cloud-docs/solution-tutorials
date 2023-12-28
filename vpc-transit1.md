@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-14"
-lasttested: "2023-10-05"
+lastupdated: "2023-12-28"
+lasttested: "2023-12-28"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
